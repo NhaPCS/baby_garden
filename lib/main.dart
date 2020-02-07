@@ -2,6 +2,8 @@ import 'package:baby_garden_flutter/screen/home_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 
+import 'generated/l10n.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -9,7 +11,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Baby garden',
+      localizationsDelegates: [S.delegate],
+      supportedLocales: S.delegate.supportedLocales,
+
       theme: ThemeData(
           primarySwatch: Colors.blue,
           primaryColor: ColorUtil.primaryColor,
@@ -17,20 +22,20 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white,
           scaffoldBackgroundColor: Colors.white,
           primaryTextTheme: TextTheme(
-            title: TextStyle(color: ColorUtil.textColor),
-            display1: TextStyle(
+            headline6: TextStyle(color: ColorUtil.textColor),
+            headline4: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
-            display3: TextStyle(
+            headline2: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
-            display2: TextStyle(
+            headline3: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
-            display4: TextStyle(
+            headline1: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
-            headline: TextStyle(
+            headline5: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
-            body2: TextStyle(
+            bodyText2: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
-            body1: TextStyle(
+            bodyText1: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
           )),
       home: HomeScreen(),
