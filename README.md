@@ -16,6 +16,7 @@ Baby Garden
 - tạo custom dialog đc đặt ở folder lib/widget/dialog/
 - UI của item trong list được đặt ở folder lib/item;
 - liên quan đến màu, size, text chung, show message dialog hay dialog chung gì đó... đặt ỏ util/resource.dart
+- Các thuộc tính chung của widget sẽ setup chung ở resource hoặc ở main.dart, không set up từng widget
 
 2. Data
 - Share preference value: saved global value được quản lý ở lib/data/shared_value.dart
