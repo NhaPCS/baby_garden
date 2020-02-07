@@ -60,21 +60,22 @@ abstract class BaseState<S extends StatefulWidget> extends State<S> {
       {String title,
       bool centerTitle = true,
       double elevation = 0,
-      Color bgColor = Colors.white}) {
+      Color bgColor = ColorUtil.primaryColor}) {
     return AppBar(
       elevation: elevation,
       backgroundColor: bgColor,
       title: title != null
           ? Text(
               title,
-              style: TextStyle(fontSize: SizeUtil.textSizeBigger),
+              style: TextStyle(
+                  fontSize: SizeUtil.textSizeBigger, color: Colors.white),
             )
           : null,
       centerTitle: centerTitle,
       leading: InkWell(
         child: Icon(
           CupertinoIcons.back,
-          color: ColorUtil.black26,
+          color: Colors.white,
         ),
         onTap: () {
           Navigator.of(context).pop();

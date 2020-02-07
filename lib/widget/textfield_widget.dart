@@ -22,7 +22,7 @@ class TextfieldWidget extends StatelessWidget {
       this.hint,
       this.textStyle,
       this.backgroundColor = Colors.white,
-      this.borderColor = ColorUtil.black26,
+      this.borderColor = ColorUtil.textGray,
       this.borderRadius = 0,
       this.suffix,
       this.textAlign = TextAlign.center,

@@ -65,7 +65,7 @@ class _CountChosenState extends State<CountChosen> {
         ],
       ),
       decoration: BoxDecoration(
-          color: ColorUtil.lightGray,
+          color: ColorUtil.textGray,
           borderRadius: BorderRadius.all(Radius.circular(SizeUtil.tinyRadius))),
     );
   }

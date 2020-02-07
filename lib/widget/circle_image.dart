@@ -11,7 +11,7 @@ class CircleImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: CircleBorder(side: BorderSide(color: ColorUtil.lightGray)),
+      shape: CircleBorder(side: BorderSide(color: ColorUtil.textGray)),
       child: Container(
         width: size,
         height: size,

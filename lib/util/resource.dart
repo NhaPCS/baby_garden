@@ -4,21 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ColorUtil {
-  static const Color primaryColor = Color(0xff898989);
-  static const Color textColor = Color(0xff242424);
-  static const Color textGray = Color(0xff999999);
-  static const Color black24 = Color(0xff242424);
-  static const Color black26 = Color(0xff262626);
-  static const Color chooseLetterColor = Color(0xffFFE5C0);
-  static const Color green = Color(0xff4EAD33);
-  static const Color level2Color = Color(0xff3F9A3D);
-  static const Color level4Color = Color(0xff99CE65);
-  static const Color pointColor = Color(0xffFFC467);
-  static const Color checkboxColor = Color(0xffCEA984);
-  static const Color blue = Color(0xff0849D9);
+  static const Color primaryColor = Color(0xffFF8918);
+  static const Color colorAccent = Color(0xffFFB00B);
+  static const Color textColor = Color(0xff40433F);
+  static const Color textGray = Color(0xff707070);
+  static const Color green = Color(0xff13BE2A);
   static const Color red = Color(0xffFF0000);
-  static const Color lightGray = Color(0xffEFEFEF);
-  static const Color iconColor = Color(0xffD1D1D1);
+  static const Color blue = Color(0xff047194);
 
   static Color getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");
@@ -113,7 +105,7 @@ class WidgetUtil {
   static Widget getLine({EdgeInsetsGeometry margin}) {
     return Container(
       height: 1,
-      color: ColorUtil.lightGray,
+      color: ColorUtil.textGray,
       margin: margin,
     );
   }
