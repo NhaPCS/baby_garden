@@ -8,6 +8,7 @@ class ColorUtil {
   static const Color colorAccent = Color(0xffFFB00B);
   static const Color textColor = Color(0xff40433F);
   static const Color textGray = Color(0xff707070);
+  static const Color black33 = Color(0xff333333);
   static const Color green = Color(0xff13BE2A);
   static const Color red = Color(0xffFF0000);
   static const Color blue = Color(0xff047194);
