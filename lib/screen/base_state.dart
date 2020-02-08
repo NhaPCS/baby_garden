@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-abstract class BaseState<S extends StatefulWidget> extends State<S> {
+abstract class BaseState<S extends StatefulWidget> extends State<S> with AutomaticKeepAliveClientMixin{
   Widget buildWidget(BuildContext context);
 
   List<SingleChildWidget> providers();
@@ -23,6 +23,7 @@ abstract class BaseState<S extends StatefulWidget> extends State<S> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     List<SingleChildWidget> prs = providers();
     return prs == null || prs.isEmpty
         ? GestureDetector(
@@ -83,4 +84,7 @@ abstract class BaseState<S extends StatefulWidget> extends State<S> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

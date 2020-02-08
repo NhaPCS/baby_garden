@@ -21,7 +21,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "hi" : MessageLookupByLibrary.simpleMessage("hihi"),
+    "account" : MessageLookupByLibrary.simpleMessage("Tài khoản"),
+    "cart" : MessageLookupByLibrary.simpleMessage("Giỏ hàng"),
+    "home" : MessageLookupByLibrary.simpleMessage("Trang chủ"),
+    "order" : MessageLookupByLibrary.simpleMessage("Đơn hàng"),
+    "shopping" : MessageLookupByLibrary.simpleMessage("Shopping"),
     "welcome" : MessageLookupByLibrary.simpleMessage("Welcome")
   };
 }

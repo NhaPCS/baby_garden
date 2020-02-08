@@ -38,10 +38,46 @@ class S {
     );
   }
 
-  String get hi {
+  String get home {
     return Intl.message(
-      'hihi',
-      name: 'hi',
+      'Trang chủ',
+      name: 'home',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get shopping {
+    return Intl.message(
+      'Shopping',
+      name: 'shopping',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cart {
+    return Intl.message(
+      'Giỏ hàng',
+      name: 'cart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get order {
+    return Intl.message(
+      'Đơn hàng',
+      name: 'order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get account {
+    return Intl.message(
+      'Tài khoản',
+      name: 'account',
       desc: '',
       args: [],
     );
