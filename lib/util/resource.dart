@@ -16,6 +16,9 @@ class ColorUtil {
   static const Color gray = Color(0xff047194);
   static const Color lightGray = Color(0xffEFEFEF);
   static const Color lineColor = Color(0xffF4F4F4);
+  static const Color indicatorActiveColor = Color(0xffE4EB18);
+  static const Color indicatorUnactiveColor = Color(0xffB0B1A1);
+  static const Color blueForgotPass = Color(0xff2294AB);
 
   static Color getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");

@@ -24,7 +24,7 @@ class _WelcomeState extends BaseState<WelcomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: SizeUtil.defaultSpace),
-            Image.asset("photo/logo.png",width: MediaQuery.of(context).size.width*1/3),
+            Image.asset("photo/logo.png",width: MediaQuery.of(context).size.width/3),
             Text(S.of(context).app_name,textAlign: TextAlign.center,style: TextStyle(fontSize: 22,fontFamily: "hobo")),
             SizedBox(height: SizeUtil.defaultSpace),
             Text(S.of(context).welcome_title,textAlign: TextAlign.center,style: TextStyle(fontSize: 18)),

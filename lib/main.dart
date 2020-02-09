@@ -1,4 +1,9 @@
+import 'package:baby_garden_flutter/screen/forgot_password/forgot_password_screen.dart';
+import 'package:baby_garden_flutter/screen/guide/welcome_guide_screen.dart';
+import 'package:baby_garden_flutter/screen/login/login_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
+import 'package:baby_garden_flutter/screen/register/register_screen.dart';
+import 'package:baby_garden_flutter/screen/reset_password/reset_password_screen.dart';
 import 'package:baby_garden_flutter/screen/welcome/welcome_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +47,7 @@ class MyApp extends StatelessWidget {
             bodyText1: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
           )),
-      home: WelcomeScreen(),
+      home: ForgotPasswordScreen(),
     );
   }
 }

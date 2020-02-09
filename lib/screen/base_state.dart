@@ -61,7 +61,9 @@ abstract class BaseState<S extends StatefulWidget> extends State<S> with Automat
       {String title,
       bool centerTitle = true,
       double elevation = 0,
-      Color bgColor = ColorUtil.primaryColor}) {
+      Color bgColor = ColorUtil.primaryColor,
+      Color titleColor = Colors.white,
+        Color backColor = Colors.white}) {
     return AppBar(
       elevation: elevation,
       backgroundColor: bgColor,
@@ -69,14 +71,14 @@ abstract class BaseState<S extends StatefulWidget> extends State<S> with Automat
           ? Text(
               title,
               style: TextStyle(
-                  fontSize: SizeUtil.textSizeBigger, color: Colors.white),
+                  fontSize: SizeUtil.textSizeBigger, color: titleColor),
             )
           : null,
       centerTitle: centerTitle,
       leading: InkWell(
         child: Icon(
           CupertinoIcons.back,
-          color: Colors.white,
+          color: backColor,
         ),
         onTap: () {
           Navigator.of(context).pop();
