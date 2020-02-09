@@ -18,6 +18,7 @@ class ListCategory extends StatelessWidget {
     return Container(
       color: ColorUtil.lineColor,
       child: ListView.builder(
+        itemCount: 10,
         itemBuilder: (context, index) {
           return Container(
             width: categoryWidth,

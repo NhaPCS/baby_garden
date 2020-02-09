@@ -16,7 +16,7 @@ class ListProduct extends StatelessWidget {
     return Container(
       color: ColorUtil.lineColor,
       child: ListView.builder(
-        itemCount: 10,
+        itemCount: 3,
         itemBuilder: (context, index) {
           return Container(
             width: productWidth,
