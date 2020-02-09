@@ -2,21 +2,24 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class TextfieldWidget extends StatelessWidget {
+class MyTextField extends StatelessWidget {
   final TextEditingController textEditingController;
   final String hint;
   final TextStyle textStyle;
+  final TextStyle hintStyle;
   final Color backgroundColor;
   final Color borderColor;
   final double borderRadius;
   final Widget suffix;
+  final Widget prefix;
   final TextAlign textAlign;
   final TextInputType inputType;
   final bool obscureText;
   final EdgeInsetsGeometry contentPadding;
   final ValueChanged<String> onChanged;
+  final double elevation;
 
-  const TextfieldWidget(
+  const MyTextField(
       {Key key,
       @required this.textEditingController,
       this.hint,
@@ -25,7 +28,7 @@ class TextfieldWidget extends StatelessWidget {
       this.borderColor = ColorUtil.textGray,
       this.borderRadius = 0,
       this.suffix,
-      this.textAlign = TextAlign.center,
+      this.textAlign = TextAlign.left,
       this.inputType = TextInputType.text,
       this.obscureText = false,
       this.contentPadding = const EdgeInsets.only(
@@ -33,11 +36,25 @@ class TextfieldWidget extends StatelessWidget {
           right: SizeUtil.defaultSpace,
           top: SizeUtil.smallSpace,
           bottom: SizeUtil.smallSpace),
-      this.onChanged})
+      this.onChanged,
+      this.hintStyle,
+      this.elevation,
+      this.prefix})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return elevation == null
+        ? textField()
+        : Material(
+            borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+            color: backgroundColor,
+            elevation: elevation,
+            child: textField(),
+          );
+  }
+
+  Widget textField() {
     return TextField(
       controller: textEditingController,
       style: textStyle,
@@ -49,8 +66,12 @@ class TextfieldWidget extends StatelessWidget {
           contentPadding: contentPadding,
           isDense: true,
           fillColor: backgroundColor,
-          suffix: suffix,
+          focusColor: backgroundColor,
+          hoverColor: backgroundColor,
+          suffixIcon: suffix,
+          prefixIcon: prefix,
           hintText: hint,
+          hintStyle: hintStyle,
           enabledBorder: _getBorder(),
           focusedBorder: _getBorder(),
           border: _getBorder()),

@@ -19,6 +19,11 @@ class MyApp extends StatelessWidget {
           accentColor: ColorUtil.colorAccent,
           backgroundColor: Colors.white,
           scaffoldBackgroundColor: Colors.white,
+          inputDecorationTheme: const InputDecorationTheme(
+              labelStyle: TextStyle(color: ColorUtil.textColor),
+              focusColor: ColorUtil.primaryColor,
+              hintStyle: TextStyle(color: ColorUtil.textHint),
+              fillColor: Colors.white),
           primaryTextTheme: TextTheme(
             headline6: TextStyle(color: ColorUtil.textColor),
             headline4: TextStyle(
