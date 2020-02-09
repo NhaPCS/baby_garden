@@ -54,6 +54,7 @@ class SizeUtil {
   static const double textSizeDefault = 15;
   static const double textSizeSmall = 11;
   static const double textSizeTiny = 8;
+  static const double textSizeMini = 5;
   static const double textSizeHuge = 40;
 
   static const double iconSize = 15;
@@ -65,6 +66,8 @@ class SizeUtil {
   static const double tinyRadius = 5;
 
   static const double defaultElevation = 5;
+
+  static const double lineHeight = 5;
 }
 
 class WidgetUtil {
