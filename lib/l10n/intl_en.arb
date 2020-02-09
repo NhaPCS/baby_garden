@@ -4,5 +4,6 @@
   "shopping": "Shopping",
   "cart": "Giỏ hàng",
   "order": "Đơn hàng",
-  "account": "Tài khoản"
+  "account": "Tài khoản",
+  "search_hint": "Bạn muốn tìm gì hôm nay?"
 }

@@ -6,6 +6,8 @@ class SvgIcon extends StatelessWidget {
   final Color color;
   final double width;
   final double height;
+  final EdgeInsets padding;
+  final VoidCallback onPressed;
 
   const SvgIcon(
     this.name, {
@@ -13,15 +15,29 @@ class SvgIcon extends StatelessWidget {
     this.color,
     this.width,
     this.height,
+    this.onPressed,
+    this.padding = const EdgeInsets.all(0),
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(
-      "photo/svg/$name",
-      color: color,
-      width: width,
-      height: height,
+    return onPressed == null
+        ? svgIcon()
+        : InkWell(
+            child: svgIcon(),
+            onTap: onPressed,
+          );
+  }
+
+  Widget svgIcon() {
+    return Padding(
+      padding: padding,
+      child: SvgPicture.asset(
+        "photo/svg/$name",
+        color: color,
+        width: width,
+        height: height,
+      ),
     );
   }
 }

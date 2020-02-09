@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "cart" : MessageLookupByLibrary.simpleMessage("Giỏ hàng"),
     "home" : MessageLookupByLibrary.simpleMessage("Trang chủ"),
     "order" : MessageLookupByLibrary.simpleMessage("Đơn hàng"),
+    "search_hint" : MessageLookupByLibrary.simpleMessage("Bạn muốn tìm gì hôm nay?"),
     "shopping" : MessageLookupByLibrary.simpleMessage("Shopping"),
     "welcome" : MessageLookupByLibrary.simpleMessage("Welcome")
   };
