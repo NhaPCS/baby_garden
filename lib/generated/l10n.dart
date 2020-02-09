@@ -100,6 +100,15 @@ class S {
       args: [],
     );
   }
+
+  String get search_hint {
+    return Intl.message(
+      'Bạn muốn tìm gì hôm nay?',
+      name: 'search_hint',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
