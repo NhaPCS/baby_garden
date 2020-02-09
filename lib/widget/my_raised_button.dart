@@ -1,0 +1,46 @@
+import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+class MyRaisedButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final EdgeInsets padding;
+  final String text;
+  final TextStyle textStyle;
+  final Color color;
+  final double borderRadius;
+
+  const MyRaisedButton(
+      {Key key,
+      @required this.onPressed,
+      this.text,
+      this.padding = const EdgeInsets.only(
+          left: SizeUtil.defaultSpace,
+          right: SizeUtil.defaultSpace,
+          top: 8,
+          bottom: 8),
+      this.color,
+      this.borderRadius = SizeUtil.smallRadius,
+      this.textStyle})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ButtonTheme(
+      child: RaisedButton(
+        color: color,
+        onPressed: onPressed,
+        child: Text(
+          text,
+          style: textStyle,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(borderRadius),
+        ),
+      ),
+      minWidth: 0,
+      height: 0,
+      padding: padding,
+    );
+  }
+}
