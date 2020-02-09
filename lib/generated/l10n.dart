@@ -82,6 +82,24 @@ class S {
       args: [],
     );
   }
+
+  String get welcome_title {
+    return Intl.message(
+      'Ứng dung mua sắm trực tuyến\nDành cho mẹ và bé',
+      name: 'welcome_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get app_name {
+    return Intl.message(
+      'Vöôøn Cuûa Beù',
+      name: 'app_name',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

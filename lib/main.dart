@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
+import 'package:baby_garden_flutter/screen/welcome/welcome_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
             bodyText1: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
           )),
-      home: MainScreen(),
+      home: WelcomeScreen(),
     );
   }
 }
