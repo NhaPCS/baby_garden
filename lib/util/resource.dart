@@ -33,6 +33,29 @@ class StringUtil {
       "https://imgix.bustle.com/uploads/image/2019/1/23/4ca31ad3-6f9b-4e75-a0bf-fada7bfecfae-shutterstock_10068471c.jpg?w=970&h=546&fit=crop&crop=faces&auto=format&q=70&dpr=2";
 }
 
+class RouteUtil {
+  static Future<dynamic> push(BuildContext context, Widget nextPage) {
+    return Navigator.of(context)
+        .push(CupertinoPageRoute(builder: (_) => nextPage));
+//    _circularSplashController.push(context, nextPage);
+  }
+
+  static Future<dynamic> pushReplacement(
+      BuildContext context, Widget nextPage) {
+    return Navigator.of(context)
+        .pushReplacement(CupertinoPageRoute(builder: (_) => nextPage));
+//    _circularSplashController.pushReplacement(context, nextPage);
+  }
+
+  static Future<dynamic> pushAndReplaceAll(
+      BuildContext context, Widget nextPage, String routeName) {
+    return Navigator.pushAndRemoveUntil(
+        context,
+        CupertinoPageRoute(builder: (context) => nextPage),
+        ModalRoute.withName(routeName));
+  }
+}
+
 class SizeUtil {
   static const EdgeInsets defaultPadding = EdgeInsets.all(20);
   static const EdgeInsets bigPadding = EdgeInsets.all(30);

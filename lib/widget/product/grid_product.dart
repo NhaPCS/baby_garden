@@ -7,19 +7,11 @@ import 'package:flutter/material.dart';
 
 class GridProduct extends StatelessWidget {
   final VoidCallback onViewMoreClick;
-  final double categoryWidth;
-  final double categoryHeight;
-  final double productHeight;
-  final double productWidth;
 
-  const GridProduct(
-      {Key key,
-      this.onViewMoreClick,
-      @required this.categoryWidth,
-      @required this.categoryHeight,
-      @required this.productHeight,
-      @required this.productWidth})
-      : super(key: key);
+  const GridProduct({
+    Key key,
+    this.onViewMoreClick,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,18 +55,9 @@ class GridProduct extends StatelessWidget {
         SizedBox(
           height: SizeUtil.smallSpace,
         ),
-        ListCategory(
-          categoryWidth: categoryWidth,
-          categoryHeight: categoryHeight,
-        ),
-        ListProduct(
-          productWidth: productWidth,
-          productHeight: productHeight,
-        ),
-        ListProduct(
-          productWidth: productWidth,
-          productHeight: productHeight,
-        )
+        ListCategory(),
+        ListProduct(),
+        ListProduct()
       ],
     );
   }

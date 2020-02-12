@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_flashsale_product.dart';
+import 'package:baby_garden_flutter/screen/flash_sale/flash_sale_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/my_raised_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -60,7 +61,7 @@ class FlashSale extends StatelessWidget {
                     ),
                     MyRaisedButton(
                       onPressed: () {
-                        //TODO
+                        RouteUtil.push(context, FlashSaleScreen());
                       },
                       text: S.of(context).happening,
                       color: ColorUtil.red,

@@ -15,19 +15,8 @@ class ShoppingScreen extends StatefulWidget {
 }
 
 class _ShoppingState extends BaseState<ShoppingScreen> {
-  double _categoryWidth;
-  double _categoryHeight;
-  double _productWidth;
-  double _productHeight;
-
   @override
   Widget buildWidget(BuildContext context) {
-    if (_categoryWidth == null) {
-      _categoryWidth = MediaQuery.of(context).size.width * 0.18;
-      _categoryHeight = _categoryWidth * 1.4;
-      _productWidth = MediaQuery.of(context).size.width * 0.35;
-      _productHeight = _productWidth * 1.4;
-    }
     return SafeArea(
       child: Material(
         child: NestedScrollView(
@@ -83,13 +72,9 @@ class _ShoppingState extends BaseState<ShoppingScreen> {
                       padding: EdgeInsets.all(0),
                       itemBuilder: (context, index) {
                         return GridProduct(
-                          categoryWidth: _categoryWidth,
-                          categoryHeight: _categoryHeight,
                           onViewMoreClick: () {
                             //TODO
                           },
-                          productWidth: _productWidth,
-                          productHeight: _productHeight,
                         );
                       }))
             ],

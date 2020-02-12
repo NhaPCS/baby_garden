@@ -18,8 +18,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeState extends BaseState<HomeScreen> {
-  double _categoryWidth;
-  double _categoryHeight;
   double _productWidth;
   double _productHeight;
   double _flashSaleHeight;
@@ -27,10 +25,7 @@ class _HomeState extends BaseState<HomeScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
-    _categoryWidth = null;
-    if (_categoryWidth == null) {
-      _categoryWidth = MediaQuery.of(context).size.width * 0.18;
-      _categoryHeight = _categoryWidth * 1.4;
+    if (_flashSaleHeight == null) {
       _productWidth = MediaQuery.of(context).size.width * 0.35;
       _productHeight = _productWidth * 1.4;
       _flashSaleHeight = MediaQuery.of(context).size.width * 0.6;
@@ -102,13 +97,9 @@ class _HomeState extends BaseState<HomeScreen> {
                             );
                           }
                           return GridProduct(
-                            categoryWidth: _categoryWidth,
-                            categoryHeight: _categoryHeight,
                             onViewMoreClick: () {
                               //TODO
                             },
-                            productWidth: _productWidth,
-                            productHeight: _productHeight,
                           );
                         }))
               ],

@@ -2,17 +2,12 @@ import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ListCategory extends StatelessWidget {
-  final double categoryWidth;
-  final double categoryHeight;
-
-  const ListCategory(
-      {Key key, @required this.categoryWidth, @required this.categoryHeight})
-      : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,7 +16,7 @@ class ListCategory extends StatelessWidget {
         itemCount: 10,
         itemBuilder: (context, index) {
           return Container(
-            width: categoryWidth,
+            width: Provider.of<AppProvider>(context).categoryWidth,
             padding: SizeUtil.tinyPadding,
             margin: EdgeInsets.only(
                 top: SizeUtil.smallSpace,
@@ -60,7 +55,7 @@ class ListCategory extends StatelessWidget {
         },
         scrollDirection: Axis.horizontal,
       ),
-      height: categoryHeight,
+      height: Provider.of<AppProvider>(context).categoryHeight,
     );
   }
 }
