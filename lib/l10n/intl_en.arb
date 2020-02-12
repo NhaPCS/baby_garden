@@ -5,5 +5,11 @@
   "cart": "Giỏ hàng",
   "order": "Đơn hàng",
   "account": "Tài khoản",
-  "search_hint": "Bạn muốn tìm gì hôm nay?"
+  "search_hint": "Bạn muốn tìm gì hôm nay?",
+  "view_more": "Xem thêm",
+  "all": "Tất cả",
+  "category": "Danh mục",
+  "happening": "Đang diễn ra",
+  "happened": "Sắp diễn ra",
+  "sold_count": "Đã bán {sold}/{total}",
 }

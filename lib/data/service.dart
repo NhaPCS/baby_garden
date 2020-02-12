@@ -10,6 +10,9 @@ import 'package:http/http.dart' as http;
 
 Map<String, String> _headers;
 
+const int START_PAGE = 1;
+const int PAGE_SIZE = 20;
+
 Future<Response> execute(BuildContext context,
     {String path,
     dynamic param,
@@ -66,12 +69,4 @@ Future<Response> execute(BuildContext context,
   }
 
   return res;
-}
-
-void pushAndReplaceAll(
-    BuildContext context, Widget nextPage, String routeName) {
-  Navigator.pushAndRemoveUntil(
-      context,
-      CupertinoPageRoute(builder: (context) => nextPage),
-      ModalRoute.withName(routeName));
 }
