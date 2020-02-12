@@ -10,5 +10,6 @@
   "all": "Tất cả",
   "category": "Danh mục",
   "happening": "Đang diễn ra",
-  "happened": "Sắp diễn ra"
+  "happened": "Sắp diễn ra",
+  "sold_count": "Đã bán {sold}/{total}"
 }

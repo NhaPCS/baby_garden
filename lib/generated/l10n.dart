@@ -136,6 +136,15 @@ class S {
       args: [],
     );
   }
+
+  String sold_count(dynamic sold, dynamic total) {
+    return Intl.message(
+      'Đã bán $sold/$total',
+      name: 'sold_count',
+      desc: '',
+      args: [sold, total],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

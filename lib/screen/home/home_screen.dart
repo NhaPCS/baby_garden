@@ -23,6 +23,7 @@ class _HomeState extends BaseState<HomeScreen> {
   double _productWidth;
   double _productHeight;
   double _flashSaleHeight;
+  double _flashSaleWidth;
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -32,7 +33,8 @@ class _HomeState extends BaseState<HomeScreen> {
       _categoryHeight = _categoryWidth * 1.4;
       _productWidth = MediaQuery.of(context).size.width * 0.35;
       _productHeight = _productWidth * 1.4;
-      _flashSaleHeight = MediaQuery.of(context).size.width * 0.5;
+      _flashSaleHeight = MediaQuery.of(context).size.width * 0.6;
+      _flashSaleWidth = _flashSaleHeight * 0.7;
     }
     return SafeArea(
       child: Material(
@@ -41,11 +43,10 @@ class _HomeState extends BaseState<HomeScreen> {
             return [
               SliverAppBar(
                 floating: true,
-                snap: true,
                 elevation: 0,
                 pinned: true,
                 backgroundColor: Colors.white,
-                expandedHeight: MediaQuery.of(context).size.height * 0.42,
+                expandedHeight: MediaQuery.of(context).size.height * 0.3,
                 flexibleSpace: Stack(
                   children: <Widget>[
                     Container(
@@ -70,11 +71,6 @@ class _HomeState extends BaseState<HomeScreen> {
                             ],
                           ),
                         ),
-                        Row(
-                          children: List.generate(5, (index) {
-                            return ItemHomeCategory();
-                          }),
-                        )
                       ],
                     )
                   ],
@@ -85,6 +81,11 @@ class _HomeState extends BaseState<HomeScreen> {
           body: Container(
             child: Column(
               children: <Widget>[
+                Row(
+                  children: List.generate(5, (index) {
+                    return ItemHomeCategory();
+                  }),
+                ),
                 Container(
                   height: SizeUtil.lineHeight,
                   color: ColorUtil.lineColor,
@@ -97,6 +98,7 @@ class _HomeState extends BaseState<HomeScreen> {
                           if (index == 0) {
                             return FlashSale(
                               flashSaleHeight: _flashSaleHeight,
+                              flashSaleWidth: _flashSaleWidth,
                             );
                           }
                           return GridProduct(

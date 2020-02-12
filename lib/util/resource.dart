@@ -7,13 +7,13 @@ class ColorUtil {
   static const Color primaryColor = Color(0xffFF8918);
   static const Color colorAccent = Color(0xffFFB00B);
   static const Color textColor = Color(0xff40433F);
-  static const Color textGray = Color(0xff707070);
+  static const Color textGray = Color(0xff808080);
   static const Color textHint = Color(0xff646464);
   static const Color black33 = Color(0xff333333);
   static const Color green = Color(0xff13BE2A);
   static const Color red = Color(0xffFF0000);
   static const Color blue = Color(0xff047194);
-  static const Color gray = Color(0xff047194);
+  static const Color gray = Color(0xffA8A8A8);
   static const Color lightGray = Color(0xffEFEFEF);
   static const Color lineColor = Color(0xffF4F4F4);
   static const Color flashSaleColor = Color(0xffF77102);

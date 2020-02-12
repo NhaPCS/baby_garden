@@ -1,4 +1,6 @@
+import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/rounded_progress.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -16,11 +18,26 @@ class ItemFlashSaleProduct extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Expanded(
-              child: CachedNetworkImage(
-            imageUrl: StringUtil.dummyImage,
-            fit: BoxFit.cover,
+              child: Container(
+            padding: SizeUtil.smallPadding,
+            child: CachedNetworkImage(
+              imageUrl: StringUtil.dummyImage,
+              fit: BoxFit.cover,
+            ),
+            decoration: BoxDecoration(
+                border: Border.all(color: ColorUtil.lightGray, width: 1)),
           )),
-          Text("Sữa Alene Úc 320g"),
+          SizedBox(
+            height: SizeUtil.smallSpace,
+          ),
+          Text(
+            "Sữa Alene Úc 320g",
+            style: TextStyle(
+                fontSize: SizeUtil.textSizeSmall, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: SizeUtil.smallSpace,
+          ),
           Row(
             children: <Widget>[
               Text(
@@ -38,12 +55,13 @@ class ItemFlashSaleProduct extends StatelessWidget {
               )
             ],
           ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: LinearProgressIndicator(
-              value: 0.4,
-              backgroundColor: ColorUtil.bgProgressOrange,
-            ),
+          SizedBox(
+            height: SizeUtil.smallSpace,
+          ),
+          RoundedProgress(
+            width: imageSize,
+            height: 18,
+            label: S.of(context).sold_count("100", "200"),
           )
         ],
       ),

@@ -19,6 +19,8 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static m0(sold, total) => "Đã bán ${sold}/${total}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "account" : MessageLookupByLibrary.simpleMessage("Tài khoản"),
@@ -31,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "order" : MessageLookupByLibrary.simpleMessage("Đơn hàng"),
     "search_hint" : MessageLookupByLibrary.simpleMessage("Bạn muốn tìm gì hôm nay?"),
     "shopping" : MessageLookupByLibrary.simpleMessage("Shopping"),
+    "sold_count" : m0,
     "view_more" : MessageLookupByLibrary.simpleMessage("Xem thêm"),
     "welcome" : MessageLookupByLibrary.simpleMessage("Welcome")
   };

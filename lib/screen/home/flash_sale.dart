@@ -8,8 +8,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class FlashSale extends StatelessWidget {
   final double flashSaleHeight;
+  final double flashSaleWidth;
 
-  const FlashSale({Key key, this.flashSaleHeight}) : super(key: key);
+  const FlashSale({Key key, this.flashSaleHeight, this.flashSaleWidth})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class FlashSale extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.only(
-                top: SizeUtil.smallSpace, bottom: SizeUtil.smallSpace),
+                top: SizeUtil.smallSpace, bottom: SizeUtil.defaultSpace),
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius:
@@ -83,7 +85,7 @@ class FlashSale extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
                       return ItemFlashSaleProduct(
-                        imageSize: flashSaleHeight*0.8,
+                        imageSize: flashSaleWidth,
                       );
                     },
                   ),
