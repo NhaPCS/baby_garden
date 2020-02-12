@@ -5,5 +5,15 @@
   "cart": "Giỏ hàng",
   "order": "Đơn hàng",
   "account": "Tài khoản",
-  "search_hint": "Bạn muốn tìm gì hôm nay?"
+  "search_hint": "Bạn muốn tìm gì hôm nay?",
+  "myProfile": "Trang cá nhân",
+  "accManage": "Quản lý tài khoản",
+  "pointManage": "Quản lý điểm",
+  "remindManage": "Quản lý lịch nhắc",
+  "voucherManage": "Quản lý voucher",
+  "favoriteProduct": "Sản phẩm yêu thích",
+  "favoritePatner": "Đối tác yêu thích",
+  "seenProduct": "Sản phẩm đã xem",
+  "customerHelper": "Hỗ trợ khách hàng",
+  "setting": "Cài đặt"
 }

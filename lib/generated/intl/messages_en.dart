@@ -21,12 +21,22 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "accManage" : MessageLookupByLibrary.simpleMessage("Quản lý tài khoản"),
     "account" : MessageLookupByLibrary.simpleMessage("Tài khoản"),
     "cart" : MessageLookupByLibrary.simpleMessage("Giỏ hàng"),
+    "customerHelper" : MessageLookupByLibrary.simpleMessage("Hỗ trợ khách hàng"),
+    "favoritePatner" : MessageLookupByLibrary.simpleMessage("Đối tác yêu thích"),
+    "favoriteProduct" : MessageLookupByLibrary.simpleMessage("Sản phẩm yêu thích"),
     "home" : MessageLookupByLibrary.simpleMessage("Trang chủ"),
+    "myProfile" : MessageLookupByLibrary.simpleMessage("Trang cá nhân"),
     "order" : MessageLookupByLibrary.simpleMessage("Đơn hàng"),
+    "pointManage" : MessageLookupByLibrary.simpleMessage("Quản lý điểm"),
+    "remindManage" : MessageLookupByLibrary.simpleMessage("Quản lý lịch nhắc"),
     "search_hint" : MessageLookupByLibrary.simpleMessage("Bạn muốn tìm gì hôm nay?"),
+    "seenProduct" : MessageLookupByLibrary.simpleMessage("Sản phẩm đã xem"),
+    "setting" : MessageLookupByLibrary.simpleMessage("Cài đặt"),
     "shopping" : MessageLookupByLibrary.simpleMessage("Shopping"),
+    "voucherManage" : MessageLookupByLibrary.simpleMessage("Quản lý voucher"),
     "welcome" : MessageLookupByLibrary.simpleMessage("Welcome")
   };
 }

@@ -3,6 +3,7 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 
 import 'generated/l10n.dart';
+import 'screen/profile/profile_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
             bodyText1: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
           )),
-      home: MainScreen(),
+      home: ProfileScreen(),
     );
   }
 }
