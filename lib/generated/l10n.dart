@@ -181,6 +181,60 @@ class S {
       args: [],
     );
   }
+
+  String get view_more {
+    return Intl.message(
+      'Xem thêm',
+      name: 'view_more',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get all {
+    return Intl.message(
+      'Tất cả',
+      name: 'all',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get category {
+    return Intl.message(
+      'Danh mục',
+      name: 'category',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get happening {
+    return Intl.message(
+      'Đang diễn ra',
+      name: 'happening',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get happened {
+    return Intl.message(
+      'Sắp diễn ra',
+      name: 'happened',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String sold_count(dynamic sold, dynamic total) {
+    return Intl.message(
+      'Đã bán $sold/$total',
+      name: 'sold_count',
+      desc: '',
+      args: [sold, total],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
