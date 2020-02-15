@@ -145,6 +145,15 @@ class S {
       args: [sold, total],
     );
   }
+
+  String get category_product {
+    return Intl.message(
+      'Danh mục sản phẩm',
+      name: 'category_product',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
