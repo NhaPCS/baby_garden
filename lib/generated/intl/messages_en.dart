@@ -19,6 +19,8 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static m0(time) => "(0:${time})";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "account" : MessageLookupByLibrary.simpleMessage("Tài khoản"),
@@ -26,7 +28,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "cart" : MessageLookupByLibrary.simpleMessage("Giỏ hàng"),
     "change_password" : MessageLookupByLibrary.simpleMessage("Đổi mật khẩu"),
     "confirm" : MessageLookupByLibrary.simpleMessage("Xác nhận"),
-    "dont_have_account" : MessageLookupByLibrary.simpleMessage("<u><font color=#09819F>Bạn chưa có tài khoản? </font><font color=#FF8918> Đăng ký </font></u>"),
+    "count_down_time" : m0,
+    "dont_have_account" : MessageLookupByLibrary.simpleMessage("Bạn chưa có tài khoản?"),
     "enter_invite_phone_number" : MessageLookupByLibrary.simpleMessage("Nhập số điện thoại giới thiệu "),
     "enter_new_password" : MessageLookupByLibrary.simpleMessage("Nhập mật khẩu mới"),
     "enter_old_password" : MessageLookupByLibrary.simpleMessage("Nhập mật khẩu cũ"),
@@ -43,7 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "password" : MessageLookupByLibrary.simpleMessage("Mật khẩu"),
     "reenter_new_password" : MessageLookupByLibrary.simpleMessage("Nhập lại mật khẩu mới"),
     "reenter_password" : MessageLookupByLibrary.simpleMessage("Nhập lại mật khẩu"),
-    "register" : MessageLookupByLibrary.simpleMessage("Đăng ký"),
+    "register" : MessageLookupByLibrary.simpleMessage(" Đăng ký "),
     "remember_password" : MessageLookupByLibrary.simpleMessage("Ghi nhớ mật khẩu"),
     "resend_otp" : MessageLookupByLibrary.simpleMessage("Gửi lại mã xác thực"),
     "return_login" : MessageLookupByLibrary.simpleMessage("Quay lại đăng nhập"),

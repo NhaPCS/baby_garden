@@ -166,7 +166,7 @@ class S {
 
   String get dont_have_account {
     return Intl.message(
-      '<u><font color=#09819F>Bạn chưa có tài khoản? </font><font color=#FF8918> Đăng ký </font></u>',
+      'Bạn chưa có tài khoản?',
       name: 'dont_have_account',
       desc: '',
       args: [],
@@ -211,7 +211,7 @@ class S {
 
   String get register {
     return Intl.message(
-      'Đăng ký',
+      ' Đăng ký ',
       name: 'register',
       desc: '',
       args: [],
@@ -314,6 +314,15 @@ class S {
       name: 'enter_old_password',
       desc: '',
       args: [],
+    );
+  }
+
+  String count_down_time(dynamic time) {
+    return Intl.message(
+      '(0:$time)',
+      name: 'count_down_time',
+      desc: '',
+      args: [time],
     );
   }
 }

@@ -14,12 +14,12 @@
   "enter_password": "Nhập mật khẩu",
   "remember_password": "Ghi nhớ mật khẩu",
   "foget_pasword": "Quên mật khẩu",
-  "dont_have_account": "<u><font color=#09819F>Bạn chưa có tài khoản? </font><font color=#FF8918> Đăng ký </font></u>",
+  "dont_have_account": "Bạn chưa có tài khoản?",
   "your_full_name" : "Họ tên của bạn",
   "password": "Mật khẩu",
   "reenter_password": "Nhập lại mật khẩu",
   "enter_invite_phone_number": "Nhập số điện thoại giới thiệu ",
-  "register": "Đăng ký",
+  "register": " Đăng ký ",
   "return_login_if_had_account": "Quay lại đăng nhập nếu đã có tài khoản",
   "return_login": "Quay lại đăng nhập",
   "enter_otp": "Nhập mã OTP",
@@ -30,5 +30,6 @@
   "reenter_new_password": "Nhập lại mật khẩu mới",
   "confirm": "Xác nhận",
   "change_password": "Đổi mật khẩu",
-  "enter_old_password": "Nhập mật khẩu cũ"
+  "enter_old_password": "Nhập mật khẩu cũ",
+  "count_down_time": "(0:{time})"
 }

@@ -58,10 +58,11 @@ class SizeUtil {
   static const double textSizeSmall = 11;
   static const double textSizeTiny = 8;
   static const double textSizeHuge = 40;
+  static const double textSizeLogo = 22;
 
-  static const double iconSize = 15;
-  static const double iconSizeBigger = 25;
-  static const double iconSizeBig = 35;
+  static const double iconSize = 16;
+  static const double iconSizeBigger = 24;
+  static const double iconSizeBig = 32;
 
   static const double smallRadius = 10;
   static const double bigRadius = 15;
