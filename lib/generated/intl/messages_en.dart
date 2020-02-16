@@ -34,6 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "happened" : MessageLookupByLibrary.simpleMessage("Sắp diễn ra"),
     "happening" : MessageLookupByLibrary.simpleMessage("Đang diễn ra"),
     "home" : MessageLookupByLibrary.simpleMessage("Trang chủ"),
+    "joinDate" : MessageLookupByLibrary.simpleMessage("Tham gia từ"),
     "myProfile" : MessageLookupByLibrary.simpleMessage("Trang cá nhân"),
     "order" : MessageLookupByLibrary.simpleMessage("Đơn hàng"),
     "pointManage" : MessageLookupByLibrary.simpleMessage("Quản lý điểm"),

@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class UserInfor extends StatelessWidget {
@@ -39,7 +40,7 @@ class UserInfor extends StatelessWidget {
                   )),
               Text(mobilePhone),
               SizedBox(height: 15),
-              Text(joinDate)
+              Text(S.of(context).joinDate + ": " + joinDate)
             ],
           ),
         ],
