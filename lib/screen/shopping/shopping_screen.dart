@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
@@ -15,6 +16,9 @@ class ShoppingScreen extends StatefulWidget {
 }
 
 class _ShoppingState extends BaseState<ShoppingScreen> {
+  final ChangeCategoryProvider _changeCategoryProvider =
+      ChangeCategoryProvider();
+
   @override
   Widget buildWidget(BuildContext context) {
     return SafeArea(
@@ -72,6 +76,7 @@ class _ShoppingState extends BaseState<ShoppingScreen> {
                       padding: EdgeInsets.all(0),
                       itemBuilder: (context, index) {
                         return GridProduct(
+                          changeCategoryProvider: _changeCategoryProvider,
                           onViewMoreClick: () {
                             //TODO
                           },

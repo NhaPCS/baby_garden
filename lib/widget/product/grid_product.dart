@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:baby_garden_flutter/widget/product/list_product.dart';
@@ -7,10 +8,12 @@ import 'package:flutter/material.dart';
 
 class GridProduct extends StatelessWidget {
   final VoidCallback onViewMoreClick;
+  final ChangeCategoryProvider changeCategoryProvider;
 
   const GridProduct({
     Key key,
     this.onViewMoreClick,
+    this.changeCategoryProvider,
   }) : super(key: key);
 
   @override
@@ -55,7 +58,9 @@ class GridProduct extends StatelessWidget {
         SizedBox(
           height: SizeUtil.smallSpace,
         ),
-        ListCategory(),
+        ListCategory(
+          categoryProvider: changeCategoryProvider,
+        ),
         ListProduct(),
         ListProduct()
       ],

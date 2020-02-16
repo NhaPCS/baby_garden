@@ -1,11 +1,13 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_product.dart';
+import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/loadmore_gridview.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 class ListProductScreen extends StatefulWidget {
   @override
@@ -15,6 +17,9 @@ class ListProductScreen extends StatefulWidget {
 }
 
 class _ListProductState extends BaseState<ListProductScreen> {
+  final ChangeCategoryProvider _changeCategoryProvider =
+      ChangeCategoryProvider();
+
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
@@ -22,7 +27,9 @@ class _ListProductState extends BaseState<ListProductScreen> {
       appBar: getAppBar(title: S.of(context).happening.toUpperCase()),
       body: Column(
         children: <Widget>[
-          ListCategory(),
+          ListCategory(
+            categoryProvider: _changeCategoryProvider,
+          ),
           Expanded(
               child: LoadMoreGridView(
             crossAxisCount: 2,
@@ -50,6 +57,6 @@ class _ListProductState extends BaseState<ListProductScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [];
+    return [ChangeNotifierProvider.value(value: _changeCategoryProvider)];
   }
 }

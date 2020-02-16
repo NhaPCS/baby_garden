@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,8 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<AppProvider>(context)
+        .updateCategorySize(MediaQuery.of(context).size.width);
     super.build(context);
     List<SingleChildWidget> prs = providers();
     return prs == null || prs.isEmpty
@@ -72,15 +75,19 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
             )
           : null,
       centerTitle: centerTitle,
-      leading: InkWell(
-        child: Icon(
-          CupertinoIcons.back,
-          color: Colors.white,
-        ),
-        onTap: () {
-          Navigator.of(context).pop();
-        },
+      leading: getLeading(),
+    );
+  }
+
+  Widget getLeading() {
+    return InkWell(
+      child: Icon(
+        CupertinoIcons.back,
+        color: Colors.white,
       ),
+      onTap: () {
+        Navigator.of(context).pop();
+      },
     );
   }
 

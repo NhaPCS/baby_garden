@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/item/item_home_category.dart';
+import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
@@ -7,6 +8,7 @@ import 'package:baby_garden_flutter/widget/search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 import 'flash_sale.dart';
 
@@ -18,16 +20,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeState extends BaseState<HomeScreen> {
-  double _productWidth;
-  double _productHeight;
+  final ChangeCategoryProvider _changeCategoryProvider =
+      ChangeCategoryProvider();
   double _flashSaleHeight;
   double _flashSaleWidth;
 
   @override
   Widget buildWidget(BuildContext context) {
     if (_flashSaleHeight == null) {
-      _productWidth = MediaQuery.of(context).size.width * 0.35;
-      _productHeight = _productWidth * 1.4;
       _flashSaleHeight = MediaQuery.of(context).size.width * 0.6;
       _flashSaleWidth = _flashSaleHeight * 0.7;
     }
@@ -97,6 +97,7 @@ class _HomeState extends BaseState<HomeScreen> {
                             );
                           }
                           return GridProduct(
+                            changeCategoryProvider: _changeCategoryProvider,
                             onViewMoreClick: () {
                               //TODO
                             },
@@ -113,6 +114,6 @@ class _HomeState extends BaseState<HomeScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [];
+    return [ChangeNotifierProvider.value(value: _changeCategoryProvider)];
   }
 }
