@@ -21,5 +21,6 @@
   "category": "Danh mục",
   "happening": "Đang diễn ra",
   "happened": "Sắp diễn ra",
-  "sold_count": "Đã bán {sold}/{total}"
+  "sold_count": "Đã bán {sold}/{total}",
+  "joinDate": "Tham gia từ"
 }

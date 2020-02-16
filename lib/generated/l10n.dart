@@ -235,6 +235,15 @@ class S {
       args: [sold, total],
     );
   }
+
+  String get joinDate {
+    return Intl.message(
+      'Tham gia từ',
+      name: 'joinDate',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
