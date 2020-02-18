@@ -5,8 +5,10 @@ class AppProvider {
   double productHeight;
   double bigCategoryHeight;
   double bigCategoryWidth;
+  double bgHeaderHeight;
+  double expandHeaderHeight;
 
-  void updateCategorySize(double widthScreen) {
+  void updateCategorySize(double widthScreen, double heightScreen) {
 //    if (categoryHeight == null) { //TODO uncomment later
     categoryWidth = widthScreen * 0.18;
     categoryHeight = categoryWidth * 1.4;
@@ -14,6 +16,8 @@ class AppProvider {
     productHeight = productWidth * 1.4;
     bigCategoryWidth = categoryHeight * 1.2;
     bigCategoryHeight = bigCategoryWidth * 1.4;
+    bgHeaderHeight = heightScreen * 0.23;
+    expandHeaderHeight = heightScreen * 0.3;
 //    }
   }
 }

@@ -236,19 +236,19 @@ class S {
     );
   }
 
-  String get category_product {
+  String get joinDate {
     return Intl.message(
-      'Danh mục sản phẩm',
-      name: 'category_product',
+      'Tham gia từ',
+      name: 'joinDate',
       desc: '',
       args: [],
     );
   }
 
-  String get joinDate {
+  String get category_product {
     return Intl.message(
-      'Tham gia từ',
-      name: 'joinDate',
+      'Danh mục sản phẩm',
+      name: 'category_product',
       desc: '',
       args: [],
     );

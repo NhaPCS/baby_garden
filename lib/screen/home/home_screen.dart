@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/item/item_home_category.dart';
+import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -41,11 +42,11 @@ class _HomeState extends BaseState<HomeScreen> {
                 elevation: 0,
                 pinned: true,
                 backgroundColor: Colors.white,
-                expandedHeight: MediaQuery.of(context).size.height * 0.3,
+                expandedHeight: Provider.of<AppProvider>(context).expandHeaderHeight,
                 flexibleSpace: Stack(
                   children: <Widget>[
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.27,
+                      height: Provider.of<AppProvider>(context).bgHeaderHeight,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage('photo/bg_header.png'),

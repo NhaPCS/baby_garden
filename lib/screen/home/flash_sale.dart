@@ -75,7 +75,7 @@ class FlashSale extends StatelessWidget {
                     ),
                     MyRaisedButton(
                       onPressed: () {
-                        //TODO
+                        RouteUtil.push(context, ListProductScreen());
                       },
                       text: S.of(context).happened,
                       color: Colors.white,

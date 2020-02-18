@@ -25,7 +25,7 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
   @override
   Widget build(BuildContext context) {
     Provider.of<AppProvider>(context)
-        .updateCategorySize(MediaQuery.of(context).size.width);
+        .updateCategorySize(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
     super.build(context);
     List<SingleChildWidget> prs = providers();
     return prs == null || prs.isEmpty
