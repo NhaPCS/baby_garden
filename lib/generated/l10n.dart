@@ -244,6 +244,60 @@ class S {
       args: [],
     );
   }
+
+  String get fullname {
+    return Intl.message(
+      'Họ và tên',
+      name: 'fullname',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get birthday {
+    return Intl.message(
+      'Ngày sinh',
+      name: 'birthday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get password {
+    return Intl.message(
+      'Mật khẩu',
+      name: 'password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get gender {
+    return Intl.message(
+      'Giới tính',
+      name: 'gender',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get address {
+    return Intl.message(
+      'Địa chỉ',
+      name: 'address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mobilePhone {
+    return Intl.message(
+      'Số điện thoại',
+      name: 'mobilePhone',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

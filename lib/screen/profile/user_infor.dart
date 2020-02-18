@@ -2,12 +2,24 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class UserInfor extends StatelessWidget {
-  UserInfor({Key key, this.username, this.mobilePhone, this.joinDate})
+  UserInfor(
+      {Key key,
+      this.username,
+      this.mobilePhone,
+      this.joinDate,
+      this.birthday,
+      this.password,
+      this.address,
+      this.gender})
       : super(key: key);
 
   final username;
   final mobilePhone;
   final joinDate;
+  final birthday;
+  final gender;
+  final password;
+  final address;
 
   @override
   Widget build(BuildContext context) {

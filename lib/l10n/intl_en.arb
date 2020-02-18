@@ -22,5 +22,11 @@
   "happening": "Đang diễn ra",
   "happened": "Sắp diễn ra",
   "sold_count": "Đã bán {sold}/{total}",
-  "joinDate": "Tham gia từ"
+  "joinDate": "Tham gia từ",
+  "fullname": "Họ và tên",
+  "birthday": "Ngày sinh",
+  "password": "Mật khẩu",
+  "gender": "Giới tính",
+  "address": "Địa chỉ",
+  "mobilePhone": "Số điện thoại"
 }
