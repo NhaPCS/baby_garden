@@ -7,20 +7,18 @@ class ColorUtil {
   static const Color primaryColor = Color(0xffFF8918);
   static const Color colorAccent = Color(0xffFFB00B);
   static const Color textColor = Color(0xff40433F);
-  static const Color textGray = Color(0xff808080);
+  static const Color textGray = Color(0xff707070);
   static const Color textHint = Color(0xff646464);
   static const Color black33 = Color(0xff333333);
   static const Color green = Color(0xff13BE2A);
   static const Color red = Color(0xffFF0000);
   static const Color blue = Color(0xff047194);
-  static const Color gray = Color(0xffA8A8A8);
+  static const Color gray = Color(0xff047194);
   static const Color lightGray = Color(0xffEFEFEF);
   static const Color lineColor = Color(0xffF4F4F4);
   static const Color indicatorActiveColor = Color(0xffE4EB18);
   static const Color indicatorUnactiveColor = Color(0xffB0B1A1);
   static const Color blueForgotPass = Color(0xff2294AB);
-  static const Color flashSaleColor = Color(0xffF77102);
-  static const Color bgProgressOrange = Color(0xffFFB483);
 
   static Color getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");
@@ -34,29 +32,6 @@ class ColorUtil {
 class StringUtil {
   static const String dummyImage =
       "https://imgix.bustle.com/uploads/image/2019/1/23/4ca31ad3-6f9b-4e75-a0bf-fada7bfecfae-shutterstock_10068471c.jpg?w=970&h=546&fit=crop&crop=faces&auto=format&q=70&dpr=2";
-}
-
-class RouteUtil {
-  static Future<dynamic> push(BuildContext context, Widget nextPage) {
-    return Navigator.of(context)
-        .push(CupertinoPageRoute(builder: (_) => nextPage));
-//    _circularSplashController.push(context, nextPage);
-  }
-
-  static Future<dynamic> pushReplacement(
-      BuildContext context, Widget nextPage) {
-    return Navigator.of(context)
-        .pushReplacement(CupertinoPageRoute(builder: (_) => nextPage));
-//    _circularSplashController.pushReplacement(context, nextPage);
-  }
-
-  static Future<dynamic> pushAndReplaceAll(
-      BuildContext context, Widget nextPage, String routeName) {
-    return Navigator.pushAndRemoveUntil(
-        context,
-        CupertinoPageRoute(builder: (context) => nextPage),
-        ModalRoute.withName(routeName));
-  }
 }
 
 class SizeUtil {
@@ -82,7 +57,6 @@ class SizeUtil {
   static const double textSizeDefault = 15;
   static const double textSizeSmall = 11;
   static const double textSizeTiny = 8;
-  static const double textSizeMini = 5;
   static const double textSizeHuge = 40;
   static const double textSizeLogo = 22;
 
@@ -95,8 +69,6 @@ class SizeUtil {
   static const double tinyRadius = 5;
 
   static const double defaultElevation = 5;
-
-  static const double lineHeight = 5;
 }
 
 class WidgetUtil {

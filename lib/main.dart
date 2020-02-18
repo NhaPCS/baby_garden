@@ -1,14 +1,11 @@
-import 'package:baby_garden_flutter/screen/main/main_screen.dart';
+import 'package:baby_garden_flutter/screen/change_password/change_password_screen.dart';
+import 'package:baby_garden_flutter/screen/login/login_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'generated/l10n.dart';
 
-void main() => runApp(Provider(
-      create: (_) => AppProvider(),
-      child: MyApp(),
-    ));
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -45,7 +42,7 @@ class MyApp extends StatelessWidget {
             bodyText1: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
           )),
-      home: MainScreen(),
+      home: ChangePasswordScreen(),
     );
   }
 }

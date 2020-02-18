@@ -32,23 +32,4 @@
   "change_password": "Đổi mật khẩu",
   "enter_old_password": "Nhập mật khẩu cũ",
   "count_down_time": "(0:{time})"
-  "search_hint": "Bạn muốn tìm gì hôm nay?",
-  "myProfile": "Trang cá nhân",
-  "accManage": "Quản lý tài khoản",
-  "pointManage": "Quản lý điểm",
-  "remindManage": "Quản lý lịch nhắc",
-  "voucherManage": "Quản lý voucher",
-  "favoriteProduct": "Sản phẩm yêu thích",
-  "favoritePatner": "Đối tác yêu thích",
-  "seenProduct": "Sản phẩm đã xem",
-  "customerHelper": "Hỗ trợ khách hàng",
-  "setting": "Cài đặt",
-  "view_more": "Xem thêm",
-  "all": "Tất cả",
-  "category": "Danh mục",
-  "happening": "Đang diễn ra",
-  "happened": "Sắp diễn ra",
-  "sold_count": "Đã bán {sold}/{total}",
-  "joinDate": "Tham gia từ",
-  "category_product": "Danh mục sản phẩm"
 }

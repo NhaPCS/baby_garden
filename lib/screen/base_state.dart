@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-abstract class BaseState<S extends StatefulWidget> extends State<S>
-    with AutomaticKeepAliveClientMixin {
+abstract class BaseState<S extends StatefulWidget> extends State<S> with AutomaticKeepAliveClientMixin{
   Widget buildWidget(BuildContext context);
 
   List<SingleChildWidget> providers();
@@ -24,8 +23,6 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<AppProvider>(context)
-        .updateCategorySize(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
     super.build(context);
     List<SingleChildWidget> prs = providers();
     return prs == null || prs.isEmpty
@@ -45,18 +42,19 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
             ));
   }
 
-  Future<dynamic> push(Widget nextPage) {
-    return RouteUtil.push(context, nextPage);
+  void push(Widget nextPage) {
+    Navigator.of(context).push(CupertinoPageRoute(builder: (_) => nextPage));
 //    _circularSplashController.push(context, nextPage);
   }
 
-  Future<dynamic> pushReplacement(Widget nextPage) {
-    return RouteUtil.pushReplacement(context, nextPage);
+  void pushReplacement(Widget nextPage) {
+    Navigator.of(context)
+        .pushReplacement(CupertinoPageRoute(builder: (_) => nextPage));
 //    _circularSplashController.pushReplacement(context, nextPage);
   }
 
-  Future<dynamic> pushAndReplaceAll(Widget nextPage, String routeName) {
-    return RouteUtil.pushAndReplaceAll(context, nextPage, routeName);
+  void pushAndReplaceAll(Widget nextPage, String routeName) {
+    service.pushAndReplaceAll(context, nextPage, routeName);
   }
 
   AppBar getAppBar(
@@ -77,19 +75,15 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
             )
           : null,
       centerTitle: centerTitle,
-      leading: getLeading(),
-    );
-  }
-
-  Widget getLeading() {
-    return InkWell(
-      child: Icon(
-        CupertinoIcons.back,
-        color: backColor,
+      leading: InkWell(
+        child: Icon(
+          CupertinoIcons.back,
+          color: backColor,
+        ),
+        onTap: () {
+          Navigator.of(context).pop();
+        },
       ),
-      onTap: () {
-        Navigator.of(context).pop();
-      },
     );
   }
 
