@@ -92,6 +92,96 @@ class S {
     );
   }
 
+  String get myProfile {
+    return Intl.message(
+      'Trang cá nhân',
+      name: 'myProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get accManage {
+    return Intl.message(
+      'Quản lý tài khoản',
+      name: 'accManage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get pointManage {
+    return Intl.message(
+      'Quản lý điểm',
+      name: 'pointManage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindManage {
+    return Intl.message(
+      'Quản lý lịch nhắc',
+      name: 'remindManage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get voucherManage {
+    return Intl.message(
+      'Quản lý voucher',
+      name: 'voucherManage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get favoriteProduct {
+    return Intl.message(
+      'Sản phẩm yêu thích',
+      name: 'favoriteProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get favoritePatner {
+    return Intl.message(
+      'Đối tác yêu thích',
+      name: 'favoritePatner',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get seenProduct {
+    return Intl.message(
+      'Sản phẩm đã xem',
+      name: 'seenProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get customerHelper {
+    return Intl.message(
+      'Hỗ trợ khách hàng',
+      name: 'customerHelper',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get setting {
+    return Intl.message(
+      'Cài đặt',
+      name: 'setting',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get view_more {
     return Intl.message(
       'Xem thêm',
@@ -150,6 +240,15 @@ class S {
     return Intl.message(
       'Danh mục sản phẩm',
       name: 'category_product',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get joinDate {
+    return Intl.message(
+      'Tham gia từ',
+      name: 'joinDate',
       desc: '',
       args: [],
     );
