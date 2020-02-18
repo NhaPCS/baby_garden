@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "all" : MessageLookupByLibrary.simpleMessage("Tất cả"),
     "cart" : MessageLookupByLibrary.simpleMessage("Giỏ hàng"),
     "category" : MessageLookupByLibrary.simpleMessage("Danh mục"),
+    "category_product" : MessageLookupByLibrary.simpleMessage("Danh mục sản phẩm"),
     "customerHelper" : MessageLookupByLibrary.simpleMessage("Hỗ trợ khách hàng"),
     "favoritePatner" : MessageLookupByLibrary.simpleMessage("Đối tác yêu thích"),
     "favoriteProduct" : MessageLookupByLibrary.simpleMessage("Sản phẩm yêu thích"),

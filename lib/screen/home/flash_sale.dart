@@ -1,6 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_flashsale_product.dart';
-import 'package:baby_garden_flutter/screen/flash_sale/flash_sale_screen.dart';
+import 'package:baby_garden_flutter/screen/list_product/list_product_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/my_raised_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,10 +26,13 @@ class FlashSale extends StatelessWidget {
           ),
           Row(
             children: <Widget>[
-              Image.asset(
-                'photo/lb_flashsale.png',
-                fit: BoxFit.fitHeight,
-                height: flashSaleHeight * 0.2,
+              Padding(
+                padding: EdgeInsets.only(left: SizeUtil.smallSpace),
+                child: Image.asset(
+                  'photo/lb_flashsale.png',
+                  fit: BoxFit.fitHeight,
+                  height: flashSaleHeight * 0.2,
+                ),
               ),
               Expanded(child: SizedBox()),
               Stack(
@@ -61,7 +64,7 @@ class FlashSale extends StatelessWidget {
                     ),
                     MyRaisedButton(
                       onPressed: () {
-                        RouteUtil.push(context, FlashSaleScreen());
+                        RouteUtil.push(context, ListProductScreen());
                       },
                       text: S.of(context).happening,
                       color: ColorUtil.red,
@@ -72,7 +75,7 @@ class FlashSale extends StatelessWidget {
                     ),
                     MyRaisedButton(
                       onPressed: () {
-                        //TODO
+                        RouteUtil.push(context, ListProductScreen());
                       },
                       text: S.of(context).happened,
                       color: Colors.white,

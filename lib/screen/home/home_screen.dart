@@ -1,4 +1,6 @@
 import 'package:baby_garden_flutter/item/item_home_category.dart';
+import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
@@ -7,6 +9,7 @@ import 'package:baby_garden_flutter/widget/search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 import 'flash_sale.dart';
 
@@ -18,16 +21,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeState extends BaseState<HomeScreen> {
-  double _productWidth;
-  double _productHeight;
+  final ChangeCategoryProvider _changeCategoryProvider =
+      ChangeCategoryProvider();
   double _flashSaleHeight;
   double _flashSaleWidth;
 
   @override
   Widget buildWidget(BuildContext context) {
     if (_flashSaleHeight == null) {
-      _productWidth = MediaQuery.of(context).size.width * 0.35;
-      _productHeight = _productWidth * 1.4;
       _flashSaleHeight = MediaQuery.of(context).size.width * 0.6;
       _flashSaleWidth = _flashSaleHeight * 0.7;
     }
@@ -41,11 +42,11 @@ class _HomeState extends BaseState<HomeScreen> {
                 elevation: 0,
                 pinned: true,
                 backgroundColor: Colors.white,
-                expandedHeight: MediaQuery.of(context).size.height * 0.3,
+                expandedHeight: Provider.of<AppProvider>(context).expandHeaderHeight,
                 flexibleSpace: Stack(
                   children: <Widget>[
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.27,
+                      height: Provider.of<AppProvider>(context).bgHeaderHeight,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage('photo/bg_header.png'),
@@ -97,6 +98,7 @@ class _HomeState extends BaseState<HomeScreen> {
                             );
                           }
                           return GridProduct(
+                            changeCategoryProvider: _changeCategoryProvider,
                             onViewMoreClick: () {
                               //TODO
                             },
@@ -113,6 +115,6 @@ class _HomeState extends BaseState<HomeScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [];
+    return [ChangeNotifierProvider.value(value: _changeCategoryProvider)];
   }
 }

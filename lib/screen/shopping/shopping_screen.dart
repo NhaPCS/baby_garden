@@ -1,3 +1,5 @@
+import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
@@ -6,6 +8,7 @@ import 'package:baby_garden_flutter/widget/search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 class ShoppingScreen extends StatefulWidget {
   @override
@@ -15,6 +18,9 @@ class ShoppingScreen extends StatefulWidget {
 }
 
 class _ShoppingState extends BaseState<ShoppingScreen> {
+  final ChangeCategoryProvider _changeCategoryProvider =
+      ChangeCategoryProvider();
+
   @override
   Widget buildWidget(BuildContext context) {
     return SafeArea(
@@ -28,11 +34,11 @@ class _ShoppingState extends BaseState<ShoppingScreen> {
                 elevation: 0,
                 pinned: true,
                 backgroundColor: Colors.white,
-                expandedHeight: MediaQuery.of(context).size.height * 0.3,
+                expandedHeight: Provider.of<AppProvider>(context).expandHeaderHeight,
                 flexibleSpace: Stack(
                   children: <Widget>[
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.27,
+                      height: Provider.of<AppProvider>(context).bgHeaderHeight,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage('photo/bg_header.png'),
@@ -72,6 +78,7 @@ class _ShoppingState extends BaseState<ShoppingScreen> {
                       padding: EdgeInsets.all(0),
                       itemBuilder: (context, index) {
                         return GridProduct(
+                          changeCategoryProvider: _changeCategoryProvider,
                           onViewMoreClick: () {
                             //TODO
                           },
