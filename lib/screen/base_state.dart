@@ -24,8 +24,8 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<AppProvider>(context)
-        .updateCategorySize(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
+    Provider.of<AppProvider>(context).updateCategorySize(
+        MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
     super.build(context);
     List<SingleChildWidget> prs = providers();
     return prs == null || prs.isEmpty
@@ -63,7 +63,8 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
       {String title,
       bool centerTitle = true,
       double elevation = 0,
-      Color bgColor = ColorUtil.primaryColor}) {
+      Color bgColor = ColorUtil.primaryColor,
+      List<Widget> actions}) {
     return AppBar(
       elevation: elevation,
       backgroundColor: bgColor,
@@ -75,6 +76,7 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
             )
           : null,
       centerTitle: centerTitle,
+      actions: actions,
       leading: getLeading(),
     );
   }

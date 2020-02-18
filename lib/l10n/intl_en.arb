@@ -23,5 +23,6 @@
   "happened": "Sắp diễn ra",
   "sold_count": "Đã bán {sold}/{total}",
   "joinDate": "Tham gia từ",
-  "category_product": "Danh mục sản phẩm"
+  "category_product": "Danh mục sản phẩm",
+  "product_detail": "Chi tiết sản phẩm"
 }

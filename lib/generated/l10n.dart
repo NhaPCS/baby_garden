@@ -253,6 +253,15 @@ class S {
       args: [],
     );
   }
+
+  String get product_detail {
+    return Intl.message(
+      'Chi tiết sản phẩm',
+      name: 'product_detail',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

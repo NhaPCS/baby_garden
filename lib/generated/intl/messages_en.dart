@@ -39,6 +39,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "myProfile" : MessageLookupByLibrary.simpleMessage("Trang cá nhân"),
     "order" : MessageLookupByLibrary.simpleMessage("Đơn hàng"),
     "pointManage" : MessageLookupByLibrary.simpleMessage("Quản lý điểm"),
+    "product_detail" : MessageLookupByLibrary.simpleMessage("Chi tiết sản phẩm"),
     "remindManage" : MessageLookupByLibrary.simpleMessage("Quản lý lịch nhắc"),
     "search_hint" : MessageLookupByLibrary.simpleMessage("Bạn muốn tìm gì hôm nay?"),
     "seenProduct" : MessageLookupByLibrary.simpleMessage("Sản phẩm đã xem"),
