@@ -16,7 +16,7 @@ class ColorUtil {
   static const Color blueLight = Color(0xff00AAE9);
   static const Color gray = Color(0xffA8A8A8);
   static const Color lightGray = Color(0xffEFEFEF);
-  static const Color lineColor = Color(0xffF4F4F4);
+  static const Color lineColor = Color(0xffE9E9E9);
   static const Color indicatorActiveColor = Color(0xffE4EB18);
   static const Color indicatorUnactiveColor = Color(0xffB0B1A1);
   static const Color blueForgotPass = Color(0xff2294AB);
@@ -36,7 +36,8 @@ class ColorUtil {
 class StringUtil {
   static const String dummyImage =
       "https://imgix.bustle.com/uploads/image/2019/1/23/4ca31ad3-6f9b-4e75-a0bf-fada7bfecfae-shutterstock_10068471c.jpg?w=970&h=546&fit=crop&crop=faces&auto=format&q=70&dpr=2";
-  static const String dummyText = "- Đế giày làm bằng cao su nhiệt dẻo (TPR). xẻ rãnh chống trơn trượt cho bé vui chơi thỏa thích \n- Cách tính cỡ Giày trẻ em cho bé (Bạn đo chiều dài bàn chân xem kích thước là bao nhiêu)\n- Ướm đi thử vừa là vừa";
+  static const String dummyText =
+      "- Đế giày làm bằng cao su nhiệt dẻo (TPR). xẻ rãnh chống trơn trượt cho bé vui chơi thỏa thích \n- Cách tính cỡ Giày trẻ em cho bé (Bạn đo chiều dài bàn chân xem kích thước là bao nhiêu)\n- Ướm đi thử vừa là vừa";
 }
 
 class RouteUtil {
@@ -105,6 +106,17 @@ class SizeUtil {
 }
 
 class WidgetUtil {
+  static Widget paddingWidget(Widget widget,
+      {EdgeInsets padding = const EdgeInsets.only(
+          left: SizeUtil.smallSpace,
+          right: SizeUtil.smallSpace,
+          top: SizeUtil.smallSpace)}) {
+    return Padding(
+      padding: padding,
+      child: widget,
+    );
+  }
+
   static Widget getInputRow(String title, TextEditingController controller) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,

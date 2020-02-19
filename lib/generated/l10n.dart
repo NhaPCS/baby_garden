@@ -667,6 +667,24 @@ class S {
       args: [],
     );
   }
+
+  String get product_count {
+    return Intl.message(
+      'Số lượng:',
+      name: 'product_count',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get color {
+    return Intl.message(
+      'Màu sắc',
+      name: 'color',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

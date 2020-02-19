@@ -8,6 +8,8 @@ class AppProvider {
   double bgHeaderHeight;
   double expandHeaderHeight;
   double productImageHeight;
+  double productCartWidth;
+  double productCartHeight;
 
   void updateCategorySize(double widthScreen, double heightScreen) {
 //    if (categoryHeight == null) { //TODO uncomment later
@@ -20,6 +22,8 @@ class AppProvider {
     bgHeaderHeight = heightScreen * 0.23;
     expandHeaderHeight = heightScreen * 0.3;
     productImageHeight = heightScreen * 0.32;
+    productCartWidth = widthScreen * 0.3;
+    productCartHeight = productCartWidth * 0.7;
     ;
 //    }
   }

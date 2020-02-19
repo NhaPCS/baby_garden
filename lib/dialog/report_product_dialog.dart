@@ -19,6 +19,12 @@ class ReportProductDialog extends AlertDialog {
   EdgeInsetsGeometry get titlePadding => EdgeInsets.all(0);
 
   @override
+  EdgeInsetsGeometry get contentPadding => EdgeInsets.only(
+      left: SizeUtil.smallSpace,
+      right: SizeUtil.smallSpace,
+      bottom: SizeUtil.smallSpace);
+
+  @override
   ShapeBorder get shape => RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(SizeUtil.smallRadius)));
 
@@ -47,10 +53,12 @@ class ReportProductDialog extends AlertDialog {
 
   @override
   Widget get content => Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
+        child: ListView(
+          shrinkWrap: true,
           children: <Widget>[
+            SizedBox(
+              height: SizeUtil.smallSpace,
+            ),
             Text(
               S.of(context).report_desc,
               style: TextStyle(
@@ -80,12 +88,15 @@ class ReportProductDialog extends AlertDialog {
             SizedBox(
               height: SizeUtil.smallSpace,
             ),
-            CircleCheckbox(
-              checkBg: Icons.check_circle,
-              uncheckBg: Icons.panorama_fish_eye,
-              color: ColorUtil.textGray,
-              size: SizeUtil.iconSizeBigger,
-              text: Text(S.of(context).choose_other),
+            Center(
+              child: CircleCheckbox(
+                checkBg: Icons.check_circle,
+                uncheckBg: Icons.panorama_fish_eye,
+                color: ColorUtil.textGray,
+                activeColor: ColorUtil.primaryColor,
+                size: SizeUtil.iconSizeBigger,
+                text: Text(S.of(context).choose_other),
+              ),
             ),
             SizedBox(
               height: SizeUtil.smallSpace,

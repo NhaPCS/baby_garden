@@ -69,5 +69,7 @@
   "choose_other": "Chọn khác",
   "report_title_hint": "Nhập tiêu đề tự chọn",
   "report_content_hint": "Viết nội dung báo cáo/ góp ý của bạn",
-  "send": "Gửi"
+  "send": "Gửi",
+  "product_count": "Số lượng:",
+  "color": "Màu sắc"
 }

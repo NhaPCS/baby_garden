@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/dialog/add_to_cart_bottom_dialog.dart';
 import 'package:baby_garden_flutter/dialog/report_product_dialog.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
@@ -318,7 +319,10 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
               Expanded(
                 child: MyRaisedButton(
                   onPressed: () {
-                    //TODO
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (_) => AddToCartBottomDialog());
                   },
                   text: S.of(context).add_to_cart,
                   textStyle: TextStyle(color: Colors.white),

@@ -15,7 +15,7 @@ class ChipTag extends StatefulWidget {
 
   const ChipTag(
       {Key key,
-      this.text,
+      @required this.text,
       this.fillColor = Colors.transparent,
       this.borderColor = ColorUtil.textGray,
       this.borderRadius = SizeUtil.smallRadius,

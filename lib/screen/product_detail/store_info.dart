@@ -11,9 +11,12 @@ class StoreInfo extends StatelessWidget {
         CircleImage(
           imageUrl: StringUtil.dummyImage,
           borderRadius: SizeUtil.smallRadius,
-          size: SizeUtil.iconSizeLarge,
+          width: SizeUtil.iconSizeLarge,
+          height: SizeUtil.iconSizeLarge,
         ),
-        SizedBox(width: SizeUtil.smallSpace,),
+        SizedBox(
+          width: SizeUtil.smallSpace,
+        ),
         Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

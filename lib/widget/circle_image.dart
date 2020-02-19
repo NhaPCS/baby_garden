@@ -3,10 +3,16 @@ import 'package:flutter/material.dart';
 
 class CircleImage extends StatelessWidget {
   final String imageUrl;
-  final double size;
   final double borderRadius;
+  final double width;
+  final double height;
 
-  const CircleImage({Key key, this.imageUrl, this.size, this.borderRadius})
+  const CircleImage(
+      {Key key,
+      this.imageUrl,
+      this.borderRadius,
+      @required this.width,
+      @required this.height})
       : super(key: key);
 
   @override
@@ -14,13 +20,13 @@ class CircleImage extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
-              borderRadius == null ? size : borderRadius)),
+              borderRadius == null ? width : borderRadius)),
       child: Container(
-        width: size,
-        height: size,
+        width: width,
+        height: height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
-              Radius.circular(borderRadius == null ? size : borderRadius)),
+              Radius.circular(borderRadius == null ? width : borderRadius)),
           image: DecorationImage(
               image: CachedNetworkImageProvider(imageUrl), fit: BoxFit.cover),
         ),
