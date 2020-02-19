@@ -26,7 +26,9 @@ class _AccountManageState extends BaseState<AccountManage> {
     gender: "male",
   );
 
-  List<Widget> listWidget;
+  void sampleBtnTap(int index) {
+    print(index);
+  }
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -51,29 +53,35 @@ class _AccountManageState extends BaseState<AccountManage> {
             child: this.userInfor,
             decoration: BoxDecoration(
                 border: Border(
-              bottom: BorderSide(
-                  width: 1,
-                  style: BorderStyle.solid,
-                  color: Color.fromRGBO(206, 206, 206, 1)),
-            )),
+                    bottom: BorderSide(
+                        width: 1,
+                        style: BorderStyle.solid,
+                        color: Color.fromRGBO(206, 206, 206, 1)))),
           ),
           // entries
           Container(
             child: entriesWidget(entries),
           ),
           // children
-          Container(child: childInfor())
+          Container(
+              decoration: BoxDecoration(
+                  border: Border(
+                      top: BorderSide(
+                          width: 3,
+                          style: BorderStyle.solid,
+                          color: Color.fromRGBO(223, 223, 223, 1)))),
+              width: double.infinity,
+              child: childInfor())
         ]));
   }
 
   Widget entriesWidget(List<Map<String, String>> entries) {
     return Container(
-      height: 350,
+      height: 190,
       child: ListView.builder(
           itemCount: entries.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
-              // margin: const EdgeInsets.all(15.0),
               padding: const EdgeInsets.only(left: 11.0, right: 11),
               decoration: BoxDecoration(
                   border: Border(
@@ -83,7 +91,6 @@ class _AccountManageState extends BaseState<AccountManage> {
                     color: Color.fromRGBO(206, 206, 206, 1)),
               )),
               height: 38,
-
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -94,12 +101,17 @@ class _AccountManageState extends BaseState<AccountManage> {
                           style: TextStyle(
                               color: (index == 4)
                                   ? ColorUtil.primaryColor
-                                  : ColorUtil.black33))),
-                  SizedBox(width: SizeUtil.smallSpace,),
-                  Image.asset(
-                    "photo/${entries[index]['icon']}",
-                    width: 11,
-                    height: 11,
+                                  : Colors.black))),
+                  SizedBox(
+                    width: SizeUtil.smallSpace,
+                  ),
+                  GestureDetector(
+                    onTap: () => sampleBtnTap(index),
+                    child: Image.asset(
+                      "photo/${entries[index]['icon']}",
+                      width: 11,
+                      height: 11,
+                    ),
                   ),
                 ],
               ),
@@ -111,7 +123,20 @@ class _AccountManageState extends BaseState<AccountManage> {
   Widget childInfor() {
     return Column(children: <Widget>[
       // title & add child button
-
+      Row(
+        children: <Widget>[
+          Text(
+            S.of(context).childInfor,
+            style: TextStyle(color: ColorUtil.primaryColor),
+          ),
+          FlatButton.icon(
+              color: Colors.grey,
+              onPressed: () => sampleBtnTap(17),
+              label: Text(S.of(context).addChild),
+              padding: EdgeInsets.all(5),
+              icon: Image.asset("photo/add_child.png"))
+        ],
+      ),
       // child information
       Column(children: <Widget>[
         Row(children: <Widget>[

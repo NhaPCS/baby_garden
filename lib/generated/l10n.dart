@@ -388,6 +388,69 @@ class S {
       args: [],
     );
   }
+
+  String get childInfor {
+    return Intl.message(
+      'Thông tin con',
+      name: 'childInfor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addChild {
+    return Intl.message(
+      'Thêm con',
+      name: 'addChild',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get childName {
+    return Intl.message(
+      'Tên bé',
+      name: 'childName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get healthIndex {
+    return Intl.message(
+      'Chỉ số sức khỏe',
+      name: 'healthIndex',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get lastDayCheck {
+    return Intl.message(
+      'Ngày đo gần nhất',
+      name: 'lastDayCheck',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get selectRemindProduct {
+    return Intl.message(
+      'Chọn sản phẩm nhắc mua',
+      name: 'selectRemindProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get selectRemindBuyTime {
+    return Intl.message(
+      'Chọn thời gian nhắc lịch mua sản phẩm',
+      name: 'selectRemindBuyTime',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

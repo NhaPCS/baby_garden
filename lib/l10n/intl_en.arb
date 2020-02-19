@@ -38,5 +38,12 @@
   "addressPlaceholder": "Nhập SĐT của bạn",
   "career": "Ngành nghề",
   "careerPlaceholder": "Nhập ngành nghề của bạn",
-  "changePassword": "Đổi mật khẩu"
+  "changePassword": "Đổi mật khẩu",
+  "childInfor": "Thông tin con",
+  "addChild": "Thêm con",
+  "childName": "Tên bé",
+  "healthIndex": "Chỉ số sức khỏe",
+  "lastDayCheck": "Ngày đo gần nhất",
+  "selectRemindProduct": "Chọn sản phẩm nhắc mua",
+  "selectRemindBuyTime": "Chọn thời gian nhắc lịch mua sản phẩm"
 }
