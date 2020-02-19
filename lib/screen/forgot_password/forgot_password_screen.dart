@@ -1,6 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/ChangePassProvider.dart';
-import 'package:baby_garden_flutter/provider/WaitingOTPProvider.dart';
+import 'package:baby_garden_flutter/provider/change_pass_provider.dart';
+import 'package:baby_garden_flutter/provider/waiting_otp_provider.dart';
 import 'package:baby_garden_flutter/provider/enter_phone_number_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
