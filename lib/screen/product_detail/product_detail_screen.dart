@@ -152,7 +152,9 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
                             ),
                             borderRadius: SizeUtil.iconSize,
                             onPressed: () {
-                              showDialog(context: context, builder: (_)=>ReportProductDialog());
+                              showDialog(
+                                  context: context,
+                                  builder: (_) => ReportProductDialog(context));
                             },
                           )
                         ],
