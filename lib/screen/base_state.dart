@@ -1,4 +1,3 @@
-import 'package:baby_garden_flutter/data/service.dart' as service;
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,8 +24,8 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<AppProvider>(context)
-        .updateCategorySize(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
+    Provider.of<AppProvider>(context).updateCategorySize(
+        MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
     super.build(context);
     List<SingleChildWidget> prs = providers();
     return prs == null || prs.isEmpty
@@ -66,7 +65,8 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
       double elevation = 0,
       Color bgColor = ColorUtil.primaryColor,
       Color titleColor = Colors.white,
-        Color backColor = Colors.white}) {
+      Color backColor = Colors.white,
+      List<Widget> actions}) {
     return AppBar(
       elevation: elevation,
       backgroundColor: bgColor,
@@ -78,12 +78,13 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
             )
           : null,
       centerTitle: centerTitle,
-      leading: getLeading(backColor: backColor),
+      leading: getLeading(context,backColor: backColor),
+      actions: actions,
     );
   }
 
-
-  Widget getLeading({Color backColor=Colors.white}) {
+  static Widget getLeading(BuildContext context,
+      {Color backColor = Colors.white}) {
     return InkWell(
       child: Icon(
         CupertinoIcons.back,

@@ -13,14 +13,16 @@ class ColorUtil {
   static const Color green = Color(0xff13BE2A);
   static const Color red = Color(0xffFF0000);
   static const Color blue = Color(0xff047194);
+  static const Color blueLight = Color(0xff00AAE9);
   static const Color gray = Color(0xffA8A8A8);
   static const Color lightGray = Color(0xffEFEFEF);
-  static const Color lineColor = Color(0xffF4F4F4);
+  static const Color lineColor = Color(0xffE9E9E9);
   static const Color indicatorActiveColor = Color(0xffE4EB18);
   static const Color indicatorUnactiveColor = Color(0xffB0B1A1);
   static const Color blueForgotPass = Color(0xff2294AB);
   static const Color flashSaleColor = Color(0xffF77102);
   static const Color bgProgressOrange = Color(0xffFFB483);
+  static const Color transGray = Color(0x66EFEFEF);
 
   static Color getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");
@@ -34,6 +36,8 @@ class ColorUtil {
 class StringUtil {
   static const String dummyImage =
       "https://imgix.bustle.com/uploads/image/2019/1/23/4ca31ad3-6f9b-4e75-a0bf-fada7bfecfae-shutterstock_10068471c.jpg?w=970&h=546&fit=crop&crop=faces&auto=format&q=70&dpr=2";
+  static const String dummyText =
+      "- Đế giày làm bằng cao su nhiệt dẻo (TPR). xẻ rãnh chống trơn trượt cho bé vui chơi thỏa thích \n- Cách tính cỡ Giày trẻ em cho bé (Bạn đo chiều dài bàn chân xem kích thước là bao nhiêu)\n- Ướm đi thử vừa là vừa";
 }
 
 class RouteUtil {
@@ -86,9 +90,11 @@ class SizeUtil {
   static const double textSizeHuge = 40;
   static const double textSizeLogo = 22;
 
+  static const double iconSizeLarge = 52;
   static const double iconSize = 16;
   static const double iconSizeBigger = 24;
   static const double iconSizeBig = 32;
+  static const double iconSizeSmall = 10;
 
   static const double smallRadius = 10;
   static const double bigRadius = 15;
@@ -100,6 +106,17 @@ class SizeUtil {
 }
 
 class WidgetUtil {
+  static Widget paddingWidget(Widget widget,
+      {EdgeInsets padding = const EdgeInsets.only(
+          left: SizeUtil.smallSpace,
+          right: SizeUtil.smallSpace,
+          top: SizeUtil.smallSpace)}) {
+    return Padding(
+      padding: padding,
+      child: widget,
+    );
+  }
+
   static Widget getInputRow(String title, TextEditingController controller) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -145,10 +162,13 @@ class WidgetUtil {
         });
   }
 
-  static Widget getLine({EdgeInsetsGeometry margin}) {
+  static Widget getLine(
+      {EdgeInsetsGeometry margin = const EdgeInsets.only(
+          top: SizeUtil.smallSpace, bottom: SizeUtil.smallSpace),
+      double width = 1}) {
     return Container(
-      height: 1,
-      color: ColorUtil.textGray,
+      height: width,
+      color: ColorUtil.lineColor,
       margin: margin,
     );
   }

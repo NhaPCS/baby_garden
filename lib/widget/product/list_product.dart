@@ -5,10 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ListProduct extends StatelessWidget {
+  final EdgeInsets padding;
+
+  const ListProduct({Key key, this.padding = const EdgeInsets.all(0)})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: ColorUtil.lineColor,
+      padding: padding,
       child: ListView.builder(
         itemCount: 3,
         itemBuilder: (context, index) {
