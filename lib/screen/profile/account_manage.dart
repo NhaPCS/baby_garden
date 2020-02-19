@@ -25,26 +25,44 @@ class _AccountManageState extends BaseState<AccountManage> {
     birthday: "17/5/93",
     gender: "male",
   );
+
+  List<Widget> listWidget;
+
   @override
   Widget buildWidget(BuildContext context) {
+    Map<String, String> entry(String title, String content, String icon) {
+      return {'title': title, 'content': content, "icon": icon};
+    }
+
     final List<Map<String, String>> entries = <Map<String, String>>[
-      {'title': S.of(context).fullname, 'content': userInfor.username},
-      {'title': S.of(context).mobilePhone, 'content': userInfor.mobilePhone},
-      {'title': S.of(context).birthday, 'content': userInfor.birthday},
-      {'title': S.of(context).gender, 'content': userInfor.gender},
-      {'title': S.of(context).password, 'content': userInfor.password},
-      {'title': S.of(context).address, 'content': userInfor.address}
+      entry(S.of(context).fullname, userInfor.username, 'pencil.png'),
+      entry(S.of(context).mobilePhone, userInfor.mobilePhone, ''),
+      entry(S.of(context).birthday, userInfor.birthday, ''),
+      entry(S.of(context).gender, userInfor.gender, ''),
+      entry(S.of(context).password, S.of(context).changePassword, 'right.png'),
+      entry(S.of(context).address, userInfor.address, 'right.png'),
     ];
 
     return Scaffold(
         appBar: getAppBar(title: S.of(context).accManage),
         body: Column(children: <Widget>[
+          // user information
           Container(
-              // user information
-              child: this.userInfor),
+            child: this.userInfor,
+            decoration: BoxDecoration(
+                border: Border(
+              bottom: BorderSide(
+                  width: 1,
+                  style: BorderStyle.solid,
+                  color: Color.fromRGBO(206, 206, 206, 1)),
+            )),
+          ),
+          // entries
           Container(
             child: entriesWidget(entries),
           ),
+          // children
+          Container(child: childInfor())
         ]));
   }
 
@@ -56,7 +74,7 @@ class _AccountManageState extends BaseState<AccountManage> {
           itemBuilder: (BuildContext context, int index) {
             return Container(
               // margin: const EdgeInsets.all(15.0),
-              padding: const EdgeInsets.only(left: 11.0),
+              padding: const EdgeInsets.only(left: 11.0, right: 11),
               decoration: BoxDecoration(
                   border: Border(
                 bottom: BorderSide(
@@ -64,17 +82,55 @@ class _AccountManageState extends BaseState<AccountManage> {
                     style: BorderStyle.solid,
                     color: Color.fromRGBO(206, 206, 206, 1)),
               )),
-              height: 50,
+              height: 38,
+
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(entries[index]['title']),
-                  Text(entries[index]['content'])
+                  Container(
+                    margin: EdgeInsets.only(left: 180),
+                    child: Text(entries[index]['content'],
+                        style: TextStyle(
+                            color: (index == 4)
+                                ? ColorUtil.primaryColor
+                                : ColorUtil.black33)),
+                  ),
+                  Image.asset(
+                    "photo/${entries[index]['icon']}",
+                    width: 11,
+                    height: 11,
+                  ),
                 ],
               ),
             );
           }),
     );
+  }
+
+  Widget childInfor() {
+    return Column(children: <Widget>[
+      // title & add child button
+
+      // child information
+      Column(children: <Widget>[
+        Row(children: <Widget>[
+          // avatar
+
+          // properties
+          Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Text("ten be  "),
+                  Text("Quyen Anh dep trai")
+                ],
+              )
+            ],
+          )
+        ])
+      ]),
+    ]);
   }
 
   @override

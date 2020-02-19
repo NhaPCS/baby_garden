@@ -21,19 +21,30 @@ class _PartnerRegisterState extends BaseState<PartnerRegister> {
   @override
   Widget buildWidget(BuildContext context) {
     final List<Map<String, String>> fields = [
-      {'title': 'shope', 'placeholder': S.of(context).accManage},
-      {'title': 'mobile', 'placeholder': S.of(context).pointManage},
-      {'title': 'address', 'placeholder': S.of(context).remindManage},
-      {'title': 'career', 'placeholder': S.of(context).voucherManage}
+      {
+        'title': S.of(context).shopName,
+        'placeholder': S.of(context).shopPlaceholder
+      },
+      {
+        'title': S.of(context).mobilePhone,
+        'placeholder': S.of(context).mobilePlaceholder
+      },
+      {
+        'title': S.of(context).address,
+        'placeholder': S.of(context).addressPlaceholder
+      },
+      {
+        'title': S.of(context).career,
+        'placeholder': S.of(context).careerPlaceholder
+      }
     ];
 
     return Scaffold(
-      appBar:
-          getAppBar(title: "Partner Register"), //S.of(context).partnerRegister
+      appBar: getAppBar(title: S.of(context).partnerRegister),
       body: Column(children: <Widget>[
         Container(
             margin: EdgeInsets.only(top: 20, left: 10, bottom: 20),
-            child: Text("Nhập thông tin sau để trở thành đối tác của VCB nhé!",
+            child: Text(S.of(context).partnerRegisHeadTitle,
                 style: TextStyle(color: Color.fromRGBO(84, 83, 83, 1)))),
         Expanded(
           child: Container(

@@ -298,6 +298,96 @@ class S {
       args: [],
     );
   }
+
+  String get category_product {
+    return Intl.message(
+      'Danh mục sản phẩm',
+      name: 'category_product',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get partnerRegister {
+    return Intl.message(
+      'Đăng ký đối tác',
+      name: 'partnerRegister',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get partnerRegisHeadTitle {
+    return Intl.message(
+      'Nhập thông tin sau để trở thành đối tác của VCB nhé!',
+      name: 'partnerRegisHeadTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get shopName {
+    return Intl.message(
+      'Tên Shop',
+      name: 'shopName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get shopPlaceholder {
+    return Intl.message(
+      'Nhập tên shop của bạn',
+      name: 'shopPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mobilePlaceholder {
+    return Intl.message(
+      'Nhập SĐT của bạn',
+      name: 'mobilePlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addressPlaceholder {
+    return Intl.message(
+      'Nhập SĐT của bạn',
+      name: 'addressPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get career {
+    return Intl.message(
+      'Ngành nghề',
+      name: 'career',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get careerPlaceholder {
+    return Intl.message(
+      'Nhập ngành nghề của bạn',
+      name: 'careerPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get changePassword {
+    return Intl.message(
+      'Đổi mật khẩu',
+      name: 'changePassword',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
