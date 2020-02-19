@@ -514,6 +514,96 @@ class S {
       args: [],
     );
   }
+
+  String get detail_info {
+    return Intl.message(
+      'Thông tin chi tiết',
+      name: 'detail_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get sku_code {
+    return Intl.message(
+      'Mã SKU',
+      name: 'sku_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get brand {
+    return Intl.message(
+      'Thương hiệu',
+      name: 'brand',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get origin {
+    return Intl.message(
+      'Xuất xứ',
+      name: 'origin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get size {
+    return Intl.message(
+      'Kích thước',
+      name: 'size',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get customer_target {
+    return Intl.message(
+      'Đối tượng sử dụng',
+      name: 'customer_target',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get product_description {
+    return Intl.message(
+      'Mô tả sản phẩm',
+      name: 'product_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get same_product {
+    return Intl.message(
+      'Sản phẩm tương tự',
+      name: 'same_product',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get buy_now {
+    return Intl.message(
+      'Mua ngay',
+      name: 'buy_now',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get add_to_cart {
+    return Intl.message(
+      'Thêm vào giỏ hàng',
+      name: 'add_to_cart',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

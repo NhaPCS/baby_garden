@@ -52,5 +52,15 @@
   "category_product": "Danh mục sản phẩm",
   "product_detail": "Chi tiết sản phẩm",
   "favorite": "Yêu thích",
-  "product_existing": "Còn hàng"
+  "product_existing": "Còn hàng",
+  "detail_info": "Thông tin chi tiết",
+  "sku_code": "Mã SKU",
+  "brand": "Thương hiệu",
+  "origin": "Xuất xứ",
+  "size": "Kích thước",
+  "customer_target": "Đối tượng sử dụng",
+  "product_description": "Mô tả sản phẩm",
+  "same_product": "Sản phẩm tương tự",
+  "buy_now": "Mua ngay",
+  "add_to_cart": "Thêm vào giỏ hàng"
 }

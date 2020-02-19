@@ -80,7 +80,6 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
       centerTitle: centerTitle,
       leading: getLeading(backColor: backColor),
       actions: actions,
-      leading: getLeading(),
     );
   }
 

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,8 @@ class MyRaisedButton extends StatelessWidget {
   final TextStyle textStyle;
   final Color color;
   final double borderRadius;
+  final Widget icon;
+  final double elevation;
 
   const MyRaisedButton(
       {Key key,
@@ -21,7 +25,9 @@ class MyRaisedButton extends StatelessWidget {
           bottom: 8),
       this.color,
       this.borderRadius = SizeUtil.smallRadius,
-      this.textStyle})
+      this.textStyle,
+      this.icon,
+      this.elevation})
       : super(key: key);
 
   @override
@@ -29,11 +35,23 @@ class MyRaisedButton extends StatelessWidget {
     return ButtonTheme(
       child: RaisedButton(
         color: color,
+        elevation: elevation,
         onPressed: onPressed,
-        child: Text(
-          text,
-          style: textStyle,
-        ),
+        child: icon == null
+            ? Text(
+                text,
+                style: textStyle,
+              )
+            : Wrap(
+                spacing: SizeUtil.smallSpace,
+                children: <Widget>[
+                  icon,
+                  Text(
+                    text,
+                    style: textStyle,
+                  )
+                ],
+              ),
         shape: RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(borderRadius),
         ),
