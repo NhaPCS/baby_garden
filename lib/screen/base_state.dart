@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/data/service.dart' as service;
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
@@ -63,7 +64,9 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
       {String title,
       bool centerTitle = true,
       double elevation = 0,
-      Color bgColor = ColorUtil.primaryColor}) {
+      Color bgColor = ColorUtil.primaryColor,
+      Color titleColor = Colors.white,
+        Color backColor = Colors.white}) {
     return AppBar(
       elevation: elevation,
       backgroundColor: bgColor,
@@ -71,19 +74,20 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
           ? Text(
               title,
               style: TextStyle(
-                  fontSize: SizeUtil.textSizeBigger, color: Colors.white),
+                  fontSize: SizeUtil.textSizeBigger, color: titleColor),
             )
           : null,
       centerTitle: centerTitle,
-      leading: getLeading(),
+      leading: getLeading(backColor: backColor),
     );
   }
 
-  Widget getLeading() {
+
+  Widget getLeading({Color backColor=Colors.white}) {
     return InkWell(
       child: Icon(
         CupertinoIcons.back,
-        color: Colors.white,
+        color: backColor,
       ),
       onTap: () {
         Navigator.of(context).pop();
