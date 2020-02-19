@@ -262,6 +262,24 @@ class S {
       args: [],
     );
   }
+
+  String get favorite {
+    return Intl.message(
+      'Yêu thích',
+      name: 'favorite',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get product_existing {
+    return Intl.message(
+      'Còn hàng',
+      name: 'product_existing',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

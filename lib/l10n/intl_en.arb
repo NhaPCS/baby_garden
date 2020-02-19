@@ -24,5 +24,7 @@
   "sold_count": "Đã bán {sold}/{total}",
   "joinDate": "Tham gia từ",
   "category_product": "Danh mục sản phẩm",
-  "product_detail": "Chi tiết sản phẩm"
+  "product_detail": "Chi tiết sản phẩm",
+  "favorite": "Yêu thích",
+  "product_existing": "Còn hàng"
 }

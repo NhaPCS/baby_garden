@@ -18,6 +18,7 @@ class ColorUtil {
   static const Color lineColor = Color(0xffF4F4F4);
   static const Color flashSaleColor = Color(0xffF77102);
   static const Color bgProgressOrange = Color(0xffFFB483);
+  static const Color transGray = Color(0x66EFEFEF);
 
   static Color getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");
@@ -85,6 +86,7 @@ class SizeUtil {
   static const double iconSize = 15;
   static const double iconSizeBigger = 25;
   static const double iconSizeBig = 35;
+  static const double iconSizeLarge = 50;
 
   static const double smallRadius = 10;
   static const double bigRadius = 15;
@@ -141,10 +143,12 @@ class WidgetUtil {
         });
   }
 
-  static Widget getLine({EdgeInsetsGeometry margin}) {
+  static Widget getLine(
+      {EdgeInsetsGeometry margin = const EdgeInsets.only(
+          top: SizeUtil.smallSpace, bottom: SizeUtil.smallSpace)}) {
     return Container(
       height: 1,
-      color: ColorUtil.textGray,
+      color: ColorUtil.lineColor,
       margin: margin,
     );
   }

@@ -19,7 +19,7 @@ class AppProvider {
     bigCategoryHeight = bigCategoryWidth * 1.4;
     bgHeaderHeight = heightScreen * 0.23;
     expandHeaderHeight = heightScreen * 0.3;
-    productImageHeight = heightScreen * 0.35;
+    productImageHeight = heightScreen * 0.32;
     ;
 //    }
   }
