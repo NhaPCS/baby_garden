@@ -59,7 +59,7 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
             hint: S.of(context).your_full_name,
             borderColor: ColorUtil.colorAccent,
             borderRadius: SizeUtil.smallRadius,
-            contentPadding: SizeUtil.smallPadding,
+            contentPadding: SizeUtil.normalPadding,
           ),
           SizedBox(
             height: SizeUtil.smallSpace,
@@ -69,7 +69,8 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
             hint: S.of(context).enter_phone_number,
             borderColor: ColorUtil.colorAccent,
             borderRadius: SizeUtil.smallRadius,
-            contentPadding: SizeUtil.smallPadding,
+            contentPadding: SizeUtil.normalPadding,
+            inputType: TextInputType.phone,
           ),
           SizedBox(
             height: SizeUtil.smallSpace,

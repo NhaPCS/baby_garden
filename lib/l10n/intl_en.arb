@@ -31,8 +31,7 @@
   "confirm": "Xác nhận",
   "change_password": "Đổi mật khẩu",
   "enter_old_password": "Nhập mật khẩu cũ",
-  "count_down_time": "(0:{time})"
-  "search_hint": "Bạn muốn tìm gì hôm nay?",
+  "count_down_time": "(0:{time})",
   "myProfile": "Trang cá nhân",
   "accManage": "Quản lý tài khoản",
   "pointManage": "Quản lý điểm",

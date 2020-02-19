@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/data/service.dart' as service;
+import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -77,11 +78,12 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
             )
           : null,
       centerTitle: centerTitle,
-      leading: getLeading(),
+      leading: getLeading(backColor: backColor),
     );
   }
 
-  Widget getLeading() {
+
+  Widget getLeading({Color backColor=Colors.white}) {
     return InkWell(
       child: Icon(
         CupertinoIcons.back,
