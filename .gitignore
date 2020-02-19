@@ -38,3 +38,10 @@ lib/generated_plugin_registrant.dart
 
 # vs code related
 .vscode/
+
+# android related
+android/.project
+android/.settings/
+android/app/.classpath
+android/app/.project
+android/app/.settings/
