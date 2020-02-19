@@ -487,6 +487,105 @@ class S {
       args: [],
     );
   }
+
+  String get setting_1 {
+    return Intl.message(
+      'Nhận thông báo các sản phẩm giờ vàng',
+      name: 'setting_1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get setting_2 {
+    return Intl.message(
+      'Nhận thông báo thay đổi giá của sản phẩm yêu thích',
+      name: 'setting_2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get setting_3 {
+    return Intl.message(
+      'Nhận thông báo lịch mua và lịch sử dung sản phẩm',
+      name: 'setting_3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get setting_4 {
+    return Intl.message(
+      'Nhận thông báo từ VCB Express',
+      name: 'setting_4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get customer_support {
+    return Intl.message(
+      'Hỗ trợ khách hàng',
+      name: 'customer_support',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get vcb_present {
+    return Intl.message(
+      'Giới thiệu về VCB',
+      name: 'vcb_present',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get vcb_contact {
+    return Intl.message(
+      'Thông tin liên hệ với VCB',
+      name: 'vcb_contact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get buy_guide {
+    return Intl.message(
+      'Hướng dẫn mua hàng',
+      name: 'buy_guide',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get update_info_guide {
+    return Intl.message(
+      'Hướng dẫn cập nhật thông tin',
+      name: 'update_info_guide',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get policy {
+    return Intl.message(
+      'Chính sách hệ thống',
+      name: 'policy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get vcb_register_partner {
+    return Intl.message(
+      'Đăng ký làm đối tác với VCB',
+      name: 'vcb_register_partner',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
