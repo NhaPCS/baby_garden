@@ -1,5 +1,5 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/ChangePassProvider.dart';
+import 'package:baby_garden_flutter/provider/change_pass_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/my_text_field.dart';
