@@ -88,14 +88,14 @@ class _AccountManageState extends BaseState<AccountManage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(entries[index]['title']),
-                  Container(
-                    margin: EdgeInsets.only(left: 180),
-                    child: Text(entries[index]['content'],
-                        style: TextStyle(
-                            color: (index == 4)
-                                ? ColorUtil.primaryColor
-                                : ColorUtil.black33)),
-                  ),
+                  Expanded(
+                      child: Text(entries[index]['content'],
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                              color: (index == 4)
+                                  ? ColorUtil.primaryColor
+                                  : ColorUtil.black33))),
+                  SizedBox(width: SizeUtil.smallSpace,),
                   Image.asset(
                     "photo/${entries[index]['icon']}",
                     width: 11,
