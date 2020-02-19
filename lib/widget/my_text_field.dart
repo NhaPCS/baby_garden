@@ -11,6 +11,7 @@ class MyTextField extends StatelessWidget {
   final Color borderColor;
   final double borderRadius;
   final Widget suffix;
+  final String suffixText;
   final Widget prefix;
   final TextAlign textAlign;
   final TextInputType inputType;
@@ -28,6 +29,7 @@ class MyTextField extends StatelessWidget {
       this.borderColor = ColorUtil.textGray,
       this.borderRadius = 0,
       this.suffix,
+      this.suffixText,
       this.textAlign = TextAlign.left,
       this.inputType = TextInputType.text,
       this.obscureText = false,
@@ -69,6 +71,7 @@ class MyTextField extends StatelessWidget {
           focusColor: backgroundColor,
           hoverColor: backgroundColor,
           suffixIcon: suffix,
+          suffixText: suffixText,
           prefixIcon: prefix,
           hintText: hint,
           hintStyle: hintStyle,

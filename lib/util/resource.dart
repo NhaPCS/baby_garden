@@ -16,6 +16,9 @@ class ColorUtil {
   static const Color gray = Color(0xffA8A8A8);
   static const Color lightGray = Color(0xffEFEFEF);
   static const Color lineColor = Color(0xffF4F4F4);
+  static const Color indicatorActiveColor = Color(0xffE4EB18);
+  static const Color indicatorUnactiveColor = Color(0xffB0B1A1);
+  static const Color blueForgotPass = Color(0xff2294AB);
   static const Color flashSaleColor = Color(0xffF77102);
   static const Color bgProgressOrange = Color(0xffFFB483);
   static const Color transGray = Color(0x66EFEFEF);
@@ -82,11 +85,12 @@ class SizeUtil {
   static const double textSizeTiny = 8;
   static const double textSizeMini = 5;
   static const double textSizeHuge = 40;
+  static const double textSizeLogo = 22;
 
-  static const double iconSize = 15;
-  static const double iconSizeBigger = 25;
-  static const double iconSizeBig = 35;
-  static const double iconSizeLarge = 50;
+  static const double iconSizeLarge = 52;
+  static const double iconSize = 16;
+  static const double iconSizeBigger = 24;
+  static const double iconSizeBig = 32;
 
   static const double smallRadius = 10;
   static const double bigRadius = 15;

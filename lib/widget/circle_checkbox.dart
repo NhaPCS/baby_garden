@@ -7,13 +7,17 @@ class CircleCheckbox extends StatefulWidget {
   final bool checked;
   final Color color;
   final double size;
+  final IconData checkBg;
+  final IconData uncheckBg;
 
   const CircleCheckbox(
       {Key key,
       this.onChanged,
-      this.checked,
+      this.checked = false,
       this.color,
-      this.size = SizeUtil.iconSizeBigger})
+      this.size = SizeUtil.iconSizeBigger,
+      this.checkBg = CupertinoIcons.check_mark_circled_solid,
+      this.uncheckBg = CupertinoIcons.check_mark_circled})
       : super(key: key);
 
   @override
@@ -56,12 +60,12 @@ class _CircleState extends State<CircleCheckbox> {
       padding: SizeUtil.smallPadding,
       child: checked
           ? Icon(
-              CupertinoIcons.check_mark_circled_solid,
+              widget.checkBg,
               color: widget.color,
               size: widget.size,
             )
           : Icon(
-              CupertinoIcons.check_mark_circled,
+              widget.uncheckBg,
               color: widget.color,
               size: widget.size,
             ),
