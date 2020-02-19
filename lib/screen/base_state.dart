@@ -78,12 +78,13 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
             )
           : null,
       centerTitle: centerTitle,
-      leading: getLeading(backColor: backColor),
+      leading: getLeading(context,backColor: backColor),
       actions: actions,
     );
   }
 
-  Widget getLeading({Color backColor = Colors.white}) {
+  static Widget getLeading(BuildContext context,
+      {Color backColor = Colors.white}) {
     return InkWell(
       child: Icon(
         CupertinoIcons.back,

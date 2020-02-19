@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/dialog/report_product_dialog.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
@@ -151,7 +152,7 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
                             ),
                             borderRadius: SizeUtil.iconSize,
                             onPressed: () {
-                              //TODO
+                              showDialog(context: context, builder: (_)=>ReportProductDialog());
                             },
                           )
                         ],
@@ -299,7 +300,9 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
           Row(
             children: <Widget>[
               MyRaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  //TODO
+                },
                 text: S.of(context).buy_now,
                 textStyle: TextStyle(color: Colors.white),
                 borderRadius: 0,
@@ -312,7 +315,9 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
               ),
               Expanded(
                 child: MyRaisedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    //TODO
+                  },
                   text: S.of(context).add_to_cart,
                   textStyle: TextStyle(color: Colors.white),
                   borderRadius: 0,

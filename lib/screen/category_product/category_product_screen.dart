@@ -56,7 +56,7 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
                   S.of(context).category_product.toUpperCase(),
                   style: TextStyle(color: Colors.white),
                 ),
-                leading: getLeading(),
+                leading: BaseState.getLeading(context),
                 centerTitle: true,
                 pinned: true,
                 floating: true,

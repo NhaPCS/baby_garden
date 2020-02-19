@@ -604,6 +604,69 @@ class S {
       args: [],
     );
   }
+
+  String get send_report {
+    return Intl.message(
+      'Gửi thông báo',
+      name: 'send_report',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get report_desc {
+    return Intl.message(
+      'Báo cáo hay góp ý với chúng rôi về hình ảnh hay thông tin về sản phẩm nhé!',
+      name: 'report_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get report_title {
+    return Intl.message(
+      'Tiêu đề báo cáo',
+      name: 'report_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get choose_other {
+    return Intl.message(
+      'Chọn khác',
+      name: 'choose_other',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get report_title_hint {
+    return Intl.message(
+      'Nhập tiêu đề tự chọn',
+      name: 'report_title_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get report_content_hint {
+    return Intl.message(
+      'Viết nội dung báo cáo/ góp ý của bạn',
+      name: 'report_content_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get send {
+    return Intl.message(
+      'Gửi',
+      name: 'send',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -18,6 +18,7 @@ class MyTextField extends StatelessWidget {
   final bool obscureText;
   final EdgeInsetsGeometry contentPadding;
   final ValueChanged<String> onChanged;
+  final int maxLines;
   final double elevation;
 
   const MyTextField(
@@ -41,7 +42,8 @@ class MyTextField extends StatelessWidget {
       this.onChanged,
       this.hintStyle,
       this.elevation,
-      this.prefix})
+      this.prefix,
+      this.maxLines = 1})
       : super(key: key);
 
   @override
@@ -61,6 +63,7 @@ class MyTextField extends StatelessWidget {
       controller: textEditingController,
       style: textStyle,
       textAlign: textAlign,
+      maxLines: maxLines,
       obscureText: obscureText,
       onChanged: onChanged,
       keyboardType: inputType,

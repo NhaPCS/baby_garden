@@ -62,5 +62,12 @@
   "product_description": "Mô tả sản phẩm",
   "same_product": "Sản phẩm tương tự",
   "buy_now": "Mua ngay",
-  "add_to_cart": "Thêm vào giỏ hàng"
+  "add_to_cart": "Thêm vào giỏ hàng",
+  "send_report": "Gửi thông báo",
+  "report_desc": "Báo cáo hay góp ý với chúng rôi về hình ảnh hay thông tin về sản phẩm nhé!",
+  "report_title": "Tiêu đề báo cáo",
+  "choose_other": "Chọn khác",
+  "report_title_hint": "Nhập tiêu đề tự chọn",
+  "report_content_hint": "Viết nội dung báo cáo/ góp ý của bạn",
+  "send": "Gửi"
 }

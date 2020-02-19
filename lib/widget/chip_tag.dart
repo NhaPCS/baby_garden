@@ -11,18 +11,20 @@ class ChipTag extends StatefulWidget {
   final ValueChanged<bool> onChanged;
   final bool removable;
   final VoidCallback onRemoveItem;
+  final double textSize;
 
   const ChipTag(
       {Key key,
       this.text,
-      this.fillColor,
-      this.borderColor,
-      this.borderRadius,
-      this.selectedBorderColor,
+      this.fillColor = Colors.transparent,
+      this.borderColor = ColorUtil.textGray,
+      this.borderRadius = SizeUtil.smallRadius,
+      this.selectedBorderColor = ColorUtil.primaryColor,
       this.hasCheckable = false,
       this.onChanged,
       this.removable = false,
-      this.onRemoveItem})
+      this.onRemoveItem,
+      this.textSize = SizeUtil.textSizeSmall})
       : super(key: key);
 
   @override
@@ -91,8 +93,9 @@ class _ChipState extends State<ChipTag> {
       widget.text,
       style: widget.hasCheckable
           ? TextStyle(
-              color: selected ? widget.selectedBorderColor : widget.borderColor)
-          : null,
+              color: selected ? widget.selectedBorderColor : widget.borderColor,
+              fontSize: widget.textSize)
+          : TextStyle(fontSize: widget.textSize),
     );
   }
 }
