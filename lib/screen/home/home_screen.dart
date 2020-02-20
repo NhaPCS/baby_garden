@@ -30,6 +30,13 @@ class _HomeState extends BaseState<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    Future.delayed(Duration(seconds: 2), () {
+      //TODO
+      showDialog(
+          context: context,
+          builder: (_) => PromotionDialog(context),
+          barrierDismissible: false);
+    });
   }
 
   @override
@@ -38,13 +45,6 @@ class _HomeState extends BaseState<HomeScreen> {
       _flashSaleHeight = MediaQuery.of(context).size.width * 0.6;
       _flashSaleWidth = _flashSaleHeight * 0.7;
     }
-    Future.delayed(Duration(seconds: 2), () {
-      //TODO
-      showDialog(
-          context: context,
-          builder: (_) => PromotionDialog(context),
-          barrierDismissible: false);
-    });
     return SafeArea(
       child: Material(
         child: NestedScrollView(
