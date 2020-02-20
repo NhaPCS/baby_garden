@@ -12,6 +12,7 @@ class SearchBar extends StatelessWidget {
   final bool hasBack;
   final VoidCallback onPressed;
   final EdgeInsets padding;
+  final ValueChanged<String> onSearchTextChanged;
 
   const SearchBar({
     Key key,
@@ -21,6 +22,7 @@ class SearchBar extends StatelessWidget {
     this.hasBack = false,
     this.onPressed,
     this.padding,
+    this.onSearchTextChanged,
   }) : super(key: key);
 
   @override
@@ -87,6 +89,7 @@ class SearchBar extends StatelessWidget {
           borderRadius: SizeUtil.tinyRadius,
           enable: enable,
           hint: S.of(context).search_hint,
+          onChanged: onSearchTextChanged,
           contentPadding: EdgeInsets.only(
               left: SizeUtil.hugSpace,
               right: SizeUtil.hugSpace,

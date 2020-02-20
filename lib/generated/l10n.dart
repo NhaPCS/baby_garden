@@ -712,6 +712,33 @@ class S {
       args: [],
     );
   }
+
+  String get search_by_name {
+    return Intl.message(
+      'Tìm kiếm theo tên sản phẩm',
+      name: 'search_by_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get search_by_content {
+    return Intl.message(
+      'Tìm kiếm theo nội dung sản phẩm',
+      name: 'search_by_content',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get distributor_name {
+    return Intl.message(
+      'nhà cung cấp ',
+      name: 'distributor_name',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

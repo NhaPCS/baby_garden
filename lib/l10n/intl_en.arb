@@ -74,5 +74,8 @@
   "color": "Màu sắc",
   "hot_key": "Từ khóa HOT",
   "search_key_history": "Lịch sử tìm kiếm",
-  "delete": "Xóa"
+  "delete": "Xóa",
+  "search_by_name": "Tìm kiếm theo tên sản phẩm",
+  "search_by_content": "Tìm kiếm theo nội dung sản phẩm",
+  "distributor_name": "nhà cung cấp "
 }
