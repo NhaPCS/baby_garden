@@ -1,6 +1,7 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/cart/cart_screen.dart';
 import 'package:baby_garden_flutter/screen/home/home_screen.dart';
 import 'package:baby_garden_flutter/screen/shopping/shopping_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -38,7 +39,7 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
           children: <Widget>[
             HomeScreen(),
             ShoppingScreen(),
-            HomeScreen(),
+            CartScreen(),
             HomeScreen(),
             HomeScreen(),
           ],
