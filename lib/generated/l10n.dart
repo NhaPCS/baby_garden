@@ -685,6 +685,33 @@ class S {
       args: [],
     );
   }
+
+  String get hot_key {
+    return Intl.message(
+      'Từ khóa HOT',
+      name: 'hot_key',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get search_key_history {
+    return Intl.message(
+      'Lịch sử tìm kiếm',
+      name: 'search_key_history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delete {
+    return Intl.message(
+      'Xóa',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

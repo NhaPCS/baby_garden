@@ -1,10 +1,12 @@
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/search/search_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
 import 'package:baby_garden_flutter/widget/product/grid_product.dart';
 import 'package:baby_garden_flutter/widget/search_bar.dart';
+import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -34,7 +36,8 @@ class _ShoppingState extends BaseState<ShoppingScreen> {
                 elevation: 0,
                 pinned: true,
                 backgroundColor: Colors.white,
-                expandedHeight: Provider.of<AppProvider>(context).expandHeaderHeight,
+                expandedHeight:
+                    Provider.of<AppProvider>(context).expandHeaderHeight,
                 flexibleSpace: Stack(
                   children: <Widget>[
                     Container(
@@ -50,7 +53,20 @@ class _ShoppingState extends BaseState<ShoppingScreen> {
                     ),
                     Column(
                       children: <Widget>[
-                        SearchBar(),
+                        SearchBar(
+                          trailing: SvgIcon(
+                            'ic_bell.svg',
+                            padding: SizeUtil.tinyPadding,
+                            color: Colors.white,
+                            onPressed: () {
+                              //TODO
+                            },
+                          ),
+                          enable: false,
+                          onPressed: () {
+                            push(SearchScreen());
+                          },
+                        ),
                         Expanded(
                           child: MyCarouselSlider(
                             images: [

@@ -71,5 +71,8 @@
   "report_content_hint": "Viết nội dung báo cáo/ góp ý của bạn",
   "send": "Gửi",
   "product_count": "Số lượng:",
-  "color": "Màu sắc"
+  "color": "Màu sắc",
+  "hot_key": "Từ khóa HOT",
+  "search_key_history": "Lịch sử tìm kiếm",
+  "delete": "Xóa"
 }
