@@ -26,6 +26,14 @@ class _AccountManageState extends BaseState<AccountManage> {
     gender: "male",
   );
 
+  final childInformation = ChildInfor(
+    childName: 'Hung gay',
+    gender: 'male',
+    lastCheck: '15/06/2011',
+    birthday: '15/06/2011',
+    healthIndex: 100,
+  );
+
   void sampleBtnTap(int index) {
     print(index);
   }
@@ -45,33 +53,32 @@ class _AccountManageState extends BaseState<AccountManage> {
       entry(S.of(context).address, userInfor.address, 'right.png'),
     ];
 
+    final List<Map<String, String>> childInforFields = <Map<String, String>>[
+      entry(S.of(context).childName, childInformation.childName, 'pencil.png'),
+      entry(S.of(context).gender, childInformation.gender, ''),
+      entry(S.of(context).birthday, childInformation.birthday, ''),
+      entry(S.of(context).healthIndex, S.of(context).moreDetail, ''),
+      entry(
+          S.of(context).lastDayCheck, S.of(context).lastDayCheck, 'right.png'),
+    ];
+
     return Scaffold(
         appBar: getAppBar(title: S.of(context).accManage),
         body: Column(children: <Widget>[
           // user information
           Container(
-            child: this.userInfor,
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(
-                        width: 1,
-                        style: BorderStyle.solid,
-                        color: Color.fromRGBO(206, 206, 206, 1)))),
-          ),
+              child: this.userInfor,
+              decoration:
+                  setBorder("bottom", Color.fromRGBO(206, 206, 206, 1), 1)),
           // entries
           Container(
             child: entriesWidget(entries),
           ),
           // children
           Container(
-              decoration: BoxDecoration(
-                  border: Border(
-                      top: BorderSide(
-                          width: 3,
-                          style: BorderStyle.solid,
-                          color: Color.fromRGBO(223, 223, 223, 1)))),
+              decoration: setBorder('top', Color.fromRGBO(223, 223, 223, 1), 3),
               width: double.infinity,
-              child: childInfor())
+              child: childInfor(childInforFields))
         ]));
   }
 
@@ -83,13 +90,8 @@ class _AccountManageState extends BaseState<AccountManage> {
           itemBuilder: (BuildContext context, int index) {
             return Container(
               padding: const EdgeInsets.only(left: 11.0, right: 11),
-              decoration: BoxDecoration(
-                  border: Border(
-                bottom: BorderSide(
-                    width: 1,
-                    style: BorderStyle.solid,
-                    color: Color.fromRGBO(206, 206, 206, 1)),
-              )),
+              decoration:
+                  setBorder('bottom', Color.fromRGBO(206, 206, 206, 1), 1),
               height: 38,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -106,7 +108,9 @@ class _AccountManageState extends BaseState<AccountManage> {
                     width: SizeUtil.smallSpace,
                   ),
                   GestureDetector(
-                    onTap: () => sampleBtnTap(index),
+                    onTap: () {
+                      print("dep trai");
+                    },
                     child: Image.asset(
                       "photo/${entries[index]['icon']}",
                       width: 11,
@@ -120,42 +124,95 @@ class _AccountManageState extends BaseState<AccountManage> {
     );
   }
 
-  Widget childInfor() {
+  Widget childInfor(List<Map<String, String>> childInforFields) {
     return Column(children: <Widget>[
-      // title & add child button
-      Row(
-        children: <Widget>[
-          Text(
-            S.of(context).childInfor,
-            style: TextStyle(color: ColorUtil.primaryColor),
-          ),
-          FlatButton.icon(
-              color: Colors.grey,
-              onPressed: () => sampleBtnTap(17),
-              label: Text(S.of(context).addChild),
-              padding: EdgeInsets.all(5),
-              icon: Image.asset("photo/add_child.png"))
-        ],
-      ),
+      headerChildInfor(),
+
       // child information
       Column(children: <Widget>[
-        Row(children: <Widget>[
-          // avatar
+        Container(
+          padding: EdgeInsets.all(10),
+          child: Row(children: <Widget>[
+            // avatar
+            ClipRRect(
+              borderRadius: BorderRadius.circular(5.0),
+              child: Image.asset(
+                'photo/child_avatar.png',
+                width: 90.0,
+                height: 90.0,
+                fit: BoxFit.fill,
+              ),
+            ),
 
-          // properties
-          Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Text("ten be  "),
-                  Text("Quyen Anh dep trai")
-                ],
-              )
-            ],
-          )
-        ])
+            // properties
+            Column(
+              children: <Widget>[
+                Container(
+                    // child: entriesWidget(childInforFields),
+                    ),
+                Row(
+                  children: <Widget>[
+                    Text("ten be  "),
+                    Text("Quyen Anh dep trai")
+                  ],
+                )
+              ],
+            )
+          ]),
+        )
       ]),
     ]);
+  }
+
+  Widget headerChildInfor() {
+    return Container(
+      padding: EdgeInsets.all(10),
+      height: 38,
+      decoration: setBorder("bottom", Color.fromRGBO(206, 206, 206, 1), 1),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Text(
+              S.of(context).childInfor,
+              style: TextStyle(
+                  color: ColorUtil.primaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              print("dep trai");
+            },
+            child: Row(children: <Widget>[
+              Text(
+                S.of(context).addChild,
+                style: TextStyle(color: ColorUtil.primaryColor),
+              ),
+              SizedBox(width: 5),
+              Image.asset("photo/add_child.png", width: 22, height: 22)
+            ]),
+          )
+        ],
+      ),
+    );
+  }
+
+  setBorder(String side, Color borderColor, double width) {
+    var boxDecoration = BoxDecoration();
+    var borderSide =
+        BorderSide(width: width, style: BorderStyle.solid, color: borderColor);
+
+    if (side == 'bottom') {
+      boxDecoration = BoxDecoration(border: Border(bottom: borderSide));
+    } else if (side == 'top') {
+      boxDecoration = BoxDecoration(border: Border(top: borderSide));
+    } else if (side == 'left') {
+      boxDecoration = BoxDecoration(border: Border(left: borderSide));
+    } else {
+      boxDecoration = BoxDecoration(border: Border(right: borderSide));
+    }
+    return boxDecoration;
   }
 
   @override

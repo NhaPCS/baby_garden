@@ -451,6 +451,15 @@ class S {
       args: [],
     );
   }
+
+  String get moreDetail {
+    return Intl.message(
+      'Xem chi tiết',
+      name: 'moreDetail',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

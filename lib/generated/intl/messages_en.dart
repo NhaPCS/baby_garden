@@ -51,6 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "lastDayCheck" : MessageLookupByLibrary.simpleMessage("Ngày đo gần nhất"),
     "mobilePhone" : MessageLookupByLibrary.simpleMessage("Số điện thoại"),
     "mobilePlaceholder" : MessageLookupByLibrary.simpleMessage("Nhập SĐT của bạn"),
+    "moreDetail" : MessageLookupByLibrary.simpleMessage("Xem chi tiết"),
     "myProfile" : MessageLookupByLibrary.simpleMessage("Trang cá nhân"),
     "order" : MessageLookupByLibrary.simpleMessage("Đơn hàng"),
     "partnerRegisHeadTitle" : MessageLookupByLibrary.simpleMessage("Nhập thông tin sau để trở thành đối tác của VCB nhé!"),

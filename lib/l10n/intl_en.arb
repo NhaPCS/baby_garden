@@ -45,5 +45,6 @@
   "healthIndex": "Chỉ số sức khỏe",
   "lastDayCheck": "Ngày đo gần nhất",
   "selectRemindProduct": "Chọn sản phẩm nhắc mua",
-  "selectRemindBuyTime": "Chọn thời gian nhắc lịch mua sản phẩm"
+  "selectRemindBuyTime": "Chọn thời gian nhắc lịch mua sản phẩm",
+  "moreDetail": "Xem chi tiết"
 }

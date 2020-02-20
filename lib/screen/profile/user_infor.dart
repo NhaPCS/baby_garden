@@ -60,3 +60,25 @@ class UserInfor extends StatelessWidget {
     );
   }
 }
+
+class ChildInfor extends StatelessWidget {
+  final childName;
+  final gender;
+  final birthday;
+  final healthIndex;
+  final lastCheck;
+
+  ChildInfor(
+      {Key key,
+      this.childName,
+      this.gender,
+      this.birthday,
+      this.healthIndex,
+      this.lastCheck})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
