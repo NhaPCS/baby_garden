@@ -3,7 +3,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/my_raised_button.dart';
+import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/product/discount_widget.dart';
 import 'package:baby_garden_flutter/widget/rounded_progress.dart';
 import 'package:flutter/material.dart';

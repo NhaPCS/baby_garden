@@ -1,8 +1,8 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_product_horizontal.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/button_close_dialog.dart';
-import 'package:baby_garden_flutter/widget/my_raised_button.dart';
+import 'package:baby_garden_flutter/widget/button/button_close_dialog.dart';
+import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/material.dart';
 

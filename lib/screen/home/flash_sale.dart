@@ -2,7 +2,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_flashsale_product.dart';
 import 'package:baby_garden_flutter/screen/list_product/list_product_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/my_raised_button.dart';
+import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

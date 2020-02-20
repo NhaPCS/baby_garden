@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/button_close_dialog.dart';
+import 'package:baby_garden_flutter/widget/button/button_close_dialog.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
