@@ -1,8 +1,8 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_product_horizontal.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/button_icon.dart';
-import 'package:baby_garden_flutter/widget/my_raised_button.dart';
+import 'package:baby_garden_flutter/widget/button/button_close_dialog.dart';
+import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/material.dart';
 
@@ -14,23 +14,7 @@ class AddToCartBottomDialog extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Container(
-            padding: SizeUtil.smallPadding,
-            child: ButtonIcon(
-              backgroundColor: ColorUtil.lightGray,
-              borderRadius: 20,
-              padding: EdgeInsets.all(3),
-              icon: Icon(
-                Icons.close,
-                color: ColorUtil.primaryColor,
-                size: SizeUtil.iconSize,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            alignment: Alignment.centerRight,
-          ),
+          ButtonCloseDialog(),
           Expanded(
               child: ListView(
             shrinkWrap: true,
@@ -41,14 +25,20 @@ class AddToCartBottomDialog extends StatelessWidget {
               ),
             ],
           )),
-          MyRaisedButton(
-            onPressed: () {},
-            icon: SvgIcon(
-              'ic_add_cart.svg',
-              height: SizeUtil.iconSize,
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.only(
+                left: SizeUtil.defaultSpace, right: SizeUtil.defaultSpace),
+            child: MyRaisedButton(
+              padding: SizeUtil.smallPadding,
+              onPressed: () {},
+              icon: SvgIcon(
+                'ic_add_cart.svg',
+                height: SizeUtil.iconSize,
+              ),
+              text: S.of(context).add_to_cart,
+              textStyle: TextStyle(color: Colors.white),
             ),
-            text: S.of(context).add_to_cart,
-            textStyle: TextStyle(color: Colors.white),
           ),
         ],
       ),

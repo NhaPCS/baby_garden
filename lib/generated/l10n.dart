@@ -685,6 +685,60 @@ class S {
       args: [],
     );
   }
+
+  String get hot_key {
+    return Intl.message(
+      'Từ khóa HOT',
+      name: 'hot_key',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get search_key_history {
+    return Intl.message(
+      'Lịch sử tìm kiếm',
+      name: 'search_key_history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delete {
+    return Intl.message(
+      'Xóa',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get search_by_name {
+    return Intl.message(
+      'Tìm kiếm theo tên sản phẩm',
+      name: 'search_by_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get search_by_content {
+    return Intl.message(
+      'Tìm kiếm theo nội dung sản phẩm',
+      name: 'search_by_content',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get distributor_name {
+    return Intl.message(
+      'nhà cung cấp ',
+      name: 'distributor_name',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

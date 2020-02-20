@@ -71,5 +71,11 @@
   "report_content_hint": "Viết nội dung báo cáo/ góp ý của bạn",
   "send": "Gửi",
   "product_count": "Số lượng:",
-  "color": "Màu sắc"
+  "color": "Màu sắc",
+  "hot_key": "Từ khóa HOT",
+  "search_key_history": "Lịch sử tìm kiếm",
+  "delete": "Xóa",
+  "search_by_name": "Tìm kiếm theo tên sản phẩm",
+  "search_by_content": "Tìm kiếm theo nội dung sản phẩm",
+  "distributor_name": "nhà cung cấp "
 }
