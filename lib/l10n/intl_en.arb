@@ -60,5 +60,13 @@
   "buy_guide": "Hướng dẫn mua hàng",
   "update_info_guide": "Hướng dẫn cập nhật thông tin",
   "policy": "Chính sách hệ thống",
-  "vcb_register_partner": "Đăng ký làm đối tác với VCB"
+  "vcb_register_partner": "Đăng ký làm đối tác với VCB",
+  "notify":"Thông báo",
+  "sale":"Khuyến mãi",
+  "personal": "Cá nhân",
+  "notify_hint_search": "Nhập từ khóa tìm kiếm thông báo",
+  "hide_readed_notify": "Ẩn tin đã đọc",
+  "send_by": "Gửi bởi: {}",
+  "notice_time": "Thời gian: {}"
+
 }

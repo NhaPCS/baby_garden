@@ -21,6 +21,7 @@ class ColorUtil {
   static const Color blueForgotPass = Color(0xff2294AB);
   static const Color flashSaleColor = Color(0xffF77102);
   static const Color bgProgressOrange = Color(0xffFFB483);
+  static const Color white = Color(0xffffff);
 
   static Color getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");

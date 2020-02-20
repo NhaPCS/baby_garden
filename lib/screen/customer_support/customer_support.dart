@@ -5,16 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 
-class CustomerSupportScreen extends StatefulWidget{
+class CustomerSupportScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _CustomerSupportScreenState();
   }
-
 }
 
-class _CustomerSupportScreenState extends BaseState<CustomerSupportScreen>{
+class _CustomerSupportScreenState extends BaseState<CustomerSupportScreen> {
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
@@ -22,84 +21,133 @@ class _CustomerSupportScreenState extends BaseState<CustomerSupportScreen>{
       appBar: getAppBar(
         title: S.of(context).customer_support,
         centerTitle: true,
-          bgColor: Colors.white,
-          titleColor: ColorUtil.primaryColor,
-          backColor: ColorUtil.primaryColor,
+        bgColor: Colors.white,
+        titleColor: ColorUtil.primaryColor,
+        backColor: ColorUtil.primaryColor,
       ),
       body: Center(
         child: Column(
           children: <Widget>[
             Image.asset("photo/logo.png",
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width / 3),
-            Text(S
-                .of(context)
-                .app_name,
+                width: MediaQuery.of(context).size.width / 3),
+            Text(S.of(context).app_name,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: SizeUtil.textSizeLogo, fontFamily: "hobo")),
             SizedBox(),
             ListTile(
-              leading: Image.asset("photo/logo.png",
-                  width: SizeUtil.iconSizeBig ),
-              title: Text(S
-                  .of(context)
-                  .vcb_present,
+              leading:
+                  Image.asset("photo/logo.png", width: SizeUtil.iconSizeBig),
+              title: Text(S.of(context).vcb_present,
                   textAlign: TextAlign.start,
                   style: TextStyle(
-                      fontSize: SizeUtil.textSizeDefault,)),
+                    fontSize: SizeUtil.textSizeDefault,
+                  )),
+            ),
+            Container(
+              height: 1,
+              width: MediaQuery.of(context).size.width,
+              margin: new EdgeInsets.only(
+                  left: SizeUtil.defaultSpace,
+                  right: SizeUtil.defaultSpace,
+                  top: 0,
+                  bottom: 0),
+              color: ColorUtil.gray,
             ),
             ListTile(
-              leading: Image.asset("photo/logo.png",
-                  width: SizeUtil.iconSizeBig ),
-              title: Text(S
-                  .of(context)
-                  .vcb_contact,
+              leading: Image.asset("photo/support_contact.png",
+                  width: SizeUtil.iconSizeBig),
+              title: Text(S.of(context).vcb_contact,
                   textAlign: TextAlign.start,
                   style: TextStyle(
-                      fontSize: SizeUtil.textSizeDefault, )),
+                    fontSize: SizeUtil.textSizeDefault,
+                  )),
+            ),
+            Container(
+              height: 1,
+              width: MediaQuery.of(context).size.width,
+              margin: new EdgeInsets.only(
+                  left: SizeUtil.defaultSpace,
+                  right: SizeUtil.defaultSpace,
+                  top: 0,
+                  bottom: 0),
+              color: ColorUtil.gray,
             ),
             ListTile(
-              leading: Image.asset("photo/logo.png",
-                  width: SizeUtil.iconSizeBig ),
-              title: Text(S
-                  .of(context)
-                  .buy_guide,
+              leading: Image.asset("photo/support_guide.png",
+                  width: SizeUtil.iconSizeBig),
+              title: Text(S.of(context).buy_guide,
                   textAlign: TextAlign.start,
                   style: TextStyle(
-                      fontSize: SizeUtil.textSizeDefault, )),
+                    fontSize: SizeUtil.textSizeDefault,
+                  )),
+            ),
+            Container(
+              height: 1,
+              width: MediaQuery.of(context).size.width,
+              margin: new EdgeInsets.only(
+                  left: SizeUtil.defaultSpace,
+                  right: SizeUtil.defaultSpace,
+                  top: 0,
+                  bottom: 0),
+              color: ColorUtil.gray,
             ),
             ListTile(
-              leading: Image.asset("photo/logo.png",
-                  width: SizeUtil.iconSizeBig ),
-              title: Text(S
-                  .of(context)
-                  .update_info_guide,
+              leading: Image.asset("photo/support_partner.png",
+                  width: SizeUtil.iconSizeBig),
+              title: Text(S.of(context).update_info_guide,
                   textAlign: TextAlign.start,
                   style: TextStyle(
-                      fontSize: SizeUtil.textSizeDefault, )),
+                    fontSize: SizeUtil.textSizeDefault,
+                  )),
+            ),
+            Container(
+              height: 1,
+              width: MediaQuery.of(context).size.width,
+              margin: new EdgeInsets.only(
+                  left: SizeUtil.defaultSpace,
+                  right: SizeUtil.defaultSpace,
+                  top: 0,
+                  bottom: 0),
+              color: ColorUtil.gray,
             ),
             ListTile(
-              leading: Image.asset("photo/logo.png",
-                  width: SizeUtil.iconSizeBig ),
-              title: Text(S
-                  .of(context)
-                  .policy,
+              leading: Image.asset("photo/support_term.png",
+                  width: SizeUtil.iconSizeBig),
+              title: Text(S.of(context).policy,
                   textAlign: TextAlign.start,
                   style: TextStyle(
-                      fontSize: SizeUtil.textSizeDefault, )),
+                    fontSize: SizeUtil.textSizeDefault,
+                  )),
+            ),
+            Container(
+              height: 1,
+              width: MediaQuery.of(context).size.width,
+              margin: new EdgeInsets.only(
+                  left: SizeUtil.defaultSpace,
+                  right: SizeUtil.defaultSpace,
+                  top: 0,
+                  bottom: 0),
+              color: ColorUtil.gray,
             ),
             ListTile(
-              leading: Image.asset("photo/logo.png",
-                  width: SizeUtil.iconSizeBig ),
-              title: Text(S
-                  .of(context)
-                  .vcb_register_partner,
+              leading: Image.asset("photo/support_update.png",
+                  width: SizeUtil.iconSizeBig),
+              title: Text(S.of(context).vcb_register_partner,
                   textAlign: TextAlign.start,
                   style: TextStyle(
-                      fontSize: SizeUtil.textSizeDefault, )),
+                    fontSize: SizeUtil.textSizeDefault,
+                  )),
+            ),
+            Container(
+              height: 1,
+              width: MediaQuery.of(context).size.width,
+              margin: new EdgeInsets.only(
+                  left: SizeUtil.defaultSpace,
+                  right: SizeUtil.defaultSpace,
+                  top: 0,
+                  bottom: 0),
+              color: ColorUtil.gray,
             ),
           ],
         ),
@@ -112,5 +160,4 @@ class _CustomerSupportScreenState extends BaseState<CustomerSupportScreen>{
     // TODO: implement providers
     return null;
   }
-
 }

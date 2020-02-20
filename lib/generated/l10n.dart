@@ -586,6 +586,55 @@ class S {
       args: [],
     );
   }
+
+  String get notify {
+    return Intl.message(
+      'Thông báo',
+      name: 'notify',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get sale {
+    return Intl.message(
+      'Khuyến mãi',
+      name: 'sale',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get personal {
+    return Intl.message(
+      'Cá nhân',
+      name: 'personal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get notify_hint_search {
+    return Intl.message(
+      'Nhập từ khóa tìm kiếm thông báo',
+      name: 'notify_hint_search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get hide_readed_notify {
+    return Intl.message(
+      'Ẩn tin đã đọc',
+      name: 'hide_readed_notify',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'send_by' key
+
+  // skipped getter for the 'notice_time' key
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
