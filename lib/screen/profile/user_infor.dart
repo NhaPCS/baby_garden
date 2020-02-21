@@ -62,19 +62,21 @@ class UserInfor extends StatelessWidget {
 }
 
 class ChildInfor extends StatelessWidget {
+  final avatar;
   final childName;
   final gender;
   final birthday;
   final healthIndex;
-  final lastCheck;
+  final lastDayCheck;
 
   ChildInfor(
       {Key key,
+      this.avatar,
       this.childName,
       this.gender,
       this.birthday,
       this.healthIndex,
-      this.lastCheck})
+      this.lastDayCheck})
       : super(key: key);
 
   @override

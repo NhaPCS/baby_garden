@@ -27,9 +27,9 @@ class _AccountManageState extends BaseState<AccountManage> {
   );
 
   final childInformation = ChildInfor(
-    childName: 'Hung gay',
+    childName: 'Hùng gay',
     gender: 'male',
-    lastCheck: '15/06/2011',
+    lastDayCheck: '15/06/2011',
     birthday: '15/06/2011',
     healthIndex: 100,
   );
@@ -57,9 +57,8 @@ class _AccountManageState extends BaseState<AccountManage> {
       entry(S.of(context).childName, childInformation.childName, 'pencil.png'),
       entry(S.of(context).gender, childInformation.gender, ''),
       entry(S.of(context).birthday, childInformation.birthday, ''),
-      entry(S.of(context).healthIndex, S.of(context).moreDetail, ''),
-      entry(
-          S.of(context).lastDayCheck, S.of(context).lastDayCheck, 'right.png'),
+      entry(S.of(context).healthIndex, S.of(context).moreDetail, 'right.png'),
+      entry(S.of(context).lastDayCheck, childInformation.lastDayCheck, ''),
     ];
 
     return Scaffold(
@@ -84,7 +83,7 @@ class _AccountManageState extends BaseState<AccountManage> {
 
   Widget entriesWidget(List<Map<String, String>> entries) {
     return Container(
-      height: 190,
+      height: 228,
       child: ListView.builder(
           itemCount: entries.length,
           itemBuilder: (BuildContext context, int index) {
@@ -124,40 +123,74 @@ class _AccountManageState extends BaseState<AccountManage> {
     );
   }
 
+  Widget entriesChildInfor(List<Map<String, String>> entries) {
+    return Container(
+      height: 111,
+      child: ListView.builder(
+          itemCount: entries.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              padding: const EdgeInsets.only(left: 11.0, right: 11),
+              height: 20,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(entries[index]['title']),
+                  Expanded(
+                      child: Text(entries[index]['content'],
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                              color: (index == 3)
+                                  ? ColorUtil.primaryColor
+                                  : Colors.black))),
+                  SizedBox(
+                    width: SizeUtil.smallSpace,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      print("dep trai");
+                    },
+                    child: Image.asset(
+                      "photo/${entries[index]['icon']}",
+                      width: 11,
+                      height: 11,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
+    );
+  }
+
   Widget childInfor(List<Map<String, String>> childInforFields) {
     return Column(children: <Widget>[
       headerChildInfor(),
-
       // child information
       Column(children: <Widget>[
         Container(
           padding: EdgeInsets.all(10),
+          decoration: setBorder("bottom", Color.fromRGBO(206, 206, 206, 1), 1),
           child: Row(children: <Widget>[
             // avatar
-            ClipRRect(
-              borderRadius: BorderRadius.circular(5.0),
-              child: Image.asset(
-                'photo/child_avatar.png',
-                width: 90.0,
-                height: 90.0,
-                fit: BoxFit.fill,
+            Container(
+              margin: EdgeInsets.only(bottom: 13),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(5.0),
+                child: Image.asset(
+                  'photo/child_avatar.png',
+                  width: 92.0,
+                  height: 92.0,
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
-
-            // properties
-            Column(
-              children: <Widget>[
-                Container(
-                    // child: entriesWidget(childInforFields),
-                    ),
-                Row(
-                  children: <Widget>[
-                    Text("ten be  "),
-                    Text("Quyen Anh dep trai")
-                  ],
-                )
-              ],
-            )
+            Expanded(
+              child: Container(
+                height: 111,
+                child: entriesChildInfor(childInforFields),
+              ),
+            ),
           ]),
         )
       ]),
