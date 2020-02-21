@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-class FavoriteProduct extends StatefulWidget {
+class SeenProduct extends StatefulWidget {
   @override
-  _FavoriteProduct createState() => _FavoriteProduct();
+  _SeenProduct createState() => _SeenProduct();
 }
 
-class _FavoriteProduct extends BaseState<FavoriteProduct> {
+class _SeenProduct extends BaseState<SeenProduct> {
   final GetListProvider _getListProvider = GetListProvider();
 
   final product = ProductCard(
@@ -20,14 +20,12 @@ class _FavoriteProduct extends BaseState<FavoriteProduct> {
     description: "Sữa Alene dành cho bé thể tích 320ml...",
     price: "900000",
     datetime: "13/2/2020",
-    favorite: true,
   );
 
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
-        appBar: getAppBar(
-            title: S.of(context).favoriteProduct), //S.of(context).myProfile),
+        appBar: getAppBar(title: S.of(context).seenProduct),
         body: Column(children: <Widget>[
           Container(
             child: Column(
