@@ -11,8 +11,19 @@ import 'button/button_icon.dart';
 class ChangeQuantityWidget extends StatefulWidget {
   final ValueNotifier<int> quantityController;
   final int max;
+  final Color buttonColor;
+  final Color textColor;
+  final double height;
+  final EdgeInsets padding;
 
-  const ChangeQuantityWidget({Key key, this.quantityController, this.max = 10})
+  const ChangeQuantityWidget(
+      {Key key,
+      this.quantityController,
+      this.max = 10,
+      this.buttonColor = ColorUtil.textGray,
+      this.textColor = ColorUtil.textGray,
+      this.height = 35,
+      this.padding = SizeUtil.tinyPadding})
       : super(key: key);
 
   @override
@@ -28,7 +39,7 @@ class _ChangeQuantityState extends BaseState<ChangeQuantityWidget> {
   @override
   Widget buildWidget(BuildContext context) {
     return Container(
-      height: 35,
+      height: widget.height,
       margin: SizeUtil.smallPadding,
       decoration: BoxDecoration(
           border: Border.all(color: ColorUtil.textGray, width: 1)),
@@ -37,8 +48,9 @@ class _ChangeQuantityState extends BaseState<ChangeQuantityWidget> {
           ButtonIcon(
             icon: Icon(
               Icons.remove,
-              color: ColorUtil.textGray,
+              color: widget.buttonColor,
             ),
+            padding: widget.padding,
             onPressed: () {
               if (_changeQuantityProvider.count > 0)
                 _changeQuantityProvider.minusCount();
@@ -57,7 +69,7 @@ class _ChangeQuantityState extends BaseState<ChangeQuantityWidget> {
               return Text(
                 value.count.toString(),
                 style: TextStyle(
-                    color: ColorUtil.textGray, fontWeight: FontWeight.bold),
+                    color: widget.textColor, fontWeight: FontWeight.bold),
               );
             },
           ),
@@ -69,8 +81,9 @@ class _ChangeQuantityState extends BaseState<ChangeQuantityWidget> {
           ButtonIcon(
             icon: Icon(
               Icons.add,
-              color: ColorUtil.textGray,
+              color: widget.buttonColor,
             ),
+            padding: widget.padding,
             onPressed: () {
               if (_changeQuantityProvider.count < widget.max)
                 _changeQuantityProvider.addCount();

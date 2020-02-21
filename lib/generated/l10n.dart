@@ -1117,6 +1117,60 @@ class S {
       args: [],
     );
   }
+
+  String get note_for_product_promo {
+    return Intl.message(
+      'Ghi chú khuyến mại của sản phẩm',
+      name: 'note_for_product_promo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get type_promo_code {
+    return Intl.message(
+      'Nhập mã giảm giá',
+      name: 'type_promo_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get apply {
+    return Intl.message(
+      'Áp dụng',
+      name: 'apply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get promo_code {
+    return Intl.message(
+      'Mã giảm giá',
+      name: 'promo_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get pre_count {
+    return Intl.message(
+      'Tạm tính',
+      name: 'pre_count',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get take_order {
+    return Intl.message(
+      'Tiến hành đặt hàng',
+      name: 'take_order',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

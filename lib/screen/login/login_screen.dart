@@ -2,6 +2,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/show_hide_pass_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/forgot_password/forgot_password_screen.dart';
+import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/register/register_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/circle_checkbox.dart';
@@ -39,7 +40,8 @@ class _LoginScreenState extends BaseState<LoginScreen> {
                 width: MediaQuery.of(context).size.width / 3),
             Text(S.of(context).app_name,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: SizeUtil.textSizeLogo, fontFamily: "hobo")),
+                style: TextStyle(
+                    fontSize: SizeUtil.textSizeLogo, fontFamily: "hobo")),
             Expanded(
               child: SizedBox(),
             ),
@@ -112,11 +114,16 @@ class _LoginScreenState extends BaseState<LoginScreen> {
                 ),
                 width: MediaQuery.of(context).size.width,
                 child: RaisedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    pushReplacement(MainScreen());
+                  },
                   color: ColorUtil.colorAccent,
                   child: Text(
                     S.of(context).login,
-                    style: TextStyle(fontSize: SizeUtil.textSizeDefault, color: Colors.white,fontStyle: FontStyle.normal),
+                    style: TextStyle(
+                        fontSize: SizeUtil.textSizeDefault,
+                        color: Colors.white,
+                        fontStyle: FontStyle.normal),
                   ),
                 )),
             SizedBox(

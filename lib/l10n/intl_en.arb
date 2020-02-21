@@ -119,5 +119,11 @@
   "delete": "Xóa",
   "search_by_name": "Tìm kiếm theo tên sản phẩm",
   "search_by_content": "Tìm kiếm theo nội dung sản phẩm",
-  "distributor_name": "nhà cung cấp "
+  "distributor_name": "nhà cung cấp ",
+  "note_for_product_promo": "Ghi chú khuyến mại của sản phẩm",
+  "type_promo_code": "Nhập mã giảm giá",
+  "apply": "Áp dụng",
+  "promo_code": "Mã giảm giá",
+  "pre_count": "Tạm tính",
+  "take_order": "Tiến hành đặt hàng"
 }

@@ -26,8 +26,7 @@ class _FavoriteProduct extends BaseState<FavoriteProduct> {
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
-        appBar: getAppBar(
-            title: S.of(context).favoriteProduct), //S.of(context).myProfile),
+        appBar: getAppBar(title: S.of(context).favoriteProduct),
         body: Column(children: <Widget>[
           Container(
             child: Column(
