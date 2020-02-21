@@ -533,154 +533,175 @@ class S {
     );
   }
 
-  String get partnerRegister {
+
+  String get setting_2 {
     return Intl.message(
-      'Đăng ký đối tác',
-      name: 'partnerRegister',
+      'Nhận thông báo thay đổi giá của sản phẩm yêu thích',
+      name: 'setting_2',
+
       desc: '',
       args: [],
     );
   }
 
-  String get partnerRegisHeadTitle {
+
+  String get setting_3 {
     return Intl.message(
-      'Nhập thông tin sau để trở thành đối tác của VCB nhé!',
-      name: 'partnerRegisHeadTitle',
+      'Nhận thông báo lịch mua và lịch sử dung sản phẩm',
+      name: 'setting_3',
       desc: '',
       args: [],
     );
   }
 
-  String get shopName {
+  String get setting_4 {
     return Intl.message(
-      'Tên Shop',
-      name: 'shopName',
+      'Nhận thông báo từ VCB Express',
+      name: 'setting_4',
       desc: '',
       args: [],
     );
   }
 
-  String get shopPlaceholder {
+  String get customer_support {
     return Intl.message(
-      'Nhập tên shop của bạn',
-      name: 'shopPlaceholder',
+      'Hỗ trợ khách hàng',
+      name: 'customer_support',
       desc: '',
       args: [],
     );
   }
 
-  String get mobilePlaceholder {
+  String get vcb_present {
     return Intl.message(
-      'Nhập SĐT của bạn',
-      name: 'mobilePlaceholder',
+      'Giới thiệu về VCB',
+      name: 'vcb_present',
       desc: '',
       args: [],
     );
   }
 
-  String get addressPlaceholder {
+  String get vcb_contact {
     return Intl.message(
-      'Nhập SĐT của bạn',
-      name: 'addressPlaceholder',
+      'Thông tin liên hệ với VCB',
+      name: 'vcb_contact',
       desc: '',
       args: [],
     );
   }
 
-  String get career {
+  String get buy_guide {
     return Intl.message(
-      'Ngành nghề',
-      name: 'career',
+      'Hướng dẫn mua hàng',
+      name: 'buy_guide',
       desc: '',
       args: [],
     );
   }
 
-  String get careerPlaceholder {
+  String get update_info_guide {
     return Intl.message(
-      'Nhập ngành nghề của bạn',
-      name: 'careerPlaceholder',
+      'Hướng dẫn cập nhật thông tin',
+      name: 'update_info_guide',
       desc: '',
       args: [],
     );
   }
 
-  String get changePassword {
+  String get policy {
     return Intl.message(
-      'Đổi mật khẩu',
-      name: 'changePassword',
+      'Chính sách hệ thống',
+      name: 'policy',
       desc: '',
       args: [],
     );
   }
 
-  String get childInfor {
+  String get vcb_register_partner {
     return Intl.message(
-      'Thông tin con',
-      name: 'childInfor',
+      'Đăng ký làm đối tác với VCB',
+      name: 'vcb_register_partner',
       desc: '',
       args: [],
     );
   }
 
-  String get addChild {
+  String get notify {
     return Intl.message(
-      'Thêm con',
-      name: 'addChild',
+      'Thông báo',
+      name: 'notify',
       desc: '',
       args: [],
     );
   }
 
-  String get childName {
+  String get sale {
     return Intl.message(
-      'Tên bé',
-      name: 'childName',
+      'Khuyến mãi',
+      name: 'sale',
       desc: '',
       args: [],
     );
   }
 
-  String get healthIndex {
+  String get personal {
     return Intl.message(
-      'Chỉ số sức khỏe',
-      name: 'healthIndex',
+      'Cá nhân',
+      name: 'personal',
       desc: '',
       args: [],
     );
   }
 
-  String get lastDayCheck {
+  String get notify_hint_search {
     return Intl.message(
-      'Ngày đo gần nhất',
-      name: 'lastDayCheck',
+      'Nhập từ khóa tìm kiếm thông báo',
+      name: 'notify_hint_search',
       desc: '',
       args: [],
     );
   }
 
-  String get selectRemindProduct {
+  String get hide_readed_notify {
     return Intl.message(
-      'Chọn sản phẩm nhắc mua',
-      name: 'selectRemindProduct',
+      'Ẩn tin đã đọc',
+      name: 'hide_readed_notify',
       desc: '',
       args: [],
     );
   }
 
-  String get selectRemindBuyTime {
+  String send_by(dynamic author) {
     return Intl.message(
-      'Chọn thời gian nhắc lịch mua sản phẩm',
-      name: 'selectRemindBuyTime',
+      'Gửi bởi: $author',
+      name: 'send_by',
+      desc: '',
+      args: [author],
+    );
+  }
+
+  String notice_time(dynamic time) {
+    return Intl.message(
+      'Thời gian: $time',
+      name: 'notice_time',
+      desc: '',
+      args: [time],
+    );
+  }
+
+  String get notify_title {
+    return Intl.message(
+      'Trả lời đánh giá đơn ',
+      name: 'notify_title',
       desc: '',
       args: [],
     );
   }
 
-  String get moreDetail {
+  String get notify_booking_success {
     return Intl.message(
-      'Xem chi tiết',
-      name: 'moreDetail',
+      'Chúc mừng ahjsda aidas doa sjdas  đã đặt hàng thành công va sau do khong co gi nua het a la la la la la ala la ala la',
+      name: 'notify_booking_success',
       desc: '',
       args: [],
     );
