@@ -6,7 +6,7 @@ import 'package:baby_garden_flutter/provider/change_parent_category_provider.dar
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/category_product/sliver_category_delegate.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/loadmore_nested_scrollview.dart';
+import 'package:baby_garden_flutter/widget/loadmore/loadmore_nested_scrollview.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:baby_garden_flutter/widget/product/list_parent_category.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +56,7 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
                   S.of(context).category_product.toUpperCase(),
                   style: TextStyle(color: Colors.white),
                 ),
-                leading: getLeading(),
+                leading: BaseState.getLeading(context),
                 centerTitle: true,
                 pinned: true,
                 floating: true,

@@ -8,11 +8,15 @@ class MyCarouselSlider extends StatefulWidget {
   final List<dynamic> images;
   final double indicationSize;
   final double height;
+  final double width;
   final double borderRadius;
   final EdgeInsets margin;
   final bool isAssetImage;
   final Color indicatorActiveColor;
   final Color indicatorInactiveColor;
+  final Color slideBackground;
+  final BoxFit boxFit;
+
 
   const MyCarouselSlider(
       {Key key,
@@ -23,7 +27,10 @@ class MyCarouselSlider extends StatefulWidget {
       this.margin = SizeUtil.smallPadding,
       this.isAssetImage = false,
       this.indicatorActiveColor = ColorUtil.primaryColor,
-      this.indicatorInactiveColor = Colors.white})
+      this.indicatorInactiveColor = Colors.white,
+      this.slideBackground = ColorUtil.lightGray,
+      this.boxFit = BoxFit.cover,
+      this.width = double.infinity})
       : super(key: key);
 
   @override
@@ -59,15 +66,15 @@ class _MyCarouselState extends State<MyCarouselSlider> {
               builder: (BuildContext context) {
                 return Container(
                   margin: widget.margin,
-                  width: double.infinity,
+                  width: widget.width,
                   height: double.infinity,
                   decoration: BoxDecoration(
-                      color: ColorUtil.lightGray,
+                      color: widget.slideBackground,
                       image: DecorationImage(
                           image: widget.isAssetImage
                               ? AssetImage(image)
                               : CachedNetworkImageProvider(image),
-                          fit: BoxFit.cover),
+                          fit: widget.boxFit),
                       borderRadius: BorderRadius.all(
                           Radius.circular(widget.borderRadius))),
                 );

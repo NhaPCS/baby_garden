@@ -1,8 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/my_raised_button.dart';
+import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
+import 'package:baby_garden_flutter/widget/product/discount_widget.dart';
 import 'package:baby_garden_flutter/widget/rounded_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,55 +40,45 @@ class ItemProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: width == null
-          ? Provider.of<AppProvider>(context).productWidth
-          : width,
-      padding: padding,
-      margin: margin,
-      height: height,
-      decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.all(Radius.circular(borderRadius))),
-      child: Stack(
-        children: <Widget>[
-          getMainContainer(context),
-          !showTime
-              ? SizedBox()
-              : MyRaisedButton(
-                  onPressed: () {},
-                  padding: EdgeInsets.only(
-                      left: SizeUtil.smallSpace,
-                      right: SizeUtil.smallSpace,
-                      top: SizeUtil.tinySpace,
-                      bottom: SizeUtil.tinySpace),
-                  textStyle: TextStyle(
-                      color: Colors.white, fontSize: SizeUtil.textSizeSmall),
-                  text: "00:56:23",
-                  borderRadius: SizeUtil.bigRadius,
-                ),
-          Positioned(
-            child: Container(
-              alignment: Alignment.center,
-              width: 30,
-              height: 30,
-              padding: SizeUtil.tinyPadding,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('photo/bg_discount.png'))),
-              child: AutoSizeText(
-                "33%",
-                maxFontSize: SizeUtil.textSizeSmall,
-                minFontSize: SizeUtil.textSizeTiny,
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-            ),
-            right: 0,
-            top: SizeUtil.smallSpace,
-          )
-        ],
+    return GestureDetector(
+      child: Container(
+        width: width == null
+            ? Provider.of<AppProvider>(context).productWidth
+            : width,
+        padding: padding,
+        margin: margin,
+        height: height,
+        decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.all(Radius.circular(borderRadius))),
+        child: Stack(
+          children: <Widget>[
+            getMainContainer(context),
+            !showTime
+                ? SizedBox()
+                : MyRaisedButton(
+                    onPressed: () {},
+                    padding: EdgeInsets.only(
+                        left: SizeUtil.smallSpace,
+                        right: SizeUtil.smallSpace,
+                        top: SizeUtil.tinySpace,
+                        bottom: SizeUtil.tinySpace),
+                    textStyle: TextStyle(
+                        color: Colors.white, fontSize: SizeUtil.textSizeSmall),
+                    text: "00:56:23",
+                    borderRadius: SizeUtil.bigRadius,
+                  ),
+            Positioned(
+              child: DiscountWidget(discount: 33),
+              right: 0,
+              top: SizeUtil.smallSpace,
+            )
+          ],
+        ),
       ),
+      onTap: () {
+        RouteUtil.push(context, ProductDetailScreen());
+      },
     );
   }
 

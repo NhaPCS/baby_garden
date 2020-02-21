@@ -11,13 +11,16 @@ class MyTextField extends StatelessWidget {
   final Color borderColor;
   final double borderRadius;
   final Widget suffix;
+  final String suffixText;
   final Widget prefix;
   final TextAlign textAlign;
   final TextInputType inputType;
   final bool obscureText;
   final EdgeInsetsGeometry contentPadding;
   final ValueChanged<String> onChanged;
+  final int maxLines;
   final double elevation;
+  final bool enable;
 
   const MyTextField(
       {Key key,
@@ -28,6 +31,7 @@ class MyTextField extends StatelessWidget {
       this.borderColor = ColorUtil.textGray,
       this.borderRadius = 0,
       this.suffix,
+      this.suffixText,
       this.textAlign = TextAlign.left,
       this.inputType = TextInputType.text,
       this.obscureText = false,
@@ -39,7 +43,9 @@ class MyTextField extends StatelessWidget {
       this.onChanged,
       this.hintStyle,
       this.elevation,
-      this.prefix})
+      this.prefix,
+      this.maxLines = 1,
+      this.enable = true})
       : super(key: key);
 
   @override
@@ -59,8 +65,10 @@ class MyTextField extends StatelessWidget {
       controller: textEditingController,
       style: textStyle,
       textAlign: textAlign,
+      maxLines: maxLines,
       obscureText: obscureText,
       onChanged: onChanged,
+      enabled: enable,
       keyboardType: inputType,
       decoration: InputDecoration(
           contentPadding: contentPadding,
@@ -69,6 +77,7 @@ class MyTextField extends StatelessWidget {
           focusColor: backgroundColor,
           hoverColor: backgroundColor,
           suffixIcon: suffix,
+          suffixText: suffixText,
           prefixIcon: prefix,
           hintText: hint,
           hintStyle: hintStyle,
