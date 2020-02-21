@@ -231,23 +231,6 @@ class _AccountManageState extends BaseState<AccountManage> {
     );
   }
 
-  setBorder(String side, Color borderColor, double width) {
-    var boxDecoration = BoxDecoration();
-    var borderSide =
-        BorderSide(width: width, style: BorderStyle.solid, color: borderColor);
-
-    if (side == 'bottom') {
-      boxDecoration = BoxDecoration(border: Border(bottom: borderSide));
-    } else if (side == 'top') {
-      boxDecoration = BoxDecoration(border: Border(top: borderSide));
-    } else if (side == 'left') {
-      boxDecoration = BoxDecoration(border: Border(left: borderSide));
-    } else {
-      boxDecoration = BoxDecoration(border: Border(right: borderSide));
-    }
-    return boxDecoration;
-  }
-
   @override
   List<SingleChildWidget> providers() {
     return [ChangeNotifierProvider.value(value: _getListProvider)];
