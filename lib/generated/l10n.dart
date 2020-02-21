@@ -533,17 +533,176 @@ class S {
     );
   }
 
-
-  String get setting_2 {
+  String get partnerRegister {
     return Intl.message(
-      'Nhận thông báo thay đổi giá của sản phẩm yêu thích',
-      name: 'setting_2',
-
+      'Đăng ký đối tác',
+      name: 'partnerRegister',
       desc: '',
       args: [],
     );
   }
 
+  String get partnerRegisHeadTitle {
+    return Intl.message(
+      'Nhập thông tin sau để trở thành đối tác của VCB nhé!',
+      name: 'partnerRegisHeadTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get shopName {
+    return Intl.message(
+      'Tên Shop',
+      name: 'shopName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get shopPlaceholder {
+    return Intl.message(
+      'Nhập tên shop của bạn',
+      name: 'shopPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mobilePlaceholder {
+    return Intl.message(
+      'Nhập SĐT của bạn',
+      name: 'mobilePlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addressPlaceholder {
+    return Intl.message(
+      'Nhập SĐT của bạn',
+      name: 'addressPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get career {
+    return Intl.message(
+      'Ngành nghề',
+      name: 'career',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get careerPlaceholder {
+    return Intl.message(
+      'Nhập ngành nghề của bạn',
+      name: 'careerPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get changePassword {
+    return Intl.message(
+      'Đổi mật khẩu',
+      name: 'changePassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get childInfor {
+    return Intl.message(
+      'Thông tin con',
+      name: 'childInfor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addChild {
+    return Intl.message(
+      'Thêm con',
+      name: 'addChild',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get childName {
+    return Intl.message(
+      'Tên bé',
+      name: 'childName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get healthIndex {
+    return Intl.message(
+      'Chỉ số sức khỏe',
+      name: 'healthIndex',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get lastDayCheck {
+    return Intl.message(
+      'Ngày đo gần nhất',
+      name: 'lastDayCheck',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get selectRemindProduct {
+    return Intl.message(
+      'Chọn sản phẩm nhắc mua',
+      name: 'selectRemindProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get selectRemindBuyTime {
+    return Intl.message(
+      'Chọn thời gian nhắc lịch mua sản phẩm',
+      name: 'selectRemindBuyTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get moreDetail {
+    return Intl.message(
+      'Xem chi tiết',
+      name: 'moreDetail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get setting_1 {
+    return Intl.message(
+      'Nhận thông báo các sản phẩm giờ vàng',
+      name: 'setting_1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get setting_2 {
+    return Intl.message(
+      'Nhận thông báo thay đổi giá của sản phẩm yêu thích',
+      name: 'setting_2',
+      desc: '',
+      args: [],
+    );
+  }
 
   String get setting_3 {
     return Intl.message(
