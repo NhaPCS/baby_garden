@@ -21,7 +21,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m0(time) => "(0:${time})";
 
-  static m1(sold, total) => "Đã bán ${sold}/${total}";
+  static m1(time) => "Thời gian: ${time}";
+
+  static m2(author) => "Gửi bởi: ${author}";
+
+  static m3(sold, total) => "Đã bán ${sold}/${total}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -57,8 +61,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "joinDate" : MessageLookupByLibrary.simpleMessage("Tham gia từ"),
     "login" : MessageLookupByLibrary.simpleMessage("Đăng nhập"),
     "myProfile" : MessageLookupByLibrary.simpleMessage("Trang cá nhân"),
+    "notice_time" : m1,
     "notify" : MessageLookupByLibrary.simpleMessage("Thông báo"),
+    "notify_booking_success" : MessageLookupByLibrary.simpleMessage("Chúc mừng ahjsda aidas doa sjdas  đã đặt hàng thành công va sau do khong co gi nua het a la la la la la ala la ala la"),
     "notify_hint_search" : MessageLookupByLibrary.simpleMessage("Nhập từ khóa tìm kiếm thông báo"),
+    "notify_title" : MessageLookupByLibrary.simpleMessage("Trả lời đánh giá đơn "),
     "order" : MessageLookupByLibrary.simpleMessage("Đơn hàng"),
     "otp_timer_out" : MessageLookupByLibrary.simpleMessage("Nếu bạn không đăng ký được, vui lòng gọi\nđiện tới số  0912 277 022 để được hỗ trợ"),
     "password" : MessageLookupByLibrary.simpleMessage("Mật khẩu"),
@@ -76,13 +83,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "sale" : MessageLookupByLibrary.simpleMessage("Khuyến mãi"),
     "search_hint" : MessageLookupByLibrary.simpleMessage("Bạn muốn tìm gì hôm nay?"),
     "seenProduct" : MessageLookupByLibrary.simpleMessage("Sản phẩm đã xem"),
+    "send_by" : m2,
     "setting" : MessageLookupByLibrary.simpleMessage("Cài đặt"),
     "setting_1" : MessageLookupByLibrary.simpleMessage("Nhận thông báo các sản phẩm giờ vàng"),
     "setting_2" : MessageLookupByLibrary.simpleMessage("Nhận thông báo thay đổi giá của sản phẩm yêu thích"),
     "setting_3" : MessageLookupByLibrary.simpleMessage("Nhận thông báo lịch mua và lịch sử dung sản phẩm"),
     "setting_4" : MessageLookupByLibrary.simpleMessage("Nhận thông báo từ VCB Express"),
     "shopping" : MessageLookupByLibrary.simpleMessage("Shopping"),
-    "sold_count" : m1,
+    "sold_count" : m3,
     "update_info_guide" : MessageLookupByLibrary.simpleMessage("Hướng dẫn cập nhật thông tin"),
     "vcb_contact" : MessageLookupByLibrary.simpleMessage("Thông tin liên hệ với VCB"),
     "vcb_present" : MessageLookupByLibrary.simpleMessage("Giới thiệu về VCB"),

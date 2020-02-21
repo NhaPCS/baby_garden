@@ -632,9 +632,41 @@ class S {
     );
   }
 
-  // skipped getter for the 'send_by' key
+  String send_by(dynamic author) {
+    return Intl.message(
+      'Gửi bởi: $author',
+      name: 'send_by',
+      desc: '',
+      args: [author],
+    );
+  }
 
-  // skipped getter for the 'notice_time' key
+  String notice_time(dynamic time) {
+    return Intl.message(
+      'Thời gian: $time',
+      name: 'notice_time',
+      desc: '',
+      args: [time],
+    );
+  }
+
+  String get notify_title {
+    return Intl.message(
+      'Trả lời đánh giá đơn ',
+      name: 'notify_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get notify_booking_success {
+    return Intl.message(
+      'Chúc mừng ahjsda aidas doa sjdas  đã đặt hàng thành công va sau do khong co gi nua het a la la la la la ala la ala la',
+      name: 'notify_booking_success',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

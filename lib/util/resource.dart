@@ -22,6 +22,7 @@ class ColorUtil {
   static const Color flashSaleColor = Color(0xffF77102);
   static const Color bgProgressOrange = Color(0xffFFB483);
   static const Color white = Color(0xffffff);
+  static const Color logoBgColor = Color(0xffE1F2F9);
 
   static Color getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");
