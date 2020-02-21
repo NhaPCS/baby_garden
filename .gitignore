@@ -48,3 +48,5 @@ android/app/.settings/
 
 # ios related
 ios/Podfile.lock
+ios/Runner.xcodeproj/project.pbxproj
+ios/Runner.xcworkspace/contents.xcworkspacedata
