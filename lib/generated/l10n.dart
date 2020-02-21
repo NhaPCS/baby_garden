@@ -488,6 +488,186 @@ class S {
     );
   }
 
+  String get setting_1 {
+    return Intl.message(
+      'Nhận thông báo các sản phẩm giờ vàng',
+      name: 'setting_1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get setting_2 {
+    return Intl.message(
+      'Nhận thông báo thay đổi giá của sản phẩm yêu thích',
+      name: 'setting_2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get setting_3 {
+    return Intl.message(
+      'Nhận thông báo lịch mua và lịch sử dung sản phẩm',
+      name: 'setting_3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get setting_4 {
+    return Intl.message(
+      'Nhận thông báo từ VCB Express',
+      name: 'setting_4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get customer_support {
+    return Intl.message(
+      'Hỗ trợ khách hàng',
+      name: 'customer_support',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get vcb_present {
+    return Intl.message(
+      'Giới thiệu về VCB',
+      name: 'vcb_present',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get vcb_contact {
+    return Intl.message(
+      'Thông tin liên hệ với VCB',
+      name: 'vcb_contact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get buy_guide {
+    return Intl.message(
+      'Hướng dẫn mua hàng',
+      name: 'buy_guide',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get update_info_guide {
+    return Intl.message(
+      'Hướng dẫn cập nhật thông tin',
+      name: 'update_info_guide',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get policy {
+    return Intl.message(
+      'Chính sách hệ thống',
+      name: 'policy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get vcb_register_partner {
+    return Intl.message(
+      'Đăng ký làm đối tác với VCB',
+      name: 'vcb_register_partner',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get notify {
+    return Intl.message(
+      'Thông báo',
+      name: 'notify',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get sale {
+    return Intl.message(
+      'Khuyến mãi',
+      name: 'sale',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get personal {
+    return Intl.message(
+      'Cá nhân',
+      name: 'personal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get notify_hint_search {
+    return Intl.message(
+      'Nhập từ khóa tìm kiếm thông báo',
+      name: 'notify_hint_search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get hide_readed_notify {
+    return Intl.message(
+      'Ẩn tin đã đọc',
+      name: 'hide_readed_notify',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String send_by(dynamic author) {
+    return Intl.message(
+      'Gửi bởi: $author',
+      name: 'send_by',
+      desc: '',
+      args: [author],
+    );
+  }
+
+  String notice_time(dynamic time) {
+    return Intl.message(
+      'Thời gian: $time',
+      name: 'notice_time',
+      desc: '',
+      args: [time],
+    );
+  }
+
+  String get notify_title {
+    return Intl.message(
+      'Trả lời đánh giá đơn ',
+      name: 'notify_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get notify_booking_success {
+    return Intl.message(
+      'Chúc mừng ahjsda aidas doa sjdas  đã đặt hàng thành công va sau do khong co gi nua het a la la la la la ala la ala la',
+      name: 'notify_booking_success',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get product_detail {
     return Intl.message(
       'Chi tiết sản phẩm',

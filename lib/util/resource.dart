@@ -22,6 +22,8 @@ class ColorUtil {
   static const Color blueForgotPass = Color(0xff2294AB);
   static const Color flashSaleColor = Color(0xffF77102);
   static const Color bgProgressOrange = Color(0xffFFB483);
+  static const Color white = Color(0xffffff);
+  static const Color logoBgColor = Color(0xffE1F2F9);
   static const Color transGray = Color(0x66EFEFEF);
 
   static Color getColorFromHex(String hexColor) {
@@ -79,6 +81,7 @@ class SizeUtil {
   static const double hugSpace = 50;
   static const double largeSpace = 70;
   static const double biggerSpace = 40;
+  static const double notifyHintSpace = 36;
 
   static const double textSizeBig = 24;
   static const double textSizeItemPost = 30;
