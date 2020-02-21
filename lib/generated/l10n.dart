@@ -667,6 +667,258 @@ class S {
       args: [],
     );
   }
+
+  String get product_detail {
+    return Intl.message(
+      'Chi tiết sản phẩm',
+      name: 'product_detail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get favorite {
+    return Intl.message(
+      'Yêu thích',
+      name: 'favorite',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get product_existing {
+    return Intl.message(
+      'Còn hàng',
+      name: 'product_existing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detail_info {
+    return Intl.message(
+      'Thông tin chi tiết',
+      name: 'detail_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get sku_code {
+    return Intl.message(
+      'Mã SKU',
+      name: 'sku_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get brand {
+    return Intl.message(
+      'Thương hiệu',
+      name: 'brand',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get origin {
+    return Intl.message(
+      'Xuất xứ',
+      name: 'origin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get size {
+    return Intl.message(
+      'Kích thước',
+      name: 'size',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get customer_target {
+    return Intl.message(
+      'Đối tượng sử dụng',
+      name: 'customer_target',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get product_description {
+    return Intl.message(
+      'Mô tả sản phẩm',
+      name: 'product_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get same_product {
+    return Intl.message(
+      'Sản phẩm tương tự',
+      name: 'same_product',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get buy_now {
+    return Intl.message(
+      'Mua ngay',
+      name: 'buy_now',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get add_to_cart {
+    return Intl.message(
+      'Thêm vào giỏ hàng',
+      name: 'add_to_cart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get send_report {
+    return Intl.message(
+      'Gửi thông báo',
+      name: 'send_report',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get report_desc {
+    return Intl.message(
+      'Báo cáo hay góp ý với chúng rôi về hình ảnh hay thông tin về sản phẩm nhé!',
+      name: 'report_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get report_title {
+    return Intl.message(
+      'Tiêu đề báo cáo',
+      name: 'report_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get choose_other {
+    return Intl.message(
+      'Chọn khác',
+      name: 'choose_other',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get report_title_hint {
+    return Intl.message(
+      'Nhập tiêu đề tự chọn',
+      name: 'report_title_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get report_content_hint {
+    return Intl.message(
+      'Viết nội dung báo cáo/ góp ý của bạn',
+      name: 'report_content_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get send {
+    return Intl.message(
+      'Gửi',
+      name: 'send',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get product_count {
+    return Intl.message(
+      'Số lượng:',
+      name: 'product_count',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get color {
+    return Intl.message(
+      'Màu sắc',
+      name: 'color',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get hot_key {
+    return Intl.message(
+      'Từ khóa HOT',
+      name: 'hot_key',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get search_key_history {
+    return Intl.message(
+      'Lịch sử tìm kiếm',
+      name: 'search_key_history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delete {
+    return Intl.message(
+      'Xóa',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get search_by_name {
+    return Intl.message(
+      'Tìm kiếm theo tên sản phẩm',
+      name: 'search_by_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get search_by_content {
+    return Intl.message(
+      'Tìm kiếm theo nội dung sản phẩm',
+      name: 'search_by_content',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get distributor_name {
+    return Intl.message(
+      'nhà cung cấp ',
+      name: 'distributor_name',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

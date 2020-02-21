@@ -1,22 +1,32 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:baby_garden_flutter/util/resource.dart';
 
 class CircleImage extends StatelessWidget {
   final String imageUrl;
-  final double size;
+  final double borderRadius;
+  final double width;
+  final double height;
 
-  const CircleImage({Key key, this.imageUrl, this.size}) : super(key: key);
+  const CircleImage(
+      {Key key,
+      this.imageUrl,
+      this.borderRadius,
+      @required this.width,
+      @required this.height})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: CircleBorder(side: BorderSide(color: ColorUtil.textGray)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+              borderRadius == null ? width : borderRadius)),
       child: Container(
-        width: size,
-        height: size,
+        width: width,
+        height: height,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(size)),
+          borderRadius: BorderRadius.all(
+              Radius.circular(borderRadius == null ? width : borderRadius)),
           image: DecorationImage(
               image: CachedNetworkImageProvider(imageUrl), fit: BoxFit.cover),
         ),
