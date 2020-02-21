@@ -38,3 +38,15 @@ lib/generated_plugin_registrant.dart
 
 # vs code related
 .vscode/
+
+# android related
+android/.project
+android/.settings/
+android/app/.classpath
+android/app/.project
+android/app/.settings/
+
+# ios related
+ios/Podfile.lock
+ios/Runner.xcodeproj/project.pbxproj
+ios/Runner.xcworkspace/contents.xcworkspacedata

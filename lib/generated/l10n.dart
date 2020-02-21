@@ -479,6 +479,51 @@ class S {
     );
   }
 
+  String get fullname {
+    return Intl.message(
+      'Họ và tên',
+      name: 'fullname',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get birthday {
+    return Intl.message(
+      'Ngày sinh',
+      name: 'birthday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get gender {
+    return Intl.message(
+      'Giới tính',
+      name: 'gender',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get address {
+    return Intl.message(
+      'Địa chỉ',
+      name: 'address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mobilePhone {
+    return Intl.message(
+      'Số điện thoại',
+      name: 'mobilePhone',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get category_product {
     return Intl.message(
       'Danh mục sản phẩm',
@@ -488,23 +533,17 @@ class S {
     );
   }
 
-  String get setting_1 {
-    return Intl.message(
-      'Nhận thông báo các sản phẩm giờ vàng',
-      name: 'setting_1',
-      desc: '',
-      args: [],
-    );
-  }
 
   String get setting_2 {
     return Intl.message(
       'Nhận thông báo thay đổi giá của sản phẩm yêu thích',
       name: 'setting_2',
+
       desc: '',
       args: [],
     );
   }
+
 
   String get setting_3 {
     return Intl.message(

@@ -5,7 +5,7 @@
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
-import 'package:baby_garden_flutter/screen/profile/userInfor.dart';
+import 'package:baby_garden_flutter/screen/profile/user_infor.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
