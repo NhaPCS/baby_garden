@@ -129,7 +129,7 @@
   "my_order": "Đơn hàng của tôi ",
   "waiting_payment": "Chờ\nthanh toán",
   "waiting_confirm": "Chờ\nxác nhận",
-  "get_at_shop": "Nhận hàng\u000Btại Shop",
+  "get_at_shop": "Nhận hàng\ntại Shop",
   "packing": "Đang\nđóng gói",
   "transporting": "Đang\nvận chuyển",
   "success_order": "Đơn hàng\nthành công",
@@ -145,5 +145,7 @@
   "how_to_know_where_my_order": "Tôi phải làm sao để biết được đơn hàng đang ở đâu?",
   "how_to_cancel_order": "Tôi muốn hủy đơn để đặt đơn khác thì làm thế nào?",
   "when_order_wrong": "Khi nhận hàng không đúng với hàng tôi đặt?",
-  "how_to_contact_with_shop": "Làm thế nào để tôi có thể liên hệ với chủ Shop?"
+  "how_to_contact_with_shop": "Làm thế nào để tôi có thể liên hệ với chủ Shop?",
+  "provided_by": "Cung cấp bởi: ",
+  "total_order_price": "Tổng đơn: "
 }

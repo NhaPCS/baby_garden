@@ -1201,7 +1201,7 @@ class S {
 
   String get get_at_shop {
     return Intl.message(
-      'Nhận hàngtại Shop',
+      'Nhận hàng\ntại Shop',
       name: 'get_at_shop',
       desc: '',
       args: [],
@@ -1347,6 +1347,24 @@ class S {
     return Intl.message(
       'Làm thế nào để tôi có thể liên hệ với chủ Shop?',
       name: 'how_to_contact_with_shop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get provided_by {
+    return Intl.message(
+      'Cung cấp bởi: ',
+      name: 'provided_by',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get total_order_price {
+    return Intl.message(
+      'Tổng đơn: ',
+      name: 'total_order_price',
       desc: '',
       args: [],
     );
