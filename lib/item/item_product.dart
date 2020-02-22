@@ -87,6 +87,9 @@ class ItemProduct extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
+        SizedBox(
+          height: SizeUtil.smallSpace,
+        ),
         Expanded(
             child: Image.asset(
           'photo/ic_phone.png',

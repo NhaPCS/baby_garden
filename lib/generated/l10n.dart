@@ -1171,6 +1171,204 @@ class S {
       args: [],
     );
   }
+
+  String get my_order {
+    return Intl.message(
+      'Đơn hàng của tôi ',
+      name: 'my_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get waiting_payment {
+    return Intl.message(
+      'Chờ\nthanh toán',
+      name: 'waiting_payment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get waiting_confirm {
+    return Intl.message(
+      'Chờ\nxác nhận',
+      name: 'waiting_confirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get get_at_shop {
+    return Intl.message(
+      'Nhận hàng\ntại Shop',
+      name: 'get_at_shop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get packing {
+    return Intl.message(
+      'Đang\nđóng gói',
+      name: 'packing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get transporting {
+    return Intl.message(
+      'Đang\nvận chuyển',
+      name: 'transporting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get success_order {
+    return Intl.message(
+      'Đơn hàng\nthành công',
+      name: 'success_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cancelled_order {
+    return Intl.message(
+      'Đơn hàng\nđã hủy',
+      name: 'cancelled_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get rate_order {
+    return Intl.message(
+      'Đánh giá\nđơn hàng',
+      name: 'rate_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get my_service {
+    return Intl.message(
+      'Dịch vụ của tôi',
+      name: 'my_service',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get booked {
+    return Intl.message(
+      'Đã\nđặt lịch',
+      name: 'booked',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get used {
+    return Intl.message(
+      'Đã\nsử dụng',
+      name: 'used',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cancelled_book {
+    return Intl.message(
+      'Đã hủy\nđặt lịch',
+      name: 'cancelled_book',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get rate_service {
+    return Intl.message(
+      'Đánh giá\ndịch vụ',
+      name: 'rate_service',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get faq {
+    return Intl.message(
+      'Các câu hỏi thường gặp',
+      name: 'faq',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get how_to_order {
+    return Intl.message(
+      'Làm thế nào để đặt đơn hàng?',
+      name: 'how_to_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get how_to_know_where_my_order {
+    return Intl.message(
+      'Tôi phải làm sao để biết được đơn hàng đang ở đâu?',
+      name: 'how_to_know_where_my_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get how_to_cancel_order {
+    return Intl.message(
+      'Tôi muốn hủy đơn để đặt đơn khác thì làm thế nào?',
+      name: 'how_to_cancel_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get when_order_wrong {
+    return Intl.message(
+      'Khi nhận hàng không đúng với hàng tôi đặt?',
+      name: 'when_order_wrong',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get how_to_contact_with_shop {
+    return Intl.message(
+      'Làm thế nào để tôi có thể liên hệ với chủ Shop?',
+      name: 'how_to_contact_with_shop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get provided_by {
+    return Intl.message(
+      'Cung cấp bởi: ',
+      name: 'provided_by',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get total_order_price {
+    return Intl.message(
+      'Tổng đơn: ',
+      name: 'total_order_price',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
