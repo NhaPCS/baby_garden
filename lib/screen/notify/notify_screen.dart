@@ -74,6 +74,8 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                 child: Column(
                   children: <Widget>[
                     Padding(
+                      padding: EdgeInsets.only(
+                          left: SizeUtil.smallSpace, top: SizeUtil.smallSpace),
                       child: Row(
                         children: <Widget>[
                           Expanded(
@@ -85,6 +87,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                                     TextStyle(fontSize: SizeUtil.textSizeSmall),
                                 elevation: SizeUtil.defaultElevation,
                                 textEditingController: searchTextController,
+                                maxLines: 1,
                                 borderRadius: SizeUtil.bigRadius,
                                 hint: S.of(context).notify_hint_search,
                                 contentPadding: EdgeInsets.only(
@@ -116,28 +119,32 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                               return !value.isFocus
                                   ? Container(
                                       alignment: Alignment.centerRight,
-                                      width: 130,
-                                      child: new SwitchListTile(
-                                        value: true,
-                                        onChanged: (bool newValue) {},
-                                        title: Text(
-                                          S.of(context).hide_readed_notify,
-                                          textAlign: TextAlign.end,
-                                          style: TextStyle(
-                                              fontSize: SizeUtil.textSizeTiny),
-                                        ),
-                                        contentPadding: const EdgeInsets.only(
-                                            right: 0, left: 5),
-                                        activeColor: ColorUtil.primaryColor,
-                                        inactiveThumbColor: ColorUtil.gray,
-                                      ),
-                                    )
-                                  : SizedBox(width: 10,);
+                                      padding: EdgeInsets.only(
+                                          left: SizeUtil.normalSpace),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Text(
+                                            S.of(context).hide_readed_notify,
+                                            textAlign: TextAlign.end,
+                                            style: TextStyle(
+                                                fontSize:
+                                                    SizeUtil.textSizeTiny),
+                                          ),
+                                          Transform.scale(scale: 0.75,child: Switch(
+                                            value: true,
+                                            onChanged: (bool newValue) {},
+                                            activeColor: ColorUtil.primaryColor,
+                                            inactiveThumbColor: ColorUtil.gray,
+                                          ),)
+                                        ],
+                                      ))
+                                  : SizedBox(
+                                      width: 10,
+                                    );
                             },
                           ),
                         ],
                       ),
-                      padding: EdgeInsets.only(left: SizeUtil.smallSpace),
                     ),
                     Expanded(
                       child: ListView.builder(

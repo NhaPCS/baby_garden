@@ -106,7 +106,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "myProfile" : MessageLookupByLibrary.simpleMessage("Trang cá nhân"),
     "notice_time" : m4,
     "notify" : MessageLookupByLibrary.simpleMessage("Thông báo"),
-    "notify_booking_success" : MessageLookupByLibrary.simpleMessage("Chúc mừng ahjsda aidas doa sjdas  đã đặt hàng thành công va sau do khong co gi nua het a la la la la la ala la ala la"),
+    "notify_booking_success" : MessageLookupByLibrary.simpleMessage("Chúc mừng quý khách đã đặt hàng thành công "),
     "notify_hint_search" : MessageLookupByLibrary.simpleMessage("Nhập từ khóa tìm kiếm thông báo"),
     "notify_title" : MessageLookupByLibrary.simpleMessage("Trả lời đánh giá đơn "),
     "order" : MessageLookupByLibrary.simpleMessage("Đơn hàng"),

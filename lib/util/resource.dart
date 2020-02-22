@@ -25,6 +25,7 @@ class ColorUtil {
   static const Color white = Color(0xffffff);
   static const Color logoBgColor = Color(0xffE1F2F9);
   static const Color transGray = Color(0x66EFEFEF);
+  static const Color customerSupportUpdate = Color(0xff73EBD5);
 
   static Color getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");
@@ -102,7 +103,7 @@ class SizeUtil {
   static const double iconSizeSmall = 10;
 
   static const double smallRadius = 10;
-  static const double bigRadius = 15;
+  static const double bigRadius = 16;
   static const double tinyRadius = 5;
 
   static const double defaultElevation = 5;

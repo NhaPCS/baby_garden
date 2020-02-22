@@ -661,7 +661,7 @@ class S {
 
   String get notify_booking_success {
     return Intl.message(
-      'Chúc mừng ahjsda aidas doa sjdas  đã đặt hàng thành công va sau do khong co gi nua het a la la la la la ala la ala la',
+      'Chúc mừng quý khách đã đặt hàng thành công ',
       name: 'notify_booking_success',
       desc: '',
       args: [],
