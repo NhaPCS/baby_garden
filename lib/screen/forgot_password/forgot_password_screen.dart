@@ -73,7 +73,8 @@ class _ForgotPasswordScreenState extends BaseState<ForgotPasswordScreen> {
                                 textEditingController: _newPasswordControler,
                                 hint: S.of(context).enter_new_password,
                                 borderColor: ColorUtil.colorAccent,
-                                borderRadius: SizeUtil.smallRadius,
+                                borderRadius: SizeUtil.tinyRadius,
+                                elevation: SizeUtil.smallElevation,
                                 contentPadding: SizeUtil.normalPadding,
                                 obscureText: !value.isShowPass,
                                 suffix: new GestureDetector(
@@ -101,7 +102,8 @@ class _ForgotPasswordScreenState extends BaseState<ForgotPasswordScreen> {
                                     _reenterNewPasswordControler,
                                 hint: S.of(context).reenter_new_password,
                                 borderColor: ColorUtil.colorAccent,
-                                borderRadius: SizeUtil.smallRadius,
+                                borderRadius: SizeUtil.tinyRadius,
+                                elevation: SizeUtil.smallElevation,
                                 contentPadding: SizeUtil.normalPadding,
                                 obscureText: !value.isShowRePass,
                                 suffix: new GestureDetector(
@@ -135,7 +137,8 @@ class _ForgotPasswordScreenState extends BaseState<ForgotPasswordScreen> {
                                     textEditingController: _otpControler,
                                     hint: S.of(context).enter_otp,
                                     borderColor: ColorUtil.colorAccent,
-                                    borderRadius: SizeUtil.smallRadius,
+                                    elevation: SizeUtil.smallElevation,
+                                    borderRadius: SizeUtil.tinyRadius,
                                     contentPadding: SizeUtil.normalPadding,
                                     inputType: TextInputType.number,
                                   ),
@@ -146,7 +149,7 @@ class _ForgotPasswordScreenState extends BaseState<ForgotPasswordScreen> {
                                             .toString()
                                             .padLeft(2, "0")),
                                         style: TextStyle(
-                                            color: value.start == 0
+                                            color: value.start < 10
                                                 ? ColorUtil.red
                                                 : ColorUtil.textColor)),
                                     right: SizeUtil.smallSpace,
@@ -166,8 +169,9 @@ class _ForgotPasswordScreenState extends BaseState<ForgotPasswordScreen> {
                       child: MyTextField(
                         textEditingController: _phoneControler,
                         hint: S.of(context).enter_phone_number,
+                        elevation: SizeUtil.smallElevation,
                         borderColor: ColorUtil.colorAccent,
-                        borderRadius: SizeUtil.smallRadius,
+                        borderRadius: SizeUtil.tinyRadius,
                         contentPadding: SizeUtil.normalPadding,
                         inputType: TextInputType.phone,
                       ));
@@ -195,26 +199,36 @@ class _ForgotPasswordScreenState extends BaseState<ForgotPasswordScreen> {
                       //TODO alert enter phone number
                     }
                   },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(SizeUtil.tinyRadius),
+                      )),
                   color: ColorUtil.colorAccent,
-                  child: Text(
-                    S.of(context).confirm,
-                    style: TextStyle(
-                        fontSize: SizeUtil.textSizeDefault,
-                        color: Colors.white,
-                        fontStyle: FontStyle.normal),
+                  child: Padding(
+                    padding: const EdgeInsets.all(SizeUtil.midSpace),
+                    child: Text(
+                      S.of(context).confirm,
+                      style: TextStyle(
+                          fontSize: SizeUtil.textSizeDefault,
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal),
+                    ),
                   ),
                 )),
             SizedBox(
               height: SizeUtil.smallSpace,
             ),
-            InkWell(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                S.of(context).return_login,
-                textAlign: TextAlign.center,
-                style: TextStyle(color: ColorUtil.blueForgotPass),
+            Padding(
+              padding: const EdgeInsets.all(SizeUtil.smallSpace),
+              child: InkWell(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  S.of(context).return_login,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: ColorUtil.blueForgotPass),
+                ),
               ),
             ),
           ],

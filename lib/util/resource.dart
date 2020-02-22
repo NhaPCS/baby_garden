@@ -75,6 +75,7 @@ class SizeUtil {
 
   static const double defaultSpace = 20;
   static const double normalSpace = 15;
+  static const double midSpace = 12;
   static const double smallSpace = 10;
   static const double tinySpace = 5;
   static const double bigSpace = 30;
@@ -105,6 +106,7 @@ class SizeUtil {
   static const double tinyRadius = 5;
 
   static const double defaultElevation = 5;
+  static const double smallElevation = 3;
 
   static const double lineHeight = 5;
 }

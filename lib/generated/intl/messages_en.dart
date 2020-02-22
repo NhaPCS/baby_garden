@@ -65,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "brand" : MessageLookupByLibrary.simpleMessage("Thương hiệu"),
     "buy_guide" : MessageLookupByLibrary.simpleMessage("Hướng dẫn mua hàng"),
     "buy_now" : MessageLookupByLibrary.simpleMessage("Mua ngay"),
+    "canceled_service" : MessageLookupByLibrary.simpleMessage("Dịch vụ đã hủy"),
     "cart" : MessageLookupByLibrary.simpleMessage("Giỏ hàng"),
     "category" : MessageLookupByLibrary.simpleMessage("Danh mục"),
     "category_product" : MessageLookupByLibrary.simpleMessage("Danh mục sản phẩm"),
@@ -164,6 +165,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "setting_4" : MessageLookupByLibrary.simpleMessage("Nhận thông báo từ VCB Express"),
     "shopping" : MessageLookupByLibrary.simpleMessage("Shopping"),
     "size" : MessageLookupByLibrary.simpleMessage("Kích thước"),
+    "skip" : MessageLookupByLibrary.simpleMessage("Bỏ qua >>"),
     "sku_code" : MessageLookupByLibrary.simpleMessage("Mã SKU"),
     "sold_count" : m14,
     "supply_by" : MessageLookupByLibrary.simpleMessage("Cung cấp bởi: "),
@@ -177,7 +179,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "voucherManage" : MessageLookupByLibrary.simpleMessage("Quản lý voucher"),
     "waitting_rate" : MessageLookupByLibrary.simpleMessage("Chờ đánh giá"),
     "welcome" : MessageLookupByLibrary.simpleMessage("Welcome"),
-    "welcome_title" : MessageLookupByLibrary.simpleMessage("Ứng dung mua sắm trực tuyến\nDành cho mẹ và bé"),
+    "welcome_title" : MessageLookupByLibrary.simpleMessage("Ứng dụng mua sắm trực tuyến\nDành cho mẹ và bé"),
     "your_full_name" : MessageLookupByLibrary.simpleMessage("Họ tên của bạn")
   };
 }

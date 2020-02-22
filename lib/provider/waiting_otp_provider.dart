@@ -5,8 +5,10 @@ import 'package:flutter/cupertino.dart';
 class WaittingOTPProvider extends ChangeNotifier {
   Timer timer;
   int start = 60;
+  bool isTimerStart = false;
 
   void startTimer() {
+    isTimerStart = true;
     const oneSec = const Duration(seconds: 1);
     if (timer == null) {
       timer = new Timer.periodic(oneSec, (timer) {
@@ -21,8 +23,8 @@ class WaittingOTPProvider extends ChangeNotifier {
     }
   }
 
-  void stopTimer(){
-    if (timer!=null){
+  void stopTimer() {
+    if (timer != null) {
       timer.cancel();
     }
   }

@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ServiceItem extends StatelessWidget {
-  const ServiceItem({Key key}) : super(key: key);
+  final bool isShowBookingDate;
+
+  const ServiceItem({Key key, this.isShowBookingDate = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,14 +54,16 @@ class ServiceItem extends StatelessWidget {
                   )
                 ],
               ),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  S.of(context).booking_date("25/12/2019 12:25"),
-                  style: TextStyle(fontSize: SizeUtil.textSizeTiny),
-                  textAlign: TextAlign.start,
-                ),
-              ),
+              isShowBookingDate
+                  ? Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        S.of(context).booking_date("25/12/2019 12:25"),
+                        style: TextStyle(fontSize: SizeUtil.textSizeTiny),
+                        textAlign: TextAlign.start,
+                      ),
+                    )
+                  : SizedBox(),
               SizedBox(
                 height: SizeUtil.smallSpace,
               ),
@@ -70,7 +74,7 @@ class ServiceItem extends StatelessWidget {
               ),
               Row(
                 children: <Widget>[
-                  Image.asset("photo/logo.png",
+                  Image.asset("photo/rate_item_img.png",
                       width: MediaQuery.of(context).size.width / 6),
                   Expanded(
                     child: Container(
@@ -127,7 +131,7 @@ class ServiceItem extends StatelessWidget {
                         style: TextStyle(
                             fontSize: SizeUtil.textSizeSmall,
                             color: ColorUtil.textColor,
-                        fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.bold),
                         children: <TextSpan>[
                           TextSpan(
                             text: "700 000 đ",

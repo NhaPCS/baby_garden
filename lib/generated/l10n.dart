@@ -85,7 +85,7 @@ class S {
 
   String get welcome_title {
     return Intl.message(
-      'Ứng dung mua sắm trực tuyến\nDành cho mẹ và bé',
+      'Ứng dụng mua sắm trực tuyến\nDành cho mẹ và bé',
       name: 'welcome_title',
       desc: '',
       args: [],
@@ -1140,6 +1140,24 @@ class S {
     return Intl.message(
       'GỬI ĐÁNH GIÁ',
       name: 'send_rating',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get canceled_service {
+    return Intl.message(
+      'Dịch vụ đã hủy',
+      name: 'canceled_service',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get skip {
+    return Intl.message(
+      'Bỏ qua >>',
+      name: 'skip',
       desc: '',
       args: [],
     );

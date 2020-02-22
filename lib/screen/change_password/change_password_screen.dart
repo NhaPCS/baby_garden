@@ -55,7 +55,8 @@ class _ChangePasswordScreenState extends BaseState<ChangePasswordScreen> {
                       .of(context)
                       .enter_old_password,
                   borderColor: ColorUtil.colorAccent,
-                  borderRadius: SizeUtil.smallRadius,
+                  elevation: SizeUtil.smallElevation,
+                  borderRadius: SizeUtil.tinyRadius,
                   contentPadding: SizeUtil.normalPadding,
                 )),
             Container(
@@ -69,7 +70,8 @@ class _ChangePasswordScreenState extends BaseState<ChangePasswordScreen> {
                     return MyTextField(
                       hint: S.of(context).enter_new_password,
                       borderColor: ColorUtil.colorAccent,
-                      borderRadius: SizeUtil.smallRadius,
+                      borderRadius: SizeUtil.tinyRadius,
+                      elevation: SizeUtil.smallElevation,
                       contentPadding: SizeUtil.normalPadding,
                       obscureText: !value.isShowPass,
                       suffix: new GestureDetector(
@@ -98,7 +100,8 @@ class _ChangePasswordScreenState extends BaseState<ChangePasswordScreen> {
                     return MyTextField(
                       hint: S.of(context).reenter_new_password,
                       borderColor: ColorUtil.colorAccent,
-                      borderRadius: SizeUtil.smallRadius,
+                      borderRadius: SizeUtil.tinyRadius,
+                      elevation: SizeUtil.smallElevation,
                       contentPadding: SizeUtil.normalPadding,
                       obscureText: !value.isShowRePass,
                       suffix: new GestureDetector(
@@ -128,6 +131,10 @@ class _ChangePasswordScreenState extends BaseState<ChangePasswordScreen> {
                 child: RaisedButton(
                   onPressed: () {},
                   color: ColorUtil.colorAccent,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(SizeUtil.tinyRadius),
+                      )),
                   child: Text(
                     S.of(context)
                         .change_password,

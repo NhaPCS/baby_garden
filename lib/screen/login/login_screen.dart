@@ -2,6 +2,8 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/show_hide_pass_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/forgot_password/forgot_password_screen.dart';
+import 'package:baby_garden_flutter/screen/home/home_screen.dart';
+import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/register/register_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/circle_checkbox.dart';
@@ -36,29 +38,31 @@ class _LoginScreenState extends BaseState<LoginScreen> {
         child: Column(
           children: <Widget>[
             Image.asset("photo/logo.png",
-                width: MediaQuery.of(context).size.width / 3),
+                width: MediaQuery.of(context).size.width / 4),
             Text(S.of(context).app_name,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: SizeUtil.textSizeLogo, fontFamily: "hobo")),
+                style: TextStyle(
+                    fontSize: SizeUtil.textSizeBigger, fontFamily: "hobo")),
             Expanded(
               child: SizedBox(),
             ),
             Padding(
                 padding: const EdgeInsets.only(
-                    left: SizeUtil.defaultSpace,
-                    right: SizeUtil.defaultSpace,
+                    left: SizeUtil.bigSpace,
+                    right: SizeUtil.bigSpace,
                     bottom: SizeUtil.smallSpace),
                 child: MyTextField(
                   hint: S.of(context).enter_phone_number,
                   borderColor: ColorUtil.colorAccent,
-                  borderRadius: SizeUtil.smallRadius,
+                  borderRadius: SizeUtil.tinyRadius,
                   contentPadding: SizeUtil.normalPadding,
+                  elevation: SizeUtil.smallElevation,
                   inputType: TextInputType.phone,
                 )),
             Padding(
               padding: const EdgeInsets.only(
-                  left: SizeUtil.defaultSpace,
-                  right: SizeUtil.defaultSpace,
+                  left: SizeUtil.bigSpace,
+                  right: SizeUtil.bigSpace,
                   top: SizeUtil.smallSpace,
                   bottom: SizeUtil.defaultSpace),
               child: Consumer<ShowHidePassProvider>(
@@ -67,7 +71,8 @@ class _LoginScreenState extends BaseState<LoginScreen> {
                   return MyTextField(
                     hint: S.of(context).enter_password,
                     borderColor: ColorUtil.colorAccent,
-                    borderRadius: SizeUtil.smallRadius,
+                    borderRadius: SizeUtil.tinyRadius,
+                    elevation: SizeUtil.smallElevation,
                     contentPadding: SizeUtil.normalPadding,
                     inputType: TextInputType.text,
                     obscureText: !value.isShowPass,
@@ -88,35 +93,46 @@ class _LoginScreenState extends BaseState<LoginScreen> {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: SizeUtil.tinySpace,
-                  right: SizeUtil.tinySpace,
-                  top: 0,
-                  bottom: 0),
-              child: Row(children: <Widget>[
-                CircleCheckbox(
-                    checkBg: Icons.check_box,
-                    uncheckBg: Icons.check_box_outline_blank,
-                    color: ColorUtil.gray),
-                Text(
-                  S.of(context).remember_password,
-                  style: TextStyle(fontSize: SizeUtil.textSizeDefault),
-                )
-              ]),
+            Container(
+              alignment: Alignment.centerLeft,
+              child: CircleCheckbox(
+                  padding: const EdgeInsets.only(
+                      left: SizeUtil.bigSpace,
+                      right: SizeUtil.normalSpace,
+                      top: 0,
+                      bottom: 0),
+                  checkBg: Icons.check_box,
+                  text: Text(
+                    S.of(context).remember_password,
+                    style: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                  ),
+                  uncheckBg: Icons.check_box_outline_blank,
+                  color: ColorUtil.gray),
             ),
             Container(
                 padding: const EdgeInsets.only(
-                  left: SizeUtil.defaultSpace,
-                  right: SizeUtil.defaultSpace,
-                ),
+                    left: SizeUtil.bigSpace,
+                    right: SizeUtil.bigSpace,
+                    top: SizeUtil.smallSpace),
                 width: MediaQuery.of(context).size.width,
                 child: RaisedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    push(MainScreen());
+                  },
                   color: ColorUtil.colorAccent,
-                  child: Text(
-                    S.of(context).login,
-                    style: TextStyle(fontSize: SizeUtil.textSizeDefault, color: Colors.white,fontStyle: FontStyle.normal),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                    Radius.circular(SizeUtil.tinyRadius),
+                  )),
+                  child: Container(
+                    padding: EdgeInsets.all(SizeUtil.midSpace),
+                    child: Text(
+                      S.of(context).login,
+                      style: TextStyle(
+                          fontSize: SizeUtil.textSizeDefault,
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal),
+                    ),
                   ),
                 )),
             SizedBox(
@@ -126,9 +142,12 @@ class _LoginScreenState extends BaseState<LoginScreen> {
               onTap: () {
                 push(ForgotPasswordScreen());
               },
-              child: Text(
-                S.of(context).foget_pasword,
-                style: TextStyle(color: ColorUtil.blueForgotPass),
+              child: Padding(
+                padding: const EdgeInsets.all(SizeUtil.tinySpace),
+                child: Text(
+                  S.of(context).foget_pasword,
+                  style: TextStyle(color: ColorUtil.blueForgotPass),
+                ),
               ),
             ),
             Expanded(
@@ -138,19 +157,22 @@ class _LoginScreenState extends BaseState<LoginScreen> {
               onTap: () {
                 push(RegisterScreen());
               },
-              child: RichText(
-                text: TextSpan(
-                    text: S.of(context).dont_have_account,
-                    style: TextStyle(
-                        color: ColorUtil.blueForgotPass,
-                        decoration: TextDecoration.underline),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: S.of(context).register,
-                          style: TextStyle(
-                              color: ColorUtil.primaryColor,
-                              decoration: TextDecoration.none)),
-                    ]),
+              child: Padding(
+                padding: const EdgeInsets.all(SizeUtil.tinySpace),
+                child: RichText(
+                  text: TextSpan(
+                      text: S.of(context).dont_have_account,
+                      style: TextStyle(
+                          color: ColorUtil.blueForgotPass,
+                          decoration: TextDecoration.underline),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: S.of(context).register,
+                            style: TextStyle(
+                                color: ColorUtil.primaryColor,
+                                decoration: TextDecoration.none)),
+                      ]),
+                ),
               ),
             ),
             SizedBox(
