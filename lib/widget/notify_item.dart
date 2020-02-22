@@ -17,7 +17,10 @@ class NotifyItem extends StatelessWidget {
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(5))),
-          margin: EdgeInsets.only(top: SizeUtil.tinySpace,left: SizeUtil.tinySpace,right: SizeUtil.tinySpace),
+          margin: EdgeInsets.only(
+              top: SizeUtil.tinySpace,
+              left: SizeUtil.tinySpace,
+              right: SizeUtil.tinySpace),
           padding: EdgeInsets.only(
               left: SizeUtil.tinySpace,
               right: SizeUtil.tinySpace,
@@ -30,14 +33,15 @@ class NotifyItem extends StatelessWidget {
                 child: Image.asset("photo/logo.png",
                     width: MediaQuery.of(context).size.width / 6),
                 color: ColorUtil.logoBgColor,
-                shape: RoundedRectangleBorder(//TODO set radius
+                shape: RoundedRectangleBorder(
+                  //TODO set radius
                   borderRadius: BorderRadius.circular(15.0),
                 ),
                 elevation: 3.0,
               ),
               Expanded(
-                child:
-                Container(child: Column(
+                  child: Container(
+                child: Column(
                   children: <Widget>[
                     Container(
                       alignment: Alignment.centerLeft,
@@ -48,10 +52,15 @@ class NotifyItem extends StatelessWidget {
                           fontSize: SizeUtil.textSizeBigger,
                           fontWeight: FontWeight.bold,
                         ),
-                      ),),
-                    Container(child: Text(S.of(context).notify_booking_success),
-                      alignment: Alignment.centerLeft,),
-                    SizedBox(height: SizeUtil.tinySpace,),
+                      ),
+                    ),
+                    Container(
+                      child: Text(S.of(context).notify_booking_success),
+                      alignment: Alignment.centerLeft,
+                    ),
+                    SizedBox(
+                      height: SizeUtil.tinySpace,
+                    ),
                     Row(
                       children: <Widget>[
                         Expanded(
@@ -70,8 +79,8 @@ class NotifyItem extends StatelessWidget {
                     )
                   ],
                 ),
-                padding: EdgeInsets.only(left: SizeUtil.tinySpace),)
-              )
+                padding: EdgeInsets.only(left: SizeUtil.tinySpace),
+              ))
             ],
           ),
         ),

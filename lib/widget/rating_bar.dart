@@ -11,6 +11,9 @@ class RatingBar extends StatefulWidget {
   final bool enable;
   final int value;
   final int rateCount;
+  final bool isIcon;
+  final bool showRateCount;
+  final Color iconColor;
 
   const RatingBar({
     Key key,
@@ -18,6 +21,9 @@ class RatingBar extends StatefulWidget {
     this.enable = false,
     this.value = 0,
     this.rateCount = 0,
+    this.isIcon = false,
+    this.showRateCount = true,
+    this.iconColor = ColorUtil.primaryColor,
   }) : super(key: key);
 
   @override
@@ -40,8 +46,8 @@ class _RatingState extends State<RatingBar> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(6, (index) {
-        if (index == 5) {
+      children: List.generate(widget.showRateCount ? 6 : 5, (index) {
+        if (widget.showRateCount && index == 5) {
           return Padding(
             padding: EdgeInsets.only(left: SizeUtil.smallSpace),
             child: Text(
@@ -59,16 +65,22 @@ class _RatingState extends State<RatingBar> {
 
   Widget star(int index) {
     return GestureDetector(
-      child: SvgIcon(
-        'ic_favorite.svg',
-        width: widget.starSize,
-        height: widget.starSize,
-        color: _value >= index ? null : ColorUtil.lightGray,
-      ),
+      child: widget.isIcon
+          ? Icon(
+              index < _value ? Icons.star : Icons.star_border,
+              size: widget.starSize,
+              color: widget.iconColor,
+            )
+          : SvgIcon(
+              'ic_favorite.svg',
+              width: widget.starSize,
+              height: widget.starSize,
+              color: _value >= index ? null : ColorUtil.lightGray,
+            ),
       onTap: () {
         if (!widget.enable) return;
         setState(() {
-          _value = index;
+          _value = index + 1;
         });
       },
     );

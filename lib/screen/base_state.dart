@@ -66,6 +66,7 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
       Color bgColor = ColorUtil.primaryColor,
       Color titleColor = Colors.white,
       Color backColor = Colors.white,
+        Widget widget = null,
       List<Widget> actions}) {
     return AppBar(
       elevation: elevation,
@@ -80,6 +81,7 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
       centerTitle: centerTitle,
       leading: getLeading(context,backColor: backColor),
       actions: actions,
+      bottom: widget,
     );
   }
 
