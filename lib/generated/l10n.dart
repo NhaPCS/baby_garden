@@ -1138,7 +1138,7 @@ class S {
 
   String get send_rating {
     return Intl.message(
-      'Gửi đánh giá',
+      'GỬI ĐÁNH GIÁ',
       name: 'send_rating',
       desc: '',
       args: [],

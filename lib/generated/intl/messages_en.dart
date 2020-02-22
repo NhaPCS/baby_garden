@@ -154,7 +154,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "seenProduct" : MessageLookupByLibrary.simpleMessage("Sản phẩm đã xem"),
     "send" : MessageLookupByLibrary.simpleMessage("Gửi"),
     "send_by" : m13,
-    "send_rating" : MessageLookupByLibrary.simpleMessage("Gửi đánh giá"),
+    "send_rating" : MessageLookupByLibrary.simpleMessage("GỬI ĐÁNH GIÁ"),
     "send_report" : MessageLookupByLibrary.simpleMessage("Gửi thông báo"),
     "service_title" : MessageLookupByLibrary.simpleMessage("Chăm sóc da mặt từ cơ bản đến nâng cao"),
     "setting" : MessageLookupByLibrary.simpleMessage("Cài đặt"),

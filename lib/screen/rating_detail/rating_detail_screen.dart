@@ -65,7 +65,7 @@ class _RatingDetailScreenState extends BaseState<RatingDetailScreen> {
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    S.of(context).order_date("25/12/2019 12:25"),
+                    S.of(context).receiving_date("25/12/2019 12:25"),
                     style: TextStyle(fontSize: SizeUtil.textSizeTiny),
                     textAlign: TextAlign.start,
                   ),
@@ -135,7 +135,8 @@ class _RatingDetailScreenState extends BaseState<RatingDetailScreen> {
             height: MediaQuery.of(context).size.height / 6,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(SizeUtil.smallRadius)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(SizeUtil.smallRadius)),
               border: Border(
                 left: BorderSide(
                   color: ColorUtil.textColor,
@@ -155,17 +156,19 @@ class _RatingDetailScreenState extends BaseState<RatingDetailScreen> {
                 ),
               ),
             ),
-            padding: EdgeInsets.only(left:SizeUtil.smallSpace,right: SizeUtil.smallSpace),
+            padding: EdgeInsets.only(
+                left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
             child: Column(
               children: <Widget>[
                 TextField(
                   style: TextStyle(fontSize: SizeUtil.textSizeSmall),
                   decoration: InputDecoration(
-                    hintText: S.of(context).rating_hint,
-                    border: InputBorder.none
-                  ),
+                      hintText: S.of(context).rating_hint,
+                      border: InputBorder.none),
                 ),
-                SizedBox(height: SizeUtil.normalSpace,)
+                SizedBox(
+                  height: SizeUtil.normalSpace,
+                )
               ],
             ),
           ),
@@ -178,10 +181,15 @@ class _RatingDetailScreenState extends BaseState<RatingDetailScreen> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                  Radius.circular(SizeUtil.smallRadius),
+                )),
                 color: ColorUtil.blueForgotPass,
                 child: Row(
                   children: <Widget>[
-                    Expanded(//todo alignment center content
+                    Expanded(
+                      //todo alignment center content
                       child: SizedBox(),
                     ),
                     Icon(
@@ -194,7 +202,7 @@ class _RatingDetailScreenState extends BaseState<RatingDetailScreen> {
                     Text(
                       S.of(context).add_image,
                       style: TextStyle(
-                          fontSize: SizeUtil.textSizeDefault,
+                          fontSize: SizeUtil.textSizeSmall,
                           color: Colors.white,
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.normal),
@@ -217,13 +225,18 @@ class _RatingDetailScreenState extends BaseState<RatingDetailScreen> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                  Radius.circular(SizeUtil.smallRadius),
+                )),
                 color: ColorUtil.primaryColor,
                 child: Text(
                   S.of(context).send_rating,
                   style: TextStyle(
                       fontSize: SizeUtil.textSizeDefault,
                       color: Colors.white,
-                      fontStyle: FontStyle.normal),
+                      fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.normal),
                 ),
               )),
         ],
