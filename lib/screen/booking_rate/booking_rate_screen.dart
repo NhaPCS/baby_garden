@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/rated_detail/rated_detail_screen.dart';
 import 'package:baby_garden_flutter/screen/rating_detail/rating_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/order_item.dart';
@@ -65,7 +66,7 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen> {
                     padding: EdgeInsets.all(0),
                     itemBuilder: (context, index) {
                       return new GestureDetector(onTap: (){
-                        push(RatingDetailScreen());
+                        push(RatedDetailScreen());
                       },
                       child: _isService ? new ServiceItem() : new OrderItem(),);
                     }),

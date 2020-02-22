@@ -14,6 +14,7 @@ class RatingBar extends StatefulWidget {
   final bool isIcon;
   final bool showRateCount;
   final Color iconColor;
+  final MainAxisAlignment alignment;
 
   const RatingBar({
     Key key,
@@ -24,6 +25,7 @@ class RatingBar extends StatefulWidget {
     this.isIcon = false,
     this.showRateCount = true,
     this.iconColor = ColorUtil.primaryColor,
+    this.alignment = MainAxisAlignment.center
   }) : super(key: key);
 
   @override
@@ -45,7 +47,7 @@ class _RatingState extends State<RatingBar> {
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: widget.alignment,
       children: List.generate(widget.showRateCount ? 6 : 5, (index) {
         if (widget.showRateCount && index == 5) {
           return Padding(

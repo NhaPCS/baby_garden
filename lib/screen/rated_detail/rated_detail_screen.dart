@@ -7,15 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 
-class RatingDetailScreen extends StatefulWidget {
+class RatedDetailScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _RatingDetailScreenState();
+    return _RatedDetailScreenState();
   }
 }
 
-class _RatingDetailScreenState extends BaseState<RatingDetailScreen> {
+class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
@@ -64,7 +64,7 @@ class _RatingDetailScreenState extends BaseState<RatingDetailScreen> {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  child: Text(    
+                  child: Text(
                     S.of(context).receiving_date("25/12/2019 12:25"),
                     style: TextStyle(fontSize: SizeUtil.textSizeTiny),
                     textAlign: TextAlign.start,
@@ -110,6 +110,17 @@ class _RatingDetailScreenState extends BaseState<RatingDetailScreen> {
                             style: TextStyle(fontSize: SizeUtil.textSizeSmall),
                           ),
                         ),
+                        Container(
+                          child: RatingBar(
+                            enable: false,
+                            iconColor: ColorUtil.primaryColor,
+                            showRateCount: false,
+                            isIcon: true,
+                            value: 3,
+                            alignment: MainAxisAlignment.start,
+                          ),
+                          alignment: Alignment.centerLeft,
+                        )
                       ],
                     ),
                   ),
@@ -118,127 +129,27 @@ class _RatingDetailScreenState extends BaseState<RatingDetailScreen> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(
-                top: SizeUtil.tinySpace, bottom: SizeUtil.smallSpace),
-            child: RatingBar(
-              enable: true,
-              value: 0,
-              isIcon: true,
-              showRateCount: false,
-              iconColor: ColorUtil.primaryColor,
-              starSize: SizeUtil.iconSizeBig,
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(
-                left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
-            height: MediaQuery.of(context).size.height / 6,
             width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              borderRadius:
-                  BorderRadius.all(Radius.circular(SizeUtil.smallRadius)),
-              border: Border(
-                left: BorderSide(
-                  color: ColorUtil.textColor,
-                  width: 1,
-                ),
-                right: BorderSide(
-                  color: ColorUtil.textColor,
-                  width: 1,
-                ),
-                top: BorderSide(
-                  color: ColorUtil.textColor,
-                  width: 1,
-                ),
-                bottom: BorderSide(
-                  color: ColorUtil.textColor,
-                  width: 1,
-                ),
-              ),
-            ),
-            padding: EdgeInsets.only(
-                left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
-            child: Column(
-              children: <Widget>[
-                TextField(
-                  style: TextStyle(fontSize: SizeUtil.textSizeSmall),
-                  decoration: InputDecoration(
-                      hintText: S.of(context).rating_hint,
-                      border: InputBorder.none),
-                ),
-                SizedBox(
-                  height: SizeUtil.normalSpace,
-                )
-              ],
-            ),
+            height: 1,
+            color: ColorUtil.gray,
+            margin: EdgeInsets.all(SizeUtil.normalSpace),
           ),
-          Container(
-              padding: const EdgeInsets.all(
-                SizeUtil.smallSpace,
-              ),
-              width: MediaQuery.of(context).size.width,
-              child: RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                  Radius.circular(SizeUtil.smallRadius),
-                )),
-                color: ColorUtil.blueForgotPass,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      //todo alignment center content
-                      child: SizedBox(),
-                    ),
-                    Icon(
-                      Icons.camera_alt,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: SizeUtil.smallSpace,
-                    ),
-                    Text(
-                      S.of(context).add_image,
-                      style: TextStyle(
-                          fontSize: SizeUtil.textSizeSmall,
-                          color: Colors.white,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.normal),
-                    ),
-                    Expanded(
-                      child: SizedBox(),
-                    ),
-                  ],
+          Text(
+              "Chất lượng sản phẩm tuyệt vời. Đóng gói sản phẩm \nrất đẹp và chắc chắn."),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.all(SizeUtil.smallSpace),
+                  child: Image.asset("photo/rated_detail_img.png",
+                      width: MediaQuery.of(context).size.width / 6),
                 ),
-              )),
-          Expanded(
-            child: SizedBox(),
+              )
+            ],
           ),
-          Container(
-              padding: const EdgeInsets.all(
-                SizeUtil.smallSpace,
-              ),
-              width: MediaQuery.of(context).size.width,
-              child: RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                  Radius.circular(SizeUtil.smallRadius),
-                )),
-                color: ColorUtil.primaryColor,
-                child: Text(
-                  S.of(context).send_rating,
-                  style: TextStyle(
-                      fontSize: SizeUtil.textSizeDefault,
-                      color: Colors.white,
-                      fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.normal),
-                ),
-              )),
+          Container(child: Text("10-01-2020 12:17"),
+          padding: EdgeInsets.only(left: SizeUtil.smallSpace),
+          alignment: Alignment.centerLeft,)
         ],
       ),
     );
