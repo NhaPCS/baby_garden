@@ -78,6 +78,7 @@ class SizeUtil {
   static const double normalSpace = 15;
   static const double midSpace = 12;
   static const double smallSpace = 10;
+  static const double midSmallSpace = 8.0;
   static const double tinySpace = 5;
   static const double bigSpace = 30;
   static const double hugSpace = 50;
@@ -90,6 +91,7 @@ class SizeUtil {
   static const double textSizeBigger = 17;
   static const double textSizeDefault = 15;
   static const double textSizeSmall = 11;
+  static const double textSizeNotiTime = 10;
   static const double textSizeTiny = 8;
   static const double textSizeMini = 5;
   static const double textSizeHuge = 40;

@@ -27,6 +27,17 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
   final TextEditingController searchTextController =
       new TextEditingController();
   final NotifySearchProvider _notifySearchProvider = new NotifySearchProvider();
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _focusNode.addListener(() {
+      print(" initState " + _focusNode.hasFocus.toString());
+      _notifySearchProvider.onChangeFocus(_focusNode.hasFocus);
+    });
+  }
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -35,9 +46,9 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
         appBar: getAppBar(
           title: S.of(context).notify,
           centerTitle: true,
-          bgColor: Colors.white,
-          titleColor: ColorUtil.primaryColor,
-          backColor: ColorUtil.primaryColor,
+          bgColor: ColorUtil.primaryColor,
+          titleColor: Colors.white,
+          backColor: Colors.white,
         ),
         body: SafeArea(
             child: Column(
@@ -61,7 +72,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                   padding: const EdgeInsets.only(
                       left: SizeUtil.biggerSpace,
                       right: SizeUtil.biggerSpace,
-                      top: 0,
+                      top: SizeUtil.smallSpace,
                       bottom: 0),
                 );
               },
@@ -73,18 +84,17 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
               child: Container(
                 child: Column(
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: SizeUtil.smallSpace, top: SizeUtil.smallSpace),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                              child: Stack(
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Padding(
+                          padding: const EdgeInsets.all(SizeUtil.midSmallSpace),
+                          child: Stack(
                             alignment: Alignment.centerLeft,
                             children: <Widget>[
                               MyTextField(
                                 textStyle:
-                                    TextStyle(fontSize: SizeUtil.textSizeSmall),
+                                    TextStyle(fontSize: SizeUtil.textSizeTiny),
                                 elevation: SizeUtil.defaultElevation,
                                 textEditingController: searchTextController,
                                 maxLines: 1,
@@ -93,9 +103,13 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                                 contentPadding: EdgeInsets.only(
                                     left: SizeUtil.notifyHintSpace,
                                     right: SizeUtil.tinySpace,
-                                    top: SizeUtil.smallSpace,
-                                    bottom: SizeUtil.smallSpace),
+                                    top: SizeUtil.midSpace,
+                                    bottom: SizeUtil.midSpace),
                                 borderColor: Colors.white,
+                                ontap: () {
+                                  _notifySearchProvider.onChangeFocus(true);
+                                },
+                                onFocus: _focusNode,
                                 onChanged: (text) {
                                   if (text.trim().length > 0)
                                     _notifySearchProvider.onChangeFocus(true);
@@ -112,39 +126,41 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                                 left: SizeUtil.smallSpace,
                               ),
                             ],
-                          )),
-                          Consumer<NotifySearchProvider>(
-                            builder: (BuildContext context,
-                                NotifySearchProvider value, Widget child) {
-                              return !value.isFocus
-                                  ? Container(
-                                      alignment: Alignment.centerRight,
-                                      padding: EdgeInsets.only(
-                                          left: SizeUtil.normalSpace),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Text(
-                                            S.of(context).hide_readed_notify,
-                                            textAlign: TextAlign.end,
-                                            style: TextStyle(
-                                                fontSize:
-                                                    SizeUtil.textSizeTiny),
-                                          ),
-                                          Transform.scale(scale: 0.75,child: Switch(
+                          ),
+                        )),
+                        Consumer<NotifySearchProvider>(
+                          builder: (BuildContext context,
+                              NotifySearchProvider value, Widget child) {
+                            return !value.isFocus
+                                ? Container(
+                                    alignment: Alignment.centerRight,
+                                    padding: EdgeInsets.only(
+                                        left: SizeUtil.normalSpace),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Text(
+                                          S.of(context).hide_readed_notify,
+                                          textAlign: TextAlign.end,
+                                          style: TextStyle(
+                                              fontSize: SizeUtil.textSizeTiny),
+                                        ),
+                                        Transform.scale(
+                                          scale: 1,
+                                          child: Switch(
                                             value: true,
                                             onChanged: (bool newValue) {},
                                             activeColor: ColorUtil.primaryColor,
                                             inactiveThumbColor: ColorUtil.gray,
-                                          ),)
-                                        ],
-                                      ))
-                                  : SizedBox(
-                                      width: 10,
-                                    );
-                            },
-                          ),
-                        ],
-                      ),
+                                          ),
+                                        )
+                                      ],
+                                    ))
+                                : SizedBox(
+                                    width: 10,
+                                  );
+                          },
+                        ),
+                      ],
                     ),
                     Expanded(
                       child: ListView.builder(

@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,10 +25,10 @@ class NotifyItem extends StatelessWidget {
                 left: SizeUtil.tinySpace,
                 right: SizeUtil.tinySpace),
             padding: EdgeInsets.only(
-                left: SizeUtil.tinySpace,
+                left: 0,
                 right: SizeUtil.tinySpace,
                 top: SizeUtil.tinySpace,
-                bottom: SizeUtil.tinySpace),
+                bottom: SizeUtil.smallSpace),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -51,13 +52,16 @@ class NotifyItem extends StatelessWidget {
                           S.of(context).notify_title,
                           textAlign: TextAlign.start,
                           style: TextStyle(
-                            fontSize: SizeUtil.textSizeBigger,
-                            fontWeight: FontWeight.bold,
-                          ),
+                              fontSize: SizeUtil.textSizeBigger,
+                              fontWeight: FontWeight.bold,
+                              color: ColorUtil.textHint),
                         ),
                       ),
                       Container(
-                        child: Text(S.of(context).notify_booking_success),
+                        child: Text(
+                          S.of(context).notify_booking_success,
+                          style: TextStyle(fontSize: SizeUtil.textSizeSmall,color: ColorUtil.textHint),
+                        ),
                         alignment: Alignment.centerLeft,
                       ),
                       SizedBox(
@@ -68,14 +72,16 @@ class NotifyItem extends StatelessWidget {
                           Expanded(
                             child: Text(
                               S.of(context).notice_time("10:30 15/09/2020"),
-                              style: TextStyle(fontSize: SizeUtil.textSizeSmall),
+                              style: TextStyle(
+                                  fontSize: SizeUtil.textSizeNotiTime,
+                                  color: ColorUtil.textHint),
                             ),
                           ),
                           Text(
                             S.of(context).send_by("Vườn của bé"),
                             style: TextStyle(
                                 color: ColorUtil.primaryColor,
-                                fontSize: SizeUtil.textSizeSmall),
+                                fontSize: SizeUtil.textSizeNotiTime),
                           ),
                         ],
                       )
@@ -87,12 +93,13 @@ class NotifyItem extends StatelessWidget {
             ),
           ),
           Positioned(
-            child: Icon(
-              CupertinoIcons.delete,
+            child: SvgIcon(
+              'ic_delete.svg',
+              width: SizeUtil.iconSize,
               color: ColorUtil.textHint,
             ),
-            right: SizeUtil.tinySpace,
-            top: SizeUtil.tinySpace,
+            right: SizeUtil.smallSpace,
+            top: SizeUtil.smallSpace,
           ),
         ],
       ),

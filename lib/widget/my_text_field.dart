@@ -21,6 +21,8 @@ class MyTextField extends StatelessWidget {
   final int maxLines;
   final double elevation;
   final bool enable;
+  final Function ontap;
+  final FocusNode onFocus;
 
   const MyTextField(
       {Key key,
@@ -44,7 +46,9 @@ class MyTextField extends StatelessWidget {
       this.hintStyle,
       this.elevation,
       this.prefix,
+        this.onFocus,
       this.maxLines = 1,
+        this.ontap,
       this.enable = true})
       : super(key: key);
 
@@ -70,6 +74,8 @@ class MyTextField extends StatelessWidget {
       onChanged: onChanged,
       enabled: enable,
       keyboardType: inputType,
+      onTap: ontap,
+      focusNode: onFocus,
       decoration: InputDecoration(
           contentPadding: contentPadding,
           isDense: true,

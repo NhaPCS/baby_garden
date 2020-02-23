@@ -1,9 +1,11 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/SwitchProvider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 class SettingScreen extends StatefulWidget {
   @override
@@ -14,131 +16,142 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends BaseState<SettingScreen> {
+  final SwitchProvider _settingProvider = new SwitchProvider();
+
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
     return Scaffold(
       appBar: getAppBar(
-          title: S
-              .of(context)
-              .setting,
+          title: S.of(context).setting,
           centerTitle: true,
-          bgColor: Colors.white,
-          titleColor: ColorUtil.primaryColor,
-          backColor: ColorUtil.primaryColor),
+          bgColor: ColorUtil.primaryColor,
+          titleColor: Colors.white,
+          backColor: Colors.white),
       body: Center(
         child: Column(
           children: <Widget>[
             Image.asset("photo/logo.png",
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width / 3),
-            Text(S
-                .of(context)
-                .app_name,
+                width: MediaQuery.of(context).size.width *4/ 16),
+            Text(S.of(context).app_name,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: SizeUtil.textSizeLogo, fontFamily: "hobo")),
-            SizedBox(),
-            new SwitchListTile(
-              value: true,
-              onChanged: (bool newValue) {},
-              title: Text(
-                S
-                    .of(context)
-                    .setting_1,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                    fontSize: SizeUtil.textSizeSmall, fontFamily: "hoho"),
-              ),
-              activeColor: ColorUtil.primaryColor,
-              inactiveThumbColor: ColorUtil.gray,
+                    fontSize: SizeUtil.textSizeBigger, fontFamily: "hobo")),
+            SizedBox(height: SizeUtil.bigSpace,),
+            Consumer<SwitchProvider>(
+              builder:
+                  (BuildContext context, SwitchProvider value, Widget child) {
+                return SwitchListTile(
+                  value: value.isSwitch1,
+                  onChanged: (bool newValue) {
+                    _settingProvider.onSwitch1(newValue);
+                  },
+                  title: Text(
+                    S.of(context).setting_1,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        fontSize: SizeUtil.textSizeSmall, fontFamily: "hoho"),
+                  ),
+                  activeColor: ColorUtil.primaryColor,
+                  inactiveThumbColor: ColorUtil.gray,
+                );
+              },
             ),
             Container(
               height: 1,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
-              margin: new EdgeInsets.only(left: SizeUtil.defaultSpace,
+              width: MediaQuery.of(context).size.width,
+              margin: new EdgeInsets.only(
+                  left: SizeUtil.defaultSpace,
                   right: SizeUtil.defaultSpace,
-                  top: SizeUtil.tinySpace, bottom: 0),
+                  top: SizeUtil.tinySpace,
+                  bottom: 0),
               color: ColorUtil.gray,
             ),
-            new SwitchListTile(
-              value: true,
-              onChanged: (bool newValue) {},
-              title: Text(
-                S
-                    .of(context)
-                    .setting_2,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                    fontSize: SizeUtil.textSizeSmall, fontFamily: "hoho"),
-              ),
-              activeColor: ColorUtil.primaryColor,
-              inactiveThumbColor: ColorUtil.gray,
+            Consumer<SwitchProvider>(
+              builder:
+                  (BuildContext context, SwitchProvider value, Widget child) {
+                return SwitchListTile(
+                  value: value.isSwitch2,
+                  onChanged: (bool newValue) {
+                    _settingProvider.onSwitch2(newValue);
+                  },
+                  title: Text(
+                    S.of(context).setting_2,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        fontSize: SizeUtil.textSizeSmall, fontFamily: "hoho"),
+                  ),
+                  activeColor: ColorUtil.primaryColor,
+                  inactiveThumbColor: ColorUtil.gray,
+                );
+              },
             ),
             Container(
               height: 1,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
-              margin: new EdgeInsets.only(left: SizeUtil.defaultSpace,
+              width: MediaQuery.of(context).size.width,
+              margin: new EdgeInsets.only(
+                  left: SizeUtil.defaultSpace,
                   right: SizeUtil.defaultSpace,
-                  top: SizeUtil.tinySpace, bottom: 0),
+                  top: SizeUtil.tinySpace,
+                  bottom: 0),
               color: ColorUtil.gray,
             ),
-            new SwitchListTile(
-              value: true,
-              onChanged: (bool newValue) {},
-              title: Text(
-                S
-                    .of(context)
-                    .setting_3,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                    fontSize: SizeUtil.textSizeSmall, fontFamily: "hoho"),
-              ),
-              activeColor: ColorUtil.primaryColor,
-              inactiveThumbColor: ColorUtil.gray,
+            Consumer<SwitchProvider>(
+              builder:
+                  (BuildContext context, SwitchProvider value, Widget child) {
+                return SwitchListTile(
+                  value: value.isSwitch3,
+                  onChanged: (bool newValue) {
+                    _settingProvider.onSwitch3(newValue);
+                  },
+                  title: Text(
+                    S.of(context).setting_3,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        fontSize: SizeUtil.textSizeSmall, fontFamily: "hoho"),
+                  ),
+                  activeColor: ColorUtil.primaryColor,
+                  inactiveThumbColor: ColorUtil.gray,
+                );
+              },
             ),
             Container(
               height: 1,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
-              margin: new EdgeInsets.only(left: SizeUtil.defaultSpace,
+              width: MediaQuery.of(context).size.width,
+              margin: new EdgeInsets.only(
+                  left: SizeUtil.defaultSpace,
                   right: SizeUtil.defaultSpace,
-                  top: SizeUtil.tinySpace, bottom: 0),
+                  top: SizeUtil.tinySpace,
+                  bottom: 0),
               color: ColorUtil.gray,
             ),
-            new SwitchListTile(
-              value: true,
-              onChanged: (bool newValue) {},
-              title: Text(
-                S
-                    .of(context)
-                    .setting_4,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                    fontSize: SizeUtil.textSizeSmall, fontFamily: "hoho"),
-              ),
-              activeColor: ColorUtil.primaryColor,
-              inactiveThumbColor: ColorUtil.gray,
+            Consumer<SwitchProvider>(
+              builder:
+                  (BuildContext context, SwitchProvider value, Widget child) {
+                return SwitchListTile(
+                  value: value.isSwitch4,
+                  onChanged: (bool newValue) {
+                    _settingProvider.onSwitch4(newValue);
+                  },
+                  title: Text(
+                    S.of(context).setting_4,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        fontSize: SizeUtil.textSizeSmall, fontFamily: "hoho"),
+                  ),
+                  activeColor: ColorUtil.primaryColor,
+                  inactiveThumbColor: ColorUtil.gray,
+                );
+              },
             ),
             Container(
               height: 1,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
-              margin: new EdgeInsets.only(left: SizeUtil.defaultSpace,
+              width: MediaQuery.of(context).size.width,
+              margin: new EdgeInsets.only(
+                  left: SizeUtil.defaultSpace,
                   right: SizeUtil.defaultSpace,
-                  top: SizeUtil.tinySpace, bottom: 0),
+                  top: SizeUtil.tinySpace,
+                  bottom: 0),
               color: ColorUtil.gray,
             ),
           ],
@@ -150,6 +163,8 @@ class _SettingScreenState extends BaseState<SettingScreen> {
   @override
   List<SingleChildWidget> providers() {
     // TODO: implement providers
-    return null;
+    return [
+      ChangeNotifierProvider.value(value: _settingProvider),
+    ];
   }
 }

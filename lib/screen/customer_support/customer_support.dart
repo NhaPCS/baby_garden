@@ -21,9 +21,9 @@ class _CustomerSupportScreenState extends BaseState<CustomerSupportScreen> {
       appBar: getAppBar(
         title: S.of(context).customer_support,
         centerTitle: true,
-        bgColor: Colors.white,
-        titleColor: ColorUtil.primaryColor,
-        backColor: ColorUtil.primaryColor,
+        bgColor: ColorUtil.primaryColor,
+        titleColor: Colors.white,
+        backColor: Colors.white,
       ),
       body: Center(
         child: Column(
@@ -33,7 +33,7 @@ class _CustomerSupportScreenState extends BaseState<CustomerSupportScreen> {
             Text(S.of(context).app_name,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: SizeUtil.textSizeLogo, fontFamily: "hobo")),
+                    fontSize: SizeUtil.textSizeBigger, fontFamily: "hobo")),
             SizedBox(
               height: SizeUtil.defaultSpace,
             ),
