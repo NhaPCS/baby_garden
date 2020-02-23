@@ -16,6 +16,10 @@ import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
 class MainScreen extends StatefulWidget {
+  final bool goToCart;
+
+  const MainScreen({Key key, this.goToCart = false}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _MainState();
@@ -34,6 +38,7 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
       _changeIndexProvider.changeIndex(_tabController.index);
     });
     super.initState();
+    if (widget.goToCart) _tabController.animateTo(2);
   }
 
   @override

@@ -93,6 +93,8 @@ class ItemProductHorizontal extends StatelessWidget {
               borderRadius: SizeUtil.tinyRadius,
               fillColor: ColorUtil.lightGray,
               borderColor: ColorUtil.lightGray,
+              selectedBorderColor: ColorUtil.primaryColor,
+              hasCheckable: true,
             );
           }),
         )),
@@ -107,6 +109,8 @@ class ItemProductHorizontal extends StatelessWidget {
               borderRadius: SizeUtil.tinyRadius,
               fillColor: ColorUtil.lightGray,
               borderColor: ColorUtil.lightGray,
+              selectedBorderColor: ColorUtil.primaryColor,
+              hasCheckable: true,
             );
           }),
         )),

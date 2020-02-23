@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,6 +40,15 @@ class CartIcon extends StatelessWidget {
           )
         ],
       ),
+      onTap: () {
+        //TODO
+        RouteUtil.pushAndReplaceAll(
+            context,
+            MainScreen(
+              goToCart: true,
+            ),
+            '/main');
+      },
     );
   }
 }

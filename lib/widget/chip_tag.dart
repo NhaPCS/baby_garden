@@ -12,6 +12,7 @@ class ChipTag extends StatefulWidget {
   final bool removable;
   final VoidCallback onRemoveItem;
   final double textSize;
+  final ValueChanged<String> onItemPressed;
 
   const ChipTag(
       {Key key,
@@ -24,7 +25,8 @@ class ChipTag extends StatefulWidget {
       this.onChanged,
       this.removable = false,
       this.onRemoveItem,
-      this.textSize = SizeUtil.textSizeSmall})
+      this.textSize = SizeUtil.textSizeSmall,
+      this.onItemPressed})
       : super(key: key);
 
   @override
@@ -79,10 +81,13 @@ class _ChipState extends State<ChipTag> {
                 BorderRadius.all(Radius.circular(widget.borderRadius))),
       ),
       onTap: () {
+        if (widget.onItemPressed != null) {
+          widget.onItemPressed(widget.text);
+        }
         if (widget.hasCheckable)
           setState(() {
             selected = !selected;
-            widget.onChanged(selected);
+            if (widget.onChanged != null) widget.onChanged(selected);
           });
       },
     );
@@ -93,7 +98,8 @@ class _ChipState extends State<ChipTag> {
       widget.text,
       style: widget.hasCheckable
           ? TextStyle(
-              color: selected ? widget.selectedBorderColor : widget.borderColor,
+              color:
+                  selected ? widget.selectedBorderColor : ColorUtil.textColor,
               fontSize: widget.textSize)
           : TextStyle(fontSize: widget.textSize),
     );
