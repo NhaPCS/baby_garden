@@ -115,7 +115,7 @@
   "order_detail": "{price} x {count}",
   "order_count_summary": "Tổng {count} sản phẩm",
   "expiry_date": "Ngày sử dung: {date}",
-  "invoice": "Tổng đơn: ",
+  "invoice": "Tổng đơn hàng: ",
   "see_more": "Xem thêm",
   "order_rating": "Đánh giá đơn {code}",
   "receiving_date": "Ngày nhận hàng: {date}",

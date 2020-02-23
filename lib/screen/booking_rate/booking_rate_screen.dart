@@ -18,12 +18,32 @@ class BookingRateScreen extends StatefulWidget {
   }
 }
 
-class _BookingRateScreenState extends BaseState<BookingRateScreen> {
-  final _isService = false;
+class _BookingRateScreenState extends BaseState<BookingRateScreen>
+    with SingleTickerProviderStateMixin {
+  final bool _isService = false;
+  bool israted = false;
+  TabController _tabController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _tabController = TabController(vsync: this, length: 2);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
+    final List<Tab> myTabs = <Tab>[
+      Tab(text: S.of(context).waitting_rate),
+      Tab(text: S.of(context).rated),
+    ];
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: ColorUtil.primaryColor));
     return DefaultTabController(
@@ -40,40 +60,45 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen> {
           widget: ColoredTabBar(
               Colors.white,
               TabBar(
+                controller: _tabController,
                 labelColor: ColorUtil.primaryColor,
                 unselectedLabelColor: ColorUtil.textColor,
-                tabs: <Widget>[
-                  Tab(
-                    text: S.of(context).waitting_rate,
-                  ),
-                  Tab(
-                    text: S.of(context).rated,
-                  )
-                ],
+                tabs: myTabs,
               )),
         ),
-        body: SafeArea(
-            child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.only(bottom: SizeUtil.smallSpace),
-                color: ColorUtil.lineColor,
-                child: ListView.builder(
-                    itemCount: 10,
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.all(0),
-                    itemBuilder: (context, index) {
-                      return new GestureDetector(onTap: (){
-                        push(RatedDetailScreen());
-                      },
-                      child: _isService ? new ServiceItem() : new OrderItem(),);
-                    }),
-              ),
-            )
-          ],
-        )),
+        body: TabBarView(
+          controller: _tabController,
+          children: myTabs.map((Tab tab) {
+            final String label = tab.text.toLowerCase();
+            return Column(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.only(bottom: SizeUtil.smallSpace),
+                    color: ColorUtil.lineColor,
+                    child: ListView.builder(
+                        itemCount: 10,
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        padding: EdgeInsets.all(0),
+                        itemBuilder: (context, index) {
+                          return new GestureDetector(
+                            onTap: () {
+                              push(myTabs.indexOf(tab) == 0
+                                  ? RatingDetailScreen()
+                                  : RatedDetailScreen());
+                            },
+                            child: myTabs.indexOf(tab) == 0
+                                ? new ServiceItem()
+                                : new OrderItem(),
+                          );
+                        }),
+                  ),
+                )
+              ],
+            );
+          }).toList(),
+        ),
       ),
     );
   }

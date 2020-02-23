@@ -78,9 +78,13 @@ class OrderItem extends StatelessWidget{
                 color: ColorUtil.gray,
               ),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Image.asset("photo/logo.png",
-                      width: MediaQuery.of(context).size.width / 6),
+                  Padding(
+                    padding: const EdgeInsets.only(top:SizeUtil.midSmallSpace),
+                    child: Image.asset("photo/order_img.png",
+                        width: MediaQuery.of(context).size.width / 6),
+                  ),
                   Expanded(
                     child: Container(
                       padding: EdgeInsets.only(left: SizeUtil.smallSpace),

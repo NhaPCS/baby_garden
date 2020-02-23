@@ -100,7 +100,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "hide_readed_notify" : MessageLookupByLibrary.simpleMessage("Ẩn tin đã đọc"),
     "home" : MessageLookupByLibrary.simpleMessage("Trang chủ"),
     "hot_key" : MessageLookupByLibrary.simpleMessage("Từ khóa HOT"),
-    "invoice" : MessageLookupByLibrary.simpleMessage("Tổng đơn: "),
+    "invoice" : MessageLookupByLibrary.simpleMessage("Tổng đơn hàng: "),
     "joinDate" : MessageLookupByLibrary.simpleMessage("Tham gia từ"),
     "login" : MessageLookupByLibrary.simpleMessage("Đăng nhập"),
     "myProfile" : MessageLookupByLibrary.simpleMessage("Trang cá nhân"),

@@ -1075,7 +1075,7 @@ class S {
 
   String get invoice {
     return Intl.message(
-      'Tổng đơn: ',
+      'Tổng đơn hàng: ',
       name: 'invoice',
       desc: '',
       args: [],
