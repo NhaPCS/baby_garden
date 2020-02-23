@@ -479,10 +479,208 @@ class S {
     );
   }
 
+  String get fullname {
+    return Intl.message(
+      'Họ và tên',
+      name: 'fullname',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get birthday {
+    return Intl.message(
+      'Ngày sinh',
+      name: 'birthday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get gender {
+    return Intl.message(
+      'Giới tính',
+      name: 'gender',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get address {
+    return Intl.message(
+      'Địa chỉ',
+      name: 'address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mobilePhone {
+    return Intl.message(
+      'Số điện thoại',
+      name: 'mobilePhone',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get category_product {
     return Intl.message(
       'Danh mục sản phẩm',
       name: 'category_product',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get partnerRegister {
+    return Intl.message(
+      'Đăng ký đối tác',
+      name: 'partnerRegister',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get partnerRegisHeadTitle {
+    return Intl.message(
+      'Nhập thông tin sau để trở thành đối tác của VCB nhé!',
+      name: 'partnerRegisHeadTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get shopName {
+    return Intl.message(
+      'Tên Shop',
+      name: 'shopName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get shopPlaceholder {
+    return Intl.message(
+      'Nhập tên shop của bạn',
+      name: 'shopPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mobilePlaceholder {
+    return Intl.message(
+      'Nhập SĐT của bạn',
+      name: 'mobilePlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addressPlaceholder {
+    return Intl.message(
+      'Nhập SĐT của bạn',
+      name: 'addressPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get career {
+    return Intl.message(
+      'Ngành nghề',
+      name: 'career',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get careerPlaceholder {
+    return Intl.message(
+      'Nhập ngành nghề của bạn',
+      name: 'careerPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get changePassword {
+    return Intl.message(
+      'Đổi mật khẩu',
+      name: 'changePassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get childInfor {
+    return Intl.message(
+      'Thông tin con',
+      name: 'childInfor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addChild {
+    return Intl.message(
+      'Thêm con',
+      name: 'addChild',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get childName {
+    return Intl.message(
+      'Tên bé',
+      name: 'childName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get healthIndex {
+    return Intl.message(
+      'Chỉ số sức khỏe',
+      name: 'healthIndex',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get lastDayCheck {
+    return Intl.message(
+      'Ngày đo gần nhất',
+      name: 'lastDayCheck',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get selectRemindProduct {
+    return Intl.message(
+      'Chọn sản phẩm nhắc mua',
+      name: 'selectRemindProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get selectRemindBuyTime {
+    return Intl.message(
+      'Chọn thời gian nhắc lịch mua sản phẩm',
+      name: 'selectRemindBuyTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get moreDetail {
+    return Intl.message(
+      'Xem chi tiết',
+      name: 'moreDetail',
       desc: '',
       args: [],
     );
@@ -920,244 +1118,257 @@ class S {
     );
   }
 
-  String get rating_service {
+
+  String get note_for_product_promo {
     return Intl.message(
-      'Đánh giá dịch vụ',
-      name: 'rating_service',
+      'Ghi chú khuyến mại của sản phẩm',
+      name: 'note_for_product_promo',
+
       desc: '',
       args: [],
     );
   }
 
-  String get rating_order {
+
+  String get type_promo_code {
     return Intl.message(
-      'Đánh giá đơn hàng',
-      name: 'rating_order',
+      'Nhập mã giảm giá',
+      name: 'type_promo_code',
       desc: '',
       args: [],
     );
   }
 
-  String get waitting_rate {
+
+  String get apply {
     return Intl.message(
-      'Chờ đánh giá',
-      name: 'waitting_rate',
+      'Áp dụng',
+      name: 'apply',
       desc: '',
       args: [],
     );
   }
 
-  String get rated {
+  String get promo_code {
     return Intl.message(
-      'Đã đánh giá',
-      name: 'rated',
+      'Mã giảm giá',
+      name: 'promo_code',
       desc: '',
       args: [],
     );
   }
 
-  String order_code(dynamic code) {
+  String get pre_count {
     return Intl.message(
-      'Mã đơn $code',
-      name: 'order_code',
+      'Tạm tính',
+      name: 'pre_count',
       desc: '',
-      args: [code],
+      args: [],
     );
   }
 
-  String order_with_code(dynamic code) {
+  String get take_order {
     return Intl.message(
-      'Đơn hàng $code',
-      name: 'order_with_code',
+      'Tiến hành đặt hàng',
+      name: 'take_order',
       desc: '',
-      args: [code],
+      args: [],
     );
   }
 
-  String get supply_by {
+  String get my_order {
+    return Intl.message(
+      'Đơn hàng của tôi ',
+      name: 'my_order',
+      desc: '',
+      args: [],
+    );
+  }
+  
+  String get waiting_payment {
+    return Intl.message(
+      'Chờ\nthanh toán',
+      name: 'waiting_payment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get waiting_confirm {
+    return Intl.message(
+      'Chờ\nxác nhận',
+      name: 'waiting_confirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get get_at_shop {
+    return Intl.message(
+      'Nhận hàng\ntại Shop',
+      name: 'get_at_shop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get packing {
+    return Intl.message(
+      'Đang\nđóng gói',
+      name: 'packing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get transporting {
+    return Intl.message(
+      'Đang\nvận chuyển',
+      name: 'transporting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get success_order {
+    return Intl.message(
+      'Đơn hàng\nthành công',
+      name: 'success_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cancelled_order {
+    return Intl.message(
+      'Đơn hàng\nđã hủy',
+      name: 'cancelled_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get rate_order {
+    return Intl.message(
+      'Đánh giá\nđơn hàng',
+      name: 'rate_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get my_service {
+    return Intl.message(
+      'Dịch vụ của tôi',
+      name: 'my_service',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get booked {
+    return Intl.message(
+      'Đã\nđặt lịch',
+      name: 'booked',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get used {
+    return Intl.message(
+      'Đã\nsử dụng',
+      name: 'used',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cancelled_book {
+    return Intl.message(
+      'Đã hủy\nđặt lịch',
+      name: 'cancelled_book',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get rate_service {
+    return Intl.message(
+      'Đánh giá\ndịch vụ',
+      name: 'rate_service',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get faq {
+    return Intl.message(
+      'Các câu hỏi thường gặp',
+      name: 'faq',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get how_to_order {
+    return Intl.message(
+      'Làm thế nào để đặt đơn hàng?',
+      name: 'how_to_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get how_to_know_where_my_order {
+    return Intl.message(
+      'Tôi phải làm sao để biết được đơn hàng đang ở đâu?',
+      name: 'how_to_know_where_my_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get how_to_cancel_order {
+    return Intl.message(
+      'Tôi muốn hủy đơn để đặt đơn khác thì làm thế nào?',
+      name: 'how_to_cancel_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get when_order_wrong {
+    return Intl.message(
+      'Khi nhận hàng không đúng với hàng tôi đặt?',
+      name: 'when_order_wrong',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get how_to_contact_with_shop {
+    return Intl.message(
+      'Làm thế nào để tôi có thể liên hệ với chủ Shop?',
+      name: 'how_to_contact_with_shop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get provided_by {
     return Intl.message(
       'Cung cấp bởi: ',
-      name: 'supply_by',
+      name: 'provided_by',
       desc: '',
       args: [],
     );
   }
 
-  String supply_by_supplier(dynamic supplier) {
-    return Intl.message(
-      'Cung cấp bởi: $supplier',
-      name: 'supply_by_supplier',
-      desc: '',
-      args: [supplier],
-    );
-  }
-
-  String booking_date(dynamic time) {
-    return Intl.message(
-      'Ngày đặt lịch: $time',
-      name: 'booking_date',
-      desc: '',
-      args: [time],
-    );
-  }
-
-  String order_date(dynamic date) {
-    return Intl.message(
-      'Ngày đặt hàng: $date',
-      name: 'order_date',
-      desc: '',
-      args: [date],
-    );
-  }
-
-  String date_of_expiration_holding(dynamic date) {
-    return Intl.message(
-      'Ngày hết hạn giữ hàng: $date',
-      name: 'date_of_expiration_holding',
-      desc: '',
-      args: [date],
-    );
-  }
-
-  String get service_title {
-    return Intl.message(
-      'Chăm sóc da mặt từ cơ bản đến nâng cao',
-      name: 'service_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get order_title {
-    return Intl.message(
-      'Áo giữ nhiệt Trẻ em màu 11 Pink size 100 vạch hồng\ncổ cao',
-      name: 'order_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String overall_time(dynamic minute) {
-    return Intl.message(
-      'Thời gian thực hiện: $minute phút',
-      name: 'overall_time',
-      desc: '',
-      args: [minute],
-    );
-  }
-
-  String order_detail(dynamic price, dynamic count) {
-    return Intl.message(
-      '$price x $count',
-      name: 'order_detail',
-      desc: '',
-      args: [price, count],
-    );
-  }
-
-  String order_count_summary(dynamic count) {
-    return Intl.message(
-      'Tổng $count sản phẩm',
-      name: 'order_count_summary',
-      desc: '',
-      args: [count],
-    );
-  }
-
-  String expiry_date(dynamic date) {
-    return Intl.message(
-      'Ngày sử dung: $date',
-      name: 'expiry_date',
-      desc: '',
-      args: [date],
-    );
-  }
-
-  String get invoice {
+  String get total_order_price {
     return Intl.message(
       'Tổng đơn: ',
-      name: 'invoice',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get see_more {
-    return Intl.message(
-      'Xem thêm',
-      name: 'see_more',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String order_rating(dynamic code) {
-    return Intl.message(
-      'Đánh giá đơn $code',
-      name: 'order_rating',
-      desc: '',
-      args: [code],
-    );
-  }
-
-  String receiving_date(dynamic date) {
-    return Intl.message(
-      'Ngày nhận hàng: $date',
-      name: 'receiving_date',
-      desc: '',
-      args: [date],
-    );
-  }
-
-  String get rating_hint {
-    return Intl.message(
-      'Viết chia sẻ của bạn về sản phẩm này',
-      name: 'rating_hint',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get add_image {
-    return Intl.message(
-      'Thêm hình ảnh',
-      name: 'add_image',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String using_date(dynamic date) {
-    return Intl.message(
-      'Ngày sử dung: $date',
-      name: 'using_date',
-      desc: '',
-      args: [date],
-    );
-  }
-
-  String get send_rating {
-    return Intl.message(
-      'GỬI ĐÁNH GIÁ',
-      name: 'send_rating',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get canceled_service {
-    return Intl.message(
-      'Dịch vụ đã hủy',
-      name: 'canceled_service',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get skip {
-    return Intl.message(
-      'Bỏ qua >>',
-      name: 'skip',
+      name: 'total_order_price',
       desc: '',
       args: [],
     );

@@ -1,7 +1,11 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/cart/cart_screen.dart';
 import 'package:baby_garden_flutter/screen/home/home_screen.dart';
+import 'package:baby_garden_flutter/screen/order/order_screen.dart';
+import 'package:baby_garden_flutter/screen/profile/profile_screen.dart';
 import 'package:baby_garden_flutter/screen/shopping/shopping_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
@@ -38,9 +42,9 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
           children: <Widget>[
             HomeScreen(),
             ShoppingScreen(),
-            HomeScreen(),
-            HomeScreen(),
-            HomeScreen(),
+            CartScreen(),
+            OrderScreen(),
+            ProfileScreen(),
           ],
         ),
         bottomNavigationBar: Consumer<ChangeIndexProvider>(
@@ -69,11 +73,13 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
                   getTabItem(
                       title: S.of(context).cart,
                       iconName: 'cart.svg',
-                      index: 2),
+                      index: 2,
+                      count: 6),
                   getTabItem(
                       title: S.of(context).order,
                       iconName: 'shipped.svg',
-                      index: 3),
+                      index: 3,
+                      count: 10),
                   getTabItem(
                       title: S.of(context).account,
                       iconName: 'user.svg',
@@ -84,12 +90,55 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
   }
 
   BottomNavigationBarItem getTabItem(
-      {String title, String iconName, int index}) {
+      {String title, String iconName, int index, int count}) {
     return BottomNavigationBarItem(
-        icon: SvgIcon(iconName,
-            color: index == _changeIndexProvider.index
-                ? ColorUtil.primaryColor
-                : ColorUtil.black33),
+        icon: count == null || count <= 0
+            ? SvgIcon(
+                iconName,
+                color: index == _changeIndexProvider.index
+                    ? ColorUtil.primaryColor
+                    : ColorUtil.black33,
+                height: 25,
+              )
+            : Container(
+                height: 27,
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                      child: SvgIcon(
+                        iconName,
+                        height: 25,
+                        color: index == _changeIndexProvider.index
+                            ? ColorUtil.primaryColor
+                            : ColorUtil.black33,
+                      ),
+                      top: 2,
+                      left: 0,
+                      right: 0,
+                    ),
+                    Positioned(
+                      child: Container(
+                        width: 15,
+                        height: 15,
+                        padding: EdgeInsets.all(2),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: ColorUtil.red),
+                        child: AutoSizeText(
+                          count.toString(),
+                          minFontSize: 8,
+                          maxFontSize: 11,
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      right: 10,
+                      top: 0,
+                    )
+                  ],
+                ),
+              ),
         title: Text(title));
   }
 

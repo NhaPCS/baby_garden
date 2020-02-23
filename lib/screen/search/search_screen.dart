@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/searching_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_icon.dart';
 import 'package:baby_garden_flutter/widget/chip_tag.dart';
@@ -171,6 +172,10 @@ class _SearchState extends BaseState<SearchScreen> {
                               text: value.data[index]['distributor'],
                               style: TextStyle(color: ColorUtil.blue)),
                         ])),
+                        onTap: (){
+                          //TODO
+                          push(ProductDetailScreen());
+                        },
                       ),
                       WidgetUtil.getLine(
                           margin: EdgeInsets.only(

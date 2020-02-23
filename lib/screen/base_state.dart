@@ -63,6 +63,7 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
       {String title,
       bool centerTitle = true,
       double elevation = 0,
+      bool hasBack = true,
       Color bgColor = ColorUtil.primaryColor,
       Color titleColor = Colors.white,
       Color backColor = Colors.white,
@@ -79,7 +80,7 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
             )
           : null,
       centerTitle: centerTitle,
-      leading: getLeading(context,backColor: backColor),
+      leading: hasBack ? getLeading(context, backColor: backColor) : null,
       actions: actions,
       bottom: widget,
     );
