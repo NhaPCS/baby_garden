@@ -4,12 +4,13 @@ import 'package:baby_garden_flutter/item/item_home_category.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/photo_view/photo_view_screen.dart';
 import 'package:baby_garden_flutter/screen/search/search_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
 import 'package:baby_garden_flutter/widget/product/grid_product.dart';
+import 'package:baby_garden_flutter/widget/product/notify_icon.dart';
 import 'package:baby_garden_flutter/widget/search_bar.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -78,14 +79,7 @@ class _HomeState extends BaseState<HomeScreen> {
                     Column(
                       children: <Widget>[
                         SearchBar(
-                          trailing: SvgIcon(
-                            'ic_bell.svg',
-                            padding: SizeUtil.tinyPadding,
-                            color: Colors.white,
-                            onPressed: () {
-                              //TODO
-                            },
-                          ),
+                          trailing: NotifyIcon(),
                           enable: false,
                           onPressed: () {
                             push(SearchScreen());
@@ -95,6 +89,11 @@ class _HomeState extends BaseState<HomeScreen> {
                           child: MyCarouselSlider(
                             hasShadow: true,
                             images: StringUtil.dummyImageList,
+                            onItemPressed: (index) {
+                              push(PhotoViewScreen(
+                                images: StringUtil.dummyImageList,
+                              ));
+                            },
                           ),
                         ),
                       ],

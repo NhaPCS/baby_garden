@@ -5,9 +5,6 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/my_text_field.dart';
 import 'package:baby_garden_flutter/widget/notify_item.dart';
-import 'package:baby_garden_flutter/widget/product/grid_product.dart';
-import 'package:baby_garden_flutter/widget/search_bar.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -94,7 +91,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                             children: <Widget>[
                               MyTextField(
                                 textStyle:
-                                    TextStyle(fontSize: SizeUtil.textSizeTiny),
+                                    TextStyle(fontSize: SizeUtil.textSizeSmall),
                                 elevation: SizeUtil.defaultElevation,
                                 textEditingController: searchTextController,
                                 maxLines: 1,
@@ -102,9 +99,9 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                                 hint: S.of(context).notify_hint_search,
                                 contentPadding: EdgeInsets.only(
                                     left: SizeUtil.notifyHintSpace,
-                                    right: SizeUtil.tinySpace,
-                                    top: SizeUtil.midSpace,
-                                    bottom: SizeUtil.midSpace),
+                                    right: SizeUtil.smallSpace,
+                                    top: SizeUtil.smallSpace,
+                                    bottom: SizeUtil.smallSpace),
                                 borderColor: Colors.white,
                                 ontap: () {
                                   _notifySearchProvider.onChangeFocus(true);
@@ -122,6 +119,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                                 child: Icon(
                                   CupertinoIcons.search,
                                   color: ColorUtil.textHint,
+                                  size: SizeUtil.iconSize,
                                 ),
                                 left: SizeUtil.smallSpace,
                               ),
@@ -142,7 +140,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                                           S.of(context).hide_readed_notify,
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
-                                              fontSize: SizeUtil.textSizeTiny),
+                                              fontSize: SizeUtil.textSizeSmall),
                                         ),
                                         Transform.scale(
                                           scale: 1,

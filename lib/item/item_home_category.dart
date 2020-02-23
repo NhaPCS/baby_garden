@@ -1,4 +1,6 @@
 import 'package:baby_garden_flutter/screen/category_product/category_product_screen.dart';
+import 'package:baby_garden_flutter/screen/partner/partner_register.dart';
+import 'package:baby_garden_flutter/screen/voucher/voucher_management.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +42,13 @@ class ItemHomeCategory extends StatelessWidget {
         ],
       ),
       onTap: () {
-        RouteUtil.push(context, CategoryProductScreen());
+        if (category['icon'].toString().contains('voucher')) {
+          RouteUtil.push(context, VoucherManage());
+        } else if (category['icon'].toString().contains('partner')) {
+          RouteUtil.push(context, PartnerRegister());
+        } else if (category['icon'].toString().contains('category')) {
+          RouteUtil.push(context, CategoryProductScreen());
+        }
       },
     ));
   }

@@ -24,7 +24,7 @@ class ListCategory extends StatelessWidget {
           builder: (BuildContext context, ChangeCategoryProvider value,
               Widget child) {
             return ListView.builder(
-              itemCount: 10,
+              itemCount: StringUtil.categoryDummy.length + 1,
               itemBuilder: (context, index) {
                 bool isSelected =
                     categoryProvider != null && categoryProvider.index == index;
@@ -54,7 +54,7 @@ class ListCategory extends StatelessWidget {
                         Image.asset(
                           index == 0
                               ? 'photo/ic_all.png'
-                              : 'photo/ic_phone.png',
+                              : StringUtil.categoryDummy[index - 1]['icon'],
                           width: SizeUtil.iconSizeBigger,
                         ),
                         SizedBox(
@@ -63,7 +63,7 @@ class ListCategory extends StatelessWidget {
                         AutoSizeText(
                           index == 0
                               ? S.of(context).all
-                              : "Điện thoại & phụ kiện",
+                              : StringUtil.categoryDummy[index - 1]['title'],
                           maxLines: 2,
                           maxFontSize: SizeUtil.textSizeTiny,
                           minFontSize: SizeUtil.textSizeMini,

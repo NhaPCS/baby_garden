@@ -38,6 +38,7 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
               ),
               itemBuilder: (context, index) {
                 return ItemProduct(
+                  index: index,
                   width: MediaQuery.of(context).size.width * 0.5,
                   borderRadius: SizeUtil.tinyRadius,
                   showSoldCount: true,

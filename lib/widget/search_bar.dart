@@ -66,14 +66,7 @@ class SearchBar extends StatelessWidget {
                   height: 0,
                   width: 0,
                 )
-              : SvgIcon(
-                  'ic_bell.svg',
-                  padding: SizeUtil.tinyPadding,
-                  color: Colors.white,
-                  onPressed: () {
-                    //TODO
-                  },
-                )
+              : trailing
         ],
       ),
     );
