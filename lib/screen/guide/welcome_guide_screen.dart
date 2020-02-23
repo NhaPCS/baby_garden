@@ -47,11 +47,10 @@ class _WelcomeGuideScreenState extends BaseState<WelcomeGuideScreen> {
             SizedBox(
               height: SizeUtil.normalSpace,
             ),
-
             InkWell(
               onTap: () {
                 print("Yeah, this line is printed after 3 seconds");
-                push(LoginScreen());
+                pushReplacement(LoginScreen());
               },
               child: Padding(
                 padding: const EdgeInsets.all(SizeUtil.tinySpace),

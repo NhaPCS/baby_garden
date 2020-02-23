@@ -16,7 +16,7 @@ class MyCarouselSlider extends StatefulWidget {
   final Color indicatorInactiveColor;
   final Color slideBackground;
   final BoxFit boxFit;
-
+  final bool hasShadow;
 
   const MyCarouselSlider(
       {Key key,
@@ -30,7 +30,8 @@ class MyCarouselSlider extends StatefulWidget {
       this.indicatorInactiveColor = Colors.white,
       this.slideBackground = ColorUtil.lightGray,
       this.boxFit = BoxFit.cover,
-      this.width = double.infinity})
+      this.width = double.infinity,
+      this.hasShadow = false})
       : super(key: key);
 
   @override
@@ -70,6 +71,8 @@ class _MyCarouselState extends State<MyCarouselSlider> {
                   height: double.infinity,
                   decoration: BoxDecoration(
                       color: widget.slideBackground,
+                      boxShadow:
+                          widget.hasShadow ? WidgetUtil.getShadow() : null,
                       image: DecorationImage(
                           image: widget.isAssetImage
                               ? AssetImage(image)

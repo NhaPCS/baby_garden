@@ -174,5 +174,10 @@
   "when_order_wrong": "Khi nhận hàng không đúng với hàng tôi đặt?",
   "how_to_contact_with_shop": "Làm thế nào để tôi có thể liên hệ với chủ Shop?",
   "provided_by": "Cung cấp bởi: ",
-  "total_order_price": "Tổng đơn: "
+  "total_order_price": "Tổng đơn: ",
+  "press_back_again_to_exit": "Nhấn 1 lần nữa để thoát ứng dụng!",
+  "partner": "Đối tác",
+  "voucher": "Voucher",
+  "vcb_express": "VCB Express",
+  "heath_number": "Chỉ số sức khỏe"
 }

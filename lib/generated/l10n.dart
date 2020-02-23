@@ -1612,6 +1612,51 @@ class S {
       args: [],
     );
   }
+
+  String get press_back_again_to_exit {
+    return Intl.message(
+      'Nhấn 1 lần nữa để thoát ứng dụng!',
+      name: 'press_back_again_to_exit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get partner {
+    return Intl.message(
+      'Đối tác',
+      name: 'partner',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get voucher {
+    return Intl.message(
+      'Voucher',
+      name: 'voucher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get vcb_express {
+    return Intl.message(
+      'VCB Express',
+      name: 'vcb_express',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get heath_number {
+    return Intl.message(
+      'Chỉ số sức khỏe',
+      name: 'heath_number',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

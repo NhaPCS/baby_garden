@@ -39,6 +39,12 @@ class ColorUtil {
 class StringUtil {
   static const String dummyImage =
       "https://imgix.bustle.com/uploads/image/2019/1/23/4ca31ad3-6f9b-4e75-a0bf-fada7bfecfae-shutterstock_10068471c.jpg?w=970&h=546&fit=crop&crop=faces&auto=format&q=70&dpr=2";
+  static const List<String> dummyImageList = [
+    "https://static.topshop.com/v1/static/json-0000156327_TSHP_WK25_THURSDAY_DESKTOP_UK_01jpg",
+    "https://fashioninthecity.com/wp-content/uploads/2018/12/GENDER-NEUTRAL-BANNER-FINAL.jpg",
+    "https://r8zlusvr.rocketcdn.com/templates/selectfashion.co.uk.new/assets/images/home/main-page-pods/pod2-newin2.jpg",
+    "https://www.telegraph.co.uk/content/dam/fashion/2019/11/26/LKB_AW19_AUGUST_10_trans_NvBQzQNjv4BqXxNHKgVzGLlMTFfSc8ogRjgvSsGPs1UGfa2r2ifahVI.jpg?imwidth=450"
+  ];
   static const String dummyText =
       "- Đế giày làm bằng cao su nhiệt dẻo (TPR). xẻ rãnh chống trơn trượt cho bé vui chơi thỏa thích \n- Cách tính cỡ Giày trẻ em cho bé (Bạn đo chiều dài bàn chân xem kích thước là bao nhiêu)\n- Ướm đi thử vừa là vừa";
 }
@@ -272,6 +278,19 @@ class WidgetUtil {
         ],
       ),
     );
+  }
+
+  static List<BoxShadow> getShadow() {
+    return [
+      BoxShadow(
+          color: Colors.black.withOpacity(0.15),
+          offset: Offset(0, 1),
+          blurRadius: 0.7),
+      BoxShadow(
+          color: Colors.black.withOpacity(0.1),
+          offset: Offset(0, 2),
+          blurRadius: 0.8),
+    ];
   }
 }
 

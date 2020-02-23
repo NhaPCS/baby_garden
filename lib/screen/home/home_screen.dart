@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/dialog/promotion_dialog.dart';
+import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_home_category.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_category_provider.dart';
@@ -28,6 +29,8 @@ class _HomeState extends BaseState<HomeScreen> {
       ChangeCategoryProvider();
   double _flashSaleHeight;
   double _flashSaleWidth;
+
+  List<dynamic> HOME_CATEGORIES = List();
 
   @override
   void initState() {
@@ -90,10 +93,8 @@ class _HomeState extends BaseState<HomeScreen> {
                         ),
                         Expanded(
                           child: MyCarouselSlider(
-                            images: [
-                              StringUtil.dummyImage,
-                              StringUtil.dummyImage,
-                            ],
+                            hasShadow: true,
+                            images: StringUtil.dummyImageList,
                           ),
                         ),
                       ],
@@ -107,9 +108,13 @@ class _HomeState extends BaseState<HomeScreen> {
             child: Column(
               children: <Widget>[
                 Row(
-                  children: List.generate(5, (index) {
-                    return ItemHomeCategory();
-                  }),
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: HOME_CATEGORIES
+                      .map((e) => ItemHomeCategory(
+                            category: e,
+                          ))
+                      .toList(),
                 ),
                 Container(
                   height: SizeUtil.lineHeight,
@@ -140,6 +145,18 @@ class _HomeState extends BaseState<HomeScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    HOME_CATEGORIES = [
+      {'icon': 'photo/ic_category.png', 'title': S.of(context).category},
+      {'icon': 'photo/ic_partner.png', 'title': S.of(context).partner},
+      {'icon': 'photo/ic_voucher.png', 'title': S.of(context).voucher},
+      {'icon': 'photo/ic_vcb_express.png', 'title': S.of(context).vcb_express},
+      {'icon': 'photo/ic_health.png', 'title': S.of(context).heath_number}
+    ];
+    super.didChangeDependencies();
   }
 
   @override

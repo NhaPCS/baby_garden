@@ -69,10 +69,8 @@ class _ShoppingState extends BaseState<ShoppingScreen> {
                         ),
                         Expanded(
                           child: MyCarouselSlider(
-                            images: [
-                              StringUtil.dummyImage,
-                              StringUtil.dummyImage,
-                            ],
+                            hasShadow: true,
+                            images: StringUtil.dummyImageList,
                           ),
                         )
                       ],
