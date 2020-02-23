@@ -1118,17 +1118,257 @@ class S {
     );
   }
 
-
-  String get note_for_product_promo {
+  String get rating_service {
     return Intl.message(
-      'Ghi chú khuyến mại của sản phẩm',
-      name: 'note_for_product_promo',
-
+      'Đánh giá dịch vụ',
+      name: 'rating_service',
       desc: '',
       args: [],
     );
   }
 
+  String get rating_order {
+    return Intl.message(
+      'Đánh giá đơn hàng',
+      name: 'rating_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get waitting_rate {
+    return Intl.message(
+      'Chờ đánh giá',
+      name: 'waitting_rate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get rated {
+    return Intl.message(
+      'Đã đánh giá',
+      name: 'rated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String order_code(dynamic code) {
+    return Intl.message(
+      'Mã đơn $code',
+      name: 'order_code',
+      desc: '',
+      args: [code],
+    );
+  }
+
+  String order_with_code(dynamic code) {
+    return Intl.message(
+      'Đơn hàng $code',
+      name: 'order_with_code',
+      desc: '',
+      args: [code],
+    );
+  }
+
+  String get supply_by {
+    return Intl.message(
+      'Cung cấp bởi: ',
+      name: 'supply_by',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String supply_by_supplier(dynamic supplier) {
+    return Intl.message(
+      'Cung cấp bởi: $supplier',
+      name: 'supply_by_supplier',
+      desc: '',
+      args: [supplier],
+    );
+  }
+
+  String booking_date(dynamic time) {
+    return Intl.message(
+      'Ngày đặt lịch: $time',
+      name: 'booking_date',
+      desc: '',
+      args: [time],
+    );
+  }
+
+  String order_date(dynamic date) {
+    return Intl.message(
+      'Ngày đặt hàng: $date',
+      name: 'order_date',
+      desc: '',
+      args: [date],
+    );
+  }
+
+  String date_of_expiration_holding(dynamic date) {
+    return Intl.message(
+      'Ngày hết hạn giữ hàng: $date',
+      name: 'date_of_expiration_holding',
+      desc: '',
+      args: [date],
+    );
+  }
+
+  String get service_title {
+    return Intl.message(
+      'Chăm sóc da mặt từ cơ bản đến nâng cao',
+      name: 'service_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get order_title {
+    return Intl.message(
+      'Áo giữ nhiệt Trẻ em màu 11 Pink size 100 vạch hồng\ncổ cao',
+      name: 'order_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String overall_time(dynamic minute) {
+    return Intl.message(
+      'Thời gian thực hiện: $minute phút',
+      name: 'overall_time',
+      desc: '',
+      args: [minute],
+    );
+  }
+
+  String order_detail(dynamic price, dynamic count) {
+    return Intl.message(
+      '$price x $count',
+      name: 'order_detail',
+      desc: '',
+      args: [price, count],
+    );
+  }
+
+  String order_count_summary(dynamic count) {
+    return Intl.message(
+      'Tổng $count sản phẩm',
+      name: 'order_count_summary',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  String expiry_date(dynamic date) {
+    return Intl.message(
+      'Ngày sử dung: $date',
+      name: 'expiry_date',
+      desc: '',
+      args: [date],
+    );
+  }
+
+  String get invoice {
+    return Intl.message(
+      'Tổng đơn: ',
+      name: 'invoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get see_more {
+    return Intl.message(
+      'Xem thêm',
+      name: 'see_more',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String order_rating(dynamic code) {
+    return Intl.message(
+      'Đánh giá đơn $code',
+      name: 'order_rating',
+      desc: '',
+      args: [code],
+    );
+  }
+
+  String receiving_date(dynamic date) {
+    return Intl.message(
+      'Ngày nhận hàng: $date',
+      name: 'receiving_date',
+      desc: '',
+      args: [date],
+    );
+  }
+
+  String get rating_hint {
+    return Intl.message(
+      'Viết chia sẻ của bạn về sản phẩm này',
+      name: 'rating_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get add_image {
+    return Intl.message(
+      'Thêm hình ảnh',
+      name: 'add_image',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String using_date(dynamic date) {
+    return Intl.message(
+      'Ngày sử dung: $date',
+      name: 'using_date',
+      desc: '',
+      args: [date],
+    );
+  }
+
+  String get send_rating {
+    return Intl.message(
+      'GỬI ĐÁNH GIÁ',
+      name: 'send_rating',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get canceled_service {
+    return Intl.message(
+      'Dịch vụ đã hủy',
+      name: 'canceled_service',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get skip {
+    return Intl.message(
+      'Bỏ qua >>',
+      name: 'skip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get note_for_product_promo {
+    return Intl.message(
+      'Ghi chú khuyến mại của sản phẩm',
+      name: 'note_for_product_promo',
+      desc: '',
+      args: [],
+    );
+  }
 
   String get type_promo_code {
     return Intl.message(
@@ -1138,7 +1378,6 @@ class S {
       args: [],
     );
   }
-
 
   String get apply {
     return Intl.message(
@@ -1184,7 +1423,7 @@ class S {
       args: [],
     );
   }
-  
+
   String get waiting_payment {
     return Intl.message(
       'Chờ\nthanh toán',
