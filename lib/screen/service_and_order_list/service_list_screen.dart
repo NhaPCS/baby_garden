@@ -36,6 +36,10 @@ class _ServiceListScreenState extends BaseState<ServiceListScreen> {
       body: SafeArea(
           child: Column(
             children: <Widget>[
+              Container(
+                height: SizeUtil.tinySpace,
+                color: Colors.white,
+              ),
               Expanded(
                 child: Container(
                   padding: EdgeInsets.only(bottom: SizeUtil.smallSpace),

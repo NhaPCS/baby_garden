@@ -64,7 +64,7 @@ class _RatingDetailScreenState extends BaseState<RatingDetailScreen> {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  child: Text(    
+                  child: Text(
                     S.of(context).receiving_date("25/12/2019 12:25"),
                     style: TextStyle(fontSize: SizeUtil.textSizeTiny),
                     textAlign: TextAlign.start,
@@ -82,10 +82,13 @@ class _RatingDetailScreenState extends BaseState<RatingDetailScreen> {
           ),
           Padding(
             padding: const EdgeInsets.only(
-                left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
+                left: SizeUtil.smallSpace,
+                right: SizeUtil.smallSpace,
+                top: SizeUtil.tinySpace),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Image.asset("photo/logo.png",
+                Image.asset("photo/order_img.png",
                     width: MediaQuery.of(context).size.width / 6),
                 Expanded(
                   child: Container(
@@ -236,7 +239,7 @@ class _RatingDetailScreenState extends BaseState<RatingDetailScreen> {
                       fontSize: SizeUtil.textSizeDefault,
                       color: Colors.white,
                       fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.normal),
+                      fontWeight: FontWeight.normal),
                 ),
               )),
         ],

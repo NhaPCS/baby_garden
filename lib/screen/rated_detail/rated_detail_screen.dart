@@ -82,10 +82,13 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
           ),
           Padding(
             padding: const EdgeInsets.only(
-                left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
+                left: SizeUtil.smallSpace,
+                right: SizeUtil.smallSpace,
+                top: SizeUtil.tinySpace),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Image.asset("photo/logo.png",
+                Image.asset("photo/order_img.png",
                     width: MediaQuery.of(context).size.width / 6),
                 Expanded(
                   child: Container(
@@ -134,22 +137,31 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
             color: ColorUtil.gray,
             margin: EdgeInsets.all(SizeUtil.normalSpace),
           ),
-          Text(
-              "Chất lượng sản phẩm tuyệt vời. Đóng gói sản phẩm \nrất đẹp và chắc chắn."),
+          Padding(
+            padding: const EdgeInsets.only(left: SizeUtil.normalSpace),
+            child: Text(
+                "Chất lượng sản phẩm tuyệt vời. Đóng gói sản phẩm \nrất đẹp và chắc chắn."),
+          ),
           Row(
             children: <Widget>[
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.all(SizeUtil.smallSpace),
+                  padding: EdgeInsets.only(
+                      left: SizeUtil.normalSpace,
+                      right: SizeUtil.normalSpace,
+                      top: SizeUtil.smallSpace,
+                      bottom: SizeUtil.smallSpace),
                   child: Image.asset("photo/rated_detail_img.png",
                       width: MediaQuery.of(context).size.width / 6),
                 ),
               )
             ],
           ),
-          Container(child: Text("10-01-2020 12:17"),
-          padding: EdgeInsets.only(left: SizeUtil.smallSpace),
-          alignment: Alignment.centerLeft,)
+          Container(
+            child: Text("10-01-2020 12:17"),
+            padding: EdgeInsets.only(left: SizeUtil.smallSpace),
+            alignment: Alignment.centerLeft,
+          )
         ],
       ),
     );
