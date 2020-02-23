@@ -122,7 +122,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "how_to_contact_with_shop" : MessageLookupByLibrary.simpleMessage("Làm thế nào để tôi có thể liên hệ với chủ Shop?"),
     "how_to_know_where_my_order" : MessageLookupByLibrary.simpleMessage("Tôi phải làm sao để biết được đơn hàng đang ở đâu?"),
     "how_to_order" : MessageLookupByLibrary.simpleMessage("Làm thế nào để đặt đơn hàng?"),
-    "invoice" : MessageLookupByLibrary.simpleMessage("Tổng đơn: "),
+    "invoice" : MessageLookupByLibrary.simpleMessage("Tổng đơn hàng: "),
     "joinDate" : MessageLookupByLibrary.simpleMessage("Tham gia từ"),
     "lastDayCheck" : MessageLookupByLibrary.simpleMessage("Ngày đo gần nhất"),
     "login" : MessageLookupByLibrary.simpleMessage("Đăng nhập"),
