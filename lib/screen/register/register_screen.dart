@@ -25,8 +25,10 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
   final TextEditingController _phoneControler = new TextEditingController();
   final TextEditingController _passControler = new TextEditingController();
   final TextEditingController _repassControler = new TextEditingController();
-  final TextEditingController _invitePhoneControler = new TextEditingController();
+  final TextEditingController _invitePhoneControler =
+      new TextEditingController();
   final TextEditingController _otpControler = new TextEditingController();
+
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
@@ -58,7 +60,8 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
             textEditingController: _nameControler,
             hint: S.of(context).your_full_name,
             borderColor: ColorUtil.colorAccent,
-            borderRadius: SizeUtil.smallRadius,
+            elevation: SizeUtil.smallElevation,
+            borderRadius: SizeUtil.tinyRadius,
             contentPadding: SizeUtil.normalPadding,
           ),
           SizedBox(
@@ -68,7 +71,8 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
             textEditingController: _phoneControler,
             hint: S.of(context).enter_phone_number,
             borderColor: ColorUtil.colorAccent,
-            borderRadius: SizeUtil.smallRadius,
+            borderRadius: SizeUtil.tinyRadius,
+            elevation: SizeUtil.smallElevation,
             contentPadding: SizeUtil.normalPadding,
             inputType: TextInputType.phone,
           ),
@@ -82,7 +86,8 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
                 textEditingController: _passControler,
                 hint: S.of(context).password,
                 borderColor: ColorUtil.colorAccent,
-                borderRadius: SizeUtil.smallRadius,
+                borderRadius: SizeUtil.tinyRadius,
+                elevation: SizeUtil.smallElevation,
                 contentPadding: SizeUtil.smallPadding,
                 obscureText: !value.isShowPass,
                 suffix: new GestureDetector(
@@ -107,7 +112,8 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
                 textEditingController: _repassControler,
                 hint: S.of(context).reenter_password,
                 borderColor: ColorUtil.colorAccent,
-                borderRadius: SizeUtil.smallRadius,
+                borderRadius: SizeUtil.tinyRadius,
+                elevation: SizeUtil.smallElevation,
                 contentPadding: SizeUtil.smallPadding,
                 obscureText: !value.isShowRePass,
                 suffix: new GestureDetector(
@@ -131,10 +137,13 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
             textEditingController: _invitePhoneControler,
             hint: S.of(context).enter_invite_phone_number,
             borderColor: ColorUtil.colorAccent,
-            borderRadius: SizeUtil.smallRadius,
+            borderRadius: SizeUtil.tinyRadius,
+            elevation: SizeUtil.smallElevation,
             contentPadding: SizeUtil.smallPadding,
             suffix: new GestureDetector(
-              onTap: () {},
+              onTap: () {
+                //todo open camera to capture the QAcode
+              },
               child: SvgIcon(
                 'ic_qr.svg',
                 width: 10,
@@ -149,29 +158,32 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
           Consumer<WaittingOTPProvider>(
             builder: (BuildContext context, WaittingOTPProvider value,
                 Widget child) {
-              return Stack(
-                alignment: Alignment.centerRight,
-                children: <Widget>[
-                  MyTextField(
-                    hint: S.of(context).enter_otp,
-                    borderColor: ColorUtil.colorAccent,
-                    borderRadius: SizeUtil.smallRadius,
-                    contentPadding: SizeUtil.normalPadding,
-                    textEditingController: _otpControler,
-                    inputType: TextInputType.number,
-                  ),
-                  Positioned(
-                    child: Text(
-                        S.of(context).count_down_time(
-                            value.start.toString().padLeft(2, "0")),
-                        style: TextStyle(
-                            color: value.start == 0
-                                ? ColorUtil.red
-                                : ColorUtil.textColor)),
-                    right: SizeUtil.smallSpace,
-                  )
-                ],
-              );
+              return value.isTimerStart
+                  ? Stack(
+                      alignment: Alignment.centerRight,
+                      children: <Widget>[
+                        MyTextField(
+                          hint: S.of(context).enter_otp,
+                          borderColor: ColorUtil.colorAccent,
+                          borderRadius: SizeUtil.tinyRadius,
+                          elevation: SizeUtil.smallElevation,
+                          contentPadding: SizeUtil.normalPadding,
+                          textEditingController: _otpControler,
+                          inputType: TextInputType.number,
+                        ),
+                        Positioned(
+                          child: Text(
+                              S.of(context).count_down_time(
+                                  value.start.toString().padLeft(2, "0")),
+                              style: TextStyle(
+                                  color: value.start < 10
+                                      ? ColorUtil.red
+                                      : ColorUtil.textColor)),
+                          right: SizeUtil.smallSpace,
+                        )
+                      ],
+                    )
+                  : SizedBox();
             },
           ),
           SizedBox(
@@ -181,11 +193,18 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
             onPressed: () {
               _waittingOTPProvider.startTimer();
             },
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(SizeUtil.tinyRadius),
+                )),
             color: ColorUtil.colorAccent,
-            child: Text(
-              S.of(context).register,
-              style: TextStyle(
-                  fontSize: SizeUtil.textSizeBigger, color: Colors.white),
+            child: Padding(
+              padding: const EdgeInsets.all(SizeUtil.smallSpace),
+              child: Text(
+                S.of(context).register,
+                style: TextStyle(
+                    fontSize: SizeUtil.textSizeBigger, color: Colors.white),
+              ),
             ),
           ),
           SizedBox(
@@ -194,13 +213,49 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
           Consumer<WaittingOTPProvider>(
             builder: (BuildContext context, WaittingOTPProvider value,
                 Widget child) {
-              return Text(
-                value.start == 0
-                    ? S.of(context).otp_timer_out
-                    : S.of(context).resend_otp,
-                textAlign: TextAlign.center,
-                style: TextStyle(color: ColorUtil.blueForgotPass),
-              );
+              return value.isTimerStart
+                  ? (value.start == 0
+                      ? RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                              text:
+                                  "Nếu bạn không đăng ký được, vui lòng gọi điện tới số  ",
+                              style: TextStyle(
+                                color: ColorUtil.textColor,
+                              ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: "0912 277 022",
+                                    style: TextStyle(
+                                        color: ColorUtil.green,
+                                        decoration: TextDecoration.none)),
+                                TextSpan(
+                                    text: " để được hỗ trợ",
+                                    style: TextStyle(
+                                        color: ColorUtil.textColor,
+                                        decoration: TextDecoration.none)),
+                              ]),
+                        )
+                      : InkWell(
+                          onTap: () {
+                            //todo resend otp
+                          },
+                          child: Text(
+                            S.of(context).resend_otp,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: ColorUtil.primaryColor),
+                          ),
+                        ))
+                  : InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        S.of(context).return_login_if_had_account,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: ColorUtil.blueForgotPass),
+                      ),
+                    );
             },
           ),
           SizedBox(

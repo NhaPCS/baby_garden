@@ -25,6 +25,7 @@ class ColorUtil {
   static const Color white = Color(0xffffff);
   static const Color logoBgColor = Color(0xffE1F2F9);
   static const Color transGray = Color(0x66EFEFEF);
+  static const Color customerSupportUpdate = Color(0xff73EBD5);
 
   static Color getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");
@@ -75,7 +76,9 @@ class SizeUtil {
 
   static const double defaultSpace = 20;
   static const double normalSpace = 15;
+  static const double midSpace = 12;
   static const double smallSpace = 10;
+  static const double midSmallSpace = 8.0;
   static const double tinySpace = 5;
   static const double bigSpace = 30;
   static const double hugSpace = 50;
@@ -88,6 +91,7 @@ class SizeUtil {
   static const double textSizeBigger = 17;
   static const double textSizeDefault = 15;
   static const double textSizeSmall = 11;
+  static const double textSizeNotiTime = 10;
   static const double textSizeTiny = 8;
   static const double textSizeMini = 5;
   static const double textSizeHuge = 40;
@@ -95,15 +99,17 @@ class SizeUtil {
 
   static const double iconSizeLarge = 52;
   static const double iconSize = 16;
+  static const double iconSizeDefault = 12;
   static const double iconSizeBigger = 24;
   static const double iconSizeBig = 32;
   static const double iconSizeSmall = 10;
 
   static const double smallRadius = 10;
-  static const double bigRadius = 15;
+  static const double bigRadius = 16;
   static const double tinyRadius = 5;
 
   static const double defaultElevation = 5;
+  static const double smallElevation = 3;
 
   static const double lineHeight = 5;
 }
