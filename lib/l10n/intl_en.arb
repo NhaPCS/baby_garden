@@ -185,6 +185,10 @@
   "vcb_ex_detail_post_time": "Thời trang cho bé | {time}",
   "vcb_ex_detail_ctm_hint": "Viết bình luận của bạn",
   "vcb_ex_detail_first_content": "Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn.",
-  "vcb_ex_detail_second_content": "Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn."
+  "vcb_ex_detail_second_content": "Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn.",
+  "saling_detail": "Chi tiết khuyến mãi",
+  "saling_detail_title": "[BIG SAle] {title}",
+  "saling_detail_time": "Thời gian áp dung: {time}",
+  "product_for_sale": "Sản phẩm khuyến mãi"
 
 }

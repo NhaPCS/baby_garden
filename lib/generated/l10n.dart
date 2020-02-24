@@ -1711,6 +1711,42 @@ class S {
       args: [],
     );
   }
+
+  String get saling_detail {
+    return Intl.message(
+      'Chi tiết khuyến mãi',
+      name: 'saling_detail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String saling_detail_title(dynamic title) {
+    return Intl.message(
+      '[BIG SAle] $title',
+      name: 'saling_detail_title',
+      desc: '',
+      args: [title],
+    );
+  }
+
+  String saling_detail_time(dynamic time) {
+    return Intl.message(
+      'Thời gian áp dung: $time',
+      name: 'saling_detail_time',
+      desc: '',
+      args: [time],
+    );
+  }
+
+  String get product_for_sale {
+    return Intl.message(
+      'Sản phẩm khuyến mãi',
+      name: 'product_for_sale',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
