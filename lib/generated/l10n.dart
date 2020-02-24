@@ -1660,7 +1660,7 @@ class S {
 
   String get vcb_ex_detail_short_title {
     return Intl.message(
-      'Vườn của bé: Thời trang dành cho bé',
+      'Vườn của bé: Thời trang dành cho bé\n năm 2019',
       name: 'vcb_ex_detail_short_title',
       desc: '',
       args: [],
