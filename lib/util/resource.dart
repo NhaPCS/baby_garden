@@ -90,6 +90,8 @@ class SizeUtil {
   static const double textSizeItemPost = 30;
   static const double textSizeBigger = 17;
   static const double textSizeDefault = 15;
+  static const double textSizeExpressTitle = 14;
+  static const double textSizeExpressDetail = 13;
   static const double textSizeSmall = 11;
   static const double textSizeNotiTime = 10;
   static const double textSizeTiny = 8;

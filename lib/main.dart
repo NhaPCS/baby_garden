@@ -6,6 +6,7 @@ import 'package:baby_garden_flutter/screen/notify/notify_screen.dart';
 import 'package:baby_garden_flutter/screen/service_and_order_list/service_list_screen.dart';
 import 'package:baby_garden_flutter/screen/setting/setting_screen.dart';
 import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
+import 'package:baby_garden_flutter/screen/vcb_express/vcb_express_screen.dart';
 import 'package:baby_garden_flutter/screen/welcome/welcome_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
             bodyText1: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
           )),
-      home: ServiceListScreen(),
+      home: VCBExpressScreen(),
     );
   }
 }

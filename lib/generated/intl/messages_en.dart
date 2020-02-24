@@ -53,6 +53,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m16(date) => "Ngày sử dung: ${date}";
 
+  static m17(time) => "Thời trang cho bé | ${time}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "accManage" : MessageLookupByLibrary.simpleMessage("Quản lý tài khoản"),
@@ -102,6 +104,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "enter_password" : MessageLookupByLibrary.simpleMessage("Nhập mật khẩu"),
     "enter_phone_number" : MessageLookupByLibrary.simpleMessage("Nhập số điện thoại"),
     "expiry_date" : m3,
+    "express_descrip" : MessageLookupByLibrary.simpleMessage("Thời trang cho bé"),
+    "express_short_content" : MessageLookupByLibrary.simpleMessage("MFGM là một màng cầu dinh dưỡng bao quanh giọt chất béo trong sữa tự nhiên, đóng vai trò quan trọng trong việc cải thiện chức năng nhận thức, khả năng miễn dịch và sức khỏe đường ruột của trẻ, là tinh chất rất A +."),
+    "express_time" : MessageLookupByLibrary.simpleMessage("12/09/2019 - 14:00"),
+    "express_title" : MessageLookupByLibrary.simpleMessage("Vườn của bé: Thời trang dành cho bé MFGM PRO\ntinh chất dinh dưỡng quý trong sữa năm 2019"),
     "faq" : MessageLookupByLibrary.simpleMessage("Các câu hỏi thường gặp"),
     "favorite" : MessageLookupByLibrary.simpleMessage("Yêu thích"),
     "favoritePatner" : MessageLookupByLibrary.simpleMessage("Đối tác yêu thích"),
@@ -220,6 +226,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "used" : MessageLookupByLibrary.simpleMessage("Đã\nsử dụng"),
     "using_date" : m16,
     "vcb_contact" : MessageLookupByLibrary.simpleMessage("Thông tin liên hệ với VCB"),
+    "vcb_ex_detail_ctm_hint" : MessageLookupByLibrary.simpleMessage("Viết bình luận của bạn"),
+    "vcb_ex_detail_first_content" : MessageLookupByLibrary.simpleMessage("Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn."),
+    "vcb_ex_detail_full_title" : MessageLookupByLibrary.simpleMessage("Thời trang dành cho bé năm 2019 phong cách xuân hè."),
+    "vcb_ex_detail_post_time" : m17,
+    "vcb_ex_detail_second_content" : MessageLookupByLibrary.simpleMessage("Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn."),
+    "vcb_ex_detail_short_title" : MessageLookupByLibrary.simpleMessage("Vườn của bé: Thời trang dành cho bé"),
+    "vcb_express" : MessageLookupByLibrary.simpleMessage("VCB Express"),
     "vcb_present" : MessageLookupByLibrary.simpleMessage("Giới thiệu về VCB"),
     "vcb_register_partner" : MessageLookupByLibrary.simpleMessage("Đăng ký làm đối tác với VCB"),
     "view_more" : MessageLookupByLibrary.simpleMessage("Xem thêm"),

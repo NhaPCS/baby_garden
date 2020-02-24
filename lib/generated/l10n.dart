@@ -1612,6 +1612,105 @@ class S {
       args: [],
     );
   }
+
+  String get express_title {
+    return Intl.message(
+      'Vườn của bé: Thời trang dành cho bé MFGM PRO\ntinh chất dinh dưỡng quý trong sữa năm 2019',
+      name: 'express_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get express_descrip {
+    return Intl.message(
+      'Thời trang cho bé',
+      name: 'express_descrip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get express_short_content {
+    return Intl.message(
+      'MFGM là một màng cầu dinh dưỡng bao quanh giọt chất béo trong sữa tự nhiên, đóng vai trò quan trọng trong việc cải thiện chức năng nhận thức, khả năng miễn dịch và sức khỏe đường ruột của trẻ, là tinh chất rất A +.',
+      name: 'express_short_content',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get express_time {
+    return Intl.message(
+      '12/09/2019 - 14:00',
+      name: 'express_time',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get vcb_express {
+    return Intl.message(
+      'VCB Express',
+      name: 'vcb_express',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get vcb_ex_detail_short_title {
+    return Intl.message(
+      'Vườn của bé: Thời trang dành cho bé',
+      name: 'vcb_ex_detail_short_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get vcb_ex_detail_full_title {
+    return Intl.message(
+      'Thời trang dành cho bé năm 2019 phong cách xuân hè.',
+      name: 'vcb_ex_detail_full_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String vcb_ex_detail_post_time(dynamic time) {
+    return Intl.message(
+      'Thời trang cho bé | $time',
+      name: 'vcb_ex_detail_post_time',
+      desc: '',
+      args: [time],
+    );
+  }
+
+  String get vcb_ex_detail_ctm_hint {
+    return Intl.message(
+      'Viết bình luận của bạn',
+      name: 'vcb_ex_detail_ctm_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get vcb_ex_detail_first_content {
+    return Intl.message(
+      'Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn.',
+      name: 'vcb_ex_detail_first_content',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get vcb_ex_detail_second_content {
+    return Intl.message(
+      'Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn.',
+      name: 'vcb_ex_detail_second_content',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
