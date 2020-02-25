@@ -18,12 +18,14 @@ class _VoucherManageState extends BaseState<VoucherManagement> {
   @override
   Widget buildWidget(BuildContext context) {
     final sampleVoucher1 = VoucherCard(
+        context: context,
         description: "Voucher khuyến mãi 50% đơn hàng",
         image: 'photo/sample_voucher.png',
         partner: "Vườn Của bé",
         timeRemain: "20:20:20");
 
     final sampleVoucher2 = VoucherCard(
+        context: context,
         description: "Voucher khuyến mãi 50% đơn hàng",
         image: 'photo/voucher30shine.png',
         partner: "30 shine");

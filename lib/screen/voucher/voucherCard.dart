@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +8,15 @@ class VoucherCard extends StatelessWidget {
   final description;
   final partner;
   final timeRemain;
+  final context;
 
   VoucherCard(
-      {Key key, this.image, this.description, this.partner, this.timeRemain})
+      {Key key,
+      this.image,
+      this.description,
+      this.partner,
+      this.timeRemain,
+      this.context})
       : super(key: key);
 
   @override
@@ -39,6 +46,7 @@ class VoucherCard extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(left: 20),
             decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
@@ -49,7 +57,7 @@ class VoucherCard extends StatelessWidget {
                 border: Border.all(
                     color: Color.fromRGBO(112, 112, 112, 1), width: 0.3)),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(5.0),
+              // borderRadius: BorderRadius.circular(5.0),
               child: Image.asset(
                 this.image,
                 width: 55.0,
@@ -74,10 +82,16 @@ class VoucherCard extends StatelessWidget {
                       ),
                       Padding(
                           padding: const EdgeInsets.only(top: 10),
-                          child: Text(this.partner,
-                              style: TextStyle(
+                          child: Row(children: <Widget>[
+                            Text(S.of(this.context).partner + ': ',
+                                style: TextStyle(
+                                    color: Color.fromRGBO(8, 105, 145, 1),
+                                    fontWeight: FontWeight.bold)),
+                            Text(this.partner,
+                                style: TextStyle(
                                   color: Color.fromRGBO(8, 105, 145, 1),
-                                  fontWeight: FontWeight.bold))),
+                                ))
+                          ])),
                       Padding(
                         padding: const EdgeInsets.only(top: 5),
                         child: Text(
