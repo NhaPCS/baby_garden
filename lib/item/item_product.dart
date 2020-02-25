@@ -97,7 +97,7 @@ class ItemProduct extends StatelessWidget {
           height: double.infinity,
         )),
         Text(
-          "Điện Thoại iPhone 11 Pro Max 64GB - Hàng Chính Hãng",
+          "Điện Thoại iPhone 11 Pro Max 64GB\n - Hàng Chính Hãng",
           maxLines: 2,
           textAlign: TextAlign.center,
           style: nameStyle,

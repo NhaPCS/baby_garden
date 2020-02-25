@@ -80,6 +80,7 @@ class SizeUtil {
   static const double smallSpace = 10;
   static const double midSmallSpace = 8.0;
   static const double tinySpace = 5;
+  static const double superTinySpace = 3;
   static const double bigSpace = 30;
   static const double hugSpace = 50;
   static const double largeSpace = 70;
