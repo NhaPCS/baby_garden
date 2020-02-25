@@ -4,6 +4,7 @@ import 'package:baby_garden_flutter/screen/customer_support/customer_support.dar
 import 'package:baby_garden_flutter/screen/login/login_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/notify/notify_screen.dart';
+import 'package:baby_garden_flutter/screen/partner/partner_book_schedule.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_like_screen.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_register.dart';
 import 'file:///C:/Users/EDU-LIVE/Documents/GitHub/baby_garden/lib/screen/partner/partner_list_screen.dart';
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
             bodyText1: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
           )),
-      home: PartnerRegister(),
+      home: PartnerBookScheduleScreen(),
     );
   }
 }
