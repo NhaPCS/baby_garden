@@ -1657,6 +1657,42 @@ class S {
       args: [],
     );
   }
+
+  String get codeTakenVoucher {
+    return Intl.message(
+      'Đã lấy mã',
+      name: 'codeTakenVoucher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get expireVoucher {
+    return Intl.message(
+      'Sắp hết hạn',
+      name: 'expireVoucher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get usedVoucher {
+    return Intl.message(
+      'Đã sử dụng',
+      name: 'usedVoucher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get expiredVoucher {
+    return Intl.message(
+      'Đã hết hạn',
+      name: 'expiredVoucher',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

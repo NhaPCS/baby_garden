@@ -179,5 +179,9 @@
   "partner": "Đối tác",
   "voucher": "Voucher",
   "vcb_express": "VCB Express",
-  "heath_number": "Chỉ số sức khỏe"
+  "heath_number": "Chỉ số sức khỏe",
+  "codeTakenVoucher": "Đã lấy mã",
+  "expireVoucher": "Sắp hết hạn",
+  "usedVoucher": "Đã sử dụng",
+  "expiredVoucher": "Đã hết hạn"
 }
