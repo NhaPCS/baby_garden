@@ -1747,6 +1747,24 @@ class S {
       args: [],
     );
   }
+
+  String get partner {
+    return Intl.message(
+      'Đối tác',
+      name: 'partner',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get familier_partner {
+    return Intl.message(
+      'Đối tác yêu thích',
+      name: 'familier_partner',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

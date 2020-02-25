@@ -18,6 +18,8 @@ class ColorUtil {
   static const Color lightGray = Color(0xffEFEFEF);
   static const Color lineColor = Color(0xffE9E9E9);
   static const Color indicatorActiveColor = Color(0xffE4EB18);
+  static const Color yellowPartnerColor = Color(0xffFBC900);
+  static const Color yellowPartnerStarColor = Color(0xffEBF308);
   static const Color indicatorUnactiveColor = Color(0xffB0B1A1);
   static const Color blueForgotPass = Color(0xff2294AB);
   static const Color flashSaleColor = Color(0xffF77102);
@@ -177,10 +179,10 @@ class WidgetUtil {
   static Widget getLine(
       {EdgeInsetsGeometry margin = const EdgeInsets.only(
           top: SizeUtil.smallSpace, bottom: SizeUtil.smallSpace),
-      double width = 1}) {
+      double width = 1,Color color = ColorUtil.lineColor}) {
     return Container(
       height: width,
-      color: ColorUtil.lineColor,
+      color: color,
       margin: margin,
     );
   }

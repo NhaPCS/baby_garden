@@ -189,6 +189,7 @@
   "saling_detail": "Chi tiết khuyến mãi",
   "saling_detail_title": "[BIG SAle] {title}",
   "saling_detail_time": "Thời gian áp dung: {time}",
-  "product_for_sale": "Sản phẩm khuyến mãi"
-
+  "product_for_sale": "Sản phẩm khuyến mãi",
+  "partner": "Đối tác",
+  "familier_partner": "Đối tác yêu thích"
 }
