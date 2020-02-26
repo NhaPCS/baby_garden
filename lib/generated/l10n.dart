@@ -29,6 +29,15 @@ class S {
 
   final String localeName;
 
+  String get app_name_title {
+    return Intl.message(
+      'VƯỜN CỦA BÉ',
+      name: 'app_name_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get welcome {
     return Intl.message(
       'Welcome',
@@ -1527,6 +1536,24 @@ class S {
     return Intl.message(
       'Đã hủy\nđặt lịch',
       name: 'cancelled_book',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get book {
+    return Intl.message(
+      'Đặt lịch',
+      name: 'book',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get product {
+    return Intl.message(
+      'Sản phẩm',
+      name: 'product',
       desc: '',
       args: [],
     );

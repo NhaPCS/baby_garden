@@ -1,7 +1,13 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/see_more_provider.dart';
+import 'package:baby_garden_flutter/provider/segment_control_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/rated_detail/rated_detail_screen.dart';
+import 'package:baby_garden_flutter/screen/rating_detail/rating_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/colored_tabbar.dart';
+import 'package:baby_garden_flutter/widget/order_item.dart';
+import 'package:baby_garden_flutter/widget/service_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -17,14 +23,25 @@ class PartnerBookScheduleScreen extends StatefulWidget {
 }
 
 class _PartnerBookScheduleScreenState
-    extends BaseState<PartnerBookScheduleScreen> {
+    extends BaseState<PartnerBookScheduleScreen>
+    with SingleTickerProviderStateMixin {
   final SeeMoreProvider _seeMoreProvider = SeeMoreProvider();
+  final SegmentControlProvider _segmentControlProvider =
+      new SegmentControlProvider();
   List<dynamic> DETAIL_INFO = List();
+  TabController _tabController;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _tabController = TabController(vsync: this, length: 2);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -62,10 +79,30 @@ class _PartnerBookScheduleScreenState
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
+    final List<Tab> myTabs = <Tab>[
+      Tab(text: S.of(context).waitting_rate),
+      Tab(
+        child: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                S.of(context).product,
+              ),
+              Text(
+                '(12)',
+                style: TextStyle(fontSize: SizeUtil.textSizeTiny),
+              )
+            ],
+          ),
+        ),
+      ),
+    ];
     return Scaffold(
-      backgroundColor: ColorUtil.lineColor,
-      appBar: getAppBar(title: S.of(context).vcb_express.toUpperCase()),
-      body: ListView(
+      backgroundColor: Colors.white,
+      appBar: getAppBar(title: S.of(context).app_name_title.toUpperCase()),
+      body: Column(
         children: <Widget>[
           Stack(
             children: <Widget>[
@@ -150,7 +187,7 @@ class _PartnerBookScheduleScreenState
             ],
           ),
           Column(
-            children: DETAIL_INFO
+            children: DETAIL_INFO // info
                 .map((e) => paddingContainer(e['see_more'] == null
                     ? Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -216,41 +253,86 @@ class _PartnerBookScheduleScreenState
                     : Consumer<SeeMoreProvider>(
                         builder: (BuildContext context, SeeMoreProvider value,
                             Widget child) {
-                          return RichText(
-                            textAlign: TextAlign.start,
-                            text: TextSpan(
-                                text: e['title'],
-                                style: TextStyle(
-                                    color: ColorUtil.textColor,
-                                    fontWeight: FontWeight.bold),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: value.isShow
-                                          ? e['full_value']
-                                          : e['value'],
+                          return GestureDetector(
+                            onTap: () {
+                              _seeMoreProvider.onChange();
+                            },
+                            child: RichText(
+                              textAlign: TextAlign.start,
+                              text: TextSpan(
+                                  text: e['title'],
+                                  style: TextStyle(
+                                      color: ColorUtil.textColor,
+                                      fontWeight: FontWeight.bold),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: value.isShow
+                                            ? e['full_value']
+                                            : e['value'],
+                                        style: TextStyle(
+                                            fontSize:
+                                                SizeUtil.textSizeExpressDetail,
+                                            color: ColorUtil.textColor,
+                                            decoration: TextDecoration.none,
+                                            fontWeight: FontWeight.normal)),
+                                    TextSpan(
+                                      text: value.isShow ? '' : e['see_more'],
                                       style: TextStyle(
-                                        fontSize: SizeUtil.textSizeExpressDetail,
-                                          color: ColorUtil.textColor,
+                                          color: ColorUtil.blueLight,
                                           decoration: TextDecoration.none,
-                                          fontWeight: FontWeight.normal)),
-                                  TextSpan(
-                                    text: e['see_more'],
-                                    style: TextStyle(
-                                        color: ColorUtil.blueLight,
-                                        decoration: TextDecoration.none,
-                                        fontWeight: FontWeight.normal),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap =
-                                          () => {print("tapped")},
-                                  ),
-                                ]),
+                                          fontWeight: FontWeight.normal),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () => {print("tapped")},
+                                    ),
+                                  ]),
+                            ),
                           );
                         },
                       )))
                 .toList(),
           ),
+          Card(
+            elevation: 2,
+            child: ColoredTabBar(
+              ColorUtil.lineColor,
+              TabBar(
+                controller: _tabController,
+                labelColor: Colors.white,
+                indicatorColor: ColorUtil.white,
+                indicator: BoxDecoration(
+                    borderRadius: BorderRadius.circular(0),
+                    color: ColorUtil.primaryColor),
+                unselectedLabelColor: ColorUtil.textColor,
+                tabs:myTabs,
+              ),
+            ),
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: myTabs.map((Tab tab) {
+                return myTabs.indexOf(tab) == 0?bookingContent():productContent();
+              }).toList(),
+            ),
+          ),
         ],
       ),
+    );
+  }
+
+  Widget bookingContent(){
+    return ListView(
+      children: <Widget>[
+        Container(height: 120,width: 120,color: ColorUtil.primaryColor,)
+      ],
+    );
+  }
+
+  Widget productContent(){
+    return ListView(
+      children: <Widget>[
+        Container(height: 120,width: 120,color: ColorUtil.colorAccent,)
+      ],
     );
   }
 
@@ -268,6 +350,10 @@ class _PartnerBookScheduleScreenState
   @override
   List<SingleChildWidget> providers() {
     // TODO: implement providers
-    return [ChangeNotifierProvider.value(value: _seeMoreProvider)];
+    return [
+      ChangeNotifierProvider.value(value: _seeMoreProvider),
+    ];
   }
+
+
 }

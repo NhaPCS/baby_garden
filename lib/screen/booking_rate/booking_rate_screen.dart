@@ -66,7 +66,8 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
                 tabs: myTabs,
               )),
         ),
-        body: TabBarView(
+        body:
+        TabBarView(
           controller: _tabController,
           children: myTabs.map((Tab tab) {
             final String label = tab.text.toLowerCase();

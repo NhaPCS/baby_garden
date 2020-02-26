@@ -1,4 +1,5 @@
 {
+  "app_name_title": "VƯỜN CỦA BÉ",
   "welcome": "Welcome",
   "home": "Trang chủ",
   "shopping": "Shopping",
@@ -166,6 +167,8 @@
   "booked": "Đã\nđặt lịch",
   "used": "Đã\nsử dụng",
   "cancelled_book": "Đã hủy\nđặt lịch",
+  "book": "Đặt lịch",
+  "product": "Sản phẩm",
   "rate_service": "Đánh giá\ndịch vụ",
   "faq": "Các câu hỏi thường gặp",
   "how_to_order": "Làm thế nào để đặt đơn hàng?",
