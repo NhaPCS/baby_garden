@@ -109,7 +109,8 @@ class _PartnerBookScheduleScreenState
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: getAppBar(title: S.of(context).app_name_title.toUpperCase()),
-      body: Column(
+      body: ListView(
+        shrinkWrap: true,
         children: <Widget>[
           Stack(
             children: <Widget>[
@@ -314,7 +315,7 @@ class _PartnerBookScheduleScreenState
               ),
             ),
           ),
-          Expanded(
+          Container(
             child: TabBarView(
               controller: _tabController,
               children: myTabs.map((Tab tab) {
@@ -330,95 +331,103 @@ class _PartnerBookScheduleScreenState
   }
 
   Widget bookingContent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            S.of(context).choose_client,
-            style: TextStyle(
-                color: ColorUtil.textColor,
-                fontSize: SizeUtil.textSizeDefault,
-                fontWeight: FontWeight.bold),
-          ),
-        ),
-        WidgetUtil.getLine(margin: EdgeInsets.all(0),width: 2),
-        Column(
-          children: CLIENT_LIST
-              .map((ele) => paddingContainer(Container(
-            height: 20,
-            color: ColorUtil.primaryColor,
-                child: Row(
-                      children: <Widget>[
-                        Image.asset(
-                          "photo/ic_promo_1.png",
-                          width: SizeUtil.iconSize,
-                          height: SizeUtil.iconSize,
-                        ),
-                        SizedBox(
-                          width: SizeUtil.smallSpace,
-                        ),
-                        Text(
-                          ele['address'],
-                          style: TextStyle(color: ColorUtil.textHint),
-                        )
-                      ],
-                    ),
-              )))
-              .toList(),
-        ),
-        WidgetUtil.getLine(margin: EdgeInsets.all(0),width: 2),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            S.of(context).choose_service("25"),
-            style: TextStyle(
-                color: ColorUtil.textColor,
-                fontSize: SizeUtil.textSizeDefault,
-                fontWeight: FontWeight.bold),
-          ),
-        ),
-        Container(
-            padding: const EdgeInsets.all(
-              SizeUtil.smallSpace,
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              S.of(context).choose_client,
+              style: TextStyle(
+                  color: ColorUtil.textColor,
+                  fontSize: SizeUtil.textSizeDefault,
+                  fontWeight: FontWeight.bold),
             ),
-            width: MediaQuery.of(context).size.width,
-            child:
-            RaisedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(SizeUtil.smallRadius),
-                  )),
+          ),
+          WidgetUtil.getLine(margin: EdgeInsets.all(0),width: 2),
+          Column(
+            children: CLIENT_LIST
+                .map((ele) => paddingContainer(Container(
+              height: 20,
               color: ColorUtil.primaryColor,
-              child: Padding(
-                padding: const EdgeInsets.all(SizeUtil.midSpace),
-                child: Text(
-                  S.of(context).book,
-                  style: TextStyle(
-                      fontSize: SizeUtil.textSizeDefault,
-                      color: Colors.white,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.bold),
-                ),
+                  child: Row(
+                        children: <Widget>[
+                          Image.asset(
+                            "photo/ic_promo_1.png",
+                            width: SizeUtil.iconSize,
+                            height: SizeUtil.iconSize,
+                          ),
+                          SizedBox(
+                            width: SizeUtil.smallSpace,
+                          ),
+                          Text(
+                            ele['address'],
+                            style: TextStyle(color: ColorUtil.textHint),
+                          )
+                        ],
+                      ),
+                )))
+                .toList(),
+          ),
+          WidgetUtil.getLine(margin: EdgeInsets.all(0),width: 2),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              S.of(context).choose_service("25"),
+              style: TextStyle(
+                  color: ColorUtil.textColor,
+                  fontSize: SizeUtil.textSizeDefault,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          Container(
+              padding: const EdgeInsets.all(
+                SizeUtil.smallSpace,
               ),
-            )),
-      ],
+              width: MediaQuery.of(context).size.width,
+              child:
+              RaisedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(SizeUtil.smallRadius),
+                    )),
+                color: ColorUtil.primaryColor,
+                child: Padding(
+                  padding: const EdgeInsets.all(SizeUtil.midSpace),
+                  child: Text(
+                    S.of(context).book,
+                    style: TextStyle(
+                        fontSize: SizeUtil.textSizeDefault,
+                        color: Colors.white,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              )),
+        ],
+      ),
     );
   }
 
   Widget productContent() {
-    return ListView(
-      children: <Widget>[
-        Container(
-          height: 120,
-          width: 120,
-          color: ColorUtil.colorAccent,
-        )
-      ],
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      child: ListView(
+        children: <Widget>[
+          Container(
+            height: 120,
+            width: 120,
+            color: ColorUtil.colorAccent,
+          )
+        ],
+      ),
     );
   }
 
