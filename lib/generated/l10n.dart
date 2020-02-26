@@ -1792,6 +1792,24 @@ class S {
       args: [],
     );
   }
+
+  String get choose_client {
+    return Intl.message(
+      'Chọn cơ sở',
+      name: 'choose_client',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String choose_service(dynamic number) {
+    return Intl.message(
+      'Chọn dịch vụ ($number dịch vụ)',
+      name: 'choose_service',
+      desc: '',
+      args: [number],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

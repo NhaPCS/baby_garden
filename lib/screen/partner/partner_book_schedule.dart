@@ -29,6 +29,7 @@ class _PartnerBookScheduleScreenState
   final SegmentControlProvider _segmentControlProvider =
       new SegmentControlProvider();
   List<dynamic> DETAIL_INFO = List();
+  List<dynamic> CLIENT_LIST = List();
   TabController _tabController;
 
   @override
@@ -47,6 +48,12 @@ class _PartnerBookScheduleScreenState
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
+    CLIENT_LIST = [
+      {'address': '38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội'},
+      {'address': '15B Đào Tấn, Ba Đình, Hà Nội'},
+      {'address': '134 Lê Lợi, Hà Đông, Hà Nội'},
+      {'address': '134 Lê Lợi, Hà Đông, Hà Nội'}
+    ];
     DETAIL_INFO = [
       {
         'title': "Điện thoại:",
@@ -303,7 +310,7 @@ class _PartnerBookScheduleScreenState
                     borderRadius: BorderRadius.circular(0),
                     color: ColorUtil.primaryColor),
                 unselectedLabelColor: ColorUtil.textColor,
-                tabs:myTabs,
+                tabs: myTabs,
               ),
             ),
           ),
@@ -311,7 +318,9 @@ class _PartnerBookScheduleScreenState
             child: TabBarView(
               controller: _tabController,
               children: myTabs.map((Tab tab) {
-                return myTabs.indexOf(tab) == 0?bookingContent():productContent();
+                return myTabs.indexOf(tab) == 0
+                    ? bookingContent()
+                    : productContent();
               }).toList(),
             ),
           ),
@@ -320,18 +329,95 @@ class _PartnerBookScheduleScreenState
     );
   }
 
-  Widget bookingContent(){
-    return ListView(
+  Widget bookingContent() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Container(height: 120,width: 120,color: ColorUtil.primaryColor,)
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            S.of(context).choose_client,
+            style: TextStyle(
+                color: ColorUtil.textColor,
+                fontSize: SizeUtil.textSizeDefault,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+        WidgetUtil.getLine(margin: EdgeInsets.all(0),width: 2),
+        Column(
+          children: CLIENT_LIST
+              .map((ele) => paddingContainer(Container(
+            height: 20,
+            color: ColorUtil.primaryColor,
+                child: Row(
+                      children: <Widget>[
+                        Image.asset(
+                          "photo/ic_promo_1.png",
+                          width: SizeUtil.iconSize,
+                          height: SizeUtil.iconSize,
+                        ),
+                        SizedBox(
+                          width: SizeUtil.smallSpace,
+                        ),
+                        Text(
+                          ele['address'],
+                          style: TextStyle(color: ColorUtil.textHint),
+                        )
+                      ],
+                    ),
+              )))
+              .toList(),
+        ),
+        WidgetUtil.getLine(margin: EdgeInsets.all(0),width: 2),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            S.of(context).choose_service("25"),
+            style: TextStyle(
+                color: ColorUtil.textColor,
+                fontSize: SizeUtil.textSizeDefault,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+        Container(
+            padding: const EdgeInsets.all(
+              SizeUtil.smallSpace,
+            ),
+            width: MediaQuery.of(context).size.width,
+            child:
+            RaisedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(SizeUtil.smallRadius),
+                  )),
+              color: ColorUtil.primaryColor,
+              child: Padding(
+                padding: const EdgeInsets.all(SizeUtil.midSpace),
+                child: Text(
+                  S.of(context).book,
+                  style: TextStyle(
+                      fontSize: SizeUtil.textSizeDefault,
+                      color: Colors.white,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            )),
       ],
     );
   }
 
-  Widget productContent(){
+  Widget productContent() {
     return ListView(
       children: <Widget>[
-        Container(height: 120,width: 120,color: ColorUtil.colorAccent,)
+        Container(
+          height: 120,
+          width: 120,
+          color: ColorUtil.colorAccent,
+        )
       ],
     );
   }
@@ -354,6 +440,4 @@ class _PartnerBookScheduleScreenState
       ChangeNotifierProvider.value(value: _seeMoreProvider),
     ];
   }
-
-
 }

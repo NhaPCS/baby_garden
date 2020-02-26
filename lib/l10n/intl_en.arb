@@ -194,5 +194,7 @@
   "saling_detail_time": "Thời gian áp dung: {time}",
   "product_for_sale": "Sản phẩm khuyến mãi",
   "partner": "Đối tác",
-  "familier_partner": "Đối tác yêu thích"
+  "familier_partner": "Đối tác yêu thích",
+  "choose_client": "Chọn cơ sở",
+  "choose_service": "Chọn dịch vụ ({number} dịch vụ)"
 }
