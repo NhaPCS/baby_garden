@@ -196,5 +196,6 @@
   "partner": "Đối tác",
   "familier_partner": "Đối tác yêu thích",
   "choose_client": "Chọn cơ sở",
-  "choose_service": "Chọn dịch vụ ({number} dịch vụ)"
+  "choose_service": "Chọn dịch vụ ({number} dịch vụ)",
+  "service_time_range": "{minute}\nPhút"
 }

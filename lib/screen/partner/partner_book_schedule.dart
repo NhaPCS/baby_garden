@@ -1,4 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/item/item_product.dart';
+import 'package:baby_garden_flutter/provider/partner_book_tabbar_provider.dart';
 import 'package:baby_garden_flutter/provider/see_more_provider.dart';
 import 'package:baby_garden_flutter/provider/segment_control_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
@@ -7,6 +9,7 @@ import 'package:baby_garden_flutter/screen/rating_detail/rating_detail_screen.da
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/colored_tabbar.dart';
 import 'package:baby_garden_flutter/widget/order_item.dart';
+import 'package:baby_garden_flutter/widget/service_detail_item.dart';
 import 'package:baby_garden_flutter/widget/service_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -26,8 +29,8 @@ class _PartnerBookScheduleScreenState
     extends BaseState<PartnerBookScheduleScreen>
     with SingleTickerProviderStateMixin {
   final SeeMoreProvider _seeMoreProvider = SeeMoreProvider();
-  final SegmentControlProvider _segmentControlProvider =
-      new SegmentControlProvider();
+  final PartnerBookTabbarProvider _bookTabbarProvider =
+      PartnerBookTabbarProvider();
   List<dynamic> DETAIL_INFO = List();
   List<dynamic> CLIENT_LIST = List();
   TabController _tabController;
@@ -37,6 +40,10 @@ class _PartnerBookScheduleScreenState
     // TODO: implement initState
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
+    _tabController.addListener(() {
+      print("change index");
+      _bookTabbarProvider.onChangeIndex(_bookTabbarProvider.index);
+    });
   }
 
   @override
@@ -48,6 +55,11 @@ class _PartnerBookScheduleScreenState
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
+    _tabController = TabController(vsync: this, length: 2);
+    _tabController.addListener(() {
+      print("change index");
+      _bookTabbarProvider.onChangeIndex(_bookTabbarProvider.index);
+    });
     CLIENT_LIST = [
       {'address': '38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội'},
       {'address': '15B Đào Tấn, Ba Đình, Hà Nội'},
@@ -315,16 +327,12 @@ class _PartnerBookScheduleScreenState
               ),
             ),
           ),
-          Container(
-            child: TabBarView(
-              controller: _tabController,
-              children: myTabs.map((Tab tab) {
-                return myTabs.indexOf(tab) == 0
-                    ? bookingContent()
-                    : productContent();
-              }).toList(),
-            ),
-          ),
+          Consumer<PartnerBookTabbarProvider>(
+            builder: (BuildContext context, PartnerBookTabbarProvider value,
+                Widget child) {
+              return value.index == 0 ? bookingContent() : productContent();
+            },
+          )
         ],
       ),
     );
@@ -332,8 +340,6 @@ class _PartnerBookScheduleScreenState
 
   Widget bookingContent() {
     return Container(
-      width: double.infinity,
-      height: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -347,32 +353,32 @@ class _PartnerBookScheduleScreenState
                   fontWeight: FontWeight.bold),
             ),
           ),
-          WidgetUtil.getLine(margin: EdgeInsets.all(0),width: 2),
+          WidgetUtil.getLine(margin: EdgeInsets.all(0), width: 2),
           Column(
             children: CLIENT_LIST
-                .map((ele) => paddingContainer(Container(
-              height: 20,
-              color: ColorUtil.primaryColor,
-                  child: Row(
-                        children: <Widget>[
-                          Image.asset(
-                            "photo/ic_promo_1.png",
-                            width: SizeUtil.iconSize,
-                            height: SizeUtil.iconSize,
-                          ),
-                          SizedBox(
-                            width: SizeUtil.smallSpace,
-                          ),
-                          Text(
-                            ele['address'],
-                            style: TextStyle(color: ColorUtil.textHint),
-                          )
-                        ],
-                      ),
-                )))
+                .map((ele) => paddingContainer(
+                    Row(
+                      children: <Widget>[
+                        Image.asset(
+                          "photo/ic_promo_1.png",
+                          width: SizeUtil.iconSize,
+                          height: SizeUtil.iconSize,
+                        ),
+                        SizedBox(
+                          width: SizeUtil.smallSpace,
+                        ),
+                        Text(
+                          ele['address'],
+                          style: TextStyle(color: ColorUtil.textHint),
+                        )
+                      ],
+                    ),
+                    padding: EdgeInsets.only(
+                        left: SizeUtil.smallSpace, top: SizeUtil.smallSpace)))
                 .toList(),
           ),
-          WidgetUtil.getLine(margin: EdgeInsets.all(0),width: 2),
+          WidgetUtil.getLine(
+              margin: EdgeInsets.only(top: SizeUtil.smallSpace), width: 2),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -383,20 +389,35 @@ class _PartnerBookScheduleScreenState
                   fontWeight: FontWeight.bold),
             ),
           ),
+          WidgetUtil.getLine(
+              margin: EdgeInsets.only(top: SizeUtil.smallSpace), width: 4),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 3,
+            child: GridView.builder(
+              scrollDirection: Axis.vertical,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, childAspectRatio: 3.3),
+              padding: EdgeInsets.only(
+                  left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
+              itemBuilder: (context, index) {
+                return ServiceDetailItem();
+              },
+            ),
+          ),
           Container(
               padding: const EdgeInsets.all(
                 SizeUtil.smallSpace,
               ),
               width: MediaQuery.of(context).size.width,
-              child:
-              RaisedButton(
+              child: RaisedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(
-                      Radius.circular(SizeUtil.smallRadius),
-                    )),
+                  Radius.circular(SizeUtil.smallRadius),
+                )),
                 color: ColorUtil.primaryColor,
                 child: Padding(
                   padding: const EdgeInsets.all(SizeUtil.midSpace),
@@ -417,8 +438,6 @@ class _PartnerBookScheduleScreenState
 
   Widget productContent() {
     return Container(
-      width: double.infinity,
-      height: double.infinity,
       child: ListView(
         children: <Widget>[
           Container(
@@ -447,6 +466,7 @@ class _PartnerBookScheduleScreenState
     // TODO: implement providers
     return [
       ChangeNotifierProvider.value(value: _seeMoreProvider),
+      ChangeNotifierProvider.value(value: _bookTabbarProvider),
     ];
   }
 }

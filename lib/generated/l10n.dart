@@ -1810,6 +1810,15 @@ class S {
       args: [number],
     );
   }
+
+  String service_time_range(dynamic minute) {
+    return Intl.message(
+      '$minute\nPhút',
+      name: 'service_time_range',
+      desc: '',
+      args: [minute],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
