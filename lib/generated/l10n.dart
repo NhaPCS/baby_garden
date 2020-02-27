@@ -1702,6 +1702,69 @@ class S {
       args: [],
     );
   }
+
+  String get addressAccount {
+    return Intl.message(
+      'Địa chỉ tài khoản',
+      name: 'addressAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addressSetting {
+    return Intl.message(
+      'Thiết lập địa chỉ',
+      name: 'addressSetting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get defaultAddress {
+    return Intl.message(
+      'Địa chỉ giao hàng mặc định',
+      name: 'defaultAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get myAddress {
+    return Intl.message(
+      'Địa chỉ của tôi',
+      name: 'myAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addAddress {
+    return Intl.message(
+      'Thêm địa chỉ của tôi',
+      name: 'addAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get edit {
+    return Intl.message(
+      'Sửa',
+      name: 'edit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get isDefault {
+    return Intl.message(
+      'Mặc định',
+      name: 'isDefault',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
