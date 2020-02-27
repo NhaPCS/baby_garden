@@ -1657,6 +1657,114 @@ class S {
       args: [],
     );
   }
+
+  String get codeTakenVoucher {
+    return Intl.message(
+      'Đã lấy mã',
+      name: 'codeTakenVoucher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get expireVoucher {
+    return Intl.message(
+      'Sắp hết hạn',
+      name: 'expireVoucher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get usedVoucher {
+    return Intl.message(
+      'Đã sử dụng',
+      name: 'usedVoucher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get expiredVoucher {
+    return Intl.message(
+      'Đã hết hạn',
+      name: 'expiredVoucher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get pointHistoryHeadText {
+    return Intl.message(
+      'Lịch sử tích điểm và sử dụng điểm',
+      name: 'pointHistoryHeadText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addressAccount {
+    return Intl.message(
+      'Địa chỉ tài khoản',
+      name: 'addressAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addressSetting {
+    return Intl.message(
+      'Thiết lập địa chỉ',
+      name: 'addressSetting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get defaultAddress {
+    return Intl.message(
+      'Địa chỉ giao hàng mặc định',
+      name: 'defaultAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get myAddress {
+    return Intl.message(
+      'Địa chỉ của tôi',
+      name: 'myAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addAddress {
+    return Intl.message(
+      'Thêm địa chỉ của tôi',
+      name: 'addAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get edit {
+    return Intl.message(
+      'Sửa',
+      name: 'edit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get isDefault {
+    return Intl.message(
+      'Mặc định',
+      name: 'isDefault',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
