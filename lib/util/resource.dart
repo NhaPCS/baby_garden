@@ -29,6 +29,8 @@ class ColorUtil {
   static const Color transGray = Color(0x66EFEFEF);
   static const Color customerSupportUpdate = Color(0xff73EBD5);
 
+  static const serviceItemUnselectColor = Color(0xffF6F6F6);
+
   static Color getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");
     if (hexColor.length == 6) {

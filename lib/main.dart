@@ -1,5 +1,7 @@
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_book_schedule.dart';
+import 'package:baby_garden_flutter/screen/partner/partner_like_screen.dart';
+import 'package:baby_garden_flutter/screen/partner/partner_list_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

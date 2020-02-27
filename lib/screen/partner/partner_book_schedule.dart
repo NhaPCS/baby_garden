@@ -1,5 +1,8 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_product.dart';
+import 'package:baby_garden_flutter/provider/change_date_provider.dart';
+import 'package:baby_garden_flutter/provider/change_schedule_provider.dart';
+import 'package:baby_garden_flutter/provider/change_service_provider.dart';
 import 'package:baby_garden_flutter/provider/partner_book_tabbar_provider.dart';
 import 'package:baby_garden_flutter/provider/see_more_provider.dart';
 import 'package:baby_garden_flutter/provider/segment_control_provider.dart';
@@ -8,7 +11,9 @@ import 'package:baby_garden_flutter/screen/rated_detail/rated_detail_screen.dart
 import 'package:baby_garden_flutter/screen/rating_detail/rating_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/colored_tabbar.dart';
+import 'package:baby_garden_flutter/widget/loadmore/loadmore_gridview.dart';
 import 'package:baby_garden_flutter/widget/order_item.dart';
+import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:baby_garden_flutter/widget/service_detail_item.dart';
 import 'package:baby_garden_flutter/widget/service_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,40 +31,51 @@ class PartnerBookScheduleScreen extends StatefulWidget {
 }
 
 class _PartnerBookScheduleScreenState
-    extends BaseState<PartnerBookScheduleScreen>
-    with SingleTickerProviderStateMixin {
+    extends BaseState<PartnerBookScheduleScreen> with TickerProviderStateMixin {
   final SeeMoreProvider _seeMoreProvider = SeeMoreProvider();
+  final ChangeServiceProvider _serviceProvider = ChangeServiceProvider();
+  final ChangeDateProvider _dateProvider = ChangeDateProvider();
+  final ChangeScheduleTimeProvider _scheduleTimeProvider =
+      ChangeScheduleTimeProvider();
   final PartnerBookTabbarProvider _bookTabbarProvider =
       PartnerBookTabbarProvider();
   List<dynamic> DETAIL_INFO = List();
   List<dynamic> CLIENT_LIST = List();
+  List<dynamic> WEEK = List();
+  List<dynamic> TIME = List();
   TabController _tabController;
+  TabController _dayTabController;
 
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
     _tabController = TabController(vsync: this, length: 2);
+    _dayTabController = TabController(vsync: this, length: 7);
     _tabController.addListener(() {
-      print("change index");
-      _bookTabbarProvider.onChangeIndex(_bookTabbarProvider.index);
+      if (_tabController.index!=_bookTabbarProvider.index){
+          print("change index asd asd : ${_tabController.index.toString()}");
+          _bookTabbarProvider.onChangeIndex(_tabController.index);
+      }
     });
+
+    _dayTabController.addListener(() {
+//      print("change index");
+//      _bookTabbarProvider.onChangeIndex(_bookTabbarProvider.index);
+    });
+    super.initState();
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    _dayTabController.dispose();
     super.dispose();
   }
 
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
-    _tabController = TabController(vsync: this, length: 2);
-    _tabController.addListener(() {
-      print("change index");
-      _bookTabbarProvider.onChangeIndex(_bookTabbarProvider.index);
-    });
+
     CLIENT_LIST = [
       {'address': '38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội'},
       {'address': '15B Đào Tấn, Ba Đình, Hà Nội'},
@@ -91,6 +107,61 @@ class _PartnerBookScheduleScreenState
             'Đây là cửa hàng chuyên cung cấp sữa bỉm cho bé,\nvà dịch vụ làm đẹp cho mẹ, để xem thêm thông tin sau do la ca mot bau troi tu cach. Chua bao gio co mot ai sanh kipj',
         'see_more': 'Xem thêm'
       }
+    ];
+    WEEK = [
+      {'dow': 'Thứ 2', 'date': '12/02/2020'},
+      {'dow': 'Thứ 3', 'date': '13/02/2020'},
+      {'dow': 'Thứ 4', 'date': '14/02/2020'},
+      {'dow': 'Thứ 5', 'date': '15/02/2020'},
+      {'dow': 'Thứ 6', 'date': '16/02/2020'},
+      {'dow': 'Thứ 7', 'date': '17/02/2020'},
+      {'dow': 'Chủ nhật', 'date': '18/02/2020'},
+    ];
+    TIME = [
+      {'time': '08:00'},
+      {'time': '08:15'},
+      {'time': '08:30'},
+      {'time': '08:45'},
+      {'time': '09:00'},
+      {'time': '09:15'},
+      {'time': '09:30'},
+      {'time': '09:45'},
+      {'time': '10:00'},
+      {'time': '10:15'},
+      {'time': '10:30'},
+      {'time': '10:45'},
+      {'time': '11:00'},
+      {'time': '11:15'},
+      {'time': '11:30'},
+      {'time': '11:45'},
+      {'time': '12:00'},
+      {'time': '12:15'},
+      {'time': '12:30'},
+      {'time': '12:45'},
+      {'time': '13:00'},
+      {'time': '13:15'},
+      {'time': '13:30'},
+      {'time': '13:45'},
+      {'time': '14:00'},
+      {'time': '14:15'},
+      {'time': '14:30'},
+      {'time': '14:45'},
+      {'time': '15:00'},
+      {'time': '15:15'},
+      {'time': '15:30'},
+      {'time': '15:45'},
+      {'time': '16:00'},
+      {'time': '16:15'},
+      {'time': '16:30'},
+      {'time': '16:45'},
+      {'time': '17:00'},
+      {'time': '17:15'},
+      {'time': '17:30'},
+      {'time': '17:45'},
+      {'time': '18:00'},
+      {'time': '18:15'},
+      {'time': '18:30'},
+      {'time': '18:45'},
     ];
     super.didChangeDependencies();
   }
@@ -211,6 +282,7 @@ class _PartnerBookScheduleScreenState
                 .map((e) => paddingContainer(e['see_more'] == null
                     ? Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Text(
                             e['title'],
@@ -298,6 +370,7 @@ class _PartnerBookScheduleScreenState
                                     TextSpan(
                                       text: value.isShow ? '' : e['see_more'],
                                       style: TextStyle(
+                                          fontSize: SizeUtil.textSizeSmall,
                                           color: ColorUtil.blueLight,
                                           decoration: TextDecoration.none,
                                           fontWeight: FontWeight.normal),
@@ -354,6 +427,7 @@ class _PartnerBookScheduleScreenState
             ),
           ),
           WidgetUtil.getLine(margin: EdgeInsets.all(0), width: 2),
+          //todo client list
           Column(
             children: CLIENT_LIST
                 .map((ele) => paddingContainer(
@@ -379,6 +453,7 @@ class _PartnerBookScheduleScreenState
           ),
           WidgetUtil.getLine(
               margin: EdgeInsets.only(top: SizeUtil.smallSpace), width: 2),
+          //todo choose service title
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -391,24 +466,45 @@ class _PartnerBookScheduleScreenState
           ),
           WidgetUtil.getLine(
               margin: EdgeInsets.only(top: SizeUtil.smallSpace), width: 4),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 3,
-            child: GridView.builder(
-              scrollDirection: Axis.vertical,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, childAspectRatio: 3.3),
-              padding: EdgeInsets.only(
-                  left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
-              itemBuilder: (context, index) {
-                return ServiceDetailItem();
-              },
-            ),
+          //todo select service
+          Consumer<ChangeServiceProvider>(
+            builder: (BuildContext context, ChangeServiceProvider value,
+                Widget child) {
+              return Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.width / 2,
+                child: GridView.builder(
+                  scrollDirection: Axis.vertical,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, childAspectRatio: 3.3),
+                  padding: EdgeInsets.only(
+                      left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
+                  itemCount: 20,
+                  itemBuilder: (context, index) {
+                    bool isSelected = _serviceProvider != null &&
+                        _serviceProvider.index == index;
+                    return GestureDetector(
+                        onTap: () {
+                          if (_serviceProvider != null &&
+                              _serviceProvider.index != index) {
+                            _serviceProvider.onSelectService(index);
+                          }
+                        },
+                        child: ServiceDetailItem(
+                          isSelected: isSelected,
+                        ));
+                  },
+                ),
+              );
+            },
           ),
+          //todo book service schedule
           Container(
-              padding: const EdgeInsets.all(
-                SizeUtil.smallSpace,
-              ),
+              padding: const EdgeInsets.only(
+                  left: SizeUtil.smallSpace,
+                  right: SizeUtil.smallSpace,
+                  top: SizeUtil.tinySpace,
+                  bottom: SizeUtil.tinySpace),
               width: MediaQuery.of(context).size.width,
               child: RaisedButton(
                 onPressed: () {
@@ -431,6 +527,94 @@ class _PartnerBookScheduleScreenState
                   ),
                 ),
               )),
+          ColoredTabBar(
+            Color(0xffFFE9D6),
+            TabBar(
+              controller: _dayTabController,
+              labelColor: Colors.white,
+              indicatorColor: ColorUtil.white,
+              indicatorPadding: EdgeInsets.all(0),
+              labelPadding: EdgeInsets.all(0),
+              indicator: BoxDecoration(
+                  borderRadius: BorderRadius.circular(0),
+                  color: Color(0xffFF7700)),
+              unselectedLabelColor: ColorUtil.textColor,
+              tabs: WEEK
+                  .map(
+                    (e) => Tab(
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              e['dow'],
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: SizeUtil.textSizeNotiTime),
+                            ),
+                            Text(
+                              e['date'],
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 6),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+          Consumer<ChangeScheduleTimeProvider>(
+            builder: (BuildContext context, ChangeScheduleTimeProvider value,
+                Widget child) {
+              return Container(
+                height: MediaQuery.of(context).size.width / 3.50,
+                width: MediaQuery.of(context).size.width,
+                color: Colors.white,
+                child: GridView.builder(
+                  scrollDirection: Axis.horizontal,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4, childAspectRatio: 0.5),
+                  padding: EdgeInsets.all(0),
+                  itemCount: TIME.length,
+                  itemBuilder: (context, index) {
+                    bool isSelected = _scheduleTimeProvider != null &&
+                        _scheduleTimeProvider.timeIndex == index;
+                    return GestureDetector(
+                        onTap: () {
+                          if (_scheduleTimeProvider != null &&
+                              _scheduleTimeProvider.timeIndex != index) {
+                            _scheduleTimeProvider.onSelectedTime(index);
+                          }
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(1),
+                          color: isSelected
+                              ? Color(0xffFFE9D6)
+                              : ColorUtil.lineColor,
+                          child: Center(
+                            child: Text(
+                              TIME[index]['time'],
+                              style: TextStyle(
+                                  fontSize: SizeUtil.textSizeTiny,
+                                  color: isSelected
+                                      ? Colors.white
+                                      : ColorUtil.textColor),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ));
+                  },
+                ),
+              );
+            },
+          ),
+          SizedBox(
+            height: SizeUtil.defaultSpace,
+          )
         ],
       ),
     );
@@ -438,13 +622,37 @@ class _PartnerBookScheduleScreenState
 
   Widget productContent() {
     return Container(
-      child: ListView(
+      child: Column(
         children: <Widget>[
-          Container(
-            height: 120,
-            width: 120,
-            color: ColorUtil.colorAccent,
-          )
+          ListCategory(
+          ),
+      Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.width *1.2,
+        child: GridView.builder(
+          scrollDirection: Axis.horizontal,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, childAspectRatio: 1.23),
+          padding: EdgeInsets.only(
+              left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
+          itemCount: 20,
+          itemBuilder: (context, index) {
+            bool isSelected = _serviceProvider != null &&
+                _serviceProvider.index == index;
+            return ItemProduct(
+              width: MediaQuery.of(context).size.width * 0.5,
+              borderRadius: SizeUtil.tinyRadius,
+              showSoldCount: false,
+              nameStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+              showTime: false,
+              padding: EdgeInsets.only(
+                  left: SizeUtil.smallSpace,
+                  right: SizeUtil.smallSpace,
+                  top: 0),
+            );
+          },
+        ),
+      ),
         ],
       ),
     );
@@ -467,6 +675,9 @@ class _PartnerBookScheduleScreenState
     return [
       ChangeNotifierProvider.value(value: _seeMoreProvider),
       ChangeNotifierProvider.value(value: _bookTabbarProvider),
+      ChangeNotifierProvider.value(value: _serviceProvider),
+      ChangeNotifierProvider.value(value: _scheduleTimeProvider),
+      ChangeNotifierProvider.value(value: _dateProvider),
     ];
   }
 }
