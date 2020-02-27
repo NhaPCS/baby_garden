@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/point_management/point_history.dart';
+import 'package:baby_garden_flutter/screen/point_management/point_history_screen.dart';
+
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

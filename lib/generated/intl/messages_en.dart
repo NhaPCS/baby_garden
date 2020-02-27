@@ -159,6 +159,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "partnerRegister" : MessageLookupByLibrary.simpleMessage("Đăng ký đối tác"),
     "password" : MessageLookupByLibrary.simpleMessage("Mật khẩu"),
     "personal" : MessageLookupByLibrary.simpleMessage("Cá nhân"),
+    "pointHistoryHeadText" : MessageLookupByLibrary.simpleMessage("Lịch sử tích điểm và sử dụng điểm"),
     "pointManage" : MessageLookupByLibrary.simpleMessage("Quản lý điểm"),
     "policy" : MessageLookupByLibrary.simpleMessage("Chính sách hệ thống"),
     "pre_count" : MessageLookupByLibrary.simpleMessage("Tạm tính"),

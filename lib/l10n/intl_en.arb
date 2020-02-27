@@ -183,5 +183,6 @@
   "codeTakenVoucher": "Đã lấy mã",
   "expireVoucher": "Sắp hết hạn",
   "usedVoucher": "Đã sử dụng",
-  "expiredVoucher": "Đã hết hạn"
+  "expiredVoucher": "Đã hết hạn",
+  "pointHistoryHeadText": "Lịch sử tích điểm và sử dụng điểm"
 }

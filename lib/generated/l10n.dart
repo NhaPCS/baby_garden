@@ -1693,6 +1693,15 @@ class S {
       args: [],
     );
   }
+
+  String get pointHistoryHeadText {
+    return Intl.message(
+      'Lịch sử tích điểm và sử dụng điểm',
+      name: 'pointHistoryHeadText',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
