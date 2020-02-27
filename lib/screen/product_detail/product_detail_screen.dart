@@ -2,7 +2,10 @@ import 'package:baby_garden_flutter/dialog/add_to_cart_bottom_dialog.dart';
 import 'package:baby_garden_flutter/dialog/report_product_dialog.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/provider/change_index_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/list_product/list_product_screen.dart';
+import 'package:baby_garden_flutter/screen/photo_view/photo_view_screen.dart';
 import 'package:baby_garden_flutter/screen/product_detail/store_info.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_icon.dart';
@@ -27,6 +30,7 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductScreenState extends BaseState<ProductDetailScreen> {
   List<dynamic> DETAIL_INFO;
+  final ChangeIndexProvider _changeIndexProvider = ChangeIndexProvider();
 
   @override
   void initState() {
@@ -80,11 +84,13 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
                 height: Provider.of<AppProvider>(context).productImageHeight,
                 borderRadius: 0,
                 margin: EdgeInsets.all(0),
-                images: [
-                  StringUtil.dummyImage,
-                  StringUtil.dummyImage,
-                  StringUtil.dummyImage
-                ],
+                images: StringUtil.dummyImageList,
+                onItemSelected: (index) {
+                  _changeIndexProvider.changeIndex(index);
+                },
+                onItemPressed: (index) {
+                  push(PhotoViewScreen(images: StringUtil.dummyImageList));
+                },
               ),
               Positioned(
                 child: DiscountWidget(
@@ -95,8 +101,14 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
                 right: 0,
                 top: SizeUtil.smallSpace,
               ),
-              ImageCount(
-                text: "1/3",
+              Consumer<ChangeIndexProvider>(
+                builder: (BuildContext context, ChangeIndexProvider value,
+                    Widget child) {
+                  return ImageCount(
+                    text:
+                        "${value.index + 1}/${StringUtil.dummyImageList.length}",
+                  );
+                },
               ),
               Positioned(
                   right: SizeUtil.smallSpace,
@@ -283,6 +295,9 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
                     )
                   ],
                 ),
+                onPressed: (){
+                  push(ListProductScreen());
+                },
               )
             ],
           ),
@@ -349,6 +364,6 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [];
+    return [ChangeNotifierProvider.value(value: _changeIndexProvider)];
   }
 }

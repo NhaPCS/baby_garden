@@ -198,4 +198,22 @@
   "choose_client": "Chọn cơ sở",
   "choose_service": "Chọn dịch vụ ({number} dịch vụ)",
   "service_time_range": "{minute}\nPhút"
+  "total_order_price": "Tổng đơn: ",
+  "press_back_again_to_exit": "Nhấn 1 lần nữa để thoát ứng dụng!",
+  "partner": "Đối tác",
+  "voucher": "Voucher",
+  "vcb_express": "VCB Express",
+  "heath_number": "Chỉ số sức khỏe",
+  "codeTakenVoucher": "Đã lấy mã",
+  "expireVoucher": "Sắp hết hạn",
+  "usedVoucher": "Đã sử dụng",
+  "expiredVoucher": "Đã hết hạn",
+  "pointHistoryHeadText": "Lịch sử tích điểm và sử dụng điểm",
+  "addressAccount": "Địa chỉ tài khoản",
+  "addressSetting": "Thiết lập địa chỉ",
+  "defaultAddress": "Địa chỉ giao hàng mặc định",
+  "myAddress": "Địa chỉ của tôi",
+  "addAddress": "Thêm địa chỉ của tôi",
+  "edit": "Sửa",
+  "isDefault": "Mặc định"
 }

@@ -16,7 +16,9 @@ class MyCarouselSlider extends StatefulWidget {
   final Color indicatorInactiveColor;
   final Color slideBackground;
   final BoxFit boxFit;
-
+  final bool hasShadow;
+  final ValueChanged<int> onItemPressed;
+  final ValueChanged<int> onItemSelected;
 
   const MyCarouselSlider(
       {Key key,
@@ -30,7 +32,10 @@ class MyCarouselSlider extends StatefulWidget {
       this.indicatorInactiveColor = Colors.white,
       this.slideBackground = ColorUtil.lightGray,
       this.boxFit = BoxFit.cover,
-      this.width = double.infinity})
+      this.width = double.infinity,
+      this.hasShadow = false,
+      this.onItemPressed,
+      this.onItemSelected})
       : super(key: key);
 
   @override
@@ -57,6 +62,7 @@ class _MyCarouselState extends State<MyCarouselSlider> {
           enableInfiniteScroll: false,
           aspectRatio: 1,
           onPageChanged: (index) {
+            if (widget.onItemSelected != null) widget.onItemSelected(index);
             setState(() {
               selectedPosition = index;
             });
@@ -64,19 +70,27 @@ class _MyCarouselState extends State<MyCarouselSlider> {
           items: widget.images.map((image) {
             return Builder(
               builder: (BuildContext context) {
-                return Container(
-                  margin: widget.margin,
-                  width: widget.width,
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                      color: widget.slideBackground,
-                      image: DecorationImage(
-                          image: widget.isAssetImage
-                              ? AssetImage(image)
-                              : CachedNetworkImageProvider(image),
-                          fit: widget.boxFit),
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(widget.borderRadius))),
+                return GestureDetector(
+                  child: Container(
+                    margin: widget.margin,
+                    width: widget.width,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                        color: widget.slideBackground,
+                        boxShadow:
+                            widget.hasShadow ? WidgetUtil.getShadow() : null,
+                        image: DecorationImage(
+                            image: widget.isAssetImage
+                                ? AssetImage(image)
+                                : CachedNetworkImageProvider(image),
+                            fit: widget.boxFit),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(widget.borderRadius))),
+                  ),
+                  onTap: () {
+                    if (widget.onItemPressed != null)
+                      widget.onItemPressed(widget.images.indexOf(image));
+                  },
                 );
               },
             );

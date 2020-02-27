@@ -45,24 +45,24 @@ class NotifyItem extends StatelessWidget {
                 Expanded(
                     child: Container(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          S.of(context).notify_title,
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                              fontSize: SizeUtil.textSizeBigger,
-                              fontWeight: FontWeight.bold,
-                              color: ColorUtil.textHint),
-                        ),
+                      Text(
+                        S.of(context).notify_title,
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                            fontSize: SizeUtil.textSizeBigger,
+                            fontWeight: FontWeight.bold,
+                            color: ColorUtil.textHint),
                       ),
-                      Container(
-                        child: Text(
-                          S.of(context).notify_booking_success,
-                          style: TextStyle(fontSize: SizeUtil.textSizeSmall,color: ColorUtil.textHint),
-                        ),
-                        alignment: Alignment.centerLeft,
+                      SizedBox(
+                        height: SizeUtil.tinySpace,
+                      ),
+                      Text(
+                        S.of(context).notify_booking_success,
+                        style: TextStyle(
+                            fontSize: SizeUtil.textSizeSmall,
+                            color: ColorUtil.textHint),
                       ),
                       SizedBox(
                         height: SizeUtil.tinySpace,

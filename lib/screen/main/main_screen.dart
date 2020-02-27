@@ -13,8 +13,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 
 class MainScreen extends StatefulWidget {
+  final bool goToCart;
+
+  const MainScreen({Key key, this.goToCart = false}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _MainState();
@@ -24,6 +29,7 @@ class MainScreen extends StatefulWidget {
 class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
   TabController _tabController;
   final ChangeIndexProvider _changeIndexProvider = ChangeIndexProvider();
+  int _time = 0;
 
   @override
   void initState() {
@@ -32,61 +38,79 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
       _changeIndexProvider.changeIndex(_tabController.index);
     });
     super.initState();
+    if (widget.goToCart) _tabController.animateTo(2);
   }
 
   @override
   Widget buildWidget(BuildContext context) {
-    return Scaffold(
-        body: TabBarView(
-          controller: _tabController,
-          children: <Widget>[
-            HomeScreen(),
-            ShoppingScreen(),
-            CartScreen(),
-            OrderScreen(),
-            ProfileScreen(),
-          ],
-        ),
-        bottomNavigationBar: Consumer<ChangeIndexProvider>(
-          builder:
-              (BuildContext context, ChangeIndexProvider value, Widget child) {
-            return BottomNavigationBar(
-                selectedItemColor: ColorUtil.primaryColor,
-                unselectedItemColor: ColorUtil.textColor,
-                showSelectedLabels: true,
-                type: BottomNavigationBarType.fixed,
-                showUnselectedLabels: true,
-                currentIndex: value.index,
-                onTap: (index) {
-                  _changeIndexProvider.changeIndex(index);
-                  _tabController.animateTo(index);
-                },
-                items: [
-                  getTabItem(
-                      title: S.of(context).home,
-                      iconName: 'home.svg',
-                      index: 0),
-                  getTabItem(
-                      title: S.of(context).shopping,
-                      iconName: 'shop.svg',
-                      index: 1),
-                  getTabItem(
-                      title: S.of(context).cart,
-                      iconName: 'cart.svg',
-                      index: 2,
-                      count: 6),
-                  getTabItem(
-                      title: S.of(context).order,
-                      iconName: 'shipped.svg',
-                      index: 3,
-                      count: 10),
-                  getTabItem(
-                      title: S.of(context).account,
-                      iconName: 'user.svg',
-                      index: 4),
-                ]);
-          },
-        ));
+    return WillPopScope(
+        child: Scaffold(
+            body: TabBarView(
+              controller: _tabController,
+              children: <Widget>[
+                HomeScreen(),
+                ShoppingScreen(),
+                CartScreen(),
+                OrderScreen(),
+                ProfileScreen(),
+              ],
+            ),
+            bottomNavigationBar: Consumer<ChangeIndexProvider>(
+              builder: (BuildContext context, ChangeIndexProvider value,
+                  Widget child) {
+                return BottomNavigationBar(
+                    selectedItemColor: ColorUtil.primaryColor,
+                    unselectedItemColor: ColorUtil.textColor,
+                    showSelectedLabels: true,
+                    type: BottomNavigationBarType.fixed,
+                    showUnselectedLabels: true,
+                    currentIndex: value.index,
+                    onTap: (index) {
+                      _changeIndexProvider.changeIndex(index);
+                      _tabController.animateTo(index);
+                    },
+                    items: [
+                      getTabItem(
+                          title: S.of(context).home,
+                          iconName: 'home.svg',
+                          index: 0),
+                      getTabItem(
+                          title: S.of(context).shopping,
+                          iconName: 'shop.svg',
+                          index: 1),
+                      getTabItem(
+                          title: S.of(context).cart,
+                          iconName: 'cart.svg',
+                          index: 2,
+                          count: 6),
+                      getTabItem(
+                          title: S.of(context).order,
+                          iconName: 'shipped.svg',
+                          index: 3,
+                          count: 10),
+                      getTabItem(
+                          title: S.of(context).account,
+                          iconName: 'user.svg',
+                          index: 4),
+                    ]);
+              },
+            )),
+        onWillPop: () async {
+          print("WTF will");
+          if (_changeIndexProvider.index != 0) {
+            _changeIndexProvider.changeIndex(0);
+            _tabController.animateTo(0);
+            return false;
+          } else {
+            if (DateTime.now().millisecondsSinceEpoch - _time < 2000) {
+              return true;
+            } else {
+              _time = DateTime.now().millisecondsSinceEpoch;
+              Toast.show(S.of(context).press_back_again_to_exit, context);
+              return false;
+            }
+          }
+        });
   }
 
   BottomNavigationBarItem getTabItem(

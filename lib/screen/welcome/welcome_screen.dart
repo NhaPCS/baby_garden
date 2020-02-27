@@ -22,7 +22,7 @@ class _WelcomeState extends BaseState<WelcomeScreen> {
 
   _WelcomeState() {
     _timer = new Timer(const Duration(milliseconds: 3000), () {
-      push(WelcomeGuideScreen());
+      pushReplacement(WelcomeGuideScreen());
     });
   }
 

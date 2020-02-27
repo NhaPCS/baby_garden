@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:baby_garden_flutter/screen/main/main_screen.dart';
+import 'package:baby_garden_flutter/screen/notify/notify_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CartIcon extends StatelessWidget {
+class NotifyIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -15,39 +15,33 @@ class CartIcon extends StatelessWidget {
             alignment: Alignment.center,
             margin: SizeUtil.smallPadding,
             child: SvgIcon(
-              'ic_cart.svg',
-              width: 30,
+              'ic_bell.svg',
+              height: 24,
             ),
           ),
           Positioned(
             child: Container(
-              width: 18,
-              height: 18,
+              width: 16,
+              height: 16,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: ColorUtil.red),
               child: AutoSizeText(
                 "1",
-                minFontSize: 10,
-                maxFontSize: 13,
+                minFontSize: 9,
+                maxFontSize: 12,
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
             right: SizeUtil.tinySpace,
-            top: SizeUtil.smallSpace,
+            top: SizeUtil.tinySpace,
           )
         ],
       ),
       onTap: () {
-        //TODO
-        RouteUtil.pushAndReplaceAll(
-            context,
-            MainScreen(
-              goToCart: true,
-            ),
-            '/main');
+        RouteUtil.push(context, NotifyScreen());
       },
     );
   }

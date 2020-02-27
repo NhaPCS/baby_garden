@@ -66,6 +66,10 @@ class _SearchState extends BaseState<SearchScreen> {
                                   text: "Đồ em bé",
                                   borderColor: ColorUtil.lightGray,
                                   fillColor: ColorUtil.lightGray,
+                                  onItemPressed: (s) {
+                                    _searchTextController.text = s;
+                                    _searchingProvider.searching(context);
+                                  },
                                 )),
                       )),
                       WidgetUtil.getLine(),
@@ -172,7 +176,7 @@ class _SearchState extends BaseState<SearchScreen> {
                               text: value.data[index]['distributor'],
                               style: TextStyle(color: ColorUtil.blue)),
                         ])),
-                        onTap: (){
+                        onTap: () {
                           //TODO
                           push(ProductDetailScreen());
                         },

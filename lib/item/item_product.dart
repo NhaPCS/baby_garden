@@ -6,6 +6,7 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/product/discount_widget.dart';
 import 'package:baby_garden_flutter/widget/rounded_progress.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,7 @@ class ItemProduct extends StatelessWidget {
   final bool showSoldCount;
   final TextStyle nameStyle;
   final bool showTime;
+  final int index;
 
   const ItemProduct(
       {Key key,
@@ -35,7 +37,8 @@ class ItemProduct extends StatelessWidget {
       this.showSoldCount = false,
       this.nameStyle = const TextStyle(
           fontSize: SizeUtil.textSizeSmall, fontWeight: FontWeight.bold),
-      this.showTime = false})
+      this.showTime = false,
+      this.index = 0})
       : super(key: key);
 
   @override
@@ -91,11 +94,16 @@ class ItemProduct extends StatelessWidget {
           height: SizeUtil.smallSpace,
         ),
         Expanded(
-            child: Image.asset(
-          'photo/ic_phone.png',
+            child: CachedNetworkImage(
+          imageUrl:
+              StringUtil.dummyProduct[index % StringUtil.dummyProduct.length],
           width: double.infinity,
           height: double.infinity,
+          fit: BoxFit.fitWidth,
         )),
+        SizedBox(
+          height: SizeUtil.tinySpace,
+        ),
         Text(
           "Điện Thoại iPhone 11 Pro Max 64GB\n - Hàng Chính Hãng",
           maxLines: 2,

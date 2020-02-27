@@ -83,20 +83,23 @@ class ReportProductDialog extends AlertDialog {
                         borderColor: ColorUtil.textGray,
                         borderRadius: SizeUtil.smallRadius,
                         removable: false,
+                        selectedBorderColor: ColorUtil.primaryColor,
+                        hasCheckable: true,
                       )),
             ),
             SizedBox(
               height: SizeUtil.smallSpace,
             ),
-            Center(
+            Container(
               child: CircleCheckbox(
                 checkBg: Icons.check_circle,
                 uncheckBg: Icons.panorama_fish_eye,
                 color: ColorUtil.textGray,
                 activeColor: ColorUtil.primaryColor,
-                size: SizeUtil.iconSizeBigger,
+                size: SizeUtil.iconSize,
                 text: Text(S.of(context).choose_other),
               ),
+              alignment: Alignment.centerLeft,
             ),
             SizedBox(
               height: SizeUtil.smallSpace,

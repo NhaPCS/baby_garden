@@ -18,7 +18,9 @@ class ListProduct extends StatelessWidget {
       child: ListView.builder(
         itemCount: 3,
         itemBuilder: (context, index) {
-          return ItemProduct();
+          return ItemProduct(
+            index: index,
+          );
         },
         scrollDirection: Axis.horizontal,
       ),

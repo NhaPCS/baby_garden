@@ -2,7 +2,6 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/show_hide_pass_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/forgot_password/forgot_password_screen.dart';
-import 'package:baby_garden_flutter/screen/home/home_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/register/register_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -92,7 +91,7 @@ class _LoginScreenState extends BaseState<LoginScreen> {
                 width: MediaQuery.of(context).size.width,
                 child: RaisedButton(
                   onPressed: () {
-                    push(MainScreen());
+                    pushReplacement(MainScreen());
                   },
                   color: ColorUtil.colorAccent,
                   shape: RoundedRectangleBorder(

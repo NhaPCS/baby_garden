@@ -1,14 +1,16 @@
 import 'package:baby_garden_flutter/dialog/promotion_dialog.dart';
+import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_home_category.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/photo_view/photo_view_screen.dart';
 import 'package:baby_garden_flutter/screen/search/search_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
 import 'package:baby_garden_flutter/widget/product/grid_product.dart';
+import 'package:baby_garden_flutter/widget/product/notify_icon.dart';
 import 'package:baby_garden_flutter/widget/search_bar.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -28,6 +30,8 @@ class _HomeState extends BaseState<HomeScreen> {
       ChangeCategoryProvider();
   double _flashSaleHeight;
   double _flashSaleWidth;
+
+  List<dynamic> HOME_CATEGORIES = List();
 
   @override
   void initState() {
@@ -75,14 +79,7 @@ class _HomeState extends BaseState<HomeScreen> {
                     Column(
                       children: <Widget>[
                         SearchBar(
-                          trailing: SvgIcon(
-                            'ic_bell.svg',
-                            padding: SizeUtil.tinyPadding,
-                            color: Colors.white,
-                            onPressed: () {
-                              //TODO
-                            },
-                          ),
+                          trailing: NotifyIcon(),
                           enable: false,
                           onPressed: () {
                             push(SearchScreen());
@@ -90,10 +87,13 @@ class _HomeState extends BaseState<HomeScreen> {
                         ),
                         Expanded(
                           child: MyCarouselSlider(
-                            images: [
-                              StringUtil.dummyImage,
-                              StringUtil.dummyImage,
-                            ],
+                            hasShadow: true,
+                            images: StringUtil.dummyImageList,
+                            onItemPressed: (index) {
+                              push(PhotoViewScreen(
+                                images: StringUtil.dummyImageList,
+                              ));
+                            },
                           ),
                         ),
                       ],
@@ -107,9 +107,13 @@ class _HomeState extends BaseState<HomeScreen> {
             child: Column(
               children: <Widget>[
                 Row(
-                  children: List.generate(5, (index) {
-                    return ItemHomeCategory();
-                  }),
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: HOME_CATEGORIES
+                      .map((e) => ItemHomeCategory(
+                            category: e,
+                          ))
+                      .toList(),
                 ),
                 Container(
                   height: SizeUtil.lineHeight,
@@ -140,6 +144,18 @@ class _HomeState extends BaseState<HomeScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    HOME_CATEGORIES = [
+      {'icon': 'photo/ic_category.png', 'title': S.of(context).category},
+      {'icon': 'photo/ic_partner.png', 'title': S.of(context).partner},
+      {'icon': 'photo/ic_voucher.png', 'title': S.of(context).voucher},
+      {'icon': 'photo/ic_vcb_express.png', 'title': S.of(context).vcb_express},
+      {'icon': 'photo/ic_health.png', 'title': S.of(context).heath_number}
+    ];
+    super.didChangeDependencies();
   }
 
   @override

@@ -89,10 +89,13 @@ class FlashSale extends StatelessWidget {
                     height: flashSaleHeight,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
+                      itemCount: 10,
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
                           child: ItemFlashSaleProduct(
                             imageSize: flashSaleWidth,
+                            imageUrl: StringUtil.dummyImageList[
+                                index % StringUtil.dummyImageList.length],
                           ),
                           onTap: () {
                             RouteUtil.push(context, ProductDetailScreen());
@@ -100,6 +103,9 @@ class FlashSale extends StatelessWidget {
                         );
                       },
                     ),
+                  ),
+                  SizedBox(
+                    height: SizeUtil.tinySpace,
                   )
                 ],
               ),

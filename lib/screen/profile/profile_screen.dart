@@ -1,7 +1,13 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/customer_support/customer_support.dart';
+import 'package:baby_garden_flutter/screen/favorite_product/favorite_product.dart';
+import 'package:baby_garden_flutter/screen/profile/account_manage_screen.dart';
 import 'package:baby_garden_flutter/screen/profile/user_infor.dart';
+import 'package:baby_garden_flutter/screen/seen_product/seen_product_screen.dart';
+import 'package:baby_garden_flutter/screen/setting/setting_screen.dart';
+import 'package:baby_garden_flutter/screen/voucher/voucher_management_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
@@ -58,32 +64,66 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
         padding: EdgeInsets.all(0),
         itemCount: entries.length,
         itemBuilder: (BuildContext context, int index) {
-          return Container(
-            // margin: const EdgeInsets.all(15.0),
-            padding: const EdgeInsets.all(3.0),
-            decoration: BoxDecoration(
-                border: Border(
-              bottom: BorderSide(
-                  width: 1,
-                  style: BorderStyle.solid,
-                  color: Color.fromRGBO(206, 206, 206, 1)),
-            )),
-            height: 50,
-            child: Row(
-              children: <Widget>[
-                SvgIcon(
-                  '${entries[index]['icon']}.svg',
-                  color:
-                      (index == 0) ? ColorUtil.primaryColor : ColorUtil.black33,
-                  padding: EdgeInsets.only(left: 12, right: 15),
-                ),
-                Text(entries[index]['title'],
-                    style: TextStyle(
-                        color: (index == 0)
-                            ? ColorUtil.primaryColor
-                            : ColorUtil.black33)),
-              ],
+          return GestureDetector(
+            child: Container(
+              // margin: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(3.0),
+              decoration: BoxDecoration(
+                  border: Border(
+                bottom: BorderSide(
+                    width: 1,
+                    style: BorderStyle.solid,
+                    color: Color.fromRGBO(206, 206, 206, 1)),
+              )),
+              height: 50,
+              child: Row(
+                children: <Widget>[
+                  SvgIcon(
+                    '${entries[index]['icon']}.svg',
+                    color: (index == 0)
+                        ? ColorUtil.primaryColor
+                        : ColorUtil.black33,
+                    padding: EdgeInsets.only(left: 12, right: 15),
+                  ),
+                  Text(entries[index]['title'],
+                      style: TextStyle(
+                          color: (index == 0)
+                              ? ColorUtil.primaryColor
+                              : ColorUtil.black33)),
+                ],
+              ),
             ),
+            onTap: () {
+              switch (index) {
+                case 0:
+                  push(AccountManage());
+                  break;
+                case 1:
+                  //TODO
+                  break;
+                case 2:
+                  //TODO
+                  break;
+                case 3:
+                  push(VoucherManagement());
+                  break;
+                case 4:
+                  push(FavoriteProduct());
+                  break;
+                case 5:
+                  //TODO
+                  break;
+                case 6:
+                  push(SeenProduct());
+                  break;
+                case 7:
+                  push(CustomerSupportScreen());
+                  break;
+                case 8:
+                  push(SettingScreen());
+                  break;
+              }
+            },
           );
         });
   }

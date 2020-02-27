@@ -38,6 +38,7 @@ class _ListProductState extends BaseState<ListProductScreen> {
                 left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
             itemBuilder: (context, index) {
               return ItemProduct(
+                index: index,
                 width: MediaQuery.of(context).size.width * 0.5,
                 borderRadius: SizeUtil.tinyRadius,
                 showSoldCount: true,

@@ -1541,24 +1541,6 @@ class S {
     );
   }
 
-  String get book {
-    return Intl.message(
-      'Đặt lịch',
-      name: 'book',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get product {
-    return Intl.message(
-      'Sản phẩm',
-      name: 'product',
-      desc: '',
-      args: [],
-    );
-  }
-
   String get rate_service {
     return Intl.message(
       'Đánh giá\ndịch vụ',
@@ -1817,6 +1799,159 @@ class S {
       name: 'service_time_range',
       desc: '',
       args: [minute],
+    );
+  }
+
+  String get press_back_again_to_exit {
+    return Intl.message(
+      'Nhấn 1 lần nữa để thoát ứng dụng!',
+      name: 'press_back_again_to_exit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get partner {
+    return Intl.message(
+      'Đối tác',
+      name: 'partner',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get voucher {
+    return Intl.message(
+      'Voucher',
+      name: 'voucher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get vcb_express {
+    return Intl.message(
+      'VCB Express',
+      name: 'vcb_express',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get heath_number {
+    return Intl.message(
+      'Chỉ số sức khỏe',
+      name: 'heath_number',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get codeTakenVoucher {
+    return Intl.message(
+      'Đã lấy mã',
+      name: 'codeTakenVoucher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get expireVoucher {
+    return Intl.message(
+      'Sắp hết hạn',
+      name: 'expireVoucher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get usedVoucher {
+    return Intl.message(
+      'Đã sử dụng',
+      name: 'usedVoucher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get expiredVoucher {
+    return Intl.message(
+      'Đã hết hạn',
+      name: 'expiredVoucher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get pointHistoryHeadText {
+    return Intl.message(
+      'Lịch sử tích điểm và sử dụng điểm',
+      name: 'pointHistoryHeadText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addressAccount {
+    return Intl.message(
+      'Địa chỉ tài khoản',
+      name: 'addressAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addressSetting {
+    return Intl.message(
+      'Thiết lập địa chỉ',
+      name: 'addressSetting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get defaultAddress {
+    return Intl.message(
+      'Địa chỉ giao hàng mặc định',
+      name: 'defaultAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get myAddress {
+    return Intl.message(
+      'Địa chỉ của tôi',
+      name: 'myAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addAddress {
+    return Intl.message(
+      'Thêm địa chỉ của tôi',
+      name: 'addAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get edit {
+    return Intl.message(
+      'Sửa',
+      name: 'edit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get isDefault {
+    return Intl.message(
+      'Mặc định',
+      name: 'isDefault',
+      desc: '',
+      args: [],
     );
   }
 }

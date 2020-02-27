@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 
 class ItemFlashSaleProduct extends StatelessWidget {
   final double imageSize;
+  final String imageUrl;
 
-  const ItemFlashSaleProduct({Key key, @required this.imageSize})
+  const ItemFlashSaleProduct({Key key, @required this.imageSize, this.imageUrl})
       : super(key: key);
 
   @override
@@ -21,7 +22,7 @@ class ItemFlashSaleProduct extends StatelessWidget {
               child: Container(
             padding: SizeUtil.smallPadding,
             child: CachedNetworkImage(
-              imageUrl: StringUtil.dummyImage,
+              imageUrl: imageUrl,
               fit: BoxFit.cover,
             ),
             decoration: BoxDecoration(
