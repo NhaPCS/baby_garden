@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/screen/address_setting/address_setting_screen.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_book_schedule.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_like_screen.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_list_screen.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
             bodyText1: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
           )),
-      home: PartnerBookScheduleScreen(),
+      home: AddressSetting(),
     );
   }
 }

@@ -193,16 +193,13 @@
   "saling_detail_title": "[BIG SAle] {title}",
   "saling_detail_time": "Thời gian áp dung: {time}",
   "product_for_sale": "Sản phẩm khuyến mãi",
-  "partner": "Đối tác",
   "familier_partner": "Đối tác yêu thích",
   "choose_client": "Chọn cơ sở",
   "choose_service": "Chọn dịch vụ ({number} dịch vụ)",
-  "service_time_range": "{minute}\nPhút"
-  "total_order_price": "Tổng đơn: ",
+  "service_time_range": "{minute}\nPhút",
   "press_back_again_to_exit": "Nhấn 1 lần nữa để thoát ứng dụng!",
   "partner": "Đối tác",
   "voucher": "Voucher",
-  "vcb_express": "VCB Express",
   "heath_number": "Chỉ số sức khỏe",
   "codeTakenVoucher": "Đã lấy mã",
   "expireVoucher": "Sắp hết hạn",
@@ -215,5 +212,8 @@
   "myAddress": "Địa chỉ của tôi",
   "addAddress": "Thêm địa chỉ của tôi",
   "edit": "Sửa",
-  "isDefault": "Mặc định"
+  "isDefault": "Mặc định",
+  "booking_schedule_verify": "Xác Nhận Đặt Lịch",
+  "back": "Quay lại",
+  "booking_schedule_success": "Bạn Đã Đặt lịch thành công"
 }

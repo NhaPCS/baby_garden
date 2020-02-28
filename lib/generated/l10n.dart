@@ -1541,6 +1541,24 @@ class S {
     );
   }
 
+  String get book {
+    return Intl.message(
+      'Đặt lịch',
+      name: 'book',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get product {
+    return Intl.message(
+      'Sản phẩm',
+      name: 'product',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get rate_service {
     return Intl.message(
       'Đánh giá\ndịch vụ',
@@ -1757,15 +1775,6 @@ class S {
     );
   }
 
-  String get partner {
-    return Intl.message(
-      'Đối tác',
-      name: 'partner',
-      desc: '',
-      args: [],
-    );
-  }
-
   String get familier_partner {
     return Intl.message(
       'Đối tác yêu thích',
@@ -1824,15 +1833,6 @@ class S {
     return Intl.message(
       'Voucher',
       name: 'voucher',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get vcb_express {
-    return Intl.message(
-      'VCB Express',
-      name: 'vcb_express',
       desc: '',
       args: [],
     );
@@ -1950,6 +1950,33 @@ class S {
     return Intl.message(
       'Mặc định',
       name: 'isDefault',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get booking_schedule_verify {
+    return Intl.message(
+      'Xác Nhận Đặt Lịch',
+      name: 'booking_schedule_verify',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get back {
+    return Intl.message(
+      'Quay lại',
+      name: 'back',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get booking_schedule_success {
+    return Intl.message(
+      'Bạn Đã Đặt lịch thành công',
+      name: 'booking_schedule_success',
       desc: '',
       args: [],
     );
