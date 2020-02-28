@@ -48,14 +48,12 @@ class _PartnerBookScheduleScreenState
     _dayTabController = TabController(vsync: this, length: 7);
     _tabController.addListener(() {
       if (_tabController.index!=_bookTabbarProvider.index){
-          print("change index asd asd : ${_tabController.index.toString()}");
           _bookTabbarProvider.onChangeIndex(_tabController.index);
       }
     });
 
     _dayTabController.addListener(() {
-//      print("change index");
-//      _bookTabbarProvider.onChangeIndex(_bookTabbarProvider.index);
+
     });
     super.initState();
   }
@@ -544,6 +542,7 @@ class _PartnerBookScheduleScreenState
                   ),
                 ),
               )),
+          //TODO date of week tabbar
           ColoredTabBar(
             Color(0xffFFE9D6),
             TabBar(
@@ -584,6 +583,7 @@ class _PartnerBookScheduleScreenState
                   .toList(),
             ),
           ),
+          //TODO schedule time of day
           Consumer<ChangeScheduleTimeProvider>(
             builder: (BuildContext context, ChangeScheduleTimeProvider value,
                 Widget child) {
@@ -698,6 +698,7 @@ class _PartnerBookScheduleScreenState
     ];
   }
 
+  //TODO need passing data into dialogue
   showBookingDialogue(BuildContext context) {
     Dialog simpleDialog = Dialog(
       shape: RoundedRectangleBorder(
