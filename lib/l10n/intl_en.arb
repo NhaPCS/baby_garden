@@ -191,5 +191,16 @@
   "myAddress": "Địa chỉ của tôi",
   "addAddress": "Thêm địa chỉ của tôi",
   "edit": "Sửa",
-  "isDefault": "Mặc định"
+  "isDefault": "Mặc định",
+  "addressDetail": "Địa chỉ cụ thể",
+  "addressDetailHint": "Nhập số nhà, tên đường...",
+  "city": "Tỉnh/ Thành Phố",
+  "cityHint": "Chọn Tỉnh/ Thành phố",
+  "district": "Quận/ Huyện",
+  "districtHint": "Chọn Quận/ Huyện",
+  "commune": "Phường/ Xã",
+  "communeHint": "Chọn Phường/ Xã",
+  "setToDefaultAddress": "Đặt làm địa chỉ nhận hàng mặc định",
+  "cancel": "Hủy bỏ",
+  "addNew": "Thêm mới"
 }

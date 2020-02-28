@@ -1765,6 +1765,105 @@ class S {
       args: [],
     );
   }
+
+  String get addressDetail {
+    return Intl.message(
+      'Địa chỉ cụ thể',
+      name: 'addressDetail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addressDetailHint {
+    return Intl.message(
+      'Nhập số nhà, tên đường...',
+      name: 'addressDetailHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get city {
+    return Intl.message(
+      'Tỉnh/ Thành Phố',
+      name: 'city',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cityHint {
+    return Intl.message(
+      'Chọn Tỉnh/ Thành phố',
+      name: 'cityHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get district {
+    return Intl.message(
+      'Quận/ Huyện',
+      name: 'district',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get districtHint {
+    return Intl.message(
+      'Chọn Quận/ Huyện',
+      name: 'districtHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get commune {
+    return Intl.message(
+      'Phường/ Xã',
+      name: 'commune',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get communeHint {
+    return Intl.message(
+      'Chọn Phường/ Xã',
+      name: 'communeHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get setToDefaultAddress {
+    return Intl.message(
+      'Đặt làm địa chỉ nhận hàng mặc định',
+      name: 'setToDefaultAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cancel {
+    return Intl.message(
+      'Hủy bỏ',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addNew {
+    return Intl.message(
+      'Thêm mới',
+      name: 'addNew',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
