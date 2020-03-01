@@ -114,6 +114,7 @@ class SizeUtil {
   static const double tinySpace = 5;
   static const double superTinySpace = 3;
   static const double bigSpace = 30;
+  static const double bigSpacehigher = 32;
   static const double hugSpace = 50;
   static const double largeSpace = 70;
   static const double biggerSpace = 40;
@@ -134,6 +135,7 @@ class SizeUtil {
 
   static const double iconSizeLarge = 52;
   static const double iconSize = 16;
+  static const double iconMidSize = 18;
   static const double iconSizeDefault = 12;
   static const double iconSizeBigger = 24;
   static const double iconSizeBig = 32;
