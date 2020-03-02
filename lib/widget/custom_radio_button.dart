@@ -11,7 +11,7 @@ class CustomRadioButton extends StatelessWidget {
       this.onChanged,
       this.titleSpace = SizeUtil.tinySpace,
       this.iconSize = SizeUtil.iconMidSize,
-      this.iconColor = ColorUtil.primaryColor,this.titleSize = SizeUtil.textSizeSmall,this.trailing});
+      this.iconColor = ColorUtil.primaryColor,this.titleSize = SizeUtil.textSizeSmall,this.trailing,this.titleContent});
 
   final String label;
   final EdgeInsets padding;
@@ -23,6 +23,7 @@ class CustomRadioButton extends StatelessWidget {
   final Color iconColor;
   final double titleSize;
   final Widget trailing;
+  final Widget titleContent;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class CustomRadioButton extends StatelessWidget {
             SizedBox(
               width: titleSpace,
             ),
-            Text(label,style: TextStyle(fontSize: titleSize),),
+            titleContent,
             Spacer(),
             trailing!=null?trailing:SizedBox()
           ],

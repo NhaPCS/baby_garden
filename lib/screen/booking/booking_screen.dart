@@ -116,6 +116,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
               title: S.of(context).type_of_delivery,
               content: getDeliveryMenthod(),
             ),
+            //TODO CHECKOUT MENTHOD
             ListTitleCustom(
               padding: const EdgeInsets.only(
                   left: SizeUtil.normalSpace,
@@ -130,6 +131,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
               title: S.of(context).type_of_checkout,
               content: getCheckoutMenthod(),
             ),
+            //TODO transfer menthod
             ListTitleCustom(
               padding: const EdgeInsets.only(
                   left: SizeUtil.normalSpace,
@@ -147,13 +149,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                     left: SizeUtil.bigSpacehigher,
                     top: SizeUtil.tinySpace,
                     bottom: SizeUtil.tinySpace),
-                child: Text(
-                  "Lê Văn Lĩnh - 0975 441 005\n28 Phan Kế Bính\nPhường Cống Vị, Quận Ba Đình, Hà Nội",
-                  style: TextStyle(
-                      fontSize: SizeUtil.textSizeSmall,
-                      height: 1.3,
-                      color: Colors.black),
-                ),
+                child: getTransferService()
               ),
             ),
             Padding(
@@ -304,6 +300,88 @@ class _BookingScreenState extends BaseState<BookingScreen> {
   List<SingleChildWidget> providers() {
     // TODO: implement providers
     return [];
+  }
+
+  Widget getTransferService() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        CustomRadioButton(
+          label: S
+              .of(context)
+              .delivery_in_shop,
+          titleContent: Column(children: <Widget>[
+            Row(children: <Widget>[
+//              SvgIcon(),
+              Text(S
+                  .of(context)
+                  .delivery_in_shop,style: TextStyle(fontSize: SizeUtil.textSizeSmall),),
+            ],),
+            Text(S
+                .of(context)
+                .delivery_plan(2),style: TextStyle(fontSize: SizeUtil.textSizeTiny,color: ColorUtil.gray),),
+          ],),
+          padding: const EdgeInsets.only(
+              left: SizeUtil.bigSpacehigher,
+              top: SizeUtil.smallSpace,
+              bottom: SizeUtil.smallSpace),
+          value: 1,
+          groupValue: checkoutMenthod,
+          onChanged: (val) {
+            setCheckoutMenthod(val);
+          },
+        ),
+        CustomRadioButton(
+          label: S
+              .of(context)
+              .delivery_to_address,
+          padding: const EdgeInsets.only(
+              left: SizeUtil.bigSpacehigher,
+              top: SizeUtil.smallSpace,
+              right: SizeUtil.normalSpace),
+          value: 2,
+          groupValue: checkoutMenthod,
+          trailing: InkWell(
+            onTap: () {
+              print(" click asd     ");
+            },
+            child: Text(
+              S
+                  .of(context)
+                  .detail,
+              style: TextStyle(
+                  color: ColorUtil.blue, fontSize: SizeUtil.textSizeSmall),
+            ),
+          ),
+          onChanged: (val) {
+            setCheckoutMenthod(val);
+          },
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+              left: SizeUtil.bigSpacehigher,
+              bottom: SizeUtil.smallSpace,
+              right: SizeUtil.tinySpace),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                S.of(context).point_payment(200),
+                style: TextStyle(fontSize: SizeUtil.textSizeSmall),
+              ),
+              Spacer(),
+              Switch(
+                value: true,
+                onChanged: (bool newValue) {},
+                activeColor: ColorUtil.primaryColor,
+                inactiveThumbColor: ColorUtil.gray,
+              ),
+            ],
+          ),
+        )
+      ],
+    );
   }
 
   Widget getCheckoutMenthod() {
