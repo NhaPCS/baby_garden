@@ -716,11 +716,24 @@ class _PartnerBookScheduleScreenState
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
           color: Colors.white,
-          boxShadow: [
-            new BoxShadow(
-                color: ColorUtil.primaryColor,
-                blurRadius: 3,)
-          ],
+          border: Border(
+            left: BorderSide(
+              color: ColorUtil.primaryColor,
+              width: 0.7,
+            ),
+            right: BorderSide(
+              color: ColorUtil.primaryColor,
+              width: 0.7,
+            ),
+            top: BorderSide(
+              color: ColorUtil.primaryColor,
+              width: 0.7,
+            ),
+            bottom: BorderSide(
+              color: ColorUtil.primaryColor,
+              width: 0.7,
+            ),
+          ),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -814,11 +827,24 @@ class _PartnerBookScheduleScreenState
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.0),
             color: Colors.white,
-            boxShadow: [
-              new BoxShadow(
+            border: Border(
+              left: BorderSide(
                 color: ColorUtil.primaryColor,
-                blurRadius: 3,)
-            ],
+                width: 0.7,
+              ),
+              right: BorderSide(
+                color: ColorUtil.primaryColor,
+                width: 0.7,
+              ),
+              top: BorderSide(
+                color: ColorUtil.primaryColor,
+                width: 0.7,
+              ),
+              bottom: BorderSide(
+                color: ColorUtil.primaryColor,
+                width: 0.7,
+              ),
+            ),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,

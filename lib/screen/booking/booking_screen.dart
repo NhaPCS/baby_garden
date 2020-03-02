@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/item/item_added_promo.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/circle_checkbox.dart';
@@ -27,6 +28,8 @@ class _BookingScreenState extends BaseState<BookingScreen> {
 
   int transferMenthod;
 
+  int deliveryAddress;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -35,6 +38,14 @@ class _BookingScreenState extends BaseState<BookingScreen> {
     shopLocation = 0;
     checkoutMenthod = 0;
     transferMenthod = 0;
+    deliveryAddress = 0;
+  }
+
+  setDeliveryAddress(val) {
+    print("setDeliveryAddress ${val}");
+    setState(() {
+      deliveryAddress = val;
+    });
   }
 
   setTransferMenthod(val) {
@@ -90,6 +101,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
               trailing: InkWell(
                   onTap: () {
                     // Show address list
+                    showChangeDeliveryAddressDialogue(context);
                   },
                   child: Text(
                     S.of(context).change,
@@ -345,11 +357,13 @@ class _BookingScreenState extends BaseState<BookingScreen> {
           },
         ),
         Container(
-          margin: EdgeInsets.only(left: SizeUtil.notifyHintSpace,),
+            margin: EdgeInsets.only(
+              left: SizeUtil.notifyHintSpace,
+            ),
             child: MySeparator(
-          color: ColorUtil.lineColor,
-          paddingLeft: SizeUtil.largeSpace,
-        )),
+              color: ColorUtil.lineColor,
+              paddingLeft: SizeUtil.largeSpace,
+            )),
         CustomRadioButton(
           crossAxisAlignment: CrossAxisAlignment.center,
           titleContent: Row(
@@ -385,7 +399,9 @@ class _BookingScreenState extends BaseState<BookingScreen> {
           },
         ),
         Container(
-            margin: EdgeInsets.only(left: SizeUtil.notifyHintSpace,),
+            margin: EdgeInsets.only(
+              left: SizeUtil.notifyHintSpace,
+            ),
             child: MySeparator(
               color: ColorUtil.lineColor,
               paddingLeft: SizeUtil.largeSpace,
@@ -425,7 +441,8 @@ class _BookingScreenState extends BaseState<BookingScreen> {
           },
         ),
         Container(
-            margin: EdgeInsets.only(left: SizeUtil.notifyHintSpace,bottom: SizeUtil.smallSpace),
+            margin: EdgeInsets.only(
+                left: SizeUtil.notifyHintSpace, bottom: SizeUtil.smallSpace),
             child: MySeparator(
               color: ColorUtil.lineColor,
             )),
@@ -439,54 +456,74 @@ class _BookingScreenState extends BaseState<BookingScreen> {
             children: <Widget>[
               Text(
                 S.of(context).enter_delivery_code,
-                style: TextStyle(fontSize: SizeUtil.textSizeSmall,color: ColorUtil.primaryColor,fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: SizeUtil.textSizeSmall,
+                    color: ColorUtil.primaryColor,
+                    fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: SizeUtil.tinySpace,),
+              SizedBox(
+                height: SizeUtil.tinySpace,
+              ),
               Container(
                 height: SizeUtil.delivery_code_height,
-                child: Row(children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      style: TextStyle(fontSize: SizeUtil.textSizeSmall),
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(0)),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextField(
+                        style: TextStyle(fontSize: SizeUtil.textSizeSmall),
+                        obscureText: true,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(0)),
+                            ),
+                            hintText: S.of(context).delivery_code,
+                            hintStyle:
+                                TextStyle(fontSize: SizeUtil.textSizeSmall),
+                            contentPadding: EdgeInsets.only(left: 8, right: 4)),
+                      ),
+                    ),
+                    SizedBox(
+                      width: SizeUtil.smallSpace,
+                    ),
+                    RaisedButton(
+                      onPressed: () {
+                        //TODO booking
+                      },
+                      color: ColorUtil.primaryColor,
+                      shape: RoundedRectangleBorder(),
+                      child: Container(
+                        padding: EdgeInsets.all(SizeUtil.midSpace),
+                        child: Text(
+                          S.of(context).apply.toUpperCase(),
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                              color: Colors.white,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold),
                         ),
-                        hintText: S.of(context).delivery_code,
-                        hintStyle: TextStyle(fontSize: SizeUtil.textSizeSmall),
-                        contentPadding: EdgeInsets.only(left:8,right: 4)
                       ),
-                    ),
-                  ),
-                  SizedBox(width: SizeUtil.smallSpace,),
-                  RaisedButton(
-                    onPressed: () {
-                      //TODO booking
-                    },
-                    color: ColorUtil.primaryColor,
-                    shape: RoundedRectangleBorder(),
-                    child: Container(
-                      padding: EdgeInsets.all(SizeUtil.midSpace),
-                      child: Text(
-                        S.of(context).apply.toUpperCase(),
-                        style: TextStyle(
-                            fontSize: SizeUtil.textSizeSmall,
-                            color: Colors.white,
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  )
-                ],),
-              )
+                    )
+                  ],
+                ),
+              ),
+              ItemAddedPromo(
+                padding: EdgeInsets.only(top: SizeUtil.tinySpace, bottom: 0),
+              ),
+              ItemAddedPromo(
+                padding: EdgeInsets.only(top: SizeUtil.tinySpace, bottom: 0),
+              ),
             ],
           ),
         ),
         WidgetUtil.getLine(margin: EdgeInsets.all(0)),
         Padding(
-          padding: const EdgeInsets.only(left: SizeUtil.smallSpace,top: SizeUtil.smallSpace),
-          child: Text(S.of(context).booking_note,style: TextStyle(color: Colors.black),),
+          padding: const EdgeInsets.only(
+              left: SizeUtil.smallSpace, top: SizeUtil.smallSpace),
+          child: Text(
+            S.of(context).booking_note,
+            style: TextStyle(color: Colors.black),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(SizeUtil.smallSpace),
@@ -494,14 +531,12 @@ class _BookingScreenState extends BaseState<BookingScreen> {
             style: TextStyle(fontSize: SizeUtil.textSizeSmall),
             obscureText: true,
             decoration: InputDecoration(
-              fillColor: Color(0xffF3F3F3),
+                fillColor: Color(0xffF3F3F3),
                 filled: true,
-                border: OutlineInputBorder(
-                ),
+                border: OutlineInputBorder(),
                 hintText: S.of(context).enter_your_note,
                 hintStyle: TextStyle(fontSize: SizeUtil.textSizeSmall),
-                contentPadding: EdgeInsets.only(left:8,right: 4,bottom: SizeUtil.largeSpace,top: 4)
-            ),
+                contentPadding: EdgeInsets.only(left: 8, right: 4, top: 4)),
           ),
         ),
       ],
@@ -675,6 +710,287 @@ class _BookingScreenState extends BaseState<BookingScreen> {
       ],
     );
   }
+
+  showChangeDeliveryAddressDialogue(BuildContext context) {
+    Dialog simpleDialog = Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: StatefulBuilder(
+          builder: (context,setState){
+            return Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                color: Colors.white,
+                border: Border(
+                  left: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                  right: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                  top: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                  bottom: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: SizeUtil.midSmallSpace,
+                        bottom: SizeUtil.midSmallSpace),
+                    child: Text(
+                      S.of(context).change_delivery_address,
+                      style: TextStyle(
+                          color: ColorUtil.primaryColor,
+                          fontSize: SizeUtil.textSizeExpressTitle,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  WidgetUtil.getLine(
+                      margin: EdgeInsets.only(bottom: SizeUtil.tinySpace),
+                      color: ColorUtil.lineColor),
+                  SizedBox(
+                    height: SizeUtil.smallSpace,
+                  ),
+                  CustomRadioButton(
+                    titleContent: Text(
+                      "Lê Văn Lĩnh - 0975 441 005\n28 Phan Kế Bính\nPhường Cống Vị, Quận Ba Đình, Hà Nội",
+                      style: TextStyle(
+                          fontSize: SizeUtil.textSizeSmall, color: Colors.black),
+                    ),
+                    padding: const EdgeInsets.only(
+                        bottom: SizeUtil.tinySpace,
+                        top: SizeUtil.tinySpace,
+                        left: SizeUtil.smallSpace,
+                        right: SizeUtil.smallSpace),
+                    value: 0,
+                    groupValue: deliveryAddress,
+                    iconSize: SizeUtil.iconSize,
+                    titleSize: SizeUtil.textSizeSmall,
+                    onChanged: (val) {
+                      setState(()=> deliveryAddress = val);
+//                      setDeliveryAddress(val);
+                    },
+                  ),
+                  CustomRadioButton(
+                    titleContent: Text(
+                      "Lê Văn Lĩnh - 0975 441 005\n28 Phan Kế Bính\nPhường Cống Vị, Quận Ba Đình, Hà Nội",
+                      style: TextStyle(
+                          fontSize: SizeUtil.textSizeSmall, color: Colors.black),
+                    ),
+                    padding: const EdgeInsets.only(
+                        bottom: SizeUtil.tinySpace,
+                        top: SizeUtil.tinySpace,
+                        left: SizeUtil.smallSpace,
+                        right: SizeUtil.smallSpace),
+                    value: 1,
+                    groupValue: deliveryAddress,
+                    iconSize: SizeUtil.iconSize,
+                    titleSize: SizeUtil.textSizeSmall,
+                    onChanged: (val) {
+                      setState(()=> deliveryAddress = val);
+//                      setDeliveryAddress(val);
+                    },
+                  ),
+                  CustomRadioButton(
+                    titleContent: Text(
+                      "Lê Văn Lĩnh - 0975 441 005\n28 Phan Kế Bính\nPhường Cống Vị, Quận Ba Đình, Hà Nội",
+                      style: TextStyle(
+                          fontSize: SizeUtil.textSizeSmall, color: Colors.black),
+                    ),
+                    padding: const EdgeInsets.only(
+                        bottom: SizeUtil.tinySpace,
+                        top: SizeUtil.tinySpace,
+                        left: SizeUtil.smallSpace,
+                        right: SizeUtil.smallSpace),
+                    value: 2,
+                    groupValue: deliveryAddress,
+                    iconSize: SizeUtil.iconSize,
+                    titleSize: SizeUtil.textSizeSmall,
+                    onChanged: (val) {
+                      setState(()=> deliveryAddress = val);
+//                      setDeliveryAddress(val);
+                    },
+                  ),
+                  SizedBox(height: SizeUtil.smallSpace,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      RaisedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(SizeUtil.smallRadius),
+                            )),
+                        color: ColorUtil.primaryColor,
+                        child: Text(
+                          S.of(context).add_new,
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                              color: Colors.white,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(
+                        width: SizeUtil.defaultSpace,
+                      ),
+                      RaisedButton(
+                        onPressed: () {
+//                      Navigator.of(context).pop();
+//                      showBookingScheduleSuccess(context);
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(SizeUtil.smallRadius),
+                            )),
+                        color: ColorUtil.primaryColor,
+                        child: Text(
+                          S.of(context).confirm,
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                              color: Colors.white,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            );
+          },
+        )
+    );
+    showDialog(
+        context: context, builder: (BuildContext context) => simpleDialog);
+  }
+
+
+  showAddingAddressDialogue(BuildContext context) {
+    Dialog simpleDialog = Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: StatefulBuilder(
+          builder: (context,setState){
+            return Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                color: Colors.white,
+                border: Border(
+                  left: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                  right: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                  top: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                  bottom: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: SizeUtil.midSmallSpace,
+                        bottom: SizeUtil.midSmallSpace),
+                    child: Text(
+                      S.of(context).add_delivery_address,
+                      style: TextStyle(
+                          color: ColorUtil.primaryColor,
+                          fontSize: SizeUtil.textSizeExpressTitle,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  WidgetUtil.getLine(
+                      margin: EdgeInsets.only(bottom: SizeUtil.tinySpace),
+                      color: ColorUtil.lineColor),
+                  SizedBox(
+                    height: SizeUtil.smallSpace,
+                  ),
+
+                  SizedBox(height: SizeUtil.smallSpace,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      RaisedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(SizeUtil.smallRadius),
+                            )),
+                        color: ColorUtil.primaryColor,
+                        child: Text(
+                          S.of(context).add_new,
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                              color: Colors.white,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(
+                        width: SizeUtil.defaultSpace,
+                      ),
+                      RaisedButton(
+                        onPressed: () {
+//                      Navigator.of(context).pop();
+//                      showBookingScheduleSuccess(context);
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(SizeUtil.smallRadius),
+                            )),
+                        color: ColorUtil.primaryColor,
+                        child: Text(
+                          S.of(context).confirm,
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                              color: Colors.white,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            );
+          },
+        )
+    );
+    showDialog(
+        context: context, builder: (BuildContext context) => simpleDialog);
+  }
+
 }
 
 class ListTitleCustom extends StatelessWidget {
