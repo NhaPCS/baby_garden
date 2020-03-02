@@ -11,7 +11,12 @@ class CustomRadioButton extends StatelessWidget {
       this.onChanged,
       this.titleSpace = SizeUtil.tinySpace,
       this.iconSize = SizeUtil.iconMidSize,
-      this.iconColor = ColorUtil.primaryColor,this.titleSize = SizeUtil.textSizeSmall,this.trailing,this.titleContent});
+      this.iconColor = ColorUtil.primaryColor,
+      this.titleSize = SizeUtil.textSizeSmall,
+      this.trailing,
+      this.titleContent,
+        this.subTitle,
+      this.crossAxisAlignment = CrossAxisAlignment.center});
 
   final String label;
   final EdgeInsets padding;
@@ -24,6 +29,8 @@ class CustomRadioButton extends StatelessWidget {
   final double titleSize;
   final Widget trailing;
   final Widget titleContent;
+  final Widget subTitle;
+  final CrossAxisAlignment crossAxisAlignment;
 
   @override
   Widget build(BuildContext context) {
@@ -33,21 +40,32 @@ class CustomRadioButton extends StatelessWidget {
       },
       child: Padding(
         padding: padding,
-        child: Row(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Icon(
-              value != groupValue
-                  ? Icons.radio_button_unchecked
-                  : Icons.radio_button_checked,
-              size: iconSize,
-              color: iconColor,
+            Row(
+              crossAxisAlignment: crossAxisAlignment,
+              children: <Widget>[
+                Icon(
+                  value != groupValue
+                      ? Icons.radio_button_unchecked
+                      : Icons.radio_button_checked,
+                  size: iconSize,
+                  color: iconColor,
+                ),
+                SizedBox(
+                  width: titleSpace,
+                ),
+                titleContent,
+                Spacer(),
+                trailing != null ? trailing : SizedBox()
+              ],
             ),
-            SizedBox(
-              width: titleSpace,
-            ),
-            titleContent,
-            Spacer(),
-            trailing!=null?trailing:SizedBox()
+            Padding(
+              padding: EdgeInsets.only(left: SizeUtil.iconSizeBigger,top: subTitle!=null?SizeUtil.tinySpace:0),
+              child: subTitle!=null?subTitle:SizedBox(),
+            )
           ],
         ),
       ),

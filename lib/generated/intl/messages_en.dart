@@ -29,7 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m4(date) => "Ngày hết hạn giữ hàng: ${date}";
 
-  static m5(day) => "Dự kiến giao khoảng ${day} ngày";
+  static m5(day) => "Dự kiến giao khoảng ${day}";
 
   static m6(date) => "Ngày sử dung: ${date}";
 

@@ -2173,7 +2173,7 @@ class S {
 
   String delivery_plan(dynamic day) {
     return Intl.message(
-      'Dự kiến giao khoảng $day ngày',
+      'Dự kiến giao khoảng $day',
       name: 'delivery_plan',
       desc: '',
       args: [day],

@@ -237,7 +237,7 @@
   "cash_payment": "Thanh toán tiền mặt khi nhận hàng",
   "credit_transfer_payment": "Thanh toán chuyển khoản qua tài khoản",
   "point_payment": "Thanh toán điểm hiện có [{point}]",
-  "delivery_plan": "Dự kiến giao khoảng {day} ngày",
+  "delivery_plan": "Dự kiến giao khoảng {day}",
   "point_payment_title": "Thanh toán điểm",
   "current_point": "Số điểm hiện tại: ",
   "point_for_booking": "Số điểm thanh toán: ",

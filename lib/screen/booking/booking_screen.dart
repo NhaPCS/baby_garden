@@ -3,6 +3,7 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/circle_checkbox.dart';
 import 'package:baby_garden_flutter/widget/custom_radio_button.dart';
+import 'package:baby_garden_flutter/widget/dot_line_separator.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -24,6 +25,8 @@ class _BookingScreenState extends BaseState<BookingScreen> {
 
   int checkoutMenthod;
 
+  int transferMenthod;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -31,6 +34,13 @@ class _BookingScreenState extends BaseState<BookingScreen> {
     deliveryMenthod = 0;
     shopLocation = 0;
     checkoutMenthod = 0;
+    transferMenthod = 0;
+  }
+
+  setTransferMenthod(val) {
+    setState(() {
+      transferMenthod = val;
+    });
   }
 
   setCheckoutMenthod(val) {
@@ -133,25 +143,18 @@ class _BookingScreenState extends BaseState<BookingScreen> {
             ),
             //TODO transfer menthod
             ListTitleCustom(
-              padding: const EdgeInsets.only(
-                  left: SizeUtil.normalSpace,
-                  right: SizeUtil.normalSpace,
-                  top: SizeUtil.midSmallSpace,
-                  bottom: SizeUtil.midSmallSpace),
-              icon: SvgIcon(
-                'ic_transfer_method.svg',
-                width: SizeUtil.iconSizeDefault,
-                height: SizeUtil.iconSizeDefault,
-              ),
-              title: S.of(context).delivery_service,
-              content: Padding(
-                padding: EdgeInsets.only(
-                    left: SizeUtil.bigSpacehigher,
-                    top: SizeUtil.tinySpace,
-                    bottom: SizeUtil.tinySpace),
-                child: getTransferService()
-              ),
-            ),
+                padding: const EdgeInsets.only(
+                    left: SizeUtil.normalSpace,
+                    right: SizeUtil.normalSpace,
+                    top: SizeUtil.midSmallSpace,
+                    bottom: SizeUtil.midSmallSpace),
+                icon: SvgIcon(
+                  'ic_transfer_method.svg',
+                  width: SizeUtil.iconSizeDefault,
+                  height: SizeUtil.iconSizeDefault,
+                ),
+                title: S.of(context).delivery_service,
+                content: getTransferService()),
             Padding(
               padding: const EdgeInsets.only(
                   left: SizeUtil.normalSpace,
@@ -304,82 +307,203 @@ class _BookingScreenState extends BaseState<BookingScreen> {
 
   Widget getTransferService() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         CustomRadioButton(
-          label: S
-              .of(context)
-              .delivery_in_shop,
-          titleContent: Column(children: <Widget>[
-            Row(children: <Widget>[
-//              SvgIcon(),
-              Text(S
-                  .of(context)
-                  .delivery_in_shop,style: TextStyle(fontSize: SizeUtil.textSizeSmall),),
-            ],),
-            Text(S
-                .of(context)
-                .delivery_plan(2),style: TextStyle(fontSize: SizeUtil.textSizeTiny,color: ColorUtil.gray),),
-          ],),
+          crossAxisAlignment: CrossAxisAlignment.center,
+          titleContent: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Image.asset(
+                'photo/ghn_icon.png',
+                width: 40,
+                height: 16,
+              ),
+              SizedBox(
+                width: SizeUtil.tinySpace,
+              ),
+              Text(
+                "Giao hàng nhanh",
+                style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail),
+              ),
+            ],
+          ),
+          subTitle: Text(
+            S.of(context).delivery_plan("2 ngày"),
+            style: TextStyle(
+                fontSize: SizeUtil.textSizeNotiTime, color: ColorUtil.gray),
+          ),
           padding: const EdgeInsets.only(
               left: SizeUtil.bigSpacehigher,
               top: SizeUtil.smallSpace,
               bottom: SizeUtil.smallSpace),
           value: 1,
-          groupValue: checkoutMenthod,
+          groupValue: transferMenthod,
           onChanged: (val) {
-            setCheckoutMenthod(val);
+            setTransferMenthod(val);
           },
         ),
+        Container(
+          margin: EdgeInsets.only(left: SizeUtil.notifyHintSpace,),
+            child: MySeparator(
+          color: ColorUtil.lineColor,
+          paddingLeft: SizeUtil.largeSpace,
+        )),
         CustomRadioButton(
-          label: S
-              .of(context)
-              .delivery_to_address,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          titleContent: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Image.asset(
+                'photo/ghn_icon.png',
+                width: 40,
+                height: 16,
+              ),
+              SizedBox(
+                width: SizeUtil.tinySpace,
+              ),
+              Text(
+                "Giao hàng tiết kiệm",
+                style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail),
+              ),
+            ],
+          ),
+          subTitle: Text(
+            S.of(context).delivery_plan("4 ngày"),
+            style: TextStyle(
+                fontSize: SizeUtil.textSizeNotiTime, color: ColorUtil.gray),
+          ),
           padding: const EdgeInsets.only(
               left: SizeUtil.bigSpacehigher,
               top: SizeUtil.smallSpace,
-              right: SizeUtil.normalSpace),
+              bottom: SizeUtil.smallSpace),
           value: 2,
-          groupValue: checkoutMenthod,
-          trailing: InkWell(
-            onTap: () {
-              print(" click asd     ");
-            },
-            child: Text(
-              S
-                  .of(context)
-                  .detail,
-              style: TextStyle(
-                  color: ColorUtil.blue, fontSize: SizeUtil.textSizeSmall),
-            ),
-          ),
+          groupValue: transferMenthod,
           onChanged: (val) {
-            setCheckoutMenthod(val);
+            setTransferMenthod(val);
           },
         ),
+        Container(
+            margin: EdgeInsets.only(left: SizeUtil.notifyHintSpace,),
+            child: MySeparator(
+              color: ColorUtil.lineColor,
+              paddingLeft: SizeUtil.largeSpace,
+            )),
+        CustomRadioButton(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          titleContent: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Image.asset(
+                'photo/ghn_icon.png',
+                width: 40,
+                height: 16,
+              ),
+              SizedBox(
+                width: SizeUtil.tinySpace,
+              ),
+              Text(
+                "Ahamove",
+                style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail),
+              ),
+            ],
+          ),
+          subTitle: Text(
+            S.of(context).delivery_plan("4 giờ"),
+            style: TextStyle(
+                fontSize: SizeUtil.textSizeNotiTime, color: ColorUtil.gray),
+          ),
+          padding: const EdgeInsets.only(
+              left: SizeUtil.bigSpacehigher,
+              top: SizeUtil.smallSpace,
+              bottom: SizeUtil.smallSpace),
+          value: 3,
+          groupValue: transferMenthod,
+          onChanged: (val) {
+            setTransferMenthod(val);
+          },
+        ),
+        Container(
+            margin: EdgeInsets.only(left: SizeUtil.notifyHintSpace,bottom: SizeUtil.smallSpace),
+            child: MySeparator(
+              color: ColorUtil.lineColor,
+            )),
         Padding(
           padding: const EdgeInsets.only(
               left: SizeUtil.bigSpacehigher,
               bottom: SizeUtil.smallSpace,
               right: SizeUtil.tinySpace),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                S.of(context).point_payment(200),
-                style: TextStyle(fontSize: SizeUtil.textSizeSmall),
+                S.of(context).enter_delivery_code,
+                style: TextStyle(fontSize: SizeUtil.textSizeSmall,color: ColorUtil.primaryColor,fontWeight: FontWeight.bold),
               ),
-              Spacer(),
-              Switch(
-                value: true,
-                onChanged: (bool newValue) {},
-                activeColor: ColorUtil.primaryColor,
-                inactiveThumbColor: ColorUtil.gray,
-              ),
+              SizedBox(height: SizeUtil.tinySpace,),
+              Container(
+                height: SizeUtil.delivery_code_height,
+                child: Row(children: <Widget>[
+                  Expanded(
+                    child: TextField(
+                      style: TextStyle(fontSize: SizeUtil.textSizeSmall),
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(0)),
+                        ),
+                        hintText: S.of(context).delivery_code,
+                        hintStyle: TextStyle(fontSize: SizeUtil.textSizeSmall),
+                        contentPadding: EdgeInsets.only(left:8,right: 4)
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: SizeUtil.smallSpace,),
+                  RaisedButton(
+                    onPressed: () {
+                      //TODO booking
+                    },
+                    color: ColorUtil.primaryColor,
+                    shape: RoundedRectangleBorder(),
+                    child: Container(
+                      padding: EdgeInsets.all(SizeUtil.midSpace),
+                      child: Text(
+                        S.of(context).apply.toUpperCase(),
+                        style: TextStyle(
+                            fontSize: SizeUtil.textSizeSmall,
+                            color: Colors.white,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  )
+                ],),
+              )
             ],
           ),
-        )
+        ),
+        WidgetUtil.getLine(margin: EdgeInsets.all(0)),
+        Padding(
+          padding: const EdgeInsets.only(left: SizeUtil.smallSpace,top: SizeUtil.smallSpace),
+          child: Text(S.of(context).booking_note,style: TextStyle(color: Colors.black),),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(SizeUtil.smallSpace),
+          child: TextField(
+            style: TextStyle(fontSize: SizeUtil.textSizeSmall),
+            obscureText: true,
+            decoration: InputDecoration(
+              fillColor: Color(0xffF3F3F3),
+                filled: true,
+                border: OutlineInputBorder(
+                ),
+                hintText: S.of(context).enter_your_note,
+                hintStyle: TextStyle(fontSize: SizeUtil.textSizeSmall),
+                contentPadding: EdgeInsets.only(left:8,right: 4,bottom: SizeUtil.largeSpace,top: 4)
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -389,7 +513,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         CustomRadioButton(
-          label: S.of(context).delivery_in_shop,
+          titleContent: Text(S.of(context).delivery_in_shop),
           padding: const EdgeInsets.only(
               left: SizeUtil.bigSpacehigher,
               top: SizeUtil.smallSpace,
@@ -401,7 +525,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
           },
         ),
         CustomRadioButton(
-          label: S.of(context).delivery_to_address,
+          titleContent: Text(S.of(context).delivery_to_address),
           padding: const EdgeInsets.only(
               left: SizeUtil.bigSpacehigher,
               top: SizeUtil.smallSpace,
@@ -409,7 +533,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
           value: 2,
           groupValue: checkoutMenthod,
           trailing: InkWell(
-            onTap: (){
+            onTap: () {
               print(" click asd     ");
             },
             child: Text(
@@ -454,7 +578,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         CustomRadioButton(
-          label: S.of(context).delivery_in_shop,
+          titleContent: Text(S.of(context).delivery_in_shop),
           padding: const EdgeInsets.only(
               left: SizeUtil.bigSpacehigher,
               top: SizeUtil.smallSpace,
@@ -469,7 +593,8 @@ class _BookingScreenState extends BaseState<BookingScreen> {
             ? Column(
                 children: <Widget>[
                   CustomRadioButton(
-                    label: "38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội",
+                    titleContent:
+                        Text("38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội"),
                     padding: const EdgeInsets.only(
                         left: SizeUtil.hugSpace, bottom: SizeUtil.tinySpace),
                     value: 1,
@@ -481,12 +606,11 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                     },
                   ),
                   CustomRadioButton(
-                    label: "38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội",
+                    titleContent:
+                        Text("38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội"),
                     padding: const EdgeInsets.only(
-                        top: SizeUtil.tinySpace,
-                        left: SizeUtil.hugSpace,
-                        bottom: SizeUtil.tinySpace),
-                    value: 2,
+                        left: SizeUtil.hugSpace, bottom: SizeUtil.tinySpace),
+                    value: 1,
                     groupValue: shopLocation,
                     iconSize: SizeUtil.iconSize,
                     titleSize: SizeUtil.textSizeSmall,
@@ -495,12 +619,11 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                     },
                   ),
                   CustomRadioButton(
-                    label: "38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội",
+                    titleContent:
+                        Text("38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội"),
                     padding: const EdgeInsets.only(
-                        top: SizeUtil.tinySpace,
-                        left: SizeUtil.hugSpace,
-                        bottom: SizeUtil.tinySpace),
-                    value: 3,
+                        left: SizeUtil.hugSpace, bottom: SizeUtil.tinySpace),
+                    value: 1,
                     groupValue: shopLocation,
                     iconSize: SizeUtil.iconSize,
                     titleSize: SizeUtil.textSizeSmall,
@@ -509,12 +632,11 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                     },
                   ),
                   CustomRadioButton(
-                    label: "38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội",
+                    titleContent:
+                        Text("38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội"),
                     padding: const EdgeInsets.only(
-                        top: SizeUtil.tinySpace,
-                        left: SizeUtil.hugSpace,
-                        bottom: SizeUtil.tinySpace),
-                    value: 4,
+                        left: SizeUtil.hugSpace, bottom: SizeUtil.tinySpace),
+                    value: 1,
                     groupValue: shopLocation,
                     iconSize: SizeUtil.iconSize,
                     titleSize: SizeUtil.textSizeSmall,
@@ -523,26 +645,11 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                     },
                   ),
                   CustomRadioButton(
-                    label: "38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội",
+                    titleContent:
+                        Text("38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội"),
                     padding: const EdgeInsets.only(
-                        top: SizeUtil.tinySpace,
-                        left: SizeUtil.hugSpace,
-                        bottom: SizeUtil.tinySpace),
-                    value: 5,
-                    groupValue: shopLocation,
-                    iconSize: SizeUtil.iconSize,
-                    titleSize: SizeUtil.textSizeSmall,
-                    onChanged: (val) {
-                      setShopLocation(val);
-                    },
-                  ),
-                  CustomRadioButton(
-                    label: "38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội",
-                    padding: const EdgeInsets.only(
-                        top: SizeUtil.tinySpace,
-                        left: SizeUtil.hugSpace,
-                        bottom: SizeUtil.tinySpace),
-                    value: 6,
+                        left: SizeUtil.hugSpace, bottom: SizeUtil.tinySpace),
+                    value: 1,
                     groupValue: shopLocation,
                     iconSize: SizeUtil.iconSize,
                     titleSize: SizeUtil.textSizeSmall,
@@ -554,7 +661,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
               )
             : SizedBox(),
         CustomRadioButton(
-          label: S.of(context).delivery_to_address,
+          titleContent: Text(S.of(context).delivery_to_address),
           padding: const EdgeInsets.only(
               left: SizeUtil.bigSpacehigher,
               top: SizeUtil.smallSpace,

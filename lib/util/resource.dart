@@ -149,6 +149,7 @@ class SizeUtil {
   static const double smallElevation = 3;
 
   static const double lineHeight = 5;
+  static const double delivery_code_height = 36;
 }
 
 class WidgetUtil {
