@@ -5,6 +5,7 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/circle_checkbox.dart';
 import 'package:baby_garden_flutter/widget/custom_radio_button.dart';
 import 'package:baby_garden_flutter/widget/dot_line_separator.dart';
+import 'package:baby_garden_flutter/widget/my_text_field.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -68,6 +69,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
 
   setShopLocation(val) {
     setState(() {
+      print("setShopLocation ${val}");
       shopLocation = val;
     });
   }
@@ -645,7 +647,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                         Text("38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội"),
                     padding: const EdgeInsets.only(
                         left: SizeUtil.hugSpace, bottom: SizeUtil.tinySpace),
-                    value: 1,
+                    value: 2,
                     groupValue: shopLocation,
                     iconSize: SizeUtil.iconSize,
                     titleSize: SizeUtil.textSizeSmall,
@@ -658,7 +660,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                         Text("38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội"),
                     padding: const EdgeInsets.only(
                         left: SizeUtil.hugSpace, bottom: SizeUtil.tinySpace),
-                    value: 1,
+                    value: 3,
                     groupValue: shopLocation,
                     iconSize: SizeUtil.iconSize,
                     titleSize: SizeUtil.textSizeSmall,
@@ -671,7 +673,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                         Text("38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội"),
                     padding: const EdgeInsets.only(
                         left: SizeUtil.hugSpace, bottom: SizeUtil.tinySpace),
-                    value: 1,
+                    value: 4,
                     groupValue: shopLocation,
                     iconSize: SizeUtil.iconSize,
                     titleSize: SizeUtil.textSizeSmall,
@@ -684,7 +686,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                         Text("38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội"),
                     padding: const EdgeInsets.only(
                         left: SizeUtil.hugSpace, bottom: SizeUtil.tinySpace),
-                    value: 1,
+                    value: 5,
                     groupValue: shopLocation,
                     iconSize: SizeUtil.iconSize,
                     titleSize: SizeUtil.textSizeSmall,
@@ -830,7 +832,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                     children: <Widget>[
                       RaisedButton(
                         onPressed: () {
-                          Navigator.of(context).pop();
+                          showAddingAddressDialogue(context);
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
@@ -851,7 +853,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                       ),
                       RaisedButton(
                         onPressed: () {
-//                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
 //                      showBookingScheduleSuccess(context);
                         },
                         shape: RoundedRectangleBorder(
@@ -934,8 +936,88 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                   SizedBox(
                     height: SizeUtil.smallSpace,
                   ),
+                  MyTextField(
+                    hint: S.of(context).enter_receiver_name,
+                    title: S.of(context).add_receiver,titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                    hintStyle: TextStyle(fontSize: SizeUtil.textSizeSmall,),
+                    contentPadding: EdgeInsets.all(0),
+                    padding: EdgeInsets.only(top: SizeUtil.smallSpace,left: SizeUtil.smallSpace,right: SizeUtil.smallSpace),
+                    showTrailing: false,
+                    isBorder: false,
+                  ),
+                  MyTextField(
+                    hint: S.of(context).enter_receive_phone,
+                    title: S.of(context).phone,titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                    hintStyle: TextStyle(fontSize: SizeUtil.textSizeSmall,),
+                    contentPadding: EdgeInsets.all(0),
+                    inputType: TextInputType.phone,
+                    padding: EdgeInsets.only(top: SizeUtil.smallSpace,left: SizeUtil.smallSpace,right: SizeUtil.smallSpace),
+                    showTrailing: false,
+                    isBorder: false,
+                  ),
+                  MyTextField(
+                    hint: S.of(context).enter_address,
+                    title: S.of(context).delivery_address,titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                    hintStyle: TextStyle(fontSize: SizeUtil.textSizeSmall,),
+                    contentPadding: EdgeInsets.all(0),
+                    padding: EdgeInsets.only(top: SizeUtil.smallSpace,left: SizeUtil.smallSpace,right: SizeUtil.smallSpace),
+                    showTrailing: false,
+                    isBorder: false,
+                  ),
+                  MyTextField(
+                    hint: S.of(context).choose_province,
+                    title: S.of(context).province,titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                    hintStyle: TextStyle(fontSize: SizeUtil.textSizeSmall,),
+                    contentPadding: EdgeInsets.all(0),
+                    padding: EdgeInsets.only(top: SizeUtil.smallSpace,left: SizeUtil.smallSpace,right: SizeUtil.smallSpace),
+                    showTrailing: true,
+                    onTrailingTap: (){
 
+                    },
+                    isBorder: false,
+                  ),
+                  MyTextField(
+                    hint: S.of(context).choose_district,
+                    title: S.of(context).district,titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                    hintStyle: TextStyle(fontSize: SizeUtil.textSizeSmall,),
+                    contentPadding: EdgeInsets.all(0),
+                    padding: EdgeInsets.only(top: SizeUtil.smallSpace,left: SizeUtil.smallSpace,right: SizeUtil.smallSpace),
+                    showTrailing: true,
+                    onTrailingTap: (){
+
+                    },
+                    isBorder: false,
+                  ),
+                  MyTextField(
+                    hint: S.of(context).choose_sub_district,
+                    title: S.of(context).sub_district,titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                    hintStyle: TextStyle(fontSize: SizeUtil.textSizeSmall,),
+                    contentPadding: EdgeInsets.all(0),
+                    padding: EdgeInsets.only(top: SizeUtil.smallSpace,left: SizeUtil.smallSpace,right: SizeUtil.smallSpace),
+                    showTrailing: true,
+                    onTrailingTap: (){
+
+                    },
+                    isBorder: false,
+                  ),
                   SizedBox(height: SizeUtil.smallSpace,),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: CircleCheckbox(
+                        padding: const EdgeInsets.only(
+                            left: SizeUtil.tinySpace,
+                            right: 0,
+                            top: 0,
+                            bottom: 0),
+                        checkBg: Icons.check_box,
+                        text: Text(
+                          S.of(context).set_delivery_address,
+                          style: TextStyle(fontSize: SizeUtil.textSizeSmall),
+                        ),
+                        uncheckBg: Icons.check_box_outline_blank,
+                        color: ColorUtil.gray),
+                  ),
+                  SizedBox(height: SizeUtil.tinySpace,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -949,7 +1031,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                             )),
                         color: ColorUtil.primaryColor,
                         child: Text(
-                          S.of(context).add_new,
+                          S.of(context).cancel,
                           style: TextStyle(
                               fontSize: SizeUtil.textSizeSmall,
                               color: Colors.white,
@@ -962,7 +1044,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                       ),
                       RaisedButton(
                         onPressed: () {
-//                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
 //                      showBookingScheduleSuccess(context);
                         },
                         shape: RoundedRectangleBorder(
@@ -971,7 +1053,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                             )),
                         color: ColorUtil.primaryColor,
                         child: Text(
-                          S.of(context).confirm,
+                          S.of(context).add_new,
                           style: TextStyle(
                               fontSize: SizeUtil.textSizeSmall,
                               color: Colors.white,

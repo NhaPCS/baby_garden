@@ -107,6 +107,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "brand" : MessageLookupByLibrary.simpleMessage("Thương hiệu"),
     "buy_guide" : MessageLookupByLibrary.simpleMessage("Hướng dẫn mua hàng"),
     "buy_now" : MessageLookupByLibrary.simpleMessage("Mua ngay"),
+    "cancel" : MessageLookupByLibrary.simpleMessage("Hủy bỏ"),
     "canceled_service" : MessageLookupByLibrary.simpleMessage("Dịch vụ đã hủy"),
     "cancelled_book" : MessageLookupByLibrary.simpleMessage("Đã hủy\nđặt lịch"),
     "cancelled_order" : MessageLookupByLibrary.simpleMessage("Đơn hàng\nđã hủy"),
