@@ -2207,37 +2207,10 @@ class S {
     );
   }
 
-  String get point_payment_policy_1 {
+  String get point_payment_policy {
     return Intl.message(
-      '* Tỷ lệ quy đổi tích điểm: 100.000 vnđ = 1 điểm',
-      name: 'point_payment_policy_1',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get point_payment_policy_2 {
-    return Intl.message(
-      '* Mỗi 1 điểm đổi tương ứng với 1.000 vnđ',
-      name: 'point_payment_policy_2',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get point_payment_policy_3 {
-    return Intl.message(
-      '* Số điểm có thể đổi phải chia hết cho 20.',
-      name: 'point_payment_policy_3',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get point_payment_policy_4 {
-    return Intl.message(
-      'Lưu ý: hóa đơn thanh toán bằng điểm sẽ không được\ntích điểm.',
-      name: 'point_payment_policy_4',
+      '* Tỷ lệ quy đổi tích điểm: 100.000 vnđ = 1 điểm\n* Mỗi 1 điểm đổi tương ứng với 1.000 vnđ\n* Số điểm có thể đổi phải chia hết cho 20.\nLưu ý: hóa đơn thanh toán bằng điểm sẽ không được\ntích điểm.',
+      name: 'point_payment_policy',
       desc: '',
       args: [],
     );
@@ -2364,6 +2337,24 @@ class S {
     return Intl.message(
       'Nhập số nhà, tên đường...',
       name: 'enter_address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get receive_time {
+    return Intl.message(
+      'Thời gian nhận hàng',
+      name: 'receive_time',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get receive_in {
+    return Intl.message(
+      'Nhận hàng vào lúc: ',
+      name: 'receive_in',
       desc: '',
       args: [],
     );

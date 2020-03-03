@@ -20,7 +20,7 @@ class BookingScreen extends StatefulWidget {
   }
 }
 
-class _BookingScreenState extends BaseState<BookingScreen> {
+class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProviderStateMixin {
   int deliveryMenthod;
 
   int shopLocation;
@@ -31,15 +31,30 @@ class _BookingScreenState extends BaseState<BookingScreen> {
 
   int deliveryAddress;
 
+  int receiveTime;
+
+  bool isHasReceiveTime = true ;
+
+  TabController _dayTabControler;
+
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
+    _dayTabControler = TabController(vsync: this, length: 3);
+    isHasReceiveTime = true;
     deliveryMenthod = 0;
     shopLocation = 0;
     checkoutMenthod = 0;
     transferMenthod = 0;
     deliveryAddress = 0;
+    receiveTime = 0;
+    super.initState();
+  }
+
+  setReceiveTime(val){
+    setState(() {
+      receiveTime = val;
+    });
   }
 
   setDeliveryAddress(val) {
@@ -76,6 +91,11 @@ class _BookingScreenState extends BaseState<BookingScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
+    final List<Tab> myTabs = <Tab>[
+      Tab(child: Text("Thứ hai\n01/02/2020",style: TextStyle(fontSize: SizeUtil.textSizeSmall,),textAlign: TextAlign.center,),),
+      Tab(child: Text("Thứ ba\n02/02/2020",style: TextStyle(fontSize: SizeUtil.textSizeSmall),textAlign: TextAlign.center,),),
+      Tab(child: Text("Thứ tư\n03/02/2020",style: TextStyle(fontSize: SizeUtil.textSizeSmall),textAlign: TextAlign.center,),),
+    ];
     // TODO: implement buildWidget
     return SafeArea(
       child: Scaffold(
@@ -140,6 +160,43 @@ class _BookingScreenState extends BaseState<BookingScreen> {
               title: S.of(context).type_of_delivery,
               content: getDeliveryMenthod(),
             ),
+            //TODO receive time
+            deliveryMenthod==1?ListTitleCustom(
+              padding: const EdgeInsets.only(
+                  left: SizeUtil.normalSpace,
+                  right: SizeUtil.normalSpace,
+                  top: SizeUtil.midSmallSpace,
+                  bottom: SizeUtil.midSmallSpace),
+              icon: SvgIcon(
+                'ic_transfer_info.svg',
+                width: SizeUtil.iconSizeDefault,
+                height: SizeUtil.iconSizeDefault,
+              ),
+              title: S.of(context).receive_time,
+              content: Padding(
+                padding: EdgeInsets.only(left: SizeUtil.notifyHintSpace,right: SizeUtil.normalSpace,top: SizeUtil.midSpace,bottom: SizeUtil.midSpace),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(text: S.of(context).receive_in,style: TextStyle(color: ColorUtil.textColor,fontSize: SizeUtil.textSizeSmall)),
+                            TextSpan(text: "09:00 - 11:00 02/02/2020",style: TextStyle(color: Colors.red,fontSize: SizeUtil.textSizeSmall))
+                          ]
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: (){
+                        showChangeReceiveTimeDialogue(context,myTabs);
+                      },
+                      child: Text(S.of(context).change,style: TextStyle(color: Colors.blue,fontSize: SizeUtil.textSizeSmall),),
+                    )
+                  ],
+                ),
+              ),
+            ):SizedBox(),
             //TODO CHECKOUT MENTHOD
             ListTitleCustom(
               padding: const EdgeInsets.only(
@@ -147,7 +204,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                   right: SizeUtil.normalSpace,
                   top: SizeUtil.midSmallSpace,
                   bottom: SizeUtil.midSmallSpace),
-              icon: Image.asset(
+              icon: SvgIcon(
                 'photo/ic_payment_method.png',
                 width: SizeUtil.iconSizeDefault,
                 height: SizeUtil.iconSizeDefault,
@@ -550,7 +607,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         CustomRadioButton(
-          titleContent: Text(S.of(context).delivery_in_shop),
+          titleContent: Text(S.of(context).cash_payment,style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail),),
           padding: const EdgeInsets.only(
               left: SizeUtil.bigSpacehigher,
               top: SizeUtil.smallSpace,
@@ -562,7 +619,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
           },
         ),
         CustomRadioButton(
-          titleContent: Text(S.of(context).delivery_to_address),
+          titleContent: Text(S.of(context).credit_transfer_payment,style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail),),
           padding: const EdgeInsets.only(
               left: SizeUtil.bigSpacehigher,
               top: SizeUtil.smallSpace,
@@ -571,7 +628,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
           groupValue: checkoutMenthod,
           trailing: InkWell(
             onTap: () {
-              print(" click asd     ");
+              showPointCheckoutDialogue(context);
             },
             child: Text(
               S.of(context).detail,
@@ -711,6 +768,158 @@ class _BookingScreenState extends BaseState<BookingScreen> {
         ),
       ],
     );
+  }
+
+  showChangeReceiveTimeDialogue(BuildContext context,List<Tab> myTabs) {
+    Dialog simpleDialog = Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: StatefulBuilder(
+          builder: (context,setState){
+            return Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                color: Colors.white,
+                border: Border(
+                  left: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                  right: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                  top: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                  bottom: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  TabBar(
+                    controller: _dayTabControler,
+                    labelColor: ColorUtil.primaryColor,
+                    indicatorColor: ColorUtil.white,
+                    unselectedLabelColor: ColorUtil.textColor,
+                    tabs: myTabs,
+                    onTap: (val){
+                      setState(()=>{isHasReceiveTime = _dayTabControler.index!=1});
+                    },
+                  ),
+                  WidgetUtil.getLine(
+                      margin: EdgeInsets.only(bottom: SizeUtil.tinySpace),
+                      color: ColorUtil.lineColor),
+                  isHasReceiveTime?Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                    CustomRadioButton(
+                      titleContent: Text(
+                        "09:00 - 11:00",
+                        style: TextStyle(
+                            fontSize: SizeUtil.textSizeSmall, color: Colors.black),
+                      ),
+                      padding: const EdgeInsets.only(
+                          bottom: SizeUtil.tinySpace,
+                          top: SizeUtil.tinySpace,
+                          left: SizeUtil.smallSpace,
+                          right: SizeUtil.smallSpace),
+                      value: 0,
+                      groupValue: receiveTime,
+                      iconSize: SizeUtil.iconSize,
+                      titleSize: SizeUtil.textSizeSmall,
+                      onChanged: (val) {
+                        setState(()=> receiveTime = val);
+//                      setDeliveryAddress(val);
+                      },
+                    ),
+                    CustomRadioButton(
+                      titleContent: Text(
+                        "14:00 - 16:00",
+                        style: TextStyle(
+                            fontSize: SizeUtil.textSizeSmall, color: Colors.black),
+                      ),
+                      padding: const EdgeInsets.only(
+                          bottom: SizeUtil.tinySpace,
+                          top: SizeUtil.tinySpace,
+                          left: SizeUtil.smallSpace,
+                          right: SizeUtil.smallSpace),
+                      value: 1,
+                      groupValue: receiveTime,
+                      iconSize: SizeUtil.iconSize,
+                      titleSize: SizeUtil.textSizeSmall,
+                      onChanged: (val) {
+                        setState(()=> receiveTime = val);
+//                      setDeliveryAddress(val);
+                      },
+                    ),
+                    CustomRadioButton(
+                      titleContent: Text(
+                        "19:00 - 21:00",
+                        style: TextStyle(
+                            fontSize: SizeUtil.textSizeSmall, color: Colors.black),
+                      ),
+                      padding: const EdgeInsets.only(
+                          bottom: SizeUtil.tinySpace,
+                          top: SizeUtil.tinySpace,
+                          left: SizeUtil.smallSpace,
+                          right: SizeUtil.smallSpace),
+                      value: 2,
+                      groupValue: receiveTime,
+                      iconSize: SizeUtil.iconSize,
+                      titleSize: SizeUtil.textSizeSmall,
+                      onChanged: (val) {
+                        setState(()=> receiveTime = val);
+//                      setDeliveryAddress(val);
+                      },
+                    ),
+                  ],):Column(
+                    children: <Widget>[
+                      SizedBox(height: SizeUtil.defaultSpace,),
+                    SvgIcon("ic_startup.svg"),
+                    Text("Không có giờ giao hàng",style: TextStyle(color: ColorUtil.primaryColor,fontSize: SizeUtil.textSizeSmall),),
+                    Text("Vui lòng chọn ngày khác",style: TextStyle(color: ColorUtil.textColor,fontSize: SizeUtil.textSizeSmall),),
+                      SizedBox(height: SizeUtil.hugSpace,),
+                  ],),
+
+                  SizedBox(height: SizeUtil.smallSpace,),
+                  RaisedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+//                      showBookingScheduleSuccess(context);
+//                      setState(()=>{isHasReceiveTime = true});
+                    },
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(SizeUtil.smallRadius),
+                        )),
+                    color: ColorUtil.primaryColor,
+                    child: Text(
+                      S.of(context).confirm,
+                      style: TextStyle(
+                          fontSize: SizeUtil.textSizeSmall,
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              ),
+            );
+          },
+        )
+    );
+    showDialog(
+        context: context, builder: (BuildContext context) => simpleDialog);
   }
 
   showChangeDeliveryAddressDialogue(BuildContext context) {
@@ -882,6 +1091,171 @@ class _BookingScreenState extends BaseState<BookingScreen> {
         context: context, builder: (BuildContext context) => simpleDialog);
   }
 
+  showPointCheckoutDialogue(BuildContext context) {
+    Dialog simpleDialog = Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: StatefulBuilder(
+          builder: (context,setState){
+            return Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                color: Colors.white,
+                border: Border(
+                  left: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                  right: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                  top: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                  bottom: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: SizeUtil.midSmallSpace,
+                        bottom: SizeUtil.midSmallSpace),
+                    child: Text(
+                      S.of(context).point_payment_title,
+                      style: TextStyle(
+                          color: ColorUtil.primaryColor,
+                          fontSize: SizeUtil.textSizeExpressTitle,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  WidgetUtil.getLine(
+                      margin: EdgeInsets.only(bottom: SizeUtil.tinySpace),
+                      color: ColorUtil.lineColor),
+                  SizedBox(
+                    height: SizeUtil.smallSpace,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    child: Row(
+                      children: <Widget>[
+                        RichText(
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(text: S.of(context).current_point,style: TextStyle(fontSize:SizeUtil.textSizeSmall,color: ColorUtil.textColor,fontWeight: FontWeight.bold)),
+                              TextSpan(text: "200 điểm", style: TextStyle(fontSize:SizeUtil.textSizeSmall,color: ColorUtil.primaryColor,fontWeight: FontWeight.bold))
+                            ]
+                          ),
+                        ),
+                        Icon(Icons.cached,size: SizeUtil.iconSize,)
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    child: Row(
+                      children: <Widget>[
+                        Text( S.of(context).point_for_booking, style: TextStyle(fontSize:SizeUtil.textSizeSmall,color: ColorUtil.primaryColor,fontWeight: FontWeight.bold)),
+                        TextField(
+                          style: TextStyle(fontSize: SizeUtil.textSizeSmall,color: ColorUtil.primaryColor,fontWeight: FontWeight.bold),
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(5)),
+                              ),
+                              hintText: S.of(context).delivery_code,
+                              hintStyle:
+                              TextStyle(fontSize: SizeUtil.textSizeSmall,color: ColorUtil.primaryColor,fontWeight: FontWeight.bold),
+                              contentPadding: EdgeInsets.only(left: 8, right: 4)),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Text(
+                    S.of(context).point_payment_policy
+                  ),
+                  SizedBox(height: SizeUtil.smallSpace,),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: CircleCheckbox(
+                        padding: const EdgeInsets.only(
+                            left: SizeUtil.tinySpace,
+                            right: 0,
+                            top: 0,
+                            bottom: 0),
+                        checkBg: Icons.check_box,
+                        text: Text(
+                          S.of(context).cancel,
+                          style: TextStyle(fontSize: SizeUtil.textSizeSmall),
+                        ),
+                        uncheckBg: Icons.check_box_outline_blank,
+                        color: ColorUtil.gray),
+                  ),
+                  SizedBox(height: SizeUtil.tinySpace,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      RaisedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(SizeUtil.smallRadius),
+                            )),
+                        color: ColorUtil.primaryColor,
+                        child: Text(
+                          S.of(context).confirm,
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                              color: Colors.white,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(
+                        width: SizeUtil.defaultSpace,
+                      ),
+                      RaisedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+//                      showBookingScheduleSuccess(context);
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(SizeUtil.smallRadius),
+                            )),
+                        color: ColorUtil.primaryColor,
+                        child: Text(
+                          S.of(context).add_new,
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                              color: Colors.white,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            );
+          },
+        )
+    );
+    showDialog(
+        context: context, builder: (BuildContext context) => simpleDialog);
+  }
 
   showAddingAddressDialogue(BuildContext context) {
     Dialog simpleDialog = Dialog(
