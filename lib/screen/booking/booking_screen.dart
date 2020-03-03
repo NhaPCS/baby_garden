@@ -20,7 +20,8 @@ class BookingScreen extends StatefulWidget {
   }
 }
 
-class _BookingScreenState extends BaseState<BookingScreen> {
+class _BookingScreenState extends BaseState<BookingScreen>
+    with SingleTickerProviderStateMixin {
   int deliveryMenthod;
 
   int shopLocation;
@@ -31,15 +32,35 @@ class _BookingScreenState extends BaseState<BookingScreen> {
 
   int deliveryAddress;
 
+  int receiveTime;
+
+  bool isHasReceiveTime = true;
+
+  bool isUpdatePointCheckout = false;
+
+  bool pointCheckout = false;
+
+  TabController _dayTabControler;
+
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
+    _dayTabControler = TabController(vsync: this, length: 3);
+    isHasReceiveTime = true;
     deliveryMenthod = 0;
     shopLocation = 0;
     checkoutMenthod = 0;
     transferMenthod = 0;
     deliveryAddress = 0;
+    receiveTime = 0;
+    pointCheckout = false;
+    super.initState();
+  }
+
+  setReceiveTime(val) {
+    setState(() {
+      receiveTime = val;
+    });
   }
 
   setDeliveryAddress(val) {
@@ -76,6 +97,31 @@ class _BookingScreenState extends BaseState<BookingScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
+    final List<Tab> myTabs = <Tab>[
+      Tab(
+        child: Text(
+          "Thứ hai\n01/02/2020",
+          style: TextStyle(
+            fontSize: SizeUtil.textSizeSmall,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      Tab(
+        child: Text(
+          "Thứ ba\n02/02/2020",
+          style: TextStyle(fontSize: SizeUtil.textSizeSmall),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      Tab(
+        child: Text(
+          "Thứ tư\n03/02/2020",
+          style: TextStyle(fontSize: SizeUtil.textSizeSmall),
+          textAlign: TextAlign.center,
+        ),
+      ),
+    ];
     // TODO: implement buildWidget
     return SafeArea(
       child: Scaffold(
@@ -140,6 +186,60 @@ class _BookingScreenState extends BaseState<BookingScreen> {
               title: S.of(context).type_of_delivery,
               content: getDeliveryMenthod(),
             ),
+            //TODO receive time
+            deliveryMenthod == 1
+                ? ListTitleCustom(
+                    padding: const EdgeInsets.only(
+                        left: SizeUtil.normalSpace,
+                        right: SizeUtil.normalSpace,
+                        top: SizeUtil.midSmallSpace,
+                        bottom: SizeUtil.midSmallSpace),
+                    icon: SvgIcon(
+                      'ic_transfer_info.svg',
+                      width: SizeUtil.iconSizeDefault,
+                      height: SizeUtil.iconSizeDefault,
+                    ),
+                    title: S.of(context).receive_time,
+                    content: Padding(
+                      padding: EdgeInsets.only(
+                          left: SizeUtil.notifyHintSpace,
+                          right: SizeUtil.normalSpace,
+                          top: SizeUtil.midSpace,
+                          bottom: SizeUtil.midSpace),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: RichText(
+                              text: TextSpan(children: <TextSpan>[
+                                TextSpan(
+                                    text: S.of(context).receive_in,
+                                    style: TextStyle(
+                                        color: ColorUtil.textColor,
+                                        fontSize: SizeUtil.textSizeSmall)),
+                                TextSpan(
+                                    text: "09:00 - 11:00 02/02/2020",
+                                    style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: SizeUtil.textSizeSmall))
+                              ]),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              showChangeReceiveTimeDialogue(context, myTabs);
+                            },
+                            child: Text(
+                              S.of(context).change,
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: SizeUtil.textSizeSmall),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                : SizedBox(),
             //TODO CHECKOUT MENTHOD
             ListTitleCustom(
               padding: const EdgeInsets.only(
@@ -147,7 +247,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                   right: SizeUtil.normalSpace,
                   top: SizeUtil.midSmallSpace,
                   bottom: SizeUtil.midSmallSpace),
-              icon: Image.asset(
+              icon: SvgIcon(
                 'photo/ic_payment_method.png',
                 width: SizeUtil.iconSizeDefault,
                 height: SizeUtil.iconSizeDefault,
@@ -265,7 +365,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                             fontSize: SizeUtil.textSizeSmall)),
                     TextSpan(
                         recognizer: new TapGestureRecognizer()
-                          ..onTap = () => print('Show policy and privacy'),
+                          ..onTap = () => showPrivacyAndPolicyDialogue(context),
                         text: "Chính sách & Điều khoản dịch vụ ",
                         style: TextStyle(
                             color: Colors.blue,
@@ -473,7 +573,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                     Expanded(
                       child: TextField(
                         style: TextStyle(fontSize: SizeUtil.textSizeSmall),
-                        obscureText: true,
+                        obscureText: false,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius:
@@ -531,7 +631,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
           padding: const EdgeInsets.all(SizeUtil.smallSpace),
           child: TextField(
             style: TextStyle(fontSize: SizeUtil.textSizeSmall),
-            obscureText: true,
+            obscureText: false,
             decoration: InputDecoration(
                 fillColor: Color(0xffF3F3F3),
                 filled: true,
@@ -550,7 +650,10 @@ class _BookingScreenState extends BaseState<BookingScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         CustomRadioButton(
-          titleContent: Text(S.of(context).delivery_in_shop),
+          titleContent: Text(
+            S.of(context).cash_payment,
+            style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail),
+          ),
           padding: const EdgeInsets.only(
               left: SizeUtil.bigSpacehigher,
               top: SizeUtil.smallSpace,
@@ -562,7 +665,10 @@ class _BookingScreenState extends BaseState<BookingScreen> {
           },
         ),
         CustomRadioButton(
-          titleContent: Text(S.of(context).delivery_to_address),
+          titleContent: Text(
+            S.of(context).credit_transfer_payment,
+            style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail),
+          ),
           padding: const EdgeInsets.only(
               left: SizeUtil.bigSpacehigher,
               top: SizeUtil.smallSpace,
@@ -571,12 +677,18 @@ class _BookingScreenState extends BaseState<BookingScreen> {
           groupValue: checkoutMenthod,
           trailing: InkWell(
             onTap: () {
-              print(" click asd     ");
+              showCreditTransferCheckoutDialogue(context);
             },
-            child: Text(
-              S.of(context).detail,
-              style: TextStyle(
-                  color: ColorUtil.blue, fontSize: SizeUtil.textSizeSmall),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: SizeUtil.tinySpace,
+                  bottom: SizeUtil.tinySpace,
+                  left: SizeUtil.tinySpace),
+              child: Text(
+                S.of(context).detail,
+                style: TextStyle(
+                    color: ColorUtil.blue, fontSize: SizeUtil.textSizeSmall),
+              ),
             ),
           ),
           onChanged: (val) {
@@ -592,14 +704,31 @@ class _BookingScreenState extends BaseState<BookingScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                S.of(context).point_payment(200),
-                style: TextStyle(fontSize: SizeUtil.textSizeSmall),
+              GestureDetector(
+                onTap: (){
+                  setState(() {
+                    print("tab change ${pointCheckout}");
+                    pointCheckout = !pointCheckout;
+                    if(pointCheckout){
+                      showPointCheckoutDialogue(context);
+                    }
+                  });
+                },
+                child: Text(
+                  S.of(context).point_payment(200),
+                  style: TextStyle(fontSize: SizeUtil.textSizeSmall),
+                ),
               ),
               Spacer(),
               Switch(
-                value: true,
-                onChanged: (bool newValue) {},
+                value: pointCheckout,
+                onChanged: (val) {
+                  print("change ${val}");
+                  pointCheckout = val;
+                  if(pointCheckout){
+                    showPointCheckoutDialogue(context);
+                  }
+                },
                 activeColor: ColorUtil.primaryColor,
                 inactiveThumbColor: ColorUtil.gray,
               ),
@@ -713,13 +842,187 @@ class _BookingScreenState extends BaseState<BookingScreen> {
     );
   }
 
+  showChangeReceiveTimeDialogue(BuildContext context, List<Tab> myTabs) {
+    Dialog simpleDialog = Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: StatefulBuilder(
+          builder: (context, setState) {
+            return Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                color: Colors.white,
+                border: Border(
+                  left: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                  right: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                  top: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                  bottom: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  TabBar(
+                    controller: _dayTabControler,
+                    labelColor: ColorUtil.primaryColor,
+                    indicatorColor: ColorUtil.white,
+                    unselectedLabelColor: ColorUtil.textColor,
+                    tabs: myTabs,
+                    onTap: (val) {
+                      setState(() =>
+                          {isHasReceiveTime = _dayTabControler.index != 1});
+                    },
+                  ),
+                  WidgetUtil.getLine(
+                      margin: EdgeInsets.only(bottom: SizeUtil.tinySpace),
+                      color: ColorUtil.lineColor),
+                  isHasReceiveTime
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            CustomRadioButton(
+                              titleContent: Text(
+                                "09:00 - 11:00",
+                                style: TextStyle(
+                                    fontSize: SizeUtil.textSizeSmall,
+                                    color: Colors.black),
+                              ),
+                              padding: const EdgeInsets.only(
+                                  bottom: SizeUtil.tinySpace,
+                                  top: SizeUtil.tinySpace,
+                                  left: SizeUtil.smallSpace,
+                                  right: SizeUtil.smallSpace),
+                              value: 0,
+                              groupValue: receiveTime,
+                              iconSize: SizeUtil.iconSize,
+                              titleSize: SizeUtil.textSizeSmall,
+                              onChanged: (val) {
+                                setState(() => receiveTime = val);
+//                      setDeliveryAddress(val);
+                              },
+                            ),
+                            CustomRadioButton(
+                              titleContent: Text(
+                                "14:00 - 16:00",
+                                style: TextStyle(
+                                    fontSize: SizeUtil.textSizeSmall,
+                                    color: Colors.black),
+                              ),
+                              padding: const EdgeInsets.only(
+                                  bottom: SizeUtil.tinySpace,
+                                  top: SizeUtil.tinySpace,
+                                  left: SizeUtil.smallSpace,
+                                  right: SizeUtil.smallSpace),
+                              value: 1,
+                              groupValue: receiveTime,
+                              iconSize: SizeUtil.iconSize,
+                              titleSize: SizeUtil.textSizeSmall,
+                              onChanged: (val) {
+                                setState(() => receiveTime = val);
+//                      setDeliveryAddress(val);
+                              },
+                            ),
+                            CustomRadioButton(
+                              titleContent: Text(
+                                "19:00 - 21:00",
+                                style: TextStyle(
+                                    fontSize: SizeUtil.textSizeSmall,
+                                    color: Colors.black),
+                              ),
+                              padding: const EdgeInsets.only(
+                                  bottom: SizeUtil.tinySpace,
+                                  top: SizeUtil.tinySpace,
+                                  left: SizeUtil.smallSpace,
+                                  right: SizeUtil.smallSpace),
+                              value: 2,
+                              groupValue: receiveTime,
+                              iconSize: SizeUtil.iconSize,
+                              titleSize: SizeUtil.textSizeSmall,
+                              onChanged: (val) {
+                                setState(() => receiveTime = val);
+//                      setDeliveryAddress(val);
+                              },
+                            ),
+                          ],
+                        )
+                      : Column(
+                          children: <Widget>[
+                            SizedBox(
+                              height: SizeUtil.defaultSpace,
+                            ),
+                            SvgIcon("ic_startup.svg"),
+                            Text(
+                              "Không có giờ giao hàng",
+                              style: TextStyle(
+                                  color: ColorUtil.primaryColor,
+                                  fontSize: SizeUtil.textSizeSmall),
+                            ),
+                            Text(
+                              "Vui lòng chọn ngày khác",
+                              style: TextStyle(
+                                  color: ColorUtil.textColor,
+                                  fontSize: SizeUtil.textSizeSmall),
+                            ),
+                            SizedBox(
+                              height: SizeUtil.hugSpace,
+                            ),
+                          ],
+                        ),
+                  SizedBox(
+                    height: SizeUtil.smallSpace,
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+//                      showBookingScheduleSuccess(context);
+//                      setState(()=>{isHasReceiveTime = true});
+                    },
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                      Radius.circular(SizeUtil.smallRadius),
+                    )),
+                    color: ColorUtil.primaryColor,
+                    child: Text(
+                      S.of(context).confirm,
+                      style: TextStyle(
+                          fontSize: SizeUtil.textSizeSmall,
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              ),
+            );
+          },
+        ));
+    showDialog(
+        context: context, builder: (BuildContext context) => simpleDialog);
+  }
+
   showChangeDeliveryAddressDialogue(BuildContext context) {
     Dialog simpleDialog = Dialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
         ),
         child: StatefulBuilder(
-          builder: (context,setState){
+          builder: (context, setState) {
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
@@ -770,7 +1073,8 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                     titleContent: Text(
                       "Lê Văn Lĩnh - 0975 441 005\n28 Phan Kế Bính\nPhường Cống Vị, Quận Ba Đình, Hà Nội",
                       style: TextStyle(
-                          fontSize: SizeUtil.textSizeSmall, color: Colors.black),
+                          fontSize: SizeUtil.textSizeSmall,
+                          color: Colors.black),
                     ),
                     padding: const EdgeInsets.only(
                         bottom: SizeUtil.tinySpace,
@@ -782,7 +1086,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                     iconSize: SizeUtil.iconSize,
                     titleSize: SizeUtil.textSizeSmall,
                     onChanged: (val) {
-                      setState(()=> deliveryAddress = val);
+                      setState(() => deliveryAddress = val);
 //                      setDeliveryAddress(val);
                     },
                   ),
@@ -790,7 +1094,8 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                     titleContent: Text(
                       "Lê Văn Lĩnh - 0975 441 005\n28 Phan Kế Bính\nPhường Cống Vị, Quận Ba Đình, Hà Nội",
                       style: TextStyle(
-                          fontSize: SizeUtil.textSizeSmall, color: Colors.black),
+                          fontSize: SizeUtil.textSizeSmall,
+                          color: Colors.black),
                     ),
                     padding: const EdgeInsets.only(
                         bottom: SizeUtil.tinySpace,
@@ -802,7 +1107,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                     iconSize: SizeUtil.iconSize,
                     titleSize: SizeUtil.textSizeSmall,
                     onChanged: (val) {
-                      setState(()=> deliveryAddress = val);
+                      setState(() => deliveryAddress = val);
 //                      setDeliveryAddress(val);
                     },
                   ),
@@ -810,7 +1115,8 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                     titleContent: Text(
                       "Lê Văn Lĩnh - 0975 441 005\n28 Phan Kế Bính\nPhường Cống Vị, Quận Ba Đình, Hà Nội",
                       style: TextStyle(
-                          fontSize: SizeUtil.textSizeSmall, color: Colors.black),
+                          fontSize: SizeUtil.textSizeSmall,
+                          color: Colors.black),
                     ),
                     padding: const EdgeInsets.only(
                         bottom: SizeUtil.tinySpace,
@@ -822,11 +1128,13 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                     iconSize: SizeUtil.iconSize,
                     titleSize: SizeUtil.textSizeSmall,
                     onChanged: (val) {
-                      setState(()=> deliveryAddress = val);
+                      setState(() => deliveryAddress = val);
 //                      setDeliveryAddress(val);
                     },
                   ),
-                  SizedBox(height: SizeUtil.smallSpace,),
+                  SizedBox(
+                    height: SizeUtil.smallSpace,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -836,8 +1144,8 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
-                              Radius.circular(SizeUtil.smallRadius),
-                            )),
+                          Radius.circular(SizeUtil.smallRadius),
+                        )),
                         color: ColorUtil.primaryColor,
                         child: Text(
                           S.of(context).add_new,
@@ -853,7 +1161,416 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                       ),
                       RaisedButton(
                         onPressed: () {
-                      Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+//                      showBookingScheduleSuccess(context);
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                          Radius.circular(SizeUtil.smallRadius),
+                        )),
+                        color: ColorUtil.primaryColor,
+                        child: Text(
+                          S.of(context).confirm,
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                              color: Colors.white,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            );
+          },
+        ));
+    showDialog(
+        context: context, builder: (BuildContext context) => simpleDialog);
+  }
+
+  showPrivacyAndPolicyDialogue(BuildContext context) {
+    Dialog simpleDialog = Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.0),
+            color: Colors.white,
+            border: Border(
+              left: BorderSide(
+                color: ColorUtil.primaryColor,
+                width: 0.7,
+              ),
+              right: BorderSide(
+                color: ColorUtil.primaryColor,
+                width: 0.7,
+              ),
+              top: BorderSide(
+                color: ColorUtil.primaryColor,
+                width: 0.7,
+              ),
+              bottom: BorderSide(
+                color: ColorUtil.primaryColor,
+                width: 0.7,
+              ),
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: SizeUtil.midSmallSpace,
+                    bottom: SizeUtil.midSmallSpace),
+                child: Text(
+                  S.of(context).policy_privacy,
+                  style: TextStyle(
+                      color: ColorUtil.primaryColor,
+                      fontSize: SizeUtil.textSizeExpressTitle,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              WidgetUtil.getLine(
+                  margin: EdgeInsets.only(bottom: SizeUtil.tinySpace),
+                  color: ColorUtil.lineColor),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: SizeUtil.smallSpace,top: SizeUtil.tinySpace,right: SizeUtil.tinySpace),
+                  child: Text(S.of(context).overral_policy,style: TextStyle(color: ColorUtil.textColor,fontWeight: FontWeight.bold,fontSize: SizeUtil.textSizeSmall),),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: SizeUtil.smallSpace,top: SizeUtil.tinySpace,right: SizeUtil.tinySpace),
+                  child: Text(S.of(context).policy_1,style: TextStyle(color: ColorUtil.textColor,fontWeight: FontWeight.normal,fontSize: SizeUtil.textSizeSmall),),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: SizeUtil.smallSpace,top: SizeUtil.tinySpace,right: SizeUtil.tinySpace),
+                  child: Text(S.of(context).privacy,style: TextStyle(color: ColorUtil.textColor,fontWeight: FontWeight.bold,fontSize: SizeUtil.textSizeSmall),),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: SizeUtil.smallSpace,top: SizeUtil.tinySpace,right: SizeUtil.tinySpace),
+                  child: Text(S.of(context).privacy_1,style: TextStyle(color: ColorUtil.textColor,fontWeight: FontWeight.normal,fontSize: SizeUtil.textSizeSmall),),
+                ),
+              ],),
+              Center(
+                child: RaisedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(SizeUtil.smallRadius),
+                      )),
+                  color: ColorUtil.primaryColor,
+                  child: Text(
+                    S.of(context).confirm,
+                    style: TextStyle(
+                        fontSize: SizeUtil.textSizeSmall,
+                        color: Colors.white,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ));
+    showDialog(
+        context: context, builder: (BuildContext context) => simpleDialog);
+  }
+
+  showCreditTransferCheckoutDialogue(BuildContext context) {
+    Dialog simpleDialog = Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.0),
+            color: Colors.white,
+            border: Border(
+              left: BorderSide(
+                color: ColorUtil.primaryColor,
+                width: 0.7,
+              ),
+              right: BorderSide(
+                color: ColorUtil.primaryColor,
+                width: 0.7,
+              ),
+              top: BorderSide(
+                color: ColorUtil.primaryColor,
+                width: 0.7,
+              ),
+              bottom: BorderSide(
+                color: ColorUtil.primaryColor,
+                width: 0.7,
+              ),
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: SizeUtil.midSmallSpace,
+                    bottom: SizeUtil.midSmallSpace),
+                child: Text(
+                  S.of(context).credit_transfer,
+                  style: TextStyle(
+                      color: ColorUtil.primaryColor,
+                      fontSize: SizeUtil.textSizeExpressTitle,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              WidgetUtil.getLine(
+                  margin: EdgeInsets.only(bottom: SizeUtil.tinySpace),
+                  color: ColorUtil.lineColor),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: SizeUtil.smallSpace,top: SizeUtil.tinySpace,right: SizeUtil.tinySpace),
+                    child: Text(S.of(context).delivery_in_place,style: TextStyle(color: ColorUtil.textColor,fontWeight: FontWeight.bold,fontSize: SizeUtil.textSizeSmall),),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: SizeUtil.smallSpace,top: SizeUtil.tinySpace,right: SizeUtil.tinySpace),
+                    child: Text(S.of(context).delivery_policy,style: TextStyle(color: ColorUtil.textColor,fontWeight: FontWeight.normal,fontSize: SizeUtil.textSizeSmall),),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: SizeUtil.smallSpace,top: SizeUtil.tinySpace,right: SizeUtil.tinySpace),
+                    child: Text(S.of(context).get_in_shop,style: TextStyle(color: ColorUtil.textColor,fontWeight: FontWeight.bold,fontSize: SizeUtil.textSizeSmall),),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: SizeUtil.smallSpace,top: SizeUtil.tinySpace,right: SizeUtil.tinySpace),
+                    child: Text(S.of(context).checkout_policy,style: TextStyle(color: ColorUtil.textColor,fontWeight: FontWeight.normal,fontSize: SizeUtil.textSizeSmall),),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: SizeUtil.smallSpace,top: SizeUtil.tinySpace,right: SizeUtil.tinySpace),
+                    child: Text(S.of(context).checkout_policy_overal,style: TextStyle(color: ColorUtil.textColor,fontWeight: FontWeight.normal,fontSize: SizeUtil.textSizeSmall),),
+                  ),
+                ],),
+              Center(
+                child: RaisedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(SizeUtil.smallRadius),
+                      )),
+                  color: ColorUtil.primaryColor,
+                  child: Text(
+                    S.of(context).confirm,
+                    style: TextStyle(
+                        fontSize: SizeUtil.textSizeSmall,
+                        color: Colors.white,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ));
+    showDialog(
+        context: context, builder: (BuildContext context) => simpleDialog);
+  }
+
+  showPointCheckoutDialogue(BuildContext context) {
+    Dialog simpleDialog = Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: StatefulBuilder(
+          //TODO update radio and tabcontroller state
+          builder: (context, setState) {
+            return Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                color: Colors.white,
+                border: Border(
+                  left: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                  right: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                  top: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                  bottom: BorderSide(
+                    color: ColorUtil.primaryColor,
+                    width: 0.7,
+                  ),
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: SizeUtil.midSmallSpace,
+                        bottom: SizeUtil.midSmallSpace),
+                    child: Text(
+                      S.of(context).point_payment_title,
+                      style: TextStyle(
+                          color: ColorUtil.primaryColor,
+                          fontSize: SizeUtil.textSizeExpressTitle,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  WidgetUtil.getLine(
+                      margin: EdgeInsets.only(bottom: SizeUtil.tinySpace),
+                      color: ColorUtil.lineColor),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: SizeUtil.tinySpace, top: SizeUtil.tinySpace),
+                    child: Row(
+                      children: <Widget>[
+                        RichText(
+                          text: TextSpan(children: <TextSpan>[
+                            TextSpan(
+                                text: S.of(context).current_point,
+                                style: TextStyle(
+                                    fontSize: SizeUtil.textSizeSmall,
+                                    color: ColorUtil.textColor,
+                                    fontWeight: FontWeight.normal)),
+                            TextSpan(
+                                text: " 200 điểm",
+                                style: TextStyle(
+                                    fontSize: SizeUtil.textSizeSmall,
+                                    color: ColorUtil.primaryColor,
+                                    fontWeight: FontWeight.bold))
+                          ]),
+                        ),
+                        SizedBox(
+                          width: SizeUtil.smallSpace,
+                        ),
+                        Icon(
+                          Icons.cached,
+                          size: SizeUtil.iconSize,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: SizeUtil.tinySpace, top: SizeUtil.smallSpace),
+                    child: Row(
+                      children: <Widget>[
+                        Text(S.of(context).point_for_booking,
+                            style: TextStyle(
+                                fontSize: SizeUtil.textSizeSmall,
+                                color: ColorUtil.textColor)),
+                        Container(
+                          width: 45,
+                          height: 20,
+                          child: TextField(
+                            onChanged: (string) {
+                              setState(() => {
+                                isUpdatePointCheckout == false
+                                    ? isUpdatePointCheckout = true
+                                    : print("nothing")
+                              });
+                            },
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: SizeUtil.textSizeSmall,
+                                color: ColorUtil.primaryColor,
+                                fontWeight: FontWeight.bold),
+                            obscureText: false,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                                ),
+                                hintText: "100",
+                                hintStyle: TextStyle(
+                                    fontSize: SizeUtil.textSizeSmall,
+                                    color: ColorUtil.primaryColor,
+                                    fontWeight: FontWeight.bold),
+                                contentPadding: EdgeInsets.only(
+                                    left: 2, right: 2, top: 2, bottom: 2)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 0, top: SizeUtil.smallSpace),
+                    child: Text(
+                      S.of(context).point_payment_policy,
+                      style: TextStyle(
+                          color: Colors.blue, fontSize: SizeUtil.textSizeSmall),
+                    ),
+                  ),
+                  SizedBox(
+                    height: SizeUtil.tinySpace,
+                  ),
+                  isUpdatePointCheckout
+                      ? Center(
+                    child: RaisedButton(
+                      onPressed: () {
+                        setState(() => {isUpdatePointCheckout = false});
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(SizeUtil.smallRadius),
+                          )),
+                      color: ColorUtil.primaryColor,
+                      child: Text(
+                        S.of(context).update,
+                        style: TextStyle(
+                            fontSize: SizeUtil.textSizeSmall,
+                            color: Colors.white,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  )
+                      : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      RaisedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(SizeUtil.smallRadius),
+                            )),
+                        color: ColorUtil.primaryColor,
+                        child: Text(
+                          S.of(context).cancel,
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                              color: Colors.white,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(
+                        width: SizeUtil.defaultSpace,
+                      ),
+                      RaisedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
 //                      showBookingScheduleSuccess(context);
                         },
                         shape: RoundedRectangleBorder(
@@ -876,12 +1593,10 @@ class _BookingScreenState extends BaseState<BookingScreen> {
               ),
             );
           },
-        )
-    );
+        ));
     showDialog(
         context: context, builder: (BuildContext context) => simpleDialog);
   }
-
 
   showAddingAddressDialogue(BuildContext context) {
     Dialog simpleDialog = Dialog(
@@ -889,7 +1604,7 @@ class _BookingScreenState extends BaseState<BookingScreen> {
           borderRadius: BorderRadius.circular(15.0),
         ),
         child: StatefulBuilder(
-          builder: (context,setState){
+          builder: (context, setState) {
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
@@ -938,69 +1653,101 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                   ),
                   MyTextField(
                     hint: S.of(context).enter_receiver_name,
-                    title: S.of(context).add_receiver,titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
-                    hintStyle: TextStyle(fontSize: SizeUtil.textSizeSmall,),
+                    title: S.of(context).add_receiver,
+                    titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                    hintStyle: TextStyle(
+                      fontSize: SizeUtil.textSizeSmall,
+                    ),
                     contentPadding: EdgeInsets.all(0),
-                    padding: EdgeInsets.only(top: SizeUtil.smallSpace,left: SizeUtil.smallSpace,right: SizeUtil.smallSpace),
+                    padding: EdgeInsets.only(
+                        top: SizeUtil.smallSpace,
+                        left: SizeUtil.smallSpace,
+                        right: SizeUtil.smallSpace),
                     showTrailing: false,
                     isBorder: false,
                   ),
                   MyTextField(
                     hint: S.of(context).enter_receive_phone,
-                    title: S.of(context).phone,titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
-                    hintStyle: TextStyle(fontSize: SizeUtil.textSizeSmall,),
+                    title: S.of(context).phone,
+                    titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                    hintStyle: TextStyle(
+                      fontSize: SizeUtil.textSizeSmall,
+                    ),
                     contentPadding: EdgeInsets.all(0),
                     inputType: TextInputType.phone,
-                    padding: EdgeInsets.only(top: SizeUtil.smallSpace,left: SizeUtil.smallSpace,right: SizeUtil.smallSpace),
+                    padding: EdgeInsets.only(
+                        top: SizeUtil.smallSpace,
+                        left: SizeUtil.smallSpace,
+                        right: SizeUtil.smallSpace),
                     showTrailing: false,
                     isBorder: false,
                   ),
                   MyTextField(
                     hint: S.of(context).enter_address,
-                    title: S.of(context).delivery_address,titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
-                    hintStyle: TextStyle(fontSize: SizeUtil.textSizeSmall,),
+                    title: S.of(context).delivery_address,
+                    titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                    hintStyle: TextStyle(
+                      fontSize: SizeUtil.textSizeSmall,
+                    ),
                     contentPadding: EdgeInsets.all(0),
-                    padding: EdgeInsets.only(top: SizeUtil.smallSpace,left: SizeUtil.smallSpace,right: SizeUtil.smallSpace),
+                    padding: EdgeInsets.only(
+                        top: SizeUtil.smallSpace,
+                        left: SizeUtil.smallSpace,
+                        right: SizeUtil.smallSpace),
                     showTrailing: false,
                     isBorder: false,
                   ),
                   MyTextField(
                     hint: S.of(context).choose_province,
-                    title: S.of(context).province,titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
-                    hintStyle: TextStyle(fontSize: SizeUtil.textSizeSmall,),
+                    title: S.of(context).province,
+                    titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                    hintStyle: TextStyle(
+                      fontSize: SizeUtil.textSizeSmall,
+                    ),
                     contentPadding: EdgeInsets.all(0),
-                    padding: EdgeInsets.only(top: SizeUtil.smallSpace,left: SizeUtil.smallSpace,right: SizeUtil.smallSpace),
+                    padding: EdgeInsets.only(
+                        top: SizeUtil.smallSpace,
+                        left: SizeUtil.smallSpace,
+                        right: SizeUtil.smallSpace),
                     showTrailing: true,
-                    onTrailingTap: (){
-
-                    },
+                    onTrailingTap: () {},
                     isBorder: false,
                   ),
                   MyTextField(
                     hint: S.of(context).choose_district,
-                    title: S.of(context).district,titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
-                    hintStyle: TextStyle(fontSize: SizeUtil.textSizeSmall,),
+                    title: S.of(context).district,
+                    titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                    hintStyle: TextStyle(
+                      fontSize: SizeUtil.textSizeSmall,
+                    ),
                     contentPadding: EdgeInsets.all(0),
-                    padding: EdgeInsets.only(top: SizeUtil.smallSpace,left: SizeUtil.smallSpace,right: SizeUtil.smallSpace),
+                    padding: EdgeInsets.only(
+                        top: SizeUtil.smallSpace,
+                        left: SizeUtil.smallSpace,
+                        right: SizeUtil.smallSpace),
                     showTrailing: true,
-                    onTrailingTap: (){
-
-                    },
+                    onTrailingTap: () {},
                     isBorder: false,
                   ),
                   MyTextField(
                     hint: S.of(context).choose_sub_district,
-                    title: S.of(context).sub_district,titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
-                    hintStyle: TextStyle(fontSize: SizeUtil.textSizeSmall,),
+                    title: S.of(context).sub_district,
+                    titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                    hintStyle: TextStyle(
+                      fontSize: SizeUtil.textSizeSmall,
+                    ),
                     contentPadding: EdgeInsets.all(0),
-                    padding: EdgeInsets.only(top: SizeUtil.smallSpace,left: SizeUtil.smallSpace,right: SizeUtil.smallSpace),
+                    padding: EdgeInsets.only(
+                        top: SizeUtil.smallSpace,
+                        left: SizeUtil.smallSpace,
+                        right: SizeUtil.smallSpace),
                     showTrailing: true,
-                    onTrailingTap: (){
-
-                    },
+                    onTrailingTap: () {},
                     isBorder: false,
                   ),
-                  SizedBox(height: SizeUtil.smallSpace,),
+                  SizedBox(
+                    height: SizeUtil.smallSpace,
+                  ),
                   Container(
                     alignment: Alignment.centerLeft,
                     child: CircleCheckbox(
@@ -1017,7 +1764,9 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                         uncheckBg: Icons.check_box_outline_blank,
                         color: ColorUtil.gray),
                   ),
-                  SizedBox(height: SizeUtil.tinySpace,),
+                  SizedBox(
+                    height: SizeUtil.tinySpace,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -1027,8 +1776,8 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
-                              Radius.circular(SizeUtil.smallRadius),
-                            )),
+                          Radius.circular(SizeUtil.smallRadius),
+                        )),
                         color: ColorUtil.primaryColor,
                         child: Text(
                           S.of(context).cancel,
@@ -1044,13 +1793,13 @@ class _BookingScreenState extends BaseState<BookingScreen> {
                       ),
                       RaisedButton(
                         onPressed: () {
-                      Navigator.of(context).pop();
+                          Navigator.of(context).pop();
 //                      showBookingScheduleSuccess(context);
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
-                              Radius.circular(SizeUtil.smallRadius),
-                            )),
+                          Radius.circular(SizeUtil.smallRadius),
+                        )),
                         color: ColorUtil.primaryColor,
                         child: Text(
                           S.of(context).add_new,
@@ -1067,12 +1816,10 @@ class _BookingScreenState extends BaseState<BookingScreen> {
               ),
             );
           },
-        )
-    );
+        ));
     showDialog(
         context: context, builder: (BuildContext context) => simpleDialog);
   }
-
 }
 
 class ListTitleCustom extends StatelessWidget {

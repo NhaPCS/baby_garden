@@ -2207,37 +2207,10 @@ class S {
     );
   }
 
-  String get point_payment_policy_1 {
+  String get point_payment_policy {
     return Intl.message(
-      '* Tỷ lệ quy đổi tích điểm: 100.000 vnđ = 1 điểm',
-      name: 'point_payment_policy_1',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get point_payment_policy_2 {
-    return Intl.message(
-      '* Mỗi 1 điểm đổi tương ứng với 1.000 vnđ',
-      name: 'point_payment_policy_2',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get point_payment_policy_3 {
-    return Intl.message(
-      '* Số điểm có thể đổi phải chia hết cho 20.',
-      name: 'point_payment_policy_3',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get point_payment_policy_4 {
-    return Intl.message(
-      'Lưu ý: hóa đơn thanh toán bằng điểm sẽ không được\ntích điểm.',
-      name: 'point_payment_policy_4',
+      '* Tỷ lệ quy đổi tích điểm: 100.000 vnđ = 1 điểm\n* Mỗi 1 điểm đổi tương ứng với 1.000 vnđ\n* Số điểm có thể đổi phải chia hết cho 20.\nLưu ý: hóa đơn thanh toán bằng điểm sẽ không được\ntích điểm.',
+      name: 'point_payment_policy',
       desc: '',
       args: [],
     );
@@ -2256,6 +2229,15 @@ class S {
     return Intl.message(
       'Đã cập nhật',
       name: 'updated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get update {
+    return Intl.message(
+      'Cập nhật',
+      name: 'update',
       desc: '',
       args: [],
     );
@@ -2369,6 +2351,24 @@ class S {
     );
   }
 
+  String get receive_time {
+    return Intl.message(
+      'Thời gian nhận hàng',
+      name: 'receive_time',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get receive_in {
+    return Intl.message(
+      'Nhận hàng vào lúc: ',
+      name: 'receive_in',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get province {
     return Intl.message(
       'Tỉnh/ Thành Phố',
@@ -2477,19 +2477,19 @@ class S {
     );
   }
 
-  String get checkout_policy_1 {
+  String get checkout_policy {
     return Intl.message(
       '- Khi thanh toán chuyển khoản trước, khách hàng sẽ\nđược giữ hàng lâu hơn 3 ngày.\n',
-      name: 'checkout_policy_1',
+      name: 'checkout_policy',
       desc: '',
       args: [],
     );
   }
 
-  String get checkout_policy_2 {
+  String get checkout_policy_overal {
     return Intl.message(
       'Khi bạn chọn hình thức thanh toán chuyển khoản, để\nhoàn tất đơn hàng bạn cần thanh toán chuyển khoản\nđể xác nhận đơn hàng',
-      name: 'checkout_policy_2',
+      name: 'checkout_policy_overal',
       desc: '',
       args: [],
     );
