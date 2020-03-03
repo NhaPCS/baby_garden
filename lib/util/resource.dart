@@ -27,7 +27,9 @@ class ColorUtil {
   static const Color white = Color(0xffffff);
   static const Color logoBgColor = Color(0xffE1F2F9);
   static const Color transGray = Color(0x66EFEFEF);
+  static const Color grayLine = Color(0xff646464);
   static const Color customerSupportUpdate = Color(0xff73EBD5);
+
 
   static const serviceItemUnselectColor = Color(0xffF6F6F6);
 
