@@ -2234,6 +2234,15 @@ class S {
     );
   }
 
+  String get update {
+    return Intl.message(
+      'Cập nhật',
+      name: 'update',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get policy_privacy {
     return Intl.message(
       'Chính sách và điều khoản dịch vụ',
@@ -2468,19 +2477,19 @@ class S {
     );
   }
 
-  String get checkout_policy_1 {
+  String get checkout_policy {
     return Intl.message(
       '- Khi thanh toán chuyển khoản trước, khách hàng sẽ\nđược giữ hàng lâu hơn 3 ngày.\n',
-      name: 'checkout_policy_1',
+      name: 'checkout_policy',
       desc: '',
       args: [],
     );
   }
 
-  String get checkout_policy_2 {
+  String get checkout_policy_overal {
     return Intl.message(
       'Khi bạn chọn hình thức thanh toán chuyển khoản, để\nhoàn tất đơn hàng bạn cần thanh toán chuyển khoản\nđể xác nhận đơn hàng',
-      name: 'checkout_policy_2',
+      name: 'checkout_policy_overal',
       desc: '',
       args: [],
     );
