@@ -20,7 +20,7 @@ class _SeenProduct extends BaseState<AddressSetting> {
 
   final List<Address> address = [
     Address(address: "28 Phan Kế Bính, Ba Đình, Hà Nội", isDefault: true),
-    Address(address: "28 Phan Kế Bính, Ba Đình, Hà Nội", isDefault: false),
+    Address(address: "12 Dịch Vọng, Cầu Giấy, Hà Nội", isDefault: false),
     Address(address: "28 Cát Linh, Hà Đông, Hà Nội", isDefault: false),
   ];
 
@@ -106,7 +106,7 @@ class _SeenProduct extends BaseState<AddressSetting> {
                 padding: const EdgeInsets.only(right: 8.0),
                 child: Icon(
                   Icons.location_on,
-                  color: Colors.blue,
+                  color: ColorUtil.primaryColor,
                   size: 27,
                 )),
           ]),
@@ -155,7 +155,10 @@ class _SeenProduct extends BaseState<AddressSetting> {
           child: GestureDetector(
             onTap: () {
               // show dialog
-              showAddAddressDialog(context);
+              final addAddress = ShowAddAddressDialog();
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => addAddress);
             },
             child: Row(children: <Widget>[
               Icon(
