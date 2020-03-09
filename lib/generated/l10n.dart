@@ -2728,6 +2728,33 @@ class S {
       args: [],
     );
   }
+
+  String get receive_in_shop {
+    return Intl.message(
+      'Nhận hàng tại shop',
+      name: 'receive_in_shop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delivering {
+    return Intl.message(
+      'Đang vận chuyển',
+      name: 'delivering',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delivery_info {
+    return Intl.message(
+      'Thông tin vận chuyển',
+      name: 'delivery_info',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

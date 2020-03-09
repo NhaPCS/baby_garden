@@ -298,5 +298,8 @@
   "order_code_title": "Mã đơn hàng:",
   "continue_buying": "Tiếp tục mua sắm",
   "view_order": "Xem đơn hàng",
-  "cancel": "Hủy bỏ"
+  "cancel": "Hủy bỏ",
+  "receive_in_shop": "Nhận hàng tại shop",
+  "delivering": "Đang vận chuyển",
+  "delivery_info": "Thông tin vận chuyển"
 }
