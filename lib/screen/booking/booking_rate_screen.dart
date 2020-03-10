@@ -66,37 +66,27 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
                 tabs: myTabs,
               )),
         ),
-        body: TabBarView(
+        body:
+        TabBarView(
           controller: _tabController,
           children: myTabs.map((Tab tab) {
             final String label = tab.text.toLowerCase();
-            return Column(
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.only(bottom: SizeUtil.smallSpace),
-                    color: ColorUtil.lineColor,
-                    child: ListView.builder(
-                        itemCount: 10,
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.all(0),
-                        itemBuilder: (context, index) {
-                          return new GestureDetector(
-                            onTap: () {
-                              push(myTabs.indexOf(tab) == 0
-                                  ? RatingDetailScreen()
-                                  : RatedDetailScreen());
-                            },
-                            child: myTabs.indexOf(tab) == 0
-                                ? new ServiceItem()
-                                : new OrderItem(),
-                          );
-                        }),
-                  ),
-                )
-              ],
-            );
+            return ListView.builder(
+                itemCount: 10,
+                scrollDirection: Axis.vertical,
+                padding: EdgeInsets.all(0),
+                itemBuilder: (context, index) {
+                  return new GestureDetector(
+                    onTap: () {
+                      push(myTabs.indexOf(tab) == 0
+                          ? RatingDetailScreen()
+                          : RatedDetailScreen());
+                    },
+                    child: myTabs.indexOf(tab) == 0
+                        ? new ServiceItem()
+                        : new OrderItem(),
+                  );
+                });
           }).toList(),
         ),
       ),

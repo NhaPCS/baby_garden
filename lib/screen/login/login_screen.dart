@@ -6,6 +6,7 @@ import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/register/register_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/circle_checkbox.dart';
+import 'package:baby_garden_flutter/widget/my_password_textfield.dart';
 import 'package:baby_garden_flutter/widget/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -64,33 +65,7 @@ class _LoginScreenState extends BaseState<LoginScreen> {
                   right: SizeUtil.bigSpace,
                   top: SizeUtil.smallSpace,
                   bottom: SizeUtil.defaultSpace),
-              child: Consumer<ShowHidePassProvider>(
-                builder: (BuildContext context, ShowHidePassProvider value,
-                    Widget child) {
-                  return MyTextField(
-                    hint: S.of(context).enter_password,
-                    borderColor: ColorUtil.colorAccent,
-                    borderRadius: SizeUtil.tinyRadius,
-                    elevation: SizeUtil.smallElevation,
-                    contentPadding: SizeUtil.normalPadding,
-                    inputType: TextInputType.text,
-                    obscureText: !value.isShowPass,
-                    suffix: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _showHidePassProvider.onControllClick();
-                        });
-                      },
-                      child: Icon(
-                        value.isShowPass
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        size: SizeUtil.iconSizeBigger,
-                      ),
-                    ),
-                  );
-                },
-              ),
+              child: MyPasswordTextField(),//
             ),
             Container(
               alignment: Alignment.centerLeft,
