@@ -142,6 +142,7 @@ class SizeUtil {
   static const double iconSizeBigger = 24;
   static const double iconSizeBig = 32;
   static const double iconSizeSmall = 10;
+  static const double iconSizeTiny = 8;
 
   static const double smallRadius = 10;
   static const double bigRadius = 16;

@@ -2755,6 +2755,15 @@ class S {
       args: [],
     );
   }
+
+  String get list_user_rated {
+    return Intl.message(
+      'Danh sách người đánh giá',
+      name: 'list_user_rated',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
