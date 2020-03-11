@@ -2818,6 +2818,24 @@ class S {
       args: [],
     );
   }
+
+  String get period {
+    return Intl.message(
+      'Thời hạn',
+      name: 'period',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get numberOfVoucher {
+    return Intl.message(
+      'Số Voucher',
+      name: 'numberOfVoucher',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
