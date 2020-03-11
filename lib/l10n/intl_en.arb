@@ -202,5 +202,9 @@
   "communeHint": "Chọn Phường/ Xã",
   "setToDefaultAddress": "Đặt làm địa chỉ nhận hàng mặc định",
   "cancel": "Hủy bỏ",
-  "addNew": "Thêm mới"
+  "addNew": "Thêm mới",
+  "nameOfChild": "Tên của bé",
+  "dateOfBirth": "Ngày tháng năm sinh",
+  "back": "trở lại",
+  "uploadChildAvatar": "Upload ảnh của bé"
 }

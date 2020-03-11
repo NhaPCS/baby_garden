@@ -1864,6 +1864,42 @@ class S {
       args: [],
     );
   }
+
+  String get nameOfChild {
+    return Intl.message(
+      'Tên của bé',
+      name: 'nameOfChild',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get dateOfBirth {
+    return Intl.message(
+      'Ngày tháng năm sinh',
+      name: 'dateOfBirth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get back {
+    return Intl.message(
+      'trở lại',
+      name: 'back',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get uploadChildAvatar {
+    return Intl.message(
+      'Upload ảnh của bé',
+      name: 'uploadChildAvatar',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -10,6 +10,7 @@ class MyTextField extends StatelessWidget {
   final Color backgroundColor;
   final Color borderColor;
   final double borderRadius;
+  final double borderWidth;
   final Widget suffix;
   final String suffixText;
   final Widget prefix;
@@ -23,6 +24,8 @@ class MyTextField extends StatelessWidget {
   final bool enable;
   final Function ontap;
   final FocusNode onFocus;
+  final String labelText;
+  final TextStyle labelStyle;
 
   const MyTextField(
       {Key key,
@@ -32,6 +35,7 @@ class MyTextField extends StatelessWidget {
       this.backgroundColor = Colors.white,
       this.borderColor = ColorUtil.textGray,
       this.borderRadius = 0,
+      this.borderWidth = 1,
       this.suffix,
       this.suffixText,
       this.textAlign = TextAlign.left,
@@ -46,10 +50,13 @@ class MyTextField extends StatelessWidget {
       this.hintStyle,
       this.elevation,
       this.prefix,
-        this.onFocus,
+      this.onFocus,
       this.maxLines = 1,
-        this.ontap,
-      this.enable = true})
+      this.ontap,
+      this.enable = true,
+      InputDecoration decoration,
+      this.labelText,
+      this.labelStyle})
       : super(key: key);
 
   @override
@@ -77,6 +84,8 @@ class MyTextField extends StatelessWidget {
       onTap: ontap,
       focusNode: onFocus,
       decoration: InputDecoration(
+          labelText: labelText,
+          labelStyle: labelStyle,
           contentPadding: contentPadding,
           isDense: true,
           fillColor: backgroundColor,
@@ -95,9 +104,7 @@ class MyTextField extends StatelessWidget {
 
   InputBorder _getBorder() {
     return OutlineInputBorder(
-        borderSide: BorderSide(
-          color: borderColor,
-        ),
+        borderSide: BorderSide(color: borderColor, width: borderWidth),
         borderRadius: BorderRadius.all(Radius.circular(borderRadius)));
   }
 }
