@@ -18,6 +18,8 @@ class ColorUtil {
   static const Color lightGray = Color(0xffEFEFEF);
   static const Color lineColor = Color(0xffE9E9E9);
   static const Color indicatorActiveColor = Color(0xffE4EB18);
+  static const Color yellowPartnerColor = Color(0xffFBC900);
+  static const Color yellowPartnerStarColor = Color(0xffEBF308);
   static const Color indicatorUnactiveColor = Color(0xffB0B1A1);
   static const Color blueForgotPass = Color(0xff2294AB);
   static const Color flashSaleColor = Color(0xffF77102);
@@ -25,7 +27,11 @@ class ColorUtil {
   static const Color white = Color(0xffffff);
   static const Color logoBgColor = Color(0xffE1F2F9);
   static const Color transGray = Color(0x66EFEFEF);
+  static const Color grayLine = Color(0xff646464);
   static const Color customerSupportUpdate = Color(0xff73EBD5);
+
+
+  static const serviceItemUnselectColor = Color(0xffF6F6F6);
 
   static Color getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");
@@ -108,7 +114,9 @@ class SizeUtil {
   static const double smallSpace = 10;
   static const double midSmallSpace = 8.0;
   static const double tinySpace = 5;
+  static const double superTinySpace = 3;
   static const double bigSpace = 30;
+  static const double bigSpacehigher = 32;
   static const double hugSpace = 50;
   static const double largeSpace = 70;
   static const double biggerSpace = 40;
@@ -118,6 +126,8 @@ class SizeUtil {
   static const double textSizeItemPost = 30;
   static const double textSizeBigger = 17;
   static const double textSizeDefault = 15;
+  static const double textSizeExpressTitle = 14;
+  static const double textSizeExpressDetail = 13;
   static const double textSizeSmall = 11;
   static const double textSizeNotiTime = 10;
   static const double textSizeTiny = 8;
@@ -127,6 +137,7 @@ class SizeUtil {
 
   static const double iconSizeLarge = 52;
   static const double iconSize = 16;
+  static const double iconMidSize = 18;
   static const double iconSizeDefault = 12;
   static const double iconSizeBigger = 24;
   static const double iconSizeBig = 32;
@@ -140,6 +151,7 @@ class SizeUtil {
   static const double smallElevation = 3;
 
   static const double lineHeight = 5;
+  static const double delivery_code_height = 36;
 }
 
 class WidgetUtil {
@@ -202,10 +214,10 @@ class WidgetUtil {
   static Widget getLine(
       {EdgeInsetsGeometry margin = const EdgeInsets.only(
           top: SizeUtil.smallSpace, bottom: SizeUtil.smallSpace),
-      double width = 1}) {
+      double width = 1,Color color = ColorUtil.lineColor}) {
     return Container(
       height: width,
-      color: ColorUtil.lineColor,
+      color: color,
       margin: margin,
     );
   }

@@ -3,6 +3,10 @@ import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/customer_support/customer_support.dart';
 import 'package:baby_garden_flutter/screen/favorite_product/favorite_product.dart';
+import 'package:baby_garden_flutter/screen/partner/partner_book_schedule.dart';
+import 'package:baby_garden_flutter/screen/partner/partner_like_screen.dart';
+import 'package:baby_garden_flutter/screen/point_management/point_history_screen.dart';
+import 'package:baby_garden_flutter/screen/point_management/point_management_screen.dart';
 import 'package:baby_garden_flutter/screen/profile/account_manage_screen.dart';
 import 'package:baby_garden_flutter/screen/profile/user_infor.dart';
 import 'package:baby_garden_flutter/screen/seen_product/seen_product_screen.dart';
@@ -99,10 +103,10 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                   push(AccountManage());
                   break;
                 case 1:
-                  //TODO
+                  push(PointManagement());
                   break;
                 case 2:
-                  //TODO
+                  push(PartnerBookScheduleScreen());
                   break;
                 case 3:
                   push(VoucherManagement());
@@ -111,7 +115,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                   push(FavoriteProduct());
                   break;
                 case 5:
-                  //TODO
+                  push(PartnerLikeScreen());
                   break;
                 case 6:
                   push(SeenProduct());

@@ -4,6 +4,7 @@ import 'package:baby_garden_flutter/provider/waiting_otp_provider.dart';
 import 'package:baby_garden_flutter/provider/enter_phone_number_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/my_password_textfield.dart';
 import 'package:baby_garden_flutter/widget/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -66,61 +67,11 @@ class _ForgotPasswordScreenState extends BaseState<ForgotPasswordScreen> {
                           bottom: SizeUtil.defaultSpace),
                       child: Column(
                         children: <Widget>[
-                          Consumer<ChangePassProvider>(
-                            builder: (BuildContext context,
-                                ChangePassProvider value, Widget child) {
-                              return MyTextField(
-                                textEditingController: _newPasswordControler,
-                                hint: S.of(context).enter_new_password,
-                                borderColor: ColorUtil.colorAccent,
-                                borderRadius: SizeUtil.tinyRadius,
-                                elevation: SizeUtil.smallElevation,
-                                contentPadding: SizeUtil.normalPadding,
-                                obscureText: !value.isShowPass,
-                                suffix: new GestureDetector(
-                                  onTap: () {
-                                    _changePassProvider.onControlShowPass();
-                                  },
-                                  child: Icon(
-                                    value.isShowPass
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                    size: SizeUtil.iconSizeBigger,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
+                          MyPasswordTextField(controller: _newPasswordControler,),
                           SizedBox(
                             height: SizeUtil.defaultSpace,
                           ),
-                          Consumer<ChangePassProvider>(
-                            builder: (BuildContext context,
-                                ChangePassProvider value, Widget child) {
-                              return MyTextField(
-                                textEditingController:
-                                    _reenterNewPasswordControler,
-                                hint: S.of(context).reenter_new_password,
-                                borderColor: ColorUtil.colorAccent,
-                                borderRadius: SizeUtil.tinyRadius,
-                                elevation: SizeUtil.smallElevation,
-                                contentPadding: SizeUtil.normalPadding,
-                                obscureText: !value.isShowRePass,
-                                suffix: new GestureDetector(
-                                  onTap: () {
-                                    _changePassProvider
-                                        .onControlShowRePass();
-                                  },
-                                  child: Icon(
-                                    value.isShowRePass
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                    size: SizeUtil.iconSizeBigger,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
+                          MyPasswordTextField(controller: _reenterNewPasswordControler,),
                           SizedBox(
                             height: SizeUtil.defaultSpace,
                           ),

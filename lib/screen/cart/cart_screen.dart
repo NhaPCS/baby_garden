@@ -2,6 +2,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_added_promo.dart';
 import 'package:baby_garden_flutter/item/item_product_cart.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/circle_checkbox.dart';
@@ -95,6 +96,7 @@ class _CartState extends BaseState<CartScreen> {
                           child: MyRaisedButton(
                             onPressed: () {
                               //TODO
+                              push(BookingScreen());
                             },
                             text: S.of(context).take_order.toUpperCase(),
                             textStyle: TextStyle(

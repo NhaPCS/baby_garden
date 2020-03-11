@@ -6,6 +6,8 @@ class ImageCount extends StatelessWidget {
   final EdgeInsets margin;
   final EdgeInsets padding;
   final Color backgroundColor;
+  final Color borderColor;
+  final Color textColor;
 
   const ImageCount(
       {Key key,
@@ -16,6 +18,8 @@ class ImageCount extends StatelessWidget {
           right: SizeUtil.smallSpace,
           top: SizeUtil.tinySpace,
           bottom: SizeUtil.tinySpace),
+        this.textColor = ColorUtil.primaryColor,
+        this.borderColor = ColorUtil.primaryColor,
       this.backgroundColor = ColorUtil.transGray})
       : super(key: key);
 
@@ -24,13 +28,13 @@ class ImageCount extends StatelessWidget {
     return Container(
       child: Text(
         text == null ? "" : text,
-        style: TextStyle(color: ColorUtil.primaryColor),
+        style: TextStyle(color: textColor),
       ),
       margin: margin,
       padding: padding,
       decoration: BoxDecoration(
           color: backgroundColor,
-          border: Border.all(color: ColorUtil.primaryColor, width: 1),
+          border: Border.all(color: borderColor, width: 1),
           borderRadius: BorderRadius.circular(SizeUtil.smallRadius)),
     );
   }

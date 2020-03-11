@@ -3,6 +3,7 @@ import 'package:baby_garden_flutter/provider/change_pass_provider.dart';
 import 'package:baby_garden_flutter/provider/waiting_otp_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/my_password_textfield.dart';
 import 'package:baby_garden_flutter/widget/my_text_field.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
@@ -79,57 +80,11 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
-          Consumer<ChangePassProvider>(
-            builder:
-                (BuildContext context, ChangePassProvider value, Widget child) {
-              return MyTextField(
-                textEditingController: _passControler,
-                hint: S.of(context).password,
-                borderColor: ColorUtil.colorAccent,
-                borderRadius: SizeUtil.tinyRadius,
-                elevation: SizeUtil.smallElevation,
-                contentPadding: SizeUtil.smallPadding,
-                obscureText: !value.isShowPass,
-                suffix: new GestureDetector(
-                  onTap: () {
-                    _changePassProvider.onControlShowPass();
-                  },
-                  child: Icon(
-                    value.isShowPass ? Icons.visibility : Icons.visibility_off,
-                    size: SizeUtil.iconSizeBigger,
-                  ),
-                ),
-              );
-            },
-          ),
+          MyPasswordTextField(controller: _passControler,),
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
-          Consumer<ChangePassProvider>(
-            builder:
-                (BuildContext context, ChangePassProvider value, Widget child) {
-              return MyTextField(
-                textEditingController: _repassControler,
-                hint: S.of(context).reenter_password,
-                borderColor: ColorUtil.colorAccent,
-                borderRadius: SizeUtil.tinyRadius,
-                elevation: SizeUtil.smallElevation,
-                contentPadding: SizeUtil.smallPadding,
-                obscureText: !value.isShowRePass,
-                suffix: new GestureDetector(
-                  onTap: () {
-                    _changePassProvider.onControlShowRePass();
-                  },
-                  child: Icon(
-                    value.isShowRePass
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                    size: SizeUtil.iconSizeBigger,
-                  ),
-                ),
-              );
-            },
-          ),
+          MyPasswordTextField(controller: _repassControler,),
           SizedBox(
             height: SizeUtil.smallSpace,
           ),

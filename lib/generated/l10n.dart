@@ -29,6 +29,15 @@ class S {
 
   final String localeName;
 
+  String get app_name_title {
+    return Intl.message(
+      'VƯỜN CỦA BÉ',
+      name: 'app_name_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get welcome {
     return Intl.message(
       'Welcome',
@@ -1532,6 +1541,24 @@ class S {
     );
   }
 
+  String get book {
+    return Intl.message(
+      'Đặt lịch',
+      name: 'book',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get product {
+    return Intl.message(
+      'Sản phẩm',
+      name: 'product',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get rate_service {
     return Intl.message(
       'Đánh giá\ndịch vụ',
@@ -1613,6 +1640,177 @@ class S {
     );
   }
 
+  String get express_title {
+    return Intl.message(
+      'Vườn của bé: Thời trang dành cho bé MFGM PRO\ntinh chất dinh dưỡng quý trong sữa năm 2019',
+      name: 'express_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get express_descrip {
+    return Intl.message(
+      'Thời trang cho bé',
+      name: 'express_descrip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get express_short_content {
+    return Intl.message(
+      'MFGM là một màng cầu dinh dưỡng bao quanh giọt chất béo trong sữa tự nhiên, đóng vai trò quan trọng trong việc cải thiện chức năng nhận thức, khả năng miễn dịch và sức khỏe đường ruột của trẻ, là tinh chất rất A +.',
+      name: 'express_short_content',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get express_time {
+    return Intl.message(
+      '12/09/2019 - 14:00',
+      name: 'express_time',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get vcb_express {
+    return Intl.message(
+      'VCB Express',
+      name: 'vcb_express',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get vcb_ex_detail_short_title {
+    return Intl.message(
+      'Vườn của bé: Thời trang dành cho bé\n năm 2019',
+      name: 'vcb_ex_detail_short_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get vcb_ex_detail_full_title {
+    return Intl.message(
+      'Thời trang dành cho bé năm 2019 phong cách xuân hè.',
+      name: 'vcb_ex_detail_full_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String vcb_ex_detail_post_time(dynamic time) {
+    return Intl.message(
+      'Thời trang cho bé | $time',
+      name: 'vcb_ex_detail_post_time',
+      desc: '',
+      args: [time],
+    );
+  }
+
+  String get vcb_ex_detail_ctm_hint {
+    return Intl.message(
+      'Viết bình luận của bạn',
+      name: 'vcb_ex_detail_ctm_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get vcb_ex_detail_first_content {
+    return Intl.message(
+      'Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn.',
+      name: 'vcb_ex_detail_first_content',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get vcb_ex_detail_second_content {
+    return Intl.message(
+      'Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn.',
+      name: 'vcb_ex_detail_second_content',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get saling_detail {
+    return Intl.message(
+      'Chi tiết khuyến mãi',
+      name: 'saling_detail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String saling_detail_title(dynamic title) {
+    return Intl.message(
+      '[BIG SAle] $title',
+      name: 'saling_detail_title',
+      desc: '',
+      args: [title],
+    );
+  }
+
+  String saling_detail_time(dynamic time) {
+    return Intl.message(
+      'Thời gian áp dung: $time',
+      name: 'saling_detail_time',
+      desc: '',
+      args: [time],
+    );
+  }
+
+  String get product_for_sale {
+    return Intl.message(
+      'Sản phẩm khuyến mãi',
+      name: 'product_for_sale',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get familier_partner {
+    return Intl.message(
+      'Đối tác yêu thích',
+      name: 'familier_partner',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get choose_client {
+    return Intl.message(
+      'Chọn cơ sở',
+      name: 'choose_client',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String choose_service(dynamic number) {
+    return Intl.message(
+      'Chọn dịch vụ ($number dịch vụ)',
+      name: 'choose_service',
+      desc: '',
+      args: [number],
+    );
+  }
+
+  String service_time_range(dynamic minute) {
+    return Intl.message(
+      '$minute\nPhút',
+      name: 'service_time_range',
+      desc: '',
+      args: [minute],
+    );
+  }
+
   String get press_back_again_to_exit {
     return Intl.message(
       'Nhấn 1 lần nữa để thoát ứng dụng!',
@@ -1635,15 +1833,6 @@ class S {
     return Intl.message(
       'Voucher',
       name: 'voucher',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get vcb_express {
-    return Intl.message(
-      'VCB Express',
-      name: 'vcb_express',
       desc: '',
       args: [],
     );
@@ -1761,6 +1950,888 @@ class S {
     return Intl.message(
       'Mặc định',
       name: 'isDefault',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addressDetail {
+    return Intl.message(
+      'Địa chỉ cụ thể',
+      name: 'addressDetail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addressDetailHint {
+    return Intl.message(
+      'Nhập số nhà, tên đường...',
+      name: 'addressDetailHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cancel {
+    return Intl.message(
+      'Hủy bỏ',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addNew {
+    return Intl.message(
+      'Thêm mới',
+      name: 'addNew',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get nameOfChild {
+    return Intl.message(
+      'Tên của bé',
+      name: 'nameOfChild',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get dateOfBirth {
+    return Intl.message(
+      'Ngày tháng năm sinh',
+      name: 'dateOfBirth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get comeBack {
+    return Intl.message(
+      'trở lại',
+      name: 'comeBack',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get uploadChildAvatar {
+    return Intl.message(
+      'Upload ảnh của bé',
+      name: 'uploadChildAvatar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get booking_schedule_verify {
+    return Intl.message(
+      'Xác Nhận Đặt Lịch',
+      name: 'booking_schedule_verify',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get back {
+    return Intl.message(
+      'Quay lại',
+      name: 'back',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get booking_schedule_success {
+    return Intl.message(
+      'Bạn Đã Đặt lịch thành công',
+      name: 'booking_schedule_success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get choose_time {
+    return Intl.message(
+      'Chọn thời gian',
+      name: 'choose_time',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get booking {
+    return Intl.message(
+      'Đặt hàng',
+      name: 'booking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get place_of_delivery {
+    return Intl.message(
+      'Địa chỉ nhận hàng',
+      name: 'place_of_delivery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get type_of_delivery {
+    return Intl.message(
+      'Hình thức nhận hàng',
+      name: 'type_of_delivery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get type_of_checkout {
+    return Intl.message(
+      'Hình thức thanh toán',
+      name: 'type_of_checkout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delivery_service {
+    return Intl.message(
+      'Đơn vị vận chuyển',
+      name: 'delivery_service',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_delivery_code {
+    return Intl.message(
+      'Nhập mã giảm giá vận chuyển',
+      name: 'enter_delivery_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delivery_code {
+    return Intl.message(
+      'Mã giảm giá vận chuyển',
+      name: 'delivery_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get booking_note {
+    return Intl.message(
+      'Chi chú đặt hàng',
+      name: 'booking_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_your_note {
+    return Intl.message(
+      'Viết ghi chú của bạn',
+      name: 'enter_your_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cost {
+    return Intl.message(
+      'Tiền hàng (sau giảm giá)',
+      name: 'cost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delivery_fee {
+    return Intl.message(
+      'Phí vận chuyển (sau giảm giá)',
+      name: 'delivery_fee',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get total {
+    return Intl.message(
+      'Thành tiền',
+      name: 'total',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get booking_submit {
+    return Intl.message(
+      'Hoàn tất đặt hàng',
+      name: 'booking_submit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get change {
+    return Intl.message(
+      'Thay đổi',
+      name: 'change',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detail {
+    return Intl.message(
+      'Chi tiết',
+      name: 'detail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delivery_in_shop {
+    return Intl.message(
+      'Nhận hàng tại Shop',
+      name: 'delivery_in_shop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delivery_to_address {
+    return Intl.message(
+      'Giao hàng tận nơi',
+      name: 'delivery_to_address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cash_payment {
+    return Intl.message(
+      'Thanh toán tiền mặt khi nhận hàng',
+      name: 'cash_payment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get credit_transfer_payment {
+    return Intl.message(
+      'Thanh toán chuyển khoản qua tài khoản',
+      name: 'credit_transfer_payment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String point_payment(dynamic point) {
+    return Intl.message(
+      'Thanh toán điểm hiện có [$point]',
+      name: 'point_payment',
+      desc: '',
+      args: [point],
+    );
+  }
+
+  String delivery_plan(dynamic day) {
+    return Intl.message(
+      'Dự kiến giao khoảng $day',
+      name: 'delivery_plan',
+      desc: '',
+      args: [day],
+    );
+  }
+
+  String get point_payment_title {
+    return Intl.message(
+      'Thanh toán điểm',
+      name: 'point_payment_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get current_point {
+    return Intl.message(
+      'Số điểm hiện tại: ',
+      name: 'current_point',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get point_for_booking {
+    return Intl.message(
+      'Số điểm thanh toán: ',
+      name: 'point_for_booking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get point_payment_policy {
+    return Intl.message(
+      '* Tỷ lệ quy đổi tích điểm: 100.000 vnđ = 1 điểm\n* Mỗi 1 điểm đổi tương ứng với 1.000 vnđ\n* Số điểm có thể đổi phải chia hết cho 20.\nLưu ý: hóa đơn thanh toán bằng điểm sẽ không được\ntích điểm.',
+      name: 'point_payment_policy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get point_payment_update {
+    return Intl.message(
+      'Cập Nhật Thanh toán điểm',
+      name: 'point_payment_update',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get updated {
+    return Intl.message(
+      'Đã cập nhật',
+      name: 'updated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get update {
+    return Intl.message(
+      'Cập nhật',
+      name: 'update',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get policy_privacy {
+    return Intl.message(
+      'Chính sách và điều khoản dịch vụ',
+      name: 'policy_privacy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get overral_policy {
+    return Intl.message(
+      'Chính sách chung:',
+      name: 'overral_policy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get policy_1 {
+    return Intl.message(
+      '- Chính sách bảo mật này nhằm mục đích giúp bạn\nhiểu rõ những thông tin chúng tôi thu thập, lý do\nchúng tôi thu thập và cách bạn có thể cập nhật, quản\nlý, xuất và xóa thông tin của mình.',
+      name: 'policy_1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get privacy {
+    return Intl.message(
+      'Điều khoản dịch vụ của Shop:',
+      name: 'privacy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get privacy_1 {
+    return Intl.message(
+      '- Khi sử dụng dịch vụ của chúng tôi, bạn tin tưởng\ncung cấp thông tin của bạn cho chúng tôi. Chúng tôi\nhiểu rằng đây là một trách nhiệm lớn và chúng tôi nỗ\nlực bảo vệ thông tin của bạn cũng như để bạn nắm\nquyền kiểm soát.',
+      name: 'privacy_1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get add_delivery_address {
+    return Intl.message(
+      'Thêm Địa chỉ nhận hàng',
+      name: 'add_delivery_address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get add_receiver {
+    return Intl.message(
+      'Tên người nhận',
+      name: 'add_receiver',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_receiver_name {
+    return Intl.message(
+      'Nhập họ và tên người nhận hàng',
+      name: 'enter_receiver_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get phone {
+    return Intl.message(
+      'Số điện thoại',
+      name: 'phone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_receive_phone {
+    return Intl.message(
+      'Nhập số điện thoại nhận hàng',
+      name: 'enter_receive_phone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delivery_address {
+    return Intl.message(
+      'Địa chỉ nhận hàng',
+      name: 'delivery_address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_address {
+    return Intl.message(
+      'Nhập số nhà, tên đường...',
+      name: 'enter_address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get receive_time {
+    return Intl.message(
+      'Thời gian nhận hàng',
+      name: 'receive_time',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get receive_in {
+    return Intl.message(
+      'Nhận hàng vào lúc: ',
+      name: 'receive_in',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get province {
+    return Intl.message(
+      'Tỉnh/ Thành Phố',
+      name: 'province',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get choose_province {
+    return Intl.message(
+      'Chọn Tỉnh/ Thành phố',
+      name: 'choose_province',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get district {
+    return Intl.message(
+      'Quận/ Huyện',
+      name: 'district',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get choose_district {
+    return Intl.message(
+      'Chọn Quận/ Huyện',
+      name: 'choose_district',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get sub_district {
+    return Intl.message(
+      'Phường/ Xã',
+      name: 'sub_district',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get choose_sub_district {
+    return Intl.message(
+      'Chọn Phường/ Xã',
+      name: 'choose_sub_district',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get set_delivery_address {
+    return Intl.message(
+      'Đặt làm địa chỉ nhận hàng mặc định',
+      name: 'set_delivery_address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get add_new {
+    return Intl.message(
+      'Thêm mới',
+      name: 'add_new',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get credit_transfer {
+    return Intl.message(
+      'Thanh Toán Chuyển Khoản',
+      name: 'credit_transfer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delivery_in_place {
+    return Intl.message(
+      'Giao hàng tận nơi:',
+      name: 'delivery_in_place',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delivery_policy {
+    return Intl.message(
+      '- Khi nhận hàng bạn không cần thanh toán tiền mặt\nnữa\n- Nếu khách hàng ở tỉnh lẻ, thanh toán chuyển khoản\ntrước sẽ giảm được chi phí vận chuyển COD.',
+      name: 'delivery_policy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get get_in_shop {
+    return Intl.message(
+      'Lấy hàng tại Shop:',
+      name: 'get_in_shop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get checkout_policy {
+    return Intl.message(
+      '- Khi thanh toán chuyển khoản trước, khách hàng sẽ\nđược giữ hàng lâu hơn 3 ngày.\n',
+      name: 'checkout_policy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get checkout_policy_overal {
+    return Intl.message(
+      'Khi bạn chọn hình thức thanh toán chuyển khoản, để\nhoàn tất đơn hàng bạn cần thanh toán chuyển khoản\nđể xác nhận đơn hàng',
+      name: 'checkout_policy_overal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get change_delivery_address {
+    return Intl.message(
+      'Thay đổi địa chỉ nhận hàng',
+      name: 'change_delivery_address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delivery_time_1 {
+    return Intl.message(
+      '09:00 - 11:00',
+      name: 'delivery_time_1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delivery_time_2 {
+    return Intl.message(
+      '14:00 - 16:00',
+      name: 'delivery_time_2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delivery_time_3 {
+    return Intl.message(
+      '19:00 - 21:00',
+      name: 'delivery_time_3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get no_delivery_time_1 {
+    return Intl.message(
+      'Không có giờ giao hàng',
+      name: 'no_delivery_time_1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get no_delivery_time_2 {
+    return Intl.message(
+      'Vui lòng chọn ngày khác',
+      name: 'no_delivery_time_2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get checkout {
+    return Intl.message(
+      'Thanh toán',
+      name: 'checkout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String shop(dynamic shop) {
+    return Intl.message(
+      'Shop $shop',
+      name: 'shop',
+      desc: '',
+      args: [shop],
+    );
+  }
+
+  String get bank {
+    return Intl.message(
+      'Ngân hàng:',
+      name: 'bank',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bank_number {
+    return Intl.message(
+      'Số tài khoản:',
+      name: 'bank_number',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get owner_name {
+    return Intl.message(
+      'Chủ tài khoản:',
+      name: 'owner_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get transfer_info {
+    return Intl.message(
+      'Thông Tin Chuyển Khoản',
+      name: 'transfer_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get contract_code {
+    return Intl.message(
+      'Mã HĐ:',
+      name: 'contract_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get transfer_content {
+    return Intl.message(
+      'Nội dung CK:',
+      name: 'transfer_content',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get amount {
+    return Intl.message(
+      'Số tiền:',
+      name: 'amount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get press_to_upload {
+    return Intl.message(
+      'Bấm để upload',
+      name: 'press_to_upload',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get upload_notice {
+    return Intl.message(
+      '(Upload hình ảnh thanh toán chuyển khoản thành công)',
+      name: 'upload_notice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_checkout_note {
+    return Intl.message(
+      'Nhập ghi chú thanh toán',
+      name: 'enter_checkout_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get checkout_note {
+    return Intl.message(
+      'Ghi chú thanh toán Quý khách muốn gửi tới Shop',
+      name: 'checkout_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get finish_checkout {
+    return Intl.message(
+      'hoàn tất thanh toán',
+      name: 'finish_checkout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get booking_success {
+    return Intl.message(
+      'Đặt Hàng Thành Công',
+      name: 'booking_success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String congratulation_booking(dynamic username) {
+    return Intl.message(
+      'Chúc mừng Anh/chị $username đã đặt hàng\nthành công ',
+      name: 'congratulation_booking',
+      desc: '',
+      args: [username],
+    );
+  }
+
+  String get order_code_title {
+    return Intl.message(
+      'Mã đơn hàng:',
+      name: 'order_code_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get continue_buying {
+    return Intl.message(
+      'Tiếp tục mua sắm',
+      name: 'continue_buying',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get view_order {
+    return Intl.message(
+      'Xem đơn hàng',
+      name: 'view_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get receive_in_shop {
+    return Intl.message(
+      'Nhận hàng tại shop',
+      name: 'receive_in_shop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delivering {
+    return Intl.message(
+      'Đang vận chuyển',
+      name: 'delivering',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delivery_info {
+    return Intl.message(
+      'Thông tin vận chuyển',
+      name: 'delivery_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get period {
+    return Intl.message(
+      'Thời hạn',
+      name: 'period',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get numberOfVoucher {
+    return Intl.message(
+      'Số Voucher',
+      name: 'numberOfVoucher',
       desc: '',
       args: [],
     );

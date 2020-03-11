@@ -224,7 +224,8 @@ class _RatingDetailScreenState extends BaseState<RatingDetailScreen> {
                 SizeUtil.smallSpace,
               ),
               width: MediaQuery.of(context).size.width,
-              child: RaisedButton(
+              child:
+              RaisedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
