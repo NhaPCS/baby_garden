@@ -1,10 +1,11 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/show_hide_pass_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/screen/forgot_password/forgot_password_screen.dart';
-import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/register/register_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/view_model/login_view_model.dart';
 import 'package:baby_garden_flutter/widget/circle_checkbox.dart';
 import 'package:baby_garden_flutter/widget/my_password_textfield.dart';
 import 'package:baby_garden_flutter/widget/my_text_field.dart';
@@ -21,7 +22,7 @@ class LoginScreen extends StatefulWidget {
   }
 }
 
-class _LoginScreenState extends BaseState<LoginScreen> {
+class _LoginScreenState extends BaseStateModel<LoginScreen, LoginViewModel> {
   final ShowHidePassProvider _showHidePassProvider = new ShowHidePassProvider();
 
   @override
@@ -90,8 +91,8 @@ class _LoginScreenState extends BaseState<LoginScreen> {
                     top: SizeUtil.smallSpace),
                 width: MediaQuery.of(context).size.width,
                 child: RaisedButton(
-                  onPressed: () {
-                    pushReplacement(MainScreen());
+                  onPressed: () async {
+                    getViewModel().onLogin(password: "1323432", phone: "2313");
                   },
                   color: ColorUtil.colorAccent,
                   shape: RoundedRectangleBorder(
@@ -162,5 +163,10 @@ class _LoginScreenState extends BaseState<LoginScreen> {
   List<SingleChildWidget> providers() {
     // TODO: implement providers
     return [ChangeNotifierProvider.value(value: _showHidePassProvider)];
+  }
+
+  @override
+  LoginViewModel initViewModel() {
+    return new LoginViewModel(context);
   }
 }
