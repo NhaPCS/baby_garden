@@ -5,17 +5,18 @@ import 'package:flutter/material.dart';
 
 class ItemAddedPromo extends StatelessWidget {
   final VoidCallback onRemoved;
+  final EdgeInsets padding;
 
-  const ItemAddedPromo({Key key, this.onRemoved}) : super(key: key);
+  const ItemAddedPromo({Key key, this.onRemoved,this.padding= const EdgeInsets.only(
+      left: SizeUtil.smallSpace,
+      right: SizeUtil.smallSpace,
+      top: SizeUtil.tinySpace,
+      bottom: SizeUtil.tinySpace)}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-          left: SizeUtil.smallSpace,
-          right: SizeUtil.smallSpace,
-          top: SizeUtil.tinySpace,
-          bottom: SizeUtil.tinySpace),
+      padding: padding,
       child: Row(
         children: <Widget>[
           SvgIcon(

@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/data/service.dart' as service;
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 typedef ReloadCallback = void Function(int page);
 
@@ -14,6 +15,7 @@ class LoadMoreGridView extends StatefulWidget {
   final pageSize;
   final int crossAxisCount;
   final double childAspectRatio;
+  final Axis scrollDirection;
 
   const LoadMoreGridView(
       {Key key,
@@ -26,6 +28,7 @@ class LoadMoreGridView extends StatefulWidget {
       this.totalElement = 0,
       this.pageSize = service.PAGE_SIZE,
       this.hasRefresh = true,
+        this.scrollDirection = Axis.vertical,
       this.childAspectRatio = 1.0})
       : super(key: key);
 
@@ -66,9 +69,12 @@ class _LoadMoreGridViewState extends State<LoadMoreGridView> {
     if (widget.hasRefresh)
       return RefreshIndicator(
           child: GridView.builder(
+            scrollDirection: widget.scrollDirection,
             controller: _scrollController,
             itemBuilder: widget.itemBuilder,
             padding: widget.padding,
+            shrinkWrap: true,
+            physics: ScrollPhysics(),
             itemCount: widget.itemsCount,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: widget.crossAxisCount,
@@ -81,8 +87,11 @@ class _LoadMoreGridViewState extends State<LoadMoreGridView> {
           });
     else
       return GridView.builder(
+        scrollDirection: widget.scrollDirection,
         controller: _scrollController,
         itemBuilder: widget.itemBuilder,
+        physics: ScrollPhysics(),
+        shrinkWrap: true,
         padding: widget.padding,
         itemCount: widget.itemsCount,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

@@ -138,7 +138,7 @@ Widget dialogBtn(context) {
               Navigator.of(context).pop();
             },
             child: Text(
-              S.of(context).back.toUpperCase(),
+              S.of(context).comeBack.toUpperCase(),
               style: TextStyle(fontSize: 12.0, color: Colors.white),
             ),
           ),

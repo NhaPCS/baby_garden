@@ -6,6 +6,7 @@ class AppProvider {
   double bigCategoryHeight;
   double bigCategoryWidth;
   double bgHeaderHeight;
+  double saleDetailSlideHeight;
   double expandHeaderHeight;
   double productImageHeight;
   double productCartWidth;
@@ -22,6 +23,7 @@ class AppProvider {
     bigCategoryWidth = categoryHeight * 1.2;
     bigCategoryHeight = bigCategoryWidth * 1.4;
     bgHeaderHeight = heightScreen * 0.23;
+    saleDetailSlideHeight = heightScreen * 0.27;
     expandHeaderHeight = heightScreen * 0.3;
     productImageHeight = heightScreen * 0.32;
     productCartWidth = widthScreen * 0.3;

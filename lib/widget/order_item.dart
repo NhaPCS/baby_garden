@@ -1,10 +1,15 @@
+import 'dart:math';
+
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OrderItem extends StatelessWidget{
-  const OrderItem({Key key}) : super(key: key);
+class OrderItem extends StatelessWidget {
+  final bool isRated;
+
+  const OrderItem({Key key, this.isRated = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +25,7 @@ class OrderItem extends StatelessWidget{
           padding: EdgeInsets.only(
               left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(
                 height: SizeUtil.tinySpace,
@@ -52,17 +58,13 @@ class OrderItem extends StatelessWidget{
                   )
                 ],
               ),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  S.of(context).order_date("25/12/2019 12:25"),
-                  style: TextStyle(fontSize: SizeUtil.textSizeTiny),
-                  textAlign: TextAlign.start,
-                ),
+              Text(
+                S.of(context).order_date("25/12/2019 12:25"),
+                style: TextStyle(fontSize: SizeUtil.textSizeTiny),
+                textAlign: TextAlign.start,
               ),
-              Container(
+              Padding(
                 padding: EdgeInsets.only(top: SizeUtil.tinySpace),
-                alignment: Alignment.centerLeft,
                 child: Text(
                   S.of(context).date_of_expiration_holding("28/12/2019 12:25"),
                   style: TextStyle(fontSize: SizeUtil.textSizeTiny),
@@ -81,7 +83,7 @@ class OrderItem extends StatelessWidget{
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(top:SizeUtil.midSmallSpace),
+                    padding: const EdgeInsets.only(top: SizeUtil.midSmallSpace),
                     child: Image.asset("photo/order_img.png",
                         width: MediaQuery.of(context).size.width / 6),
                   ),
@@ -91,19 +93,23 @@ class OrderItem extends StatelessWidget{
                       child: Column(
                         children: <Widget>[
                           SizedBox(
-                            height: SizeUtil.tinySpace,
+                            height: isRated
+                                ? SizeUtil.tinySpace
+                                : SizeUtil.smallSpace,
                           ),
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
                               S.of(context).order_title,
                               style:
-                              TextStyle(fontSize: SizeUtil.textSizeSmall),
+                                  TextStyle(fontSize: SizeUtil.textSizeSmall),
                               textAlign: TextAlign.start,
                             ),
                           ),
                           SizedBox(
-                            height: SizeUtil.tinySpace,
+                            height: isRated
+                                ? SizeUtil.tinySpace
+                                : SizeUtil.defaultSpace,
                           ),
                           Container(
                             alignment: Alignment.centerLeft,
@@ -128,25 +134,44 @@ class OrderItem extends StatelessWidget{
                           SizedBox(
                             height: SizeUtil.tinySpace,
                           ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            child: StarDisplay(value: 3),
-                          ),
+                          isRated
+                              ? Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: StarDisplay(value: 3),
+                                )
+                              : SizedBox(),
                         ],
                       ),
                     ),
                   )
                 ],
               ),
+              isRated?SizedBox():
+                  Center(
+                    child: Text(
+                    S.of(context).see_more,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: ColorUtil.blue,
+                        fontSize: SizeUtil.textSizeTiny),
+                      ),
+                  )
+                  ,
               Container(
                 height: 0.5,
                 width: MediaQuery.of(context).size.width,
                 color: ColorUtil.gray,
-                margin: EdgeInsets.only(top: SizeUtil.smallSpace,bottom: SizeUtil.tinySpace),
+                margin: EdgeInsets.only(
+                    top: isRated?SizeUtil.smallSpace:0, bottom: isRated?SizeUtil.tinySpace:0),
               ),
+              isRated?SizedBox():Center(child: Transform.rotate(angle: pi / 2,child: SvgIcon('express_seemore_svg.svg',width: SizeUtil.iconSizeSmall,height: SizeUtil.iconSizeSmall,color: ColorUtil.blue,))),
               Row(
                 children: <Widget>[
-                  Expanded(child: Text(S.of(context).order_count_summary(4),style: TextStyle(fontSize: SizeUtil.textSizeTiny),)),
+                  Expanded(
+                      child: Text(
+                    S.of(context).order_count_summary(4),
+                    style: TextStyle(fontSize: SizeUtil.textSizeTiny),
+                  )),
                   RichText(
                     text: TextSpan(
                         text: S.of(context).invoice,
@@ -179,11 +204,18 @@ class OrderItem extends StatelessWidget{
 
 class StarDisplay extends StatelessWidget {
   final int value;
-  final Color bgColor ;
+  final Color bgColor;
+
   final double size;
-  const StarDisplay({Key key, this.value = 0,this.bgColor = ColorUtil.primaryColor,this.size = SizeUtil.iconSizeDefault})
+
+  const StarDisplay(
+      {Key key,
+      this.value = 0,
+      this.bgColor = ColorUtil.primaryColor,
+      this.size = SizeUtil.iconSizeDefault})
       : assert(value != null),
         super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Row(
