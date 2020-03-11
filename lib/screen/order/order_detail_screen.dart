@@ -6,6 +6,7 @@ import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nested/nested.dart';
 
 import 'order_delivery_info_screen.dart';
@@ -37,7 +38,9 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
         body: SafeArea(
             child: ListView(children: <Widget>[
           WidgetUtil.getLine(
-              width: SizeUtil.smallSpace, margin: EdgeInsets.all(0),color: Color(0xffDFDFDF)),
+              width: SizeUtil.smallSpace,
+              margin: EdgeInsets.all(0),
+              color: Color(0xffDFDFDF)),
           Container(
               color: Color(0xffFFEDDB),
               padding: const EdgeInsets.only(
@@ -69,8 +72,8 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                   )
                 ],
               )),
-              //TODO delivery address
-              WidgetUtil.getLine(width: 1,margin: EdgeInsets.all(0)),
+          //TODO delivery address
+          WidgetUtil.getLine(width: 1, margin: EdgeInsets.all(0)),
           Padding(
             padding: const EdgeInsets.only(
                 left: SizeUtil.normalSpace,
@@ -107,8 +110,9 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                     height: 1.3,
                     color: Colors.black)),
           ),
-              //TODO type of delivery
-              WidgetUtil.getLine(width: 1,margin: EdgeInsets.only(top: SizeUtil.tinySpace)),
+          //TODO type of delivery
+          WidgetUtil.getLine(
+              width: 1, margin: EdgeInsets.only(top: SizeUtil.tinySpace)),
           Padding(
             padding: const EdgeInsets.only(
                 left: SizeUtil.normalSpace,
@@ -144,8 +148,9 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                     height: 1.3,
                     color: Colors.black)),
           ),
-              //TODO type of checkout
-              WidgetUtil.getLine(width: 1,margin: EdgeInsets.only(top: SizeUtil.tinySpace)),
+          //TODO type of checkout
+          WidgetUtil.getLine(
+              width: 1, margin: EdgeInsets.only(top: SizeUtil.tinySpace)),
           Padding(
             padding: const EdgeInsets.only(
                 left: SizeUtil.normalSpace,
@@ -154,8 +159,8 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                 bottom: SizeUtil.tinySpace),
             child: Row(
               children: <Widget>[
-                Image.asset(
-                  'photo/ic_payment_method.png',
+                SvgIcon(
+                  'ic_payment_method.svg',
                   width: SizeUtil.iconSize,
                   height: SizeUtil.iconSize,
                 ),
@@ -180,9 +185,9 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                     height: 1.3,
                     color: Colors.black)),
           ),
-              //TODO delivery info
-              WidgetUtil.getLine(
-                  width: 1, margin: EdgeInsets.only(top: SizeUtil.tinySpace)),
+          //TODO delivery info
+          WidgetUtil.getLine(
+              width: 1, margin: EdgeInsets.only(top: SizeUtil.tinySpace)),
           Padding(
             padding: const EdgeInsets.only(
                 left: SizeUtil.normalSpace,
@@ -233,48 +238,57 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                     height: 1.3,
                     color: Colors.black)),
           ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: SizeUtil.normalSpace,
-                    right: SizeUtil.normalSpace,
-                    top: SizeUtil.midSmallSpace),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          Padding(
+            padding: const EdgeInsets.only(
+                left: SizeUtil.normalSpace,
+                right: SizeUtil.normalSpace,
+                top: SizeUtil.midSmallSpace),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Column(
                   children: <Widget>[
-                    Column(children: <Widget>[
-                      SvgIcon(
-                        'target_svg.svg',
-                        width: SizeUtil.iconSizeSmall,
-                        height: SizeUtil.iconSizeSmall,
-                        color: Colors.blue,
-                      ),
-                      Container(color: Color(0xff6C6C6C),width: 1,height: SizeUtil.defaultSpace,)
-                    ],),
-                    SizedBox(
-                      width: SizeUtil.smallSpace,
+                    SvgIcon(
+                      'target_svg.svg',
+                      width: SizeUtil.iconSizeSmall,
+                      height: SizeUtil.iconSizeSmall,
+                      color: Colors.blue,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                      Text(
-                        "Đang vận chuyển",
-                        style: TextStyle(
-                            fontSize: SizeUtil.textSizeExpressDetail,
-                            color: Colors.blue),
-                      ),
-                      SizedBox(height: SizeUtil.tinySpace,),
-                      Text(
-                        "25-12-2019 15:42",
-                        style: TextStyle(
-                            fontSize: SizeUtil.textSizeSmall,
-                            color: ColorUtil.textColor),
-                      ),
-                    ],)
+                    Container(
+                      color: Color(0xff6C6C6C),
+                      width: 1,
+                      height: SizeUtil.defaultSpace,
+                    )
                   ],
                 ),
-              ),
+                SizedBox(
+                  width: SizeUtil.smallSpace,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Đang vận chuyển",
+                      style: TextStyle(
+                          fontSize: SizeUtil.textSizeExpressDetail,
+                          color: Colors.blue),
+                    ),
+                    SizedBox(
+                      height: SizeUtil.tinySpace,
+                    ),
+                    Text(
+                      "25-12-2019 15:42",
+                      style: TextStyle(
+                          fontSize: SizeUtil.textSizeSmall,
+                          color: ColorUtil.textColor),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
           //TODO type of checkout
-          WidgetUtil.getLine(width: 1,margin: EdgeInsets.all(0)),
+          WidgetUtil.getLine(width: 1, margin: EdgeInsets.all(0)),
           Padding(
             padding: const EdgeInsets.only(
                 left: SizeUtil.normalSpace,
@@ -283,8 +297,8 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                 bottom: SizeUtil.tinySpace),
             child: Row(
               children: <Widget>[
-                Image.asset(
-                  'photo/ic_payment_method.png',
+                SvgIcon(
+                  'ic_payment_method.svg',
                   width: SizeUtil.iconSize,
                   height: SizeUtil.iconSize,
                 ),
@@ -315,7 +329,9 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                               child: Image.asset("photo/order_img.png",
                                   width: MediaQuery.of(context).size.width / 6),
                             ),
-                            SizedBox(width: SizeUtil.tinySpace,),
+                            SizedBox(
+                              width: SizeUtil.tinySpace,
+                            ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -331,7 +347,7 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                                 Text(
                                   "SKU: 495212521252125",
                                   style: TextStyle(
-                                    height: 1.5,
+                                      height: 1.5,
                                       fontSize: SizeUtil.textSizeNotiTime),
                                   textAlign: TextAlign.start,
                                 ),
@@ -348,8 +364,7 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                                           text: " 2",
                                           style: TextStyle(
                                             color: ColorUtil.textColor,
-                                            fontSize:
-                                                SizeUtil.textSizeSmall,
+                                            fontSize: SizeUtil.textSizeSmall,
                                           ),
                                         ),
                                       ]),
@@ -366,93 +381,86 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
               width: SizeUtil.tinySpace,
               margin: EdgeInsets.all(0),
               color: Color(0xffDFDFDF)),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: SizeUtil.normalSpace,
-                    right: SizeUtil.normalSpace,
-                    top: SizeUtil.midSmallSpace,
-                    bottom: SizeUtil.midSmallSpace),
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      S.of(context).cost,
-                      style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail),
-                    ),
-                    Spacer(),
-                    Text("520.000d",
-                        style:
-                        TextStyle(fontSize: SizeUtil.textSizeExpressDetail))
-                  ],
+          Padding(
+            padding: const EdgeInsets.only(
+                left: SizeUtil.normalSpace,
+                right: SizeUtil.normalSpace,
+                top: SizeUtil.midSmallSpace,
+                bottom: SizeUtil.midSmallSpace),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  S.of(context).cost,
+                  style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail),
                 ),
-              ),
-              WidgetUtil.getLine(
-                  width: 1,
-                  color: ColorUtil.lineColor,
-                  margin: EdgeInsets.all(0)),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: SizeUtil.normalSpace,
-                    right: SizeUtil.normalSpace,
-                    top: SizeUtil.midSmallSpace,
-                    bottom: SizeUtil.midSmallSpace),
-                child: Row(
-                  children: <Widget>[
-                    Text(S.of(context).delivery_fee,
-                        style:
-                        TextStyle(fontSize: SizeUtil.textSizeExpressDetail)),
-                    Spacer(),
-                    Text("5.000d",
-                        style:
-                        TextStyle(fontSize: SizeUtil.textSizeExpressDetail))
-                  ],
-                ),
-              ),
-              WidgetUtil.getLine(
-                  width: 1,
-                  color: ColorUtil.lineColor,
-                  margin: EdgeInsets.all(0)),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: SizeUtil.normalSpace,
-                    right: SizeUtil.normalSpace,
-                    top: SizeUtil.midSmallSpace,
-                    bottom: SizeUtil.midSmallSpace),
-                child: Row(
-                  children: <Widget>[
-                    Text(S.of(context).total,
-                        style: TextStyle(
-                            fontSize: SizeUtil.textSizeDefault,
-                            color: Colors.black)),
-                    Spacer(),
-                    Text("525.000d",
-                        style: TextStyle(
-                            fontSize: SizeUtil.textSizeDefault,
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold))
-                  ],
-                ),
-              ),
-              WidgetUtil.getLine(
-                  width: SizeUtil.tinySpace,
-                  color: ColorUtil.lineColor,
-                  margin: EdgeInsets.all(0)),
-              RaisedButton(
-                onPressed: () {
-                  //TODO booking
-                },
-                color: ColorUtil.primaryColor,
-                child: Container(
-                  padding: EdgeInsets.all(SizeUtil.midSpace),
-                  child: Text(
-                    S.of(context).booking_submit.toUpperCase(),
+                Spacer(),
+                Text("520.000d",
+                    style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail))
+              ],
+            ),
+          ),
+          WidgetUtil.getLine(
+              width: 1, color: ColorUtil.lineColor, margin: EdgeInsets.all(0)),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: SizeUtil.normalSpace,
+                right: SizeUtil.normalSpace,
+                top: SizeUtil.midSmallSpace,
+                bottom: SizeUtil.midSmallSpace),
+            child: Row(
+              children: <Widget>[
+                Text(S.of(context).delivery_fee,
+                    style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail)),
+                Spacer(),
+                Text("5.000d",
+                    style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail))
+              ],
+            ),
+          ),
+          WidgetUtil.getLine(
+              width: 1, color: ColorUtil.lineColor, margin: EdgeInsets.all(0)),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: SizeUtil.normalSpace,
+                right: SizeUtil.normalSpace,
+                top: SizeUtil.midSmallSpace,
+                bottom: SizeUtil.midSmallSpace),
+            child: Row(
+              children: <Widget>[
+                Text(S.of(context).total,
                     style: TextStyle(
                         fontSize: SizeUtil.textSizeDefault,
-                        color: Colors.white,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
+                        color: Colors.black)),
+                Spacer(),
+                Text("525.000d",
+                    style: TextStyle(
+                        fontSize: SizeUtil.textSizeDefault,
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold))
+              ],
+            ),
+          ),
+          WidgetUtil.getLine(
+              width: SizeUtil.tinySpace,
+              color: ColorUtil.lineColor,
+              margin: EdgeInsets.all(0)),
+          RaisedButton(
+            onPressed: () {
+              //TODO booking
+            },
+            color: ColorUtil.primaryColor,
+            child: Container(
+              padding: EdgeInsets.all(SizeUtil.midSpace),
+              child: Text(
+                S.of(context).booking_submit.toUpperCase(),
+                style: TextStyle(
+                    fontSize: SizeUtil.textSizeDefault,
+                    color: Colors.white,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.bold),
               ),
+            ),
+          ),
         ])));
   }
 

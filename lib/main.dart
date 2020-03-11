@@ -7,6 +7,7 @@ import 'package:baby_garden_flutter/screen/partner/partner_book_schedule.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_like_screen.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_list_screen.dart';
 import 'package:baby_garden_flutter/screen/rating_detail/rating_detail_screen.dart';
+import 'package:baby_garden_flutter/screen/welcome/welcome_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       theme: ThemeData(
           primaryColor: ColorUtil.primaryColor,
+          primaryColorDark: ColorUtil.primaryColor,
           accentColor: ColorUtil.colorAccent,
           backgroundColor: Colors.white,
           scaffoldBackgroundColor: Colors.white,
@@ -54,7 +56,7 @@ class MyApp extends StatelessWidget {
             bodyText1: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
           )),
-      home: OrderDetailScreen(),
+      home: WelcomeScreen(),
     );
   }
 }

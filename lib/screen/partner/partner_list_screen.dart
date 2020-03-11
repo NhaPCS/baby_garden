@@ -1,6 +1,8 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
+import 'package:baby_garden_flutter/screen/vcb_express_detail/vcb_express_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/expressItem.dart';
 import 'package:baby_garden_flutter/widget/partner_item.dart';
@@ -10,18 +12,18 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-class PartnerListScreen extends StatefulWidget{
+class PartnerListScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _PartnerListScreenState();
   }
-
 }
 
-class _PartnerListScreenState extends BaseState<PartnerListScreen>{
+class _PartnerListScreenState extends BaseState<PartnerListScreen> {
   final ChangeCategoryProvider _changeCategoryProvider =
-  ChangeCategoryProvider();
+      ChangeCategoryProvider();
+
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
@@ -44,6 +46,7 @@ class _PartnerListScreenState extends BaseState<PartnerListScreen>{
                     child: new PartnerItem(),
                     onTap: () {
 //                      push(VCBExpressDetailScreen());
+                      push(BookingScreen());
                     },
                   );
                 }),
@@ -58,5 +61,4 @@ class _PartnerListScreenState extends BaseState<PartnerListScreen>{
     // TODO: implement providers
     return [ChangeNotifierProvider.value(value: _changeCategoryProvider)];
   }
-
 }
