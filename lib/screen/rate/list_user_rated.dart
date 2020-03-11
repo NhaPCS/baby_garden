@@ -272,8 +272,9 @@ class userRatedItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-      margin: EdgeInsets.all(8.0),
+      margin: EdgeInsets.only(left:8.0,right: 8.0,top: 2.0,bottom: 2.0),
       child: Card(
+        elevation: 4,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(SizeUtil.tinyRadius),
