@@ -248,7 +248,7 @@ class _BookingScreenState extends BaseState<BookingScreen>
                   top: SizeUtil.midSmallSpace,
                   bottom: SizeUtil.midSmallSpace),
               icon: SvgIcon(
-                'photo/ic_payment_method.png',
+                'ic_payment_method.svg',
                 width: SizeUtil.iconSizeDefault,
                 height: SizeUtil.iconSizeDefault,
               ),
