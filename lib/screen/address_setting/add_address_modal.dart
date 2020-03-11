@@ -17,55 +17,60 @@ class _ShowAddAddressDialogState extends State<ShowAddAddressDialog> {
         'title': S.of(context).addressDetail,
         'hint': S.of(context).addressDetailHint
       },
-      {'title': S.of(context).city, 'hint': S.of(context).cityHint},
-      {'title': S.of(context).district, 'hint': S.of(context).districtHint},
-      {'title': S.of(context).commune, 'hint': S.of(context).communeHint}
+      {'title': S.of(context).province, 'hint': S.of(context).choose_province},
+      {'title': S.of(context).district, 'hint': S.of(context).choose_district},
+      {
+        'title': S.of(context).sub_district,
+        'hint': S.of(context).choose_sub_district
+      }
     ];
 
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      child: Container(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            // title
-            Container(
-              height: 40,
-              decoration:
-                  setBorder("bottom", Color.fromRGBO(204, 204, 204, 1), 0.5),
-              child: Center(
-                child: Text(
-                  S.of(context).addAddress,
-                  style: TextStyle(
-                      color: ColorUtil.primaryColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
+    return SingleChildScrollView(
+      child: Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              // title
+              Container(
+                height: 40,
+                decoration:
+                    setBorder("bottom", Color.fromRGBO(204, 204, 204, 1), 0.5),
+                child: Center(
+                  child: Text(
+                    S.of(context).addAddress,
+                    style: TextStyle(
+                        color: ColorUtil.primaryColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-            ),
 
-            listInputView(listInput),
-            Row(
-              children: <Widget>[
-                Checkbox(
-                    value: this.checkDefaultAdd,
-                    onChanged: (bool value) {
-                      setState(() {
-                        this.checkDefaultAdd = !this.checkDefaultAdd;
-                      });
-                    }),
-                Text(
-                  S.of(context).setToDefaultAddress,
-                  style: TextStyle(color: ColorUtil.black33, fontSize: 12),
-                ),
-              ],
-            ),
+              listInputView(listInput),
+              Row(
+                children: <Widget>[
+                  Checkbox(
+                      value: this.checkDefaultAdd,
+                      onChanged: (bool value) {
+                        setState(() {
+                          this.checkDefaultAdd = !this.checkDefaultAdd;
+                        });
+                      }),
+                  Text(
+                    S.of(context).set_delivery_address,
+                    style: TextStyle(color: ColorUtil.black33, fontSize: 12),
+                  ),
+                ],
+              ),
 
-            dialogBtn(context)
-          ],
+              dialogBtn(context)
+            ],
+          ),
         ),
       ),
     );

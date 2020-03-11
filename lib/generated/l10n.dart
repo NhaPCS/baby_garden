@@ -10,18 +10,18 @@ import 'intl/messages_all.dart';
 
 class S {
   S(this.localeName);
-
-  static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
+  
+  static const AppLocalizationDelegate delegate =
+    AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final String name =
-        locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
+    final String name = locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
       return S(localeName);
     });
-  }
+  } 
 
   static S of(BuildContext context) {
     return Localizations.of<S>(context, S);
@@ -1968,60 +1968,6 @@ class S {
     return Intl.message(
       'Nhập số nhà, tên đường...',
       name: 'addressDetailHint',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get city {
-    return Intl.message(
-      'Tỉnh/ Thành Phố',
-      name: 'city',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get cityHint {
-    return Intl.message(
-      'Chọn Tỉnh/ Thành phố',
-      name: 'cityHint',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get districtHint {
-    return Intl.message(
-      'Chọn Quận/ Huyện',
-      name: 'districtHint',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get commune {
-    return Intl.message(
-      'Phường/ Xã',
-      name: 'commune',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get communeHint {
-    return Intl.message(
-      'Chọn Phường/ Xã',
-      name: 'communeHint',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get setToDefaultAddress {
-    return Intl.message(
-      'Đặt làm địa chỉ nhận hàng mặc định',
-      name: 'setToDefaultAddress',
       desc: '',
       args: [],
     );

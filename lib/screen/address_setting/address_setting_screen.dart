@@ -10,12 +10,12 @@ import 'package:provider/provider.dart';
 import 'add_address_modal.dart';
 import 'address.dart';
 
-class AddressSetting extends StatefulWidget {
+class AddressSettingScreen extends StatefulWidget {
   @override
   _SeenProduct createState() => _SeenProduct();
 }
 
-class _SeenProduct extends BaseState<AddressSetting> {
+class _SeenProduct extends BaseState<AddressSettingScreen> {
   final GetListProvider _getListProvider = GetListProvider();
 
   final List<Address> address = [
