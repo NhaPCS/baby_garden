@@ -6,7 +6,6 @@ import 'package:nested/nested.dart';
 
 class ListOrderScreen extends StatefulWidget {
   final String title;
-
   const ListOrderScreen({Key key, @required this.title}) : super(key: key);
 
   @override

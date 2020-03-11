@@ -3,6 +3,7 @@ import 'package:baby_garden_flutter/provider/show_hide_pass_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/screen/forgot_password/forgot_password_screen.dart';
+import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/register/register_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/view_model/login_view_model.dart';
@@ -91,9 +92,13 @@ class _LoginScreenState extends BaseStateModel<LoginScreen, LoginViewModel> {
                     top: SizeUtil.smallSpace),
                 width: MediaQuery.of(context).size.width,
                 child: RaisedButton(
-                  onPressed: () async {
-                    getViewModel().onLogin(password: "1323432", phone: "2313");
-                  },
+                  onPressed: () {
+                    pushReplacement(MainScreen());
+                  }
+//                  async {
+//                    getViewModel().onLogin(password: "1323432", phone: "2313");
+//                  }
+                  ,
                   color: ColorUtil.colorAccent,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
@@ -125,9 +130,7 @@ class _LoginScreenState extends BaseStateModel<LoginScreen, LoginViewModel> {
                 ),
               ),
             ),
-            Expanded(
-              child: SizedBox(),
-            ),
+            Spacer(),
             InkWell(
               onTap: () {
                 push(RegisterScreen());
@@ -150,9 +153,7 @@ class _LoginScreenState extends BaseStateModel<LoginScreen, LoginViewModel> {
                 ),
               ),
             ),
-            SizedBox(
-              height: SizeUtil.smallSpace,
-            )
+            Spacer()
           ],
         ),
       ),

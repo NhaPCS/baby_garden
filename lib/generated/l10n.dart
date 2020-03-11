@@ -2738,6 +2738,15 @@ class S {
     );
   }
 
+  String get receive {
+    return Intl.message(
+      'Nhận hàng',
+      name: 'receive',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get delivering {
     return Intl.message(
       'Đang vận chuyển',
@@ -2751,6 +2760,105 @@ class S {
     return Intl.message(
       'Thông tin vận chuyển',
       name: 'delivery_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get order_info {
+    return Intl.message(
+      'Thông tin đơn hàng',
+      name: 'order_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get barcode_note {
+    return Intl.message(
+      'Quý khách vui lòng đưa mã barcode cho\nnhân viên tại cửa hàng để được nhận hàng',
+      name: 'barcode_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get ordered {
+    return Intl.message(
+      'Đơn hàng đã đặt',
+      name: 'ordered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get canceled_order {
+    return Intl.message(
+      'Đơn hàng đã huỷ',
+      name: 'canceled_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get service_booked {
+    return Intl.message(
+      'Dịch vụ đã đặt lịch',
+      name: 'service_booked',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get used_service {
+    return Intl.message(
+      'Dịch vụ đã sử dụng',
+      name: 'used_service',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get service_using_address {
+    return Intl.message(
+      'Địa chỉ sử dung dịch vụ',
+      name: 'service_using_address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get time_using {
+    return Intl.message(
+      'Thời gian sử dụng',
+      name: 'time_using',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get date_using {
+    return Intl.message(
+      'Ngày sử dụng',
+      name: 'date_using',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get service_info {
+    return Intl.message(
+      'Thông tin dịch vụ',
+      name: 'service_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cancel_schedule {
+    return Intl.message(
+      'Hủy Lịch',
+      name: 'cancel_schedule',
       desc: '',
       args: [],
     );
