@@ -10,18 +10,18 @@ import 'intl/messages_all.dart';
 
 class S {
   S(this.localeName);
-
-  static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
+  
+  static const AppLocalizationDelegate delegate =
+    AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final String name =
-        locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
+    final String name = locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
       return S(localeName);
     });
-  }
+  } 
 
   static S of(BuildContext context) {
     return Localizations.of<S>(context, S);
@@ -2958,6 +2958,87 @@ class S {
     return Intl.message(
       'Hủy Lịch',
       name: 'cancel_schedule',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindBuyProduct {
+    return Intl.message(
+      'Nhắc lịch mua sản phẩm',
+      name: 'remindBuyProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindTime {
+    return Intl.message(
+      'Thời gian nhắc:',
+      name: 'remindTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindUseProduct {
+    return Intl.message(
+      'Nhắc lịch sử dụng sản phẩm',
+      name: 'remindUseProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get endDateOfReminder {
+    return Intl.message(
+      'Ngày kết thúc nhắc:',
+      name: 'endDateOfReminder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get reminderCycle {
+    return Intl.message(
+      'Chu kỳ nhắc (ngày):',
+      name: 'reminderCycle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get reminderCycleHint {
+    return Intl.message(
+      ' Chọn 1 là nhắc lịch hàng ngày, 2 là 2 ngày sẽ nhắc 1 lần...',
+      name: 'reminderCycleHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get select {
+    return Intl.message(
+      'Chọn',
+      name: 'select',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String reminderTimeAt(dynamic order) {
+    return Intl.message(
+      'Thời gian nhắc lần $order',
+      name: 'reminderTimeAt',
+      desc: '',
+      args: [order],
+    );
+  }
+
+  String get addReminder {
+    return Intl.message(
+      'Thêm lịch nhắc',
+      name: 'addReminder',
       desc: '',
       args: [],
     );

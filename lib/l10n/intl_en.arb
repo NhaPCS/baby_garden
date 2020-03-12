@@ -324,5 +324,14 @@
   "time_using": "Thời gian sử dụng",
   "date_using": "Ngày sử dụng",
   "service_info": "Thông tin dịch vụ",
-  "cancel_schedule": "Hủy Lịch"
+  "cancel_schedule": "Hủy Lịch",
+  "remindBuyProduct": "Nhắc lịch mua sản phẩm",
+  "remindTime": "Thời gian nhắc:",
+  "remindUseProduct": "Nhắc lịch sử dụng sản phẩm",
+  "endDateOfReminder": "Ngày kết thúc nhắc:",
+  "reminderCycle": "Chu kỳ nhắc (ngày):",
+  "reminderCycleHint": " Chọn 1 là nhắc lịch hàng ngày, 2 là 2 ngày sẽ nhắc 1 lần...",
+  "select": "Chọn",
+  "reminderTimeAt": "Thời gian nhắc lần {order}",
+  "addReminder": "Thêm lịch nhắc"
 }
