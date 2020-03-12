@@ -303,6 +303,7 @@
   "receive": "Nhận hàng",
   "delivering": "Đang vận chuyển",
   "delivery_info": "Thông tin vận chuyển",
+  "list_user_rated": "Danh sách người đánh giá",
   "order_info": "Thông tin đơn hàng",
   "barcode_note": "Quý khách vui lòng đưa mã barcode cho\nnhân viên tại cửa hàng để được nhận hàng",
   "ordered": "Đơn hàng đã đặt",

@@ -2765,6 +2765,15 @@ class S {
     );
   }
 
+  String get list_user_rated {
+    return Intl.message(
+      'Danh sách người đánh giá',
+      name: 'list_user_rated',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get order_info {
     return Intl.message(
       'Thông tin đơn hàng',
