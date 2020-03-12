@@ -1,6 +1,7 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_added_promo.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/checkout/checkout_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/circle_checkbox.dart';
 import 'package:baby_garden_flutter/widget/custom_radio_button.dart';
@@ -123,292 +124,291 @@ class _BookingScreenState extends BaseState<BookingScreen>
       ),
     ];
     // TODO: implement buildWidget
-    return SafeArea(
-      child: Scaffold(
-        appBar: getAppBar(
-            title: S.of(context).booking,
-            centerTitle: true,
-            bgColor: ColorUtil.primaryColor,
-            titleColor: Colors.white,
-            backColor: Colors.white),
-        body: ListView(
-          children: <Widget>[
-            //TODO delivery address
-            ListTitleCustom(
-              padding: const EdgeInsets.only(
-                  left: SizeUtil.normalSpace,
-                  right: SizeUtil.normalSpace,
-                  top: SizeUtil.midSmallSpace,
-                  bottom: SizeUtil.midSmallSpace),
-              icon: SvgIcon(
-                'ic_receive_location.svg',
-                width: SizeUtil.iconSizeDefault,
-                height: SizeUtil.iconSizeDefault,
-              ),
-              title: S.of(context).delivery_address,
-              trailing: InkWell(
-                  onTap: () {
-                    // Show address list
-                    showChangeDeliveryAddressDialogue(context);
-                  },
-                  child: Text(
-                    S.of(context).change,
-                    style: TextStyle(
-                        color: ColorUtil.blueLight,
-                        fontSize: SizeUtil.textSizeSmall),
-                  )),
-              content: Padding(
-                padding: EdgeInsets.only(
-                    left: SizeUtil.bigSpacehigher,
-                    top: SizeUtil.tinySpace,
-                    bottom: SizeUtil.tinySpace),
+    return Scaffold(
+      appBar: getAppBar(
+          title: S.of(context).booking,
+          centerTitle: true,
+          bgColor: ColorUtil.primaryColor,
+          titleColor: Colors.white,
+          backColor: Colors.white),
+      body: ListView(
+        children: <Widget>[
+          //TODO delivery address
+          ListTitleCustom(
+            padding: const EdgeInsets.only(
+                left: SizeUtil.normalSpace,
+                right: SizeUtil.normalSpace,
+                top: SizeUtil.midSmallSpace,
+                bottom: SizeUtil.midSmallSpace),
+            icon: SvgIcon(
+              'ic_receive_location.svg',
+              width: SizeUtil.iconSizeDefault,
+              height: SizeUtil.iconSizeDefault,
+            ),
+            title: S.of(context).delivery_address,
+            trailing: InkWell(
+                onTap: () {
+                  // Show address list
+                  showChangeDeliveryAddressDialogue(context);
+                },
                 child: Text(
-                  "Lê Văn Lĩnh - 0975 441 005\n28 Phan Kế Bính\nPhường Cống Vị, Quận Ba Đình, Hà Nội",
+                  S.of(context).change,
                   style: TextStyle(
-                      fontSize: SizeUtil.textSizeSmall,
-                      height: 1.3,
-                      color: Colors.black),
-                ),
+                      color: ColorUtil.blueLight,
+                      fontSize: SizeUtil.textSizeSmall),
+                )),
+            content: Padding(
+              padding: EdgeInsets.only(
+                  left: SizeUtil.bigSpacehigher,
+                  top: SizeUtil.tinySpace,
+                  bottom: SizeUtil.tinySpace),
+              child: Text(
+                "Lê Văn Lĩnh - 0975 441 005\n28 Phan Kế Bính\nPhường Cống Vị, Quận Ba Đình, Hà Nội",
+                style: TextStyle(
+                    fontSize: SizeUtil.textSizeSmall,
+                    height: 1.3,
+                    color: Colors.black),
               ),
             ),
-            //TODO delivery menthod
-            ListTitleCustom(
-              padding: const EdgeInsets.only(
-                  left: SizeUtil.normalSpace,
-                  right: SizeUtil.normalSpace,
-                  top: SizeUtil.midSmallSpace,
-                  bottom: SizeUtil.midSmallSpace),
-              icon: SvgIcon(
-                'ic_receive_method.svg',
-                width: SizeUtil.iconSizeDefault,
-                height: SizeUtil.iconSizeDefault,
-              ),
-              title: S.of(context).type_of_delivery,
-              content: getDeliveryMenthod(),
+          ),
+          //TODO delivery menthod
+          ListTitleCustom(
+            padding: const EdgeInsets.only(
+                left: SizeUtil.normalSpace,
+                right: SizeUtil.normalSpace,
+                top: SizeUtil.midSmallSpace,
+                bottom: SizeUtil.midSmallSpace),
+            icon: SvgIcon(
+              'ic_receive_method.svg',
+              width: SizeUtil.iconSizeDefault,
+              height: SizeUtil.iconSizeDefault,
             ),
-            //TODO receive time
-            deliveryMenthod == 1
-                ? ListTitleCustom(
-                    padding: const EdgeInsets.only(
-                        left: SizeUtil.normalSpace,
-                        right: SizeUtil.normalSpace,
-                        top: SizeUtil.midSmallSpace,
-                        bottom: SizeUtil.midSmallSpace),
-                    icon: SvgIcon(
-                      'ic_transfer_info.svg',
-                      width: SizeUtil.iconSizeDefault,
-                      height: SizeUtil.iconSizeDefault,
-                    ),
-                    title: S.of(context).receive_time,
-                    content: Padding(
-                      padding: EdgeInsets.only(
-                          left: SizeUtil.notifyHintSpace,
-                          right: SizeUtil.normalSpace,
-                          top: SizeUtil.midSpace,
-                          bottom: SizeUtil.midSpace),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: RichText(
-                              text: TextSpan(children: <TextSpan>[
-                                TextSpan(
-                                    text: S.of(context).receive_in,
-                                    style: TextStyle(
-                                        color: ColorUtil.textColor,
-                                        fontSize: SizeUtil.textSizeSmall)),
-                                TextSpan(
-                                    text: "09:00 - 11:00 02/02/2020",
-                                    style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: SizeUtil.textSizeSmall))
-                              ]),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              showChangeReceiveTimeDialogue(context, myTabs);
-                            },
-                            child: Text(
-                              S.of(context).change,
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: SizeUtil.textSizeSmall),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                : SizedBox(),
-            //TODO CHECKOUT MENTHOD
-            ListTitleCustom(
-              padding: const EdgeInsets.only(
-                  left: SizeUtil.normalSpace,
-                  right: SizeUtil.normalSpace,
-                  top: SizeUtil.midSmallSpace,
-                  bottom: SizeUtil.midSmallSpace),
-              icon: SvgIcon(
-                'ic_payment_method.svg',
-                width: SizeUtil.iconSizeDefault,
-                height: SizeUtil.iconSizeDefault,
-              ),
-              title: S.of(context).type_of_checkout,
-              content: getCheckoutMenthod(),
-            ),
-            //TODO transfer menthod
-            ListTitleCustom(
-                padding: const EdgeInsets.only(
-                    left: SizeUtil.normalSpace,
-                    right: SizeUtil.normalSpace,
-                    top: SizeUtil.midSmallSpace,
-                    bottom: SizeUtil.midSmallSpace),
-                icon: SvgIcon(
-                  'ic_transfer_method.svg',
-                  width: SizeUtil.iconSizeDefault,
-                  height: SizeUtil.iconSizeDefault,
-                ),
-                title: S.of(context).delivery_service,
-                content: getTransferService()),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: SizeUtil.normalSpace,
-                  right: SizeUtil.normalSpace,
-                  top: SizeUtil.midSmallSpace,
-                  bottom: SizeUtil.midSmallSpace),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    S.of(context).cost,
-                    style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail),
-                  ),
-                  Spacer(),
-                  Text("520.000d",
-                      style:
-                          TextStyle(fontSize: SizeUtil.textSizeExpressDetail))
-                ],
-              ),
-            ),
-            WidgetUtil.getLine(
-                width: 1,
-                color: ColorUtil.lineColor,
-                margin: EdgeInsets.all(0)),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: SizeUtil.normalSpace,
-                  right: SizeUtil.normalSpace,
-                  top: SizeUtil.midSmallSpace,
-                  bottom: SizeUtil.midSmallSpace),
-              child: Row(
-                children: <Widget>[
-                  Text(S.of(context).delivery_fee,
-                      style:
-                          TextStyle(fontSize: SizeUtil.textSizeExpressDetail)),
-                  Spacer(),
-                  Text("5.000d",
-                      style:
-                          TextStyle(fontSize: SizeUtil.textSizeExpressDetail))
-                ],
-              ),
-            ),
-            WidgetUtil.getLine(
-                width: 1,
-                color: ColorUtil.lineColor,
-                margin: EdgeInsets.all(0)),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: SizeUtil.normalSpace,
-                  right: SizeUtil.normalSpace,
-                  top: SizeUtil.midSmallSpace,
-                  bottom: SizeUtil.midSmallSpace),
-              child: Row(
-                children: <Widget>[
-                  Text(S.of(context).total,
-                      style: TextStyle(
-                          fontSize: SizeUtil.textSizeDefault,
-                          color: Colors.black)),
-                  Spacer(),
-                  Text("525.000d",
-                      style: TextStyle(
-                          fontSize: SizeUtil.textSizeDefault,
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold))
-                ],
-              ),
-            ),
-            WidgetUtil.getLine(
-                width: 1,
-                color: ColorUtil.lineColor,
-                margin: EdgeInsets.only(bottom: SizeUtil.smallSpace)),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    //todo change icon
-                  },
-                  child: SvgIcon(
-                    'select_icon.svg',
+            title: S.of(context).type_of_delivery,
+            content: getDeliveryMenthod(),
+          ),
+          //TODO receive time
+          deliveryMenthod == 1
+              ? ListTitleCustom(
+                  padding: const EdgeInsets.only(
+                      left: SizeUtil.normalSpace,
+                      right: SizeUtil.normalSpace,
+                      top: SizeUtil.midSmallSpace,
+                      bottom: SizeUtil.midSmallSpace),
+                  icon: SvgIcon(
+                    'ic_transfer_info.svg',
                     width: SizeUtil.iconSizeDefault,
                     height: SizeUtil.iconSizeDefault,
                   ),
-                ),
-                SizedBox(
-                  width: SizeUtil.smallSpace,
-                ),
-                RichText(
-                  text: TextSpan(children: <TextSpan>[
-                    TextSpan(
-                        text: "Đồng ý với ",
-                        style: TextStyle(
-                            color: ColorUtil.textColor,
-                            fontSize: SizeUtil.textSizeSmall)),
-                    TextSpan(
-                        recognizer: new TapGestureRecognizer()
-                          ..onTap = () => showPrivacyAndPolicyDialogue(context),
-                        text: "Chính sách & Điều khoản dịch vụ ",
-                        style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: SizeUtil.textSizeSmall)),
-                    TextSpan(
-                        text: "của Shop",
-                        style: TextStyle(
-                            color: ColorUtil.textColor,
-                            fontSize: SizeUtil.textSizeSmall)),
-                  ]),
-                ),
-              ],
-            ),
-            Container(
-                padding: const EdgeInsets.only(
-                    left: SizeUtil.smallSpace,
-                    right: SizeUtil.smallSpace,
-                    top: SizeUtil.smallSpace,
-                    bottom: SizeUtil.smallSpace),
-                width: MediaQuery.of(context).size.width,
-                child: RaisedButton(
-                  onPressed: () {
-                    //TODO booking
-                  },
-                  color: ColorUtil.primaryColor,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                    Radius.circular(SizeUtil.tinyRadius),
-                  )),
-                  child: Container(
-                    padding: EdgeInsets.all(SizeUtil.midSpace),
-                    child: Text(
-                      S.of(context).booking_submit.toUpperCase(),
-                      style: TextStyle(
-                          fontSize: SizeUtil.textSizeDefault,
-                          color: Colors.white,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.bold),
+                  title: S.of(context).receive_time,
+                  content: Padding(
+                    padding: EdgeInsets.only(
+                        left: SizeUtil.notifyHintSpace,
+                        right: SizeUtil.normalSpace,
+                        top: SizeUtil.midSpace,
+                        bottom: SizeUtil.midSpace),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: RichText(
+                            text: TextSpan(children: <TextSpan>[
+                              TextSpan(
+                                  text: S.of(context).receive_in,
+                                  style: TextStyle(
+                                      color: ColorUtil.textColor,
+                                      fontSize: SizeUtil.textSizeSmall)),
+                              TextSpan(
+                                  text: "09:00 - 11:00 02/02/2020",
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: SizeUtil.textSizeSmall))
+                            ]),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            showChangeReceiveTimeDialogue(context, myTabs);
+                          },
+                          child: Text(
+                            S.of(context).change,
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: SizeUtil.textSizeSmall),
+                          ),
+                        )
+                      ],
                     ),
                   ),
+                )
+              : SizedBox(),
+          //TODO CHECKOUT MENTHOD
+          ListTitleCustom(
+            padding: const EdgeInsets.only(
+                left: SizeUtil.normalSpace,
+                right: SizeUtil.normalSpace,
+                top: SizeUtil.midSmallSpace,
+                bottom: SizeUtil.midSmallSpace),
+            icon: SvgIcon(
+              'ic_payment_method.svg',
+              width: SizeUtil.iconSizeDefault,
+              height: SizeUtil.iconSizeDefault,
+            ),
+            title: S.of(context).type_of_checkout,
+            content: getCheckoutMenthod(),
+          ),
+          //TODO transfer menthod
+          ListTitleCustom(
+              padding: const EdgeInsets.only(
+                  left: SizeUtil.normalSpace,
+                  right: SizeUtil.normalSpace,
+                  top: SizeUtil.midSmallSpace,
+                  bottom: SizeUtil.midSmallSpace),
+              icon: SvgIcon(
+                'ic_transfer_method.svg',
+                width: SizeUtil.iconSizeDefault,
+                height: SizeUtil.iconSizeDefault,
+              ),
+              title: S.of(context).delivery_service,
+              content: getTransferService()),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: SizeUtil.normalSpace,
+                right: SizeUtil.normalSpace,
+                top: SizeUtil.midSmallSpace,
+                bottom: SizeUtil.midSmallSpace),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  S.of(context).cost,
+                  style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail),
+                ),
+                Spacer(),
+                Text("520.000d",
+                    style:
+                        TextStyle(fontSize: SizeUtil.textSizeExpressDetail))
+              ],
+            ),
+          ),
+          WidgetUtil.getLine(
+              width: 1,
+              color: ColorUtil.lineColor,
+              margin: EdgeInsets.all(0)),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: SizeUtil.normalSpace,
+                right: SizeUtil.normalSpace,
+                top: SizeUtil.midSmallSpace,
+                bottom: SizeUtil.midSmallSpace),
+            child: Row(
+              children: <Widget>[
+                Text(S.of(context).delivery_fee,
+                    style:
+                        TextStyle(fontSize: SizeUtil.textSizeExpressDetail)),
+                Spacer(),
+                Text("5.000d",
+                    style:
+                        TextStyle(fontSize: SizeUtil.textSizeExpressDetail))
+              ],
+            ),
+          ),
+          WidgetUtil.getLine(
+              width: 1,
+              color: ColorUtil.lineColor,
+              margin: EdgeInsets.all(0)),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: SizeUtil.normalSpace,
+                right: SizeUtil.normalSpace,
+                top: SizeUtil.midSmallSpace,
+                bottom: SizeUtil.midSmallSpace),
+            child: Row(
+              children: <Widget>[
+                Text(S.of(context).total,
+                    style: TextStyle(
+                        fontSize: SizeUtil.textSizeDefault,
+                        color: Colors.black)),
+                Spacer(),
+                Text("525.000d",
+                    style: TextStyle(
+                        fontSize: SizeUtil.textSizeDefault,
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold))
+              ],
+            ),
+          ),
+          WidgetUtil.getLine(
+              width: 1,
+              color: ColorUtil.lineColor,
+              margin: EdgeInsets.only(bottom: SizeUtil.smallSpace)),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {
+                  //todo change icon
+                },
+                child: SvgIcon(
+                  'select_icon.svg',
+                  width: SizeUtil.iconSizeDefault,
+                  height: SizeUtil.iconSizeDefault,
+                ),
+              ),
+              SizedBox(
+                width: SizeUtil.smallSpace,
+              ),
+              RichText(
+                text: TextSpan(children: <TextSpan>[
+                  TextSpan(
+                      text: "Đồng ý với ",
+                      style: TextStyle(
+                          color: ColorUtil.textColor,
+                          fontSize: SizeUtil.textSizeSmall)),
+                  TextSpan(
+                      recognizer: new TapGestureRecognizer()
+                        ..onTap = () => showPrivacyAndPolicyDialogue(context),
+                      text: "Chính sách & Điều khoản dịch vụ ",
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: SizeUtil.textSizeSmall)),
+                  TextSpan(
+                      text: "của Shop",
+                      style: TextStyle(
+                          color: ColorUtil.textColor,
+                          fontSize: SizeUtil.textSizeSmall)),
+                ]),
+              ),
+            ],
+          ),
+          Container(
+              padding: const EdgeInsets.only(
+                  left: SizeUtil.smallSpace,
+                  right: SizeUtil.smallSpace,
+                  top: SizeUtil.smallSpace,
+                  bottom: SizeUtil.smallSpace),
+              width: MediaQuery.of(context).size.width,
+              child: RaisedButton(
+                onPressed: () {
+                  //TODO booking
+                  push(CheckoutScreen());
+                },
+                color: ColorUtil.primaryColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                  Radius.circular(SizeUtil.tinyRadius),
                 )),
-          ],
-        ),
+                child: Container(
+                  padding: EdgeInsets.all(SizeUtil.midSpace),
+                  child: Text(
+                    S.of(context).booking_submit.toUpperCase(),
+                    style: TextStyle(
+                        fontSize: SizeUtil.textSizeDefault,
+                        color: Colors.white,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              )),
+        ],
       ),
     );
   }

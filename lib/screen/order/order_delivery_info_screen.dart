@@ -170,10 +170,8 @@ class TrackingItem extends StatelessWidget {
                       width: 1,
                       height: SizeUtil.defaultSpace,
                     ),
-              SvgIcon(
-                'target_svg.svg',
-                width: SizeUtil.iconSizeSmall,
-                height: SizeUtil.iconSizeSmall,
+              Icon(Icons.radio_button_checked,
+                size: SizeUtil.iconSizeSmall,
                 color: targetColor,
               ),
               Container(

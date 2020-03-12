@@ -45,7 +45,7 @@ class CartIcon extends StatelessWidget {
         RouteUtil.pushAndReplaceAll(
             context,
             MainScreen(
-              goToCart: true,
+              index: 2,
             ),
             '/main');
       },

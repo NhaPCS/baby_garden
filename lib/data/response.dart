@@ -1,11 +1,11 @@
 class Response {
-  int result;
-  dynamic error;
+  String message;
+  dynamic errorId;
   dynamic data;
 
-  Response({this.result, this.error, this.data});
+  Response({this.message, this.errorId, this.data});
 
   bool isSuccess() {
-    return result != null && result == 1;
+    return errorId != null && errorId == 200;
   }
 }

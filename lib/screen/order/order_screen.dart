@@ -2,7 +2,10 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_faq.dart';
 import 'package:baby_garden_flutter/item/item_order_option.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/booking/booking_rate_screen.dart';
 import 'package:baby_garden_flutter/screen/list_order/list_order_screen.dart';
+import 'package:baby_garden_flutter/screen/order/order_list_screen.dart';
+import 'package:baby_garden_flutter/screen/service_and_order_list/service_list_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -44,9 +47,39 @@ class _OrderState extends BaseState<OrderScreen> {
                   .map((e) => InkWell(
                         child: ItemOrderOption(option: e),
                         onTap: () {
-                          push(ListOrderScreen(
-                            title: e['title'],
-                          ));
+                          switch(ORDER_OPTIONS.indexOf(e)){
+                            case 0:
+                              push(ListOrderScreen(
+                                title: e['title'],
+                              ));
+                              break;
+                            case 1:
+                              push(ListOrderScreen(
+                                title: e['title'],
+                              ));
+                              break;
+                            case 2:
+                              push(OrderListScreen());
+                              break;
+                            case 3:
+                              push(ListOrderScreen(
+                                title: e['title'],
+                              ));
+                              break;
+                            case 4:
+                              push(OrderListScreen(isDelivering: true,));
+                              break;
+                            case 5:
+                              push(ServiceListScreen(title: S.of(context).ordered,order: 0,));
+                              break;
+                            case 6:
+                              push(ServiceListScreen(title: S.of(context).canceled_order,order: 1,));
+                              break;
+                            default:
+                              push(BookingRateScreen(isService:  false,));
+                              break;
+                          }
+
                         },
                       ))
                   .toList(),
@@ -64,7 +97,24 @@ class _OrderState extends BaseState<OrderScreen> {
               gridDelegate:
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
               children: SERVICE_OPTIONS
-                  .map((e) => ItemOrderOption(option: e))
+                  .map((e) => InkWell(
+                  onTap: (){
+                    switch(SERVICE_OPTIONS.indexOf(e)){
+                      case 0 :
+                        push(ServiceListScreen(title: S.of(context).service_booked,order: 2,));
+                        break;
+                      case 1 :
+                        push(ServiceListScreen(title: S.of(context).used_service,order: 3,));
+                        break;
+                      case 2 :
+                        push(ServiceListScreen(title: S.of(context).canceled_service,order: 4,));
+                        break;
+                      default:
+                        push(BookingRateScreen(isService: true,));
+                        break;
+                    }
+                  },
+                  child: ItemOrderOption(option: e)))
                   .toList(),
             ),
             Text(

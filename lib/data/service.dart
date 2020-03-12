@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:baby_garden_flutter/data/response.dart';
 import 'package:baby_garden_flutter/data/shared_value.dart';
@@ -10,8 +9,45 @@ import 'package:http/http.dart' as http;
 
 Map<String, String> _headers;
 
+const String BASE_URL = "http://chap.com.vn/vcb/api/";
 const int START_PAGE = 1;
 const int PAGE_SIZE = 20;
+
+Future<dynamic> login(BuildContext context, {String phone, String password})async {
+  Response response=await post(context, path: 'login', param: {
+    'phone': phone,
+    'password': password
+  });
+  if(response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<Response> post(BuildContext context,
+    {String path,
+    dynamic param,
+    bool hasAccessToken = false,
+    bool showErrorDialog = true}) async {
+  Response response = await execute(context,
+      path: path,
+      param: path,
+      hasAccessToken: hasAccessToken,
+      showErrorDialog: showErrorDialog,
+      isPost: true);
+  return response;
+}
+
+Future<Response> get(BuildContext context,
+    {String path,
+      dynamic param,
+      bool showErrorDialog = true}) async {
+  Response response = await execute(context,
+      path: path,
+      param: path,
+      hasAccessToken: false,
+      showErrorDialog: showErrorDialog,
+      isPost: false);
+  return response;
+}
 
 Future<Response> execute(BuildContext context,
     {String path,
@@ -20,45 +56,31 @@ Future<Response> execute(BuildContext context,
     bool showErrorDialog = true,
     bool isPost = true}) async {
   if (_headers == null || _headers.isEmpty) {
-    _headers = {
-      'device-id': '',
-      'device-os': Platform.isIOS ? "ios" : "android",
-      'device-os-version': '10',
-      'device-token': 'abc',
-      'device-brand': 'google',
-      'language': 'en'
-    };
+    _headers = {};
   }
-  String key = await ShareValueProvider.shareValueProvider.getAccessToken();
-  print("TOKEN $key");
-  _headers['Authorization'] = 'Bearer $key';
-
-  var url = 'http://api-moda.vrmaker.io/v1/$path';
-
-  print("BODY: $path === $param");
-  if (!isPost) {
-    print("aaa ${Uri.http("api-moda.vrmaker.io", '/v1/$path', param)}");
-  }
-  if (context != null) WidgetUtil.showLoading(context);
+  var url = '$BASE_URL$path';
+  if (context != null && showErrorDialog) WidgetUtil.showLoading(context);
   var response = isPost
       ? await http.post(url, body: param, headers: _headers)
-      : await http.get(Uri.http("api-moda.vrmaker.io", '/v1/$path', param),
-          headers: _headers);
+      : await http.get(Uri.http(BASE_URL, path, param), headers: _headers);
+  print("REQ: ${response.request}");
   print("RES: ${response.body}");
-  if (context != null) Navigator.pop(context);
-  dynamic body = jsonDecode(response.body);
+  if (context != null && showErrorDialog) Navigator.of(context).pop();
+  Response res =
+      parseResponse(context, response.body, hasAccessToken: hasAccessToken);
+  return res;
+}
+
+Response parseResponse(BuildContext context, String responseBody,
+    {bool hasAccessToken}) {
+  dynamic body = jsonDecode(responseBody);
   Response res = Response(
-      result: body == null ? 0 : body['result'],
-      error: body == null ? null : body['error'],
+      message: body == null ? 0 : body['message'],
+      errorId: body == null ? null : body['errorId'],
       data: body == null ? null : body['data']);
 
   if (!res.isSuccess()) {
-    if (res.error != null) {
-      if (res.error['code'] == 401) {
-        //TODO
-      } else if (showErrorDialog && context != null)
-        WidgetUtil.showErrorDialog(context, res.error['message']);
-    }
+    WidgetUtil.showErrorDialog(context, res.message);
   } else {
     if (hasAccessToken) {
       String rawCookie = res.data['access_token'];
@@ -67,6 +89,5 @@ Future<Response> execute(BuildContext context,
       }
     }
   }
-
   return res;
 }
