@@ -310,5 +310,7 @@
   "delivering": "Đang vận chuyển",
   "delivery_info": "Thông tin vận chuyển",
   "period": "Thời hạn",
-  "numberOfVoucher": "Số Voucher"
+  "numberOfVoucher": "Số Voucher",
+  "remindBuy": "nhắc mua",
+  "remindUse": "nhắc sử dụng"
 }

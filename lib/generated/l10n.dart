@@ -2836,6 +2836,24 @@ class S {
       args: [],
     );
   }
+
+  String get remindBuy {
+    return Intl.message(
+      'nhắc mua',
+      name: 'remindBuy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindUse {
+    return Intl.message(
+      'nhắc sử dụng',
+      name: 'remindUse',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
