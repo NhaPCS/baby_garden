@@ -307,10 +307,22 @@
   "continue_buying": "Tiếp tục mua sắm",
   "view_order": "Xem đơn hàng",
   "receive_in_shop": "Nhận hàng tại shop",
+  "receive": "Nhận hàng",
   "delivering": "Đang vận chuyển",
   "delivery_info": "Thông tin vận chuyển",
   "period": "Thời hạn",
   "numberOfVoucher": "Số Voucher",
   "remindBuy": "nhắc mua",
-  "remindUse": "nhắc sử dụng"
+  "remindUse": "nhắc sử dụng",
+  "order_info": "Thông tin đơn hàng",
+  "barcode_note": "Quý khách vui lòng đưa mã barcode cho\nnhân viên tại cửa hàng để được nhận hàng",
+  "ordered": "Đơn hàng đã đặt",
+  "canceled_order": "Đơn hàng đã huỷ",
+  "service_booked": "Dịch vụ đã đặt lịch",
+  "used_service": "Dịch vụ đã sử dụng",
+  "service_using_address": "Địa chỉ sử dung dịch vụ",
+  "time_using": "Thời gian sử dụng",
+  "date_using": "Ngày sử dụng",
+  "service_info": "Thông tin dịch vụ",
+  "cancel_schedule": "Hủy Lịch"
 }

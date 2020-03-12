@@ -11,6 +11,8 @@ import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 
 class BookingRateScreen extends StatefulWidget {
+  final bool isService;
+  const BookingRateScreen({Key key,this.isService = false}):super(key: key);
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -20,7 +22,6 @@ class BookingRateScreen extends StatefulWidget {
 
 class _BookingRateScreenState extends BaseState<BookingRateScreen>
     with SingleTickerProviderStateMixin {
-  final bool _isService = false;
   bool israted = false;
   TabController _tabController;
 
@@ -50,7 +51,7 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
       length: 2,
       child: Scaffold(
         appBar: getAppBar(
-          title: _isService
+          title: widget.isService
               ? S.of(context).rating_service
               : S.of(context).rating_order,
           centerTitle: true,

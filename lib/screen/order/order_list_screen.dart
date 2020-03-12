@@ -9,7 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 
+import 'order_detail_screen.dart';
+
 class OrderListScreen extends StatefulWidget{
+  final bool isDelivering;
+  const OrderListScreen({Key key,this.isDelivering = false}):super(key:key);
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -26,38 +31,37 @@ class _OrderListScreenState extends BaseState<OrderListScreen>{
         SystemUiOverlayStyle(statusBarColor: ColorUtil.primaryColor,statusBarBrightness: Brightness.light,));
     return Scaffold(
       appBar: getAppBar(
-        title:  S.of(context).receive_in_shop,
+        title:  widget.isDelivering?S.of(context).delivering:S.of(context).receive_in_shop,
         centerTitle: true,
         bgColor: ColorUtil.primaryColor,
         titleColor: Colors.white,
         backColor: Colors.white,
       ),
-      body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: SizeUtil.tinySpace,
-                color: Colors.white,
-              ),
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.only(bottom: SizeUtil.smallSpace),
-                  color: ColorUtil.lineColor,
-                  child: ListView.builder(
-                      itemCount: 10,
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      padding: EdgeInsets.all(0),
-                      itemBuilder: (context, index) {
-                        return new GestureDetector(onTap: (){
-                          push(RatingDetailScreen());
-                        },
-                            child: OrderItem(isRated: false,));
-                      }),
-                ),
-              )
-            ],
-          )),
+      body: Column(
+        children: <Widget>[
+          Container(
+            height: SizeUtil.tinySpace,
+            color: Colors.white,
+          ),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.only(bottom: SizeUtil.smallSpace),
+              color: ColorUtil.lineColor,
+              child: ListView.builder(
+                  itemCount: 10,
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.all(0),
+                  itemBuilder: (context, index) {
+                    return new GestureDetector(onTap: (){
+                      push(OrderDetailScreen(isDelivering: widget.isDelivering,));
+                    },
+                        child: OrderItem(isRated: false,));
+                  }),
+            ),
+          )
+        ],
+      ),
     );
   }
 

@@ -1,6 +1,8 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/order/order_detail_screen.dart';
 import 'package:baby_garden_flutter/screen/rated_detail/rated_detail_screen.dart';
+import 'package:baby_garden_flutter/screen/service/service_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/order_item.dart';
 import 'package:baby_garden_flutter/widget/service_item.dart';
@@ -10,6 +12,9 @@ import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 
 class ServiceListScreen extends StatefulWidget {
+  final int order;
+  final String title;
+  const ServiceListScreen({Key key, this.order = 0,this.title}):super(key: key);
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -27,7 +32,7 @@ class _ServiceListScreenState extends BaseState<ServiceListScreen> {
         SystemUiOverlayStyle(statusBarColor: ColorUtil.primaryColor,statusBarBrightness: Brightness.light,));
     return Scaffold(
       appBar: getAppBar(
-        title:  S.of(context).canceled_service,
+        title:  widget.title,
         centerTitle: true,
         bgColor: ColorUtil.primaryColor,
         titleColor: Colors.white,
@@ -51,7 +56,7 @@ class _ServiceListScreenState extends BaseState<ServiceListScreen> {
                       padding: EdgeInsets.all(0),
                       itemBuilder: (context, index) {
                         return new GestureDetector(onTap: (){
-                          push(RatedDetailScreen());
+                          push(ServiceDetailScreen(title: widget.order==4?"Chi tiết hủy đơn":"Đơn hàng VCB19.12.25",isBookedSchedule: widget.order==2,isCancel: widget.order==4,));
                         },
                           child: new ServiceItem(isShowBookingDate: false,));
                       }),

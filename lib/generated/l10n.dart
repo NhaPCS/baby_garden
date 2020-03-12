@@ -10,18 +10,18 @@ import 'intl/messages_all.dart';
 
 class S {
   S(this.localeName);
-  
-  static const AppLocalizationDelegate delegate =
-    AppLocalizationDelegate();
+
+  static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final String name = locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
+    final String name =
+        locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
       return S(localeName);
     });
-  } 
+  }
 
   static S of(BuildContext context) {
     return Localizations.of<S>(context, S);
@@ -2801,6 +2801,15 @@ class S {
     );
   }
 
+  String get receive {
+    return Intl.message(
+      'Nhận hàng',
+      name: 'receive',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get delivering {
     return Intl.message(
       'Đang vận chuyển',
@@ -2850,6 +2859,105 @@ class S {
     return Intl.message(
       'nhắc sử dụng',
       name: 'remindUse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get order_info {
+    return Intl.message(
+      'Thông tin đơn hàng',
+      name: 'order_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get barcode_note {
+    return Intl.message(
+      'Quý khách vui lòng đưa mã barcode cho\nnhân viên tại cửa hàng để được nhận hàng',
+      name: 'barcode_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get ordered {
+    return Intl.message(
+      'Đơn hàng đã đặt',
+      name: 'ordered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get canceled_order {
+    return Intl.message(
+      'Đơn hàng đã huỷ',
+      name: 'canceled_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get service_booked {
+    return Intl.message(
+      'Dịch vụ đã đặt lịch',
+      name: 'service_booked',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get used_service {
+    return Intl.message(
+      'Dịch vụ đã sử dụng',
+      name: 'used_service',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get service_using_address {
+    return Intl.message(
+      'Địa chỉ sử dung dịch vụ',
+      name: 'service_using_address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get time_using {
+    return Intl.message(
+      'Thời gian sử dụng',
+      name: 'time_using',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get date_using {
+    return Intl.message(
+      'Ngày sử dụng',
+      name: 'date_using',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get service_info {
+    return Intl.message(
+      'Thông tin dịch vụ',
+      name: 'service_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cancel_schedule {
+    return Intl.message(
+      'Hủy Lịch',
+      name: 'cancel_schedule',
       desc: '',
       args: [],
     );
