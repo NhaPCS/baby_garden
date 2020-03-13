@@ -78,14 +78,14 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(left: 10, top: 51),
+                        padding: EdgeInsets.only(left: 9, top: 56),
                         child: CustomPaint(
-                            size: Size(56, 45), painter: DrawTriangle()),
+                            size: Size(50, 50), painter: DrawTriangle()),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 10, top: 15),
+                        padding: EdgeInsets.only(left: 8, top: 18),
                         child: Transform.rotate(
-                            angle: -pi / 4.5,
+                            angle: -pi / 4,
                             child: Text(
                               voucher.type == VoucherType.used
                                   ? 'Đã dùng'
@@ -93,7 +93,7 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
                                       ? 'Đã lấy'
                                       : '',
                               style: TextStyle(
-                                  fontSize: 12,
+                                  fontSize: SizeUtil.textSizeSmall,
                                   fontWeight: FontWeight.bold,
                                   color: voucher.type == VoucherType.used
                                       ? Colors.blue
@@ -102,7 +102,7 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
                       )
                     ]),
                     Container(
-                      margin: EdgeInsets.all(10),
+                      margin: EdgeInsets.all(9),
                       height: 90,
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -125,9 +125,7 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
                                             fontWeight: FontWeight.bold)),
                                     TextSpan(text: voucher.period)
                                   ])),
-                              SizedBox(
-                                width: 38,
-                              ),
+                              Expanded(child: SizedBox()),
                               RichText(
                                   text: TextSpan(
                                       style: TextStyle(
