@@ -3043,6 +3043,33 @@ class S {
       args: [],
     );
   }
+
+  String get saveChange {
+    return Intl.message(
+      'Lưu thay đổi',
+      name: 'saveChange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get date {
+    return Intl.message(
+      'Ngày',
+      name: 'date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get editReminder {
+    return Intl.message(
+      'Sửa lịch nhắc',
+      name: 'editReminder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -1,14 +1,19 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/screen/checkout/checkout_screen.dart';
+import 'package:baby_garden_flutter/screen/remind_management/remind_edit_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/button/button_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RemindCard extends StatelessWidget {
+  final id;
   final image;
   final description;
   final price;
   final datetime;
   final remindType;
+  final bool displayIcon;
 
   RemindCard(
       {Key key,
@@ -16,7 +21,9 @@ class RemindCard extends StatelessWidget {
       this.description,
       this.price,
       this.datetime,
-      this.remindType})
+      this.remindType,
+      this.id,
+      this.displayIcon = true})
       : super(key: key);
 
   @override
@@ -38,15 +45,15 @@ class RemindCard extends StatelessWidget {
           Expanded(
             child: Container(
                 height: 100,
-                padding: EdgeInsets.only(top: 0),
                 child: ListView(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(SizeUtil.midSmallSpace),
                     physics: NeverScrollableScrollPhysics(),
                     children: <Widget>[
                       RichText(
                           text: TextSpan(
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.black),
+                              style: TextStyle(
+                                  fontSize: SizeUtil.textSizeDefault,
+                                  color: Colors.black),
                               children: <TextSpan>[
                             TextSpan(
                                 text: this.remindType == RemindType.remindBuy
@@ -55,6 +62,7 @@ class RemindCard extends StatelessWidget {
                                     : "[${S.of(context).remindUse}] "
                                         .toUpperCase(),
                                 style: TextStyle(
+                                    fontSize: 13,
                                     color:
                                         this.remindType == RemindType.remindBuy
                                             ? Colors.blue
@@ -64,49 +72,61 @@ class RemindCard extends StatelessWidget {
                                 style: TextStyle(fontSize: 13))
                           ])),
                       Padding(
-                        padding: const EdgeInsets.only(top: 5),
+                        padding: const EdgeInsets.only(top: SizeUtil.tinySpace),
                         child: Text(
                           this.price,
                           style: TextStyle(
                               color: Colors.red,
-                              fontSize: 16,
+                              fontSize: SizeUtil.textSizeBigger,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 5),
+                        padding: const EdgeInsets.only(top: SizeUtil.tinySpace),
                         child: Row(children: [
                           Icon(
                             Icons.alarm,
                             color: Colors.orange,
-                            size: 18,
+                            size: SizeUtil.iconMidSize,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
+                            padding: const EdgeInsets.only(
+                                left: SizeUtil.midSmallSpace),
                             child: Text(this.datetime,
                                 style: TextStyle(
-                                    color: Color.fromRGBO(100, 100, 100, 1),
-                                    fontSize: 12)),
+                                    color: ColorUtil.grayLine,
+                                    fontSize: SizeUtil.textSizeSmall)),
                           ),
                         ]),
                       )
                     ])),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 36, right: 8.0),
-            child: Column(
-              children: <Widget>[
-                Icon(Icons.delete,
-                    size: 19, color: Color.fromRGBO(112, 112, 112, 1)),
-                Padding(
-                  padding: const EdgeInsets.only(top: 18.0),
-                  child: Icon(
-                    Icons.edit,
-                    size: 19,
-                    color: Color.fromRGBO(112, 112, 112, 1),
+            padding:
+                const EdgeInsets.only(top: 36, right: SizeUtil.midSmallSpace),
+            child: Visibility(
+              visible: displayIcon,
+              child: Column(
+                children: <Widget>[
+                  ButtonIcon(
+                    icon: Icon(Icons.delete,
+                        size: SizeUtil.iconMidSize, color: ColorUtil.darkGray),
+                    onPressed: () {
+                      //remove reminder
+                    },
                   ),
-                )
-              ],
+                  ButtonIcon(
+                    icon: Icon(
+                      Icons.edit,
+                      size: SizeUtil.iconMidSize,
+                      color: ColorUtil.darkGray,
+                    ),
+                    onPressed: () {
+                      RouteUtil.push(context, RemindEditScreen());
+                    },
+                  )
+                ],
+              ),
             ),
           )
         ]),
