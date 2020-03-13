@@ -13,9 +13,50 @@ const String BASE_URL = "http://chap.com.vn/vcb/api/";
 const int START_PAGE = 1;
 const int PAGE_SIZE = 20;
 
+//TODO require LOGIN
 Future<dynamic> login(BuildContext context, {String phone, String password})async {
-  Response response=await post(context, path: 'login', param: {
+  Response response=await get(context, path: 'login', param: {
     'phone': phone,
+    'password': password
+  });
+  if(response.isSuccess()) return response.data;
+  return null;
+}
+
+//TODO require REGISTER
+Future<dynamic> register(BuildContext context, {String phone,  String name,String password,String ref_code})async {
+  Response response=await get(context, path: 'register', param: {
+    'phone': phone,
+    'phone': name,
+    'password': password,
+    'ref_code': ref_code
+  });
+  if(response.isSuccess()) return response.data;
+  return null;
+}
+
+//TODO require VERIFY CODE
+Future<dynamic> verifyCode(BuildContext context,{String phone}) async{
+  Response response = await get(context,path: "verifyCode",param: {
+    'phone':phone
+  });
+  if(response.isSuccess()) return response.data;
+  return null;
+}
+
+//TODO require FORGET PASSWORD
+Future<dynamic> forgetPassword(BuildContext context,{String phone}) async{
+  Response response = await post(context,path: "forgetPassword",param: {
+    'phone':phone
+  });
+  if(response.isSuccess()) return response.data;
+  return null;
+}
+
+//TODO require FORGET PASSWORD
+Future<dynamic> changePassword(BuildContext context,{String phone,String password}) async{
+  Response response = await post(context,path: "changePassword",param: {
+    'phone':phone,
     'password': password
   });
   if(response.isSuccess()) return response.data;

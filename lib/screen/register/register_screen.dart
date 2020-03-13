@@ -26,10 +26,9 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
   final TextEditingController _phoneControler = new TextEditingController();
   final TextEditingController _passControler = new TextEditingController();
   final TextEditingController _repassControler = new TextEditingController();
-  final TextEditingController _invitePhoneControler =
-      new TextEditingController();
+  final TextEditingController _invitePhoneControler = new TextEditingController();
   final TextEditingController _otpControler = new TextEditingController();
-
+  final bool isShowOTP = false;
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
@@ -147,6 +146,7 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
           RaisedButton(
             onPressed: () {
               _waittingOTPProvider.startTimer();
+
             },
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
@@ -219,6 +219,30 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
         ],
       )),
     );
+  }
+
+  String checkRegisterCondition(bool isSendCode){
+    if(_nameControler.text.trim().length==0){
+      return "Enter name";
+    }else if(_nameControler.text.trim().length==0){
+      return "Enter Phone number";
+    }else if(_nameControler.text.trim().length==0){
+      return "Enter password";
+    }else if(_nameControler.text.trim().length==0){
+      return "Enter repassword";
+    }else if(_nameControler.text.trim().length==0){
+      return "Enter invite phone number";
+    }else{
+      if (isSendCode){
+        if(_otpControler.text.trim().length==0){
+          return "Enter code";
+        }else{
+          return "";
+        }
+      }else{
+        return "";
+      }
+    }
   }
 
   @override
