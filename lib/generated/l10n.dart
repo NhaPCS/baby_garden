@@ -1955,6 +1955,78 @@ class S {
     );
   }
 
+  String get addressDetail {
+    return Intl.message(
+      'Địa chỉ cụ thể',
+      name: 'addressDetail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addressDetailHint {
+    return Intl.message(
+      'Nhập số nhà, tên đường...',
+      name: 'addressDetailHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cancel {
+    return Intl.message(
+      'Hủy bỏ',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addNew {
+    return Intl.message(
+      'Thêm mới',
+      name: 'addNew',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get nameOfChild {
+    return Intl.message(
+      'Tên của bé',
+      name: 'nameOfChild',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get dateOfBirth {
+    return Intl.message(
+      'Ngày tháng năm sinh',
+      name: 'dateOfBirth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get comeBack {
+    return Intl.message(
+      'trở lại',
+      name: 'comeBack',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get uploadChildAvatar {
+    return Intl.message(
+      'Upload ảnh của bé',
+      name: 'uploadChildAvatar',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get booking_schedule_verify {
     return Intl.message(
       'Xác Nhận Đặt Lịch',
@@ -2720,15 +2792,6 @@ class S {
     );
   }
 
-  String get cancel {
-    return Intl.message(
-      'Hủy bỏ',
-      name: 'cancel',
-      desc: '',
-      args: [],
-    );
-  }
-
   String get receive_in_shop {
     return Intl.message(
       'Nhận hàng tại shop',
@@ -2760,6 +2823,42 @@ class S {
     return Intl.message(
       'Thông tin vận chuyển',
       name: 'delivery_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get period {
+    return Intl.message(
+      'Thời hạn',
+      name: 'period',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get numberOfVoucher {
+    return Intl.message(
+      'Số Voucher',
+      name: 'numberOfVoucher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindBuy {
+    return Intl.message(
+      'nhắc mua',
+      name: 'remindBuy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindUse {
+    return Intl.message(
+      'nhắc sử dụng',
+      name: 'remindUse',
       desc: '',
       args: [],
     );
@@ -2859,6 +2958,87 @@ class S {
     return Intl.message(
       'Hủy Lịch',
       name: 'cancel_schedule',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindBuyProduct {
+    return Intl.message(
+      'Nhắc lịch mua sản phẩm',
+      name: 'remindBuyProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindTime {
+    return Intl.message(
+      'Thời gian nhắc:',
+      name: 'remindTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindUseProduct {
+    return Intl.message(
+      'Nhắc lịch sử dụng sản phẩm',
+      name: 'remindUseProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get endDateOfReminder {
+    return Intl.message(
+      'Ngày kết thúc nhắc:',
+      name: 'endDateOfReminder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get reminderCycle {
+    return Intl.message(
+      'Chu kỳ nhắc (ngày):',
+      name: 'reminderCycle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get reminderCycleHint {
+    return Intl.message(
+      ' Chọn 1 là nhắc lịch hàng ngày, 2 là 2 ngày sẽ nhắc 1 lần...',
+      name: 'reminderCycleHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get select {
+    return Intl.message(
+      'Chọn',
+      name: 'select',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String reminderTimeAt(dynamic order) {
+    return Intl.message(
+      'Thời gian nhắc lần $order',
+      name: 'reminderTimeAt',
+      desc: '',
+      args: [order],
+    );
+  }
+
+  String get addReminder {
+    return Intl.message(
+      'Thêm lịch nhắc',
+      name: 'addReminder',
       desc: '',
       args: [],
     );

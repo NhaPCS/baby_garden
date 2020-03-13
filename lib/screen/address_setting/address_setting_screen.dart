@@ -7,19 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
+import 'add_address_modal.dart';
 import 'address.dart';
 
-class AddressSetting extends StatefulWidget {
+class AddressSettingScreen extends StatefulWidget {
   @override
   _SeenProduct createState() => _SeenProduct();
 }
 
-class _SeenProduct extends BaseState<AddressSetting> {
+class _SeenProduct extends BaseState<AddressSettingScreen> {
   final GetListProvider _getListProvider = GetListProvider();
 
   final List<Address> address = [
     Address(address: "28 Phan Kế Bính, Ba Đình, Hà Nội", isDefault: true),
-    Address(address: "28 Phan Kế Bính, Ba Đình, Hà Nội", isDefault: false),
+    Address(address: "12 Dịch Vọng, Cầu Giấy, Hà Nội", isDefault: false),
     Address(address: "28 Cát Linh, Hà Đông, Hà Nội", isDefault: false),
   ];
 
@@ -105,7 +106,7 @@ class _SeenProduct extends BaseState<AddressSetting> {
                 padding: const EdgeInsets.only(right: 8.0),
                 child: Icon(
                   Icons.location_on,
-                  color: Colors.blue,
+                  color: ColorUtil.primaryColor,
                   size: 27,
                 )),
           ]),
@@ -154,7 +155,10 @@ class _SeenProduct extends BaseState<AddressSetting> {
           child: GestureDetector(
             onTap: () {
               // show dialog
-              showAddAddressDialog(context);
+              final addAddress = ShowAddAddressDialog();
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => addAddress);
             },
             child: Row(children: <Widget>[
               Icon(
@@ -177,155 +181,4 @@ class _SeenProduct extends BaseState<AddressSetting> {
   List<SingleChildWidget> providers() {
     return [ChangeNotifierProvider.value(value: _getListProvider)];
   }
-}
-
-showAddAddressDialog(BuildContext context) {
-  Dialog simpleDialog = Dialog(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(15.0),
-    ),
-    child: Container(
-      height: 300.0,
-      width: 300.0,
-      child: Column(
-        children: <Widget>[
-          // title
-          Container(
-            height: 38,
-            width: double.infinity,
-            decoration:
-                setBorder("bottom", Color.fromRGBO(204, 204, 204, 1), 0.5),
-            child: Center(
-              child: Text(
-                S.of(context).myAddress,
-                style: TextStyle(
-                    color: ColorUtil.primaryColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-          Container(
-            height: 38,
-            width: double.infinity,
-            decoration:
-                setBorder("bottom", Color.fromRGBO(204, 204, 204, 1), 0.5),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "Địa chỉ cụ thể",
-                    style: TextStyle(
-                        color: Color.fromRGBO(51, 51, 51, 1), fontSize: 12),
-                  ),
-                ]),
-          ),
-          Container(
-            height: 38,
-            width: double.infinity,
-            decoration:
-                setBorder("bottom", Color.fromRGBO(204, 204, 204, 1), 0.5),
-            child: Padding(
-              padding: EdgeInsets.only(top: 8.0),
-              child: Text(
-                "Tỉnh/ Thành Phố",
-                style: TextStyle(
-                    color: Color.fromRGBO(51, 51, 51, 1), fontSize: 12),
-              ),
-            ),
-          ),
-          Container(
-            height: 38,
-            width: double.infinity,
-            decoration:
-                setBorder("bottom", Color.fromRGBO(204, 204, 204, 1), 0.5),
-            child: Padding(
-              padding: EdgeInsets.only(top: 8.0),
-              child: Text(
-                "Quận/ Huyện",
-                style: TextStyle(
-                    color: Color.fromRGBO(51, 51, 51, 1), fontSize: 12),
-              ),
-            ),
-          ),
-          Container(
-            height: 38,
-            width: double.infinity,
-            decoration:
-                setBorder("bottom", Color.fromRGBO(204, 204, 204, 1), 0.5),
-            child: Padding(
-              padding: EdgeInsets.only(top: 8.0),
-              child: Text(
-                "Phường/ Xã",
-                style: TextStyle(
-                    color: Color.fromRGBO(51, 51, 51, 1), fontSize: 12),
-              ),
-            ),
-          ),
-          Container(
-            height: 38,
-            width: double.infinity,
-            decoration:
-                setBorder("bottom", Color.fromRGBO(204, 204, 204, 1), 0.5),
-            child: Padding(
-              padding: EdgeInsets.only(top: 8.0),
-              child: Text(
-                "Đặt làm địa chỉ nhận hàng mặc định",
-                style: TextStyle(color: ColorUtil.primaryColor, fontSize: 12),
-              ),
-            ),
-          ),
-
-          // button
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 28),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                ButtonTheme(
-                  minWidth: 90,
-                  height: 23,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(5.0),
-                    ),
-                    color: ColorUtil.primaryColor,
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      'Okay',
-                      style: TextStyle(fontSize: 12.0, color: Colors.white),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                ButtonTheme(
-                  minWidth: 90,
-                  height: 23,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(5.0),
-                    ),
-                    color: ColorUtil.primaryColor,
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      'Cancel!',
-                      style: TextStyle(fontSize: 12.0, color: Colors.white),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-  showDialog(context: context, builder: (BuildContext context) => simpleDialog);
 }
