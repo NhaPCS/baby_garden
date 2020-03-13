@@ -22,7 +22,7 @@ class _ShowAddAddressDialogState extends State<AddChildDialog> {
     return SingleChildScrollView(
       child: Dialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.circular(SizeUtil.bigRadius),
         ),
         child: Container(
           child: Column(
@@ -31,7 +31,7 @@ class _ShowAddAddressDialogState extends State<AddChildDialog> {
             children: <Widget>[
               // title
               Container(
-                height: 40,
+                height: SizeUtil.biggerSpace,
                 decoration:
                     setBorder("bottom", Color.fromRGBO(204, 204, 204, 1), 0.5),
                 child: Center(
@@ -39,13 +39,13 @@ class _ShowAddAddressDialogState extends State<AddChildDialog> {
                     S.of(context).addChild,
                     style: TextStyle(
                         color: ColorUtil.primaryColor,
-                        fontSize: 16,
+                        fontSize: SizeUtil.textSizeBigger,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 12.0),
+                padding: const EdgeInsets.only(top: SizeUtil.midSpace),
                 child: Center(
                   child: Image.asset(
                     "photo/child_avatar.png",
@@ -57,12 +57,12 @@ class _ShowAddAddressDialogState extends State<AddChildDialog> {
               Center(
                   child: Icon(
                 Icons.photo_camera,
-                color: Color.fromRGBO(255, 176, 11, 1),
+                color: ColorUtil.colorAccent,
               )),
               Center(
                 child: Text(
                   S.of(context).uploadChildAvatar,
-                  style: TextStyle(color: Color.fromRGBO(255, 176, 11, 1)),
+                  style: TextStyle(color: ColorUtil.colorAccent),
                 ),
               ),
 
@@ -81,18 +81,28 @@ Widget listInputView(List<Map<String, String>> listInput) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: listInput.map((input) {
         return Padding(
-          padding: EdgeInsets.only(top: 12, left: 12, right: 12),
+          padding: EdgeInsets.only(
+              top: SizeUtil.midSpace,
+              left: SizeUtil.midSpace,
+              right: SizeUtil.midSpace),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                MyTextField(
-                  borderColor: Color.fromRGBO(255, 176, 11, 1),
-                  borderRadius: 6,
-                  borderWidth: 0.5,
-                  labelText: input['title'],
-                  labelStyle: TextStyle(
-                      color: Color.fromRGBO(51, 51, 51, 1), fontSize: 12),
-                  textEditingController: null,
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(SizeUtil.tinyRadius),
+                      color: Colors.white,
+                      boxShadow: WidgetUtil.getShadow()),
+                  child: MyTextField(
+                    borderColor: ColorUtil.colorAccent,
+                    borderRadius: SizeUtil.tinyRadius,
+                    borderWidth: 0.5,
+                    labelText: input['title'],
+                    labelStyle: TextStyle(
+                        color: ColorUtil.black33,
+                        fontSize: SizeUtil.textSizeSmall),
+                    textEditingController: null,
+                  ),
                 ),
               ]),
         );
@@ -101,37 +111,42 @@ Widget listInputView(List<Map<String, String>> listInput) {
 
 Widget dialogBtn(context) {
   return Padding(
-    padding: const EdgeInsets.only(left: 23, right: 23, top: 23, bottom: 37),
+    padding: const EdgeInsets.only(
+        left: SizeUtil.defaultSpace,
+        right: SizeUtil.defaultSpace,
+        top: SizeUtil.defaultSpace,
+        bottom: SizeUtil.biggerSpace),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         ButtonTheme(
           minWidth: 90,
-          height: 40,
+          height: SizeUtil.biggerSpace,
           child: RaisedButton(
             shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(6.0),
+              borderRadius: new BorderRadius.circular(SizeUtil.tinyRadius),
             ),
-            color: Color.fromRGBO(255, 176, 11, 1),
+            color: ColorUtil.colorAccent,
             onPressed: () {
               Navigator.of(context).pop();
             },
             child: Text(
               S.of(context).addChild.toUpperCase(),
-              style: TextStyle(fontSize: 12.0, color: Colors.white),
+              style: TextStyle(
+                  fontSize: SizeUtil.textSizeSmall, color: Colors.white),
             ),
           ),
         ),
         SizedBox(
-          width: 50,
+          width: SizeUtil.hugSpace,
         ),
         ButtonTheme(
           minWidth: 90,
-          height: 40,
+          height: SizeUtil.biggerSpace,
           child: RaisedButton(
             shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(6.0),
+              borderRadius: new BorderRadius.circular(SizeUtil.tinyRadius),
             ),
             color: Color.fromRGBO(10, 133, 158, 1),
             onPressed: () {
@@ -139,7 +154,8 @@ Widget dialogBtn(context) {
             },
             child: Text(
               S.of(context).comeBack.toUpperCase(),
-              style: TextStyle(fontSize: 12.0, color: Colors.white),
+              style: TextStyle(
+                  fontSize: SizeUtil.textSizeSmall, color: Colors.white),
             ),
           ),
         )
