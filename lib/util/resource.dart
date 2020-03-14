@@ -75,6 +75,95 @@ class StringUtil {
     {'icon': 'photo/ic_phone.png', 'title': "Điện thoại & phụ kiện"},
     {'icon': 'photo/ic_toy.png', 'title': "Đồ chơi"},
   ];
+
+  static List<dynamic> confirmForm = [
+    {
+      'title':'Dịch vụ đã đặt: ',
+      'content':'Chăm sóc da mặt từ cơ bản đến nâng cao'
+    },
+    {
+      'title':'Giá niêm yết:  ',
+      'content':'\nKhách hàng đã có thẻ hoặc mã voucher vui lòng mang tới cửa hàng để được hưởng đầy đủ ưu đãi.',
+      'value':'150.000 đ'
+    },
+    {
+      'title':'Ngày sử dụng: ',
+      'content':'14/02/2020'
+    },
+    {
+      'title':'Thời gian: ',
+      'content':'10:00'
+    },
+    {
+      'title':'Thời gian thực hiện: ',
+      'content':'120 Phút'
+    },
+  ];
+
+  static List<dynamic> time = [
+    {'time': '08:00'},
+    {'time': '08:15'},
+    {'time': '08:30'},
+    {'time': '08:45'},
+    {'time': '09:00'},
+    {'time': '09:15'},
+    {'time': '09:30'},
+    {'time': '09:45'},
+    {'time': '10:00'},
+    {'time': '10:15'},
+    {'time': '10:30'},
+    {'time': '10:45'},
+    {'time': '11:00'},
+    {'time': '11:15'},
+    {'time': '11:30'},
+    {'time': '11:45'},
+    {'time': '12:00'},
+    {'time': '12:15'},
+    {'time': '12:30'},
+    {'time': '12:45'},
+    {'time': '13:00'},
+    {'time': '13:15'},
+    {'time': '13:30'},
+    {'time': '13:45'},
+    {'time': '14:00'},
+    {'time': '14:15'},
+    {'time': '14:30'},
+    {'time': '14:45'},
+    {'time': '15:00'},
+    {'time': '15:15'},
+    {'time': '15:30'},
+    {'time': '15:45'},
+    {'time': '16:00'},
+    {'time': '16:15'},
+    {'time': '16:30'},
+    {'time': '16:45'},
+    {'time': '17:00'},
+    {'time': '17:15'},
+    {'time': '17:30'},
+    {'time': '17:45'},
+    {'time': '18:00'},
+    {'time': '18:15'},
+    {'time': '18:30'},
+    {'time': '18:45'},
+  ];
+
+  static List<dynamic> week = [
+    {'dow': 'Thứ 2', 'date': '12/02/2020'},
+    {'dow': 'Thứ 3', 'date': '13/02/2020'},
+    {'dow': 'Thứ 4', 'date': '14/02/2020'},
+    {'dow': 'Thứ 5', 'date': '15/02/2020'},
+    {'dow': 'Thứ 6', 'date': '16/02/2020'},
+    {'dow': 'Thứ 7', 'date': '17/02/2020'},
+    {'dow': 'Chủ nhật', 'date': '18/02/2020'},
+  ];
+
+  static List<dynamic> clientList = [
+    {'address': '38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội'},
+    {'address': '15B Đào Tấn, Ba Đình, Hà Nội'},
+    {'address': '134 Lê Lợi, Hà Đông, Hà Nội'},
+    {'address': '134 Lê Lợi, Hà Đông, Hà Nội'}
+  ];
+
 }
 
 class RouteUtil {
@@ -153,6 +242,13 @@ class SizeUtil {
 
   static const double lineHeight = 5;
   static const double delivery_code_height = 36;
+
+  static const double tabbar_fix_height = 50;
+
+  static const double textSpaceTiny = 1;
+  static const double textSpaceSmall = 2;
+  static const double textSpaceNormal = 3;
+  static const double textSpaceBig = 4;
 }
 
 class WidgetUtil {

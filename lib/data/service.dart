@@ -24,12 +24,12 @@ Future<dynamic> login(BuildContext context, {String phone, String password})asyn
 }
 
 //TODO require REGISTER
-Future<dynamic> register(BuildContext context, {String phone,  String name,String password,String ref_code})async {
-  Response response=await get(context, path: 'register', param: {
+Future<dynamic> register(BuildContext context, {String phone,  String name,String password,String refCode})async {
+  Response response=await post(context, path: 'register', param: {
     'phone': phone,
-    'phone': name,
+    'name': name,
     'password': password,
-    'ref_code': ref_code
+    "ref_code":refCode
   });
   if(response.isSuccess()) return response.data;
   return null;
@@ -70,7 +70,7 @@ Future<Response> post(BuildContext context,
     bool showErrorDialog = true}) async {
   Response response = await execute(context,
       path: path,
-      param: path,
+      param: param,
       hasAccessToken: hasAccessToken,
       showErrorDialog: showErrorDialog,
       isPost: true);
@@ -83,7 +83,7 @@ Future<Response> get(BuildContext context,
       bool showErrorDialog = true}) async {
   Response response = await execute(context,
       path: path,
-      param: path,
+      param: param,
       hasAccessToken: false,
       showErrorDialog: showErrorDialog,
       isPost: false);
@@ -99,17 +99,22 @@ Future<Response> execute(BuildContext context,
   if (_headers == null || _headers.isEmpty) {
     _headers = {};
   }
-  var url = '$BASE_URL$path';
-  if (context != null && showErrorDialog) WidgetUtil.showLoading(context);
-  var response = isPost
-      ? await http.post(url, body: param, headers: _headers)
-      : await http.get(Uri.http(BASE_URL, path, param), headers: _headers);
-  print("REQ: ${response.request}");
-  print("RES: ${response.body}");
-  if (context != null && showErrorDialog) Navigator.of(context).pop();
-  Response res =
-      parseResponse(context, response.body, hasAccessToken: hasAccessToken);
-  return res;
+  try{
+    var url = '$BASE_URL$path';
+    if (context != null && showErrorDialog) WidgetUtil.showLoading(context);
+    var response = isPost
+        ? await http.post(url, body: param, headers: _headers)
+        : await http.get(Uri.http(BASE_URL, path, param), headers: _headers);
+    print("REQ: ${response.request}");
+    print("RES: ${response.body}");
+    if (context != null && showErrorDialog) Navigator.of(context).pop();
+    Response res =
+    parseResponse(context, response.body, hasAccessToken: hasAccessToken);
+    return res;
+  } on Exception catch(e){
+    print(e);
+  }
+  return Response();
 }
 
 Response parseResponse(BuildContext context, String responseBody,

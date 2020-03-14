@@ -1,12 +1,18 @@
+import 'package:baby_garden_flutter/dialog/booking_dialogue.dart';
+import 'package:baby_garden_flutter/dialog/booking_schedule_success_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_product.dart';
+import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_date_provider.dart';
 import 'package:baby_garden_flutter/provider/change_schedule_provider.dart';
 import 'package:baby_garden_flutter/provider/change_service_provider.dart';
 import 'package:baby_garden_flutter/provider/partner_book_tabbar_provider.dart';
+import 'package:baby_garden_flutter/provider/partner_schedule_get_header_hei.dart';
 import 'package:baby_garden_flutter/provider/see_more_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/category_product/sliver_category_delegate.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/loadmore/loadmore_nested_scrollview.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:baby_garden_flutter/widget/service_detail_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,36 +32,43 @@ class PartnerBookScheduleScreen extends StatefulWidget {
 class _PartnerBookScheduleScreenState
     extends BaseState<PartnerBookScheduleScreen> with TickerProviderStateMixin {
   final SeeMoreProvider _seeMoreProvider = SeeMoreProvider();
+  final PartnerGetHeightProvider _getHeightProvider =
+      PartnerGetHeightProvider();
   final ChangeServiceProvider _serviceProvider = ChangeServiceProvider();
   final ChangeDateProvider _dateProvider = ChangeDateProvider();
   final ChangeScheduleTimeProvider _scheduleTimeProvider =
       ChangeScheduleTimeProvider();
   final PartnerBookTabbarProvider _bookTabbarProvider =
       PartnerBookTabbarProvider();
-  List<dynamic> DETAIL_INFO = List();
-  List<dynamic> CLIENT_LIST = List();
-  List<dynamic> WEEK = List();
-  List<dynamic> TIME = List();
-  List<dynamic> CONFIRM_FORM = List();
+  List<dynamic> detailInfo = List();
 
   TabController _tabController;
   TabController _dayTabController;
-
+  final GlobalKey _rowKey = GlobalKey();
+  final GlobalKey _rowKeyFull = GlobalKey();
+  final ValueNotifier<double> _rowHeight = ValueNotifier<double>(-1);
+  double _rowHeightFull = 0;
+  final int imageHeight = 151;
   @override
   void initState() {
     // TODO: implement initState
     _tabController = TabController(vsync: this, length: 2);
     _dayTabController = TabController(vsync: this, length: 7);
     _tabController.addListener(() {
-      if (_tabController.index!=_bookTabbarProvider.index){
-          _bookTabbarProvider.onChangeIndex(_tabController.index);
+      if (_tabController.index != _bookTabbarProvider.index) {
+        _bookTabbarProvider.onChangeIndex(_tabController.index);
       }
     });
 
-    _dayTabController.addListener(() {
+    _dayTabController.addListener(() {});
 
-    });
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => {
+          _rowHeight.value = _rowKey.currentContext.size.height,//TODO min height
+          _rowHeightFull = _rowKeyFull.currentContext.size.height,//TODO max height
+          print(_rowHeight.value),
+          print(_rowHeightFull)
+        });
   }
 
   @override
@@ -68,36 +81,7 @@ class _PartnerBookScheduleScreenState
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
-    CONFIRM_FORM = [
-      {
-        'title':'Dịch vụ đã đặt: ',
-        'content':'Chăm sóc da mặt từ cơ bản đến nâng cao'
-      },
-      {
-        'title':'Giá niêm yết:  ',
-        'content':'\nKhách hàng đã có thẻ hoặc mã voucher vui lòng mang tới cửa hàng để được hưởng đầy đủ ưu đãi.',
-        'value':'150.000 đ'
-      },
-      {
-        'title':'Ngày sử dụng: ',
-        'content':'14/02/2020'
-      },
-      {
-        'title':'Thời gian: ',
-        'content':'10:00'
-      },
-      {
-        'title':'Thời gian thực hiện: ',
-        'content':'120 Phút'
-      },
-    ];
-    CLIENT_LIST = [
-      {'address': '38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội'},
-      {'address': '15B Đào Tấn, Ba Đình, Hà Nội'},
-      {'address': '134 Lê Lợi, Hà Đông, Hà Nội'},
-      {'address': '134 Lê Lợi, Hà Đông, Hà Nội'}
-    ];
-    DETAIL_INFO = [
+    detailInfo = [
       {
         'title': "Điện thoại:",
         'value': '0912 677 022',
@@ -106,7 +90,7 @@ class _PartnerBookScheduleScreenState
       },
       {
         'title': "Địa chỉ: ",
-        'value': '38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội',
+        'value': '38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội, Thanh Xuân, Hà Nội,',
         'action_title': 'Chỉ đường'
       },
       {
@@ -117,66 +101,11 @@ class _PartnerBookScheduleScreenState
       {
         'title': 'Giới thiệu: ',
         'value':
-            'Đây là cửa hàng chuyên cung cấp sữa bỉm cho bé,\nvà dịch vụ làm đẹp cho mẹ, để xem thêm thông tin...',
+            'Đây là cửa hàng chuyên cung cấp sữa bỉm cho bé, và dịch vụ làm đẹp cho mẹ, để xem thêm thông tin...',
         'full_value':
-            'Đây là cửa hàng chuyên cung cấp sữa bỉm cho bé,\nvà dịch vụ làm đẹp cho mẹ, để xem thêm thông tin sau do la ca mot bau troi tu cach. Chua bao gio co mot ai sanh kipj',
+            'Đây là cửa hàng chuyên cung cấp sữa bỉm cho bé, và dịch vụ làm đẹp cho mẹ, để xem thêm thông tin sau do la ca mot bau troi tu cach. Chua bao gio co mot ai sanh kip anh cua em o day Chua bao gio co mot ai sanh kip anh cua em o day Chua bao gio co mot ai sanh kip anh cua em o day',
         'see_more': 'Xem thêm'
       }
-    ];
-    WEEK = [
-      {'dow': 'Thứ 2', 'date': '12/02/2020'},
-      {'dow': 'Thứ 3', 'date': '13/02/2020'},
-      {'dow': 'Thứ 4', 'date': '14/02/2020'},
-      {'dow': 'Thứ 5', 'date': '15/02/2020'},
-      {'dow': 'Thứ 6', 'date': '16/02/2020'},
-      {'dow': 'Thứ 7', 'date': '17/02/2020'},
-      {'dow': 'Chủ nhật', 'date': '18/02/2020'},
-    ];
-    TIME = [
-      {'time': '08:00'},
-      {'time': '08:15'},
-      {'time': '08:30'},
-      {'time': '08:45'},
-      {'time': '09:00'},
-      {'time': '09:15'},
-      {'time': '09:30'},
-      {'time': '09:45'},
-      {'time': '10:00'},
-      {'time': '10:15'},
-      {'time': '10:30'},
-      {'time': '10:45'},
-      {'time': '11:00'},
-      {'time': '11:15'},
-      {'time': '11:30'},
-      {'time': '11:45'},
-      {'time': '12:00'},
-      {'time': '12:15'},
-      {'time': '12:30'},
-      {'time': '12:45'},
-      {'time': '13:00'},
-      {'time': '13:15'},
-      {'time': '13:30'},
-      {'time': '13:45'},
-      {'time': '14:00'},
-      {'time': '14:15'},
-      {'time': '14:30'},
-      {'time': '14:45'},
-      {'time': '15:00'},
-      {'time': '15:15'},
-      {'time': '15:30'},
-      {'time': '15:45'},
-      {'time': '16:00'},
-      {'time': '16:15'},
-      {'time': '16:30'},
-      {'time': '16:45'},
-      {'time': '17:00'},
-      {'time': '17:15'},
-      {'time': '17:30'},
-      {'time': '17:45'},
-      {'time': '18:00'},
-      {'time': '18:15'},
-      {'time': '18:30'},
-      {'time': '18:45'},
     ];
     super.didChangeDependencies();
   }
@@ -204,167 +133,510 @@ class _PartnerBookScheduleScreenState
         ),
       ),
     ];
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: getAppBar(title: S.of(context).app_name_title.toUpperCase()),
-      body: ListView(
-        shrinkWrap: true,
-        children: <Widget>[
-          Stack(
-            children: <Widget>[
-              Image.asset(
-                "photo/partner_item_img.png",
-                width: MediaQuery.of(context).size.width,
-              ),
-              Positioned(
-                bottom: SizeUtil.smallSpace,
-                right: SizeUtil.smallSpace,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(
-                          left: SizeUtil.midSmallSpace,
-                          right: SizeUtil.midSmallSpace,
-                          top: SizeUtil.tinySpace,
-                          bottom: SizeUtil.tinySpace),
-                      decoration: BoxDecoration(
-                          color: Color(0xffF6F6F6),
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(SizeUtil.smallRadius))),
-                      child: Wrap(
-                        direction: Axis.horizontal,
+    return Consumer<PartnerGetHeightProvider>(builder:
+        (BuildContext context, PartnerGetHeightProvider value, Widget child) {
+      return ValueListenableBuilder<double>(
+          valueListenable: _rowHeight,
+          builder: (BuildContext context, double height, Widget child) {
+            return SafeArea(
+              child: Material(
+                child: _rowHeight.value > 0
+                    ? NestedScrollView(
+                        body: TabBarView(
+                            controller: _tabController,
+                            children: myTabs.map((Tab tab) {
+                              return myTabs.indexOf(tab) == 0 ? bookingContent()
+                                  : productContent();
+                            }).toList()
+                        ),
+                        headerSliverBuilder: (context, isScrollInner) {
+                          return [
+                            new SliverAppBar(
+                              title: new Text(
+                                S.of(context).app_name_title.toUpperCase(),
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              leading: BaseState.getLeading(context),
+                              centerTitle: true,
+                              pinned: true,
+                              forceElevated: isScrollInner,
+                            ),
+                            Consumer<SeeMoreProvider>(builder: (BuildContext context, SeeMoreProvider value, Widget child) {
+                              double hei = (value.isShow?_rowHeightFull:_rowHeight.value) + imageHeight;
+                              print("hei: ${hei}");
+                              return SliverPersistentHeader(
+                                pinned: false,
+                                floating: false,
+                                delegate: SliverCategoryDelegate(
+                                    Column(
+                                      children: <Widget>[
+                                        Stack(
+                                          children: <Widget>[
+                                            Image.asset(
+                                              "photo/partner_item_img.png",
+                                              fit: BoxFit.fitWidth,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: 146,
+                                            ),
+                                            Positioned(
+                                              bottom: SizeUtil.smallSpace,
+                                              right: SizeUtil.smallSpace,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Container(
+                                                    padding: EdgeInsets.only(
+                                                        left: SizeUtil
+                                                            .midSmallSpace,
+                                                        right: SizeUtil
+                                                            .midSmallSpace,
+                                                        top: SizeUtil.tinySpace,
+                                                        bottom:
+                                                        SizeUtil.tinySpace),
+                                                    decoration: BoxDecoration(
+                                                        color: Color(0xffF6F6F6),
+                                                        borderRadius: BorderRadius
+                                                            .all(Radius.circular(
+                                                            SizeUtil
+                                                                .smallRadius))),
+                                                    child: Wrap(
+                                                      direction: Axis.horizontal,
+                                                      children: <Widget>[
+                                                        Image.asset(
+                                                          "photo/comment_img.png",
+                                                          width: SizeUtil
+                                                              .iconSizeDefault,
+                                                          height: SizeUtil
+                                                              .iconSizeDefault,
+                                                        ),
+                                                        SizedBox(
+                                                          width:
+                                                          SizeUtil.tinySpace,
+                                                        ),
+                                                        Text(
+                                                          "12",
+                                                          style: TextStyle(
+                                                              fontSize: SizeUtil
+                                                                  .textSizeSmall,
+                                                              color: ColorUtil
+                                                                  .textColor,
+                                                              fontWeight:
+                                                              FontWeight
+                                                                  .normal),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: SizeUtil.smallSpace,
+                                                  ),
+                                                  Container(
+                                                    padding: EdgeInsets.only(
+                                                        left: SizeUtil
+                                                            .midSmallSpace,
+                                                        right: SizeUtil
+                                                            .midSmallSpace,
+                                                        top: SizeUtil.tinySpace,
+                                                        bottom:
+                                                        SizeUtil.tinySpace),
+                                                    decoration: BoxDecoration(
+                                                        color: Color(0xffF6F6F6),
+                                                        borderRadius: BorderRadius
+                                                            .all(Radius.circular(
+                                                            SizeUtil
+                                                                .smallRadius))),
+                                                    child: Wrap(
+                                                      direction: Axis.horizontal,
+                                                      children: <Widget>[
+                                                        Image.asset(
+                                                          "photo/heart.png",
+                                                          width: SizeUtil
+                                                              .iconSizeDefault,
+                                                          height: SizeUtil
+                                                              .iconSizeDefault,
+                                                        ),
+                                                        SizedBox(
+                                                          width:
+                                                          SizeUtil.tinySpace,
+                                                        ),
+                                                        Text(
+                                                          "234",
+                                                          style: TextStyle(
+                                                              fontSize: SizeUtil
+                                                                  .textSizeSmall,
+                                                              color: ColorUtil
+                                                                  .textColor,
+                                                              fontWeight:
+                                                              FontWeight
+                                                                  .normal),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        Column(
+                                          children: detailInfo // info
+                                              .map(
+                                                  (e) => paddingContainer(
+                                                  e['see_more'] == null
+                                                      ? Row(
+                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Expanded(
+                                                        child: RichText(
+                                                          textAlign:
+                                                          TextAlign
+                                                              .start,
+                                                          text: TextSpan(
+                                                              text: e[
+                                                              'title'],
+                                                              style: TextStyle(
+                                                                  color: ColorUtil
+                                                                      .textColor,
+                                                                  fontWeight: FontWeight
+                                                                      .bold),
+                                                              children: <
+                                                                  TextSpan>[
+                                                                TextSpan(
+
+                                                                    text: " "+ e['value'],
+                                                                    style: TextStyle(fontSize: SizeUtil.textSizeSmall, color: e['valueColor'] == null ? ColorUtil.textColor : e['valueColor'], decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
+                                                              ]),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: SizeUtil
+                                                            .tinySpace,
+                                                      ),
+                                                      SizedBox(width: e['action_title'] ==
+                                                          null
+                                                          ?0:SizeUtil.tinySpace,),
+                                                      e['action_title'] ==
+                                                          null
+                                                          ? SizedBox()
+                                                          : InkWell(
+                                                        onTap:
+                                                            () {},
+                                                        child:
+                                                        Text(
+                                                          e['action_title'],
+                                                          style: TextStyle(
+                                                              fontSize:
+                                                              SizeUtil.textSizeSmall,
+                                                              color: ColorUtil.blueLight),
+                                                        ),
+                                                      ),
+                                                      e['button'] ==
+                                                          null
+                                                          ? SizedBox()
+                                                          : RaisedButton(
+                                                        onPressed:
+                                                            () {},
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius: BorderRadius.all(
+                                                              Radius.circular(
+                                                                  SizeUtil.smallRadius),
+                                                            )),
+                                                        color: ColorUtil
+                                                            .primaryColor,
+                                                        child:
+                                                        Text(
+                                                          e['button'],
+                                                          style: TextStyle(
+                                                              fontSize:
+                                                              SizeUtil.textSizeDefault,
+                                                              color: Colors.white,
+                                                              fontStyle: FontStyle.normal,
+                                                              fontWeight: FontWeight.normal),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                                      : GestureDetector(
+                                                    onTap: () {
+                                                      print("tapped");
+                                                      _seeMoreProvider
+                                                          .onChange();
+                                                    },
+                                                    child:
+                                                    RichText(
+                                                      textAlign:
+                                                      TextAlign
+                                                          .start,
+                                                      text: TextSpan(
+                                                          text: e[
+                                                          'title'],
+                                                          style: TextStyle(
+                                                              color: ColorUtil
+                                                                  .textColor,
+                                                              fontWeight: FontWeight
+                                                                  .bold),
+                                                          children: <
+                                                              TextSpan>[
+                                                            TextSpan(
+                                                                text: value.isShow
+                                                                    ? e['full_value']
+                                                                    : e['value'],
+                                                                style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail, color: ColorUtil.textColor, decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
+                                                            TextSpan(
+                                                              text: value.isShow
+                                                                  ? ''
+                                                                  : e['see_more'],
+                                                              style: TextStyle(
+                                                                  fontSize: SizeUtil.textSizeSmall,
+                                                                  color: ColorUtil.blueLight,
+                                                                  decoration: TextDecoration.none,
+                                                                  fontWeight: FontWeight.normal),
+                                                              recognizer: TapGestureRecognizer()
+                                                                ..onTap = () =>
+                                                                {
+                                                                  print("tapped")
+                                                                },
+                                                            ),
+                                                          ]),
+                                                    ),
+                                                  )))
+                                              .toList(),
+                                        ),
+                                        SizedBox(
+                                          height: SizeUtil.tinySpace,
+                                        ),
+                                      ],
+                                    ),
+                                    hei,
+                                    hei),
+                              );
+                            },),
+                            SliverPersistentHeader(
+                              pinned: true,
+                              floating: false,
+                              delegate: SliverCategoryDelegate(
+                                  Container(
+                                    height: SizeUtil.tabbar_fix_height,
+                                    child: ColoredTabBar(
+                                      ColorUtil.lineColor,
+                                      TabBar(
+                                        controller: _tabController,
+                                        labelColor: Colors.white,
+                                        indicatorColor: ColorUtil.white,
+                                        indicator: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(0),
+                                            color: ColorUtil.primaryColor),
+                                        unselectedLabelColor:
+                                            ColorUtil.textColor,
+                                        tabs: myTabs,
+                                      ),
+                                    ),
+                                    decoration: BoxDecoration(boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey,
+                                        blurRadius: 5.0,
+                                      ),
+                                    ]),
+                                  ),
+                                  SizeUtil.tabbar_fix_height,
+                                  SizeUtil.tabbar_fix_height),
+                            )
+                          ];
+                        },
+                      )
+                    : Column(
                         children: <Widget>[
-                          Image.asset(
-                            "photo/comment_img.png",
-                            width: SizeUtil.iconSizeDefault,
-                            height: SizeUtil.iconSizeDefault,
-                          ),
-                          SizedBox(
-                            width: SizeUtil.tinySpace,
-                          ),
-                          Text(
-                            "12",
-                            style: TextStyle(
-                                fontSize: SizeUtil.textSizeSmall,
-                                color: ColorUtil.textColor,
-                                fontWeight: FontWeight.normal),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: SizeUtil.smallSpace,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(
-                          left: SizeUtil.midSmallSpace,
-                          right: SizeUtil.midSmallSpace,
-                          top: SizeUtil.tinySpace,
-                          bottom: SizeUtil.tinySpace),
-                      decoration: BoxDecoration(
-                          color: Color(0xffF6F6F6),
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(SizeUtil.smallRadius))),
-                      child: Wrap(
-                        direction: Axis.horizontal,
-                        children: <Widget>[
-                          Image.asset(
-                            "photo/heart.png",
-                            width: SizeUtil.iconSizeDefault,
-                            height: SizeUtil.iconSizeDefault,
-                          ),
-                          SizedBox(
-                            width: SizeUtil.tinySpace,
-                          ),
-                          Text(
-                            "234",
-                            style: TextStyle(
-                                fontSize: SizeUtil.textSizeSmall,
-                                color: ColorUtil.textColor,
-                                fontWeight: FontWeight.normal),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-          Column(
-            children: DETAIL_INFO // info
-                .map((e) => paddingContainer(e['see_more'] == null
-                    ? Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            e['title'],
-                            style: TextStyle(
-                                color: ColorUtil.textColor,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            width: SizeUtil.tinySpace,
-                          ),
-                          Text(
-                            e['value'],
-                            style: TextStyle(
-                                fontSize: SizeUtil.textSizeSmall,
-                                color: e['valueColor'] == null
-                                    ? ColorUtil.textColor
-                                    : e['valueColor']),
-                          ),
-                          e['action_title'] == null
-                              ? SizedBox()
-                              : Expanded(
-                                  child: SizedBox(),
+                          //TODO get detail info min height
+                          Column(
+                            key: _rowKey,
+                            mainAxisSize: MainAxisSize.min,
+                            children: detailInfo // info
+                                .map((e) => paddingContainer(e['see_more'] ==
+                                        null
+                                    ? Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Expanded(
+                                  child: RichText(
+                                    textAlign:
+                                    TextAlign
+                                        .start,
+                                    text: TextSpan(
+                                        text: e[
+                                        'title'],
+                                        style: TextStyle(
+                                            color: ColorUtil
+                                                .textColor,
+                                            fontWeight: FontWeight
+                                                .bold),
+                                        children: <
+                                            TextSpan>[
+                                          TextSpan(
+
+                                              text: " "+ e['value'],
+                                              style: TextStyle(fontSize: SizeUtil.textSizeSmall, color: e['valueColor'] == null ? ColorUtil.textColor : e['valueColor'], decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
+                                        ]),
+                                  ),
                                 ),
-                          e['action_title'] == null
-                              ? SizedBox()
-                              : InkWell(
-                                  onTap: () {},
-                                  child: Text(
+                                SizedBox(
+                                  width: SizeUtil
+                                      .tinySpace,
+                                ),
+                                SizedBox(width: e['action_title'] ==
+                                    null
+                                    ?0:SizeUtil.tinySpace,),
+                                e['action_title'] ==
+                                    null
+                                    ? SizedBox()
+                                    : InkWell(
+                                  onTap:
+                                      () {},
+                                  child:
+                                  Text(
                                     e['action_title'],
                                     style: TextStyle(
-                                        fontSize: SizeUtil.textSizeSmall,
+                                        fontSize:
+                                        SizeUtil.textSizeSmall,
                                         color: ColorUtil.blueLight),
                                   ),
                                 ),
-                          e['button'] == null
-                              ? SizedBox()
-                              : Expanded(
-                                  child: SizedBox(),
-                                ),
-                          e['button'] == null
-                              ? SizedBox()
-                              : RaisedButton(
-                                  onPressed: () {},
+                                e['button'] ==
+                                    null
+                                    ? SizedBox()
+                                    : RaisedButton(
+                                  onPressed:
+                                      () {},
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
-                                    Radius.circular(SizeUtil.smallRadius),
-                                  )),
-                                  color: ColorUtil.primaryColor,
-                                  child: Text(
+                                        Radius.circular(
+                                            SizeUtil.smallRadius),
+                                      )),
+                                  color: ColorUtil
+                                      .primaryColor,
+                                  child:
+                                  Text(
                                     e['button'],
                                     style: TextStyle(
-                                        fontSize: SizeUtil.textSizeDefault,
+                                        fontSize:
+                                        SizeUtil.textSizeDefault,
                                         color: Colors.white,
                                         fontStyle: FontStyle.normal,
                                         fontWeight: FontWeight.normal),
                                   ),
                                 ),
-                        ],
-                      )
-                    : Consumer<SeeMoreProvider>(
-                        builder: (BuildContext context, SeeMoreProvider value,
-                            Widget child) {
-                          return GestureDetector(
-                            onTap: () {
-                              _seeMoreProvider.onChange();
-                            },
-                            child: RichText(
+                              ],
+                            )
+                                    : RichText(
+                                        textAlign: TextAlign.start,
+                                        text: TextSpan(
+                                            text: e['title'],
+                                            style: TextStyle(
+                                                color: ColorUtil.textColor,
+                                                fontWeight: FontWeight.bold),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: e['value'],
+                                                  style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail, color: ColorUtil.textColor, decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
+                                              TextSpan(
+                                                text:  e['see_more'],
+                                                style: TextStyle(
+                                                    fontSize: SizeUtil.textSizeSmall,
+                                                    color: ColorUtil.blueLight,
+                                                    decoration: TextDecoration.none,
+                                                    fontWeight: FontWeight.normal),
+                                              ),
+                                            ]),
+                                      )))
+                                .toList(),
+                          ),
+                          //TODO get detail info max height
+                          Column(
+                            key: _rowKeyFull,
+                            mainAxisSize: MainAxisSize.min,
+                            children: detailInfo // info
+                                .map((e) => paddingContainer(e['see_more'] ==
+                                null
+                                ? Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Expanded(
+                                  child: RichText(
+                                    textAlign:
+                                    TextAlign
+                                        .start,
+                                    text: TextSpan(
+                                        text: e[
+                                        'title'],
+                                        style: TextStyle(
+                                            color: ColorUtil
+                                                .textColor,
+                                            fontWeight: FontWeight
+                                                .bold),
+                                        children: <
+                                            TextSpan>[
+                                          TextSpan(
+
+                                              text: " "+ e['value'],
+                                              style: TextStyle(fontSize: SizeUtil.textSizeSmall, color: e['valueColor'] == null ? ColorUtil.textColor : e['valueColor'], decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
+                                        ]),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: SizeUtil
+                                      .tinySpace,
+                                ),
+                                SizedBox(width: e['action_title'] ==
+                                    null
+                                    ?0:SizeUtil.tinySpace,),
+                                e['action_title'] ==
+                                    null
+                                    ? SizedBox()
+                                    : InkWell(
+                                  onTap:
+                                      () {},
+                                  child:
+                                  Text(
+                                    e['action_title'],
+                                    style: TextStyle(
+                                        fontSize:
+                                        SizeUtil.textSizeSmall,
+                                        color: ColorUtil.blueLight),
+                                  ),
+                                ),
+                                e['button'] ==
+                                    null
+                                    ? SizedBox()
+                                    : RaisedButton(
+                                  onPressed:
+                                      () {},
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                            SizeUtil.smallRadius),
+                                      )),
+                                  color: ColorUtil
+                                      .primaryColor,
+                                  child:
+                                  Text(
+                                    e['button'],
+                                    style: TextStyle(
+                                        fontSize:
+                                        SizeUtil.textSizeDefault,
+                                        color: Colors.white,
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                ),
+                              ],
+                            )
+                                : RichText(
                               textAlign: TextAlign.start,
                               text: TextSpan(
                                   text: e['title'],
@@ -373,138 +645,97 @@ class _PartnerBookScheduleScreenState
                                       fontWeight: FontWeight.bold),
                                   children: <TextSpan>[
                                     TextSpan(
-                                        text: value.isShow
-                                            ? e['full_value']
-                                            : e['value'],
+                                        text: e['full_value'],
                                         style: TextStyle(
-                                            fontSize:
-                                                SizeUtil.textSizeExpressDetail,
-                                            color: ColorUtil.textColor,
-                                            decoration: TextDecoration.none,
-                                            fontWeight: FontWeight.normal)),
-                                    TextSpan(
-                                      text: value.isShow ? '' : e['see_more'],
-                                      style: TextStyle(
-                                          fontSize: SizeUtil.textSizeSmall,
-                                          color: ColorUtil.blueLight,
-                                          decoration: TextDecoration.none,
-                                          fontWeight: FontWeight.normal),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () => {print("tapped")},
-                                    ),
+                                            fontSize: SizeUtil
+                                                .textSizeExpressDetail,
+                                            color:
+                                            ColorUtil.textColor,
+                                            decoration:
+                                            TextDecoration.none,
+                                            fontWeight:
+                                            FontWeight.normal)),
                                   ]),
-                            ),
-                          );
-                        },
-                      )))
-                .toList(),
-          ),
-          SizedBox(height: SizeUtil.tinySpace,),
-          Container(
-            child: ColoredTabBar(
-              ColorUtil.lineColor,
-              TabBar(
-                controller: _tabController,
-                labelColor: Colors.white,
-                indicatorColor: ColorUtil.white,
-                indicator: BoxDecoration(
-                    borderRadius: BorderRadius.circular(0),
-                    color: ColorUtil.primaryColor),
-                unselectedLabelColor: ColorUtil.textColor,
-                tabs: myTabs,
+                            )))
+                                .toList(),
+                          ),
+                        ],
+                      ),
               ),
-            ),
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  blurRadius: 5.0,
-                ),
-              ]
-            ),
-          ),
-          WidgetUtil.getLine(width: 1,margin: EdgeInsets.all(0),color: ColorUtil.transGray),
-          Consumer<PartnerBookTabbarProvider>(
-            builder: (BuildContext context, PartnerBookTabbarProvider value,
-                Widget child) {
-              return value.index == 0 ? bookingContent() : productContent();
-            },
-          ),
-          //todo book service schedule
-        ],
-      ),
-    );
+            );
+          });
+    });
   }
 
   Widget bookingContent() {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              S.of(context).choose_client,
-              style: TextStyle(
-                  color: ColorUtil.textColor,
-                  fontSize: SizeUtil.textSizeDefault,
-                  fontWeight: FontWeight.bold),
+    return ListView(
+      children: <Widget>[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                S.of(context).choose_client,
+                style: TextStyle(
+                    color: ColorUtil.textColor,
+                    fontSize: SizeUtil.textSizeDefault,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          WidgetUtil.getLine(margin: EdgeInsets.all(0), width: 2),
-          //todo client list
-          Column(
-            children: CLIENT_LIST
-                .map((ele) => paddingContainer(
-                    Row(
-                      children: <Widget>[
-                        Image.asset(
-                          "photo/ic_promo_1.png",
-                          width: SizeUtil.iconSize,
-                          height: SizeUtil.iconSize,
-                        ),
-                        SizedBox(
-                          width: SizeUtil.smallSpace,
-                        ),
-                        Text(
-                          ele['address'],
-                          style: TextStyle(color: ColorUtil.textHint),
-                        )
-                      ],
-                    ),
-                    padding: EdgeInsets.only(
-                        left: SizeUtil.smallSpace, top: SizeUtil.smallSpace)))
-                .toList(),
-          ),
-          WidgetUtil.getLine(
-              margin: EdgeInsets.only(top: SizeUtil.smallSpace), width: 2),
-          //todo choose service title
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              S.of(context).choose_service("25"),
-              style: TextStyle(
-                  color: ColorUtil.textColor,
-                  fontSize: SizeUtil.textSizeDefault,
-                  fontWeight: FontWeight.bold),
+            WidgetUtil.getLine(margin: EdgeInsets.all(0), width: 2),
+            //todo client list
+            Column(
+              children: StringUtil.clientList
+                  .map((ele) => paddingContainer(
+                  Row(
+                    children: <Widget>[
+                      Image.asset(
+                        "photo/ic_promo_1.png",
+                        width: SizeUtil.iconSize,
+                        height: SizeUtil.iconSize,
+                      ),
+                      SizedBox(
+                        width: SizeUtil.smallSpace,
+                      ),
+                      Text(
+                        ele['address'],
+                        style: TextStyle(color: ColorUtil.textHint),
+                      )
+                    ],
+                  ),
+                  padding: EdgeInsets.only(
+                      left: SizeUtil.smallSpace, top: SizeUtil.smallSpace)))
+                  .toList(),
             ),
-          ),
-          WidgetUtil.getLine(
-              margin: EdgeInsets.only(top: SizeUtil.smallSpace), width: 4),
-          //todo select service
-          Consumer<ChangeServiceProvider>(
-            builder: (BuildContext context, ChangeServiceProvider value,
-                Widget child) {
-              return Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.width / 2,
-                child: GridView.builder(
+            WidgetUtil.getLine(
+                margin: EdgeInsets.only(top: SizeUtil.smallSpace), width: 2),
+            //todo choose service title
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                S.of(context).choose_service("25"),
+                style: TextStyle(
+                    color: ColorUtil.textColor,
+                    fontSize: SizeUtil.textSizeDefault,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            WidgetUtil.getLine(
+                margin: EdgeInsets.only(top: SizeUtil.smallSpace), width: 4),
+            //todo select service
+            Consumer<ChangeServiceProvider>(
+              builder: (BuildContext context, ChangeServiceProvider value,
+                  Widget child) {
+                return GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, childAspectRatio: 3.3),
                   padding: EdgeInsets.only(
                       left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
-                  itemCount: 20,
+                  itemCount: 10,
                   itemBuilder: (context, index) {
                     bool isSelected = _serviceProvider != null &&
                         _serviceProvider.index == index;
@@ -519,178 +750,174 @@ class _PartnerBookScheduleScreenState
                           isSelected: isSelected,
                         ));
                   },
-                ),
-              );
-            },
-          ),
-          WidgetUtil.getLine(
-              margin: EdgeInsets.all(0), width: 2),
-          //todo choose service title
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              S.of(context).choose_time,
-              style: TextStyle(
-                  color: ColorUtil.textColor,
-                  fontSize: SizeUtil.textSizeDefault,
-                  fontWeight: FontWeight.bold),
+                );
+              },
             ),
-          ),
-          //TODO date of week tabbar
-          ColoredTabBar(
-            Color(0xffFFE9D6),
-            TabBar(
-              controller: _dayTabController,
-              labelColor: Colors.white,
-              indicatorColor: ColorUtil.white,
-              indicatorPadding: EdgeInsets.all(0),
-              labelPadding: EdgeInsets.all(0),
-              indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(0),
-                  color: Color(0xffFF7700)),
-              unselectedLabelColor: ColorUtil.textColor,
-              tabs: WEEK
-                  .map(
-                    (e) => Tab(
-                      child: Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              e['dow'],
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: SizeUtil.textSizeNotiTime),
-                            ),
-                            Text(
-                              e['date'],
-                              style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 6),
-                            )
-                          ],
-                        ),
+            WidgetUtil.getLine(margin: EdgeInsets.all(0), width: 2),
+            //todo choose service title
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                S.of(context).choose_time,
+                style: TextStyle(
+                    color: ColorUtil.textColor,
+                    fontSize: SizeUtil.textSizeDefault,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            //TODO date of week tabbar
+            ColoredTabBar(
+              Color(0xffFFE9D6),
+              TabBar(
+                controller: _dayTabController,
+                labelColor: Colors.white,
+                indicatorColor: ColorUtil.white,
+                indicatorPadding: EdgeInsets.all(0),
+                labelPadding: EdgeInsets.all(0),
+                indicator: BoxDecoration(
+                    borderRadius: BorderRadius.circular(0),
+                    color: Color(0xffFF7700)),
+                unselectedLabelColor: ColorUtil.textColor,
+                tabs: StringUtil.week
+                    .map(
+                      (e) => Tab(
+                    child: Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            e['dow'],
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: SizeUtil.textSizeNotiTime),
+                          ),
+                          Text(
+                            e['date'],
+                            style: TextStyle(
+                                fontWeight: FontWeight.normal, fontSize: 6),
+                          )
+                        ],
                       ),
                     ),
-                  )
-                  .toList(),
-            ),
-          ),
-          //TODO schedule time of day
-          Consumer<ChangeScheduleTimeProvider>(
-            builder: (BuildContext context, ChangeScheduleTimeProvider value,
-                Widget child) {
-              return Container(
-                height: MediaQuery.of(context).size.width / 3.50,
-                width: MediaQuery.of(context).size.width,
-                color: Colors.white,
-                child: GridView.builder(
-                  scrollDirection: Axis.horizontal,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4, childAspectRatio: 0.5),
-                  padding: EdgeInsets.all(0),
-                  itemCount: TIME.length,
-                  itemBuilder: (context, index) {
-                    bool isSelected = _scheduleTimeProvider != null &&
-                        _scheduleTimeProvider.timeIndex == index;
-                    return GestureDetector(
-                        onTap: () {
-                          if (_scheduleTimeProvider != null &&
-                              _scheduleTimeProvider.timeIndex != index) {
-                            _scheduleTimeProvider.onSelectedTime(index);
-                          }
-                        },
-                        child: Container(
-                          margin: EdgeInsets.all(1),
-                          color: isSelected
-                              ? Color(0xffFFE9D6)
-                              : ColorUtil.lineColor,
-                          child: Center(
-                            child: Text(
-                              TIME[index]['time'],
-                              style: TextStyle(
-                                  fontSize: SizeUtil.textSizeTiny,
-                                  color: isSelected
-                                      ? Colors.white
-                                      : ColorUtil.textColor),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ));
-                  },
-                ),
-              );
-            },
-          ),
-          Container(
-              padding: const EdgeInsets.only(
-                  left: SizeUtil.smallSpace,
-                  right: SizeUtil.smallSpace,
-                  top: SizeUtil.tinySpace,
-                  bottom: SizeUtil.tinySpace),
-              width: MediaQuery.of(context).size.width,
-              child: RaisedButton(
-                onPressed: () {
-                  showBookingDialogue(context);
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(SizeUtil.smallRadius),
-                    )),
-                color: ColorUtil.primaryColor,
-                child: Padding(
-                  padding: const EdgeInsets.all(SizeUtil.midSpace),
-                  child: Text(
-                    S.of(context).book,
-                    style: TextStyle(
-                        fontSize: SizeUtil.textSizeDefault,
-                        color: Colors.white,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold),
                   ),
-                ),
-              )),
-        ],
-      ),
+                )
+                    .toList(),
+              ),
+            ),
+            //TODO schedule time of day
+            Consumer<ChangeScheduleTimeProvider>(
+              builder: (BuildContext context, ChangeScheduleTimeProvider value,
+                  Widget child) {
+                return Container(
+                  height: MediaQuery.of(context).size.width / 3.50,
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.white,
+                  child: GridView.builder(
+                    scrollDirection: Axis.horizontal,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4, childAspectRatio: 0.5),
+                    padding: EdgeInsets.all(0),
+                    itemCount: StringUtil.time.length,
+                    itemBuilder: (context, index) {
+                      bool isSelected = _scheduleTimeProvider != null &&
+                          _scheduleTimeProvider.timeIndex == index;
+                      return GestureDetector(
+                          onTap: () {
+                            if (_scheduleTimeProvider != null &&
+                                _scheduleTimeProvider.timeIndex != index) {
+                              _scheduleTimeProvider.onSelectedTime(index);
+                            }
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(1),
+                            color: isSelected
+                                ? Color(0xffFFE9D6)
+                                : ColorUtil.lineColor,
+                            child: Center(
+                              child: Text(
+                                StringUtil.time[index]['time'],
+                                style: TextStyle(
+                                    fontSize: SizeUtil.textSizeTiny,
+                                    color: isSelected
+                                        ? Colors.white
+                                        : ColorUtil.textColor),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ));
+                    },
+                  ),
+                );
+              },
+            ),
+            Container(
+                padding: const EdgeInsets.only(
+                    left: SizeUtil.smallSpace,
+                    right: SizeUtil.smallSpace,
+                    top: SizeUtil.tinySpace,
+                    bottom: SizeUtil.tinySpace),
+                width: MediaQuery.of(context).size.width,
+                child: RaisedButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            BookingDialogue(context));
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(SizeUtil.smallRadius),
+                      )),
+                  color: ColorUtil.primaryColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(SizeUtil.midSpace),
+                    child: Text(
+                      S.of(context).book,
+                      style: TextStyle(
+                          fontSize: SizeUtil.textSizeDefault,
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                )),
+          ],
+        ),
+      ],
     );
   }
 
   Widget productContent() {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          ListCategory(
+    return Column(
+      children: <Widget>[
+        ListCategory(),
+        Expanded(
+          child: GridView.builder(
+            scrollDirection: Axis.vertical,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, childAspectRatio: 0.78),
+            padding: EdgeInsets.only(
+                left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
+            itemCount: 20,
+            itemBuilder: (context, index) {
+              bool isSelected =
+                  _serviceProvider != null && _serviceProvider.index == index;
+              return ItemProduct(
+                width: MediaQuery.of(context).size.width * 0.5,
+                borderRadius: SizeUtil.tinyRadius,
+                showSoldCount: false,
+                nameStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                showTime: false,
+                padding: EdgeInsets.only(
+                    left: SizeUtil.smallSpace,
+                    right: SizeUtil.smallSpace,
+                    top: 0),
+              );
+            },
           ),
-      Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.width *1.2,
-        child: GridView.builder(
-          scrollDirection: Axis.horizontal,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, childAspectRatio: 1.23),
-          padding: EdgeInsets.only(
-              left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
-          itemCount: 20,
-          itemBuilder: (context, index) {
-            bool isSelected = _serviceProvider != null &&
-                _serviceProvider.index == index;
-            return ItemProduct(
-              width: MediaQuery.of(context).size.width * 0.5,
-              borderRadius: SizeUtil.tinyRadius,
-              showSoldCount: false,
-              nameStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
-              showTime: false,
-              padding: EdgeInsets.only(
-                  left: SizeUtil.smallSpace,
-                  right: SizeUtil.smallSpace,
-                  top: 0),
-            );
-          },
         ),
-      ),
-        ],
-      ),
+      ],
     );
   }
 
@@ -714,180 +941,7 @@ class _PartnerBookScheduleScreenState
       ChangeNotifierProvider.value(value: _serviceProvider),
       ChangeNotifierProvider.value(value: _scheduleTimeProvider),
       ChangeNotifierProvider.value(value: _dateProvider),
+      ChangeNotifierProvider.value(value: _getHeightProvider),
     ];
-  }
-
-  //TODO need passing data into dialogue
-  showBookingDialogue(BuildContext context) {
-    Dialog simpleDialog = Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          color: Colors.white,
-          border: Border(
-            left: BorderSide(
-              color: ColorUtil.primaryColor,
-              width: 0.7,
-            ),
-            right: BorderSide(
-              color: ColorUtil.primaryColor,
-              width: 0.7,
-            ),
-            top: BorderSide(
-              color: ColorUtil.primaryColor,
-              width: 0.7,
-            ),
-            bottom: BorderSide(
-              color: ColorUtil.primaryColor,
-              width: 0.7,
-            ),
-          ),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: SizeUtil.midSmallSpace,bottom: SizeUtil.midSmallSpace),
-                child: Text(S.of(context).booking_schedule_verify,style: TextStyle(color: ColorUtil.primaryColor,fontSize: SizeUtil.textSizeExpressTitle,fontWeight: FontWeight.bold),),
-              ),
-              WidgetUtil.getLine(margin: EdgeInsets.only(bottom: SizeUtil.tinySpace),color: ColorUtil.lineColor)
-              ,Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                  children: CONFIRM_FORM.map((e) => paddingContainer(RichText(
-                text: TextSpan(
-                  text: e['title'],
-                  style: TextStyle(color: ColorUtil.textColor,fontSize: SizeUtil.textSizeSmall,fontWeight: FontWeight.bold),
-                  children: CONFIRM_FORM.indexOf(e)!=1?<TextSpan>[
-                    TextSpan(
-                      text: e['content'],
-                      style: TextStyle(color: ColorUtil.blueLight,fontSize: SizeUtil.textSizeSmall,fontWeight: FontWeight.normal),)
-                  ]:<TextSpan>[
-                    TextSpan(
-                      text: e['value'],
-                      style: TextStyle(color: ColorUtil.red,fontSize: SizeUtil.textSizeSmall),),
-                    TextSpan(
-                      text: e['content'],
-                      style: TextStyle(color: ColorUtil.textColor,fontSize: SizeUtil.textSizeSmall,fontWeight: FontWeight.normal,))
-                  ],
-                ),
-              ))).toList()),
-              SizedBox(height: SizeUtil.smallSpace,)
-              ,Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(SizeUtil.smallRadius),
-                      )),
-                  color: ColorUtil.blue,
-                  child: Text(
-                    S.of(context).back,
-                    style: TextStyle(
-                        fontSize: SizeUtil.textSizeSmall,
-                        color: Colors.white,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(width: SizeUtil.smallSpace,),
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    showBookingScheduleSuccess(context);
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(SizeUtil.smallRadius),
-                      )),
-                  color: ColorUtil.primaryColor,
-                  child: Text(
-                    S.of(context).confirm,
-                    style: TextStyle(
-                        fontSize: SizeUtil.textSizeSmall,
-                        color: Colors.white,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],)
-            ],
-        ),
-      )
-    );
-    showDialog(context: context, builder: (BuildContext context) => simpleDialog);
-  }
-
-  showBookingScheduleSuccess(BuildContext context){
-    Dialog simpleDialog = Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        child: Container(
-          //todo create round color
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.0),
-            color: Colors.white,
-            border: Border(
-              left: BorderSide(
-                color: ColorUtil.primaryColor,
-                width: 0.7,
-              ),
-              right: BorderSide(
-                color: ColorUtil.primaryColor,
-                width: 0.7,
-              ),
-              top: BorderSide(
-                color: ColorUtil.primaryColor,
-                width: 0.7,
-              ),
-              bottom: BorderSide(
-                color: ColorUtil.primaryColor,
-                width: 0.7,
-              ),
-            ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: SizeUtil.midSmallSpace,bottom: SizeUtil.midSmallSpace),
-                child: Text(S.of(context).booking_schedule_success,style: TextStyle(color: ColorUtil.primaryColor,fontSize: SizeUtil.textSizeDefault,fontWeight: FontWeight.bold),),
-              ),
-              RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(SizeUtil.smallRadius),
-                    )),
-                color: ColorUtil.primaryColor,
-                child: Text(
-                  S.of(context).confirm,
-                  style: TextStyle(
-                      fontSize: SizeUtil.textSizeTiny,
-                      color: Colors.white,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
-        )
-    );
-    showDialog(context: context, builder: (BuildContext context) => simpleDialog);
   }
 }
