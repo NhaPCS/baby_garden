@@ -314,7 +314,11 @@
   "time_using": "Thời gian sử dụng",
   "date_using": "Ngày sử dụng",
   "service_info": "Thông tin dịch vụ",
-  "cancel_schedule": "Hủy Lịch"
-
+  "cancel_schedule": "Hủy Lịch",
+"register_success": "Đăng ký thành công",
+  "change_pass_success": "Đổi mật khẩu thành công",
+  "pass_repass_must_same":"Nhập lại mật khẩu chưa trùng khớp",
+  "fill_all_blank": "Hãy nhập đầy đủ các ô",
+  "change_fail": "Cập nhật thất bại"
 
 }

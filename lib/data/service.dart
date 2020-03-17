@@ -9,7 +9,8 @@ import 'package:http/http.dart' as http;
 
 Map<String, String> _headers;
 
-const String BASE_URL = "http://chap.com.vn/vcb/api/";
+const String BASE_URL = "chap.com.vn";
+const String SUB_URL = "/vcb/api/";
 const int START_PAGE = 1;
 const int PAGE_SIZE = 20;
 
@@ -100,11 +101,12 @@ Future<Response> execute(BuildContext context,
     _headers = {};
   }
   try{
-    var url = '$BASE_URL$path';
+    //TODO post url must has http:// get: url generate by Url.http require param1: host param2: route param3: map parameter
+    var url = 'http://$BASE_URL$SUB_URL$path';
     if (context != null && showErrorDialog) WidgetUtil.showLoading(context);
     var response = isPost
         ? await http.post(url, body: param, headers: _headers)
-        : await http.get(Uri.http(BASE_URL, path, param), headers: _headers);
+        : await http.get(Uri.http(BASE_URL, '$SUB_URL$path', param), headers: _headers);
     print("REQ: ${response.request}");
     print("RES: ${response.body}");
     if (context != null && showErrorDialog) Navigator.of(context).pop();

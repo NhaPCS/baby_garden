@@ -5,6 +5,7 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 
 class WelcomeGuideScreen extends StatefulWidget {
@@ -19,6 +20,7 @@ class _WelcomeGuideScreenState extends BaseState<WelcomeGuideScreen> {
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       body: Center(
         child: Column(

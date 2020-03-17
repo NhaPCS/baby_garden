@@ -1,7 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/change_pass_provider.dart';
 import 'package:baby_garden_flutter/provider/waiting_otp_provider.dart';
-import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/view_model/register_view_model.dart';
 import 'package:baby_garden_flutter/widget/my_password_textfield.dart';
@@ -9,6 +8,7 @@ import 'package:baby_garden_flutter/widget/my_text_field.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
@@ -22,21 +22,20 @@ class RegisterScreen extends StatefulWidget {
   }
 }
 
-class _RegisterScreenState extends BaseStateModel<RegisterScreen,RegisterViewModel> {
+class _RegisterScreenState extends BaseStateModel<RegisterScreen, RegisterViewModel> {
   final WaittingOTPProvider _waittingOTPProvider = new WaittingOTPProvider();
   final ChangePassProvider _changePassProvider = new ChangePassProvider();
   final TextEditingController _nameControler = new TextEditingController();
   final TextEditingController _phoneControler = new TextEditingController();
   final TextEditingController _passControler = new TextEditingController();
   final TextEditingController _repassControler = new TextEditingController();
-  final TextEditingController _invitePhoneControler =
-      new TextEditingController();
+  final TextEditingController _invitePhoneControler = new TextEditingController();
   final TextEditingController _otpControler = new TextEditingController();
   bool isShowOTP = false;
-
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       appBar: getAppBar(
           title: S.of(context).register,
@@ -154,19 +153,26 @@ class _RegisterScreenState extends BaseStateModel<RegisterScreen,RegisterViewMod
             height: SizeUtil.defaultSpace,
           ),
           RaisedButton(
-            onPressed: ()
-             async {
+            onPressed: () async {
               String check = checkRegisterCondition(isShowOTP);
               if (check.trim().length == 0) {
-                isShowOTP = true;
-                _waittingOTPProvider.startTimer();
-
-                getViewModel().onRegister(name: _nameControler.text.toString(),phone:_phoneControler.text.toString(),password:_passControler.text.toString(),refCode:_invitePhoneControler.text.toString());
+                var code = await getViewModel().onGetVerifyCode(
+                    phone: _phoneControler.text); // todo get verify code
+                if (code != null) {
+                  isShowOTP = true;
+                  _waittingOTPProvider.startTimer();
+                  //todo
+                  getViewModel().onRegister(
+                      name: _nameControler.text.toString(),
+                      phone: _phoneControler.text.toString(),
+                      password: _passControler.text.toString(),
+                      refCode: _invitePhoneControler.text.toString());
+                }
               } else {
-                WidgetUtil.showMessageDialog(context, message: check, title: "Alert");
+                WidgetUtil.showMessageDialog(context,
+                    message: check, title: "Alert");
               }
-            }
-            ,
+            },
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
               Radius.circular(SizeUtil.tinyRadius),
@@ -249,7 +255,7 @@ class _RegisterScreenState extends BaseStateModel<RegisterScreen,RegisterViewMod
       return "Please Enter password";
     } else if (_repassControler.text.trim().length == 0) {
       return "Please Enter repassword";
-    } else if (_passControler.text.compareTo(_repassControler.text)<0) {
+    } else if (_passControler.text.compareTo(_repassControler.text) < 0) {
       return "Password and repassword must be the same";
     } else if (_invitePhoneControler.text.trim().length == 0) {
       return "Please Enter invite phone number";
@@ -265,8 +271,6 @@ class _RegisterScreenState extends BaseStateModel<RegisterScreen,RegisterViewMod
       }
     }
   }
-
-
 
   @override
   void dispose() {

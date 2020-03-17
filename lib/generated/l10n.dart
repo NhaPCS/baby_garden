@@ -2872,6 +2872,51 @@ class S {
       args: [],
     );
   }
+
+  String get register_success {
+    return Intl.message(
+      'Đăng ký thành công',
+      name: 'register_success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get change_pass_success {
+    return Intl.message(
+      'Đổi mật khẩu thành công',
+      name: 'change_pass_success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get pass_repass_must_same {
+    return Intl.message(
+      'Nhập lại mật khẩu chưa trùng khớp',
+      name: 'pass_repass_must_same',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get fill_all_blank {
+    return Intl.message(
+      'Hãy nhập đầy đủ các ô',
+      name: 'fill_all_blank',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get change_fail {
+    return Intl.message(
+      'Cập nhật thất bại',
+      name: 'change_fail',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

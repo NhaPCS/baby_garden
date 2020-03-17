@@ -8,7 +8,8 @@ import 'package:nested/nested.dart';
 
 class MyPasswordTextField extends StatefulWidget {
   final TextEditingController controller;
-  const MyPasswordTextField({Key key,this.controller }) : super(key: key);
+  final String hint;
+  const MyPasswordTextField({Key key,this.controller,this.hint }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -30,7 +31,7 @@ class _MyPasswordTextFieldState extends State<MyPasswordTextField> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return MyTextField(
-      hint: S.of(context).enter_password,
+      hint: widget.hint!=null?widget.hint:S.of(context).enter_password,
       textEditingController: widget.controller,
       borderColor: ColorUtil.colorAccent,
       borderRadius: SizeUtil.tinyRadius,
