@@ -12,7 +12,8 @@ class ServiceDetailItem extends StatelessWidget{
     // TODO: implement build
     return GestureDetector(
       child: Container(
-        margin: EdgeInsets.all(2),
+        width: MediaQuery.of(context).size.width/2,
+        padding: EdgeInsets.all(2),
         color: isSelected?ColorUtil.primaryColor:ColorUtil.serviceItemUnselectColor,
         child: Stack(
           children: <Widget>[

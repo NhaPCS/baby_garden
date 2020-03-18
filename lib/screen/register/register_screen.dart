@@ -1,15 +1,18 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/change_pass_provider.dart';
 import 'package:baby_garden_flutter/provider/waiting_otp_provider.dart';
-import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/view_model/register_view_model.dart';
 import 'package:baby_garden_flutter/widget/my_password_textfield.dart';
 import 'package:baby_garden_flutter/widget/my_text_field.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
+
+import '../base_state_model.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -19,20 +22,20 @@ class RegisterScreen extends StatefulWidget {
   }
 }
 
-class _RegisterScreenState extends BaseState<RegisterScreen> {
+class _RegisterScreenState extends BaseStateModel<RegisterScreen, RegisterViewModel> {
   final WaittingOTPProvider _waittingOTPProvider = new WaittingOTPProvider();
   final ChangePassProvider _changePassProvider = new ChangePassProvider();
   final TextEditingController _nameControler = new TextEditingController();
   final TextEditingController _phoneControler = new TextEditingController();
   final TextEditingController _passControler = new TextEditingController();
   final TextEditingController _repassControler = new TextEditingController();
-  final TextEditingController _invitePhoneControler =
-      new TextEditingController();
+  final TextEditingController _invitePhoneControler = new TextEditingController();
   final TextEditingController _otpControler = new TextEditingController();
-
+  bool isShowOTP = false;
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       appBar: getAppBar(
           title: S.of(context).register,
@@ -80,11 +83,15 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
-          MyPasswordTextField(controller: _passControler,),
+          MyPasswordTextField(
+            controller: _passControler,
+          ),
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
-          MyPasswordTextField(controller: _repassControler,),
+          MyPasswordTextField(
+            controller: _repassControler,
+          ),
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
@@ -95,6 +102,7 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
             borderRadius: SizeUtil.tinyRadius,
             elevation: SizeUtil.smallElevation,
             contentPadding: SizeUtil.smallPadding,
+            inputType: TextInputType.phone,
             suffix: new GestureDetector(
               onTap: () {
                 //todo open camera to capture the QAcode
@@ -145,13 +153,30 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
             height: SizeUtil.defaultSpace,
           ),
           RaisedButton(
-            onPressed: () {
-              _waittingOTPProvider.startTimer();
+            onPressed: () async {
+              String check = checkRegisterCondition(isShowOTP);
+              if (check.trim().length == 0) {
+                var code = await getViewModel().onGetVerifyCode(
+                    phone: _phoneControler.text); // todo get verify code
+                if (code != null) {
+                  isShowOTP = true;
+                  _waittingOTPProvider.startTimer();
+                  //todo
+                  getViewModel().onRegister(
+                      name: _nameControler.text.toString(),
+                      phone: _phoneControler.text.toString(),
+                      password: _passControler.text.toString(),
+                      refCode: _invitePhoneControler.text.toString());
+                }
+              } else {
+                WidgetUtil.showMessageDialog(context,
+                    message: check, title: "Alert");
+              }
             },
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(SizeUtil.tinyRadius),
-                )),
+              Radius.circular(SizeUtil.tinyRadius),
+            )),
             color: ColorUtil.colorAccent,
             child: Padding(
               padding: const EdgeInsets.all(SizeUtil.smallSpace),
@@ -221,6 +246,32 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
     );
   }
 
+  String checkRegisterCondition(bool isSendCode) {
+    if (_nameControler.text.trim().length == 0) {
+      return "Please Enter name";
+    } else if (_phoneControler.text.trim().length == 0) {
+      return "Please Enter Phone number";
+    } else if (_passControler.text.trim().length == 0) {
+      return "Please Enter password";
+    } else if (_repassControler.text.trim().length == 0) {
+      return "Please Enter repassword";
+    } else if (_passControler.text.compareTo(_repassControler.text) < 0) {
+      return "Password and repassword must be the same";
+    } else if (_invitePhoneControler.text.trim().length == 0) {
+      return "Please Enter invite phone number";
+    } else {
+      if (isSendCode) {
+        if (_otpControler.text.trim().length == 0) {
+          return "Please Enter code";
+        } else {
+          return "";
+        }
+      } else {
+        return "";
+      }
+    }
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -235,5 +286,11 @@ class _RegisterScreenState extends BaseState<RegisterScreen> {
       ChangeNotifierProvider.value(value: _waittingOTPProvider),
       ChangeNotifierProvider.value(value: _changePassProvider)
     ];
+  }
+
+  @override
+  RegisterViewModel initViewModel() {
+    // TODO: implement initViewModel
+    return new RegisterViewModel(context);
   }
 }

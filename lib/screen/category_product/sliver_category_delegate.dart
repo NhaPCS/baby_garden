@@ -21,6 +21,6 @@ class SliverCategoryDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
+    return oldDelegate.maxExtent!=maxHeight;
   }
 }

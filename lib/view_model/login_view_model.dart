@@ -6,8 +6,6 @@ import 'package:flutter/src/widgets/framework.dart';
 
 class LoginViewModel implements BaseViewModel{
 
-
-
   Future<void> onLogin({String phone, String password}) async {
     dynamic data = await login(context,
         password: password, phone: phone);

@@ -9,13 +9,55 @@ import 'package:http/http.dart' as http;
 
 Map<String, String> _headers;
 
-const String BASE_URL = "http://chap.com.vn/vcb/api/";
+const String BASE_URL = "chap.com.vn";
+const String SUB_URL = "/vcb/api/";
 const int START_PAGE = 1;
 const int PAGE_SIZE = 20;
 
+//TODO require LOGIN
 Future<dynamic> login(BuildContext context, {String phone, String password})async {
-  Response response=await post(context, path: 'login', param: {
+  Response response=await get(context, path: 'login', param: {
     'phone': phone,
+    'password': password
+  });
+  if(response.isSuccess()) return response.data;
+  return null;
+}
+
+//TODO require REGISTER
+Future<dynamic> register(BuildContext context, {String phone,  String name,String password,String refCode})async {
+  Response response=await post(context, path: 'register', param: {
+    'phone': phone,
+    'name': name,
+    'password': password,
+    "ref_code":refCode
+  });
+  if(response.isSuccess()) return response.data;
+  return null;
+}
+
+//TODO require VERIFY CODE
+Future<dynamic> verifyCode(BuildContext context,{String phone}) async{
+  Response response = await get(context,path: "verifyCode",param: {
+    'phone':phone
+  });
+  if(response.isSuccess()) return response.data;
+  return null;
+}
+
+//TODO require FORGET PASSWORD
+Future<dynamic> forgetPassword(BuildContext context,{String phone}) async{
+  Response response = await post(context,path: "forgetPassword",param: {
+    'phone':phone
+  });
+  if(response.isSuccess()) return response.data;
+  return null;
+}
+
+//TODO require FORGET PASSWORD
+Future<dynamic> changePassword(BuildContext context,{String phone,String password}) async{
+  Response response = await post(context,path: "changePassword",param: {
+    'phone':phone,
     'password': password
   });
   if(response.isSuccess()) return response.data;
@@ -29,7 +71,7 @@ Future<Response> post(BuildContext context,
     bool showErrorDialog = true}) async {
   Response response = await execute(context,
       path: path,
-      param: path,
+      param: param,
       hasAccessToken: hasAccessToken,
       showErrorDialog: showErrorDialog,
       isPost: true);
@@ -42,7 +84,7 @@ Future<Response> get(BuildContext context,
       bool showErrorDialog = true}) async {
   Response response = await execute(context,
       path: path,
-      param: path,
+      param: param,
       hasAccessToken: false,
       showErrorDialog: showErrorDialog,
       isPost: false);
@@ -58,17 +100,23 @@ Future<Response> execute(BuildContext context,
   if (_headers == null || _headers.isEmpty) {
     _headers = {};
   }
-  var url = '$BASE_URL$path';
-  if (context != null && showErrorDialog) WidgetUtil.showLoading(context);
-  var response = isPost
-      ? await http.post(url, body: param, headers: _headers)
-      : await http.get(Uri.http(BASE_URL, path, param), headers: _headers);
-  print("REQ: ${response.request}");
-  print("RES: ${response.body}");
-  if (context != null && showErrorDialog) Navigator.of(context).pop();
-  Response res =
-      parseResponse(context, response.body, hasAccessToken: hasAccessToken);
-  return res;
+  try{
+    //TODO post url must has http:// get: url generate by Url.http require param1: host param2: route param3: map parameter
+    var url = 'http://$BASE_URL$SUB_URL$path';
+    if (context != null && showErrorDialog) WidgetUtil.showLoading(context);
+    var response = isPost
+        ? await http.post(url, body: param, headers: _headers)
+        : await http.get(Uri.http(BASE_URL, '$SUB_URL$path', param), headers: _headers);
+    print("REQ: ${response.request}");
+    print("RES: ${response.body}");
+    if (context != null && showErrorDialog) Navigator.of(context).pop();
+    Response res =
+    parseResponse(context, response.body, hasAccessToken: hasAccessToken);
+    return res;
+  } on Exception catch(e){
+    print(e);
+  }
+  return Response();
 }
 
 Response parseResponse(BuildContext context, String responseBody,

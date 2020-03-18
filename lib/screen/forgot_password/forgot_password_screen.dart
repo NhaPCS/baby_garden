@@ -3,10 +3,13 @@ import 'package:baby_garden_flutter/provider/change_pass_provider.dart';
 import 'package:baby_garden_flutter/provider/waiting_otp_provider.dart';
 import 'package:baby_garden_flutter/provider/enter_phone_number_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/view_model/forgot_pass_view_model.dart';
 import 'package:baby_garden_flutter/widget/my_password_textfield.dart';
 import 'package:baby_garden_flutter/widget/my_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +21,7 @@ class ForgotPasswordScreen extends StatefulWidget {
   }
 }
 
-class _ForgotPasswordScreenState extends BaseState<ForgotPasswordScreen> {
+class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,ForgotPasswordViewModel> {
   final ChangePassProvider _changePassProvider = new ChangePassProvider();
   final WaittingOTPProvider _waittingOTPProvider = new WaittingOTPProvider();
   final EnterPhoneNumberProvider _enterPhoneNumberProvider =
@@ -33,6 +36,7 @@ class _ForgotPasswordScreenState extends BaseState<ForgotPasswordScreen> {
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       appBar: getAppBar(
           title: S.of(context).foget_pasword,
@@ -67,11 +71,17 @@ class _ForgotPasswordScreenState extends BaseState<ForgotPasswordScreen> {
                           bottom: SizeUtil.defaultSpace),
                       child: Column(
                         children: <Widget>[
-                          MyPasswordTextField(controller: _newPasswordControler,),
+                          MyPasswordTextField(controller: _newPasswordControler,
+                              hint: S
+                                  .of(context)
+                                  .enter_new_password),
                           SizedBox(
                             height: SizeUtil.defaultSpace,
                           ),
-                          MyPasswordTextField(controller: _reenterNewPasswordControler,),
+                          MyPasswordTextField(controller: _reenterNewPasswordControler,
+                              hint: S
+                                  .of(context)
+                                  .reenter_new_password),
                           SizedBox(
                             height: SizeUtil.defaultSpace,
                           ),
@@ -136,18 +146,34 @@ class _ForgotPasswordScreenState extends BaseState<ForgotPasswordScreen> {
                 ),
                 width: MediaQuery.of(context).size.width,
                 child: RaisedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_phoneControler.text.trim().length > 0) {
-                      _waittingOTPProvider.startTimer();
-                      _enterPhoneNumberProvider.isEnterPhoneNumber
-                          ? _enterPhoneNumberProvider.changeNewPass(
-                              _newPasswordControler.text,
-                              _reenterNewPasswordControler.text,
-                              _otpControler.text)
-                          : _enterPhoneNumberProvider
-                              .enterPhoneNumber(_phoneControler.text);
+                      if(_enterPhoneNumberProvider.isEnterPhoneNumber){
+                        if(_newPasswordControler.text.trim().length==0||_reenterNewPasswordControler.text.trim().length==0){
+                          WidgetUtil.showMessageDialog(context, message: S.of(context).enter_password, title: S.of(context).foget_pasword);
+                        }else if (_newPasswordControler.text.trim()!=_reenterNewPasswordControler.text.trim()){
+                          WidgetUtil.showMessageDialog(context, message: S.of(context).pass_repass_must_same, title: S.of(context).foget_pasword);
+                        }else{
+                          var data = await getViewModel().onChangePassword(_phoneControler.text, _newPasswordControler.text);
+//                          if (data!=null) {
+//                            print(data);
+                          WidgetUtil.showMessageDialog(context, message: S.of(context).change_pass_success, title: S.of(context).foget_pasword,onOkClick: (){
+                            Navigator.of(context).pop();
+                          });
+//                          }
+//                            _enterPhoneNumberProvider.changeNewPass(_newPasswordControler.text, _reenterNewPasswordControler.text, _otpControler.text);
+                        }
+                      }else{
+                        var data = await getViewModel().onForgotPassword(_phoneControler.text);
+                        if(data!=null){
+                          _waittingOTPProvider.startTimer();
+                          _enterPhoneNumberProvider.enterPhoneNumber(_phoneControler.text);
+                        }
+                      }
+
                     } else {
                       //TODO alert enter phone number
+                      WidgetUtil.showMessageDialog(context, message: S.of(context).enter_phone_number, title: S.of(context).foget_pasword);
                     }
                   },
                   shape: RoundedRectangleBorder(
@@ -203,5 +229,11 @@ class _ForgotPasswordScreenState extends BaseState<ForgotPasswordScreen> {
       ChangeNotifierProvider.value(value: _changePassProvider),
       ChangeNotifierProvider.value(value: _waittingOTPProvider),
     ];
+  }
+
+  @override
+  ForgotPasswordViewModel initViewModel() {
+    // TODO: implement initViewModel
+    return new ForgotPasswordViewModel();
   }
 }

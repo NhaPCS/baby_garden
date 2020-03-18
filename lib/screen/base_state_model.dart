@@ -16,7 +16,7 @@ abstract class BaseStateModel<S extends StatefulWidget, V extends BaseViewModel>
 
  V initViewModel();
 
-  getViewModel() {
+ V  getViewModel() {
     return this._baseViewModel;
   }
 

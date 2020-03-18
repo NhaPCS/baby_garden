@@ -1955,78 +1955,6 @@ class S {
     );
   }
 
-  String get addressDetail {
-    return Intl.message(
-      'Địa chỉ cụ thể',
-      name: 'addressDetail',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get addressDetailHint {
-    return Intl.message(
-      'Nhập số nhà, tên đường...',
-      name: 'addressDetailHint',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get cancel {
-    return Intl.message(
-      'Hủy bỏ',
-      name: 'cancel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get addNew {
-    return Intl.message(
-      'Thêm mới',
-      name: 'addNew',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get nameOfChild {
-    return Intl.message(
-      'Tên của bé',
-      name: 'nameOfChild',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get dateOfBirth {
-    return Intl.message(
-      'Ngày tháng năm sinh',
-      name: 'dateOfBirth',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get comeBack {
-    return Intl.message(
-      'trở lại',
-      name: 'comeBack',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get uploadChildAvatar {
-    return Intl.message(
-      'Upload ảnh của bé',
-      name: 'uploadChildAvatar',
-      desc: '',
-      args: [],
-    );
-  }
-
   String get booking_schedule_verify {
     return Intl.message(
       'Xác Nhận Đặt Lịch',
@@ -2792,6 +2720,15 @@ class S {
     );
   }
 
+  String get cancel {
+    return Intl.message(
+      'Hủy bỏ',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get receive_in_shop {
     return Intl.message(
       'Nhận hàng tại shop',
@@ -2828,37 +2765,10 @@ class S {
     );
   }
 
-  String get period {
+  String get list_user_rated {
     return Intl.message(
-      'Thời hạn',
-      name: 'period',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get numberOfVoucher {
-    return Intl.message(
-      'Số Voucher',
-      name: 'numberOfVoucher',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get remindBuy {
-    return Intl.message(
-      'nhắc mua',
-      name: 'remindBuy',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get remindUse {
-    return Intl.message(
-      'nhắc sử dụng',
-      name: 'remindUse',
+      'Danh sách người đánh giá',
+      name: 'list_user_rated',
       desc: '',
       args: [],
     );
@@ -2963,82 +2873,46 @@ class S {
     );
   }
 
-  String get remindBuyProduct {
+  String get register_success {
     return Intl.message(
-      'Nhắc lịch mua sản phẩm',
-      name: 'remindBuyProduct',
+      'Đăng ký thành công',
+      name: 'register_success',
       desc: '',
       args: [],
     );
   }
 
-  String get remindTime {
+  String get change_pass_success {
     return Intl.message(
-      'Thời gian nhắc:',
-      name: 'remindTime',
+      'Đổi mật khẩu thành công',
+      name: 'change_pass_success',
       desc: '',
       args: [],
     );
   }
 
-  String get remindUseProduct {
+  String get pass_repass_must_same {
     return Intl.message(
-      'Nhắc lịch sử dụng sản phẩm',
-      name: 'remindUseProduct',
+      'Nhập lại mật khẩu chưa trùng khớp',
+      name: 'pass_repass_must_same',
       desc: '',
       args: [],
     );
   }
 
-  String get endDateOfReminder {
+  String get fill_all_blank {
     return Intl.message(
-      'Ngày kết thúc nhắc:',
-      name: 'endDateOfReminder',
+      'Hãy nhập đầy đủ các ô',
+      name: 'fill_all_blank',
       desc: '',
       args: [],
     );
   }
 
-  String get reminderCycle {
+  String get change_fail {
     return Intl.message(
-      'Chu kỳ nhắc (ngày):',
-      name: 'reminderCycle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get reminderCycleHint {
-    return Intl.message(
-      ' Chọn 1 là nhắc lịch hàng ngày, 2 là 2 ngày sẽ nhắc 1 lần...',
-      name: 'reminderCycleHint',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get select {
-    return Intl.message(
-      'Chọn',
-      name: 'select',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String reminderTimeAt(dynamic order) {
-    return Intl.message(
-      'Thời gian nhắc lần $order',
-      name: 'reminderTimeAt',
-      desc: '',
-      args: [order],
-    );
-  }
-
-  String get addReminder {
-    return Intl.message(
-      'Thêm lịch nhắc',
-      name: 'addReminder',
+      'Cập nhật thất bại',
+      name: 'change_fail',
       desc: '',
       args: [],
     );
