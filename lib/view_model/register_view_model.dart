@@ -20,7 +20,7 @@ class RegisterViewModel extends BaseViewModel{
     if(data!=null){
       WidgetUtil.showMessageDialog(context,message: S.of(context).register_success,onOkClick: (){
         Navigator.of(context).pop();
-      }, title: S.of(context).register);
+      }, title: S.of(context).success);
     }
   }
 

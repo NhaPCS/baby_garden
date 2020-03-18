@@ -29,7 +29,7 @@ class _WelcomeState extends BaseState<WelcomeScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
+//    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       body: Center(
         child: Column(

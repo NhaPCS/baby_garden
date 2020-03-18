@@ -28,7 +28,7 @@ class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,Cha
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
+//    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       appBar: getAppBar(
           title: S
@@ -113,7 +113,7 @@ class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,Cha
                 }else {
                   var data = await getViewModel().onChangePassword("112233", _newPasswordControler.text);
                   if (data!=null){
-                    WidgetUtil.showMessageDialog(context, message: S.of(context).change_pass_success, title: S.of(context).changePassword,onOkClick: (){
+                    WidgetUtil.showMessageDialog(context, message: S.of(context).change_pass_success, title: S.of(context).success,onOkClick: (){
                       Navigator.of(context).pop();
                     });
                   }else{

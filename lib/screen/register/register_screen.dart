@@ -35,7 +35,7 @@ class _RegisterScreenState extends BaseStateModel<RegisterScreen, RegisterViewMo
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
+//    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       appBar: getAppBar(
           title: S.of(context).register,
@@ -170,7 +170,7 @@ class _RegisterScreenState extends BaseStateModel<RegisterScreen, RegisterViewMo
                 }
               } else {
                 WidgetUtil.showMessageDialog(context,
-                    message: check, title: "Alert");
+                    message: check, title: "Note");
               }
             },
             shape: RoundedRectangleBorder(

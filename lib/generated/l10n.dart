@@ -1955,6 +1955,78 @@ class S {
     );
   }
 
+  String get addressDetail {
+    return Intl.message(
+      'Địa chỉ cụ thể',
+      name: 'addressDetail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addressDetailHint {
+    return Intl.message(
+      'Nhập số nhà, tên đường...',
+      name: 'addressDetailHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get list_user_rated {
+    return Intl.message(
+      'Danh sách người đánh giá',
+      name: 'list_user_rated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get addNew {
+    return Intl.message(
+      'Thêm mới',
+      name: 'addNew',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get nameOfChild {
+    return Intl.message(
+      'Tên của bé',
+      name: 'nameOfChild',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get dateOfBirth {
+    return Intl.message(
+      'Ngày tháng năm sinh',
+      name: 'dateOfBirth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get comeBack {
+    return Intl.message(
+      'trở lại',
+      name: 'comeBack',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get uploadChildAvatar {
+    return Intl.message(
+      'Upload ảnh của bé',
+      name: 'uploadChildAvatar',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get booking_schedule_verify {
     return Intl.message(
       'Xác Nhận Đặt Lịch',
@@ -2765,10 +2837,37 @@ class S {
     );
   }
 
-  String get list_user_rated {
+  String get period {
     return Intl.message(
-      'Danh sách người đánh giá',
-      name: 'list_user_rated',
+      'Thời hạn',
+      name: 'period',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get numberOfVoucher {
+    return Intl.message(
+      'Số Voucher',
+      name: 'numberOfVoucher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindBuy {
+    return Intl.message(
+      'nhắc mua',
+      name: 'remindBuy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindUse {
+    return Intl.message(
+      'nhắc sử dụng',
+      name: 'remindUse',
       desc: '',
       args: [],
     );
@@ -2873,6 +2972,87 @@ class S {
     );
   }
 
+  String get remindBuyProduct {
+    return Intl.message(
+      'Nhắc lịch mua sản phẩm',
+      name: 'remindBuyProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindTime {
+    return Intl.message(
+      'Thời gian nhắc:',
+      name: 'remindTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindUseProduct {
+    return Intl.message(
+      'Nhắc lịch sử dụng sản phẩm',
+      name: 'remindUseProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get endDateOfReminder {
+    return Intl.message(
+      'Ngày kết thúc nhắc:',
+      name: 'endDateOfReminder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get reminderCycle {
+    return Intl.message(
+      'Chu kỳ nhắc (ngày):',
+      name: 'reminderCycle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get reminderCycleHint {
+    return Intl.message(
+      ' Chọn 1 là nhắc lịch hàng ngày, 2 là 2 ngày sẽ nhắc 1 lần...',
+      name: 'reminderCycleHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get select {
+    return Intl.message(
+      'Chọn',
+      name: 'select',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String reminderTimeAt(dynamic order) {
+    return Intl.message(
+      'Thời gian nhắc lần $order',
+      name: 'reminderTimeAt',
+      desc: '',
+      args: [order],
+    );
+  }
+
+  String get addReminder {
+    return Intl.message(
+      'Thêm lịch nhắc',
+      name: 'addReminder',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get register_success {
     return Intl.message(
       'Đăng ký thành công',
@@ -2913,6 +3093,15 @@ class S {
     return Intl.message(
       'Cập nhật thất bại',
       name: 'change_fail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get success {
+    return Intl.message(
+      'Thành công',
+      name: 'success',
       desc: '',
       args: [],
     );

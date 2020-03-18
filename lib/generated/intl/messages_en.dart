@@ -373,6 +373,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sku_code" : MessageLookupByLibrary.simpleMessage("Mã SKU"),
     "sold_count" : m23,
     "sub_district" : MessageLookupByLibrary.simpleMessage("Phường/ Xã"),
+    "success" : MessageLookupByLibrary.simpleMessage("Thành công"),
     "success_order" : MessageLookupByLibrary.simpleMessage("Đơn hàng\nthành công"),
     "supply_by" : MessageLookupByLibrary.simpleMessage("Cung cấp bởi: "),
     "supply_by_supplier" : m24,

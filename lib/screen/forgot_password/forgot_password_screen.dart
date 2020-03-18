@@ -36,7 +36,7 @@ class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,For
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
+//    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       appBar: getAppBar(
           title: S.of(context).foget_pasword,
@@ -157,7 +157,7 @@ class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,For
                           var data = await getViewModel().onChangePassword(_phoneControler.text, _newPasswordControler.text);
 //                          if (data!=null) {
 //                            print(data);
-                          WidgetUtil.showMessageDialog(context, message: S.of(context).change_pass_success, title: S.of(context).foget_pasword,onOkClick: (){
+                          WidgetUtil.showMessageDialog(context, message: S.of(context).change_pass_success, title: S.of(context).success,onOkClick: (){
                             Navigator.of(context).pop();
                           });
 //                          }
