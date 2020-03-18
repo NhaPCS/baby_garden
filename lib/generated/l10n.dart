@@ -15,7 +15,7 @@ class S {
     AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final String name = locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
+    final String name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
@@ -3133,6 +3133,51 @@ class S {
       args: [],
     );
   }
+
+  String get voucherDetail {
+    return Intl.message(
+      'Chi tiết Voucher',
+      name: 'voucherDetail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get information {
+    return Intl.message(
+      'Thông tin',
+      name: 'information',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get guide {
+    return Intl.message(
+      'Hướng dẫn',
+      name: 'guide',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get images {
+    return Intl.message(
+      'Hình ảnh',
+      name: 'images',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get contact {
+    return Intl.message(
+      'Liên hệ',
+      name: 'contact',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
@@ -3140,7 +3185,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
 
   List<Locale> get supportedLocales {
     return const <Locale>[
-      Locale('en', ''),
+      Locale.fromSubtags(languageCode: 'en'),
     ];
   }
 

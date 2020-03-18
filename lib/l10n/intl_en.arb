@@ -343,5 +343,10 @@
   "pass_repass_must_same": "Nhập lại mật khẩu chưa trùng khớp",
   "fill_all_blank": "Hãy nhập đầy đủ các ô",
   "change_fail": "Cập nhật thất bại",
-  "success": "Thành công"
+  "success": "Thành công",
+  "voucherDetail": "Chi tiết Voucher",
+  "information": "Thông tin",
+  "guide": "Hướng dẫn",
+  "images": "Hình ảnh",
+  "contact": "Liên hệ"
 }
