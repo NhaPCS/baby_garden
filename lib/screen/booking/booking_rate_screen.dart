@@ -83,7 +83,7 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
                           ? RatingDetailScreen()
                           : RatedDetailScreen());
                     },
-                    child: myTabs.indexOf(tab) == 0
+                    child: widget.isService
                         ? new ServiceItem()
                         : new OrderItem(),
                   );
