@@ -215,7 +215,7 @@
   "isDefault": "Mặc định",
   "addressDetail": "Địa chỉ cụ thể",
   "addressDetailHint": "Nhập số nhà, tên đường...",
-  "cancel": "Hủy bỏ",
+  "list_user_rated": "Danh sách người đánh giá",
   "addNew": "Thêm mới",
   "nameOfChild": "Tên của bé",
   "dateOfBirth": "Ngày tháng năm sinh",
@@ -306,6 +306,7 @@
   "order_code_title": "Mã đơn hàng:",
   "continue_buying": "Tiếp tục mua sắm",
   "view_order": "Xem đơn hàng",
+  "cancel": "Hủy bỏ",
   "receive_in_shop": "Nhận hàng tại shop",
   "receive": "Nhận hàng",
   "delivering": "Đang vận chuyển",
@@ -336,5 +337,11 @@
   "addReminder": "Thêm lịch nhắc",
   "saveChange": "Lưu thay đổi",
   "date": "Ngày",
-  "editReminder": "Sửa lịch nhắc"
+  "editReminder": "Sửa lịch nhắc",
+  "register_success": "Đăng ký thành công",
+  "change_pass_success": "Đổi mật khẩu thành công",
+  "pass_repass_must_same": "Nhập lại mật khẩu chưa trùng khớp",
+  "fill_all_blank": "Hãy nhập đầy đủ các ô",
+  "change_fail": "Cập nhật thất bại",
+  "success": "Thành công"
 }

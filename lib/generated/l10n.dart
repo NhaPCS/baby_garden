@@ -1973,10 +1973,10 @@ class S {
     );
   }
 
-  String get cancel {
+  String get list_user_rated {
     return Intl.message(
-      'Hủy bỏ',
-      name: 'cancel',
+      'Danh sách người đánh giá',
+      name: 'list_user_rated',
       desc: '',
       args: [],
     );
@@ -2792,6 +2792,15 @@ class S {
     );
   }
 
+  String get cancel {
+    return Intl.message(
+      'Hủy bỏ',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get receive_in_shop {
     return Intl.message(
       'Nhận hàng tại shop',
@@ -3066,6 +3075,60 @@ class S {
     return Intl.message(
       'Sửa lịch nhắc',
       name: 'editReminder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get register_success {
+    return Intl.message(
+      'Đăng ký thành công',
+      name: 'register_success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get change_pass_success {
+    return Intl.message(
+      'Đổi mật khẩu thành công',
+      name: 'change_pass_success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get pass_repass_must_same {
+    return Intl.message(
+      'Nhập lại mật khẩu chưa trùng khớp',
+      name: 'pass_repass_must_same',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get fill_all_blank {
+    return Intl.message(
+      'Hãy nhập đầy đủ các ô',
+      name: 'fill_all_blank',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get change_fail {
+    return Intl.message(
+      'Cập nhật thất bại',
+      name: 'change_fail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get success {
+    return Intl.message(
+      'Thành công',
+      name: 'success',
       desc: '',
       args: [],
     );

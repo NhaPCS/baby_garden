@@ -12,6 +12,7 @@ import 'package:baby_garden_flutter/widget/my_password_textfield.dart';
 import 'package:baby_garden_flutter/widget/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
@@ -25,10 +26,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends BaseStateModel<LoginScreen, LoginViewModel> {
   final ShowHidePassProvider _showHidePassProvider = new ShowHidePassProvider();
-
+  final TextEditingController _phoneControler = new TextEditingController();
+  final TextEditingController _passControler = new TextEditingController();
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
+//    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       appBar: getAppBar(
           title: S.of(context).login,
@@ -60,6 +63,7 @@ class _LoginScreenState extends BaseStateModel<LoginScreen, LoginViewModel> {
                   contentPadding: SizeUtil.normalPadding,
                   elevation: SizeUtil.smallElevation,
                   inputType: TextInputType.phone,
+                  textEditingController: _phoneControler,
                 )),
             Padding(
               padding: const EdgeInsets.only(
@@ -67,7 +71,7 @@ class _LoginScreenState extends BaseStateModel<LoginScreen, LoginViewModel> {
                   right: SizeUtil.bigSpace,
                   top: SizeUtil.smallSpace,
                   bottom: SizeUtil.defaultSpace),
-              child: MyPasswordTextField(),//
+              child: MyPasswordTextField(controller: _passControler,),//
             ),
             Container(
               alignment: Alignment.centerLeft,
@@ -92,13 +96,9 @@ class _LoginScreenState extends BaseStateModel<LoginScreen, LoginViewModel> {
                     top: SizeUtil.smallSpace),
                 width: MediaQuery.of(context).size.width,
                 child: RaisedButton(
-                  onPressed: () {
-                    pushReplacement(MainScreen());
-                  }
-//                  async {
-//                    getViewModel().onLogin(password: "1323432", phone: "2313");
-//                  }
-                  ,
+                  onPressed: () async {
+                    getViewModel().onLogin(password: _passControler.text, phone: _phoneControler.text);
+                  },
                   color: ColorUtil.colorAccent,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(

@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/guide/welcome_guide_screen.dart';
+import 'package:baby_garden_flutter/screen/welcome/welcome_guide_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +29,7 @@ class _WelcomeState extends BaseState<WelcomeScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
+//    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       body: Center(
         child: Column(
