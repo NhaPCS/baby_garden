@@ -3142,6 +3142,78 @@ class S {
       args: [],
     );
   }
+
+  String get voucherDetail {
+    return Intl.message(
+      'Chi tiết Voucher',
+      name: 'voucherDetail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get information {
+    return Intl.message(
+      'Thông tin',
+      name: 'information',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get guide {
+    return Intl.message(
+      'Hướng dẫn',
+      name: 'guide',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get images {
+    return Intl.message(
+      'Hình ảnh',
+      name: 'images',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get contact {
+    return Intl.message(
+      'Liên hệ',
+      name: 'contact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get getCode {
+    return Intl.message(
+      'LẤY MÃ',
+      name: 'getCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cancelDialog {
+    return Intl.message(
+      'Huỷ',
+      name: 'cancelDialog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get agree {
+    return Intl.message(
+      'Đồng ý',
+      name: 'agree',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

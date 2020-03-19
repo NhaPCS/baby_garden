@@ -31,6 +31,7 @@ class ColorUtil {
   static const Color customerSupportUpdate = Color(0xff73EBD5);
   static const Color darkGray = Color(0xff707070);
   static const serviceItemUnselectColor = Color(0xffF6F6F6);
+  static const Color textDark = Color(0xff444444);
 
   static Color getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");
@@ -77,26 +78,18 @@ class StringUtil {
 
   static List<dynamic> confirmForm = [
     {
-      'title':'Dịch vụ đã đặt: ',
-      'content':'Chăm sóc da mặt từ cơ bản đến nâng cao'
+      'title': 'Dịch vụ đã đặt: ',
+      'content': 'Chăm sóc da mặt từ cơ bản đến nâng cao'
     },
     {
-      'title':'Giá niêm yết:  ',
-      'content':'\nKhách hàng đã có thẻ hoặc mã voucher vui lòng mang tới cửa hàng để được hưởng đầy đủ ưu đãi.',
-      'value':'150.000 đ'
+      'title': 'Giá niêm yết:  ',
+      'content':
+          '\nKhách hàng đã có thẻ hoặc mã voucher vui lòng mang tới cửa hàng để được hưởng đầy đủ ưu đãi.',
+      'value': '150.000 đ'
     },
-    {
-      'title':'Ngày sử dụng: ',
-      'content':'14/02/2020'
-    },
-    {
-      'title':'Thời gian: ',
-      'content':'10:00'
-    },
-    {
-      'title':'Thời gian thực hiện: ',
-      'content':'120 Phút'
-    },
+    {'title': 'Ngày sử dụng: ', 'content': '14/02/2020'},
+    {'title': 'Thời gian: ', 'content': '10:00'},
+    {'title': 'Thời gian thực hiện: ', 'content': '120 Phút'},
   ];
 
   static List<dynamic> time = [
@@ -162,7 +155,6 @@ class StringUtil {
     {'address': '134 Lê Lợi, Hà Đông, Hà Nội'},
     {'address': '134 Lê Lợi, Hà Đông, Hà Nội'}
   ];
-
 }
 
 class RouteUtil {

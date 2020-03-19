@@ -50,3 +50,6 @@ android/app/.settings/
 ios/Podfile.lock
 ios/Runner.xcodeproj/project.pbxproj
 ios/Runner.xcworkspace/contents.xcworkspacedata
+
+.prettierrc
+babe_garden.code-workspace
