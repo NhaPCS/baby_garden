@@ -352,5 +352,8 @@
     "contact": "Liên hệ",
     "getCode": "LẤY MÃ",
     "cancelDialog": "Huỷ",
-    "agree": "Đồng ý"
+    "agree": "Đồng ý",
+    "providerInfo": "Thông tin đơn vị cung cấp",
+    "email": "Email",
+    "telePhone": "Điện thoại"
 }

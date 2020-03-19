@@ -11,18 +11,17 @@ class TabGuideScreen extends StatelessWidget {
     'Khách hàng chọn " MUA QUA VÍ - 1.000 đ" để mua gói ưu đãi và hoàn thành giao dịch để sở hữu gói ưu đãi.',
     'Khách hàng chọn " MUA QUA VÍ - 1.000 đ" để mua gói ưu đãi và hoàn thành giao dịch để sở hữu gói ưu đãi.'
   ];
-  var stepIndex = 0;
-  var conIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    var stepIndex = 0;
+    var conIndex = 0;
     return Padding(
       padding: const EdgeInsets.only(
           left: SizeUtil.midSpace,
           right: SizeUtil.midSmallSpace,
           top: SizeUtil.midSmallSpace),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
         children: <Widget>[
           Text(
             '[Deal giảm linh đình] Gói ưu đãi trị giá 200.000 đ chỉ với 1000 đ',

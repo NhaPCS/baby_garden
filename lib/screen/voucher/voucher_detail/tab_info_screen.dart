@@ -8,6 +8,9 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class TabInfoScreen extends StatefulWidget {
+  final BuildContext context;
+
+  const TabInfoScreen({Key key, this.context}) : super(key: key);
   @override
   _TabInfoScreenState createState() => _TabInfoScreenState();
 }
@@ -202,6 +205,10 @@ class _TabInfoScreenState extends BaseState<TabInfoScreen> {
               ),
               color: Color.fromRGBO(10, 133, 158, 1),
               onPressed: () {
+                setState(() {
+                  this.buttonTitle = '';
+                });
+
                 Navigator.of(context).pop();
               },
               child: Text(S.of(context).agree,

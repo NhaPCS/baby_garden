@@ -3214,6 +3214,33 @@ class S {
       args: [],
     );
   }
+
+  String get providerInfo {
+    return Intl.message(
+      'Thông tin đơn vị cung cấp',
+      name: 'providerInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get email {
+    return Intl.message(
+      'Email',
+      name: 'email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get telePhone {
+    return Intl.message(
+      'Điện thoại',
+      name: 'telePhone',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

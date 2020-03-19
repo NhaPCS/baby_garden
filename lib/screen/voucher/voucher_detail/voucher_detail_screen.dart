@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import '../../base_state.dart';
+import 'tab_contact_screen.dart';
 
 class VoucherDetailScreen extends StatefulWidget {
   @override
@@ -69,7 +70,7 @@ class _VoucherDetailScreenState extends BaseState<VoucherDetailScreen> {
                       TabInfoScreen(),
                       TabGuideScreen(),
                       TabImageScreen(),
-                      Text('ff'),
+                      TabContactScreen(context: context),
                     ],
                   ),
                 ),
