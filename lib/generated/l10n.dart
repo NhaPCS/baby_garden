@@ -3190,7 +3190,7 @@ class S {
 
   String get getCode {
     return Intl.message(
-      'LẤY MÃ',
+      'lấy mã',
       name: 'getCode',
       desc: '',
       args: [],
@@ -3237,6 +3237,87 @@ class S {
     return Intl.message(
       'Điện thoại',
       name: 'telePhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get useCode {
+    return Intl.message(
+      'Sử dụng mã',
+      name: 'useCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get voucherCode {
+    return Intl.message(
+      'Mã khuyến mãi',
+      name: 'voucherCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get codeTimeRemain {
+    return Intl.message(
+      'Thời gian còn lại sử dung mã khuyễn mãi là: 24 giờ',
+      name: 'codeTimeRemain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get promotionCode {
+    return Intl.message(
+      'Mã ưu đãi',
+      name: 'promotionCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get authenPromoCode {
+    return Intl.message(
+      'Xác thực mã ưu đãi',
+      name: 'authenPromoCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get fillAuthenCode {
+    return Intl.message(
+      'Nhập mã xác thực',
+      name: 'fillAuthenCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get sendCode {
+    return Intl.message(
+      'Gửi mã',
+      name: 'sendCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get or {
+    return Intl.message(
+      'Hoặc',
+      name: 'or',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get scanQRCode {
+    return Intl.message(
+      'Quét mã QR Code',
+      name: 'scanQRCode',
       desc: '',
       args: [],
     );

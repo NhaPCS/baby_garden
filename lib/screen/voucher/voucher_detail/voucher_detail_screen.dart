@@ -67,7 +67,7 @@ class _VoucherDetailScreenState extends BaseState<VoucherDetailScreen> {
                 Expanded(
                   child: TabBarView(
                     children: [
-                      TabInfoScreen(),
+                      TabInfoScreen(context: context, voucherIsAvailable: true),
                       TabGuideScreen(),
                       TabImageScreen(),
                       TabContactScreen(context: context),

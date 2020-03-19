@@ -1,6 +1,7 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/voucher/voucher_detail/voucher_code_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,17 +10,22 @@ import 'package:provider/provider.dart';
 
 class TabInfoScreen extends StatefulWidget {
   final BuildContext context;
+  final bool voucherIsAvailable;
 
-  const TabInfoScreen({Key key, this.context}) : super(key: key);
+  const TabInfoScreen({Key key, this.context, this.voucherIsAvailable})
+      : super(key: key);
   @override
   _TabInfoScreenState createState() => _TabInfoScreenState();
 }
 
 class _TabInfoScreenState extends BaseState<TabInfoScreen> {
-  var buttonTitle = 'LẤY MÃ';
   final GetListProvider _getListProvider = GetListProvider();
   @override
   Widget buildWidget(BuildContext context) {
+    final buttonTitle = widget.voucherIsAvailable
+        ? S.of(widget.context).useCode.toUpperCase()
+        : S.of(widget.context).getCode.toUpperCase();
+
     return Column(children: [
       Expanded(
         child: ListView(
@@ -99,11 +105,13 @@ class _TabInfoScreenState extends BaseState<TabInfoScreen> {
           width: double.infinity,
           height: 40,
           decoration: BoxDecoration(
-              color: ColorUtil.primaryColor,
+              color: widget.voucherIsAvailable
+                  ? Color(0xff0A859E)
+                  : ColorUtil.primaryColor,
               borderRadius: BorderRadius.circular(SizeUtil.tinyRadius)),
           child: Center(
             child: Text(
-              this.buttonTitle,
+              buttonTitle,
               style: TextStyle(
                   fontSize: SizeUtil.textSizeBigger,
                   fontWeight: FontWeight.bold,
@@ -112,10 +120,15 @@ class _TabInfoScreenState extends BaseState<TabInfoScreen> {
           ),
         ),
         onTap: () {
-          // show dialog
-          showDialog(
-              context: context,
-              builder: (BuildContext context) => getCodeDialog(context));
+          if (widget.voucherIsAvailable) {
+            // go to voucher detail 6
+            push(VoucherCodeScreen(context: widget.context));
+          } else {
+            // show dialog
+            showDialog(
+                context: context,
+                builder: (BuildContext context) => getCodeDialog(context));
+          }
         },
       )
     ]);
@@ -205,10 +218,8 @@ class _TabInfoScreenState extends BaseState<TabInfoScreen> {
               ),
               color: Color.fromRGBO(10, 133, 158, 1),
               onPressed: () {
-                setState(() {
-                  this.buttonTitle = '';
-                });
-
+                // go to voucher detail 6
+                push(VoucherCodeScreen(context: widget.context));
                 Navigator.of(context).pop();
               },
               child: Text(S.of(context).agree,

@@ -350,10 +350,19 @@
     "guide": "Hướng dẫn",
     "images": "Hình ảnh",
     "contact": "Liên hệ",
-    "getCode": "LẤY MÃ",
+    "getCode": "lấy mã",
     "cancelDialog": "Huỷ",
     "agree": "Đồng ý",
     "providerInfo": "Thông tin đơn vị cung cấp",
     "email": "Email",
-    "telePhone": "Điện thoại"
+    "telePhone": "Điện thoại",
+    "useCode": "Sử dụng mã",
+    "voucherCode": "Mã khuyến mãi",
+    "codeTimeRemain": "Thời gian còn lại sử dung mã khuyễn mãi là: 24 giờ",
+    "promotionCode": "Mã ưu đãi",
+    "authenPromoCode": "Xác thực mã ưu đãi",
+    "fillAuthenCode": "Nhập mã xác thực",
+    "sendCode": "Gửi mã",
+    "or": "Hoặc",
+    "scanQRCode": "Quét mã QR Code"
 }
