@@ -3133,6 +3133,15 @@ class S {
       args: [],
     );
   }
+
+  String get provider_info {
+    return Intl.message(
+      'Thông tin nhà cung cấp',
+      name: 'provider_info',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

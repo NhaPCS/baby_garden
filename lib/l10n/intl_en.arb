@@ -340,8 +340,9 @@
   "editReminder": "Sửa lịch nhắc",
   "register_success": "Đăng ký thành công",
   "change_pass_success": "Đổi mật khẩu thành công",
-  "pass_repass_must_same":"Nhập lại mật khẩu chưa trùng khớp",
+  "pass_repass_must_same": "Nhập lại mật khẩu chưa trùng khớp",
   "fill_all_blank": "Hãy nhập đầy đủ các ô",
   "change_fail": "Cập nhật thất bại",
-  "success": "Thành công"
+  "success": "Thành công",
+  "provider_info": "Thông tin nhà cung cấp"
 }
