@@ -15,7 +15,7 @@ class S {
     AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final String name = locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
+    final String name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
@@ -3053,6 +3053,33 @@ class S {
     );
   }
 
+  String get saveChange {
+    return Intl.message(
+      'Lưu thay đổi',
+      name: 'saveChange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get date {
+    return Intl.message(
+      'Ngày',
+      name: 'date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get editReminder {
+    return Intl.message(
+      'Sửa lịch nhắc',
+      name: 'editReminder',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get register_success {
     return Intl.message(
       'Đăng ký thành công',
@@ -3106,6 +3133,195 @@ class S {
       args: [],
     );
   }
+
+  String get provider_info {
+    return Intl.message(
+      'Thông tin nhà cung cấp',
+      name: 'provider_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get voucherDetail {
+    return Intl.message(
+      'Chi tiết Voucher',
+      name: 'voucherDetail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get information {
+    return Intl.message(
+      'Thông tin',
+      name: 'information',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get guide {
+    return Intl.message(
+      'Hướng dẫn',
+      name: 'guide',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get images {
+    return Intl.message(
+      'Hình ảnh',
+      name: 'images',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get contact {
+    return Intl.message(
+      'Liên hệ',
+      name: 'contact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get getCode {
+    return Intl.message(
+      'lấy mã',
+      name: 'getCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cancelDialog {
+    return Intl.message(
+      'Huỷ',
+      name: 'cancelDialog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get agree {
+    return Intl.message(
+      'Đồng ý',
+      name: 'agree',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get providerInfo {
+    return Intl.message(
+      'Thông tin đơn vị cung cấp',
+      name: 'providerInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get email {
+    return Intl.message(
+      'Email',
+      name: 'email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get telePhone {
+    return Intl.message(
+      'Điện thoại',
+      name: 'telePhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get useCode {
+    return Intl.message(
+      'Sử dụng mã',
+      name: 'useCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get voucherCode {
+    return Intl.message(
+      'Mã khuyến mãi',
+      name: 'voucherCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get codeTimeRemain {
+    return Intl.message(
+      'Thời gian còn lại sử dung mã khuyễn mãi là: 24 giờ',
+      name: 'codeTimeRemain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get promotionCode {
+    return Intl.message(
+      'Mã ưu đãi',
+      name: 'promotionCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get authenPromoCode {
+    return Intl.message(
+      'Xác thực mã ưu đãi',
+      name: 'authenPromoCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get fillAuthenCode {
+    return Intl.message(
+      'Nhập mã xác thực',
+      name: 'fillAuthenCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get sendCode {
+    return Intl.message(
+      'Gửi mã',
+      name: 'sendCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get or {
+    return Intl.message(
+      'Hoặc',
+      name: 'or',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get scanQRCode {
+    return Intl.message(
+      'Quét mã QR Code',
+      name: 'scanQRCode',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
@@ -3113,7 +3329,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
 
   List<Locale> get supportedLocales {
     return const <Locale>[
-      Locale('en', ''),
+      Locale.fromSubtags(languageCode: 'en'),
     ];
   }
 

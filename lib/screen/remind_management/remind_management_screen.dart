@@ -17,6 +17,7 @@ class _RemindManageState extends BaseState<RemindManagementScreen> {
   final GetListProvider _getListProvider = GetListProvider();
 
   final remind1 = RemindCard(
+    id: 1,
     image: "photo/sample_product.png",
     description:
         "Sữa bột Glico Nhật Bản số 0-1 dành cho trẻ từ sơ sinh đến 1 tuổi",

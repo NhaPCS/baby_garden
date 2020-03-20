@@ -38,15 +38,15 @@ class VoucherCard extends StatelessWidget {
       height: 90,
       child: Card(
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: Color.fromRGBO(112, 112, 112, 1), width: 0.1),
+          side: BorderSide(color: ColorUtil.darkGray, width: 0.1),
           borderRadius: BorderRadius.circular(0),
         ),
         margin: EdgeInsets.only(top: 0),
         child: Row(children: <Widget>[
           Container(
-            margin: EdgeInsets.only(left: 20),
+            margin: EdgeInsets.only(left: SizeUtil.defaultSpace),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(SizeUtil.smallRadius),
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
@@ -54,10 +54,8 @@ class VoucherCard extends StatelessWidget {
                     offset: Offset(-3.0, 3.0),
                   )
                 ],
-                border: Border.all(
-                    color: Color.fromRGBO(112, 112, 112, 1), width: 0.3)),
+                border: Border.all(color: ColorUtil.darkGray, width: 0.3)),
             child: ClipRRect(
-              // borderRadius: BorderRadius.circular(5.0),
               child: Image.asset(
                 this.image,
                 width: 55.0,
@@ -68,20 +66,21 @@ class VoucherCard extends StatelessWidget {
           Expanded(
             child: Container(
                 height: 90,
-                padding: EdgeInsets.only(top: 5, left: 35),
+                padding: EdgeInsets.only(top: SizeUtil.tinySpace, left: 35),
                 child: ListView(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(SizeUtil.midSmallSpace),
                     physics: NeverScrollableScrollPhysics(),
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(top: 5),
+                        padding: const EdgeInsets.only(top: SizeUtil.tinySpace),
                         child: Text(
                           this.description,
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                       Padding(
-                          padding: const EdgeInsets.only(top: 10),
+                          padding:
+                              const EdgeInsets.only(top: SizeUtil.smallSpace),
                           child: Row(children: <Widget>[
                             Text(S.of(this.context).partner + ': ',
                                 style: TextStyle(
@@ -93,7 +92,7 @@ class VoucherCard extends StatelessWidget {
                                 ))
                           ])),
                       Padding(
-                        padding: const EdgeInsets.only(top: 5),
+                        padding: const EdgeInsets.only(top: SizeUtil.tinySpace),
                         child: Text(
                           timeRemain != null ? this.timeRemain : '',
                           style: TextStyle(

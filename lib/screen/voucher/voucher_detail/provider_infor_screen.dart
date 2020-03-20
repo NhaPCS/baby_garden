@@ -1,11 +1,10 @@
-import 'dart:math';
+// Thông tin nhà cung cấp
 
+import 'dart:math';
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/item/item_product.dart';
 import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/loadmore/loadmore_gridview.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -58,11 +57,22 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
   Widget buildWidget(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorUtil.lineColor,
-      appBar: getAppBar(title: S.of(context).voucher.toUpperCase()),
+      appBar: getAppBar(title: S.of(context).provider_info),
       body: Column(
         children: <Widget>[
-          ListCategory(
-            categoryProvider: _changeCategoryProvider,
+          Container(
+            width: 60,
+            color: Colors.white,
+            child: Row(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Text("Cung cấp bởi"),
+                    Text("CÔNG TY CỔ PHẦN VINID")
+                  ],
+                )
+              ],
+            ),
           ),
           Expanded(
             child: ListView(

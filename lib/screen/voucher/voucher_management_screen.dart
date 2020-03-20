@@ -62,20 +62,17 @@ class _VoucherManageState extends BaseState<VoucherManagement> {
                 Container(
                   width: double.infinity,
                   constraints: BoxConstraints(maxHeight: 150.0),
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 6,
-                          color: Color.fromRGBO(0, 0, 0, 0.16),
-                          offset: Offset(0.0, 3.0),
-                        )
-                      ],
-                      border: Border.all(
-                          color: Color.fromRGBO(112, 112, 112, 1), width: 0.1)),
+                  decoration: BoxDecoration(boxShadow: [
+                    BoxShadow(
+                      blurRadius: SizeUtil.tinyRadius,
+                      color: Color.fromRGBO(0, 0, 0, 0.16),
+                      offset: Offset(0.0, 3.0),
+                    )
+                  ], border: Border.all(color: ColorUtil.darkGray, width: 0.1)),
                   child: new Material(
                     color: Colors.white,
                     child: TabBar(
-                      labelColor: Color.fromRGBO(100, 100, 100, 1),
+                      labelColor: ColorUtil.grayLine,
                       isScrollable: true,
                       indicatorColor: ColorUtil.primaryColor,
                       tabs: vouchers.map((Vouchers vouchers) {
@@ -89,13 +86,10 @@ class _VoucherManageState extends BaseState<VoucherManagement> {
                 Expanded(
                   child: Container(
                     color: Colors.white,
-                    margin: EdgeInsets.only(top: 10),
+                    margin: EdgeInsets.only(top: SizeUtil.smallSpace),
                     child: TabBarView(
                       children: vouchers.map((Vouchers vouchers) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 0.0),
-                          child: VoucherList(voucherList: vouchers.vouchers),
-                        );
+                        return VoucherList(voucherList: vouchers.vouchers);
                       }).toList(),
                     ),
                   ),

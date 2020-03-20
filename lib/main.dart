@@ -1,14 +1,4 @@
 import 'package:baby_garden_flutter/provider/app_provider.dart';
-import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
-import 'package:baby_garden_flutter/screen/checkout/checkout_screen.dart';
-import 'package:baby_garden_flutter/screen/main/main_screen.dart';
-import 'package:baby_garden_flutter/screen/order/order_detail_screen.dart';
-import 'package:baby_garden_flutter/screen/order/order_list_screen.dart';
-import 'package:baby_garden_flutter/screen/partner/partner_book_schedule.dart';
-import 'package:baby_garden_flutter/screen/partner/partner_like_screen.dart';
-import 'package:baby_garden_flutter/screen/partner/partner_list_screen.dart';
-import 'package:baby_garden_flutter/screen/rate/list_user_rated.dart';
-import 'package:baby_garden_flutter/screen/rating_detail/rating_detail_screen.dart';
 import 'package:baby_garden_flutter/screen/welcome/welcome_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
