@@ -25,21 +25,25 @@ Future<dynamic> login(BuildContext context, {String phone, String password})asyn
 }
 
 //TODO require REGISTER
-Future<dynamic> register(BuildContext context, {String phone,  String name,String password,String refCode})async {
+Future<dynamic> register(BuildContext context, {String phone,  String name,String password,String refCode,String code})async {
   Response response=await post(context, path: 'register', param: {
     'phone': phone,
     'name': name,
     'password': password,
-    "ref_code":refCode
+    'ref_code':refCode,
+    'code_verify':code
   });
   if(response.isSuccess()) return response.data;
   return null;
 }
 
 //TODO require VERIFY CODE
-Future<dynamic> verifyCode(BuildContext context,{String phone}) async{
-  Response response = await get(context,path: "verifyCode",param: {
-    'phone':phone
+Future<dynamic> verifyCode(BuildContext context,{String phone, String name,String password,String refCode}) async{
+  Response response = await post(context,path: "verifyCode",param: {
+    'phone': phone,
+    'name': name,
+    'password': password,
+    'ref_code':refCode,
   });
   if(response.isSuccess()) return response.data;
   return null;
@@ -103,6 +107,7 @@ Future<Response> execute(BuildContext context,
   try{
     //TODO post url must has http:// get: url generate by Url.http require param1: host param2: route param3: map parameter
     var url = 'http://$BASE_URL$SUB_URL$path';
+    print('$param');
     if (context != null && showErrorDialog) WidgetUtil.showLoading(context);
     var response = isPost
         ? await http.post(url, body: param, headers: _headers)

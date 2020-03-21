@@ -8,13 +8,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GridProduct extends StatelessWidget {
-  final VoidCallback onViewMoreClick;
   final ChangeCategoryProvider changeCategoryProvider;
+  final bool isHome;
+  final String title;
 
   const GridProduct({
     Key key,
-    this.onViewMoreClick,
+    @required this.title,
     this.changeCategoryProvider,
+    this.isHome = false,
   }) : super(key: key);
 
   @override
@@ -32,7 +34,7 @@ class GridProduct extends StatelessWidget {
               ),
               Expanded(
                   child: Text(
-                "Sữa cho bé".toUpperCase(),
+                title.toUpperCase(),
                 style: TextStyle(
                     color: ColorUtil.primaryColor,
                     fontWeight: FontWeight.bold,
@@ -61,11 +63,19 @@ class GridProduct extends StatelessWidget {
             categoryProvider: changeCategoryProvider,
           ),
           ListProduct(),
-          ListProduct()
+          isHome
+              ? SizedBox(
+                  height: 0,
+                )
+              : ListProduct()
         ],
       ),
       onTap: () {
-        RouteUtil.push(context, ListProductScreen());
+        RouteUtil.push(
+            context,
+            ListProductScreen(
+              title: title,
+            ));
       },
     );
   }

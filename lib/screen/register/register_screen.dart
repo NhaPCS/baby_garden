@@ -22,20 +22,24 @@ class RegisterScreen extends StatefulWidget {
   }
 }
 
-class _RegisterScreenState extends BaseStateModel<RegisterScreen, RegisterViewModel> {
+class _RegisterScreenState
+    extends BaseStateModel<RegisterScreen, RegisterViewModel> {
   final WaittingOTPProvider _waittingOTPProvider = new WaittingOTPProvider();
   final ChangePassProvider _changePassProvider = new ChangePassProvider();
   final TextEditingController _nameControler = new TextEditingController();
   final TextEditingController _phoneControler = new TextEditingController();
   final TextEditingController _passControler = new TextEditingController();
   final TextEditingController _repassControler = new TextEditingController();
-  final TextEditingController _invitePhoneControler = new TextEditingController();
+  final TextEditingController _invitePhoneControler =
+      new TextEditingController();
   final TextEditingController _otpControler = new TextEditingController();
   bool isShowOTP = false;
+
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
-//    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       appBar: getAppBar(
           title: S.of(context).register,
@@ -121,32 +125,32 @@ class _RegisterScreenState extends BaseStateModel<RegisterScreen, RegisterViewMo
           Consumer<WaittingOTPProvider>(
             builder: (BuildContext context, WaittingOTPProvider value,
                 Widget child) {
-              return value.isTimerStart
-                  ? Stack(
-                      alignment: Alignment.centerRight,
-                      children: <Widget>[
-                        MyTextField(
-                          hint: S.of(context).enter_otp,
-                          borderColor: ColorUtil.colorAccent,
-                          borderRadius: SizeUtil.tinyRadius,
-                          elevation: SizeUtil.smallElevation,
-                          contentPadding: SizeUtil.normalPadding,
-                          textEditingController: _otpControler,
-                          inputType: TextInputType.number,
-                        ),
-                        Positioned(
-                          child: Text(
-                              S.of(context).count_down_time(
-                                  value.start.toString().padLeft(2, "0")),
-                              style: TextStyle(
-                                  color: value.start < 10
-                                      ? ColorUtil.red
-                                      : ColorUtil.textColor)),
-                          right: SizeUtil.smallSpace,
-                        )
-                      ],
+                return value.isTimerStart?
+                Stack(
+                  alignment: Alignment.centerRight,
+                  children: <Widget>[
+                    MyTextField(
+                      hint: S.of(context).enter_otp,
+                      borderColor: ColorUtil.colorAccent,
+                      borderRadius: SizeUtil.tinyRadius,
+                      elevation: SizeUtil.smallElevation,
+                      contentPadding: SizeUtil.normalPadding,
+                      textEditingController: _otpControler,
+                      inputType: TextInputType.number,
+                      autoFocus: true,
+                    ),
+                    Positioned(
+                      child: Text(
+                          S.of(context).count_down_time(
+                              value.start.toString().padLeft(2, "0")),
+                          style: TextStyle(
+                              color: value.start < 10
+                                  ? ColorUtil.red
+                                  : ColorUtil.textColor)),
+                      right: SizeUtil.smallSpace,
                     )
-                  : SizedBox();
+                  ],
+                ):SizedBox();
             },
           ),
           SizedBox(
@@ -156,21 +160,33 @@ class _RegisterScreenState extends BaseStateModel<RegisterScreen, RegisterViewMo
             onPressed: () async {
               String check = checkRegisterCondition(isShowOTP);
               if (check.trim().length == 0) {
-                var code = await getViewModel().onGetVerifyCode(
-                    phone: _phoneControler.text); // todo get verify code
-                if (code != null) {
-                  isShowOTP = true;
-                  _waittingOTPProvider.startTimer();
-                  //todo
-                  getViewModel().onRegister(
+                if (isShowOTP) {
+                  if (_otpControler.text.trim().length > 0) {
+                    //todo
+                    await getViewModel().onRegister(
+                        name: _nameControler.text.toString(),
+                        phone: _phoneControler.text.toString(),
+                        password: _passControler.text.toString(),
+                        refCode: _invitePhoneControler.text.toString(),
+                    code: _otpControler.text.toString().trim());
+                  }
+                } else {
+                  var code = await getViewModel().onGetVerifyCode(
                       name: _nameControler.text.toString(),
                       phone: _phoneControler.text.toString(),
                       password: _passControler.text.toString(),
                       refCode: _invitePhoneControler.text.toString());
+                  if (code != null) {
+                    print(code);
+                    isShowOTP = true;
+                    _waittingOTPProvider.startTimer();
+                  }
                 }
+                // todo get verify code
+
               } else {
                 WidgetUtil.showMessageDialog(context,
-                    message: check, title: "Note");
+                    message: check, title: "Alert");
               }
             },
             shape: RoundedRectangleBorder(
@@ -246,7 +262,7 @@ class _RegisterScreenState extends BaseStateModel<RegisterScreen, RegisterViewMo
     );
   }
 
-  String checkRegisterCondition(bool isSendCode) {
+  String checkRegisterCondition(bool isShowOTP) {
     if (_nameControler.text.trim().length == 0) {
       return "Please Enter name";
     } else if (_phoneControler.text.trim().length == 0) {
@@ -260,7 +276,7 @@ class _RegisterScreenState extends BaseStateModel<RegisterScreen, RegisterViewMo
     } else if (_invitePhoneControler.text.trim().length == 0) {
       return "Please Enter invite phone number";
     } else {
-      if (isSendCode) {
+      if (isShowOTP) {
         if (_otpControler.text.trim().length == 0) {
           return "Please Enter code";
         } else {

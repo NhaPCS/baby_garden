@@ -4,6 +4,7 @@ import 'package:baby_garden_flutter/item/item_home_category.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/category_product/sliver_category_delegate.dart';
 import 'package:baby_garden_flutter/screen/photo_view/photo_view_screen.dart';
 import 'package:baby_garden_flutter/screen/search/search_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -28,16 +29,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeState extends BaseState<HomeScreen> {
   final ChangeCategoryProvider _changeCategoryProvider =
       ChangeCategoryProvider();
-  double _flashSaleHeight;
-  double _flashSaleWidth;
-
   List<dynamic> HOME_CATEGORIES = List();
+  List<dynamic> SECTIONS = List();
 
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 2), () {
-      //TODO
+      //TODO fake dialog
       showDialog(
           context: context,
           builder: (_) => PromotionDialog(context),
@@ -47,10 +46,6 @@ class _HomeState extends BaseState<HomeScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
-    if (_flashSaleHeight == null) {
-      _flashSaleHeight = MediaQuery.of(context).size.width * 0.6;
-      _flashSaleWidth = _flashSaleHeight * 0.7;
-    }
     return SafeArea(
       child: Material(
         child: NestedScrollView(
@@ -101,40 +96,46 @@ class _HomeState extends BaseState<HomeScreen> {
                   ],
                 ),
               ),
+              SliverPersistentHeader(
+                pinned: true,
+                floating: false,
+                delegate: SliverCategoryDelegate(
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: HOME_CATEGORIES
+                            .map((e) => ItemHomeCategory(
+                                  category: e,
+                                ))
+                            .toList(),
+                      ),
+                      color: Colors.white,
+                    ),
+                    Provider.of<AppProvider>(context).homeCategoryHeight,
+                    Provider.of<AppProvider>(context).homeCategoryHeight),
+              ),
             ];
           },
           body: Container(
             child: Column(
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: HOME_CATEGORIES
-                      .map((e) => ItemHomeCategory(
-                            category: e,
-                          ))
-                      .toList(),
-                ),
                 Container(
                   height: SizeUtil.lineHeight,
                   color: ColorUtil.lineColor,
                 ),
                 Expanded(
                     child: ListView.builder(
-                        itemCount: 10,
+                        itemCount: SECTIONS.length + 1,
                         padding: EdgeInsets.all(0),
                         itemBuilder: (context, index) {
                           if (index == 0) {
-                            return FlashSale(
-                              flashSaleHeight: _flashSaleHeight,
-                              flashSaleWidth: _flashSaleWidth,
-                            );
+                            return FlashSale();
                           }
                           return GridProduct(
+                            isHome: true,
+                            title: SECTIONS[index - 1]['title'],
                             changeCategoryProvider: _changeCategoryProvider,
-                            onViewMoreClick: () {
-                              //TODO
-                            },
                           );
                         }))
               ],
@@ -154,6 +155,17 @@ class _HomeState extends BaseState<HomeScreen> {
       {'icon': 'photo/ic_voucher.png', 'title': S.of(context).voucher},
       {'icon': 'photo/ic_vcb_express.png', 'title': S.of(context).vcb_express},
       {'icon': 'photo/ic_health.png', 'title': S.of(context).heath_number}
+    ];
+    SECTIONS = [
+      {
+        "title": "HÀNG MỚI VỀ",
+      },
+      {
+        "title": "HÀNG bán chạy",
+      },
+      {
+        "title": "HÀNG khuyến mãi",
+      },
     ];
     super.didChangeDependencies();
   }

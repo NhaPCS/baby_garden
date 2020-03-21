@@ -26,9 +26,9 @@ class ItemProduct extends StatelessWidget {
       {Key key,
       this.padding = SizeUtil.tinyPadding,
       this.margin = const EdgeInsets.only(
-        bottom: SizeUtil.smallSpace,
-        left: SizeUtil.tinySpace,
-        right: SizeUtil.tinySpace,
+        bottom: SizeUtil.tinySpace,
+        left: SizeUtil.superTinySpace,
+        right: SizeUtil.superTinySpace,
       ),
       this.height = double.infinity,
       this.color = Colors.white,

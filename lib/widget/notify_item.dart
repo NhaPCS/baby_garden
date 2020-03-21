@@ -14,6 +14,7 @@ class NotifyItem extends StatelessWidget {
     // TODO: implement build
     return Card(
       elevation: SizeUtil.smallElevation,
+      margin: EdgeInsets.only(top: 2,bottom: 2,left: 2,right: 2),
       child: Stack(
         children: <Widget>[
           Container(

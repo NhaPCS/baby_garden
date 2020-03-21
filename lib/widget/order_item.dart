@@ -16,9 +16,10 @@ class OrderItem extends StatelessWidget {
     // TODO: implement build
     return Column(
       children: <Widget>[
-        Container(
-          height: SizeUtil.smallSpace,
+        WidgetUtil.getLine(
+          width: SizeUtil.tinySpace,
           color: ColorUtil.lineColor,
+          margin: EdgeInsets.all(0)
         ),
         Container(
           color: Colors.white,
@@ -50,6 +51,7 @@ class OrderItem extends StatelessWidget {
                           TextSpan(
                             text: "Vườn Của Bé",
                             style: TextStyle(
+                              height: 2,
                               color: ColorUtil.red,
                               fontSize: SizeUtil.textSizeSmall,
                             ),
@@ -146,25 +148,36 @@ class OrderItem extends StatelessWidget {
                   )
                 ],
               ),
-              isRated?SizedBox():
-                  Center(
-                    child: Text(
-                    S.of(context).see_more,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: ColorUtil.blue,
-                        fontSize: SizeUtil.textSizeTiny),
+              isRated
+                  ? SizedBox()
+                  : Center(
+                      child: Text(
+                        S.of(context).see_more,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: ColorUtil.blue,
+                            fontSize: SizeUtil.textSizeTiny),
                       ),
-                  )
-                  ,
+                    ),
               Container(
                 height: 0.5,
                 width: MediaQuery.of(context).size.width,
                 color: ColorUtil.gray,
                 margin: EdgeInsets.only(
-                    top: isRated?SizeUtil.smallSpace:0, bottom: isRated?SizeUtil.tinySpace:0),
+                    top: isRated ? SizeUtil.smallSpace : 0,
+                    bottom: isRated ? SizeUtil.tinySpace : 0),
               ),
-              isRated?SizedBox():Center(child: Transform.rotate(angle: pi / 2,child: SvgIcon('express_seemore_svg.svg',width: SizeUtil.iconSizeSmall,height: SizeUtil.iconSizeSmall,color: ColorUtil.blue,))),
+              isRated
+                  ? SizedBox()
+                  : Center(
+                      child: Transform.rotate(
+                          angle: pi / 2,
+                          child: SvgIcon(
+                            'express_seemore_svg.svg',
+                            width: SizeUtil.iconSizeSmall,
+                            height: SizeUtil.iconSizeSmall,
+                            color: ColorUtil.blue,
+                          ))),
               Row(
                 children: <Widget>[
                   Expanded(
