@@ -19,7 +19,7 @@ class AppProvider {
 
   void updateCategorySize(double widthScreen, double heightScreen) {
 //    if (categoryHeight == null) { //TODO uncomment later
-    categoryWidth = widthScreen * 0.16;
+    categoryWidth = widthScreen * 0.15;
     categoryHeight = categoryWidth * 1.4;
     productWidth = widthScreen * 0.35;
     productHeight = productWidth * 1.4;
