@@ -1,10 +1,14 @@
 import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/screen/home/home_screen.dart';
+import 'package:baby_garden_flutter/screen/profile/account_manage_screen.dart';
+import 'package:baby_garden_flutter/screen/profile/profile_screen.dart';
 import 'package:baby_garden_flutter/screen/welcome/welcome_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'generated/l10n.dart';
+import 'screen/remind_management/remind_edit_screen.dart';
 
 void main() => runApp(Provider(
       create: (_) => AppProvider(),

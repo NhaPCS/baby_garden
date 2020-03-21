@@ -16,6 +16,7 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
@@ -28,8 +29,8 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
   final GetListProvider _getListProvider = GetListProvider();
 
   final UserInfor userInfor = UserInfor(
-    username: "Quyền Anh đẹp trai",
-    mobilePhone: "0338305xxx",
+    username: "Đinh Bộ Lĩnh",
+    mobilePhone: "0123456789",
     joinDate: "13/2/2020",
   );
 
@@ -45,6 +46,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
       {'icon': 'profile_past', 'title': S.of(context).seenProduct},
       {'icon': 'profile_help', 'title': S.of(context).customerHelper},
       {'icon': 'profile_settings', 'title': S.of(context).setting},
+      {'icon': 'profile_logout', 'title': S.of(context).logout}
     ];
 
     return Column(children: <Widget>[

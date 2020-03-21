@@ -18,18 +18,18 @@ class AccountManage extends StatefulWidget {
 class _AccountManageState extends BaseState<AccountManage> {
   final GetListProvider _getListProvider = GetListProvider();
   final UserInfor userInfor = UserInfor(
-    username: "Quyền Anh đẹp trai",
-    mobilePhone: "0338305xxx",
+    username: "Đinh Bộ Lĩnh",
+    mobilePhone: "0123456789",
     joinDate: "13/2/2020",
     password: "xxx",
-    address: "universe",
+    address: "28 Phan Kế Bính, Ba Đình, Hà Nội",
     birthday: "17/5/93",
-    gender: "male",
+    gender: "Nam",
   );
 
   final childInformation = ChildInfor(
     childName: 'Hùng gay',
-    gender: 'male',
+    gender: 'Nam',
     lastDayCheck: '15/06/2011',
     birthday: '15/06/2011',
     healthIndex: 100,

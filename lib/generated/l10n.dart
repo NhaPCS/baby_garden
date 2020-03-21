@@ -3322,6 +3322,15 @@ class S {
       args: [],
     );
   }
+
+  String get logout {
+    return Intl.message(
+      'Đăng xuất',
+      name: 'logout',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
