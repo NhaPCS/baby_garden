@@ -37,6 +37,7 @@ class _ChildHeathState extends BaseState<ChildHeathScreen> {
             floating: true,
             elevation: 0,
             backgroundColor: ColorUtil.primaryColor,
+            leading: SizedBox(width: 0,),
             expandedHeight: Provider.of<AppProvider>(context).childHeightBar,
             flexibleSpace: Column(
               children: <Widget>[

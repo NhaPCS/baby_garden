@@ -27,8 +27,6 @@ class _OrderListScreenState extends BaseState<OrderListScreen>{
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: ColorUtil.primaryColor,statusBarBrightness: Brightness.light,));
     return Scaffold(
       appBar: getAppBar(
         title:  widget.isDelivering?S.of(context).delivering:S.of(context).receive_in_shop,

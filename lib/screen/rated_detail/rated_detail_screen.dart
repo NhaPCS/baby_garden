@@ -19,8 +19,6 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: ColorUtil.primaryColor));
     return Scaffold(
       appBar: getAppBar(
         title: S.of(context).order_rating("vcb19.12.15"),

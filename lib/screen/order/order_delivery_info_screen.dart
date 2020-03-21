@@ -19,10 +19,6 @@ class _OrderDeliveryInfoScreenState extends BaseState<OrderDeliveryInfoScreen> {
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: ColorUtil.primaryColor,
-      statusBarBrightness: Brightness.light,
-    ));
     return Scaffold(
         appBar: getAppBar(
           title: S.of(context).delivery_info,

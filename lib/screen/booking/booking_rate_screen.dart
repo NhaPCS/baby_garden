@@ -45,8 +45,6 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
       Tab(text: S.of(context).waitting_rate),
       Tab(text: S.of(context).rated),
     ];
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: ColorUtil.primaryColor));
     return DefaultTabController(
       length: 2,
       child: Scaffold(

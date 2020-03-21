@@ -40,7 +40,6 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: ColorUtil.primaryColor));
     return Scaffold(
         appBar: getAppBar(
           title: S.of(context).notify,

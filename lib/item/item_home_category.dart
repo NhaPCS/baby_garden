@@ -56,8 +56,7 @@ class ItemHomeCategory extends StatelessWidget {
           RouteUtil.push(context, CategoryProductScreen());
         } else if (category['icon'].toString().contains('ic_vcb_express')) {
           RouteUtil.push(context, VCBExpressScreen());
-        }
-        if (category['icon'].toString().contains('heath')) {
+        } else if (category['icon'].toString().contains('health')) {
           RouteUtil.push(context, ChildHeathScreen());
         }
       },

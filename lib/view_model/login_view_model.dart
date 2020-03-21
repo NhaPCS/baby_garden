@@ -12,10 +12,6 @@ class LoginViewModel implements BaseViewModel{
         password: password, phone: phone);
     if (data != null) {
       RouteUtil.push(context,MainScreen());
-      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: ColorUtil.primaryColor,
-        statusBarBrightness: Brightness.light,
-      ));
     }
   }
 

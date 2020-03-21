@@ -101,7 +101,8 @@ class _HomeState extends BaseState<HomeScreen> {
               pinned: true,
               floating: false,
               delegate: SliverCategoryDelegate(
-                  Container(
+                  Card(
+                    margin: EdgeInsets.all(0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,

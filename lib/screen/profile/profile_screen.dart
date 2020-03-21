@@ -3,6 +3,7 @@ import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/customer_support/customer_support.dart';
 import 'package:baby_garden_flutter/screen/favorite_product/favorite_product.dart';
+import 'package:baby_garden_flutter/screen/login/login_screen.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_book_schedule.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_like_screen.dart';
 import 'package:baby_garden_flutter/screen/point_management/point_history_screen.dart';
@@ -130,6 +131,9 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                   break;
                 case 8:
                   push(SettingScreen());
+                  break;
+                case 9:
+                  pushAndReplaceAll(LoginScreen(), '/login');
                   break;
               }
             },
