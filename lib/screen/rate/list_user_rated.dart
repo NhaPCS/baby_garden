@@ -25,10 +25,6 @@ class _ListUserRatedScreenState extends BaseState<ListUserRatedScreen> {
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: ColorUtil.primaryColor,
-      statusBarBrightness: Brightness.light,
-    ));
     return Scaffold(
       appBar: getAppBar(
         title: S.of(context).list_user_rated,

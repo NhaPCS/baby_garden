@@ -2,6 +2,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/screen/address_setting/address_setting_screen.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/child_heath/child_heath_screen.dart';
 import 'package:baby_garden_flutter/screen/change_password/change_password_screen.dart';
 import 'package:baby_garden_flutter/screen/profile/add_child_dialog.dart';
 import 'package:baby_garden_flutter/screen/profile/user_infor.dart';
@@ -130,7 +131,7 @@ class _AccountManageState extends BaseState<AccountManage> {
   }
 
   Widget entriesChildInfor(List<Map<String, String>> entries) {
-    return Container(
+    return GestureDetector(child: Container(
       height: 111,
       child: ListView.builder(
           itemCount: entries.length,
@@ -166,7 +167,9 @@ class _AccountManageState extends BaseState<AccountManage> {
               ),
             );
           }),
-    );
+    ),onTap: (){
+      push(ChildHeathScreen());
+    },);
   }
 
   Widget childInfor(List<Map<String, String>> childInforFields) {

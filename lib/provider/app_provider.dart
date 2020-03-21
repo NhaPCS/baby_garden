@@ -16,6 +16,7 @@ class AppProvider {
   double flashSaleItemHeight;
   double flashSaleItemWidth;
   double homeCategoryHeight;
+  double childHeightBar;
 
   void updateCategorySize(double widthScreen, double heightScreen) {
 //    if (categoryHeight == null) { //TODO uncomment later
@@ -36,6 +37,7 @@ class AppProvider {
     flashSaleItemWidth=widthScreen*0.35;
     flashSaleItemHeight=flashSaleItemWidth*1.7;
     homeCategoryHeight= heightScreen*0.15;
+    childHeightBar=heightScreen*0.4;
     ;
 //    }
   }

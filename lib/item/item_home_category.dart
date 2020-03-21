@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/screen/category_product/category_product_screen.dart';
+import 'package:baby_garden_flutter/screen/child_heath/child_heath_screen.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_list_screen.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_register_screen.dart';
 import 'package:baby_garden_flutter/screen/vcb_express/vcb_express_screen.dart';
@@ -19,28 +20,32 @@ class ItemHomeCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: GestureDetector(
-      child: Padding(padding: SizeUtil.tinyPadding, child: Column(
-        children: <Widget>[
-          Image.asset(
-            category['icon'],
-            width: Provider.of<AppProvider>(context).homeCategoryHeight * 0.5,
-            height: Provider.of<AppProvider>(context).homeCategoryHeight * 0.5,
-          ),
-          SizedBox(
-            height: SizeUtil.smallSpace,
-          ),
-          Expanded(
-              child: AutoSizeText(
-                category['title'],
-                textAlign: TextAlign.center,
-                maxFontSize: SizeUtil.textSizeSmall,
-                minFontSize: SizeUtil.textSizeMini,
-                style: TextStyle(
-                    color: ColorUtil.primaryColor,
-                    fontSize: SizeUtil.textSizeSmall),
-              )),
-        ],
-      ),),
+      child: Padding(
+        padding: SizeUtil.tinyPadding,
+        child: Column(
+          children: <Widget>[
+            Image.asset(
+              category['icon'],
+              width: Provider.of<AppProvider>(context).homeCategoryHeight * 0.5,
+              height:
+                  Provider.of<AppProvider>(context).homeCategoryHeight * 0.5,
+            ),
+            SizedBox(
+              height: SizeUtil.smallSpace,
+            ),
+            Expanded(
+                child: AutoSizeText(
+              category['title'],
+              textAlign: TextAlign.center,
+              maxFontSize: SizeUtil.textSizeSmall,
+              minFontSize: SizeUtil.textSizeMini,
+              style: TextStyle(
+                  color: ColorUtil.primaryColor,
+                  fontSize: SizeUtil.textSizeSmall),
+            )),
+          ],
+        ),
+      ),
       onTap: () {
         if (category['icon'].toString().contains('voucher')) {
           //TODO
@@ -51,6 +56,8 @@ class ItemHomeCategory extends StatelessWidget {
           RouteUtil.push(context, CategoryProductScreen());
         } else if (category['icon'].toString().contains('ic_vcb_express')) {
           RouteUtil.push(context, VCBExpressScreen());
+        } else if (category['icon'].toString().contains('health')) {
+          RouteUtil.push(context, ChildHeathScreen());
         }
       },
     ));

@@ -367,5 +367,16 @@
     "scanQRCode": "Quét mã QR Code",
     "logout": "Đăng xuất",
     "attached_product": "Sản phẩm mua kèm",
-    "selectRemindTime": "Chọn thời gian nhắc"
+    "selectRemindTime": "Chọn thời gian nhắc",
+    "weight_height": "Chiều cao - Cân nặng",
+    "girl": "Bé gái",
+    "height": "Chiều Cao",
+    "weight": "Cân nặng",
+    "chart_for_girl": "Biểu đồ chiều cao theo tuổi cho bé gái",
+    "normal_height": "Chiều cao bình thường",
+    "greater_than_age": "Chiều cao cao hơn so với tuổi",
+    "suy_dinh_duong_normal": "Trẻ suy dinh dưỡng thể thấp còi, mức độ vừa",
+    "sdd_nang": "Trẻ suy dinh dưỡng thể thấp còi, mức độ nặng",
+    "enter_weight_height": "Nhập chiều cao/cân nặng",
+    "enter_all_value_child": "Nhập các chỉ số chiều cao, cân nặng của bé"
 }

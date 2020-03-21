@@ -53,8 +53,6 @@ class _WelcomeGuideScreenState extends BaseState<WelcomeGuideScreen> {
             InkWell(
               onTap: () {
                 print("Yeah, this line is printed after 3 seconds");
-
-                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: ColorUtil.primaryColor));
                 pushReplacement(MainScreen());
               },
               child: Padding(

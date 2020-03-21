@@ -11,6 +11,7 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
@@ -33,6 +34,7 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     _tabController = TabController(length: 5, vsync: this);
     _tabController.addListener(() {
       _changeIndexProvider.changeIndex(_tabController.index);
