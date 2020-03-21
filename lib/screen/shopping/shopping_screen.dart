@@ -10,6 +10,7 @@ import 'package:baby_garden_flutter/widget/product/notify_icon.dart';
 import 'package:baby_garden_flutter/widget/search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
@@ -25,80 +26,81 @@ class _ShoppingState extends BaseState<ShoppingScreen> {
       ChangeCategoryProvider();
 
   @override
+  void initState() {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    super.initState();
+  }
+  @override
   Widget buildWidget(BuildContext context) {
-    return SafeArea(
-      child: Material(
-        child: NestedScrollView(
-          headerSliverBuilder: (context, isScrollInner) {
-            return [
-              SliverAppBar(
-                floating: true,
-                snap: true,
-                elevation: 0,
-                pinned: true,
-                backgroundColor: Colors.white,
-                expandedHeight:
-                    Provider.of<AppProvider>(context).expandHeaderHeight,
-                flexibleSpace: Stack(
+    return Scaffold(body: NestedScrollView(
+      headerSliverBuilder: (context, isScrollInner) {
+        return [
+          SliverAppBar(
+            floating: true,
+            snap: true,
+            elevation: 0,
+            pinned: true,
+            backgroundColor: Colors.white,
+            expandedHeight:
+            Provider.of<AppProvider>(context).expandHeaderHeight,
+            flexibleSpace: Stack(
+              children: <Widget>[
+                Container(
+                  height: Provider.of<AppProvider>(context).bgHeaderHeight,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('photo/bg_header.png'),
+                          fit: BoxFit.cover),
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(SizeUtil.bigRadius),
+                          bottomRight:
+                          Radius.circular(SizeUtil.bigRadius))),
+                ),
+                Column(
                   children: <Widget>[
-                    Container(
-                      height: Provider.of<AppProvider>(context).bgHeaderHeight,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('photo/bg_header.png'),
-                              fit: BoxFit.cover),
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(SizeUtil.bigRadius),
-                              bottomRight:
-                                  Radius.circular(SizeUtil.bigRadius))),
+                    SearchBar(
+                      trailing: NotifyIcon(),
+                      enable: false,
+                      onPressed: () {
+                        push(SearchScreen());
+                      },
                     ),
-                    Column(
-                      children: <Widget>[
-                        SearchBar(
-                          trailing: NotifyIcon(),
-                          enable: false,
-                          onPressed: () {
-                            push(SearchScreen());
-                          },
-                        ),
-                        Expanded(
-                          child: MyCarouselSlider(
-                            hasShadow: true,
+                    Expanded(
+                      child: MyCarouselSlider(
+                        hasShadow: true,
+                        images: StringUtil.dummyImageList,
+                        onItemPressed: (index) {
+                          push(PhotoViewScreen(
                             images: StringUtil.dummyImageList,
-                            onItemPressed: (index) {
-                              push(PhotoViewScreen(
-                                images: StringUtil.dummyImageList,
-                              ));
-                            },
-                          ),
-                        )
-                      ],
+                          ));
+                        },
+                      ),
                     )
                   ],
-                ),
-              ),
-            ];
-          },
-          body: Column(
-            children: <Widget>[
-              Container(
-                height: SizeUtil.lineHeight,
-                color: ColorUtil.lineColor,
-              ),
-              Expanded(
-                  child: ListView.builder(
-                      itemCount: 10,
-                      padding: EdgeInsets.all(0),
-                      itemBuilder: (context, index) {
-                        return GridProduct(
-                          changeCategoryProvider: _changeCategoryProvider, title: "Ăn dặm cho bé",
-                        );
-                      }))
-            ],
+                )
+              ],
+            ),
           ),
-        ),
+        ];
+      },
+      body: Column(
+        children: <Widget>[
+          Container(
+            height: SizeUtil.lineHeight,
+            color: ColorUtil.lineColor,
+          ),
+          Expanded(
+              child: ListView.builder(
+                  itemCount: 10,
+                  padding: EdgeInsets.all(0),
+                  itemBuilder: (context, index) {
+                    return GridProduct(
+                      changeCategoryProvider: _changeCategoryProvider, title: "Ăn dặm cho bé",
+                    );
+                  }))
+        ],
       ),
-    );
+    ),);
   }
 
   @override
