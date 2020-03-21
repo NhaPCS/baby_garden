@@ -92,6 +92,44 @@ class _TabInfoScreenState extends BaseState<TabInfoScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: SizeUtil.smallSpace),
                     child: Image.asset('photo/ticket_voucher.png'),
+                  ),
+                  Container(
+                    decoration: setBorder('bottom', Color(0xffF4F4F4), 5),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                          child: Text(
+                        "Mẫu vé CGV",
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      )),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(top: 8),
+                    width: double.infinity,
+                    color: Colors.white,
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Image.asset('photo/sample_provider.png',
+                              height: 43, width: 43),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text("Cung cấp bởi",
+                                style: TextStyle(fontSize: 13)),
+                            Text("CÔNG TY CỔ PHẦN VINID",
+                                style: TextStyle(
+                                  fontSize: SizeUtil.textSizeDefault,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff4A4949),
+                                ))
+                          ],
+                        )
+                      ],
+                    ),
                   )
                 ],
               ),
