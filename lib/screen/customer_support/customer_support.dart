@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/partner/partner_register_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -115,6 +116,9 @@ class _CustomerSupportScreenState extends BaseState<CustomerSupportScreen> {
           ),
           WidgetUtil.getLine(margin: EdgeInsets.only(left: SizeUtil.defaultSpace,right: SizeUtil.defaultSpace),color: ColorUtil.gray),
           ListTile(
+            onTap: (){
+              push(PartnerRegister());
+            },
             leading: Image.asset("photo/support_partner.png",
                 width: SizeUtil.iconSizeBig),
             title: Text(S.of(context).vcb_register_partner,

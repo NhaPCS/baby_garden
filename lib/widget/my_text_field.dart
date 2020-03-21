@@ -111,6 +111,7 @@ class MyTextField extends StatelessWidget {
                     TextField(
                       controller: textEditingController,
                       style: textStyle,
+                      autofocus: autoFocus,
                       textAlign: textAlign,
                       autofocus: autoFocus,
                       maxLines: maxLines,

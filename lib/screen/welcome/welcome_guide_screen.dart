@@ -1,6 +1,7 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/login/login_screen.dart';
+import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -52,7 +53,9 @@ class _WelcomeGuideScreenState extends BaseState<WelcomeGuideScreen> {
             InkWell(
               onTap: () {
                 print("Yeah, this line is printed after 3 seconds");
-                pushReplacement(LoginScreen());
+
+                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: ColorUtil.primaryColor));
+                pushReplacement(MainScreen());
               },
               child: Padding(
                 padding: const EdgeInsets.all(SizeUtil.tinySpace),

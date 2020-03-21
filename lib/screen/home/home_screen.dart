@@ -14,6 +14,7 @@ import 'package:baby_garden_flutter/widget/product/notify_icon.dart';
 import 'package:baby_garden_flutter/widget/search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
@@ -34,6 +35,7 @@ class _HomeState extends BaseState<HomeScreen> {
 
   @override
   void initState() {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     super.initState();
     Future.delayed(Duration(seconds: 2), () {
       //TODO fake dialog
@@ -46,102 +48,100 @@ class _HomeState extends BaseState<HomeScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
-    return SafeArea(
-      child: Material(
-        child: NestedScrollView(
-          headerSliverBuilder: (context, isScrollInner) {
-            return [
-              SliverAppBar(
-                floating: true,
-                elevation: 0,
-                pinned: true,
-                backgroundColor: Colors.white,
-                expandedHeight:
-                    Provider.of<AppProvider>(context).expandHeaderHeight,
-                flexibleSpace: Stack(
-                  children: <Widget>[
-                    Container(
-                      height: Provider.of<AppProvider>(context).bgHeaderHeight,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('photo/bg_header.png'),
-                              fit: BoxFit.cover),
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(SizeUtil.bigRadius),
-                              bottomRight:
-                                  Radius.circular(SizeUtil.bigRadius))),
-                    ),
-                    Column(
-                      children: <Widget>[
-                        SearchBar(
-                          trailing: NotifyIcon(),
-                          enable: false,
-                          onPressed: () {
-                            push(SearchScreen());
+    return Scaffold(
+      body: NestedScrollView(
+        headerSliverBuilder: (context, isScrollInner) {
+          return [
+            SliverAppBar(
+              floating: true,
+              elevation: 0,
+              pinned: true,
+              backgroundColor: Colors.white,
+              expandedHeight:
+              Provider.of<AppProvider>(context).expandHeaderHeight,
+              flexibleSpace: Stack(
+                children: <Widget>[
+                  Container(
+                    height: Provider.of<AppProvider>(context).bgHeaderHeight,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('photo/bg_header.png'),
+                            fit: BoxFit.cover),
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(SizeUtil.bigRadius),
+                            bottomRight:
+                            Radius.circular(SizeUtil.bigRadius))),
+                  ),
+                  Column(
+                    children: <Widget>[
+                      SearchBar(
+                        trailing: NotifyIcon(),
+                        enable: false,
+                        onPressed: () {
+                          push(SearchScreen());
+                        },
+                      ),
+                      Expanded(
+                        child: MyCarouselSlider(
+                          hasShadow: true,
+                          images: StringUtil.dummyImageList,
+                          onItemPressed: (index) {
+                            push(PhotoViewScreen(
+                              images: StringUtil.dummyImageList,
+                            ));
                           },
                         ),
-                        Expanded(
-                          child: MyCarouselSlider(
-                            hasShadow: true,
-                            images: StringUtil.dummyImageList,
-                            onItemPressed: (index) {
-                              push(PhotoViewScreen(
-                                images: StringUtil.dummyImageList,
-                              ));
-                            },
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              SliverPersistentHeader(
-                pinned: true,
-                floating: false,
-                delegate: SliverCategoryDelegate(
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: HOME_CATEGORIES
-                            .map((e) => ItemHomeCategory(
-                                  category: e,
-                                ))
-                            .toList(),
                       ),
-                      color: Colors.white,
-                    ),
-                    Provider.of<AppProvider>(context).homeCategoryHeight,
-                    Provider.of<AppProvider>(context).homeCategoryHeight),
+                    ],
+                  )
+                ],
               ),
-            ];
-          },
-          body: Container(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  height: SizeUtil.lineHeight,
-                  color: ColorUtil.lineColor,
-                ),
-                Expanded(
-                    child: ListView.builder(
-                        itemCount: SECTIONS.length + 1,
-                        padding: EdgeInsets.all(0),
-                        itemBuilder: (context, index) {
-                          if (index == 0) {
-                            return FlashSale();
-                          }
-                          return GridProduct(
-                            isHome: true,
-                            title: SECTIONS[index - 1]['title'],
-                            changeCategoryProvider: _changeCategoryProvider,
-                          );
-                        }))
-              ],
             ),
-            height: double.infinity,
+            SliverPersistentHeader(
+              pinned: true,
+              floating: false,
+              delegate: SliverCategoryDelegate(
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: HOME_CATEGORIES
+                          .map((e) => ItemHomeCategory(
+                        category: e,
+                      ))
+                          .toList(),
+                    ),
+                    color: Colors.white,
+                  ),
+                  Provider.of<AppProvider>(context).homeCategoryHeight,
+                  Provider.of<AppProvider>(context).homeCategoryHeight),
+            ),
+          ];
+        },
+        body: Container(
+          child: Column(
+            children: <Widget>[
+              Container(
+                height: SizeUtil.lineHeight,
+                color: ColorUtil.lineColor,
+              ),
+              Expanded(
+                  child: ListView.builder(
+                      itemCount: SECTIONS.length + 1,
+                      padding: EdgeInsets.all(0),
+                      itemBuilder: (context, index) {
+                        if (index == 0) {
+                          return FlashSale();
+                        }
+                        return GridProduct(
+                          isHome: true,
+                          title: SECTIONS[index - 1]['title'],
+                          changeCategoryProvider: _changeCategoryProvider,
+                        );
+                      }))
+            ],
           ),
+          height: double.infinity,
         ),
       ),
     );

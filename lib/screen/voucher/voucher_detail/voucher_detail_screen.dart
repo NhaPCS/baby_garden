@@ -32,10 +32,7 @@ class _VoucherDetailScreenState extends BaseState<VoucherDetailScreen> {
         length: tabsBar.length,
         child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: AppBar(
-              backgroundColor: ColorUtil.primaryColor,
-              centerTitle: true,
-              title: Text(S.of(context).voucherDetail)),
+          appBar:getAppBar(title: S.of(context).voucherDetail),
           body: DefaultTabController(
             length: tabsBar.length,
             child: Column(
@@ -67,7 +64,7 @@ class _VoucherDetailScreenState extends BaseState<VoucherDetailScreen> {
                 Expanded(
                   child: TabBarView(
                     children: [
-                      TabInfoScreen(context: context, voucherIsAvailable: true),
+                      TabInfoScreen(context: context),
                       TabGuideScreen(),
                       TabImageScreen(),
                       TabContactScreen(context: context),

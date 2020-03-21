@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/button_partner_info_provider.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/voucher/voucher_detail/voucher_code_screen.dart';
@@ -10,9 +11,8 @@ import 'package:provider/provider.dart';
 
 class TabInfoScreen extends StatefulWidget {
   final BuildContext context;
-  final bool voucherIsAvailable;
 
-  const TabInfoScreen({Key key, this.context, this.voucherIsAvailable})
+  const TabInfoScreen({Key key, this.context})
       : super(key: key);
   @override
   _TabInfoScreenState createState() => _TabInfoScreenState();
@@ -20,23 +20,17 @@ class TabInfoScreen extends StatefulWidget {
 
 class _TabInfoScreenState extends BaseState<TabInfoScreen> {
   final GetListProvider _getListProvider = GetListProvider();
+  final ButtonPartnerInfoProvider _buttonPartnerInfoProvider = new ButtonPartnerInfoProvider();
   @override
   Widget buildWidget(BuildContext context) {
-    final buttonTitle = widget.voucherIsAvailable
-        ? S.of(widget.context).useCode.toUpperCase()
-        : S.of(widget.context).getCode.toUpperCase();
 
     return Column(children: [
       Expanded(
         child: ListView(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(
-                  right: SizeUtil.smallSpace, left: SizeUtil.smallSpace),
-              child: Container(
-                child: Image.asset(
-                  'photo/voucherViettel.png',
-                ),
+            Container(
+              child: Image.asset(
+                'photo/voucherViettel.png',
               ),
             ),
             Padding(
@@ -137,38 +131,42 @@ class _TabInfoScreenState extends BaseState<TabInfoScreen> {
           ],
         ),
       ),
-      GestureDetector(
-        child: Container(
-          margin: SizeUtil.normalPadding,
-          width: double.infinity,
-          height: 40,
-          decoration: BoxDecoration(
-              color: widget.voucherIsAvailable
-                  ? Color(0xff0A859E)
-                  : ColorUtil.primaryColor,
-              borderRadius: BorderRadius.circular(SizeUtil.tinyRadius)),
-          child: Center(
-            child: Text(
-              buttonTitle,
-              style: TextStyle(
-                  fontSize: SizeUtil.textSizeBigger,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
+      Consumer<ButtonPartnerInfoProvider>(builder: (BuildContext context, ButtonPartnerInfoProvider value, Widget child) {
+        return GestureDetector(
+          child: Container(
+            margin: SizeUtil.normalPadding,
+            width: double.infinity,
+            height: 40,
+            decoration: BoxDecoration(
+                color: value.isVoucherAvailable
+                    ? Color(0xff0A859E)
+                    : ColorUtil.primaryColor,
+                borderRadius: BorderRadius.circular(SizeUtil.tinyRadius)),
+            child: Center(
+              child: Text(
+                value.isVoucherAvailable
+                    ? S.of(widget.context).useCode.toUpperCase()
+                    : S.of(widget.context).getCode.toUpperCase(),
+                style: TextStyle(
+                    fontSize: SizeUtil.textSizeBigger,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
             ),
           ),
-        ),
-        onTap: () {
-          if (widget.voucherIsAvailable) {
-            // go to voucher detail 6
-            push(VoucherCodeScreen(context: widget.context));
-          } else {
-            // show dialog
-            showDialog(
-                context: context,
-                builder: (BuildContext context) => getCodeDialog(context));
-          }
-        },
-      )
+          onTap: () {
+            if (value.isVoucherAvailable) {
+              // go to voucher detail 6
+              push(VoucherCodeScreen(context: widget.context));
+            } else {
+              // show dialog
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => getCodeDialog(context));
+            }
+          },
+        );
+      },)
     ]);
   }
 
@@ -225,7 +223,7 @@ class _TabInfoScreenState extends BaseState<TabInfoScreen> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           ButtonTheme(
-            minWidth: 120,
+            minWidth: 110,
             height: SizeUtil.biggerSpace,
             child: RaisedButton(
               shape: RoundedRectangleBorder(
@@ -248,17 +246,21 @@ class _TabInfoScreenState extends BaseState<TabInfoScreen> {
             width: SizeUtil.midSmallSpace,
           ),
           ButtonTheme(
-            minWidth: 120,
+            minWidth: 110,
             height: SizeUtil.biggerSpace,
             child: RaisedButton(
               shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(SizeUtil.tinyRadius),
               ),
               color: Color.fromRGBO(10, 133, 158, 1),
-              onPressed: () {
+              onPressed: () async {
                 // go to voucher detail 6
-                push(VoucherCodeScreen(context: widget.context));
                 Navigator.of(context).pop();
+                var data = await push(VoucherCodeScreen(context: widget.context));
+                if (data == "sent"){
+
+                }
+                _buttonPartnerInfoProvider.onChange(true);
               },
               child: Text(S.of(context).agree,
                   style: TextStyle(
@@ -274,6 +276,9 @@ class _TabInfoScreenState extends BaseState<TabInfoScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _getListProvider)];
+    return [
+      ChangeNotifierProvider.value(value: _getListProvider),
+      ChangeNotifierProvider.value(value: _buttonPartnerInfoProvider),
+    ];
   }
 }

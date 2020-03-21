@@ -4,6 +4,7 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/my_text_field.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
@@ -122,7 +123,7 @@ class _VoucherCodeScreenState extends BaseState<VoucherCodeScreen> {
             GestureDetector(
               onTap: () {
                 // turn back to voucher detail infor tab and set state change button title to used
-                Navigator.of(context).pop();
+                Navigator.of(context).pop("sent");
               },
               child: Padding(
                 padding: SizeUtil.smallPadding,
@@ -158,12 +159,19 @@ class _VoucherCodeScreenState extends BaseState<VoucherCodeScreen> {
                       color: Color(0xfff0CA0BE)),
                   width: double.infinity,
                   height: SizeUtil.hugSpace,
-                  child: Center(
-                      child: Text(
-                    S.of(widget.context).sendCode,
-                    style: TextStyle(
-                        fontSize: SizeUtil.textSizeBigger, color: Colors.white),
-                  )),
+                  child: Stack(
+                    alignment: Alignment.center,
+                      children: <Widget>[
+                        Positioned(
+                          right: SizeUtil.smallSpace,
+                          child: Icon(FontAwesomeIcons.qrcode,color: Colors.white,),
+                        ),
+                        Text(
+                          S.of(widget.context).scanQRCode,
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeBigger, color: Colors.white),
+                        )
+                      ],),
                 ),
               ),
             ),

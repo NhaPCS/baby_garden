@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
             bodyText1: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
           )),
-      home: MainScreen(),
+      home: WelcomeScreen(),
     );
   }
 }

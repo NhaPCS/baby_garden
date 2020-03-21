@@ -9,6 +9,7 @@ import 'package:baby_garden_flutter/screen/point_management/point_history_screen
 import 'package:baby_garden_flutter/screen/point_management/point_management_screen.dart';
 import 'package:baby_garden_flutter/screen/profile/account_manage_screen.dart';
 import 'package:baby_garden_flutter/screen/profile/user_infor.dart';
+import 'package:baby_garden_flutter/screen/remind_management/remind_management_screen.dart';
 import 'package:baby_garden_flutter/screen/seen_product/seen_product_screen.dart';
 import 'package:baby_garden_flutter/screen/setting/setting_screen.dart';
 import 'package:baby_garden_flutter/screen/voucher/voucher_management_screen.dart';
@@ -110,7 +111,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                   push(PointManagement());
                   break;
                 case 2:
-                  push(PartnerBookScheduleScreen());
+                  push(RemindManagementScreen());
                   break;
                 case 3:
                   push(VoucherManagement());

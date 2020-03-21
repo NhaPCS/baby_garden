@@ -50,11 +50,7 @@ class _VoucherManageState extends BaseState<VoucherManagement> {
         length: vouchers.length,
         child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: AppBar(
-            backgroundColor: ColorUtil.primaryColor,
-            centerTitle: true,
-            title: Text(S.of(context).voucherManage),
-          ),
+          appBar: getAppBar(title:S.of(context).voucherManage),
           body: DefaultTabController(
             length: vouchers.length,
             child: Column(
