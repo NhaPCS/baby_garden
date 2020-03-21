@@ -1,6 +1,5 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
-import 'package:baby_garden_flutter/screen/list_product/list_product_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/material.dart';
@@ -59,9 +58,7 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
               )),
           rowCheckBox(S.of(context).remindBuyProduct),
           GestureDetector(
-            onTap: (){
-
-            },
+            onTap: () {},
             child: rowTimeTable(S.of(context).remindTime),
           ),
           rowCheckBox(S.of(context).remindUseProduct, isRemindUse: true),

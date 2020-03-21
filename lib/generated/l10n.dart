@@ -15,7 +15,7 @@ class S {
     AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final String name = locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
+    final String name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
@@ -3340,6 +3340,15 @@ class S {
       args: [],
     );
   }
+
+  String get selectRemindTime {
+    return Intl.message(
+      'Chọn thời gian nhắc',
+      name: 'selectRemindTime',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
@@ -3347,7 +3356,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
 
   List<Locale> get supportedLocales {
     return const <Locale>[
-      Locale('en', ''),
+      Locale.fromSubtags(languageCode: 'en'),
     ];
   }
 

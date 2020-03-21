@@ -370,6 +370,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "select" : MessageLookupByLibrary.simpleMessage("Chọn"),
     "selectRemindBuyTime" : MessageLookupByLibrary.simpleMessage("Chọn thời gian nhắc lịch mua sản phẩm"),
     "selectRemindProduct" : MessageLookupByLibrary.simpleMessage("Chọn sản phẩm nhắc mua"),
+    "selectRemindTime" : MessageLookupByLibrary.simpleMessage("Chọn thời gian nhắc"),
     "send" : MessageLookupByLibrary.simpleMessage("Gửi"),
     "sendCode" : MessageLookupByLibrary.simpleMessage("Gửi mã"),
     "send_by" : m20,

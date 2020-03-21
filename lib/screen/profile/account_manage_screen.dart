@@ -6,7 +6,6 @@ import 'package:baby_garden_flutter/screen/change_password/change_password_scree
 import 'package:baby_garden_flutter/screen/profile/add_child_dialog.dart';
 import 'package:baby_garden_flutter/screen/profile/user_infor.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -97,10 +96,10 @@ class _AccountManageState extends BaseState<AccountManage> {
               height: 38,
               child: GestureDetector(
                 onTap: () {
-                  if (index == 5){
-                      push(AddressSettingScreen());
-                  }else if (index ==4){
-                     push(ChangePasswordScreen());
+                  if (index == 5) {
+                    push(AddressSettingScreen());
+                  } else if (index == 4) {
+                    push(ChangePasswordScreen());
                   }
                 },
                 child: Row(

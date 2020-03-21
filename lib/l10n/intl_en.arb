@@ -366,5 +366,6 @@
     "or": "Hoặc",
     "scanQRCode": "Quét mã QR Code",
     "logout": "Đăng xuất",
-    "attached_product": "Sản phẩm mua kèm"
+    "attached_product": "Sản phẩm mua kèm",
+    "selectRemindTime": "Chọn thời gian nhắc"
 }
