@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
+import 'package:baby_garden_flutter/screen/remind_management/remind_set/remind_cycle_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_management/remind_set/set_date_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_management/remind_set/set_time_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -66,7 +67,9 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
             child: rowTimeTable(S.of(context).remindTime),
           ),
           rowCheckBox(S.of(context).remindUseProduct, isRemindUse: true),
-          rowTimeTable(S.of(context).endDateOfReminder),
+          GestureDetector(
+              onTap: () => push(SetDateScreen()),
+              child: rowTimeTable(S.of(context).endDateOfReminder)),
           Padding(
               padding: const EdgeInsets.only(left: SizeUtil.hugSpace),
               child: Column(
@@ -90,7 +93,7 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
                           child: GestureDetector(
                             onTap: () {
                               // show date picker screen
-                              push(SetTimeScreen());
+                              push(RemindCycleScreen());
                             },
                             child: Text(
                               S.of(context).select,
@@ -141,8 +144,6 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
                   )))
         ]));
   }
-
-  chooseRemindTime() {}
 
   listViewRemindTime() {
     List<int> order = [1, 2, 3, 4];

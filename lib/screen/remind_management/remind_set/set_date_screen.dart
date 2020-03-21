@@ -6,14 +6,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class SetDateScreen extends StatefulWidget {
   @override
   _SetDateScreenState createState() => _SetDateScreenState();
 }
 
-class _SetDateScreenState extends BaseState<SetDateScreen> {
+class _SetDateScreenState extends BaseState<SetDateScreen>
+    with TickerProviderStateMixin {
   final GetListProvider _getListProvider = GetListProvider();
+
   @override
   Widget buildWidget(BuildContext context) {
     String buttonTitle = S.of(context).confirm;
@@ -36,35 +39,19 @@ class _SetDateScreenState extends BaseState<SetDateScreen> {
                   ),
                 )),
             Container(
-              decoration: setBorder('top', Color(0xffE4E4E4), 6),
-              padding: EdgeInsets.only(top: 20),
-              height: 300,
-              child: Theme(
-                data: ThemeData(
-                    cupertinoOverrideTheme: CupertinoThemeData(
-                        barBackgroundColor: Colors.green,
-                        scaffoldBackgroundColor: Colors.grey,
-                        textTheme: CupertinoTextThemeData(
-                          pickerTextStyle:
-                              TextStyle(color: Colors.orange, fontSize: 20),
-                          tabLabelTextStyle: TextStyle(fontSize: 80),
-                          navLargeTitleTextStyle: TextStyle(fontSize: 50),
-                          navActionTextStyle: TextStyle(color: Colors.orange),
-                          navTitleTextStyle: TextStyle(fontSize: 40),
-                          dateTimePickerTextStyle: TextStyle(
-                            fontSize: 30,
-                            color: Colors.orange,
-                          ),
-                        ))
-                    // textSelectionColor: Colors.orange
-                    ),
-                child: selectDate().selectedDate,
-              ),
-            ),
+                decoration: setBorder('top', Color(0xffE4E4E4), 6),
+                padding: EdgeInsets.only(top: 20),
+                height: 300,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  // calender table
+                  children: <Widget>[],
+                )),
             Expanded(
                 child: Container(
               decoration: setBorder('top', Color(0xffE4E4E4), 6),
             )),
+            // button
             GestureDetector(
               child: Container(
                 margin: SizeUtil.normalPadding,
@@ -89,27 +76,6 @@ class _SetDateScreenState extends BaseState<SetDateScreen> {
             )
           ],
         ));
-  }
-
-  Widget showPickerDate() {
-    return Text('');
-    return selectDate();
-  }
-
-  selectDate() {
-    Future<DateTime> selectedDate = showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2018),
-      lastDate: DateTime(2030),
-      builder: (BuildContext context, Widget child) {
-        return Theme(
-          data: ThemeData.dark(),
-          child: child,
-        );
-      },
-    );
-    setState(() {});
   }
 
   @override
