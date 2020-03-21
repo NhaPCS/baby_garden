@@ -95,78 +95,6 @@ class MyTextField extends StatelessWidget {
     return title != null
         ? Stack(
             children: <Widget>[
-<<<<<<< HEAD
-            Text(title,style:titleStyle,),
-            SizedBox(height: SizeUtil.tinySpace,),
-            TextField(
-              controller: textEditingController,
-              style: textStyle,
-              textAlign: textAlign,
-              maxLines: maxLines,
-              autofocus: autoFocus,
-              obscureText: obscureText,
-              onChanged: onChanged,
-              enabled: enable,
-              keyboardType: inputType,
-              onTap: ontap,
-              focusNode: onFocus,
-              decoration: InputDecoration(
-                  contentPadding: contentPadding,
-                  isDense: true,
-                  fillColor: backgroundColor,
-                  focusColor: backgroundColor,
-                  hoverColor: backgroundColor,
-                  suffixIcon: suffix,
-                  suffixText: suffixText,
-                  prefixIcon: prefix,
-                  hintText: hint,
-                  hintStyle: hintStyle,
-                  enabledBorder: _getBorder(),
-                  focusedBorder: _getBorder(),
-                  border: _getBorder()),
-            )
-          ],),
-        ),
-        showTrailing?
-        Positioned(
-          right: SizeUtil.defaultSpace,
-          top: 0,
-          child: GestureDetector(
-            onTap: onTrailingTap,
-              child: Container(
-                margin: const EdgeInsets.all(5.0),
-                child: Icon(Icons.keyboard_arrow_down,size: SizeUtil.iconSizeBigger,),
-              )),
-        ):SizedBox()
-      ],
-    ):
-    TextField(
-      controller: textEditingController,
-      style: textStyle,
-      textAlign: textAlign,
-      maxLines: maxLines,
-      obscureText: obscureText,
-      onChanged: onChanged,
-      enabled: enable,
-      keyboardType: inputType,
-      onTap: ontap,
-      focusNode: onFocus,
-      decoration: InputDecoration(
-          contentPadding: contentPadding,
-          isDense: true,
-          fillColor: backgroundColor,
-          focusColor: backgroundColor,
-          hoverColor: backgroundColor,
-          suffixIcon: suffix,
-          suffixText: suffixText,
-          prefixIcon: prefix,
-          hintText: hint,
-          hintStyle: hintStyle,
-          enabledBorder: _getBorder(),
-          focusedBorder: _getBorder(),
-          border: _getBorder()),
-    );
-=======
               Padding(
                 padding: padding,
                 child: Column(
@@ -254,7 +182,6 @@ class MyTextField extends StatelessWidget {
                 focusedBorder: _getBorder(),
                 border: _getBorder()),
           );
->>>>>>> origin/master
   }
 
   InputBorder _getBorder() {
