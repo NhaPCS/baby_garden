@@ -186,6 +186,7 @@ class SizeUtil {
   static const EdgeInsets hugePadding = EdgeInsets.all(40);
   static const EdgeInsets smallPadding = EdgeInsets.all(10);
   static const EdgeInsets tinyPadding = EdgeInsets.all(5);
+  static const EdgeInsets miniPadding = EdgeInsets.all(3);
   static const EdgeInsets normalPadding = EdgeInsets.all(15);
 
   static const double defaultSpace = 20;

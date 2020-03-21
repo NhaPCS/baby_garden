@@ -72,7 +72,9 @@ class ItemProductHorizontal extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Text(S.of(context).product_count),
-                    ChangeQuantityWidget()
+                    ChangeQuantityWidget(
+                      textColor: ColorUtil.primaryColor,
+                    )
                   ],
                 )
               ],
