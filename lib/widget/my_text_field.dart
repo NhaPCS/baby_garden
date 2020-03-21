@@ -113,6 +113,7 @@ class MyTextField extends StatelessWidget {
                       style: textStyle,
                       autofocus: autoFocus,
                       textAlign: textAlign,
+                      autofocus: autoFocus,
                       maxLines: maxLines,
                       obscureText: obscureText,
                       onChanged: onChanged,
