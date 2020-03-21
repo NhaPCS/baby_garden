@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/notify_switch_provider.dart';
 import 'package:baby_garden_flutter/provider/search_notify_provider.dart';
 import 'package:baby_garden_flutter/provider/segment_control_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
@@ -7,6 +8,7 @@ import 'package:baby_garden_flutter/widget/my_text_field.dart';
 import 'package:baby_garden_flutter/widget/notify_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
@@ -19,11 +21,10 @@ class NotifyScreen extends StatefulWidget {
 }
 
 class _NotifyScreenState extends BaseState<NotifyScreen> {
-  final SegmentControlProvider _segmentControlProvider =
-      new SegmentControlProvider();
-  final TextEditingController searchTextController =
-      new TextEditingController();
+  final SegmentControlProvider _segmentControlProvider = new SegmentControlProvider();
+  final TextEditingController searchTextController = new TextEditingController();
   final NotifySearchProvider _notifySearchProvider = new NotifySearchProvider();
+  final NotifySwitchProvider _notifySwitchProvider = new NotifySwitchProvider();
   final FocusNode _focusNode = FocusNode();
 
   @override
@@ -39,6 +40,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: ColorUtil.primaryColor));
     return Scaffold(
         appBar: getAppBar(
           title: S.of(context).notify,
@@ -81,11 +83,12 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
               child: Container(
                 child: Column(
                   children: <Widget>[
+                    //todo search notify
                     Row(
                       children: <Widget>[
                         Expanded(
                             child: Padding(
-                          padding: const EdgeInsets.all(SizeUtil.midSmallSpace),
+                          padding: const EdgeInsets.only(left: SizeUtil.midSmallSpace,bottom: SizeUtil.midSmallSpace,right: SizeUtil.midSmallSpace,top: SizeUtil.midSmallSpace),
                           child: Stack(
                             alignment: Alignment.centerLeft,
                             children: <Widget>[
@@ -136,21 +139,30 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                                         left: SizeUtil.normalSpace),
                                     child: Row(
                                       children: <Widget>[
-                                        Text(
-                                          S.of(context).hide_readed_notify,
-                                          textAlign: TextAlign.end,
-                                          style: TextStyle(
-                                              fontSize: SizeUtil.textSizeSmall),
-                                        ),
-                                        Transform.scale(
-                                          scale: 1,
-                                          child: Switch(
-                                            value: true,
-                                            onChanged: (bool newValue) {},
-                                            activeColor: ColorUtil.primaryColor,
-                                            inactiveThumbColor: ColorUtil.gray,
+                                        InkWell(
+                                          child: Text(
+                                            S.of(context).hide_readed_notify,
+                                            textAlign: TextAlign.end,
+                                            style: TextStyle(
+                                                fontSize: SizeUtil.textSizeSmall),
                                           ),
-                                        )
+                                          onTap: (){
+                                            _notifySwitchProvider.onChange();
+                                          },
+                                        ),
+                                        Consumer<NotifySwitchProvider>(builder: (BuildContext context, NotifySwitchProvider value, Widget child) {
+                                          return Transform.scale(
+                                            scale: 1,
+                                            child: Switch(
+                                              value: value.isEnable,
+                                              onChanged: (bool newValue) {
+                                                _notifySwitchProvider.onChange();
+                                              },
+                                              activeColor: ColorUtil.primaryColor,
+                                              inactiveThumbColor: ColorUtil.gray,
+                                            ),
+                                          );
+                                        },),
                                       ],
                                     ))
                                 : SizedBox(
@@ -160,6 +172,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                         ),
                       ],
                     ),
+                    //todo notify list
                     Expanded(
                       child: ListView.builder(
                           itemCount: 10,
@@ -185,6 +198,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
     return [
       ChangeNotifierProvider.value(value: _segmentControlProvider),
       ChangeNotifierProvider.value(value: _notifySearchProvider),
+      ChangeNotifierProvider.value(value: _notifySwitchProvider),
     ];
   }
 }

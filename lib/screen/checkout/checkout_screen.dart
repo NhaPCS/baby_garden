@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/checkout_dropdown_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/home/home_screen.dart';
 import 'package:baby_garden_flutter/screen/list_order/list_order_screen.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 class CheckoutScreen extends StatefulWidget {
   @override
@@ -20,6 +22,7 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends BaseState<CheckoutScreen> {
+  final CheckoutDropDownProvider _checkoutDropDownProvider = new CheckoutDropDownProvider();
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
@@ -84,113 +87,151 @@ class _CheckoutScreenState extends BaseState<CheckoutScreen> {
                 SizedBox(
                   width: SizeUtil.smallSpace,
                 ),
-                RichText(
-                  text: TextSpan(children: <TextSpan>[
-                    TextSpan(
-                        text: S.of(context).bank,
-                        style: TextStyle(
-                            color: ColorUtil.textColor,
-                            fontSize: SizeUtil.textSizeExpressDetail)),
-                    TextSpan(
-                        text: " Vietcombank",
-                        style: TextStyle(
-                            color: ColorUtil.blue,
-                            fontSize: SizeUtil.textSizeExpressDetail))
-                  ]),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: SizeUtil.smallSpace,
-                      right: SizeUtil.smallSpace,
-                      top: SizeUtil.tinySpace,
-                      bottom: SizeUtil.tinySpace),
-                  child: Icon(
-                    Icons.keyboard_arrow_down,
-                    color: ColorUtil.primaryColor,
-                    size: SizeUtil.iconSizeBigger,
+                Text(S.of(context).bank,
+                    style: TextStyle(
+                        color: ColorUtil.textColor,
+                        fontSize: SizeUtil.textSizeExpressDetail)),
+//                RichText(
+//                  text: TextSpan(children: <TextSpan>[
+//                    TextSpan(
+//                        text: S.of(context).bank,
+//                        style: TextStyle(
+//                            color: ColorUtil.textColor,
+//                            fontSize: SizeUtil.textSizeExpressDetail)),
+//                    TextSpan(
+//                        text: " Vietcombank",
+//                        style: TextStyle(
+//                            color: ColorUtil.blue,
+//                            fontSize: SizeUtil.textSizeExpressDetail))
+//                  ]),
+//                )
+
+//                Padding(
+//                  padding: const EdgeInsets.only(
+//                      left: SizeUtil.smallSpace,
+//                      right: SizeUtil.smallSpace,
+//                      top: SizeUtil.tinySpace,
+//                      bottom: SizeUtil.tinySpace),
+//                  child: Icon(
+//                    Icons.keyboard_arrow_down,
+//                    color: ColorUtil.primaryColor,
+//                    size: SizeUtil.iconSizeBigger,
+//                  ),
+//                )
+              Consumer<CheckoutDropDownProvider>(builder: (BuildContext context, CheckoutDropDownProvider value, Widget child) {
+                print(value.val);
+                return Padding(
+                  padding: const EdgeInsets.only(left:8.0),
+                  child: DropdownButton<int>(
+                    icon: Icon(
+                      Icons.keyboard_arrow_down,
+                      color: ColorUtil.primaryColor,
+                      size: SizeUtil.iconSizeBigger,
+                    ),
+                    style: TextStyle(
+                        color: ColorUtil.blue,
+                        fontSize: SizeUtil.textSizeExpressDetail),
+                    underline: SizedBox(),
+                    value: value.val,
+                    onChanged: (val){
+                      _checkoutDropDownProvider.onChangeBank(val);
+                    }, items: [
+                    new DropdownMenuItem(child: Text('VietcomBank'),value: 0),
+                    new DropdownMenuItem(child: Text('TechcomBank'),value: 1),
+                    new DropdownMenuItem(child: Text('BIDV'),value:2),
+                    new DropdownMenuItem(child: Text('ViettinBank'),value:3),
+                    new DropdownMenuItem(child: Text('MBBank'),value: 4),
+                  ],
                   ),
-                )
+                );
+              },)
               ],
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Icon(
-                  Icons.credit_card,
-                  size: SizeUtil.iconMidSize,
-                  color: ColorUtil.primaryColor,
-                ),
-                SizedBox(
-                  width: SizeUtil.smallSpace,
-                ),
-                RichText(
-                  text: TextSpan(children: <TextSpan>[
-                    TextSpan(
-                        text: S.of(context).bank_number,
-                        style: TextStyle(
-                            color: ColorUtil.textColor,
-                            fontSize: SizeUtil.textSizeExpressDetail)),
-                    TextSpan(
-                        text: " 0011004057146",
-                        style: TextStyle(
-                            color: ColorUtil.blue,
-                            fontSize: SizeUtil.textSizeExpressDetail))
-                  ]),
-                ),
-                Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: SizeUtil.smallSpace,
-                      right: SizeUtil.smallSpace,
-                      top: SizeUtil.tinySpace,
-                      bottom: SizeUtil.tinySpace),
-                  child: GestureDetector(
-                      onTap: () {
-                        //TODO coppy
-                      },
-                      child: SvgIcon(
-                        "ic_copy.svg",
-                        width: SizeUtil.iconSizeDefault,
-                        height: SizeUtil.iconSizeDefault,
-                      )),
-                ),
-                SizedBox(
-                  width: SizeUtil.smallSpace,
-                )
-              ],
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: SizeUtil.tinySpace, bottom: SizeUtil.tinySpace),
-                  child: Icon(
-                    Icons.person,
+            Padding(
+              padding: const EdgeInsets.only(bottom:8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Icon(
+                    Icons.credit_card,
                     size: SizeUtil.iconMidSize,
                     color: ColorUtil.primaryColor,
                   ),
-                ),
-                SizedBox(
-                  width: SizeUtil.smallSpace,
-                ),
-                RichText(
-                  text: TextSpan(children: <TextSpan>[
-                    TextSpan(
-                        text: S.of(context).owner_name,
-                        style: TextStyle(
-                            color: ColorUtil.textColor,
-                            fontSize: SizeUtil.textSizeExpressDetail)),
-                    TextSpan(
-                        text: " Vũ Thị Hài",
-                        style: TextStyle(
-                            color: ColorUtil.blue,
-                            fontSize: SizeUtil.textSizeExpressDetail))
-                  ]),
-                )
-              ],
+                  SizedBox(
+                    width: SizeUtil.smallSpace,
+                  ),
+                  RichText(
+                    text: TextSpan(children: <TextSpan>[
+                      TextSpan(
+                          text: S.of(context).bank_number,
+                          style: TextStyle(
+                              color: ColorUtil.textColor,
+                              fontSize: SizeUtil.textSizeExpressDetail)),
+                      TextSpan(
+                          text: " 0011004057146",
+                          style: TextStyle(
+                              color: ColorUtil.blue,
+                              fontSize: SizeUtil.textSizeExpressDetail))
+                    ]),
+                  ),
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: SizeUtil.smallSpace,
+                        right: SizeUtil.smallSpace,
+                        top: SizeUtil.tinySpace,
+                        bottom: SizeUtil.tinySpace),
+                    child: GestureDetector(
+                        onTap: () {
+                          //TODO coppy
+                        },
+                        child: SvgIcon(
+                          "ic_copy.svg",
+                          width: SizeUtil.iconSizeDefault,
+                          height: SizeUtil.iconSizeDefault,
+                        )),
+                  ),
+                  SizedBox(
+                    width: SizeUtil.smallSpace,
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom:4.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: SizeUtil.tinySpace, bottom: SizeUtil.tinySpace),
+                    child: Icon(
+                      Icons.person,
+                      size: SizeUtil.iconMidSize,
+                      color: ColorUtil.primaryColor,
+                    ),
+                  ),
+                  SizedBox(
+                    width: SizeUtil.smallSpace,
+                  ),
+                  RichText(
+                    text: TextSpan(children: <TextSpan>[
+                      TextSpan(
+                          text: S.of(context).owner_name,
+                          style: TextStyle(
+                              color: ColorUtil.textColor,
+                              fontSize: SizeUtil.textSizeExpressDetail)),
+                      TextSpan(
+                          text: " Vũ Thị Hài",
+                          style: TextStyle(
+                              color: ColorUtil.blue,
+                              fontSize: SizeUtil.textSizeExpressDetail))
+                    ]),
+                  )
+                ],
+              ),
             )
           ],
         ),
@@ -471,7 +512,7 @@ class _CheckoutScreenState extends BaseState<CheckoutScreen> {
                       fontSize: SizeUtil.textSizeSmall)),
               TextSpan(
                   recognizer: new TapGestureRecognizer()
-                    ..onTap = () => showPrivacyAndPolicyDialogue(context),
+                    ..onTap = () =>    showPrivacyAndPolicyDialogue(context),
                   text: "Chính sách & Điều khoản dịch vụ ",
                   style: TextStyle(
                       color: Colors.blue,
@@ -522,7 +563,7 @@ class _CheckoutScreenState extends BaseState<CheckoutScreen> {
   @override
   List<SingleChildWidget> providers() {
     // TODO: implement providers
-    return [];
+    return [ChangeNotifierProvider.value(value: _checkoutDropDownProvider)];
   }
 
   showPrivacyAndPolicyDialogue(BuildContext context) {

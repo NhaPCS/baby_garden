@@ -145,7 +145,39 @@ class StringUtil {
     {'time': '18:15'},
     {'time': '18:30'},
     {'time': '18:45'},
+    {'time': '19:00'},
+    {'time': '19:15'},
+    {'time': '19:30'},
+    {'time': '19:45'},
+    {'time': '20:00'},
+    {'time': '20:15'},
+    {'time': '20:30'},
+    {'time': '20:45'},
+    {'time': '21:00'},
+    {'time': '21:15'},
+    {'time': '21:30'},
+    {'time': '21:45'},
   ];
+
+  static List<String> banks1 = ['VietcomBank','TechcomBank','BIDV','ViettinBank','MBBank'];
+
+  static List<dynamic> banks = [
+    {'bank':'VietcomBank','accountNumber':'00112233445566','accountOwner':'Vũ Thị Hài'},
+    {'bank':'TechcomBank','accountNumber':'00880900989089','accountOwner':'Vũ Thị Hài'},
+    {'bank':'BIDV','accountNumber':'00880900989089','accountOwner':'Vũ Thị Hài'},
+    {'bank':'ViettinBank','accountNumber':'10923809821989','accountOwner':'Vũ Thị Hài'},
+    {'bank':'MBBank','accountNumber':'00112233445566','accountOwner':'Vũ Thị Hài'},
+  ];
+
+  static List<DropdownMenuItem<dynamic>> bankAccounts = [
+    new DropdownMenuItem(child: Text('VietcomBank'),value: banks1[0]),
+    new DropdownMenuItem(child: Text('TechcomBank'),value: banks1[1]),
+    new DropdownMenuItem(child: Text('BIDV'),value: banks1[2]),
+    new DropdownMenuItem(child: Text('ViettinBank'),value: banks1[3]),
+    new DropdownMenuItem(child: Text('MBBank'),value: banks1[4]),
+  ];
+
+
 
   static List<dynamic> week = [
     {'dow': 'Thứ 2', 'date': '12/02/2020'},

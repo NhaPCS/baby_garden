@@ -66,8 +66,8 @@ class _PartnerBookScheduleScreenState
     WidgetsBinding.instance.addPostFrameCallback((_) => {
           _rowHeight.value = _rowKey.currentContext.size.height,//TODO min height
           _rowHeightFull = _rowKeyFull.currentContext.size.height,//TODO max height
-          print(_rowHeight.value),
-          print(_rowHeightFull)
+          print(_rowHeight.value), //todo min height
+          print(_rowHeightFull) // todo expand full height
         });
   }
 
@@ -133,8 +133,11 @@ class _PartnerBookScheduleScreenState
         ),
       ),
     ];
+
+    //todo get hei set
     return Consumer<PartnerGetHeightProvider>(builder:
         (BuildContext context, PartnerGetHeightProvider value, Widget child) {
+      //todo ValueListenableBuilder is observe view height value <_rowheight>
       return ValueListenableBuilder<double>(
           valueListenable: _rowHeight,
           builder: (BuildContext context, double height, Widget child) {
@@ -149,6 +152,7 @@ class _PartnerBookScheduleScreenState
                                   : productContent();
                             }).toList()
                         ),
+                        //todo get height view
                         headerSliverBuilder: (context, isScrollInner) {
                           return [
                             new SliverAppBar(
@@ -832,7 +836,7 @@ class _PartnerBookScheduleScreenState
                           child: Container(
                             margin: EdgeInsets.all(1),
                             color: isSelected
-                                ? Color(0xffFFE9D6)
+                                ? ColorUtil.primaryColor
                                 : ColorUtil.lineColor,
                             child: Center(
                               child: Text(
