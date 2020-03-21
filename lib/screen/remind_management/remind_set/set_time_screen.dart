@@ -15,7 +15,6 @@ class SetTimeScreen extends StatefulWidget {
 class _SetTimeScreenState extends BaseState<SetTimeScreen> {
   final GetListProvider _getListProvider = GetListProvider();
 
-  set chosenTime(DateTime chosenTime) {}
   @override
   Widget buildWidget(BuildContext context) {
     String buttonTitle = S.of(context).confirm;
@@ -64,10 +63,7 @@ class _SetTimeScreenState extends BaseState<SetTimeScreen> {
                   mode: CupertinoDatePickerMode.time,
                   use24hFormat: true,
                   // backgroundColor: Colors.orange,
-                  onDateTimeChanged: (chosenTime) {
-                    print(chosenTime);
-                    this.chosenTime = chosenTime;
-                  },
+                  onDateTimeChanged: (chosenTime) {},
                 ),
               ),
             ),
