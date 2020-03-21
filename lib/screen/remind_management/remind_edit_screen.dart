@@ -115,12 +115,35 @@ class _RemindEditScreen extends BaseState<RemindEditScreen> {
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: CupertinoTimerPicker(
-                      mode: CupertinoTimerPickerMode.hm,
-                      onTimerDurationChanged: (chosenTime) {
-                        print(chosenTime);
-                        this.chosenTime = chosenTime;
-                      },
+                    child: Theme(
+                      data: ThemeData(
+                          cupertinoOverrideTheme: CupertinoThemeData(
+                              barBackgroundColor: Colors.green,
+                              scaffoldBackgroundColor: Colors.grey,
+                              textTheme: CupertinoTextThemeData(
+                                pickerTextStyle: TextStyle(
+                                    color: Colors.orange, fontSize: 20),
+                                tabLabelTextStyle: TextStyle(fontSize: 80),
+                                navLargeTitleTextStyle: TextStyle(fontSize: 50),
+                                navActionTextStyle:
+                                    TextStyle(color: Colors.orange),
+                                navTitleTextStyle: TextStyle(fontSize: 40),
+                                dateTimePickerTextStyle: TextStyle(
+                                  fontSize: 30,
+                                  color: Colors.orange,
+                                ),
+                              ))
+                          // textSelectionColor: Colors.orange
+                          ),
+                      child: CupertinoDatePicker(
+                        mode: CupertinoDatePickerMode.time,
+                        use24hFormat: true,
+                        // backgroundColor: Colors.orange,
+                        onDateTimeChanged: (chosenTime) {
+                          print(chosenTime);
+                          this.chosenTime = chosenTime;
+                        },
+                      ),
                     ),
                   ),
                 ],
@@ -143,7 +166,9 @@ class _RemindEditScreen extends BaseState<RemindEditScreen> {
                       child: RaisedButton(
                         padding: SizeUtil.normalPadding,
                         onPressed: () {
-                          RouteUtil.push(context, RemindManagementScreen());
+                          // RouteUtil.push(context, RemindManagementScreen());
+                          showTimePicker(
+                              context: context, initialTime: TimeOfDay.now());
                         },
                         child: Text(
                           S.of(context).saveChange,

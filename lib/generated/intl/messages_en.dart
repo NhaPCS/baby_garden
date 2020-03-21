@@ -250,6 +250,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "lastDayCheck" : MessageLookupByLibrary.simpleMessage("Ngày đo gần nhất"),
     "list_user_rated" : MessageLookupByLibrary.simpleMessage("Danh sách người đánh giá"),
     "login" : MessageLookupByLibrary.simpleMessage("Đăng nhập"),
+    "logout" : MessageLookupByLibrary.simpleMessage("Đăng xuất"),
     "mobilePhone" : MessageLookupByLibrary.simpleMessage("Số điện thoại"),
     "mobilePlaceholder" : MessageLookupByLibrary.simpleMessage("Nhập SĐT của bạn"),
     "moreDetail" : MessageLookupByLibrary.simpleMessage("Xem chi tiết"),

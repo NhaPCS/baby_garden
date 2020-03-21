@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'generated/l10n.dart';
+import 'screen/remind_management/remind_edit_screen.dart';
 
 void main() => runApp(Provider(
       create: (_) => AppProvider(),

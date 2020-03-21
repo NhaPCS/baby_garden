@@ -3323,6 +3323,10 @@ class S {
     );
   }
 
+  String get logout {
+    return Intl.message(
+      'Đăng xuất',
+      name: 'logout',
   String get attached_product {
     return Intl.message(
       'Sản phẩm mua kèm',
