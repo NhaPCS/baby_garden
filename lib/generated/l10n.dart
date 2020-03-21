@@ -3340,6 +3340,105 @@ class S {
       args: [],
     );
   }
+
+  String get weight_height {
+    return Intl.message(
+      'Chiều cao - Cân nặng',
+      name: 'weight_height',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get girl {
+    return Intl.message(
+      'Bé gái',
+      name: 'girl',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get height {
+    return Intl.message(
+      'Chiều Cao',
+      name: 'height',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get weight {
+    return Intl.message(
+      'Cân nặng',
+      name: 'weight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get chart_for_girl {
+    return Intl.message(
+      'Biểu đồ chiều cao theo tuổi cho bé gái',
+      name: 'chart_for_girl',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get normal_height {
+    return Intl.message(
+      'Chiều cao bình thường',
+      name: 'normal_height',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get greater_than_age {
+    return Intl.message(
+      'Chiều cao cao hơn so với tuổi',
+      name: 'greater_than_age',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get suy_dinh_duong_normal {
+    return Intl.message(
+      'Trẻ suy dinh dưỡng thể thấp còi, mức độ vừa',
+      name: 'suy_dinh_duong_normal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get sdd_nang {
+    return Intl.message(
+      'Trẻ suy dinh dưỡng thể thấp còi, mức độ nặng',
+      name: 'sdd_nang',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_weight_height {
+    return Intl.message(
+      'Nhập chiều cao/cân nặng',
+      name: 'enter_weight_height',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_all_value_child {
+    return Intl.message(
+      'Nhập các chỉ số chiều cao, cân nặng của bé',
+      name: 'enter_all_value_child',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
