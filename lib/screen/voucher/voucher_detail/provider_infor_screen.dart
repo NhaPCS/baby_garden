@@ -63,7 +63,7 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
       body: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(top: 4,left: 4,right: 4),
+            padding: const EdgeInsets.only(top: 4, left: 4, right: 4),
             child: ListCategory(
               categoryProvider: _changeCategoryProvider,
             ),
@@ -72,43 +72,45 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
             child: ListView(
                 children: sampleVouchers.map((voucher) {
               return GestureDetector(
-                onTap: (){
+                onTap: () {
                   push(VoucherDetailScreen());
                 },
                 child: Container(
                   child: Stack(
                     alignment: AlignmentDirectional.bottomCenter,
                     children: <Widget>[
-                      Stack(alignment: AlignmentDirectional.topStart, children: [
-                        ClipRect(
-                          child: Image.asset(
-                            voucher.image,
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(left: 9, top: 56),
-                          child: CustomPaint(
-                              size: Size(50, 50), painter: DrawTriangle()),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 8, top: 18),
-                          child: Transform.rotate(
-                              angle: -pi / 4,
-                              child: Text(
-                                voucher.type == VoucherType.used
-                                    ? 'Đã dùng'
-                                    : voucher.type == VoucherType.took
-                                        ? 'Đã lấy'
-                                        : '',
-                                style: TextStyle(
-                                    fontSize: SizeUtil.textSizeSmall,
-                                    fontWeight: FontWeight.bold,
-                                    color: voucher.type == VoucherType.used
-                                        ? Colors.blue
-                                        : Colors.orange),
-                              )),
-                        )
-                      ]),
+                      Stack(
+                          alignment: AlignmentDirectional.topStart,
+                          children: [
+                            ClipRect(
+                              child: Image.asset(
+                                voucher.image,
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 9, top: 56),
+                              child: CustomPaint(
+                                  size: Size(50, 50), painter: DrawTriangle()),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 8, top: 18),
+                              child: Transform.rotate(
+                                  angle: -pi / 4,
+                                  child: Text(
+                                    voucher.type == VoucherType.used
+                                        ? 'Đã dùng'
+                                        : voucher.type == VoucherType.took
+                                            ? 'Đã lấy'
+                                            : '',
+                                    style: TextStyle(
+                                        fontSize: SizeUtil.textSizeSmall,
+                                        fontWeight: FontWeight.bold,
+                                        color: voucher.type == VoucherType.used
+                                            ? Colors.blue
+                                            : Colors.orange),
+                                  )),
+                            )
+                          ]),
                       Container(
                         margin: EdgeInsets.all(9),
                         height: 90,
@@ -116,10 +118,10 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(6)),
                         child: Padding(
-                          padding: const EdgeInsets.all(17.0),
+                          padding: SizeUtil.normalPadding,
                           child: Column(children: <Widget>[
                             Padding(
-                              padding: const EdgeInsets.only(bottom:8.0),
+                              padding: const EdgeInsets.only(bottom: 8.0),
                               child: Text(voucher.description,
                                   style: TextStyle(color: Colors.black)),
                             ),
@@ -160,10 +162,14 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
                         child: Container(
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(28)),
+                            borderRadius: BorderRadius.all(Radius.circular(28)),
                           ),
-                          child: CircleImage(imageUrl: StringUtil.dummyImage,width: 28,height: 28,margin: EdgeInsets.all(2),),
+                          child: CircleImage(
+                            imageUrl: StringUtil.dummyImage,
+                            width: 28,
+                            height: 28,
+                            margin: EdgeInsets.all(2),
+                          ),
                         ),
                       )
                     ],
