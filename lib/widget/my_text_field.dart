@@ -41,7 +41,7 @@ class MyTextField extends StatelessWidget {
       {Key key,
       @required this.textEditingController,
       this.hint,
-        this.autoFocus = false,
+      this.autoFocus = false,
       this.textStyle,
       this.showTrailing = false,
       this.onTrailingTap,
@@ -111,6 +111,7 @@ class MyTextField extends StatelessWidget {
                     TextField(
                       controller: textEditingController,
                       style: textStyle,
+                      autofocus: autoFocus,
                       textAlign: textAlign,
                       maxLines: maxLines,
                       obscureText: obscureText,

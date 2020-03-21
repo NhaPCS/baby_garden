@@ -73,7 +73,7 @@ class _OrderState extends BaseState<OrderScreen> {
                               push(ServiceListScreen(title: S.of(context).ordered,order: 0,));
                               break;
                             case 6:
-                              push(ServiceListScreen(title: S.of(context).canceled_order,order: 1,));
+                              push(ServiceListScreen(title: S.of(context).canceled_order,order: 4,));
                               break;
                             default:
                               push(BookingRateScreen(isService:  false,));

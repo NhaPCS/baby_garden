@@ -1,7 +1,9 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
+import 'package:baby_garden_flutter/screen/address_setting/address_setting_screen.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/child_heath/child_heath_screen.dart';
+import 'package:baby_garden_flutter/screen/change_password/change_password_screen.dart';
 import 'package:baby_garden_flutter/screen/profile/add_child_dialog.dart';
 import 'package:baby_garden_flutter/screen/profile/user_infor.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -94,31 +96,35 @@ class _AccountManageState extends BaseState<AccountManage> {
               decoration:
                   setBorder('bottom', Color.fromRGBO(206, 206, 206, 1), 1),
               height: 38,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(entries[index]['title']),
-                  Expanded(
-                      child: Text(entries[index]['content'],
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                              color: (index == 4)
-                                  ? ColorUtil.primaryColor
-                                  : Colors.black))),
-                  SizedBox(
-                    width: SizeUtil.smallSpace,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      print("dep trai");
-                    },
-                    child: Image.asset(
+              child: GestureDetector(
+                onTap: () {
+                  if (index == 5){
+                      push(AddressSettingScreen());
+                  }else if (index ==4){
+                     push(ChangePasswordScreen());
+                  }
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(entries[index]['title']),
+                    Expanded(
+                        child: Text(entries[index]['content'],
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                                color: (index == 4)
+                                    ? ColorUtil.primaryColor
+                                    : Colors.black))),
+                    SizedBox(
+                      width: SizeUtil.smallSpace,
+                    ),
+                    Image.asset(
                       "photo/${entries[index]['icon']}",
                       width: 11,
                       height: 11,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           }),

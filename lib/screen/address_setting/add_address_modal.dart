@@ -144,9 +144,7 @@ Widget dialogBtn(context) {
             ),
           ),
         ),
-        SizedBox(
-          width: 50,
-        ),
+        Spacer(),
         ButtonTheme(
           minWidth: 90,
           height: 23,

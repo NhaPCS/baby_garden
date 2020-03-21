@@ -67,17 +67,29 @@ class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,Cha
                   borderRadius: SizeUtil.tinyRadius,
                   contentPadding: SizeUtil.normalPadding,
                 )),
-            MyPasswordTextField(
-              controller: _newPasswordControler,
-              hint: S
-                  .of(context)
-                  .enter_new_password,
+            Container(
+              margin: const EdgeInsets.only(
+                  left: SizeUtil.defaultSpace,
+                  right: SizeUtil.defaultSpace,
+                  bottom: SizeUtil.smallSpace),
+              child: MyPasswordTextField(
+                controller: _newPasswordControler,
+                hint: S
+                    .of(context)
+                    .enter_new_password,
+              ),
             ),
-            MyPasswordTextField(
-              controller: _reenterNewPasswordControler,
-              hint: S
-                  .of(context)
-                  .reenter_new_password,
+            Container(
+              margin: const EdgeInsets.only(
+                  left: SizeUtil.defaultSpace,
+                  right: SizeUtil.defaultSpace,
+                  bottom: SizeUtil.smallSpace),
+              child: MyPasswordTextField(
+                controller: _reenterNewPasswordControler,
+                hint: S
+                    .of(context)
+                    .reenter_new_password,
+              ),
             ),
             Container(
                 padding: const EdgeInsets.only(

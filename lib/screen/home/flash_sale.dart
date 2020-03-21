@@ -108,7 +108,7 @@ class FlashSale extends StatelessWidget {
         color: ColorUtil.flashSaleColor,
       ),
       onTap: () {
-        RouteUtil.push(context, ListProductScreen());
+        RouteUtil.push(context, ListProductScreen(title:S.of(context).happening));
       },
     );
   }

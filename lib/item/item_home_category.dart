@@ -5,6 +5,7 @@ import 'package:baby_garden_flutter/screen/child_heath/child_heath_screen.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_list_screen.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_register_screen.dart';
 import 'package:baby_garden_flutter/screen/vcb_express/vcb_express_screen.dart';
+import 'package:baby_garden_flutter/screen/voucher/voucher_detail/provider_infor_screen.dart';
 import 'package:baby_garden_flutter/screen/voucher/voucher_management_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class ItemHomeCategory extends StatelessWidget {
       onTap: () {
         if (category['icon'].toString().contains('voucher')) {
           //TODO
-          RouteUtil.push(context, VoucherManagement());
+          RouteUtil.push(context, VoucherScreen());
         } else if (category['icon'].toString().contains('partner')) {
           RouteUtil.push(context, PartnerListScreen());
         } else if (category['icon'].toString().contains('category')) {

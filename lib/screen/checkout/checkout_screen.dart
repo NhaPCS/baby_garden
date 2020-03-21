@@ -91,33 +91,6 @@ class _CheckoutScreenState extends BaseState<CheckoutScreen> {
                     style: TextStyle(
                         color: ColorUtil.textColor,
                         fontSize: SizeUtil.textSizeExpressDetail)),
-//                RichText(
-//                  text: TextSpan(children: <TextSpan>[
-//                    TextSpan(
-//                        text: S.of(context).bank,
-//                        style: TextStyle(
-//                            color: ColorUtil.textColor,
-//                            fontSize: SizeUtil.textSizeExpressDetail)),
-//                    TextSpan(
-//                        text: " Vietcombank",
-//                        style: TextStyle(
-//                            color: ColorUtil.blue,
-//                            fontSize: SizeUtil.textSizeExpressDetail))
-//                  ]),
-//                )
-
-//                Padding(
-//                  padding: const EdgeInsets.only(
-//                      left: SizeUtil.smallSpace,
-//                      right: SizeUtil.smallSpace,
-//                      top: SizeUtil.tinySpace,
-//                      bottom: SizeUtil.tinySpace),
-//                  child: Icon(
-//                    Icons.keyboard_arrow_down,
-//                    color: ColorUtil.primaryColor,
-//                    size: SizeUtil.iconSizeBigger,
-//                  ),
-//                )
               Consumer<CheckoutDropDownProvider>(builder: (BuildContext context, CheckoutDropDownProvider value, Widget child) {
                 print(value.val);
                 return Padding(
