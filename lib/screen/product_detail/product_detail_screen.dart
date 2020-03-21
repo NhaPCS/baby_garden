@@ -5,6 +5,7 @@ import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/list_product/list_product_screen.dart';
+import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/photo_view/photo_view_screen.dart';
 import 'package:baby_garden_flutter/screen/product_detail/store_info.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -321,6 +322,7 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
           MyFlatButton(
             onPressed: () {
               //TODO
+              pushAndReplaceAll(MainScreen(index: 2,), "/main_screen");
             },
             text: S.of(context).buy_now,
             textStyle: TextStyle(color: Colors.white),

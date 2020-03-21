@@ -4,7 +4,9 @@ import 'dart:math';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/voucher/voucher_detail/voucher_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/circle_image.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -57,103 +59,115 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
   Widget buildWidget(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorUtil.lineColor,
-      appBar: getAppBar(title: S.of(context).provider_info),
+      appBar: getAppBar(title: S.of(context).voucher.toUpperCase()),
       body: Column(
         children: <Widget>[
-          Container(
-            width: 60,
-            color: Colors.white,
-            child: Row(
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Text("Cung cấp bởi"),
-                    Text("CÔNG TY CỔ PHẦN VINID")
-                  ],
-                )
-              ],
+          Padding(
+            padding: const EdgeInsets.only(top: 4,left: 4,right: 4),
+            child: ListCategory(
+              categoryProvider: _changeCategoryProvider,
             ),
           ),
           Expanded(
             child: ListView(
                 children: sampleVouchers.map((voucher) {
-              return Container(
-                child: Stack(
-                  alignment: AlignmentDirectional.bottomCenter,
-                  children: <Widget>[
-                    Stack(alignment: AlignmentDirectional.topStart, children: [
-                      ClipRect(
-                        child: Image.asset(
-                          voucher.image,
+              return GestureDetector(
+                onTap: (){
+                  push(VoucherDetailScreen());
+                },
+                child: Container(
+                  child: Stack(
+                    alignment: AlignmentDirectional.bottomCenter,
+                    children: <Widget>[
+                      Stack(alignment: AlignmentDirectional.topStart, children: [
+                        ClipRect(
+                          child: Image.asset(
+                            voucher.image,
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(left: 9, top: 56),
+                          child: CustomPaint(
+                              size: Size(50, 50), painter: DrawTriangle()),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 8, top: 18),
+                          child: Transform.rotate(
+                              angle: -pi / 4,
+                              child: Text(
+                                voucher.type == VoucherType.used
+                                    ? 'Đã dùng'
+                                    : voucher.type == VoucherType.took
+                                        ? 'Đã lấy'
+                                        : '',
+                                style: TextStyle(
+                                    fontSize: SizeUtil.textSizeSmall,
+                                    fontWeight: FontWeight.bold,
+                                    color: voucher.type == VoucherType.used
+                                        ? Colors.blue
+                                        : Colors.orange),
+                              )),
+                        )
+                      ]),
+                      Container(
+                        margin: EdgeInsets.all(9),
+                        height: 90,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(6)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(17.0),
+                          child: Column(children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(bottom:8.0),
+                              child: Text(voucher.description,
+                                  style: TextStyle(color: Colors.black)),
+                            ),
+                            Row(
+                              children: <Widget>[
+                                RichText(
+                                    text: TextSpan(
+                                        style: TextStyle(
+                                            fontSize: 14, color: Colors.black),
+                                        children: <TextSpan>[
+                                      TextSpan(
+                                          text: "${S.of(context).period}: ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      TextSpan(text: voucher.period)
+                                    ])),
+                                Expanded(child: SizedBox()),
+                                RichText(
+                                    text: TextSpan(
+                                        style: TextStyle(
+                                            fontSize: 14, color: Colors.black),
+                                        children: [
+                                      TextSpan(
+                                          text:
+                                              "${S.of(context).numberOfVoucher}: ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      TextSpan(text: voucher.amount),
+                                    ])),
+                              ],
+                            )
+                          ]),
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.only(left: 9, top: 56),
-                        child: CustomPaint(
-                            size: Size(50, 50), painter: DrawTriangle()),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 8, top: 18),
-                        child: Transform.rotate(
-                            angle: -pi / 4,
-                            child: Text(
-                              voucher.type == VoucherType.used
-                                  ? 'Đã dùng'
-                                  : voucher.type == VoucherType.took
-                                      ? 'Đã lấy'
-                                      : '',
-                              style: TextStyle(
-                                  fontSize: SizeUtil.textSizeSmall,
-                                  fontWeight: FontWeight.bold,
-                                  color: voucher.type == VoucherType.used
-                                      ? Colors.blue
-                                      : Colors.orange),
-                            )),
+                      Positioned(
+                        bottom: 82,
+                        left: 40,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(28)),
+                          ),
+                          child: CircleImage(imageUrl: StringUtil.dummyImage,width: 28,height: 28,margin: EdgeInsets.all(2),),
+                        ),
                       )
-                    ]),
-                    Container(
-                      margin: EdgeInsets.all(9),
-                      height: 90,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(6)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(17.0),
-                        child: Column(children: <Widget>[
-                          Text(voucher.description,
-                              style: TextStyle(color: Colors.black)),
-                          Row(
-                            children: <Widget>[
-                              RichText(
-                                  text: TextSpan(
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.black),
-                                      children: <TextSpan>[
-                                    TextSpan(
-                                        text: "${S.of(context).period}: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                    TextSpan(text: voucher.period)
-                                  ])),
-                              Expanded(child: SizedBox()),
-                              RichText(
-                                  text: TextSpan(
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.black),
-                                      children: [
-                                    TextSpan(
-                                        text:
-                                            "${S.of(context).numberOfVoucher}: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                    TextSpan(text: voucher.amount),
-                                  ])),
-                            ],
-                          )
-                        ]),
-                      ),
-                    )
-                  ],
+                    ],
+                  ),
                 ),
               );
             }).toList()),

@@ -3327,6 +3327,11 @@ class S {
     return Intl.message(
       'Đăng xuất',
       name: 'logout',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get attached_product {
     return Intl.message(
       'Sản phẩm mua kèm',

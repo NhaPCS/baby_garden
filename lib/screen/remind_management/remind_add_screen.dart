@@ -58,7 +58,12 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
                 ],
               )),
           rowCheckBox(S.of(context).remindBuyProduct),
-          rowTimeTable(S.of(context).remindTime),
+          GestureDetector(
+            onTap: (){
+
+            },
+            child: rowTimeTable(S.of(context).remindTime),
+          ),
           rowCheckBox(S.of(context).remindUseProduct, isRemindUse: true),
           rowTimeTable(S.of(context).endDateOfReminder),
           Padding(

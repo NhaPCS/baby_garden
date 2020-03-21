@@ -6,10 +6,12 @@ class CircleImage extends StatelessWidget {
   final double borderRadius;
   final double width;
   final double height;
+  final EdgeInsets margin;
 
   const CircleImage(
       {Key key,
       this.imageUrl,
+        this.margin = const EdgeInsets.all(4),
       this.borderRadius,
       @required this.width,
       @required this.height})
@@ -18,6 +20,7 @@ class CircleImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: margin,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
               borderRadius == null ? width : borderRadius)),
