@@ -1,5 +1,7 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
+import 'package:baby_garden_flutter/screen/remind_management/remind_set/set_date_screen.dart';
+import 'package:baby_garden_flutter/screen/remind_management/remind_set/set_time_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +60,9 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
               )),
           rowCheckBox(S.of(context).remindBuyProduct),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              push(SetTimeScreen());
+            },
             child: rowTimeTable(S.of(context).remindTime),
           ),
           rowCheckBox(S.of(context).remindUseProduct, isRemindUse: true),
@@ -84,7 +88,10 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
                           padding:
                               const EdgeInsets.only(left: SizeUtil.tinySpace),
                           child: GestureDetector(
-                            onTap: chooseCalendar(),
+                            onTap: () {
+                              // show date picker screen
+                              push(SetTimeScreen());
+                            },
                             child: Text(
                               S.of(context).select,
                               style: TextStyle(
@@ -135,7 +142,7 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
         ]));
   }
 
-  chooseCalendar() {}
+  chooseRemindTime() {}
 
   listViewRemindTime() {
     List<int> order = [1, 2, 3, 4];
@@ -152,7 +159,9 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
             Padding(
               padding: const EdgeInsets.only(left: SizeUtil.tinySpace),
               child: GestureDetector(
-                onTap: chooseCalendar(),
+                onTap: () {
+                  push(SetTimeScreen());
+                },
                 child: Text(
                   S.of(context).select,
                   style: TextStyle(
