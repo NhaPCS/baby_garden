@@ -29,8 +29,7 @@ class ColorUtil {
   static const Color transGray = Color(0x66EFEFEF);
   static const Color grayLine = Color(0xff646464);
   static const Color customerSupportUpdate = Color(0xff73EBD5);
-
-
+  static const Color darkGray = Color(0xff707070);
   static const serviceItemUnselectColor = Color(0xffF6F6F6);
 
   static Color getColorFromHex(String hexColor) {
@@ -343,7 +342,8 @@ class WidgetUtil {
   static Widget getLine(
       {EdgeInsetsGeometry margin = const EdgeInsets.only(
           top: SizeUtil.smallSpace, bottom: SizeUtil.smallSpace),
-      double width = 1,Color color = ColorUtil.lineColor}) {
+      double width = 1,
+      Color color = ColorUtil.lineColor}) {
     return Container(
       height: width,
       color: color,

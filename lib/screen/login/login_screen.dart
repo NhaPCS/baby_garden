@@ -31,7 +31,7 @@ class _LoginScreenState extends BaseStateModel<LoginScreen, LoginViewModel> {
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
+//    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       appBar: getAppBar(
           title: S.of(context).login,
