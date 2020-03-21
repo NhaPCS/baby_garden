@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:baby_garden_flutter/dialog/set_schedule_for_product_dialog.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/screen/remind_management/remind_add_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_icon.dart';
 import 'package:baby_garden_flutter/widget/change_quantity_widget.dart';
@@ -27,6 +29,7 @@ class ItemProductCart extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Stack(
+          alignment: Alignment.centerRight,
           children: <Widget>[
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -111,6 +114,11 @@ class ItemProductCart extends StatelessWidget {
                         ),
                         ButtonIcon(
                           icon: SvgIcon('ic_alarm.svg'),
+                          onPressed: (){
+                            showDialog(context: context,builder: (context){
+                              return SetScheduleForProductDialog();
+                            });
+                          },
                         )
                       ],
                     )
@@ -118,17 +126,13 @@ class ItemProductCart extends StatelessWidget {
                 )),
               ],
             ),
-            Positioned(
-                top: 0,
-                right: 0,
-                bottom: 0,
-                child: ButtonIcon(
-                  icon: SvgIcon('ic_delete.svg'),
-                  padding: SizeUtil.smallPadding,
-                  onPressed: () {
-                    //TODO
-                  },
-                ))
+            ButtonIcon(
+              icon: SvgIcon('ic_delete.svg'),
+              padding: SizeUtil.smallPadding,
+              onPressed: () {
+                //TODO
+              },
+            )
           ],
         ),
         !hasDashLine
