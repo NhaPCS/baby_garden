@@ -10,6 +10,10 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class ListProductScreen extends StatefulWidget {
+  final String title;
+
+  const ListProductScreen({Key key, this.title}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _ListProductState();
@@ -24,7 +28,8 @@ class _ListProductState extends BaseState<ListProductScreen> {
   Widget buildWidget(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorUtil.lineColor,
-      appBar: getAppBar(title: S.of(context).happening.toUpperCase()),
+      appBar: getAppBar(
+          title: widget.title == null ? "" : widget.title.toUpperCase()),
       body: Column(
         children: <Widget>[
           ListCategory(
@@ -33,7 +38,7 @@ class _ListProductState extends BaseState<ListProductScreen> {
           Expanded(
               child: LoadMoreGridView(
             crossAxisCount: 2,
-            childAspectRatio: 0.7,
+            childAspectRatio: 0.8,
             padding: EdgeInsets.only(
                 left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
             itemBuilder: (context, index) {

@@ -1,9 +1,7 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/show_hide_pass_provider.dart';
-import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/screen/forgot_password/forgot_password_screen.dart';
-import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/register/register_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/view_model/login_view_model.dart';
@@ -30,8 +28,6 @@ class _LoginScreenState extends BaseStateModel<LoginScreen, LoginViewModel> {
   final TextEditingController _passControler = new TextEditingController();
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
-//    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       appBar: getAppBar(
           title: S.of(context).login,

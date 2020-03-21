@@ -14,7 +14,18 @@ class ServiceDetailItem extends StatelessWidget{
       child: Container(
         width: MediaQuery.of(context).size.width/2,
         padding: EdgeInsets.all(2),
-        color: isSelected?ColorUtil.primaryColor:ColorUtil.serviceItemUnselectColor,
+        margin: EdgeInsets.only(bottom: 2, left: 1,right: 1),
+        decoration: BoxDecoration(
+          color: isSelected?ColorUtil.primaryColor:ColorUtil.serviceItemUnselectColor,
+            shape: BoxShape.rectangle,
+            // BoxShape.circle or BoxShape.retangle
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                blurRadius: 0,
+              ),
+            ],
+        ),
         child: Stack(
           children: <Widget>[
             Padding(

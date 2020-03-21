@@ -32,6 +32,7 @@ class MyTextField extends StatelessWidget {
   final Function onTrailingTap;
   final bool showTrailing;
   final bool isBorder;
+  final bool autoFocus;
   final CrossAxisAlignment crossAxisAlignment;
   final MainAxisAlignment mainAxisAlignment;
   final EdgeInsets padding;
@@ -40,6 +41,7 @@ class MyTextField extends StatelessWidget {
       {Key key,
       @required this.textEditingController,
       this.hint,
+        this.autoFocus = false,
       this.textStyle,
       this.showTrailing = false,
       this.onTrailingTap,
@@ -110,6 +112,7 @@ class MyTextField extends StatelessWidget {
                       controller: textEditingController,
                       style: textStyle,
                       textAlign: textAlign,
+                      autofocus: autoFocus,
                       maxLines: maxLines,
                       obscureText: obscureText,
                       onChanged: onChanged,

@@ -20,6 +20,16 @@ class AddToCartBottomDialog extends StatelessWidget {
             shrinkWrap: true,
             children: <Widget>[
               ItemProductHorizontal(),
+              WidgetUtil.paddingWidget(
+                  Text(
+                    S.of(context).attached_product,
+                    style: TextStyle(
+                        color: ColorUtil.textGray, fontWeight: FontWeight.bold),
+                  ),
+                  padding: EdgeInsets.only(
+                      left: SizeUtil.smallSpace,
+                      right: SizeUtil.smallSpace,
+                      bottom: SizeUtil.smallSpace)),
               ItemProductHorizontal(
                 isAttach: true,
               ),
