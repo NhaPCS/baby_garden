@@ -91,10 +91,7 @@ class _ShoppingState extends BaseState<ShoppingScreen> {
                       padding: EdgeInsets.all(0),
                       itemBuilder: (context, index) {
                         return GridProduct(
-                          changeCategoryProvider: _changeCategoryProvider,
-                          onViewMoreClick: () {
-                            //TODO
-                          },
+                          changeCategoryProvider: _changeCategoryProvider, title: "Ăn dặm cho bé",
                         );
                       }))
             ],

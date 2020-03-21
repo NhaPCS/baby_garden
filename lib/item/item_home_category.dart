@@ -1,3 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/screen/category_product/category_product_screen.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_list_screen.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_register_screen.dart';
@@ -5,6 +7,7 @@ import 'package:baby_garden_flutter/screen/vcb_express/vcb_express_screen.dart';
 import 'package:baby_garden_flutter/screen/voucher/voucher_management_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ItemHomeCategory extends StatelessWidget {
   final dynamic category;
@@ -15,34 +18,28 @@ class ItemHomeCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: GestureDetector(
-      child: Column(
+      child: Padding(padding: SizeUtil.tinyPadding, child: Column(
         children: <Widget>[
-          Padding(
-            child: Image.asset(
-              category['icon'],
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-            padding: EdgeInsets.only(
-                top: SizeUtil.smallSpace,
-                left: SizeUtil.normalSpace,
-                right: SizeUtil.normalSpace),
+          Image.asset(
+            category['icon'],
+            width: Provider.of<AppProvider>(context).homeCategoryHeight * 0.5,
+            height: Provider.of<AppProvider>(context).homeCategoryHeight * 0.5,
           ),
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
-          Text(
-            category['title'],
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: ColorUtil.primaryColor,
-                fontSize: SizeUtil.textSizeSmall),
-          ),
-          SizedBox(
-            height: SizeUtil.smallSpace,
-          ),
+          Expanded(
+              child: AutoSizeText(
+                category['title'],
+                textAlign: TextAlign.center,
+                maxFontSize: SizeUtil.textSizeSmall,
+                minFontSize: SizeUtil.textSizeMini,
+                style: TextStyle(
+                    color: ColorUtil.primaryColor,
+                    fontSize: SizeUtil.textSizeSmall),
+              )),
         ],
-      ),
+      ),),
       onTap: () {
         if (category['icon'].toString().contains('voucher')) {
           //TODO

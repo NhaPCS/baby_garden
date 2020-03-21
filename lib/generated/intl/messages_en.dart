@@ -98,6 +98,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "app_name" : MessageLookupByLibrary.simpleMessage("Vöôøn Cuûa Beù"),
     "app_name_title" : MessageLookupByLibrary.simpleMessage("VƯỜN CỦA BÉ"),
     "apply" : MessageLookupByLibrary.simpleMessage("Áp dụng"),
+    "attached_product" : MessageLookupByLibrary.simpleMessage("Sản phẩm mua kèm"),
     "authenPromoCode" : MessageLookupByLibrary.simpleMessage("Xác thực mã ưu đãi"),
     "back" : MessageLookupByLibrary.simpleMessage("Quay lại"),
     "bank" : MessageLookupByLibrary.simpleMessage("Ngân hàng:"),

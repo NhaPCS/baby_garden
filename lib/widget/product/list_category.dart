@@ -31,17 +31,19 @@ class ListCategory extends StatelessWidget {
                 return GestureDetector(
                   child: Container(
                     width: Provider.of<AppProvider>(context).categoryWidth,
-                    padding: SizeUtil.tinyPadding,
+                    padding: SizeUtil.miniPadding,
                     margin: EdgeInsets.only(
-                        top: SizeUtil.smallSpace,
-                        bottom: SizeUtil.smallSpace,
-                        left: SizeUtil.tinySpace,
-                        right: SizeUtil.tinySpace),
+                        top: SizeUtil.tinySpace,
+                        bottom: SizeUtil.tinySpace,
+                        left: SizeUtil.superTinySpace,
+                        right: SizeUtil.superTinySpace),
                     height: double.infinity,
                     decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(SizeUtil.smallRadius)),
+                        borderRadius: isSelected
+                            ? BorderRadius.all(
+                                Radius.circular(SizeUtil.tinyRadius))
+                            : null,
                         border: Border.all(
                             color: isSelected
                                 ? ColorUtil.primaryColor
