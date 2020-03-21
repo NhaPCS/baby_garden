@@ -89,6 +89,8 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                     color: (index == 0)
                         ? ColorUtil.primaryColor
                         : ColorUtil.black33,
+                    width: 26,
+                    height: 26,
                     padding: EdgeInsets.only(left: 12, right: 15),
                   ),
                   Text(entries[index]['title'],
