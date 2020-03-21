@@ -1,7 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/voucher/voucher_detail/voucher_code_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,7 +18,7 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
-        appBar: getAppBar(title: 'Chọn thời gian nhắc'),
+        appBar: getAppBar(title: S.of(context).selectRemindTime),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -119,7 +118,9 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
                   ),
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pop();
+              },
             )
           ],
         ));
