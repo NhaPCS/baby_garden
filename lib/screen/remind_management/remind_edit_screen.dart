@@ -153,31 +153,27 @@ class _RemindEditScreen extends BaseState<RemindEditScreen> {
             decoration:
                 setBorder('bottom', Color(0xffE4E4E4), SizeUtil.lineHeight),
           ),
-          Expanded(
-              child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    padding: SizeUtil.normalPadding,
-                    child: ButtonTheme(
-                      buttonColor: ColorUtil.primaryColor,
-                      padding: SizeUtil.normalPadding,
-                      minWidth: double.infinity,
-                      height: SizeUtil.biggerSpace,
-                      child: RaisedButton(
-                        padding: SizeUtil.normalPadding,
-                        onPressed: () {
-                          // RouteUtil.push(context, RemindManagementScreen());
-                          showTimePicker(
-                              context: context, initialTime: TimeOfDay.now());
-                        },
-                        child: Text(
-                          S.of(context).saveChange,
-                          style: TextStyle(fontSize: SizeUtil.textSizeBigger),
-                        ),
-                        textColor: Colors.white,
-                      ),
-                    ),
-                  )))
+          Expanded(child: SizedBox()),
+          Container(
+            padding: SizeUtil.normalPadding,
+            child: ButtonTheme(
+              buttonColor: ColorUtil.primaryColor,
+              padding: SizeUtil.normalPadding,
+              minWidth: double.infinity,
+              child: RaisedButton(
+                onPressed: () {
+                  // RouteUtil.push(context, RemindManagementScreen());
+                  showTimePicker(
+                      context: context, initialTime: TimeOfDay.now());
+                },
+                child: Text(
+                  S.of(context).saveChange,
+                  style: TextStyle(fontSize: SizeUtil.textSizeBigger),
+                ),
+                textColor: Colors.white,
+              ),
+            ),
+          )
         ]));
   }
 

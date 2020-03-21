@@ -36,7 +36,9 @@ class _ReminderState extends BaseState<ReminderLayout> {
             Padding(
               padding: const EdgeInsets.only(left: SizeUtil.tinySpace),
               child: GestureDetector(
-                onTap: chooseCalendar(),
+                onTap: (){
+                  chooseCalendar();
+                },
                 child: Text(
                   S.of(context).select,
                   style: TextStyle(
@@ -120,7 +122,9 @@ class _ReminderState extends BaseState<ReminderLayout> {
                         padding:
                             const EdgeInsets.only(left: SizeUtil.tinySpace),
                         child: GestureDetector(
-                          onTap: chooseCalendar(),
+                          onTap: (){
+                            chooseCalendar();
+                          },
                           child: Text(
                             S.of(context).select,
                             style: TextStyle(

@@ -18,6 +18,7 @@ import 'package:baby_garden_flutter/widget/service_detail_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
@@ -141,530 +142,528 @@ class _PartnerBookScheduleScreenState
       return ValueListenableBuilder<double>(
           valueListenable: _rowHeight,
           builder: (BuildContext context, double height, Widget child) {
-            return SafeArea(
-              child: Material(
-                child: _rowHeight.value > 0
-                    ? NestedScrollView(
-                        body: TabBarView(
-                            controller: _tabController,
-                            children: myTabs.map((Tab tab) {
-                              return myTabs.indexOf(tab) == 0 ? bookingContent()
-                                  : productContent();
-                            }).toList()
-                        ),
-                        //todo get height view
-                        headerSliverBuilder: (context, isScrollInner) {
-                          return [
-                            new SliverAppBar(
-                              title: new Text(
-                                S.of(context).app_name_title.toUpperCase(),
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              leading: BaseState.getLeading(context),
-                              centerTitle: true,
-                              pinned: true,
-                              forceElevated: isScrollInner,
-                            ),
-                            Consumer<SeeMoreProvider>(builder: (BuildContext context, SeeMoreProvider value, Widget child) {
-                              double hei = (value.isShow?_rowHeightFull:_rowHeight.value) + imageHeight;
-                              print("hei: ${hei}");
-                              return SliverPersistentHeader(
-                                pinned: false,
-                                floating: false,
-                                delegate: SliverCategoryDelegate(
-                                    Column(
-                                      children: <Widget>[
-                                        Stack(
-                                          children: <Widget>[
-                                            Image.asset(
-                                              "photo/partner_item_img.png",
-                                              fit: BoxFit.fitWidth,
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: 146,
-                                            ),
-                                            Positioned(
-                                              bottom: SizeUtil.smallSpace,
-                                              right: SizeUtil.smallSpace,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                                children: <Widget>[
-                                                  Container(
-                                                    padding: EdgeInsets.only(
-                                                        left: SizeUtil
-                                                            .midSmallSpace,
-                                                        right: SizeUtil
-                                                            .midSmallSpace,
-                                                        top: SizeUtil.tinySpace,
-                                                        bottom:
-                                                        SizeUtil.tinySpace),
-                                                    decoration: BoxDecoration(
-                                                        color: Color(0xffF6F6F6),
-                                                        borderRadius: BorderRadius
-                                                            .all(Radius.circular(
-                                                            SizeUtil
-                                                                .smallRadius))),
-                                                    child: Wrap(
-                                                      direction: Axis.horizontal,
-                                                      children: <Widget>[
-                                                        Image.asset(
-                                                          "photo/comment_img.png",
-                                                          width: SizeUtil
-                                                              .iconSizeDefault,
-                                                          height: SizeUtil
-                                                              .iconSizeDefault,
-                                                        ),
-                                                        SizedBox(
-                                                          width:
-                                                          SizeUtil.tinySpace,
-                                                        ),
-                                                        Text(
-                                                          "12",
-                                                          style: TextStyle(
-                                                              fontSize: SizeUtil
-                                                                  .textSizeSmall,
-                                                              color: ColorUtil
-                                                                  .textColor,
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .normal),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: SizeUtil.smallSpace,
-                                                  ),
-                                                  Container(
-                                                    padding: EdgeInsets.only(
-                                                        left: SizeUtil
-                                                            .midSmallSpace,
-                                                        right: SizeUtil
-                                                            .midSmallSpace,
-                                                        top: SizeUtil.tinySpace,
-                                                        bottom:
-                                                        SizeUtil.tinySpace),
-                                                    decoration: BoxDecoration(
-                                                        color: Color(0xffF6F6F6),
-                                                        borderRadius: BorderRadius
-                                                            .all(Radius.circular(
-                                                            SizeUtil
-                                                                .smallRadius))),
-                                                    child: Wrap(
-                                                      direction: Axis.horizontal,
-                                                      children: <Widget>[
-                                                        Image.asset(
-                                                          "photo/heart.png",
-                                                          width: SizeUtil
-                                                              .iconSizeDefault,
-                                                          height: SizeUtil
-                                                              .iconSizeDefault,
-                                                        ),
-                                                        SizedBox(
-                                                          width:
-                                                          SizeUtil.tinySpace,
-                                                        ),
-                                                        Text(
-                                                          "234",
-                                                          style: TextStyle(
-                                                              fontSize: SizeUtil
-                                                                  .textSizeSmall,
-                                                              color: ColorUtil
-                                                                  .textColor,
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .normal),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                        Column(
-                                          children: detailInfo // info
-                                              .map(
-                                                  (e) => paddingContainer(
-                                                  e['see_more'] == null
-                                                      ? Row(
-                                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    children: <Widget>[
-                                                      Expanded(
-                                                        child: RichText(
-                                                          textAlign:
-                                                          TextAlign
-                                                              .start,
-                                                          text: TextSpan(
-                                                              text: e[
-                                                              'title'],
-                                                              style: TextStyle(
-                                                                  color: ColorUtil
-                                                                      .textColor,
-                                                                  fontWeight: FontWeight
-                                                                      .bold),
-                                                              children: <
-                                                                  TextSpan>[
-                                                                TextSpan(
-
-                                                                    text: " "+ e['value'],
-                                                                    style: TextStyle(fontSize: SizeUtil.textSizeSmall, color: e['valueColor'] == null ? ColorUtil.textColor : e['valueColor'], decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
-                                                              ]),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width: SizeUtil
-                                                            .tinySpace,
-                                                      ),
-                                                      SizedBox(width: e['action_title'] ==
-                                                          null
-                                                          ?0:SizeUtil.tinySpace,),
-                                                      e['action_title'] ==
-                                                          null
-                                                          ? SizedBox()
-                                                          : InkWell(
-                                                        onTap:
-                                                            () {},
-                                                        child:
-                                                        Text(
-                                                          e['action_title'],
-                                                          style: TextStyle(
-                                                              fontSize:
-                                                              SizeUtil.textSizeSmall,
-                                                              color: ColorUtil.blueLight),
-                                                        ),
-                                                      ),
-                                                      e['button'] ==
-                                                          null
-                                                          ? SizedBox()
-                                                          : RaisedButton(
-                                                        onPressed:
-                                                            () {},
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius: BorderRadius.all(
-                                                              Radius.circular(
-                                                                  SizeUtil.smallRadius),
-                                                            )),
-                                                        color: ColorUtil
-                                                            .primaryColor,
-                                                        child:
-                                                        Text(
-                                                          e['button'],
-                                                          style: TextStyle(
-                                                              fontSize:
-                                                              SizeUtil.textSizeDefault,
-                                                              color: Colors.white,
-                                                              fontStyle: FontStyle.normal,
-                                                              fontWeight: FontWeight.normal),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )
-                                                      : GestureDetector(
-                                                    onTap: () {
-                                                      print("tapped");
-                                                      _seeMoreProvider
-                                                          .onChange();
-                                                    },
-                                                    child:
-                                                    RichText(
-                                                      textAlign:
-                                                      TextAlign
-                                                          .start,
-                                                      text: TextSpan(
-                                                          text: e[
-                                                          'title'],
-                                                          style: TextStyle(
-                                                              color: ColorUtil
-                                                                  .textColor,
-                                                              fontWeight: FontWeight
-                                                                  .bold),
-                                                          children: <
-                                                              TextSpan>[
-                                                            TextSpan(
-                                                                text: value.isShow
-                                                                    ? e['full_value']
-                                                                    : e['value'],
-                                                                style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail, color: ColorUtil.textColor, decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
-                                                            TextSpan(
-                                                              text: value.isShow
-                                                                  ? ''
-                                                                  : e['see_more'],
-                                                              style: TextStyle(
-                                                                  fontSize: SizeUtil.textSizeSmall,
-                                                                  color: ColorUtil.blueLight,
-                                                                  decoration: TextDecoration.none,
-                                                                  fontWeight: FontWeight.normal),
-                                                              recognizer: TapGestureRecognizer()
-                                                                ..onTap = () =>
-                                                                {
-                                                                  print("tapped")
-                                                                },
-                                                            ),
-                                                          ]),
-                                                    ),
-                                                  )))
-                                              .toList(),
-                                        ),
-                                        SizedBox(
-                                          height: SizeUtil.tinySpace,
-                                        ),
-                                      ],
-                                    ),
-                                    hei,
-                                    hei),
-                              );
-                            },),
-                            SliverPersistentHeader(
-                              pinned: true,
-                              floating: false,
-                              delegate: SliverCategoryDelegate(
-                                  Container(
-                                    height: SizeUtil.tabbar_fix_height,
-                                    child: ColoredTabBar(
-                                      ColorUtil.lineColor,
-                                      TabBar(
-                                        controller: _tabController,
-                                        labelColor: Colors.white,
-                                        indicatorColor: ColorUtil.white,
-                                        indicator: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(0),
-                                            color: ColorUtil.primaryColor),
-                                        unselectedLabelColor:
-                                            ColorUtil.textColor,
-                                        tabs: myTabs,
-                                      ),
-                                    ),
-                                    decoration: BoxDecoration(boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey,
-                                        blurRadius: 5.0,
-                                      ),
-                                    ]),
-                                  ),
-                                  SizeUtil.tabbar_fix_height,
-                                  SizeUtil.tabbar_fix_height),
-                            )
-                          ];
-                        },
-                      )
-                    : Column(
-                        children: <Widget>[
-                          //TODO get detail info min height
-                          Column(
-                            key: _rowKey,
-                            mainAxisSize: MainAxisSize.min,
-                            children: detailInfo // info
-                                .map((e) => paddingContainer(e['see_more'] ==
-                                        null
-                                    ? Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Expanded(
-                                  child: RichText(
-                                    textAlign:
-                                    TextAlign
-                                        .start,
-                                    text: TextSpan(
-                                        text: e[
-                                        'title'],
-                                        style: TextStyle(
-                                            color: ColorUtil
-                                                .textColor,
-                                            fontWeight: FontWeight
-                                                .bold),
-                                        children: <
-                                            TextSpan>[
-                                          TextSpan(
-
-                                              text: " "+ e['value'],
-                                              style: TextStyle(fontSize: SizeUtil.textSizeSmall, color: e['valueColor'] == null ? ColorUtil.textColor : e['valueColor'], decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
-                                        ]),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: SizeUtil
-                                      .tinySpace,
-                                ),
-                                SizedBox(width: e['action_title'] ==
-                                    null
-                                    ?0:SizeUtil.tinySpace,),
-                                e['action_title'] ==
-                                    null
-                                    ? SizedBox()
-                                    : InkWell(
-                                  onTap:
-                                      () {},
-                                  child:
-                                  Text(
-                                    e['action_title'],
-                                    style: TextStyle(
-                                        fontSize:
-                                        SizeUtil.textSizeSmall,
-                                        color: ColorUtil.blueLight),
-                                  ),
-                                ),
-                                e['button'] ==
-                                    null
-                                    ? SizedBox()
-                                    : RaisedButton(
-                                  onPressed:
-                                      () {},
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(
-                                            SizeUtil.smallRadius),
-                                      )),
-                                  color: ColorUtil
-                                      .primaryColor,
-                                  child:
-                                  Text(
-                                    e['button'],
-                                    style: TextStyle(
-                                        fontSize:
-                                        SizeUtil.textSizeDefault,
-                                        color: Colors.white,
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.normal),
-                                  ),
-                                ),
-                              ],
-                            )
-                                    : RichText(
-                                        textAlign: TextAlign.start,
-                                        text: TextSpan(
-                                            text: e['title'],
-                                            style: TextStyle(
-                                                color: ColorUtil.textColor,
-                                                fontWeight: FontWeight.bold),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                  text: e['value'],
-                                                  style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail, color: ColorUtil.textColor, decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
-                                              TextSpan(
-                                                text:  e['see_more'],
-                                                style: TextStyle(
-                                                    fontSize: SizeUtil.textSizeSmall,
-                                                    color: ColorUtil.blueLight,
-                                                    decoration: TextDecoration.none,
-                                                    fontWeight: FontWeight.normal),
-                                              ),
-                                            ]),
-                                      )))
-                                .toList(),
-                          ),
-                          //TODO get detail info max height
-                          Column(
-                            key: _rowKeyFull,
-                            mainAxisSize: MainAxisSize.min,
-                            children: detailInfo // info
-                                .map((e) => paddingContainer(e['see_more'] ==
-                                null
-                                ? Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Expanded(
-                                  child: RichText(
-                                    textAlign:
-                                    TextAlign
-                                        .start,
-                                    text: TextSpan(
-                                        text: e[
-                                        'title'],
-                                        style: TextStyle(
-                                            color: ColorUtil
-                                                .textColor,
-                                            fontWeight: FontWeight
-                                                .bold),
-                                        children: <
-                                            TextSpan>[
-                                          TextSpan(
-
-                                              text: " "+ e['value'],
-                                              style: TextStyle(fontSize: SizeUtil.textSizeSmall, color: e['valueColor'] == null ? ColorUtil.textColor : e['valueColor'], decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
-                                        ]),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: SizeUtil
-                                      .tinySpace,
-                                ),
-                                SizedBox(width: e['action_title'] ==
-                                    null
-                                    ?0:SizeUtil.tinySpace,),
-                                e['action_title'] ==
-                                    null
-                                    ? SizedBox()
-                                    : InkWell(
-                                  onTap:
-                                      () {},
-                                  child:
-                                  Text(
-                                    e['action_title'],
-                                    style: TextStyle(
-                                        fontSize:
-                                        SizeUtil.textSizeSmall,
-                                        color: ColorUtil.blueLight),
-                                  ),
-                                ),
-                                e['button'] ==
-                                    null
-                                    ? SizedBox()
-                                    : RaisedButton(
-                                  onPressed:
-                                      () {},
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(
-                                            SizeUtil.smallRadius),
-                                      )),
-                                  color: ColorUtil
-                                      .primaryColor,
-                                  child:
-                                  Text(
-                                    e['button'],
-                                    style: TextStyle(
-                                        fontSize:
-                                        SizeUtil.textSizeDefault,
-                                        color: Colors.white,
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.normal),
-                                  ),
-                                ),
-                              ],
-                            )
-                                : RichText(
-                              textAlign: TextAlign.start,
-                              text: TextSpan(
-                                  text: e['title'],
-                                  style: TextStyle(
-                                      color: ColorUtil.textColor,
-                                      fontWeight: FontWeight.bold),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: e['full_value'],
-                                        style: TextStyle(
-                                            fontSize: SizeUtil
-                                                .textSizeExpressDetail,
-                                            color:
-                                            ColorUtil.textColor,
-                                            decoration:
-                                            TextDecoration.none,
-                                            fontWeight:
-                                            FontWeight.normal)),
-                                  ]),
-                            )))
-                                .toList(),
-                          ),
-                        ],
+            return Scaffold(
+              body: _rowHeight.value > 0
+                  ? NestedScrollView(
+                body: TabBarView(
+                    controller: _tabController,
+                    children: myTabs.map((Tab tab) {
+                      return myTabs.indexOf(tab) == 0 ? bookingContent()
+                          : productContent();
+                    }).toList()
+                ),
+                //todo get height view
+                headerSliverBuilder: (context, isScrollInner) {
+                  return [
+                    new SliverAppBar(
+                      title: new Text(
+                        S.of(context).app_name_title.toUpperCase(),
+                        style: TextStyle(color: Colors.white),
                       ),
+                      leading: BaseState.getLeading(context),
+                      centerTitle: true,
+                      pinned: true,
+                      forceElevated: isScrollInner,
+                    ),
+                    Consumer<SeeMoreProvider>(builder: (BuildContext context, SeeMoreProvider value, Widget child) {
+                      double hei = (value.isShow?_rowHeightFull:_rowHeight.value) + imageHeight;
+                      print("hei: ${hei}");
+                      return SliverPersistentHeader(
+                        pinned: false,
+                        floating: false,
+                        delegate: SliverCategoryDelegate(
+                            Column(
+                              children: <Widget>[
+                                Stack(
+                                  children: <Widget>[
+                                    Image.asset(
+                                      "photo/partner_item_img.png",
+                                      fit: BoxFit.fitWidth,
+                                      width: MediaQuery.of(context)
+                                          .size
+                                          .width,
+                                      height: 146,
+                                    ),
+                                    Positioned(
+                                      bottom: SizeUtil.smallSpace,
+                                      right: SizeUtil.smallSpace,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Container(
+                                            padding: EdgeInsets.only(
+                                                left: SizeUtil
+                                                    .midSmallSpace,
+                                                right: SizeUtil
+                                                    .midSmallSpace,
+                                                top: SizeUtil.tinySpace,
+                                                bottom:
+                                                SizeUtil.tinySpace),
+                                            decoration: BoxDecoration(
+                                                color: Color(0xffF6F6F6),
+                                                borderRadius: BorderRadius
+                                                    .all(Radius.circular(
+                                                    SizeUtil
+                                                        .smallRadius))),
+                                            child: Wrap(
+                                              direction: Axis.horizontal,
+                                              children: <Widget>[
+                                                Image.asset(
+                                                  "photo/comment_img.png",
+                                                  width: SizeUtil
+                                                      .iconSizeDefault,
+                                                  height: SizeUtil
+                                                      .iconSizeDefault,
+                                                ),
+                                                SizedBox(
+                                                  width:
+                                                  SizeUtil.tinySpace,
+                                                ),
+                                                Text(
+                                                  "12",
+                                                  style: TextStyle(
+                                                      fontSize: SizeUtil
+                                                          .textSizeSmall,
+                                                      color: ColorUtil
+                                                          .textColor,
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .normal),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: SizeUtil.smallSpace,
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.only(
+                                                left: SizeUtil
+                                                    .midSmallSpace,
+                                                right: SizeUtil
+                                                    .midSmallSpace,
+                                                top: SizeUtil.tinySpace,
+                                                bottom:
+                                                SizeUtil.tinySpace),
+                                            decoration: BoxDecoration(
+                                                color: Color(0xffF6F6F6),
+                                                borderRadius: BorderRadius
+                                                    .all(Radius.circular(
+                                                    SizeUtil
+                                                        .smallRadius))),
+                                            child: Wrap(
+                                              direction: Axis.horizontal,
+                                              children: <Widget>[
+                                                Image.asset(
+                                                  "photo/heart.png",
+                                                  width: SizeUtil
+                                                      .iconSizeDefault,
+                                                  height: SizeUtil
+                                                      .iconSizeDefault,
+                                                ),
+                                                SizedBox(
+                                                  width:
+                                                  SizeUtil.tinySpace,
+                                                ),
+                                                Text(
+                                                  "234",
+                                                  style: TextStyle(
+                                                      fontSize: SizeUtil
+                                                          .textSizeSmall,
+                                                      color: ColorUtil
+                                                          .textColor,
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .normal),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  children: detailInfo // info
+                                      .map(
+                                          (e) => paddingContainer(
+                                          e['see_more'] == null
+                                              ? Row(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: <Widget>[
+                                              Expanded(
+                                                child: RichText(
+                                                  textAlign:
+                                                  TextAlign
+                                                      .start,
+                                                  text: TextSpan(
+                                                      text: e[
+                                                      'title'],
+                                                      style: TextStyle(
+                                                          color: ColorUtil
+                                                              .textColor,
+                                                          fontWeight: FontWeight
+                                                              .bold),
+                                                      children: <
+                                                          TextSpan>[
+                                                        TextSpan(
+
+                                                            text: " "+ e['value'],
+                                                            style: TextStyle(fontSize: SizeUtil.textSizeSmall, color: e['valueColor'] == null ? ColorUtil.textColor : e['valueColor'], decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
+                                                      ]),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: SizeUtil
+                                                    .tinySpace,
+                                              ),
+                                              SizedBox(width: e['action_title'] ==
+                                                  null
+                                                  ?0:SizeUtil.tinySpace,),
+                                              e['action_title'] ==
+                                                  null
+                                                  ? SizedBox()
+                                                  : InkWell(
+                                                onTap:
+                                                    () {},
+                                                child:
+                                                Text(
+                                                  e['action_title'],
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                      SizeUtil.textSizeSmall,
+                                                      color: ColorUtil.blueLight),
+                                                ),
+                                              ),
+                                              e['button'] ==
+                                                  null
+                                                  ? SizedBox()
+                                                  : RaisedButton(
+                                                onPressed:
+                                                    () {},
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.all(
+                                                      Radius.circular(
+                                                          SizeUtil.smallRadius),
+                                                    )),
+                                                color: ColorUtil
+                                                    .primaryColor,
+                                                child:
+                                                Text(
+                                                  e['button'],
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                      SizeUtil.textSizeDefault,
+                                                      color: Colors.white,
+                                                      fontStyle: FontStyle.normal,
+                                                      fontWeight: FontWeight.normal),
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                              : GestureDetector(
+                                            onTap: () {
+                                              print("tapped");
+                                              _seeMoreProvider
+                                                  .onChange();
+                                            },
+                                            child:
+                                            RichText(
+                                              textAlign:
+                                              TextAlign
+                                                  .start,
+                                              text: TextSpan(
+                                                  text: e[
+                                                  'title'],
+                                                  style: TextStyle(
+                                                      color: ColorUtil
+                                                          .textColor,
+                                                      fontWeight: FontWeight
+                                                          .bold),
+                                                  children: <
+                                                      TextSpan>[
+                                                    TextSpan(
+                                                        text: value.isShow
+                                                            ? e['full_value']
+                                                            : e['value'],
+                                                        style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail, color: ColorUtil.textColor, decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
+                                                    TextSpan(
+                                                      text: value.isShow
+                                                          ? ''
+                                                          : e['see_more'],
+                                                      style: TextStyle(
+                                                          fontSize: SizeUtil.textSizeSmall,
+                                                          color: ColorUtil.blueLight,
+                                                          decoration: TextDecoration.none,
+                                                          fontWeight: FontWeight.normal),
+                                                      recognizer: TapGestureRecognizer()
+                                                        ..onTap = () =>
+                                                        {
+                                                          print("tapped")
+                                                        },
+                                                    ),
+                                                  ]),
+                                            ),
+                                          )))
+                                      .toList(),
+                                ),
+                                SizedBox(
+                                  height: SizeUtil.tinySpace,
+                                ),
+                              ],
+                            ),
+                            hei,
+                            hei),
+                      );
+                    },),
+                    SliverPersistentHeader(
+                      pinned: true,
+                      floating: false,
+                      delegate: SliverCategoryDelegate(
+                          Container(
+                            height: SizeUtil.tabbar_fix_height,
+                            child: ColoredTabBar(
+                              ColorUtil.lineColor,
+                              TabBar(
+                                controller: _tabController,
+                                labelColor: Colors.white,
+                                indicatorColor: ColorUtil.white,
+                                indicator: BoxDecoration(
+                                    borderRadius:
+                                    BorderRadius.circular(0),
+                                    color: ColorUtil.primaryColor),
+                                unselectedLabelColor:
+                                ColorUtil.textColor,
+                                tabs: myTabs,
+                              ),
+                            ),
+                            decoration: BoxDecoration(boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 5.0,
+                              ),
+                            ]),
+                          ),
+                          SizeUtil.tabbar_fix_height,
+                          SizeUtil.tabbar_fix_height),
+                    )
+                  ];
+                },
+              )
+                  : Column(
+                children: <Widget>[
+                  //TODO get detail info min height
+                  Column(
+                    key: _rowKey,
+                    mainAxisSize: MainAxisSize.min,
+                    children: detailInfo // info
+                        .map((e) => paddingContainer(e['see_more'] ==
+                        null
+                        ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          child: RichText(
+                            textAlign:
+                            TextAlign
+                                .start,
+                            text: TextSpan(
+                                text: e[
+                                'title'],
+                                style: TextStyle(
+                                    color: ColorUtil
+                                        .textColor,
+                                    fontWeight: FontWeight
+                                        .bold),
+                                children: <
+                                    TextSpan>[
+                                  TextSpan(
+
+                                      text: " "+ e['value'],
+                                      style: TextStyle(fontSize: SizeUtil.textSizeSmall, color: e['valueColor'] == null ? ColorUtil.textColor : e['valueColor'], decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
+                                ]),
+                          ),
+                        ),
+                        SizedBox(
+                          width: SizeUtil
+                              .tinySpace,
+                        ),
+                        SizedBox(width: e['action_title'] ==
+                            null
+                            ?0:SizeUtil.tinySpace,),
+                        e['action_title'] ==
+                            null
+                            ? SizedBox()
+                            : InkWell(
+                          onTap:
+                              () {},
+                          child:
+                          Text(
+                            e['action_title'],
+                            style: TextStyle(
+                                fontSize:
+                                SizeUtil.textSizeSmall,
+                                color: ColorUtil.blueLight),
+                          ),
+                        ),
+                        e['button'] ==
+                            null
+                            ? SizedBox()
+                            : RaisedButton(
+                          onPressed:
+                              () {},
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                    SizeUtil.smallRadius),
+                              )),
+                          color: ColorUtil
+                              .primaryColor,
+                          child:
+                          Text(
+                            e['button'],
+                            style: TextStyle(
+                                fontSize:
+                                SizeUtil.textSizeDefault,
+                                color: Colors.white,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ),
+                      ],
+                    )
+                        : RichText(
+                      textAlign: TextAlign.start,
+                      text: TextSpan(
+                          text: e['title'],
+                          style: TextStyle(
+                              color: ColorUtil.textColor,
+                              fontWeight: FontWeight.bold),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: e['value'],
+                                style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail, color: ColorUtil.textColor, decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
+                            TextSpan(
+                              text:  e['see_more'],
+                              style: TextStyle(
+                                  fontSize: SizeUtil.textSizeSmall,
+                                  color: ColorUtil.blueLight,
+                                  decoration: TextDecoration.none,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ]),
+                    )))
+                        .toList(),
+                  ),
+                  //TODO get detail info max height
+                  Column(
+                    key: _rowKeyFull,
+                    mainAxisSize: MainAxisSize.min,
+                    children: detailInfo // info
+                        .map((e) => paddingContainer(e['see_more'] ==
+                        null
+                        ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          child: RichText(
+                            textAlign:
+                            TextAlign
+                                .start,
+                            text: TextSpan(
+                                text: e[
+                                'title'],
+                                style: TextStyle(
+                                    color: ColorUtil
+                                        .textColor,
+                                    fontWeight: FontWeight
+                                        .bold),
+                                children: <
+                                    TextSpan>[
+                                  TextSpan(
+
+                                      text: " "+ e['value'],
+                                      style: TextStyle(fontSize: SizeUtil.textSizeSmall, color: e['valueColor'] == null ? ColorUtil.textColor : e['valueColor'], decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
+                                ]),
+                          ),
+                        ),
+                        SizedBox(
+                          width: SizeUtil
+                              .tinySpace,
+                        ),
+                        SizedBox(width: e['action_title'] ==
+                            null
+                            ?0:SizeUtil.tinySpace,),
+                        e['action_title'] ==
+                            null
+                            ? SizedBox()
+                            : InkWell(
+                          onTap:
+                              () {},
+                          child:
+                          Text(
+                            e['action_title'],
+                            style: TextStyle(
+                                fontSize:
+                                SizeUtil.textSizeSmall,
+                                color: ColorUtil.blueLight),
+                          ),
+                        ),
+                        e['button'] ==
+                            null
+                            ? SizedBox()
+                            : RaisedButton(
+                          onPressed:
+                              () {},
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                    SizeUtil.smallRadius),
+                              )),
+                          color: ColorUtil
+                              .primaryColor,
+                          child:
+                          Text(
+                            e['button'],
+                            style: TextStyle(
+                                fontSize:
+                                SizeUtil.textSizeDefault,
+                                color: Colors.white,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ),
+                      ],
+                    )
+                        : RichText(
+                      textAlign: TextAlign.start,
+                      text: TextSpan(
+                          text: e['title'],
+                          style: TextStyle(
+                              color: ColorUtil.textColor,
+                              fontWeight: FontWeight.bold),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: e['full_value'],
+                                style: TextStyle(
+                                    fontSize: SizeUtil
+                                        .textSizeExpressDetail,
+                                    color:
+                                    ColorUtil.textColor,
+                                    decoration:
+                                    TextDecoration.none,
+                                    fontWeight:
+                                    FontWeight.normal)),
+                          ]),
+                    )))
+                        .toList(),
+                  ),
+                ],
               ),
             );
           });

@@ -140,7 +140,6 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                       negative: "Không", positiveClicked: () {
                     pushAndReplaceAll(LoginScreen(), '/login');
                   }, negativeClick: () {
-                    Navigator.of(context).pop();
                   });
                   break;
               }
