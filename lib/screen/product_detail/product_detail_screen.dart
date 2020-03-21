@@ -9,6 +9,7 @@ import 'package:baby_garden_flutter/screen/photo_view/photo_view_screen.dart';
 import 'package:baby_garden_flutter/screen/product_detail/store_info.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_icon.dart';
+import 'package:baby_garden_flutter/widget/button/my_flat_button.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
 import 'package:baby_garden_flutter/widget/product/cart_icon.dart';
@@ -274,8 +275,13 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(
-                  child: paddingContainer(Text(S.of(context).same_product),
-                      padding: SizeUtil.smallPadding)),
+                  child: paddingContainer(
+                Text(
+                  S.of(context).same_product,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                padding: SizeUtil.smallPadding,
+              )),
               ButtonIcon(
                 icon: Wrap(
                   alignment: WrapAlignment.center,
@@ -295,24 +301,24 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
                     )
                   ],
                 ),
-                onPressed: (){
-                  push(ListProductScreen());
+                onPressed: () {
+                  push(ListProductScreen(
+                    title: S.of(context).same_product,
+                  ));
                 },
               )
             ],
           ),
-          SizedBox(
-            height: SizeUtil.smallSpace,
-          ),
           ListProduct(
-            padding: EdgeInsets.only(top: SizeUtil.smallSpace),
+            padding: EdgeInsets.only(top: SizeUtil.tinySpace),
           )
         ],
       ),
       bottomNavigationBar: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          MyRaisedButton(
-            elevation: 0,
+          MyFlatButton(
             onPressed: () {
               //TODO
             },
@@ -327,8 +333,7 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
             color: ColorUtil.primaryColor,
           ),
           Expanded(
-            child: MyRaisedButton(
-              elevation: 0,
+            child: MyFlatButton(
               onPressed: () {
                 showModalBottomSheet(
                     isScrollControlled: true,

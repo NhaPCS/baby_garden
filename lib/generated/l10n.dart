@@ -3322,6 +3322,15 @@ class S {
       args: [],
     );
   }
+
+  String get attached_product {
+    return Intl.message(
+      'Sản phẩm mua kèm',
+      name: 'attached_product',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

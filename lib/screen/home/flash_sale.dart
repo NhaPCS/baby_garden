@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_flashsale_product.dart';
+import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/screen/list_product/list_product_screen.dart';
 import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -7,13 +8,9 @@ import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class FlashSale extends StatelessWidget {
-  final double flashSaleHeight;
-  final double flashSaleWidth;
-
-  const FlashSale({Key key, this.flashSaleHeight, this.flashSaleWidth})
-      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +23,14 @@ class FlashSale extends StatelessWidget {
             SizedBox(
               width: SizeUtil.smallSpace,
             ),
-            Row(
+            SizedBox(
+              height:Provider.of<AppProvider>(context).flashSaleItemHeight * 0.2 ,
+              child: Row(
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(left: SizeUtil.smallSpace),
-                  child: Image.asset(
-                    'photo/lb_flashsale.png',
-                    fit: BoxFit.fitHeight,
-                    height: flashSaleHeight * 0.2,
-                  ),
-                ),
+                Padding(padding: SizeUtil.smallPadding, child: Image.asset(
+                  'photo/lb_flashsale.png',
+                  fit: BoxFit.fitHeight,
+                ),),
                 Expanded(child: SizedBox()),
                 Stack(
                   alignment: Alignment.center,
@@ -48,10 +43,9 @@ class FlashSale extends StatelessWidget {
                   ],
                 ),
               ],
-            ),
+            ),),
             Container(
-              margin: EdgeInsets.only(
-                  top: SizeUtil.smallSpace, bottom: SizeUtil.defaultSpace),
+              margin: EdgeInsets.only(bottom: SizeUtil.defaultSpace),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius:
@@ -86,14 +80,13 @@ class FlashSale extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: flashSaleHeight,
+                    height: Provider.of<AppProvider>(context).flashSaleItemHeight,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: 10,
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
                           child: ItemFlashSaleProduct(
-                            imageSize: flashSaleWidth,
                             imageUrl: StringUtil.dummyImageList[
                                 index % StringUtil.dummyImageList.length],
                           ),

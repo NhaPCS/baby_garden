@@ -1,15 +1,15 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/rounded_progress.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ItemFlashSaleProduct extends StatelessWidget {
-  final double imageSize;
   final String imageUrl;
 
-  const ItemFlashSaleProduct({Key key, @required this.imageSize, this.imageUrl})
-      : super(key: key);
+  const ItemFlashSaleProduct({Key key, this.imageUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,13 +60,13 @@ class ItemFlashSaleProduct extends StatelessWidget {
             height: SizeUtil.smallSpace,
           ),
           RoundedProgress(
-            width: imageSize,
+            width: Provider.of<AppProvider>(context).flashSaleItemWidth,
             height: 18,
             label: S.of(context).sold_count("100", "200"),
           )
         ],
       ),
-      width: imageSize,
+      width: Provider.of<AppProvider>(context).flashSaleItemWidth,
     );
   }
 }
