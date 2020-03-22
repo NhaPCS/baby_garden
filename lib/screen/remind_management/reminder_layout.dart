@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/remind_management/remind_set/set_date_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_management/remind_set/set_time_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
@@ -19,6 +20,11 @@ class _ReminderState extends BaseState<ReminderLayout> {
 
   chooseCalendar() {
     push(SetTimeScreen());
+  }
+
+  chooseDatePic(){
+    //todo show set date screen
+//    push(SetDateScreen());
   }
 
   listViewRemindTime() {
@@ -100,7 +106,12 @@ class _ReminderState extends BaseState<ReminderLayout> {
           child: rowTimeTable(S.of(context).remindTime),
         ),
         rowCheckBox(S.of(context).remindUseProduct, isRemindUse: true),
-        rowTimeTable(S.of(context).endDateOfReminder),
+        GestureDetector(
+          onTap: (){
+            chooseDatePic();
+          },
+          child: rowTimeTable(S.of(context).endDateOfReminder),
+        ),
         Padding(
             padding: const EdgeInsets.only(left: SizeUtil.hugSpace),
             child: Column(

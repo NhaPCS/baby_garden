@@ -42,7 +42,7 @@ class _RemindManageState extends BaseState<RemindManagementScreen> {
             IconButton(
               icon: Icon(Icons.add_circle, size: 24, color: Colors.white),
               onPressed: () {
-                RouteUtil.push(context, RemindAddScreen());
+                push(RemindAddScreen());
               },
             ),
           ],

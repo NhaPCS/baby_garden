@@ -385,6 +385,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "send_rating" : MessageLookupByLibrary.simpleMessage("GỬI ĐÁNH GIÁ"),
     "send_report" : MessageLookupByLibrary.simpleMessage("Gửi thông báo"),
     "service_booked" : MessageLookupByLibrary.simpleMessage("Dịch vụ đã đặt lịch"),
+    "service_detail" : MessageLookupByLibrary.simpleMessage("Chi tiết dịch vụ"),
     "service_info" : MessageLookupByLibrary.simpleMessage("Thông tin dịch vụ"),
     "service_time_range" : m21,
     "service_title" : MessageLookupByLibrary.simpleMessage("Chăm sóc da mặt từ cơ bản đến nâng cao"),

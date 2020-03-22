@@ -36,15 +36,6 @@ class _RemindEditScreen extends BaseState<RemindEditScreen> {
   Widget buildWidget(BuildContext context) {
     return Scaffold(
         appBar: getAppBar(
-          actions: [
-            IconButton(
-              icon: Icon(Icons.add_circle,
-                  size: SizeUtil.iconSizeBigger, color: Colors.white),
-              onPressed: () {
-                RouteUtil.push(context, RemindAddScreen());
-              },
-            ),
-          ],
           title: S.of(context).editReminder,
         ),
         body: Column(children: <Widget>[
@@ -79,9 +70,7 @@ class _RemindEditScreen extends BaseState<RemindEditScreen> {
                     color: ColorUtil.darkGray,
                     fontSize: SizeUtil.textSizeBigger),
               ),
-              Expanded(
-                child: SizedBox(),
-              ),
+              Spacer(),
               GestureDetector(
                 onTap: () {
                   // display table choose date
@@ -153,7 +142,7 @@ class _RemindEditScreen extends BaseState<RemindEditScreen> {
             decoration:
                 setBorder('bottom', Color(0xffE4E4E4), SizeUtil.lineHeight),
           ),
-          Expanded(child: SizedBox()),
+          Spacer(),
           Container(
             padding: SizeUtil.normalPadding,
             child: ButtonTheme(
@@ -163,8 +152,8 @@ class _RemindEditScreen extends BaseState<RemindEditScreen> {
               child: RaisedButton(
                 onPressed: () {
                   // RouteUtil.push(context, RemindManagementScreen());
-                  showTimePicker(
-                      context: context, initialTime: TimeOfDay.now());
+//                  showTimePicker(context: context, initialTime: TimeOfDay.now());
+                  Navigator.of(context).pop();
                 },
                 child: Text(
                   S.of(context).saveChange,

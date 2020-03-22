@@ -378,5 +378,6 @@
     "suy_dinh_duong_normal": "Trẻ suy dinh dưỡng thể thấp còi, mức độ vừa",
     "sdd_nang": "Trẻ suy dinh dưỡng thể thấp còi, mức độ nặng",
     "enter_weight_height": "Nhập chiều cao/cân nặng",
-    "enter_all_value_child": "Nhập các chỉ số chiều cao, cân nặng của bé"
+    "enter_all_value_child": "Nhập các chỉ số chiều cao, cân nặng của bé",
+    "service_detail": "Chi tiết dịch vụ"
 }

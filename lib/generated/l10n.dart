@@ -3448,6 +3448,15 @@ class S {
       args: [],
     );
   }
+
+  String get service_detail {
+    return Intl.message(
+      'Chi tiết dịch vụ',
+      name: 'service_detail',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

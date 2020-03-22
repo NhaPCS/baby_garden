@@ -812,7 +812,8 @@ class _PartnerBookScheduleScreenState
             Consumer<ChangeScheduleTimeProvider>(
               builder: (BuildContext context, ChangeScheduleTimeProvider value,
                   Widget child) {
-                return Container(
+                return
+                  Container(
                   height: MediaQuery.of(context).size.width / 3.50,
                   width: MediaQuery.of(context).size.width,
                   color: Colors.white,
