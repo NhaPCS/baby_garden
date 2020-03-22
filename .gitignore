@@ -53,3 +53,4 @@ ios/Runner.xcworkspace/contents.xcworkspacedata
 
 .prettierrc
 babe_garden.code-workspace
+pubspec.lock

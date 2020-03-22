@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/remind_management/remind_set/remind_cycle_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_management/remind_set/set_date_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_management/remind_set/set_time_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -22,9 +23,8 @@ class _ReminderState extends BaseState<ReminderLayout> {
     push(SetTimeScreen());
   }
 
-  chooseDatePic(){
-    //todo show set date screen
-//    push(SetDateScreen());
+  chooseDate() {
+    push(SetDateScreen());
   }
 
   listViewRemindTime() {
@@ -42,7 +42,7 @@ class _ReminderState extends BaseState<ReminderLayout> {
             Padding(
               padding: const EdgeInsets.only(left: SizeUtil.tinySpace),
               child: GestureDetector(
-                onTap: (){
+                onTap: () {
                   chooseCalendar();
                 },
                 child: Text(
@@ -107,8 +107,8 @@ class _ReminderState extends BaseState<ReminderLayout> {
         ),
         rowCheckBox(S.of(context).remindUseProduct, isRemindUse: true),
         GestureDetector(
-          onTap: (){
-            chooseDatePic();
+          onTap: () {
+            chooseDate();
           },
           child: rowTimeTable(S.of(context).endDateOfReminder),
         ),
@@ -133,8 +133,8 @@ class _ReminderState extends BaseState<ReminderLayout> {
                         padding:
                             const EdgeInsets.only(left: SizeUtil.tinySpace),
                         child: GestureDetector(
-                          onTap: (){
-                            chooseCalendar();
+                          onTap: () {
+                            push(RemindCycleScreen());
                           },
                           child: Text(
                             S.of(context).select,
@@ -162,7 +162,6 @@ class _ReminderState extends BaseState<ReminderLayout> {
                 listViewRemindTime(),
               ],
             )),
-
       ],
     );
   }

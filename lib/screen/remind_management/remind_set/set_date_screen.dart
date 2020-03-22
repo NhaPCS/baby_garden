@@ -4,8 +4,10 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class SetDateScreen extends StatefulWidget {
   @override
@@ -14,6 +16,16 @@ class SetDateScreen extends StatefulWidget {
 
 class _SetDateScreenState extends BaseState<SetDateScreen> {
   final GetListProvider _getListProvider = GetListProvider();
+  CalendarController _calenderController;
+
+  final locale = 'vi';
+
+  @override
+  void initState() {
+    super.initState();
+    _calenderController = CalendarController();
+  }
+
   @override
   Widget buildWidget(BuildContext context) {
     String buttonTitle = S.of(context).confirm;
@@ -28,7 +40,7 @@ class _SetDateScreenState extends BaseState<SetDateScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15, top: 18, bottom: 18),
                   child: Text(
-                    'Chọn ngày nhắc',
+                    S.of(context).selectRemindDate,
                     style: TextStyle(
                         color: ColorUtil.primaryColor,
                         fontWeight: FontWeight.bold,
@@ -36,35 +48,34 @@ class _SetDateScreenState extends BaseState<SetDateScreen> {
                   ),
                 )),
             Container(
-              decoration: setBorder('top', Color(0xffE4E4E4), 6),
-              padding: EdgeInsets.only(top: 20),
-              height: 300,
-              child: Theme(
-                data: ThemeData(
-                    cupertinoOverrideTheme: CupertinoThemeData(
-                        barBackgroundColor: Colors.green,
-                        scaffoldBackgroundColor: Colors.grey,
-                        textTheme: CupertinoTextThemeData(
-                          pickerTextStyle:
-                              TextStyle(color: Colors.orange, fontSize: 20),
-                          tabLabelTextStyle: TextStyle(fontSize: 80),
-                          navLargeTitleTextStyle: TextStyle(fontSize: 50),
-                          navActionTextStyle: TextStyle(color: Colors.orange),
-                          navTitleTextStyle: TextStyle(fontSize: 40),
-                          dateTimePickerTextStyle: TextStyle(
-                            fontSize: 30,
-                            color: Colors.orange,
-                          ),
-                        ))
-                    // textSelectionColor: Colors.orange
-                    ),
-                child: selectDate().selectedDate,
-              ),
-            ),
+                decoration: setBorder('top', Color(0xffE4E4E4), 6),
+                padding: EdgeInsets.only(top: 20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  // calender table
+                  children: <Widget>[
+                    TableCalendar(
+                      locale: this.locale,
+                      calendarController: _calenderController,
+                      calendarStyle: CalendarStyle(
+                        todayColor: Color.fromRGBO(255, 137, 24, 0.7),
+                        selectedColor: ColorUtil.primaryColor,
+                      ),
+                      headerStyle: HeaderStyle(
+                          formatButtonVisible: false,
+                          centerHeaderTitle: true,
+                          titleTextStyle: TextStyle(fontSize: 23),
+                          titleTextBuilder: (date, locale) =>
+                              '${S.of(context).month} ' +
+                              DateFormat.M(locale).format(date)),
+                    )
+                  ],
+                )),
             Expanded(
                 child: Container(
               decoration: setBorder('top', Color(0xffE4E4E4), 6),
             )),
+            // button
             GestureDetector(
               child: Container(
                 margin: SizeUtil.normalPadding,
@@ -89,27 +100,6 @@ class _SetDateScreenState extends BaseState<SetDateScreen> {
             )
           ],
         ));
-  }
-
-  Widget showPickerDate() {
-    return Text('');
-    return selectDate();
-  }
-
-  selectDate() {
-    Future<DateTime> selectedDate = showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2018),
-      lastDate: DateTime(2030),
-      builder: (BuildContext context, Widget child) {
-        return Theme(
-          data: ThemeData.dark(),
-          child: child,
-        );
-      },
-    );
-    setState(() {});
   }
 
   @override

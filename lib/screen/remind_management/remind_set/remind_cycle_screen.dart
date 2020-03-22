@@ -29,7 +29,7 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15, top: 18, bottom: 18),
                   child: Text(
-                    'chọn chu kì nhắc',
+                    S.of(context).selectRemindCycle,
                     style: TextStyle(
                         color: ColorUtil.primaryColor,
                         fontWeight: FontWeight.bold,

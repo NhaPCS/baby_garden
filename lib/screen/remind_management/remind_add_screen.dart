@@ -1,9 +1,7 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
-import 'package:baby_garden_flutter/screen/list_product/list_product_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_management/reminder_layout.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -64,8 +62,7 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
                     onPressed: () {},
                     child: Text(
                       S.of(context).addReminder,
-                      style:
-                      TextStyle(fontSize: SizeUtil.textSizeBigger),
+                      style: TextStyle(fontSize: SizeUtil.textSizeBigger),
                     ),
                     textColor: Colors.white,
                   ),
