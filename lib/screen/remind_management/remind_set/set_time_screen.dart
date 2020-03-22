@@ -29,7 +29,7 @@ class _SetTimeScreenState extends BaseState<SetTimeScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15, top: 18, bottom: 18),
                   child: Text(
-                    'Chọn thời gian nhắc',
+                    S.of(context).selectRemindTime,
                     style: TextStyle(
                         color: ColorUtil.primaryColor,
                         fontWeight: FontWeight.bold,

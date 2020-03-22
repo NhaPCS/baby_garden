@@ -133,7 +133,14 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                   push(SettingScreen());
                   break;
                 case 9:
-                  pushAndReplaceAll(LoginScreen(), '/login');
+                  WidgetUtil.showConfirmDialog(context,
+                      title: "Xác nhận",
+                      message: "Bạn có muốn đăng xuất không?",
+                      positive: "Có",
+                      negative: "Không", positiveClicked: () {
+                    pushAndReplaceAll(LoginScreen(), '/login');
+                  }, negativeClick: () {
+                  });
                   break;
               }
             },

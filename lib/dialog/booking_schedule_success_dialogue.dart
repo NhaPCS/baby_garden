@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/screen/partner/partner_book_schedule_success.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 
@@ -51,6 +52,7 @@ class BookingScheduleSuccessDialogue extends Dialog{
         RaisedButton(
           onPressed: () {
             Navigator.of(context).pop();
+            RouteUtil.push(context, PartnerBookScheduleSuccessScreen());
           },
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(

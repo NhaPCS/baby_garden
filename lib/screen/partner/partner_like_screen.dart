@@ -1,6 +1,7 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/partner/partner_book_schedule.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/partner_item.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
@@ -42,6 +43,7 @@ class _PartnerLikeScreen extends BaseState<PartnerLikeScreen> {
                   return new GestureDetector(
                     child: new PartnerItem(),
                     onTap: () {
+                      push(PartnerBookScheduleScreen());
 //                      push(VCBExpressDetailScreen());
                     },
                   );

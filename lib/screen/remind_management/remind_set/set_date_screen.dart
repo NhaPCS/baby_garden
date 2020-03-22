@@ -4,6 +4,7 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -13,9 +14,17 @@ class SetDateScreen extends StatefulWidget {
   _SetDateScreenState createState() => _SetDateScreenState();
 }
 
-class _SetDateScreenState extends BaseState<SetDateScreen>
-    with TickerProviderStateMixin {
+class _SetDateScreenState extends BaseState<SetDateScreen> {
   final GetListProvider _getListProvider = GetListProvider();
+  CalendarController _calenderController;
+
+  final locale = 'vi';
+
+  @override
+  void initState() {
+    super.initState();
+    _calenderController = CalendarController();
+  }
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -31,7 +40,7 @@ class _SetDateScreenState extends BaseState<SetDateScreen>
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15, top: 18, bottom: 18),
                   child: Text(
-                    'Chọn ngày nhắc',
+                    S.of(context).selectRemindDate,
                     style: TextStyle(
                         color: ColorUtil.primaryColor,
                         fontWeight: FontWeight.bold,
@@ -41,11 +50,26 @@ class _SetDateScreenState extends BaseState<SetDateScreen>
             Container(
                 decoration: setBorder('top', Color(0xffE4E4E4), 6),
                 padding: EdgeInsets.only(top: 20),
-                height: 300,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   // calender table
-                  children: <Widget>[],
+                  children: <Widget>[
+                    TableCalendar(
+                      locale: this.locale,
+                      calendarController: _calenderController,
+                      calendarStyle: CalendarStyle(
+                        todayColor: Color.fromRGBO(255, 137, 24, 0.7),
+                        selectedColor: ColorUtil.primaryColor,
+                      ),
+                      headerStyle: HeaderStyle(
+                          formatButtonVisible: false,
+                          centerHeaderTitle: true,
+                          titleTextStyle: TextStyle(fontSize: 23),
+                          titleTextBuilder: (date, locale) =>
+                              '${S.of(context).month} ' +
+                              DateFormat.M(locale).format(date)),
+                    )
+                  ],
                 )),
             Expanded(
                 child: Container(

@@ -3448,6 +3448,42 @@ class S {
       args: [],
     );
   }
+
+  String get service_detail {
+    return Intl.message(
+      'Chi tiết dịch vụ',
+      name: 'service_detail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get selectRemindDate {
+    return Intl.message(
+      'Chọn ngày nhắc',
+      name: 'selectRemindDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get month {
+    return Intl.message(
+      'Tháng',
+      name: 'month',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get selectRemindCycle {
+    return Intl.message(
+      'chọn chu kì nhắc',
+      name: 'selectRemindCycle',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
