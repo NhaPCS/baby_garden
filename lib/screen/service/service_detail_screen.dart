@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/dialog/receive_barcode_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -369,29 +370,58 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                 ),
               ),
             ],):Spacer(),
-            widget.isBookedSchedule?Container(
-              width: MediaQuery.of(context).size.width,
-              child: RaisedButton(
-                onPressed: () {
-                  //TODO booking
-                },
-                color: ColorUtil.primaryColor,
-                child: Container(
-                  padding: EdgeInsets.all(SizeUtil.midSpace),
-                  child: Text(
-                    S
-                        .of(context)
-                        .cancel_schedule
-                        .toUpperCase(),
-                    style: TextStyle(
-                        fontSize: SizeUtil.textSizeDefault,
-                        color: Colors.white,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold),
+            widget.isBookedSchedule?
+            Column(children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: RaisedButton(
+                  onPressed: () {
+                    //TODO booking
+                    showDialog(
+                        context: context, builder: (BuildContext context) => ReceiveBarCodeDialogue());
+                  },
+                  color: ColorUtil.primaryColor,
+                  child: Container(
+                    padding: EdgeInsets.all(SizeUtil.midSpace),
+                    child: Text(
+                      S
+                          .of(context)
+                          .use_service
+                          .toUpperCase(),
+                      style: TextStyle(
+                          fontSize: SizeUtil.textSizeDefault,
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
               ),
-            ):SizedBox()
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: RaisedButton(
+                  onPressed: () {
+                    //TODO booking
+                  },
+                  color: ColorUtil.primaryColor,
+                  child: Container(
+                    padding: EdgeInsets.all(SizeUtil.midSpace),
+                    child: Text(
+                      S
+                          .of(context)
+                          .cancel_schedule
+                          .toUpperCase(),
+                      style: TextStyle(
+                          fontSize: SizeUtil.textSizeDefault,
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              )
+            ],)
+            :SizedBox()
           ]),
         ));
   }

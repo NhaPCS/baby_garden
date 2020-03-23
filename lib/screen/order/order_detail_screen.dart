@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/dialog/receive_barcode_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
@@ -65,7 +66,7 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                       RichText(
                         text: TextSpan(children: <TextSpan>[
                           TextSpan(
-                              text: "Cung cấp bởi: Vườn Của Bé",
+                              text: "Cung cấp bởi:",
                               style: TextStyle(
                                   color: ColorUtil.textColor,
                                   fontWeight: FontWeight.normal,
@@ -504,27 +505,58 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                   ? SizedBox(
                 height: SizeUtil.smallSpace,
               )
-                  : RaisedButton(
-                onPressed: () {
-                  //TODO booking
-                  showReceiveBarcode(context);
-                },
-                color: ColorUtil.primaryColor,
-                child: Container(
-                  padding: EdgeInsets.all(SizeUtil.midSpace),
-                  child: Text(
-                    S
-                        .of(context)
-                        .receive
-                        .toUpperCase(),
-                    style: TextStyle(
-                        fontSize: SizeUtil.textSizeDefault,
-                        color: Colors.white,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              )
+                  : Column(
+                mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      RaisedButton(
+                        onPressed: () {
+                          //TODO booking
+                          showDialog(
+                              context: context, builder: (BuildContext context) => ReceiveBarCodeDialogue());
+                        },
+                        color: ColorUtil.primaryColor,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.all(SizeUtil.midSpace),
+                          child: Text(
+                            S
+                                .of(context)
+                                .receive
+                                .toUpperCase(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: SizeUtil.textSizeDefault,
+                                color: Colors.white,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      RaisedButton(
+                        onPressed: () {
+                          //TODO booking
+//                          showReceiveBarcode(context);
+                        },
+                        color: ColorUtil.primaryColor,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.all(SizeUtil.midSpace),
+                          child: Text(
+                            S
+                                .of(context)
+                                .cancel
+                                .toUpperCase(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: SizeUtil.textSizeDefault,
+                                color: Colors.white,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      )
+                    ],
+                  )
             ])));
   }
 
@@ -532,38 +564,5 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
   List<SingleChildWidget> providers() {
     // TODO: implement providers
     return [];
-  }
-
-  showReceiveBarcode(BuildContext context) {
-    Dialog simpleDialog = Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.0),
-            color: Colors.white,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(height: SizeUtil.bigSpacehigher,),
-              SvgIcon('barcode-of-square-shape.svg'),
-              SizedBox(height: SizeUtil.smallSpace,),
-              Text("HD253628", style: TextStyle(color: ColorUtil.textColor,
-                  fontWeight: FontWeight.normal,
-                  fontSize: SizeUtil.textSizeLogo),),
-              SizedBox(height: SizeUtil.defaultSpace,),
-              Text(S.of(context).barcode_note, style: TextStyle(color: ColorUtil.textColor,
-                  fontWeight: FontWeight.normal,
-                  fontSize: SizeUtil.textSizeExpressDetail),),
-              SizedBox(height: SizeUtil.bigSpacehigher,),
-            ],
-          ),
-        ));
-    showDialog(
-        context: context, builder: (BuildContext context) => simpleDialog);
   }
 }

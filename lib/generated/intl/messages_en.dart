@@ -430,6 +430,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "uploadChildAvatar" : MessageLookupByLibrary.simpleMessage("Upload ảnh của bé"),
     "upload_notice" : MessageLookupByLibrary.simpleMessage("(Upload hình ảnh thanh toán chuyển khoản thành công)"),
     "useCode" : MessageLookupByLibrary.simpleMessage("Sử dụng mã"),
+    "use_service" : MessageLookupByLibrary.simpleMessage("Sử dụng dịch vụ"),
     "used" : MessageLookupByLibrary.simpleMessage("Đã\nsử dụng"),
     "usedVoucher" : MessageLookupByLibrary.simpleMessage("Đã sử dụng"),
     "used_service" : MessageLookupByLibrary.simpleMessage("Dịch vụ đã sử dụng"),

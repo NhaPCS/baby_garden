@@ -382,5 +382,6 @@
     "service_detail": "Chi tiết dịch vụ",
     "selectRemindDate": "Chọn ngày nhắc",
     "month": "Tháng",
-    "selectRemindCycle": "chọn chu kì nhắc"
+    "selectRemindCycle": "chọn chu kì nhắc",
+    "use_service": "Sử dụng dịch vụ"
 }

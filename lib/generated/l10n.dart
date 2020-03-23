@@ -3484,6 +3484,15 @@ class S {
       args: [],
     );
   }
+
+  String get use_service {
+    return Intl.message(
+      'Sử dụng dịch vụ',
+      name: 'use_service',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
