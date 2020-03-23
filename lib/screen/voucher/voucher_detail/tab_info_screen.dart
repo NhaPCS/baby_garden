@@ -12,18 +12,17 @@ import 'package:provider/provider.dart';
 class TabInfoScreen extends StatefulWidget {
   final BuildContext context;
 
-  const TabInfoScreen({Key key, this.context})
-      : super(key: key);
+  const TabInfoScreen({Key key, this.context}) : super(key: key);
   @override
   _TabInfoScreenState createState() => _TabInfoScreenState();
 }
 
 class _TabInfoScreenState extends BaseState<TabInfoScreen> {
   final GetListProvider _getListProvider = GetListProvider();
-  final ButtonPartnerInfoProvider _buttonPartnerInfoProvider = new ButtonPartnerInfoProvider();
+  final ButtonPartnerInfoProvider _buttonPartnerInfoProvider =
+      new ButtonPartnerInfoProvider();
   @override
   Widget buildWidget(BuildContext context) {
-
     return Column(children: [
       Expanded(
         child: ListView(
@@ -131,42 +130,45 @@ class _TabInfoScreenState extends BaseState<TabInfoScreen> {
           ],
         ),
       ),
-      Consumer<ButtonPartnerInfoProvider>(builder: (BuildContext context, ButtonPartnerInfoProvider value, Widget child) {
-        return GestureDetector(
-          child: Container(
-            margin: SizeUtil.normalPadding,
-            width: double.infinity,
-            height: 40,
-            decoration: BoxDecoration(
-                color: value.isVoucherAvailable
-                    ? Color(0xff0A859E)
-                    : ColorUtil.primaryColor,
-                borderRadius: BorderRadius.circular(SizeUtil.tinyRadius)),
-            child: Center(
-              child: Text(
-                value.isVoucherAvailable
-                    ? S.of(widget.context).useCode.toUpperCase()
-                    : S.of(widget.context).getCode.toUpperCase(),
-                style: TextStyle(
-                    fontSize: SizeUtil.textSizeBigger,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
+      Consumer<ButtonPartnerInfoProvider>(
+        builder: (BuildContext context, ButtonPartnerInfoProvider value,
+            Widget child) {
+          return GestureDetector(
+            child: Container(
+              margin: SizeUtil.normalPadding,
+              width: double.infinity,
+              height: 40,
+              decoration: BoxDecoration(
+                  color: value.isVoucherAvailable
+                      ? Color(0xff0A859E)
+                      : ColorUtil.primaryColor,
+                  borderRadius: BorderRadius.circular(SizeUtil.tinyRadius)),
+              child: Center(
+                child: Text(
+                  value.isVoucherAvailable
+                      ? S.of(widget.context).useCode.toUpperCase()
+                      : S.of(widget.context).getCode.toUpperCase(),
+                  style: TextStyle(
+                      fontSize: SizeUtil.textSizeBigger,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
               ),
             ),
-          ),
-          onTap: () {
-            if (value.isVoucherAvailable) {
-              // go to voucher detail 6
-              push(VoucherCodeScreen(context: widget.context));
-            } else {
-              // show dialog
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) => getCodeDialog(context));
-            }
-          },
-        );
-      },)
+            onTap: () {
+              if (value.isVoucherAvailable) {
+                // go to voucher detail 6
+                push(VoucherCodeScreen(context: widget.context));
+              } else {
+                // show dialog
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => getCodeDialog(context));
+              }
+            },
+          );
+        },
+      )
     ]);
   }
 
@@ -200,7 +202,9 @@ class _TabInfoScreenState extends BaseState<TabInfoScreen> {
               Padding(
                 padding: SizeUtil.defaultPadding,
                 child: Text(
-                    'Mã khuyến mãi của bạn có hiệu lực trong 24 giờ. Bạn có muốn lấy mã không?'),
+                  S.of(context).getCodeNotifyText,
+                  style: TextStyle(fontSize: SizeUtil.textSizeBigger),
+                ),
               ),
               SizedBox(
                 height: SizeUtil.smallSpace,
@@ -256,10 +260,9 @@ class _TabInfoScreenState extends BaseState<TabInfoScreen> {
               onPressed: () async {
                 // go to voucher detail 6
                 Navigator.of(context).pop();
-                var data = await push(VoucherCodeScreen(context: widget.context));
-                if (data == "sent"){
-
-                }
+                var data =
+                    await push(VoucherCodeScreen(context: widget.context));
+                if (data == "sent") {}
                 _buttonPartnerInfoProvider.onChange(true);
               },
               child: Text(S.of(context).agree,

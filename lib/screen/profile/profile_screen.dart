@@ -124,7 +124,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                   push(PartnerLikeScreen());
                   break;
                 case 6:
-                  push(SeenProduct());
+                  push(SeenProductScreen());
                   break;
                 case 7:
                   push(CustomerSupportScreen());
@@ -139,8 +139,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                       positive: "Có",
                       negative: "Không", positiveClicked: () {
                     pushAndReplaceAll(LoginScreen(), '/login');
-                  }, negativeClick: () {
-                  });
+                  }, negativeClick: () {});
                   break;
               }
             },

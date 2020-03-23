@@ -4,6 +4,7 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/my_text_field.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,7 @@ class _VoucherCodeScreenState extends BaseState<VoucherCodeScreen> {
   final GetListProvider _getListProvider = GetListProvider();
   @override
   Widget buildWidget(BuildContext context) {
+    String code = 'GHK 123456';
     return Scaffold(
       appBar: getAppBar(title: S.of(widget.context).voucherCode), //
       body: Padding(
@@ -64,28 +66,34 @@ class _VoucherCodeScreenState extends BaseState<VoucherCodeScreen> {
                         top: SizeUtil.normalSpace,
                         bottom: SizeUtil.normalSpace),
                     child: Center(
-                      child: Text('GKH 12456',
+                      child: Text(code,
                           style: TextStyle(
                               fontSize: SizeUtil.textSizeHuge,
                               color: ColorUtil.primaryColor)),
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomRight,
+                Positioned(
+                  bottom: 22,
+                  right: 15,
                   child: Container(
-                    margin: EdgeInsets.only(right: 20, top: 65),
-                    child: SvgIcon(
-                      'copy.svg',
-                      color: Colors.black,
-                      height: SizeUtil.iconSize,
-                      width: SizeUtil.iconSize,
-                      onPressed: () {
-                        // copy to clipboard
-                      },
-                    ),
+                    child: Column(children: <Widget>[
+                      SvgIcon(
+                        'copy.svg',
+                        color: Colors.black,
+                        height: SizeUtil.iconSize,
+                        width: SizeUtil.iconSize,
+                        onPressed: () {
+                          // copy to clipboard
+                          Clipboard.setData(ClipboardData(text: code));
+                        },
+                      ),
+                      Text('Copy',
+                          style:
+                              TextStyle(fontSize: 10, color: Color(0xff545353)))
+                    ]),
                   ),
-                ),
+                )
               ],
             ),
             Container(
@@ -161,17 +169,22 @@ class _VoucherCodeScreenState extends BaseState<VoucherCodeScreen> {
                   height: SizeUtil.hugSpace,
                   child: Stack(
                     alignment: Alignment.center,
-                      children: <Widget>[
-                        Positioned(
-                          right: SizeUtil.smallSpace,
-                          child: Icon(FontAwesomeIcons.qrcode,color: Colors.white,),
+                    children: <Widget>[
+                      Positioned(
+                        right: SizeUtil.smallSpace,
+                        child: Icon(
+                          FontAwesomeIcons.qrcode,
+                          color: Colors.white,
                         ),
-                        Text(
-                          S.of(widget.context).scanQRCode,
-                          style: TextStyle(
-                              fontSize: SizeUtil.textSizeBigger, color: Colors.white),
-                        )
-                      ],),
+                      ),
+                      Text(
+                        S.of(widget.context).scanQRCode,
+                        style: TextStyle(
+                            fontSize: SizeUtil.textSizeBigger,
+                            color: Colors.white),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
