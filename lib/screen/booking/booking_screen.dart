@@ -242,7 +242,7 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
                   style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail),
                 ),
                 Spacer(),
-                Text("520.000d",
+                Text("520.000 đ",
                     style:
                         TextStyle(fontSize: SizeUtil.textSizeExpressDetail))
               ],
@@ -264,7 +264,7 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
                     style:
                         TextStyle(fontSize: SizeUtil.textSizeExpressDetail)),
                 Spacer(),
-                Text("5.000d",
+                Text("5.000 đ",
                     style:
                         TextStyle(fontSize: SizeUtil.textSizeExpressDetail))
               ],
@@ -287,7 +287,7 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
                         fontSize: SizeUtil.textSizeDefault,
                         color: Colors.black)),
                 Spacer(),
-                Text("525.000d",
+                Text("525.000 đ",
                     style: TextStyle(
                         fontSize: SizeUtil.textSizeDefault,
                         color: Colors.red,
@@ -421,12 +421,17 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
             padding: const EdgeInsets.only(
                 left: SizeUtil.bigSpacehigher,
                 top: SizeUtil.smallSpace,
-                bottom: SizeUtil.smallSpace),
+                bottom: SizeUtil.smallSpace,right: SizeUtil.normalSpace),
             value: 1,
             groupValue: value.transferMenthod,
             onChanged: (val) {
               _transferMethodProvider.onChange(val);
             },
+            trailing: Row(children: <Widget>[
+              Text('25.000 đ',style: TextStyle(fontSize: SizeUtil.textSizeTiny,decoration: TextDecoration.lineThrough,),),
+              SizedBox(width: SizeUtil.tinySpace,),
+              Text('5.000 đ',style: TextStyle(fontSize: SizeUtil.textSizeSmall,),),
+            ],),
           ),
           Container(
               margin: EdgeInsets.only(
@@ -442,9 +447,9 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Image.asset(
-                  'photo/ghn_icon.png',
-                  width: 40,
-                  height: 16,
+                  'photo/ghtk.png',
+                  width: 24,
+                  height: 20,
                 ),
                 SizedBox(
                   width: SizeUtil.tinySpace,
@@ -463,12 +468,13 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
             padding: const EdgeInsets.only(
                 left: SizeUtil.bigSpacehigher,
                 top: SizeUtil.smallSpace,
-                bottom: SizeUtil.smallSpace),
+                bottom: SizeUtil.smallSpace,right: SizeUtil.normalSpace),
             value: 2,
             groupValue: value.transferMenthod,
             onChanged: (val) {
               _transferMethodProvider.onChange(val);
             },
+            trailing: Text('28.000 đ',style: TextStyle(fontSize: SizeUtil.textSizeSmall,),),
           ),
           Container(
               margin: EdgeInsets.only(
@@ -484,9 +490,9 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Image.asset(
-                  'photo/ghn_icon.png',
-                  width: 40,
-                  height: 16,
+                  'photo/ahamove.png',
+                  width: 24,
+                  height: 20,
                 ),
                 SizedBox(
                   width: SizeUtil.tinySpace,
@@ -505,12 +511,13 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
             padding: const EdgeInsets.only(
                 left: SizeUtil.bigSpacehigher,
                 top: SizeUtil.smallSpace,
-                bottom: SizeUtil.smallSpace),
+                bottom: SizeUtil.smallSpace,right: SizeUtil.normalSpace),
             value: 3,
             groupValue: value.transferMenthod,
             onChanged: (val) {
               _transferMethodProvider.onChange(val);
             },
+            trailing: Text('35.000 đ',style: TextStyle(fontSize: SizeUtil.textSizeSmall,),),
           ),
           Container(
               margin: EdgeInsets.only(
@@ -518,6 +525,7 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
               child: MySeparator(
                 color: ColorUtil.lineColor,
               )),
+          //todo promote code
           Padding(
             padding: const EdgeInsets.only(
                 left: SizeUtil.bigSpacehigher,
@@ -575,7 +583,10 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
-                      )
+                      ),
+                      SizedBox(
+                        width: SizeUtil.smallSpace,
+                      ),
                     ],
                   ),
                 ),
@@ -589,6 +600,7 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
             ),
           ),
           WidgetUtil.getLine(margin: EdgeInsets.all(0)),
+          //todo note
           Padding(
             padding: const EdgeInsets.only(
                 left: SizeUtil.smallSpace, top: SizeUtil.smallSpace),
@@ -598,7 +610,7 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(SizeUtil.smallSpace),
+            padding: const EdgeInsets.only(left:SizeUtil.smallSpace,right: SizeUtil.midSpace,top: SizeUtil.smallSpace,bottom: SizeUtil.smallSpace),
             child: TextField(
               style: TextStyle(fontSize: SizeUtil.textSizeSmall),
               obscureText: false,
@@ -665,6 +677,8 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
               ),
             ),
             onChanged: (val) {
+              showDialog(
+                  context: context, builder: (BuildContext context) => CreditTransferCheckoutDialogue());
               _checkoutMethodProvider.onChange(val);
             },
           ),

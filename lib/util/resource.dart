@@ -95,7 +95,7 @@ class StringUtil {
   static List<dynamic> time = [
     {'time': '08:00'},
     {'time': '08:15'},
-    {'time': '08:30'},
+    {'time': '08:30','off':'0'},
     {'time': '08:45'},
     {'time': '09:00'},
     {'time': '09:15'},
@@ -107,7 +107,7 @@ class StringUtil {
     {'time': '10:45'},
     {'time': '11:00'},
     {'time': '11:15'},
-    {'time': '11:30'},
+    {'time': '11:30','off':'0'},
     {'time': '11:45'},
     {'time': '12:00'},
     {'time': '12:15'},

@@ -826,17 +826,20 @@ class _PartnerBookScheduleScreenState
                     itemBuilder: (context, index) {
                       bool isSelected = _scheduleTimeProvider != null &&
                           _scheduleTimeProvider.timeIndex == index;
-                      return GestureDetector(
+                      print(StringUtil.time[index]['off']);
+                      return StringUtil.time[index]['off']==null?
+                        GestureDetector(
                           onTap: () {
                             if (_scheduleTimeProvider != null &&
                                 _scheduleTimeProvider.timeIndex != index) {
                               _scheduleTimeProvider.onSelectedTime(index);
                             }
                           },
-                          child: Container(
+                          child:
+                          Container(
                             margin: EdgeInsets.all(1),
                             color: isSelected
-                                ? ColorUtil.primaryColor
+                                ? Color(0xffFF7700)
                                 : ColorUtil.lineColor,
                             child: Center(
                               child: Text(
@@ -849,12 +852,25 @@ class _PartnerBookScheduleScreenState
                                 textAlign: TextAlign.center,
                               ),
                             ),
-                          ));
+                          )):Container(
+                        margin: EdgeInsets.all(1),
+                        color: ColorUtil.red,
+                        child: Center(
+                          child: Text(
+                            StringUtil.time[index]['time'],
+                            style: TextStyle(
+                                fontSize: SizeUtil.textSizeTiny,
+                                color: Colors.white),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
                     },
                   ),
                 );
               },
             ),
+            //todo booking button
             Container(
                 padding: const EdgeInsets.only(
                     left: SizeUtil.smallSpace,
