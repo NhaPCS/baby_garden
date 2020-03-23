@@ -22,10 +22,10 @@ class _AccountManageState extends BaseState<AccountManage> {
   final UserInfor userInfor = UserInfor(
     username: "Đinh Bộ Lĩnh",
     mobilePhone: "0123456789",
-    joinDate: "13/2/2020",
+    joinDate: "13/02/2020",
     password: "xxx",
     address: "28 Phan Kế Bính, Ba Đình, Hà Nội",
-    birthday: "17/5/93",
+    birthday: "17/05/1993",
     gender: "Nam",
   );
 
@@ -131,45 +131,48 @@ class _AccountManageState extends BaseState<AccountManage> {
   }
 
   Widget entriesChildInfor(List<Map<String, String>> entries) {
-    return GestureDetector(child: Container(
-      height: 111,
-      child: ListView.builder(
-          itemCount: entries.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              padding: const EdgeInsets.only(left: 11.0, right: 11),
-              height: 20,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(entries[index]['title']),
-                  Expanded(
-                      child: Text(entries[index]['content'],
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                              color: (index == 3)
-                                  ? ColorUtil.primaryColor
-                                  : Colors.black))),
-                  SizedBox(
-                    width: SizeUtil.smallSpace,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      print("dep trai");
-                    },
-                    child: Image.asset(
-                      "photo/${entries[index]['icon']}",
-                      width: 11,
-                      height: 11,
+    return GestureDetector(
+      child: Container(
+        height: 111,
+        child: ListView.builder(
+            itemCount: entries.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                padding: const EdgeInsets.only(left: 11.0, right: 11),
+                height: 20,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(entries[index]['title']),
+                    Expanded(
+                        child: Text(entries[index]['content'],
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                                color: (index == 3)
+                                    ? ColorUtil.primaryColor
+                                    : Colors.black))),
+                    SizedBox(
+                      width: SizeUtil.smallSpace,
                     ),
-                  ),
-                ],
-              ),
-            );
-          }),
-    ),onTap: (){
-      push(ChildHeathScreen());
-    },);
+                    GestureDetector(
+                      onTap: () {
+                        print("dep trai");
+                      },
+                      child: Image.asset(
+                        "photo/${entries[index]['icon']}",
+                        width: 11,
+                        height: 11,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
+      ),
+      onTap: () {
+        push(ChildHeathScreen());
+      },
+    );
   }
 
   Widget childInfor(List<Map<String, String>> childInforFields) {

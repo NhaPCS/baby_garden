@@ -589,7 +589,7 @@ class S {
 
   String get addressPlaceholder {
     return Intl.message(
-      'Nhập SĐT của bạn',
+      'Nhập địa chỉ của bạn',
       name: 'addressPlaceholder',
       desc: '',
       args: [],
@@ -3480,6 +3480,15 @@ class S {
     return Intl.message(
       'chọn chu kì nhắc',
       name: 'selectRemindCycle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get getCodeNotifyText {
+    return Intl.message(
+      'Mã khuyến mãi của bạn có hiệu lực trong 24 giờ. Bạn có muốn lấy mã không?',
+      name: 'getCodeNotifyText',
       desc: '',
       args: [],
     );

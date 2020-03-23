@@ -16,7 +16,7 @@ class ProductCard extends StatelessWidget {
       this.description,
       this.price,
       this.datetime,
-        this.onTap,
+      this.onTap,
       this.favorite})
       : super(key: key);
 
@@ -38,8 +38,8 @@ class ProductCard extends StatelessWidget {
                 offset: Offset(0.0, 3.0),
               )
             ],
-            border:
-                Border.all(color: Color.fromRGBO(112, 112, 112, 1), width: 0.3)),
+            border: Border.all(
+                color: Color.fromRGBO(112, 112, 112, 1), width: 0.3)),
         width: double.infinity,
         height: 110,
         child: Card(
@@ -65,7 +65,7 @@ class ProductCard extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 5),
                           child: Text(
-                            this.price,
+                            this.price + ' đ',
                             style: TextStyle(color: Colors.red, fontSize: 16),
                           ),
                         ),
