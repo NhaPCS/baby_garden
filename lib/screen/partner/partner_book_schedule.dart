@@ -6,12 +6,14 @@ import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_date_provider.dart';
 import 'package:baby_garden_flutter/provider/change_schedule_provider.dart';
 import 'package:baby_garden_flutter/provider/change_service_provider.dart';
+import 'package:baby_garden_flutter/provider/partner_book_schedule_choose_location.dart';
 import 'package:baby_garden_flutter/provider/partner_book_tabbar_provider.dart';
 import 'package:baby_garden_flutter/provider/partner_schedule_get_header_hei.dart';
 import 'package:baby_garden_flutter/provider/see_more_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/category_product/sliver_category_delegate.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/custom_radio_button.dart';
 import 'package:baby_garden_flutter/widget/loadmore/loadmore_nested_scrollview.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:baby_garden_flutter/widget/service_detail_item.dart';
@@ -33,6 +35,7 @@ class PartnerBookScheduleScreen extends StatefulWidget {
 class _PartnerBookScheduleScreenState
     extends BaseState<PartnerBookScheduleScreen> with TickerProviderStateMixin {
   final SeeMoreProvider _seeMoreProvider = SeeMoreProvider();
+  final PartnerChooseLocation _partnerChooseLocation = PartnerChooseLocation();
   final PartnerGetHeightProvider _getHeightProvider =
       PartnerGetHeightProvider();
   final ChangeServiceProvider _serviceProvider = ChangeServiceProvider();
@@ -115,7 +118,7 @@ class _PartnerBookScheduleScreenState
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
     final List<Tab> myTabs = <Tab>[
-      Tab(text: S.of(context).waitting_rate),
+      Tab(text: S.of(context).book),
       Tab(
         child: Container(
           child: Row(
@@ -688,29 +691,25 @@ class _PartnerBookScheduleScreenState
             ),
             WidgetUtil.getLine(margin: EdgeInsets.all(0), width: 2),
             //todo client list
-            Column(
-              children: StringUtil.clientList
-                  .map((ele) => paddingContainer(
-                  Row(
-                    children: <Widget>[
-                      Image.asset(
-                        "photo/ic_promo_1.png",
-                        width: SizeUtil.iconSize,
-                        height: SizeUtil.iconSize,
-                      ),
-                      SizedBox(
-                        width: SizeUtil.smallSpace,
-                      ),
-                      Text(
-                        ele['address'],
-                        style: TextStyle(color: ColorUtil.textHint),
-                      )
-                    ],
-                  ),
-                  padding: EdgeInsets.only(
-                      left: SizeUtil.smallSpace, top: SizeUtil.smallSpace)))
-                  .toList(),
-            ),
+            Consumer<PartnerChooseLocation>(builder: (BuildContext context, PartnerChooseLocation value, Widget child) {
+              return Column(
+                children: StringUtil.clientList
+                    .map((ele) => CustomRadioButton(
+                  titleContent:
+                  Text(ele['address']),
+                  padding: const EdgeInsets.only(
+                      left: SizeUtil.smallSpace, top: SizeUtil.smallSpace),
+                  value: StringUtil.clientList.indexOf(ele),
+                  groupValue: value.val,
+                  iconSize: SizeUtil.iconSize,
+                  titleSize: SizeUtil.textSizeSmall,
+                  onChanged: (val) {
+                    _partnerChooseLocation.onChange(val);
+                  },
+                ),)
+                    .toList(),
+              );
+            },),
             WidgetUtil.getLine(
                 margin: EdgeInsets.only(top: SizeUtil.smallSpace), width: 2),
             //todo choose service title
@@ -962,6 +961,7 @@ class _PartnerBookScheduleScreenState
       ChangeNotifierProvider.value(value: _scheduleTimeProvider),
       ChangeNotifierProvider.value(value: _dateProvider),
       ChangeNotifierProvider.value(value: _getHeightProvider),
+      ChangeNotifierProvider.value(value: _partnerChooseLocation),
     ];
   }
 }

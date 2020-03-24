@@ -6,7 +6,12 @@ import 'package:nested/nested.dart';
 
 class ListOrderScreen extends StatefulWidget {
   final String title;
-  const ListOrderScreen({Key key, @required this.title}) : super(key: key);
+  final String childTitle;
+  final int state;
+  final bool isShowPositiveButton;
+  final bool isShowNegativeButton;
+
+  const ListOrderScreen({Key key, @required this.title, this.state = 0,this.childTitle,this.isShowNegativeButton = false, this.isShowPositiveButton = false,}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -23,7 +28,7 @@ class _ListOrderState extends BaseState<ListOrderScreen> {
         return InkWell(
           child: ItemOrder(),
           onTap: () {
-            push(OrderDetailScreen());
+            push(OrderDetailScreen(title: widget.childTitle!=null?widget.childTitle:widget.title.replaceAll("\n", " "),state: widget.state,isShowNegativeButton: widget.isShowNegativeButton,isShowPositiveButton: widget.isShowPositiveButton,));
           },
         );
       }),

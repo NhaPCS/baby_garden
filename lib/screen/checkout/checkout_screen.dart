@@ -2,7 +2,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/checkout_dropdown_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/home/home_screen.dart';
-import 'package:baby_garden_flutter/screen/list_order/list_order_screen.dart';
+import 'package:baby_garden_flutter/screen/order/list_order_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/order/order_list_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';

@@ -27,9 +27,10 @@ class _OrderListScreenState extends BaseState<OrderListScreen>{
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
+    String title = widget.isDelivering?S.of(context).delivering:S.of(context).receive_in_shop;
     return Scaffold(
       appBar: getAppBar(
-        title:  widget.isDelivering?S.of(context).delivering:S.of(context).receive_in_shop,
+        title:  title,
         centerTitle: true,
         bgColor: ColorUtil.primaryColor,
         titleColor: Colors.white,
@@ -52,7 +53,7 @@ class _OrderListScreenState extends BaseState<OrderListScreen>{
                   padding: EdgeInsets.all(0),
                   itemBuilder: (context, index) {
                     return new GestureDetector(onTap: (){
-                      push(OrderDetailScreen(isDelivering: widget.isDelivering,));
+                      push(OrderDetailScreen(title:title,state: widget.isDelivering?4:2,isShowNegativeButton: !widget.isDelivering,isShowPositiveButton: !widget.isDelivering,));
                     },
                         child: OrderItem(isRated: false,));
                   }),
