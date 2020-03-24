@@ -67,12 +67,15 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
                 children: sampleVouchers.map((voucher) {
               return Container(
                 child: Stack(
-                  alignment: AlignmentDirectional.bottomCenter,
+                  alignment: Alignment.bottomCenter,
                   children: <Widget>[
                     Stack(alignment: AlignmentDirectional.topStart, children: [
-                      ClipRect(
-                        child: Image.asset(
-                          voucher.image,
+                      Container(
+                        padding: EdgeInsets.only(bottom: 99),
+                        child: ClipRect(
+                          child: Image.asset(
+                            voucher.image,
+                          ),
                         ),
                       ),
                       Container(
@@ -100,7 +103,7 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
                       )
                     ]),
                     Container(
-                      margin: EdgeInsets.all(9),
+                      margin: EdgeInsets.only(left: 9, right: 9, bottom: 20),
                       height: 90,
                       decoration: BoxDecoration(
                           color: Colors.white,

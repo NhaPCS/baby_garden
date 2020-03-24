@@ -1,7 +1,10 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/screen/voucher/voucherCard.dart';
+import 'package:baby_garden_flutter/screen/voucher/voucher_detail/voucher_detail_screen.dart';
+import 'package:baby_garden_flutter/screen/voucher/voucher_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -50,7 +53,7 @@ class _VoucherManageState extends BaseState<VoucherManagement> {
         length: vouchers.length,
         child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: getAppBar(title:S.of(context).voucherManage),
+          appBar: getAppBar(title: S.of(context).voucherManage),
           body: DefaultTabController(
             length: vouchers.length,
             child: Column(
@@ -85,7 +88,8 @@ class _VoucherManageState extends BaseState<VoucherManagement> {
                     margin: EdgeInsets.only(top: SizeUtil.smallSpace),
                     child: TabBarView(
                       children: vouchers.map((Vouchers vouchers) {
-                        return VoucherList(voucherList: vouchers.vouchers);
+                        return VoucherList(
+                            voucherList: vouchers.vouchers, context: context);
                       }).toList(),
                     ),
                   ),
@@ -112,7 +116,8 @@ class Vouchers {
 }
 
 class VoucherList extends StatelessWidget {
-  VoucherList({Key key, this.voucherList}) : super(key: key);
+  final BuildContext context;
+  VoucherList({Key key, this.voucherList, this.context}) : super(key: key);
   final List<VoucherCard> voucherList;
 
   @override
@@ -120,7 +125,12 @@ class VoucherList extends StatelessWidget {
     return ListView.builder(
         itemCount: voucherList.length,
         itemBuilder: (context, index) {
-          return voucherList[index];
+          return GestureDetector(
+              onTap: () {
+                Navigator.of(this.context).push(
+                    CupertinoPageRoute(builder: (_) => VoucherDetailScreen()));
+              },
+              child: voucherList[index]);
         });
   }
 }

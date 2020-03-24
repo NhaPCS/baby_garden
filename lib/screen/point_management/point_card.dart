@@ -16,9 +16,10 @@ class PointCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: setBorder('bottom', Color.fromRGBO(201, 200, 200, 1), 1),
-      margin: EdgeInsets.only(left: 10, right: 10),
-      height: 90,
+      decoration: setBorder('bottom', Color(0xffC9C8C8), 1),
+      margin: EdgeInsets.only(
+          left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
+      height: 80,
       child: GestureDetector(
         onTap: () {
           RouteUtil.push(
@@ -35,29 +36,30 @@ class PointCard extends StatelessWidget {
             child: Image.asset(
               this.image,
               fit: BoxFit.cover,
-              width: 55.0,
-              height: 55.0,
+              width: SizeUtil.iconSizeLarge,
+              height: SizeUtil.iconSizeLarge,
             ),
           ),
           Expanded(
             child: Container(
                 // height: 90,
-                padding: EdgeInsets.only(top: 15),
+                padding: EdgeInsets.only(top: SizeUtil.smallSpace),
                 child: ListView(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(SizeUtil.midSmallSpace),
                     physics: NeverScrollableScrollPhysics(),
                     children: <Widget>[
                       Text(this.name,
                           style: TextStyle(
-                              fontSize: 18,
+                              fontSize: SizeUtil.textSizeBigger,
                               color: ColorUtil.primaryColor,
                               fontWeight: FontWeight.bold)),
                       Padding(
-                          padding: const EdgeInsets.only(top: 5),
+                          padding:
+                              const EdgeInsets.only(top: SizeUtil.tinySpace),
                           child: Text(this.point.toString() + ' điểm',
                               style: TextStyle(
-                                  color: Color.fromRGBO(112, 112, 112, 1),
-                                  fontSize: 16))),
+                                  color: ColorUtil.darkGray,
+                                  fontSize: SizeUtil.textSizeBigger))),
                     ])),
           ),
           Image.asset(

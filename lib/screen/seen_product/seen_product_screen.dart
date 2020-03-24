@@ -8,12 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-class SeenProduct extends StatefulWidget {
+class SeenProductScreen extends StatefulWidget {
   @override
-  _SeenProduct createState() => _SeenProduct();
+  _SeenProductScreen createState() => _SeenProductScreen();
 }
 
-class _SeenProduct extends BaseState<SeenProduct> {
+class _SeenProductScreen extends BaseState<SeenProductScreen> {
   final GetListProvider _getListProvider = GetListProvider();
 
   @override
@@ -23,31 +23,35 @@ class _SeenProduct extends BaseState<SeenProduct> {
         body: Column(children: <Widget>[
           Container(
             child: Column(
-              children: <Widget>[ProductCard(
-                onTap: (){
-                  push(ProductDetailScreen());
-                },
-                image: "photo/sample_product.png",
-                description: "Sữa Alene dành cho bé thể tích 320ml...",
-                price: "900000",
-                datetime: "13/2/2020",
-              ), ProductCard(
-                onTap: (){
-                  push(ProductDetailScreen());
-                },
-                image: "photo/sample_product.png",
-                description: "Sữa Alene dành cho bé thể tích 320ml...",
-                price: "900000",
-                datetime: "13/2/2020",
-              ), ProductCard(
-                onTap: (){
-                  push(ProductDetailScreen());
-                },
-                image: "photo/sample_product.png",
-                description: "Sữa Alene dành cho bé thể tích 320ml...",
-                price: "900000",
-                datetime: "13/2/2020",
-              )],
+              children: <Widget>[
+                ProductCard(
+                  onTap: () {
+                    push(ProductDetailScreen());
+                  },
+                  image: "photo/sample_product.png",
+                  description: "Sữa Alene dành cho bé thể tích 320ml...",
+                  price: "900000",
+                  datetime: "13/2/2020 - 12:30",
+                ),
+                ProductCard(
+                  onTap: () {
+                    push(ProductDetailScreen());
+                  },
+                  image: "photo/sample_product.png",
+                  description: "Sữa Alene dành cho bé thể tích 320ml...",
+                  price: "900000",
+                  datetime: "13/2/2020 - 11:20",
+                ),
+                ProductCard(
+                  onTap: () {
+                    push(ProductDetailScreen());
+                  },
+                  image: "photo/sample_product.png",
+                  description: "Sữa Alene dành cho bé thể tích 320ml...",
+                  price: "900000",
+                  datetime: "13/2/2020 - 10:52",
+                )
+              ],
             ),
           ),
         ]));

@@ -61,7 +61,7 @@
     "shopName": "Tên Shop",
     "shopPlaceholder": "Nhập tên shop của bạn",
     "mobilePlaceholder": "Nhập SĐT của bạn",
-    "addressPlaceholder": "Nhập SĐT của bạn",
+    "addressPlaceholder": "Nhập địa chỉ của bạn",
     "career": "Ngành nghề",
     "careerPlaceholder": "Nhập ngành nghề của bạn",
     "changePassword": "Đổi mật khẩu",
@@ -383,5 +383,5 @@
     "selectRemindDate": "Chọn ngày nhắc",
     "month": "Tháng",
     "selectRemindCycle": "chọn chu kì nhắc",
-    "use_service": "Sử dụng dịch vụ"
+    "getCodeNotifyText": "Mã khuyến mãi của bạn có hiệu lực trong 24 giờ. Bạn có muốn lấy mã không?"
 }

@@ -15,7 +15,7 @@ class S {
     AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final String name = locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
+    final String name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
@@ -589,7 +589,7 @@ class S {
 
   String get addressPlaceholder {
     return Intl.message(
-      'Nhập SĐT của bạn',
+      'Nhập địa chỉ của bạn',
       name: 'addressPlaceholder',
       desc: '',
       args: [],
@@ -3485,10 +3485,10 @@ class S {
     );
   }
 
-  String get use_service {
+  String get getCodeNotifyText {
     return Intl.message(
-      'Sử dụng dịch vụ',
-      name: 'use_service',
+      'Mã khuyến mãi của bạn có hiệu lực trong 24 giờ. Bạn có muốn lấy mã không?',
+      name: 'getCodeNotifyText',
       desc: '',
       args: [],
     );
@@ -3500,7 +3500,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
 
   List<Locale> get supportedLocales {
     return const <Locale>[
-      Locale('en', ''),
+      Locale.fromSubtags(languageCode: 'en'),
     ];
   }
 
