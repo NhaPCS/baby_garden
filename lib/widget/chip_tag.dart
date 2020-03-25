@@ -12,6 +12,7 @@ class ChipTag extends StatefulWidget {
   final bool removable;
   final VoidCallback onRemoveItem;
   final double textSize;
+  final bool checked;
   final ValueChanged<String> onItemPressed;
 
   const ChipTag(
@@ -26,7 +27,8 @@ class ChipTag extends StatefulWidget {
       this.removable = false,
       this.onRemoveItem,
       this.textSize = SizeUtil.textSizeSmall,
-      this.onItemPressed})
+      this.onItemPressed,
+      this.checked})
       : super(key: key);
 
   @override
@@ -36,10 +38,15 @@ class ChipTag extends StatefulWidget {
 }
 
 class _ChipState extends State<ChipTag> {
+  bool savedChecked = false;
   bool selected = false;
 
   @override
   Widget build(BuildContext context) {
+    if (widget.checked != null && savedChecked != widget.checked) {
+      selected = widget.checked;
+      savedChecked = widget.checked;
+    }
     return GestureDetector(
       child: Container(
         child: widget.removable

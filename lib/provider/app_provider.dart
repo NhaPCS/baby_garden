@@ -16,12 +16,14 @@ class AppProvider {
   double flashSaleItemHeight;
   double flashSaleItemWidth;
   double homeCategoryHeight;
+  double homeCategoryWidth;
+  double homeCategoryIconHeight;
   double childHeightBar;
 
   void updateCategorySize(double widthScreen, double heightScreen) {
 //    if (categoryHeight == null) { //TODO uncomment later
     categoryWidth = widthScreen * 0.15;
-    categoryHeight = categoryWidth * 1.4;
+    categoryHeight = categoryWidth * 1.2;
     productWidth = widthScreen * 0.35;
     productHeight = productWidth * 1.4;
     bigCategoryWidth = categoryHeight * 1.2;
@@ -34,10 +36,12 @@ class AppProvider {
     productCartHeight = productCartWidth * 0.7;
     width03 = widthScreen * 0.3;
     width05 = widthScreen * 0.5;
-    flashSaleItemWidth=widthScreen*0.35;
-    flashSaleItemHeight=flashSaleItemWidth*1.7;
-    homeCategoryHeight= heightScreen*0.15;
-    childHeightBar=heightScreen*0.4;
+    flashSaleItemWidth = widthScreen * 0.35;
+    flashSaleItemHeight = flashSaleItemWidth * 1.7;
+    homeCategoryHeight = widthScreen * 0.23;
+    homeCategoryWidth = widthScreen/5;
+    homeCategoryIconHeight = homeCategoryWidth*0.65;
+    childHeightBar = heightScreen * 0.4;
     ;
 //    }
   }

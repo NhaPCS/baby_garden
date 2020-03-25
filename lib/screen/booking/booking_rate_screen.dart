@@ -46,7 +46,7 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
     final List<Tab> myTabs = <Tab>[
-      Tab(text: S.of(context).waitting_rate),
+      Tab(text: S.of(context).book),
       Tab(text: S.of(context).rated),
     ];
     return DefaultTabController(

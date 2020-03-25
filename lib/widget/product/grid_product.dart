@@ -62,12 +62,10 @@ class GridProduct extends StatelessWidget {
           ListCategory(
             categoryProvider: changeCategoryProvider,
           ),
-          ListProduct(),
-          isHome
-              ? SizedBox(
-                  height: 0,
-                )
-              : ListProduct()
+          ListProduct(
+            maxItems: isHome ? 8 : 16,
+            rowsCount: isHome ? 1 : 2,
+          ),
         ],
       ),
       onTap: () {

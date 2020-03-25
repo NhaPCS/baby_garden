@@ -11,7 +11,6 @@ import 'package:baby_garden_flutter/screen/product_detail/store_info.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_icon.dart';
 import 'package:baby_garden_flutter/widget/button/my_flat_button.dart';
-import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
 import 'package:baby_garden_flutter/widget/product/cart_icon.dart';
 import 'package:baby_garden_flutter/widget/product/discount_widget.dart';
@@ -218,35 +217,23 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
           WidgetUtil.getLine(width: 2),
           StoreInfo(),
           WidgetUtil.getLine(width: 2),
-          paddingContainer(Text(S.of(context).detail_info)),
+          paddingContainer(Text(
+            S.of(context).detail_info,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          )),
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
           Column(
             children: DETAIL_INFO
-                .map((e) => paddingContainer(Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            e['title'],
-                            style: TextStyle(color: ColorUtil.textGray),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            e['value'],
-                            style: TextStyle(
-                                color: e['valueColor'] == null
-                                    ? ColorUtil.textColor
-                                    : e['valueColor']),
-                          ),
-                        )
-                      ],
-                    )))
+                .map((e) => infoRow(e, DETAIL_INFO.indexOf(e)))
                 .toList(),
           ),
           WidgetUtil.getLine(width: 2),
-          paddingContainer(Text(S.of(context).product_description)),
+          paddingContainer(Text(
+            S.of(context).product_description,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          )),
           paddingContainer(
               Text(
                 StringUtil.dummyText,
@@ -322,8 +309,13 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
           MyFlatButton(
             onPressed: () {
               //TODO
-              pushAndReplaceAll(MainScreen(index: 2,), "/main_screen");
+              pushAndReplaceAll(
+                  MainScreen(
+                    index: 2,
+                  ),
+                  "/main_screen");
             },
+            height: 50,
             text: S.of(context).buy_now,
             textStyle: TextStyle(color: Colors.white),
             borderRadius: 0,
@@ -336,6 +328,7 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
           ),
           Expanded(
             child: MyFlatButton(
+              height: 50,
               onPressed: () {
                 showModalBottomSheet(
                     isScrollControlled: true,
@@ -355,6 +348,32 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
           )
         ],
       ),
+    );
+  }
+
+  Widget infoRow(dynamic e, int index) {
+    return Container(
+      padding: SizeUtil.smallPadding,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Text(
+              e['title'],
+              style: TextStyle(color: ColorUtil.textGray),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              e['value'],
+              style: TextStyle(
+                  color: e['valueColor'] == null
+                      ? ColorUtil.textColor
+                      : e['valueColor']),
+            ),
+          )
+        ],
+      ),
+      color: index % 2 == 1 ? Color(0xffFBF9F9).withOpacity(0.7) : Colors.white,
     );
   }
 

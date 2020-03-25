@@ -3,10 +3,8 @@ import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/screen/category_product/category_product_screen.dart';
 import 'package:baby_garden_flutter/screen/child_heath/child_heath_screen.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_list_screen.dart';
-import 'package:baby_garden_flutter/screen/partner/partner_register_screen.dart';
 import 'package:baby_garden_flutter/screen/vcb_express/vcb_express_screen.dart';
 import 'package:baby_garden_flutter/screen/voucher/voucher_detail/provider_infor_screen.dart';
-import 'package:baby_garden_flutter/screen/voucher/voucher_management_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,18 +18,18 @@ class ItemHomeCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: GestureDetector(
-      child: Padding(
-        padding: SizeUtil.tinyPadding,
+      child: Container(
+        width: Provider.of<AppProvider>(context).homeCategoryWidth,
+        padding: EdgeInsets.only(
+            top: SizeUtil.tinySpace, bottom: SizeUtil.tinySpace),
         child: Column(
           children: <Widget>[
             Image.asset(
               category['icon'],
-              width: Provider.of<AppProvider>(context).homeCategoryHeight * 0.5,
-              height:
-                  Provider.of<AppProvider>(context).homeCategoryHeight * 0.5,
+              height: Provider.of<AppProvider>(context).homeCategoryIconHeight,
             ),
             SizedBox(
-              height: SizeUtil.smallSpace,
+              height: SizeUtil.tinySpace,
             ),
             Expanded(
                 child: AutoSizeText(
@@ -39,10 +37,11 @@ class ItemHomeCategory extends StatelessWidget {
               textAlign: TextAlign.center,
               maxFontSize: SizeUtil.textSizeSmall,
               minFontSize: SizeUtil.textSizeMini,
+              maxLines: 2,
               style: TextStyle(
                   color: ColorUtil.primaryColor,
                   fontSize: SizeUtil.textSizeSmall),
-            )),
+            ))
           ],
         ),
       ),
