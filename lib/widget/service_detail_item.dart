@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -43,8 +44,8 @@ class ServiceDetailItem extends StatelessWidget{
             Positioned(
               top: 0,
               right: 0,
-              child: Image.asset(
-                "photo/partner_indicator_icon_blue.png",
+              child: SvgIcon(
+                "triangle.svg",
                 width: 35,
                 height: 35,
               ),

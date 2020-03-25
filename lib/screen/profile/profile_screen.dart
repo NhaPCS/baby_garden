@@ -138,7 +138,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                       message: "Bạn có muốn đăng xuất không?",
                       positive: "Có",
                       negative: "Không", positiveClicked: () {
-                    pushAndReplaceAll(LoginScreen(), '/login');
+                    push(LoginScreen());
                   }, negativeClick: () {});
                   break;
               }

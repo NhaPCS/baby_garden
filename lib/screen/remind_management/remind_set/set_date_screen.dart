@@ -1,9 +1,11 @@
+import 'package:baby_garden_flutter/generated/intl/messages_all.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +31,7 @@ class _SetDateScreenState extends BaseState<SetDateScreen> {
   @override
   Widget buildWidget(BuildContext context) {
     String buttonTitle = S.of(context).confirm;
+    initializeDateFormatting('en', null);
     return Scaffold(
         appBar: getAppBar(title: S.of(context).selectRemindTime),
         body: Column(

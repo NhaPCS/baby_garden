@@ -7,7 +7,6 @@ import 'package:baby_garden_flutter/widget/my_password_textfield.dart';
 import 'package:baby_garden_flutter/widget/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +27,6 @@ class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,Cha
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
-//    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       appBar: getAppBar(
           title: S
@@ -39,13 +37,17 @@ class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,Cha
           titleColor: ColorUtil.primaryColor,
           backColor: ColorUtil.primaryColor),
       body: Center(
-        child: Column(
+        child: ListView(
           children: <Widget>[
             Image.asset("photo/logo.png",
                 width: MediaQuery
                     .of(context)
                     .size
-                    .width / 3),
+                    .width / 4,
+            height: MediaQuery
+                .of(context)
+                .size
+                .width / 4,),
             Text(S
                 .of(context)
                 .app_name,
@@ -113,32 +115,6 @@ class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,Cha
                     style: TextStyle(fontSize: SizeUtil.textSizeDefault, color: Colors.white),
                   ),
                 )),
-            SizedBox(
-              height: SizeUtil.smallSpace,
-            ),
-            InkWell(
-              onTap: () async{
-                if(_oldPasswordControler.text.trim().length==0||_newPasswordControler.text.trim().length==0||_reenterNewPasswordControler.text.trim().length==0){
-                  WidgetUtil.showMessageDialog(context, message: S.of(context).fill_all_blank, title: S.of(context).changePassword);
-                }else if (_newPasswordControler.text.trim().length!=_reenterNewPasswordControler.text.trim().length){
-                  WidgetUtil.showMessageDialog(context, message: S.of(context).pass_repass_must_same, title: S.of(context).changePassword);
-                }else {
-                  var data = await getViewModel().onChangePassword("112233", _newPasswordControler.text);
-                  if (data!=null){
-                    WidgetUtil.showMessageDialog(context, message: S.of(context).change_pass_success, title: S.of(context).success,onOkClick: (){
-                      Navigator.of(context).pop();
-                    });
-                  }else{
-                    WidgetUtil.showMessageDialog(context, message: S.of(context).change_fail, title: S.of(context).changePassword);
-                  }
-                }
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                S.of(context).return_login,
-                style: TextStyle(color: ColorUtil.blueForgotPass),
-              ),
-            )
           ],
         ),
       ),
