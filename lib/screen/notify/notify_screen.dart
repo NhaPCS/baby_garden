@@ -3,6 +3,7 @@ import 'package:baby_garden_flutter/provider/notify_switch_provider.dart';
 import 'package:baby_garden_flutter/provider/search_notify_provider.dart';
 import 'package:baby_garden_flutter/provider/segment_control_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/saling_detail/saling_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/my_text_field.dart';
 import 'package:baby_garden_flutter/widget/notify_item.dart';
@@ -179,7 +180,12 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                           shrinkWrap: true,
                           padding: EdgeInsets.all(0),
                           itemBuilder: (context, index) {
-                            return new NotifyItem();
+                            return GestureDetector(
+                              onTap: (){
+                                push(SalingDetailScreen());
+                              },
+                              child: NotifyItem(),
+                            );
                           }),
                     )
                   ],
