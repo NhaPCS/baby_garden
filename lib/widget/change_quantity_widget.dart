@@ -15,6 +15,7 @@ class ChangeQuantityWidget extends StatefulWidget {
   final Color textColor;
   final double height;
   final EdgeInsets padding;
+  final EdgeInsets containerMargin;
 
   const ChangeQuantityWidget(
       {Key key,
@@ -23,7 +24,8 @@ class ChangeQuantityWidget extends StatefulWidget {
       this.buttonColor = ColorUtil.textGray,
       this.textColor = ColorUtil.textGray,
       this.height = 35,
-      this.padding = SizeUtil.tinyPadding})
+      this.padding = SizeUtil.tinyPadding,
+      this.containerMargin = SizeUtil.smallPadding})
       : super(key: key);
 
   @override
@@ -40,7 +42,7 @@ class _ChangeQuantityState extends BaseState<ChangeQuantityWidget> {
   Widget buildWidget(BuildContext context) {
     return Container(
       height: widget.height,
-      margin: SizeUtil.smallPadding,
+      margin: widget.containerMargin,
       decoration: BoxDecoration(
           border: Border.all(color: ColorUtil.textGray, width: 1)),
       child: Row(
@@ -49,6 +51,7 @@ class _ChangeQuantityState extends BaseState<ChangeQuantityWidget> {
             icon: Icon(
               Icons.remove,
               color: widget.buttonColor,
+              size: SizeUtil.iconSize,
             ),
             padding: widget.padding,
             onPressed: () {
@@ -82,6 +85,7 @@ class _ChangeQuantityState extends BaseState<ChangeQuantityWidget> {
             icon: Icon(
               Icons.add,
               color: widget.buttonColor,
+              size: SizeUtil.iconSize,
             ),
             padding: widget.padding,
             onPressed: () {

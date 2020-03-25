@@ -48,6 +48,7 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
     return WillPopScope(
         child: Scaffold(
             body: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
               controller: _tabController,
               children: <Widget>[
                 HomeScreen(),

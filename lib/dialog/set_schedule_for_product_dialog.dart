@@ -25,15 +25,19 @@ class SetScheduleForProductDialog extends StatelessWidget {
         ),
       ),
       content: ListView(
+        shrinkWrap: true,
         children: <Widget>[
           Padding(
             padding: SizeUtil.smallPadding,
             child: Text(
               "Sữa bột Glico Nhật Bản số 0-1 dành cho trẻ từ sơ sinh đến 1 tuổi",
-              style: TextStyle(color: ColorUtil.blue),
+              style: TextStyle(color: ColorUtil.blue, fontSize: SizeUtil.textSizeDefault),
             ),
           ),
-          ReminderLayout(),
+          ReminderLayout(
+            showDesc: false,
+            hasDivider: true,
+          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -62,7 +66,8 @@ class SetScheduleForProductDialog extends StatelessWidget {
                 borderRadius: 30,
               )
             ],
-          )
+          ),
+          SizedBox(height: SizeUtil.smallSpace,)
         ],
       ),
     );

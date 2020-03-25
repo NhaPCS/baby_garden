@@ -111,12 +111,7 @@ class _RegisterScreenState
               onTap: () {
                 //todo open camera to capture the QAcode
               },
-              child: SvgIcon(
-                'ic_qr.svg',
-                width: 10,
-                height: 10,
-                padding: const EdgeInsets.all(SizeUtil.smallSpace),
-              ),
+              child: Icon(Icons.card_giftcard),
             ),
           ),
           SizedBox(

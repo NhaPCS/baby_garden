@@ -11,7 +11,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class FlashSale extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -24,26 +23,31 @@ class FlashSale extends StatelessWidget {
               width: SizeUtil.smallSpace,
             ),
             SizedBox(
-              height:Provider.of<AppProvider>(context).flashSaleItemHeight * 0.2 ,
+              height:
+                  Provider.of<AppProvider>(context).flashSaleItemHeight * 0.2,
               child: Row(
-              children: <Widget>[
-                Padding(padding: SizeUtil.smallPadding, child: Image.asset(
-                  'photo/lb_flashsale.png',
-                  fit: BoxFit.fitHeight,
-                ),),
-                Expanded(child: SizedBox()),
-                Stack(
-                  alignment: Alignment.center,
-                  children: <Widget>[
-                    SvgPicture.asset('photo/svg/bg_triangle.svg'),
-                    Text(
-                      S.of(context).view_more.toUpperCase(),
-                      style: TextStyle(color: Colors.white),
-                    )
-                  ],
-                ),
-              ],
-            ),),
+                children: <Widget>[
+                  Padding(
+                    padding: SizeUtil.smallPadding,
+                    child: Image.asset(
+                      'photo/lb_flashsale.png',
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                  Expanded(child: SizedBox()),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      SvgPicture.asset('photo/svg/bg_triangle.svg'),
+                      Text(
+                        S.of(context).view_more.toUpperCase(),
+                        style: TextStyle(color: Colors.white),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
             Container(
               margin: EdgeInsets.only(bottom: SizeUtil.defaultSpace),
               decoration: BoxDecoration(
@@ -60,7 +64,10 @@ class FlashSale extends StatelessWidget {
                       ),
                       MyRaisedButton(
                         onPressed: () {
-                          RouteUtil.push(context, ListProductScreen());
+                          RouteUtil.push(
+                              context,
+                              ListProductScreen(
+                                  title: S.of(context).happening));
                         },
                         text: S.of(context).happening,
                         color: ColorUtil.red,
@@ -71,7 +78,10 @@ class FlashSale extends StatelessWidget {
                       ),
                       MyRaisedButton(
                         onPressed: () {
-                          RouteUtil.push(context, ListProductScreen());
+                          RouteUtil.push(
+                              context,
+                              ListProductScreen(
+                                  title: S.of(context).happened));
                         },
                         text: S.of(context).happened,
                         color: Colors.white,
@@ -80,7 +90,8 @@ class FlashSale extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: Provider.of<AppProvider>(context).flashSaleItemHeight,
+                    height:
+                        Provider.of<AppProvider>(context).flashSaleItemHeight,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: 10,
@@ -108,7 +119,8 @@ class FlashSale extends StatelessWidget {
         color: ColorUtil.flashSaleColor,
       ),
       onTap: () {
-        RouteUtil.push(context, ListProductScreen(title:S.of(context).happening));
+        RouteUtil.push(
+            context, ListProductScreen(title: S.of(context).happening));
       },
     );
   }

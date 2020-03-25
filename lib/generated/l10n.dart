@@ -1840,7 +1840,7 @@ class S {
 
   String get heath_number {
     return Intl.message(
-      'Chỉ số sức khỏe',
+      'Chỉ số\nsức khỏe',
       name: 'heath_number',
       desc: '',
       args: [],
@@ -3498,6 +3498,42 @@ class S {
     return Intl.message(
       'Mã khuyến mãi của bạn có hiệu lực trong 24 giờ. Bạn có muốn lấy mã không?',
       name: 'getCodeNotifyText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get view_all {
+    return Intl.message(
+      'Xem tất cả',
+      name: 'view_all',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get height_cm {
+    return Intl.message(
+      'Chiều cao (cm)',
+      name: 'height_cm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get age_month {
+    return Intl.message(
+      'Tháng tuối',
+      name: 'age_month',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get view_shop {
+    return Intl.message(
+      'Xem Shop',
+      name: 'view_shop',
       desc: '',
       args: [],
     );
