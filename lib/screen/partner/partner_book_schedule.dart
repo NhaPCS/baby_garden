@@ -9,6 +9,7 @@ import 'package:baby_garden_flutter/provider/change_service_provider.dart';
 import 'package:baby_garden_flutter/provider/partner_book_schedule_choose_location.dart';
 import 'package:baby_garden_flutter/provider/partner_book_tabbar_provider.dart';
 import 'package:baby_garden_flutter/provider/partner_schedule_get_header_hei.dart';
+import 'package:baby_garden_flutter/provider/partner_tabbar_provider.dart';
 import 'package:baby_garden_flutter/provider/see_more_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/category_product/sliver_category_delegate.dart';
@@ -36,6 +37,7 @@ class _PartnerBookScheduleScreenState
     extends BaseState<PartnerBookScheduleScreen> with TickerProviderStateMixin {
   final SeeMoreProvider _seeMoreProvider = SeeMoreProvider();
   final PartnerChooseLocation _partnerChooseLocation = PartnerChooseLocation();
+  final PartnerTabbarProvider _partnerTabbarProvider = PartnerTabbarProvider();
   final PartnerGetHeightProvider _getHeightProvider =
       PartnerGetHeightProvider();
   final ChangeServiceProvider _serviceProvider = ChangeServiceProvider();
@@ -49,10 +51,11 @@ class _PartnerBookScheduleScreenState
   TabController _tabController;
   TabController _dayTabController;
   final GlobalKey _rowKey = GlobalKey();
+  final GlobalKey _bannerKey = GlobalKey();
   final GlobalKey _rowKeyFull = GlobalKey();
   final ValueNotifier<double> _rowHeight = ValueNotifier<double>(-1);
   double _rowHeightFull = 0;
-  final int imageHeight = 151;
+  double imageHeight = 151;
   @override
   void initState() {
     // TODO: implement initState
@@ -70,6 +73,7 @@ class _PartnerBookScheduleScreenState
     WidgetsBinding.instance.addPostFrameCallback((_) => {
           _rowHeight.value = _rowKey.currentContext.size.height,//TODO min height
           _rowHeightFull = _rowKeyFull.currentContext.size.height,//TODO max height
+        imageHeight = _bannerKey.currentContext.size.height,//TODO max height
           print(_rowHeight.value), //todo min height
           print(_rowHeightFull) // todo expand full height
         });
@@ -117,6 +121,7 @@ class _PartnerBookScheduleScreenState
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
+    final productTabbarHei = SizeUtil.tabbar_fix_height +76;
     final List<Tab> myTabs = <Tab>[
       Tab(text: S.of(context).book),
       Tab(
@@ -169,7 +174,7 @@ class _PartnerBookScheduleScreenState
                       forceElevated: isScrollInner,
                     ),
                     Consumer<SeeMoreProvider>(builder: (BuildContext context, SeeMoreProvider value, Widget child) {
-                      double hei = (value.isShow?_rowHeightFull:_rowHeight.value) + imageHeight;
+                      double hei = (value.isShow?_rowHeightFull:_rowHeight.value) + imageHeight + 7;
                       print("hei: ${hei}");
                       return SliverPersistentHeader(
                         pinned: false,
@@ -185,7 +190,7 @@ class _PartnerBookScheduleScreenState
                                       width: MediaQuery.of(context)
                                           .size
                                           .width,
-                                      height: 146,
+                                      height: imageHeight,
                                     ),
                                     Positioned(
                                       bottom: SizeUtil.smallSpace,
@@ -422,43 +427,61 @@ class _PartnerBookScheduleScreenState
                             hei),
                       );
                     },),
-                    SliverPersistentHeader(
-                      pinned: true,
-                      floating: false,
-                      delegate: SliverCategoryDelegate(
-                          Container(
-                            height: SizeUtil.tabbar_fix_height,
-                            child: ColoredTabBar(
-                              ColorUtil.lineColor,
-                              TabBar(
-                                controller: _tabController,
-                                labelColor: Colors.white,
-                                indicatorColor: ColorUtil.white,
-                                indicator: BoxDecoration(
-                                    borderRadius:
-                                    BorderRadius.circular(0),
-                                    color: ColorUtil.primaryColor),
-                                unselectedLabelColor:
-                                ColorUtil.textColor,
-                                tabs: myTabs,
-                              ),
+                    Consumer<PartnerTabbarProvider>(builder: (BuildContext context, PartnerTabbarProvider value, Widget child) {
+                      return SliverPersistentHeader(
+                        pinned: true,
+                        floating: false,
+                        delegate: SliverCategoryDelegate(
+                            Column(
+                              children: <Widget>[
+                                Container(
+                                  height: SizeUtil.tabbar_fix_height,
+                                  child: ColoredTabBar(
+                                    ColorUtil.lineColor,
+                                    TabBar(
+                                      onTap: (val){
+                                        _partnerTabbarProvider.onChange();
+                                      },
+                                      controller: _tabController,
+                                      labelColor: Colors.white,
+                                      indicatorColor: ColorUtil.white,
+                                      indicator: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(0),
+                                          color: ColorUtil.primaryColor),
+                                      unselectedLabelColor:
+                                      ColorUtil.textColor,
+                                      tabs: myTabs,
+                                    ),
+                                  ),
+                                  decoration: BoxDecoration(boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      blurRadius: 5.0,
+                                    ),
+                                  ]),
+                                ),
+                                value.isProduct?ListCategory():SizedBox()
+                              ],
                             ),
-                            decoration: BoxDecoration(boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey,
-                                blurRadius: 5.0,
-                              ),
-                            ]),
-                          ),
-                          SizeUtil.tabbar_fix_height,
-                          SizeUtil.tabbar_fix_height),
-                    )
+                            value.isProduct?productTabbarHei:SizeUtil.tabbar_fix_height,
+                          value.isProduct?productTabbarHei:SizeUtil.tabbar_fix_height),
+                      );
+                    },)
                   ];
                 },
               )
                   : Column(
                 children: <Widget>[
                   //TODO get detail info min height
+                  Image.asset(
+                    "photo/partner_item_img.png",
+                    fit: BoxFit.fitWidth,
+                    key: _bannerKey,
+                    width: MediaQuery.of(context)
+                        .size
+                        .width,
+                  ),
                   Column(
                     key: _rowKey,
                     mainAxisSize: MainAxisSize.min,
@@ -910,7 +933,6 @@ class _PartnerBookScheduleScreenState
   Widget productContent() {
     return Column(
       children: <Widget>[
-        ListCategory(),
         Expanded(
           child: GridView.builder(
             scrollDirection: Axis.vertical,
@@ -962,6 +984,7 @@ class _PartnerBookScheduleScreenState
       ChangeNotifierProvider.value(value: _dateProvider),
       ChangeNotifierProvider.value(value: _getHeightProvider),
       ChangeNotifierProvider.value(value: _partnerChooseLocation),
+      ChangeNotifierProvider.value(value: _partnerTabbarProvider),
     ];
   }
 }

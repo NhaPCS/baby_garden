@@ -402,7 +402,7 @@ class WidgetUtil {
       {String message,
       String title,
       String positive = "OK",
-      String negative = "Camcel",
+      String negative = "Cancel",
       VoidCallback positiveClicked,
       VoidCallback negativeClick}) {
     showDialog(

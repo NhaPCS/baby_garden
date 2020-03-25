@@ -49,31 +49,31 @@ class _OrderState extends BaseState<OrderScreen> {
                         onTap: () {
                           switch(ORDER_OPTIONS.indexOf(e)){
                             case 0:// todo chờ thanh toán
-                              push(ListOrderScreen(
-                                title: e['title'],isShowNegativeButton: true,isShowPositiveButton: true,state: 0,
+                              push(OrderListScreen(
+                                title: e['title'].replaceAll("\n", " "),isShowNegativeButton: true,isShowPositiveButton: true,state: 0,
                               ));
                               break;
                             case 1://todo chờ xác nhận
-                              push(ListOrderScreen(
-                                title: e['title'],isShowNegativeButton: true,state: 1,
+                              push(OrderListScreen(
+                                title: e['title'].replaceAll("\n", " "),isShowNegativeButton: true,state: 1,
                               ));
                               break;
                             case 2://todo nhận hàng tại shop
-                              push(OrderListScreen());
+                              push(OrderListScreen(title: S.of(context).receive_in_shop,state: 2,isShowPositiveButton: true,isShowNegativeButton: true,));
                               break;
                             case 3://todo đang đóng gói
-                              push(ListOrderScreen(
-                                title: e['title'],state: 3,
+                              push(OrderListScreen(
+                                title: e['title'].replaceAll("\n", " "),state: 3,
                               ));
                               break;
                             case 4://todo đang vận chuyển
-                              push(OrderListScreen(isDelivering: true,));
+                              push(OrderListScreen(state: 4,title: S.of(context).delivering,));
                               break;
                             case 5://todo đơn hàng thành công
-                              push(ListOrderScreen(title: S.of(context).ordered,state: 5,isShowPositiveButton: true,childTitle: "Đơn hàng VCB19.12.25",));
+                              push(OrderListScreen(title: S.of(context).ordered,state: 5,isShowPositiveButton: true,childTitle: "Đơn hàng VCB19.12.25",));
                               break;
                             case 6://todo đơn hàng đã huỷ
-                              push(ListOrderScreen(title: S.of(context).canceled_order,state: 6,isShowPositiveButton: true,childTitle: "Chi tiết huỷ đơn",));
+                              push(OrderListScreen(title: S.of(context).canceled_order,state: 6,isShowPositiveButton: true,childTitle: "Chi tiết huỷ đơn",));
                               break;
                             default://todo đánh giá đơn hàng
                               push(BookingRateScreen(isService:  false,));

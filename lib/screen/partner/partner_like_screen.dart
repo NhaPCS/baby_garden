@@ -33,6 +33,7 @@ class _PartnerLikeScreen extends BaseState<PartnerLikeScreen> {
           SizedBox(
             height: SizeUtil.tinySpace,
           ),
+          ListCategory(),
           Expanded(
             child: ListView.builder(
                 itemCount: 10,

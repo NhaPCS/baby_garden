@@ -558,7 +558,7 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                   //TODO booking
                   if (widget.state == 0) {
                     push(CheckoutScreen());
-                  } else if (widget.state == 4){
+                  } else if (widget.state == 2){
                     showDialog(
                         context: context,
                         builder: (BuildContext context) =>
@@ -574,7 +574,7 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                   child: Text(
                     widget.state == 0
                         ? S.of(context).checkout.toUpperCase()
-                        : widget.state == 4 ? S.of(context).receive.toUpperCase():S.of(context).rating_order,
+                        : widget.state == 2 ? S.of(context).receive.toUpperCase():S.of(context).rating_order,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: SizeUtil.textSizeDefault,
