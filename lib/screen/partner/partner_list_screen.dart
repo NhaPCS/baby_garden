@@ -3,7 +3,7 @@ import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_book_schedule.dart';
-import 'package:baby_garden_flutter/screen/vcb_express_detail/vcb_express_detail_screen.dart';
+import 'package:baby_garden_flutter/screen/vcb_express/vcb_express_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/expressItem.dart';
 import 'package:baby_garden_flutter/widget/partner_item.dart';

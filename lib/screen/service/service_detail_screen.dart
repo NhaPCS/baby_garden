@@ -1,5 +1,7 @@
+import 'package:baby_garden_flutter/dialog/receive_barcode_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/rating_detail/rating_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,10 +11,9 @@ import 'package:nested/nested.dart';
 
 class ServiceDetailScreen extends StatefulWidget{
   final String title;
-  final bool isBookedSchedule;
-  final bool isCancel;
+  final int state;
 
-  const ServiceDetailScreen({Key key,this.title,this.isBookedSchedule = false,this.isCancel = false}):super(key: key);
+  const ServiceDetailScreen({Key key,this.title,this.state = 0}):super(key: key);
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -60,7 +61,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                     RichText(
                       text: TextSpan(children: <TextSpan>[
                         TextSpan(
-                            text: "Cung cấp bởi: Vườn Của Bé",
+                            text: "Cung cấp bởi:",
                             style: TextStyle(
                                 color: ColorUtil.textColor,
                                 fontWeight: FontWeight.normal,
@@ -299,7 +300,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                     ]),
               ),
             ),
-            widget.isCancel?Column(
+            widget.state==2?Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
               WidgetUtil.getLine(
@@ -369,29 +370,63 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                 ),
               ),
             ],):Spacer(),
-            widget.isBookedSchedule?Container(
-              width: MediaQuery.of(context).size.width,
-              child: RaisedButton(
-                onPressed: () {
-                  //TODO booking
-                },
-                color: ColorUtil.primaryColor,
-                child: Container(
-                  padding: EdgeInsets.all(SizeUtil.midSpace),
-                  child: Text(
-                    S
-                        .of(context)
-                        .cancel_schedule
-                        .toUpperCase(),
-                    style: TextStyle(
-                        fontSize: SizeUtil.textSizeDefault,
-                        color: Colors.white,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold),
+            Column(children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: RaisedButton(
+                  onPressed: () {
+                    //TODO booking
+                    if(widget.state==0){
+                      showDialog(context: context, builder: (BuildContext context) => ReceiveBarCodeDialogue());
+                    }else {
+                      push(RatingDetailScreen());
+                    }
+                  },
+                  color: ColorUtil.primaryColor,
+                  child: Container(
+                    padding: EdgeInsets.all(SizeUtil.midSpace),
+                    child: Text(
+                      widget.state==0?S
+                          .of(context)
+                          .use_service
+                          .toUpperCase():S
+                          .of(context)
+                          .rating_service
+                          .toUpperCase(),
+                      style: TextStyle(
+                          fontSize: SizeUtil.textSizeDefault,
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
               ),
-            ):SizedBox()
+              widget.state==0?Container(
+                width: MediaQuery.of(context).size.width,
+                child: RaisedButton(
+                  onPressed: () {
+                    //TODO booking
+                    Navigator.of(context).pop();
+                  },
+                  color: ColorUtil.primaryColor,
+                  child: Container(
+                    padding: EdgeInsets.all(SizeUtil.midSpace),
+                    child: Text(
+                      S
+                          .of(context)
+                          .cancel_schedule
+                          .toUpperCase(),
+                      style: TextStyle(
+                          fontSize: SizeUtil.textSizeDefault,
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ):SizedBox()
+            ],)
           ]),
         ));
   }

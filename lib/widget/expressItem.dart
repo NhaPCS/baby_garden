@@ -48,7 +48,7 @@ class ExpressItem extends StatelessWidget {
             Row(
               children: <Widget>[
                 Image.asset("photo/express_item_img.png",
-                    width: MediaQuery.of(context).size.width*3 / 16),
+                    width: MediaQuery.of(context).size.width*3 / 16,height: MediaQuery.of(context).size.width*3 / 16,fit: BoxFit.cover,),
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.only(left: SizeUtil.tinySpace),

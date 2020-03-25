@@ -81,7 +81,7 @@ class _OrderDeliveryInfoScreenState extends BaseState<OrderDeliveryInfoScreen> {
             isFirstItem: true,
             padding: EdgeInsets.only(
                 top: SizeUtil.smallSpace, left: SizeUtil.smallSpace),
-            title: "Đang vận chuyển",
+            title: S.of(context).delivering,
             subTitle: "25-12-2019 15:42",
             targetColor: Colors.blue,
             isShowSeparate: true,

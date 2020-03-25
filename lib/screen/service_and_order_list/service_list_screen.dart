@@ -12,9 +12,10 @@ import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 
 class ServiceListScreen extends StatefulWidget {
-  final int order;
   final String title;
-  const ServiceListScreen({Key key, this.order = 0,this.title}):super(key: key);
+  final String childTitle;
+  final int state;
+  const ServiceListScreen({Key key,this.title,@required this.childTitle, this.state = 0}):super(key: key);
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -23,8 +24,6 @@ class ServiceListScreen extends StatefulWidget {
 }
 
 class _ServiceListScreenState extends BaseState<ServiceListScreen> {
-  final _isService = false;
-
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
@@ -54,7 +53,7 @@ class _ServiceListScreenState extends BaseState<ServiceListScreen> {
                       padding: EdgeInsets.all(0),
                       itemBuilder: (context, index) {
                         return new GestureDetector(onTap: (){
-                          push(ServiceDetailScreen(title: widget.order==4?"Chi tiết hủy đơn":"Đơn hàng VCB19.12.25",isBookedSchedule: widget.order==2,isCancel: widget.order==4,));
+                          push(ServiceDetailScreen(title: widget.childTitle,state: widget.state,));
                         },
                           child: new ServiceItem(isShowBookingDate: false,));
                       }),

@@ -6,12 +6,15 @@ import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_date_provider.dart';
 import 'package:baby_garden_flutter/provider/change_schedule_provider.dart';
 import 'package:baby_garden_flutter/provider/change_service_provider.dart';
+import 'package:baby_garden_flutter/provider/partner_book_schedule_choose_location.dart';
 import 'package:baby_garden_flutter/provider/partner_book_tabbar_provider.dart';
 import 'package:baby_garden_flutter/provider/partner_schedule_get_header_hei.dart';
+import 'package:baby_garden_flutter/provider/partner_tabbar_provider.dart';
 import 'package:baby_garden_flutter/provider/see_more_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/category_product/sliver_category_delegate.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/custom_radio_button.dart';
 import 'package:baby_garden_flutter/widget/loadmore/loadmore_nested_scrollview.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:baby_garden_flutter/widget/service_detail_item.dart';
@@ -33,6 +36,8 @@ class PartnerBookScheduleScreen extends StatefulWidget {
 class _PartnerBookScheduleScreenState
     extends BaseState<PartnerBookScheduleScreen> with TickerProviderStateMixin {
   final SeeMoreProvider _seeMoreProvider = SeeMoreProvider();
+  final PartnerChooseLocation _partnerChooseLocation = PartnerChooseLocation();
+  final PartnerTabbarProvider _partnerTabbarProvider = PartnerTabbarProvider();
   final PartnerGetHeightProvider _getHeightProvider =
       PartnerGetHeightProvider();
   final ChangeServiceProvider _serviceProvider = ChangeServiceProvider();
@@ -46,10 +51,11 @@ class _PartnerBookScheduleScreenState
   TabController _tabController;
   TabController _dayTabController;
   final GlobalKey _rowKey = GlobalKey();
+  final GlobalKey _bannerKey = GlobalKey();
   final GlobalKey _rowKeyFull = GlobalKey();
   final ValueNotifier<double> _rowHeight = ValueNotifier<double>(-1);
   double _rowHeightFull = 0;
-  final int imageHeight = 151;
+  double imageHeight = 151;
   @override
   void initState() {
     // TODO: implement initState
@@ -67,6 +73,7 @@ class _PartnerBookScheduleScreenState
     WidgetsBinding.instance.addPostFrameCallback((_) => {
           _rowHeight.value = _rowKey.currentContext.size.height,//TODO min height
           _rowHeightFull = _rowKeyFull.currentContext.size.height,//TODO max height
+        imageHeight = _bannerKey.currentContext.size.height,//TODO max height
           print(_rowHeight.value), //todo min height
           print(_rowHeightFull) // todo expand full height
         });
@@ -114,8 +121,9 @@ class _PartnerBookScheduleScreenState
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
+    final productTabbarHei = SizeUtil.tabbar_fix_height +76;
     final List<Tab> myTabs = <Tab>[
-      Tab(text: S.of(context).waitting_rate),
+      Tab(text: S.of(context).book),
       Tab(
         child: Container(
           child: Row(
@@ -166,7 +174,7 @@ class _PartnerBookScheduleScreenState
                       forceElevated: isScrollInner,
                     ),
                     Consumer<SeeMoreProvider>(builder: (BuildContext context, SeeMoreProvider value, Widget child) {
-                      double hei = (value.isShow?_rowHeightFull:_rowHeight.value) + imageHeight;
+                      double hei = (value.isShow?_rowHeightFull:_rowHeight.value) + imageHeight + 7;
                       print("hei: ${hei}");
                       return SliverPersistentHeader(
                         pinned: false,
@@ -182,7 +190,7 @@ class _PartnerBookScheduleScreenState
                                       width: MediaQuery.of(context)
                                           .size
                                           .width,
-                                      height: 146,
+                                      height: imageHeight,
                                     ),
                                     Positioned(
                                       bottom: SizeUtil.smallSpace,
@@ -419,43 +427,61 @@ class _PartnerBookScheduleScreenState
                             hei),
                       );
                     },),
-                    SliverPersistentHeader(
-                      pinned: true,
-                      floating: false,
-                      delegate: SliverCategoryDelegate(
-                          Container(
-                            height: SizeUtil.tabbar_fix_height,
-                            child: ColoredTabBar(
-                              ColorUtil.lineColor,
-                              TabBar(
-                                controller: _tabController,
-                                labelColor: Colors.white,
-                                indicatorColor: ColorUtil.white,
-                                indicator: BoxDecoration(
-                                    borderRadius:
-                                    BorderRadius.circular(0),
-                                    color: ColorUtil.primaryColor),
-                                unselectedLabelColor:
-                                ColorUtil.textColor,
-                                tabs: myTabs,
-                              ),
+                    Consumer<PartnerTabbarProvider>(builder: (BuildContext context, PartnerTabbarProvider value, Widget child) {
+                      return SliverPersistentHeader(
+                        pinned: true,
+                        floating: false,
+                        delegate: SliverCategoryDelegate(
+                            Column(
+                              children: <Widget>[
+                                Container(
+                                  height: SizeUtil.tabbar_fix_height,
+                                  child: ColoredTabBar(
+                                    ColorUtil.lineColor,
+                                    TabBar(
+                                      onTap: (val){
+                                        _partnerTabbarProvider.onChange();
+                                      },
+                                      controller: _tabController,
+                                      labelColor: Colors.white,
+                                      indicatorColor: ColorUtil.white,
+                                      indicator: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(0),
+                                          color: ColorUtil.primaryColor),
+                                      unselectedLabelColor:
+                                      ColorUtil.textColor,
+                                      tabs: myTabs,
+                                    ),
+                                  ),
+                                  decoration: BoxDecoration(boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      blurRadius: 5.0,
+                                    ),
+                                  ]),
+                                ),
+                                value.isProduct?ListCategory():SizedBox()
+                              ],
                             ),
-                            decoration: BoxDecoration(boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey,
-                                blurRadius: 5.0,
-                              ),
-                            ]),
-                          ),
-                          SizeUtil.tabbar_fix_height,
-                          SizeUtil.tabbar_fix_height),
-                    )
+                            value.isProduct?productTabbarHei:SizeUtil.tabbar_fix_height,
+                          value.isProduct?productTabbarHei:SizeUtil.tabbar_fix_height),
+                      );
+                    },)
                   ];
                 },
               )
                   : Column(
                 children: <Widget>[
                   //TODO get detail info min height
+                  Image.asset(
+                    "photo/partner_item_img.png",
+                    fit: BoxFit.fitWidth,
+                    key: _bannerKey,
+                    width: MediaQuery.of(context)
+                        .size
+                        .width,
+                  ),
                   Column(
                     key: _rowKey,
                     mainAxisSize: MainAxisSize.min,
@@ -688,29 +714,25 @@ class _PartnerBookScheduleScreenState
             ),
             WidgetUtil.getLine(margin: EdgeInsets.all(0), width: 2),
             //todo client list
-            Column(
-              children: StringUtil.clientList
-                  .map((ele) => paddingContainer(
-                  Row(
-                    children: <Widget>[
-                      Image.asset(
-                        "photo/ic_promo_1.png",
-                        width: SizeUtil.iconSize,
-                        height: SizeUtil.iconSize,
-                      ),
-                      SizedBox(
-                        width: SizeUtil.smallSpace,
-                      ),
-                      Text(
-                        ele['address'],
-                        style: TextStyle(color: ColorUtil.textHint),
-                      )
-                    ],
-                  ),
-                  padding: EdgeInsets.only(
-                      left: SizeUtil.smallSpace, top: SizeUtil.smallSpace)))
-                  .toList(),
-            ),
+            Consumer<PartnerChooseLocation>(builder: (BuildContext context, PartnerChooseLocation value, Widget child) {
+              return Column(
+                children: StringUtil.clientList
+                    .map((ele) => CustomRadioButton(
+                  titleContent:
+                  Text(ele['address']),
+                  padding: const EdgeInsets.only(
+                      left: SizeUtil.smallSpace, top: SizeUtil.smallSpace),
+                  value: StringUtil.clientList.indexOf(ele),
+                  groupValue: value.val,
+                  iconSize: SizeUtil.iconSize,
+                  titleSize: SizeUtil.textSizeSmall,
+                  onChanged: (val) {
+                    _partnerChooseLocation.onChange(val);
+                  },
+                ),)
+                    .toList(),
+              );
+            },),
             WidgetUtil.getLine(
                 margin: EdgeInsets.only(top: SizeUtil.smallSpace), width: 2),
             //todo choose service title
@@ -826,17 +848,20 @@ class _PartnerBookScheduleScreenState
                     itemBuilder: (context, index) {
                       bool isSelected = _scheduleTimeProvider != null &&
                           _scheduleTimeProvider.timeIndex == index;
-                      return GestureDetector(
+                      print(StringUtil.time[index]['off']);
+                      return StringUtil.time[index]['off']==null?
+                        GestureDetector(
                           onTap: () {
                             if (_scheduleTimeProvider != null &&
                                 _scheduleTimeProvider.timeIndex != index) {
                               _scheduleTimeProvider.onSelectedTime(index);
                             }
                           },
-                          child: Container(
+                          child:
+                          Container(
                             margin: EdgeInsets.all(1),
                             color: isSelected
-                                ? ColorUtil.primaryColor
+                                ? Color(0xffFF7700)
                                 : ColorUtil.lineColor,
                             child: Center(
                               child: Text(
@@ -849,12 +874,25 @@ class _PartnerBookScheduleScreenState
                                 textAlign: TextAlign.center,
                               ),
                             ),
-                          ));
+                          )):Container(
+                        margin: EdgeInsets.all(1),
+                        color: ColorUtil.red,
+                        child: Center(
+                          child: Text(
+                            StringUtil.time[index]['time'],
+                            style: TextStyle(
+                                fontSize: SizeUtil.textSizeTiny,
+                                color: Colors.white),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
                     },
                   ),
                 );
               },
             ),
+            //todo booking button
             Container(
                 padding: const EdgeInsets.only(
                     left: SizeUtil.smallSpace,
@@ -895,7 +933,6 @@ class _PartnerBookScheduleScreenState
   Widget productContent() {
     return Column(
       children: <Widget>[
-        ListCategory(),
         Expanded(
           child: GridView.builder(
             scrollDirection: Axis.vertical,
@@ -946,6 +983,8 @@ class _PartnerBookScheduleScreenState
       ChangeNotifierProvider.value(value: _scheduleTimeProvider),
       ChangeNotifierProvider.value(value: _dateProvider),
       ChangeNotifierProvider.value(value: _getHeightProvider),
+      ChangeNotifierProvider.value(value: _partnerChooseLocation),
+      ChangeNotifierProvider.value(value: _partnerTabbarProvider),
     ];
   }
 }

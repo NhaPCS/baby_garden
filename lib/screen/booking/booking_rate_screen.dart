@@ -1,4 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/booking_rate_tabber_provider.dart';
+import 'package:baby_garden_flutter/provider/partner_tabbar_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/rated_detail/rated_detail_screen.dart';
 import 'package:baby_garden_flutter/screen/rating_detail/rating_detail_screen.dart';
@@ -9,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 class BookingRateScreen extends StatefulWidget {
   final bool isService;
@@ -24,12 +27,13 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
     with SingleTickerProviderStateMixin {
   bool israted = false;
   TabController _tabController;
-
+  final BookingRateTabbarProvider _bookingRateTabbarProvider = BookingRateTabbarProvider();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
+    _tabController.addListener(() { _bookingRateTabbarProvider.onChange();});
   }
 
   @override
@@ -59,6 +63,9 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
           widget: ColoredTabBar(
               Colors.white,
               TabBar(
+                onTap: (val){
+                  _bookingRateTabbarProvider.onChange();
+                },
                 controller: _tabController,
                 labelColor: ColorUtil.primaryColor,
                 unselectedLabelColor: ColorUtil.textColor,
@@ -83,7 +90,9 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
                     },
                     child: widget.isService
                         ? new ServiceItem()
-                        : new OrderItem(),
+                        : Consumer<BookingRateTabbarProvider>(builder: (BuildContext context, BookingRateTabbarProvider value, Widget child) {
+                          return  OrderItem(isRated: value.isRated,);
+                    },),
                   );
                 });
           }).toList(),
@@ -95,7 +104,7 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
   @override
   List<SingleChildWidget> providers() {
     // TODO: implement providers
-    return null;
+    return [ChangeNotifierProvider.value(value: _bookingRateTabbarProvider)];
   }
 }
 

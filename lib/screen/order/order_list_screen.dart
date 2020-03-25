@@ -12,8 +12,12 @@ import 'package:nested/nested.dart';
 import 'order_detail_screen.dart';
 
 class OrderListScreen extends StatefulWidget{
-  final bool isDelivering;
-  const OrderListScreen({Key key,this.isDelivering = false}):super(key:key);
+  final String title;
+  final String childTitle;
+  final int state;
+  final bool isShowPositiveButton;
+  final bool isShowNegativeButton;
+  const OrderListScreen({Key key,@required this.title, this.state = 0,this.childTitle,this.isShowNegativeButton = false, this.isShowPositiveButton = false,}):super(key:key);
 
   @override
   State<StatefulWidget> createState() {
@@ -29,7 +33,7 @@ class _OrderListScreenState extends BaseState<OrderListScreen>{
     // TODO: implement buildWidget
     return Scaffold(
       appBar: getAppBar(
-        title:  widget.isDelivering?S.of(context).delivering:S.of(context).receive_in_shop,
+        title:   widget.title,
         centerTitle: true,
         bgColor: ColorUtil.primaryColor,
         titleColor: Colors.white,
@@ -52,7 +56,7 @@ class _OrderListScreenState extends BaseState<OrderListScreen>{
                   padding: EdgeInsets.all(0),
                   itemBuilder: (context, index) {
                     return new GestureDetector(onTap: (){
-                      push(OrderDetailScreen(isDelivering: widget.isDelivering,));
+                      push(OrderDetailScreen(title:widget.childTitle!=null?widget.childTitle:widget.title,state: widget.state,isShowNegativeButton: widget.isShowNegativeButton,isShowPositiveButton: widget.isShowPositiveButton,));
                     },
                         child: OrderItem(isRated: false,));
                   }),
