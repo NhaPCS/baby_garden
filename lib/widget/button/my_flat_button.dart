@@ -9,6 +9,7 @@ class MyFlatButton extends StatelessWidget {
   final TextStyle textStyle;
   final Color color;
   final double borderRadius;
+  final double height;
   final Widget icon;
 
   const MyFlatButton({
@@ -24,12 +25,15 @@ class MyFlatButton extends StatelessWidget {
     this.borderRadius = SizeUtil.smallRadius,
     this.textStyle,
     this.icon,
+    this.height,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       child: Container(
+        alignment: Alignment.center,
+        height: height,
         child: icon == null
             ? Text(
                 text,

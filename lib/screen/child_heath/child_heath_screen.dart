@@ -176,7 +176,7 @@ class _ChildHeathState extends BaseState<ChildHeathScreen> {
         child: InkWell(
       child: Container(
         margin: EdgeInsets.only(
-            left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
+            left: SizeUtil.defaultSpace, right: SizeUtil.defaultSpace),
         alignment: Alignment.center,
         padding: SizeUtil.smallPadding,
         decoration: BoxDecoration(

@@ -11,6 +11,8 @@ class MyRaisedButton extends StatelessWidget {
   final TextStyle textStyle;
   final Color color;
   final double borderRadius;
+  final double borderWidth;
+  final Color borderColor;
   final Widget icon;
   final double elevation;
 
@@ -27,7 +29,9 @@ class MyRaisedButton extends StatelessWidget {
       this.borderRadius = SizeUtil.smallRadius,
       this.textStyle,
       this.icon,
-      this.elevation})
+      this.elevation,
+      this.borderWidth = 0,
+      this.borderColor = Colors.transparent})
       : super(key: key);
 
   @override
@@ -53,8 +57,8 @@ class MyRaisedButton extends StatelessWidget {
                 ],
               ),
         shape: RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(borderRadius),
-        ),
+            borderRadius: new BorderRadius.circular(borderRadius),
+            side: BorderSide(color: borderColor, width: borderWidth)),
       ),
       minWidth: 0,
       height: 0,

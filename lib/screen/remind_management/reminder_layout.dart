@@ -4,11 +4,18 @@ import 'package:baby_garden_flutter/screen/remind_management/remind_set/remind_c
 import 'package:baby_garden_flutter/screen/remind_management/remind_set/set_date_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_management/remind_set/set_time_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/dashed_line.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 
 class ReminderLayout extends StatefulWidget {
+  final bool showDesc;
+  final bool hasDivider;
+
+  const ReminderLayout({Key key, this.showDesc = true, this.hasDivider = false})
+      : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _ReminderState();
@@ -87,17 +94,18 @@ class _ReminderState extends BaseState<ReminderLayout> {
   Widget buildWidget(BuildContext context) {
     return Column(
       children: <Widget>[
-        Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              children: <Widget>[
-                Text(S.of(context).selectRemindBuyTime,
+        widget.showDesc
+            ? Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Text(S.of(context).selectRemindBuyTime,
                     style: TextStyle(
                         fontSize: SizeUtil.textSizeBigger,
                         fontWeight: FontWeight.bold,
-                        color: ColorUtil.darkGray)),
-              ],
-            )),
+                        color: ColorUtil.darkGray)))
+            : SizedBox(
+                height: 0,
+                width: 0,
+              ),
         rowCheckBox(S.of(context).remindBuyProduct),
         GestureDetector(
           onTap: () {
@@ -105,6 +113,7 @@ class _ReminderState extends BaseState<ReminderLayout> {
           },
           child: rowTimeTable(S.of(context).remindTime),
         ),
+        getDivider(),
         rowCheckBox(S.of(context).remindUseProduct, isRemindUse: true),
         GestureDetector(
           onTap: () {
@@ -185,6 +194,21 @@ class _ReminderState extends BaseState<ReminderLayout> {
         ),
       ],
     );
+  }
+
+  Widget getDivider() {
+    return widget.hasDivider
+        ? Container(
+            width: double.infinity,
+            margin: EdgeInsets.only(top: SizeUtil.smallSpace),
+            child: CustomPaint(
+              painter: DashedLine(color: ColorUtil.primaryColor, dashSpace: 5),
+            ),
+          )
+        : SizedBox(
+            height: 0,
+            width: 0,
+          );
   }
 
   @override
