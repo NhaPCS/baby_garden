@@ -1,8 +1,6 @@
 import 'package:baby_garden_flutter/dialog/booking_dialogue.dart';
-import 'package:baby_garden_flutter/dialog/booking_schedule_success_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_product.dart';
-import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_date_provider.dart';
 import 'package:baby_garden_flutter/provider/change_schedule_provider.dart';
 import 'package:baby_garden_flutter/provider/change_service_provider.dart';
@@ -15,13 +13,11 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/category_product/sliver_category_delegate.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/custom_radio_button.dart';
-import 'package:baby_garden_flutter/widget/loadmore/loadmore_nested_scrollview.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:baby_garden_flutter/widget/service_detail_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
@@ -62,6 +58,7 @@ class _PartnerBookScheduleScreenState
     _tabController = TabController(vsync: this, length: 2);
     _dayTabController = TabController(vsync: this, length: 7);
     _tabController.addListener(() {
+      _partnerTabbarProvider.onChange();
       if (_tabController.index != _bookTabbarProvider.index) {
         _bookTabbarProvider.onChangeIndex(_tabController.index);
       }
