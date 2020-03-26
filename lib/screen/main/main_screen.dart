@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
@@ -43,6 +44,12 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
     if (widget.index>0) _tabController.animateTo(widget.index);
   }
 
+  @override
+  Future<void> didChangeDependencies() async {
+    super.didChangeDependencies();
+    String id = await ShareValueProvider.shareValueProvider.getUserId();
+    print("USER_ID $id");
+  }
   @override
   Widget buildWidget(BuildContext context) {
     return WillPopScope(
