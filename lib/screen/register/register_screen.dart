@@ -120,32 +120,33 @@ class _RegisterScreenState
           Consumer<WaittingOTPProvider>(
             builder: (BuildContext context, WaittingOTPProvider value,
                 Widget child) {
-                return value.isTimerStart?
-                Stack(
-                  alignment: Alignment.centerRight,
-                  children: <Widget>[
-                    MyTextField(
-                      hint: S.of(context).enter_otp,
-                      borderColor: ColorUtil.colorAccent,
-                      borderRadius: SizeUtil.tinyRadius,
-                      elevation: SizeUtil.smallElevation,
-                      contentPadding: SizeUtil.normalPadding,
-                      textEditingController: _otpControler,
-                      inputType: TextInputType.number,
-                      autoFocus: true,
-                    ),
-                    Positioned(
-                      child: Text(
-                          S.of(context).count_down_time(
-                              value.start.toString().padLeft(2, "0")),
-                          style: TextStyle(
-                              color: value.start < 10
-                                  ? ColorUtil.red
-                                  : ColorUtil.textColor)),
-                      right: SizeUtil.smallSpace,
+              return value.isTimerStart
+                  ? Stack(
+                      alignment: Alignment.centerRight,
+                      children: <Widget>[
+                        MyTextField(
+                          hint: S.of(context).enter_otp,
+                          borderColor: ColorUtil.colorAccent,
+                          borderRadius: SizeUtil.tinyRadius,
+                          elevation: SizeUtil.smallElevation,
+                          contentPadding: SizeUtil.normalPadding,
+                          textEditingController: _otpControler,
+                          inputType: TextInputType.number,
+                          autoFocus: true,
+                        ),
+                        Positioned(
+                          child: Text(
+                              S.of(context).count_down_time(
+                                  value.start.toString().padLeft(2, "0")),
+                              style: TextStyle(
+                                  color: value.start < 10
+                                      ? ColorUtil.red
+                                      : ColorUtil.textColor)),
+                          right: SizeUtil.smallSpace,
+                        )
+                      ],
                     )
-                  ],
-                ):SizedBox();
+                  : SizedBox();
             },
           ),
           SizedBox(
@@ -155,17 +156,22 @@ class _RegisterScreenState
             onPressed: () async {
               String check = checkRegisterCondition(isShowOTP);
               if (check.trim().length == 0) {
-                if (isShowOTP) {
-                  if (_otpControler.text.trim().length > 0) {
-                    //todo
-                    await getViewModel().onRegister(
-                        name: _nameControler.text.toString(),
-                        phone: _phoneControler.text.toString(),
-                        password: _passControler.text.toString(),
-                        refCode: _invitePhoneControler.text.toString(),
-                    code: _otpControler.text.toString().trim());
+                if (isShowOTP) {//todo check show otp input
+                  if (_waittingOTPProvider.start > 0){ //todo OTP timer out
+                    if (_otpControler.text.trim().length > 0) {//todo check otp invalid
+                      //todo
+                      await getViewModel().onRegister(
+                          name: _nameControler.text.toString(),
+                          phone: _phoneControler.text.toString(),
+                          password: _passControler.text.toString(),
+                          refCode: _invitePhoneControler.text.toString(),
+                          code: _otpControler.text.toString().trim());
+                    } else {
+                      WidgetUtil.showErrorDialog(context, "Vui lòng nhập OTP");
+                    }
                   }
                 } else {
+                  //todo send verify code and show otp input
                   var code = await getViewModel().onGetVerifyCode(
                       name: _nameControler.text.toString(),
                       phone: _phoneControler.text.toString(),
