@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_category_provider.dart';
+import 'package:baby_garden_flutter/provider/get_banners_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/photo_view/photo_view_screen.dart';
 import 'package:baby_garden_flutter/screen/search/search_screen.dart';
@@ -64,13 +65,21 @@ class _ShoppingState extends BaseState<ShoppingScreen> {
                       },
                     ),
                     Expanded(
-                      child: MyCarouselSlider(
-                        hasShadow: true,
-                        images: StringUtil.dummyImageList,
-                        onItemPressed: (index) {
-                          push(PhotoViewScreen(
-                            images: StringUtil.dummyImageList,
-                          ));
+                      child: Consumer<GetBannersProvider>(
+                        builder: (BuildContext context,
+                            GetBannersProvider value, Widget child) {
+                          return MyCarouselSlider(
+                            hasShadow: true,
+                            images: value.banners,
+                            imageAttrName: "img",
+                            onItemPressed: (index) {
+                              push(PhotoViewScreen(
+                                images: value.banners,
+                                imageAttrName: 'img',
+                                initIndex: index,
+                              ));
+                            },
+                          );
                         },
                       ),
                     )

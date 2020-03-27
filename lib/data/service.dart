@@ -74,8 +74,14 @@ Future<dynamic> changePassword(BuildContext context,
   return null;
 }
 
-Future<dynamic> productCategory(BuildContext context) async {
-  Response response = await get(context, path: "category");
+Future<dynamic> productCategory() async {
+  Response response = await get(null, path: "category");
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> banners() async {
+  Response response = await get(null, path: "banner");
   if (response.isSuccess()) return response.data;
   return null;
 }

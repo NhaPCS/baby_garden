@@ -32,7 +32,7 @@ class GridProduct extends StatelessWidget {
               ),
               Expanded(
                   child: Text(
-                title.toUpperCase(),
+                title == null ? "" : title.toUpperCase(),
                 style: TextStyle(
                     color: ColorUtil.primaryColor,
                     fontWeight: FontWeight.bold,

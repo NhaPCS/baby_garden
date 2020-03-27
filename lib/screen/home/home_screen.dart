@@ -3,6 +3,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_home_category.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_category_provider.dart';
+import 'package:baby_garden_flutter/provider/get_banners_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/category_product/sliver_category_delegate.dart';
 import 'package:baby_garden_flutter/screen/photo_view/photo_view_screen.dart';
@@ -56,7 +57,7 @@ class _HomeState extends BaseState<HomeScreen> {
               pinned: true,
               backgroundColor: Colors.white,
               expandedHeight:
-              Provider.of<AppProvider>(context).expandHeaderHeight,
+                  Provider.of<AppProvider>(context).expandHeaderHeight,
               flexibleSpace: Stack(
                 children: <Widget>[
                   Container(
@@ -67,8 +68,7 @@ class _HomeState extends BaseState<HomeScreen> {
                             fit: BoxFit.cover),
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(SizeUtil.bigRadius),
-                            bottomRight:
-                            Radius.circular(SizeUtil.bigRadius))),
+                            bottomRight: Radius.circular(SizeUtil.bigRadius))),
                   ),
                   Column(
                     children: <Widget>[
@@ -80,13 +80,21 @@ class _HomeState extends BaseState<HomeScreen> {
                         },
                       ),
                       Expanded(
-                        child: MyCarouselSlider(
-                          hasShadow: true,
-                          images: StringUtil.dummyImageList,
-                          onItemPressed: (index) {
-                            push(PhotoViewScreen(
-                              images: StringUtil.dummyImageList,
-                            ));
+                        child: Consumer<GetBannersProvider>(
+                          builder: (BuildContext context,
+                              GetBannersProvider value, Widget child) {
+                            return MyCarouselSlider(
+                              hasShadow: true,
+                              images: value.banners,
+                              imageAttrName: "img",
+                              onItemPressed: (index) {
+                                push(PhotoViewScreen(
+                                  images: value.banners,
+                                  imageAttrName: 'img',
+                                  initIndex: index,
+                                ));
+                              },
+                            );
                           },
                         ),
                       ),
@@ -106,8 +114,8 @@ class _HomeState extends BaseState<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: HOME_CATEGORIES
                           .map((e) => ItemHomeCategory(
-                        category: e,
-                      ))
+                                category: e,
+                              ))
                           .toList(),
                     ),
                     color: Colors.white,
