@@ -18,8 +18,6 @@ class VoucherScreen extends StatefulWidget {
 }
 
 class _VoucherScreen extends BaseState<VoucherScreen> {
-  final ChangeCategoryProvider _changeCategoryProvider =
-      ChangeCategoryProvider();
 
   final sampleVouchers = [
     VoucherDetail(
@@ -59,9 +57,7 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
       appBar: getAppBar(title: S.of(context).voucher.toUpperCase()),
       body: Column(
         children: <Widget>[
-          ListCategory(
-            categoryProvider: _changeCategoryProvider,
-          ),
+          ListCategory(),
           Expanded(
             child: ListView(
                 children: sampleVouchers.map((voucher) {
@@ -156,7 +152,7 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _changeCategoryProvider)];
+    return null;
   }
 }
 

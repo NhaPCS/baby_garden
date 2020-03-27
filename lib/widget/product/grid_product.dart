@@ -8,14 +8,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GridProduct extends StatelessWidget {
-  final ChangeCategoryProvider changeCategoryProvider;
   final bool isHome;
   final String title;
 
   const GridProduct({
     Key key,
     @required this.title,
-    this.changeCategoryProvider,
     this.isHome = false,
   }) : super(key: key);
 
@@ -59,9 +57,7 @@ class GridProduct extends StatelessWidget {
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
-          ListCategory(
-            categoryProvider: changeCategoryProvider,
-          ),
+          ListCategory(),
           ListProduct(
             maxItems: isHome ? 8 : 16,
             rowsCount: isHome ? 1 : 2,
