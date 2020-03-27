@@ -23,8 +23,6 @@ class CategoryProductScreen extends StatefulWidget {
 class _CategoryProductState extends BaseState<CategoryProductScreen> {
   final ChangeParentCategoryProvider _changeParentCategoryProvider =
       ChangeParentCategoryProvider();
-  final ChangeCategoryProvider _changeCategoryProvider =
-      ChangeCategoryProvider();
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -77,9 +75,7 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
                 pinned: true,
                 floating: false,
                 delegate: SliverCategoryDelegate(
-                    ListCategory(
-                      categoryProvider: _changeCategoryProvider,
-                    ),
+                    ListCategory(),
                     Provider.of<AppProvider>(context).categoryHeight,
                     Provider.of<AppProvider>(context).categoryHeight),
               )
@@ -94,7 +90,6 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
   @override
   List<SingleChildWidget> providers() {
     return [
-      ChangeNotifierProvider.value(value: _changeCategoryProvider),
       ChangeNotifierProvider.value(value: _changeParentCategoryProvider),
     ];
   }

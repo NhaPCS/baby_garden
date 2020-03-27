@@ -21,8 +21,6 @@ class VoucherScreen extends StatefulWidget {
 }
 
 class _VoucherScreen extends BaseState<VoucherScreen> {
-  final ChangeCategoryProvider _changeCategoryProvider =
-      ChangeCategoryProvider();
 
   final sampleVouchers = [
     VoucherDetail(
@@ -64,9 +62,7 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(top: 4, left: 4, right: 4),
-            child: ListCategory(
-              categoryProvider: _changeCategoryProvider,
-            ),
+            child: ListCategory(),
           ),
           Expanded(
             child: ListView(
@@ -185,7 +181,7 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _changeCategoryProvider)];
+    return null;
   }
 }
 

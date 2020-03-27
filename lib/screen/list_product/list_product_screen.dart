@@ -21,9 +21,6 @@ class ListProductScreen extends StatefulWidget {
 }
 
 class _ListProductState extends BaseState<ListProductScreen> {
-  final ChangeCategoryProvider _changeCategoryProvider =
-      ChangeCategoryProvider();
-
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
@@ -32,9 +29,7 @@ class _ListProductState extends BaseState<ListProductScreen> {
           title: widget.title == null ? "" : widget.title.toUpperCase()),
       body: Column(
         children: <Widget>[
-          ListCategory(
-            categoryProvider: _changeCategoryProvider,
-          ),
+          ListCategory(),
           Expanded(
               child: LoadMoreGridView(
             crossAxisCount: 2,
@@ -63,6 +58,6 @@ class _ListProductState extends BaseState<ListProductScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _changeCategoryProvider)];
+    return null;
   }
 }

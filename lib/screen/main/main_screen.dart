@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
+import 'package:baby_garden_flutter/provider/get_product_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/cart/cart_screen.dart';
 import 'package:baby_garden_flutter/screen/home/home_screen.dart';
@@ -35,21 +36,21 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     _tabController = TabController(length: 5, vsync: this);
     _tabController.addListener(() {
       _changeIndexProvider.changeIndex(_tabController.index);
     });
     super.initState();
-    if (widget.index>0) _tabController.animateTo(widget.index);
+    if (widget.index > 0) _tabController.animateTo(widget.index);
   }
 
   @override
   Future<void> didChangeDependencies() async {
     super.didChangeDependencies();
-    String id = await ShareValueProvider.shareValueProvider.getUserId();
-    print("USER_ID $id");
   }
+
   @override
   Widget buildWidget(BuildContext context) {
     return WillPopScope(
