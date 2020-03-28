@@ -327,6 +327,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "product_detail" : MessageLookupByLibrary.simpleMessage("Chi tiết sản phẩm"),
     "product_existing" : MessageLookupByLibrary.simpleMessage("Còn hàng"),
     "product_for_sale" : MessageLookupByLibrary.simpleMessage("Sản phẩm khuyến mãi"),
+    "profileWelcomeText" : MessageLookupByLibrary.simpleMessage("Vườn Của Bé ,Xin chào!"),
     "promo_code" : MessageLookupByLibrary.simpleMessage("Mã giảm giá"),
     "promotionCode" : MessageLookupByLibrary.simpleMessage("Mã ưu đãi"),
     "provided_by" : MessageLookupByLibrary.simpleMessage("Cung cấp bởi: "),

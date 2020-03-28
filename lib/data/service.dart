@@ -151,3 +151,10 @@ Response parseResponse(BuildContext context, String responseBody,
   }
   return res;
 }
+
+Future<dynamic> getUserInfo(BuildContext context,
+    {@required String userId}) async {
+  Response response = await post(context, path: "", param: {'user_id': userId});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
