@@ -68,6 +68,7 @@ class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,Cha
                   elevation: SizeUtil.smallElevation,
                   borderRadius: SizeUtil.tinyRadius,
                   contentPadding: SizeUtil.normalPadding,
+                  inputType: TextInputType.text,
                 )),
             Container(
               margin: const EdgeInsets.only(
@@ -103,7 +104,15 @@ class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,Cha
                     .size
                     .width,
                 child: RaisedButton(
-                  onPressed: () {},
+                  onPressed: () async{
+                    var check = checkCondition();
+                    if(check==""){
+                      await getViewModel().onChangePassword("8734793742", _newPasswordControler.text.trim());
+//                      Navigator.of(context).pop();
+                    }else{
+                      WidgetUtil.showMessageDialog(context, message: check, title: S.of(context).notify);
+                    }
+                  },
                   color: ColorUtil.colorAccent,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
@@ -119,6 +128,20 @@ class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,Cha
         ),
       ),
     );
+  }
+
+  String checkCondition() {
+    if (_oldPasswordControler.text.trim().length == 0) {
+      return "Please Enter name";
+    } else if (_newPasswordControler.text.trim().length == 0) {
+      return "Please Enter new password";
+    } else if (_reenterNewPasswordControler.text.trim().length == 0) {
+      return "Please reenter new repassword";
+    } else if (_newPasswordControler.text.compareTo(_reenterNewPasswordControler.text) < 0) {
+      return "Password and repassword must be the same";
+    }else{
+      return "";
+    }
   }
 
   @override
