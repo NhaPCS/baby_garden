@@ -1,5 +1,7 @@
 import 'package:baby_garden_flutter/data/service.dart';
+import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/view_model/base_view_model.dart';
+import 'package:flutter/cupertino.dart';
 
 class ChangePasswordViewModel extends BaseViewModel{
 
@@ -8,5 +10,6 @@ class ChangePasswordViewModel extends BaseViewModel{
     if(data!=null){
       return data;
     }
+    Navigator.of(context).pop();
   }
 }
