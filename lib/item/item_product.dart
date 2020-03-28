@@ -21,6 +21,7 @@ class ItemProduct extends StatelessWidget {
   final TextStyle nameStyle;
   final bool showTime;
   final int index;
+  final dynamic product;
 
   const ItemProduct(
       {Key key,
@@ -38,7 +39,8 @@ class ItemProduct extends StatelessWidget {
       this.nameStyle = const TextStyle(
           fontSize: SizeUtil.textSizeSmall, fontWeight: FontWeight.bold),
       this.showTime = false,
-      this.index = 0})
+      this.index = 0,
+      this.product})
       : super(key: key);
 
   @override
@@ -72,7 +74,10 @@ class ItemProduct extends StatelessWidget {
                     borderRadius: SizeUtil.bigRadius,
                   ),
             Positioned(
-              child: DiscountWidget(discount: 33),
+              child: DiscountWidget(
+                  discount: product == null
+                      ? 0
+                      : int.parse(product['number_sales'])),
               right: 0,
               top: SizeUtil.smallSpace,
             )
@@ -95,8 +100,11 @@ class ItemProduct extends StatelessWidget {
         ),
         Expanded(
             child: CachedNetworkImage(
-          imageUrl:
-              StringUtil.dummyProduct[index % StringUtil.dummyProduct.length],
+          imageUrl: product == null ||
+                  product['image'] == null ||
+                  product['image'].isEmpty
+              ? ""
+              : product['image'][0],
           width: double.infinity,
           height: double.infinity,
           fit: BoxFit.fitWidth,
@@ -105,7 +113,7 @@ class ItemProduct extends StatelessWidget {
           height: SizeUtil.tinySpace,
         ),
         Text(
-          "Điện Thoại iPhone 11 Pro Max 64GB\n - Hàng Chính Hãng",
+          product == null ? "" : product['name'],
           maxLines: 2,
           textAlign: TextAlign.center,
           style: nameStyle,
@@ -117,7 +125,7 @@ class ItemProduct extends StatelessWidget {
           children: <Widget>[
             Expanded(
                 child: AutoSizeText(
-              "800.000 đ",
+              product == null ? "" : StringUtil.getPriceText(product['price']),
               maxFontSize: SizeUtil.textSizeSmall,
               minFontSize: SizeUtil.textSizeTiny,
               maxLines: 1,
@@ -129,7 +137,9 @@ class ItemProduct extends StatelessWidget {
               width: SizeUtil.tinySpace,
             ),
             Text(
-              "800.000 đ",
+              product == null
+                  ? ""
+                  : StringUtil.getPriceText(product['price_discount']),
               style:
                   TextStyle(color: ColorUtil.red, fontWeight: FontWeight.bold),
             )

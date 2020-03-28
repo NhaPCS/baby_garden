@@ -111,4 +111,10 @@ abstract class BaseStateModel<S extends StatefulWidget, V extends BaseViewModel>
 
   @override
   bool get wantKeepAlive => true;
+
+ @override
+  void didChangeDependencies() {
+   _baseViewModel?.onDidChangeDependencies();
+    super.didChangeDependencies();
+  }
 }

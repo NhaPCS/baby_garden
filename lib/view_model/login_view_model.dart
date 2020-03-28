@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginViewModel implements BaseViewModel{
+class LoginViewModel extends BaseViewModel{
 
   Future<void> onLogin({String phone, String password}) async {
     dynamic data = await login(context,
