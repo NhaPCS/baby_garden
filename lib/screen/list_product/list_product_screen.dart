@@ -73,7 +73,7 @@ class _ListProductState extends BaseState<ListProductScreen> {
                     borderRadius: SizeUtil.tinyRadius,
                     showSoldCount: true,
                     nameStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
-                    showTime: true,
+                    showTime: false,
                     padding: EdgeInsets.only(
                         left: SizeUtil.smallSpace,
                         right: SizeUtil.smallSpace,

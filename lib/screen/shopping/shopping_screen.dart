@@ -101,7 +101,7 @@ class _ShoppingState extends BaseState<ShoppingScreen> {
                   itemCount: 10,
                   padding: EdgeInsets.all(0),
                   itemBuilder: (context, index) {
-                    return GridProduct(title: "CATEGORY",);
+                    return GridProduct();
                   }))
         ],
       ),

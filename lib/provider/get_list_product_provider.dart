@@ -15,7 +15,7 @@ class GetListProductProvider extends ChangeNotifier {
     if (data != null) {
       products = data['list'];
       total = data['total'];
-      totalPage = data['total'] / numberPosts;
+      totalPage = (data['total'] / numberPosts).toInt()+1;
       notifyListeners();
     }
   }
