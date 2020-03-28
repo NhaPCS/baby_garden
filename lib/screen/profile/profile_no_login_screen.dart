@@ -4,12 +4,9 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/customer_support/customer_support.dart';
 import 'package:baby_garden_flutter/screen/favorite_product/favorite_product.dart';
 import 'package:baby_garden_flutter/screen/login/login_screen.dart';
-import 'package:baby_garden_flutter/screen/partner/partner_book_schedule.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_like_screen.dart';
-import 'package:baby_garden_flutter/screen/point_management/point_history_screen.dart';
 import 'package:baby_garden_flutter/screen/point_management/point_management_screen.dart';
 import 'package:baby_garden_flutter/screen/profile/account_manage_screen.dart';
-import 'package:baby_garden_flutter/screen/profile/user_infor.dart';
 import 'package:baby_garden_flutter/screen/remind_management/remind_management_screen.dart';
 import 'package:baby_garden_flutter/screen/seen_product/seen_product_screen.dart';
 import 'package:baby_garden_flutter/screen/setting/setting_screen.dart';
@@ -18,23 +15,16 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileNoLoginScreen extends StatefulWidget {
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  _ProfileNoLoginScreenState createState() => _ProfileNoLoginScreenState();
 }
 
-class _ProfileScreenState extends BaseState<ProfileScreen> {
+class _ProfileNoLoginScreenState extends BaseState<ProfileNoLoginScreen> {
   final GetListProvider _getListProvider = GetListProvider();
-
-  final UserInfor userInfor = UserInfor(
-    username: "Đinh Bộ Lĩnh",
-    mobilePhone: "0123456789",
-    joinDate: "13/2/2020",
-  );
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -47,15 +37,73 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
       {'icon': 'profile_care', 'title': S.of(context).favoritePatner},
       {'icon': 'profile_past', 'title': S.of(context).seenProduct},
       {'icon': 'profile_help', 'title': S.of(context).customerHelper},
-      {'icon': 'profile_settings', 'title': S.of(context).setting},
-      {'icon': 'profile_logout', 'title': S.of(context).logout}
+      {'icon': 'profile_settings', 'title': S.of(context).setting}
     ];
 
     return Column(children: <Widget>[
       getAppBar(title: S.of(context).myProfile, hasBack: false),
       Container(
+          height: 100,
+          width: double.infinity,
+          padding: const EdgeInsets.only(
+              left: SizeUtil.smallSpace,
+              right: SizeUtil.smallSpace,
+              top: 12,
+              bottom: 12),
+          decoration: BoxDecoration(
+              border: Border(
+            bottom: BorderSide(
+                width: 1,
+                style: BorderStyle.solid,
+                color: Color.fromRGBO(206, 206, 206, 1)),
+          )),
           // user information
-          child: this.userInfor),
+          child: Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(right: SizeUtil.smallSpace),
+                child: Image.asset(
+                  'photo/logo.png',
+                  width: 70,
+                  height: 70,
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: SizeUtil.midSmallSpace),
+                    child: Text(
+                      S.of(context).profileWelcomeText,
+                      style: TextStyle(color: ColorUtil.darkGray),
+                    ),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            right: SizeUtil.midSmallSpace),
+                        child: RaisedButton(
+                            color: Color(0xff00B9FF),
+                            onPressed: () {},
+                            child: Text(S.of(context).login,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: SizeUtil.textSizeSmall))),
+                      ),
+                      RaisedButton(
+                          color: ColorUtil.primaryColor,
+                          onPressed: () {},
+                          child: Text(S.of(context).register,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: SizeUtil.textSizeSmall)))
+                    ],
+                  )
+                ],
+              )
+            ],
+          )),
       Expanded(
         child: entriesWidget(entries),
       ),
@@ -130,15 +178,6 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                   break;
                 case 8:
                   push(SettingScreen());
-                  break;
-                case 9:
-                  WidgetUtil.showConfirmDialog(context,
-                      title: "Xác nhận",
-                      message: "Bạn có muốn đăng xuất không?",
-                      positive: "Có",
-                      negative: "Không", positiveClicked: () {
-                    push(LoginScreen());
-                  }, negativeClick: () {});
                   break;
               }
             },
