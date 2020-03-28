@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ColorUtil {
   static const Color primaryColor = Color(0xffFF8918);
@@ -43,6 +44,33 @@ class ColorUtil {
 }
 
 class StringUtil {
+  static String getPriceText(String price) {
+    if (price == null || price.isEmpty) return "";
+    try {
+      return new NumberFormat.currency(
+              locale: "vi_VN", name: "", decimalDigits: 0, symbol: "đ")
+          .format(int.parse(price));
+    } on Exception catch (e) {
+      return "";
+    }
+  }
+
+  static int getDiscountPercent({String price, String discountPrice}) {
+    if (price == null ||
+        price.isEmpty ||
+        discountPrice == null ||
+        discountPrice.isEmpty) return 0;
+    try {
+      double dP = double.parse(discountPrice);
+      double p = double.parse(price);
+      int result = (((p - dP) / p) * 100).toInt();
+      return result;
+    } on Exception catch (e) {
+      print(e);
+      return 0;
+    }
+  }
+
   static const String dummyImage =
       "https://imgix.bustle.com/uploads/image/2019/1/23/4ca31ad3-6f9b-4e75-a0bf-fada7bfecfae-shutterstock_10068471c.jpg?w=970&h=546&fit=crop&crop=faces&auto=format&q=70&dpr=2";
   static const List<String> dummyImageList = [
@@ -95,7 +123,7 @@ class StringUtil {
   static List<dynamic> time = [
     {'time': '08:00'},
     {'time': '08:15'},
-    {'time': '08:30','off':'0'},
+    {'time': '08:30', 'off': '0'},
     {'time': '08:45'},
     {'time': '09:00'},
     {'time': '09:15'},
@@ -107,7 +135,7 @@ class StringUtil {
     {'time': '10:45'},
     {'time': '11:00'},
     {'time': '11:15'},
-    {'time': '11:30','off':'0'},
+    {'time': '11:30', 'off': '0'},
     {'time': '11:45'},
     {'time': '12:00'},
     {'time': '12:15'},
@@ -151,25 +179,49 @@ class StringUtil {
     {'time': '21:45'},
   ];
 
-  static List<String> banks1 = ['VietcomBank','TechcomBank','BIDV','ViettinBank','MBBank'];
+  static List<String> banks1 = [
+    'VietcomBank',
+    'TechcomBank',
+    'BIDV',
+    'ViettinBank',
+    'MBBank'
+  ];
 
   static List<dynamic> banks = [
-    {'bank':'VietcomBank','accountNumber':'00112233445566','accountOwner':'Vũ Thị Hài'},
-    {'bank':'TechcomBank','accountNumber':'00880900989089','accountOwner':'Vũ Thị Hài'},
-    {'bank':'BIDV','accountNumber':'00880900989089','accountOwner':'Vũ Thị Hài'},
-    {'bank':'ViettinBank','accountNumber':'10923809821989','accountOwner':'Vũ Thị Hài'},
-    {'bank':'MBBank','accountNumber':'00112233445566','accountOwner':'Vũ Thị Hài'},
+    {
+      'bank': 'VietcomBank',
+      'accountNumber': '00112233445566',
+      'accountOwner': 'Vũ Thị Hài'
+    },
+    {
+      'bank': 'TechcomBank',
+      'accountNumber': '00880900989089',
+      'accountOwner': 'Vũ Thị Hài'
+    },
+    {
+      'bank': 'BIDV',
+      'accountNumber': '00880900989089',
+      'accountOwner': 'Vũ Thị Hài'
+    },
+    {
+      'bank': 'ViettinBank',
+      'accountNumber': '10923809821989',
+      'accountOwner': 'Vũ Thị Hài'
+    },
+    {
+      'bank': 'MBBank',
+      'accountNumber': '00112233445566',
+      'accountOwner': 'Vũ Thị Hài'
+    },
   ];
 
   static List<DropdownMenuItem<dynamic>> bankAccounts = [
-    new DropdownMenuItem(child: Text('VietcomBank'),value: banks1[0]),
-    new DropdownMenuItem(child: Text('TechcomBank'),value: banks1[1]),
-    new DropdownMenuItem(child: Text('BIDV'),value: banks1[2]),
-    new DropdownMenuItem(child: Text('ViettinBank'),value: banks1[3]),
-    new DropdownMenuItem(child: Text('MBBank'),value: banks1[4]),
+    new DropdownMenuItem(child: Text('VietcomBank'), value: banks1[0]),
+    new DropdownMenuItem(child: Text('TechcomBank'), value: banks1[1]),
+    new DropdownMenuItem(child: Text('BIDV'), value: banks1[2]),
+    new DropdownMenuItem(child: Text('ViettinBank'), value: banks1[3]),
+    new DropdownMenuItem(child: Text('MBBank'), value: banks1[4]),
   ];
-
-
 
   static List<dynamic> week = [
     {'dow': 'Thứ 2', 'date': '12/02/2020'},

@@ -1,24 +1,49 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/change_category_provider.dart';
+import 'package:baby_garden_flutter/provider/get_list_product_provider.dart';
+import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/list_product/list_product_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:baby_garden_flutter/widget/product/list_product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
-class GridProduct extends StatelessWidget {
+final int TOTAL_ITEMS = 7;
+
+class GridProduct extends StatefulWidget {
   final bool isHome;
-  final String title;
+  final dynamic section;
 
   const GridProduct({
     Key key,
-    @required this.title,
+    @required this.section,
     this.isHome = false,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<StatefulWidget> createState() {
+    return _GridProductState();
+  }
+}
+
+class _GridProductState extends BaseState<GridProduct> {
+  final GetListProductProvider _getListProductProvider =
+      GetListProductProvider();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if ((_getListProductProvider.products == null ||
+            _getListProductProvider.products.isEmpty) &&
+        widget.section != null) {
+      _getListProductProvider.getData(context, widget.section['path'], numberPosts: TOTAL_ITEMS);
+    }
+  }
+
+  @override
+  Widget buildWidget(BuildContext context) {
     return GestureDetector(
       child: Column(
         children: <Widget>[
@@ -32,7 +57,7 @@ class GridProduct extends StatelessWidget {
               ),
               Expanded(
                   child: Text(
-                title == null ? "" : title.toUpperCase(),
+                getTitle().toUpperCase(),
                 style: TextStyle(
                     color: ColorUtil.primaryColor,
                     fontWeight: FontWeight.bold,
@@ -57,10 +82,21 @@ class GridProduct extends StatelessWidget {
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
-          ListCategory(),
-          ListProduct(
-            maxItems: isHome ? 8 : 16,
-            rowsCount: isHome ? 1 : 2,
+          ListCategory(
+            onChangedCategory: (category) {
+              _getListProductProvider.getData(context, widget.section['path'],
+                  categoryId: category['id'], numberPosts: TOTAL_ITEMS);
+            },
+          ),
+          Consumer<GetListProductProvider>(
+            builder: (BuildContext context, GetListProductProvider value,
+                Widget child) {
+              return ListProduct(
+                maxItems: widget.isHome ? value.products.length : null,
+                rowsCount: widget.isHome ? 1 : 2,
+                products: value.products,
+              );
+            },
           ),
         ],
       ),
@@ -68,9 +104,21 @@ class GridProduct extends StatelessWidget {
         RouteUtil.push(
             context,
             ListProductScreen(
-              title: title,
+              title: getTitle(),
+              section: widget.section,
             ));
       },
     );
+  }
+
+  @override
+  List<SingleChildWidget> providers() {
+    return [ChangeNotifierProvider.value(value: _getListProductProvider)];
+  }
+
+  String getTitle() {
+    return widget.section == null || widget.section['title'] == null
+        ? ""
+        : widget.section['title'];
   }
 }

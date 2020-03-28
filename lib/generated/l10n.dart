@@ -3538,6 +3538,33 @@ class S {
       args: [],
     );
   }
+
+  String get home_new_products {
+    return Intl.message(
+      'HÀNG MỚI VỀ',
+      name: 'home_new_products',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get home_hot_products {
+    return Intl.message(
+      'HÀNG bán chạy',
+      name: 'home_hot_products',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get home_discount_products {
+    return Intl.message(
+      'HÀNG khuyến mãi',
+      name: 'home_discount_products',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

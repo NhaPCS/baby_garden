@@ -10,13 +10,15 @@ class ListProduct extends StatelessWidget {
   final int maxItems;
   final VoidCallback onViewMoreClick;
   final int rowsCount;
+  final List<dynamic> products;
 
   const ListProduct(
       {Key key,
       this.padding = const EdgeInsets.all(0),
       this.maxItems,
       this.onViewMoreClick,
-      this.rowsCount = 1})
+      this.rowsCount = 1,
+      this.products})
       : super(key: key);
 
   @override
@@ -26,13 +28,14 @@ class ListProduct extends StatelessWidget {
       padding: padding,
       child: GridView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: maxItems != null ? maxItems : 5,
+        itemCount: getItemsCount(),
         itemBuilder: (context, index) {
           if (maxItems != null && index == maxItems - 1) {
             return ViewMoreProduct();
           } else
             return ItemProduct(
               index: index,
+              product: products == null ? null : products[index],
             );
         },
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -40,5 +43,9 @@ class ListProduct extends StatelessWidget {
       ),
       height: Provider.of<AppProvider>(context).productHeight * rowsCount,
     );
+  }
+
+  int getItemsCount() {
+    return maxItems != null ? maxItems : products == null ? products.length : 0;
   }
 }

@@ -5,7 +5,7 @@ import 'package:baby_garden_flutter/view_model/base_view_model.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class LoginViewModel implements BaseViewModel{
+class LoginViewModel extends BaseViewModel{
 
   Future<void> onLogin({String phone, String password}) async {
     dynamic data = await login(context,

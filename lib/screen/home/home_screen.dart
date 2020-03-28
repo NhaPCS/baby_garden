@@ -9,6 +9,7 @@ import 'package:baby_garden_flutter/screen/category_product/sliver_category_dele
 import 'package:baby_garden_flutter/screen/photo_view/photo_view_screen.dart';
 import 'package:baby_garden_flutter/screen/search/search_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/view_model/home_view_model.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
 import 'package:baby_garden_flutter/widget/product/grid_product.dart';
 import 'package:baby_garden_flutter/widget/product/notify_icon.dart';
@@ -19,6 +20,7 @@ import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
+import '../base_state_model.dart';
 import 'flash_sale.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,10 +30,7 @@ class HomeScreen extends StatefulWidget {
   }
 }
 
-class _HomeState extends BaseState<HomeScreen> {
-  List<dynamic> HOME_CATEGORIES = List();
-  List<dynamic> SECTIONS = List();
-
+class _HomeState extends BaseStateModel<HomeScreen, HomeViewModel> {
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
@@ -83,6 +82,7 @@ class _HomeState extends BaseState<HomeScreen> {
                         child: Consumer<GetBannersProvider>(
                           builder: (BuildContext context,
                               GetBannersProvider value, Widget child) {
+                            if(value.banners==null|| value.banners.isEmpty) return SizedBox();
                             return MyCarouselSlider(
                               hasShadow: true,
                               images: value.banners,
@@ -112,7 +112,8 @@ class _HomeState extends BaseState<HomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: HOME_CATEGORIES
+                      children: getViewModel()
+                          .HOME_CATEGORIES
                           .map((e) => ItemHomeCategory(
                                 category: e,
                               ))
@@ -134,7 +135,7 @@ class _HomeState extends BaseState<HomeScreen> {
               ),
               Expanded(
                   child: ListView.builder(
-                      itemCount: SECTIONS.length + 1,
+                      itemCount: getViewModel().SECTIONS.length + 1,
                       padding: EdgeInsets.all(0),
                       itemBuilder: (context, index) {
                         if (index == 0) {
@@ -142,7 +143,7 @@ class _HomeState extends BaseState<HomeScreen> {
                         }
                         return GridProduct(
                           isHome: true,
-                          title: SECTIONS[index - 1]['title'],
+                          section: getViewModel().SECTIONS[index - 1],
                         );
                       }))
             ],
@@ -154,30 +155,12 @@ class _HomeState extends BaseState<HomeScreen> {
   }
 
   @override
-  void didChangeDependencies() {
-    HOME_CATEGORIES = [
-      {'icon': 'photo/ic_category.png', 'title': S.of(context).category},
-      {'icon': 'photo/ic_partner.png', 'title': S.of(context).partner},
-      {'icon': 'photo/ic_voucher.png', 'title': S.of(context).voucher},
-      {'icon': 'photo/ic_vcb_express.png', 'title': S.of(context).vcb_express},
-      {'icon': 'photo/ic_health.png', 'title': S.of(context).heath_number}
-    ];
-    SECTIONS = [
-      {
-        "title": "HÀNG MỚI VỀ",
-      },
-      {
-        "title": "HÀNG bán chạy",
-      },
-      {
-        "title": "HÀNG khuyến mãi",
-      },
-    ];
-    super.didChangeDependencies();
+  List<SingleChildWidget> providers() {
+    return null;
   }
 
   @override
-  List<SingleChildWidget> providers() {
-    return null;
+  initViewModel() {
+    return new HomeViewModel(context);
   }
 }

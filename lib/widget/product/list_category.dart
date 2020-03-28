@@ -94,7 +94,8 @@ class _ListCategoryState extends State<ListCategory> {
                 ),
                 onTap: () {
                   if (widget.onChangedCategory != null)
-                    widget.onChangedCategory(value.categories[index]);
+                    widget.onChangedCategory(
+                        index == 0 ? null : value.categories[index - 1]);
                   setState(() {
                     _selectedIndex = index;
                   });
