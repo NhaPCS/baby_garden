@@ -28,8 +28,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeState extends BaseState<HomeScreen> {
-  final ChangeCategoryProvider _changeCategoryProvider =
-      ChangeCategoryProvider();
   List<dynamic> HOME_CATEGORIES = List();
   List<dynamic> SECTIONS = List();
 
@@ -137,7 +135,6 @@ class _HomeState extends BaseState<HomeScreen> {
                         return GridProduct(
                           isHome: true,
                           title: SECTIONS[index - 1]['title'],
-                          changeCategoryProvider: _changeCategoryProvider,
                         );
                       }))
             ],
@@ -173,6 +170,6 @@ class _HomeState extends BaseState<HomeScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _changeCategoryProvider)];
+    return null;
   }
 }

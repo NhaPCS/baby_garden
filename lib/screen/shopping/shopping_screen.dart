@@ -22,8 +22,6 @@ class ShoppingScreen extends StatefulWidget {
 }
 
 class _ShoppingState extends BaseState<ShoppingScreen> {
-  final ChangeCategoryProvider _changeCategoryProvider =
-      ChangeCategoryProvider();
 
   @override
   void initState() {
@@ -94,9 +92,7 @@ class _ShoppingState extends BaseState<ShoppingScreen> {
                   itemCount: 10,
                   padding: EdgeInsets.all(0),
                   itemBuilder: (context, index) {
-                    return GridProduct(
-                      changeCategoryProvider: _changeCategoryProvider, title: "Ăn dặm cho bé",
-                    );
+                    return GridProduct(title: "CATEGORY",);
                   }))
         ],
       ),
