@@ -22,8 +22,6 @@ class PartnerListScreen extends StatefulWidget {
 }
 
 class _PartnerListScreenState extends BaseState<PartnerListScreen> {
-  final ChangeCategoryProvider _changeCategoryProvider =
-      ChangeCategoryProvider();
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -33,9 +31,7 @@ class _PartnerListScreenState extends BaseState<PartnerListScreen> {
       appBar: getAppBar(title: S.of(context).partner.toUpperCase()),
       body: Column(
         children: <Widget>[
-          ListCategory(
-            categoryProvider: _changeCategoryProvider,
-          ),
+          ListCategory(),
           Expanded(
             child: ListView.builder(
                 itemCount: 10,
@@ -58,7 +54,6 @@ class _PartnerListScreenState extends BaseState<PartnerListScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
-    return [ChangeNotifierProvider.value(value: _changeCategoryProvider)];
+    return null;
   }
 }

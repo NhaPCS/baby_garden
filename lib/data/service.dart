@@ -74,6 +74,12 @@ Future<dynamic> changePassword(BuildContext context,
   return null;
 }
 
+Future<dynamic> productCategory(BuildContext context) async {
+  Response response = await get(context, path: "category");
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 Future<Response> post(BuildContext context,
     {String path,
     dynamic param,
@@ -140,7 +146,7 @@ Response parseResponse(BuildContext context, String responseBody,
       errorId: body == null ? null : body['errorId'],
       data: body == null ? null : body['data']);
 
-  if (!res.isSuccess()) {
+  if (!res.isSuccess() && context != null) {
     WidgetUtil.showErrorDialog(context, res.message);
   } else {
     if (hasAccessToken) {
