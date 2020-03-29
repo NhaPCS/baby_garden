@@ -1,15 +1,15 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/provider/change_index_provider.dart';
 import 'package:baby_garden_flutter/provider/change_mode_enter_heath_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/child_heath/enter_weight_height.dart';
+import 'package:baby_garden_flutter/screen/child_heath/select_child_dropdow.dart';
 import 'package:baby_garden_flutter/screen/child_heath/view_weight_height.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
-import 'package:baby_garden_flutter/widget/chart/child_chart.dart';
 import 'package:baby_garden_flutter/widget/circle_image.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +26,7 @@ class ChildHeathScreen extends StatefulWidget {
 class _ChildHeathState extends BaseState<ChildHeathScreen> {
   final ChangeModeEnterHeathProvider _changeModeEnterHeathProvider =
       ChangeModeEnterHeathProvider();
+  final ChangeIndexProvider _changeIndexProvider = ChangeIndexProvider();
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -37,7 +38,9 @@ class _ChildHeathState extends BaseState<ChildHeathScreen> {
             floating: true,
             elevation: 0,
             backgroundColor: ColorUtil.primaryColor,
-            leading: SizedBox(width: 0,),
+            leading: SizedBox(
+              width: 0,
+            ),
             expandedHeight: Provider.of<AppProvider>(context).childHeightBar,
             flexibleSpace: Column(
               children: <Widget>[
@@ -91,47 +94,28 @@ class _ChildHeathState extends BaseState<ChildHeathScreen> {
                     ),
                   ],
                 ),
-                Expanded(
-                    child: Stack(
-                  alignment: Alignment.center,
-                  children: <Widget>[
-                    SvgIcon(
-                      'btn_rounded_orange.svg',
-                      height: 50,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          bottom: SizeUtil.smallSpace, top: SizeUtil.tinySpace),
-                      child: Wrap(
-                        alignment: WrapAlignment.center,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            "Âu Vũ Ngân Giang",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Icon(
-                            Icons.keyboard_arrow_down,
-                            color: Colors.white,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ))
+                SelectChildDropDown()
               ],
             ),
-            bottom: PreferredSize(child: Consumer<ChangeModeEnterHeathProvider>(builder: (BuildContext context, ChangeModeEnterHeathProvider value, Widget child) {
-              if(value.isEntering) return SizedBox();
-              return Row(
-                children: <Widget>[
-                  getTab(S.of(context).height, true),
-                  getTab(S.of(context).weight, false)
-                ],
-              );
-            },), preferredSize: Size.fromHeight(60)),
+            bottom: PreferredSize(
+                child: Consumer<ChangeModeEnterHeathProvider>(
+                  builder: (BuildContext context,
+                      ChangeModeEnterHeathProvider value, Widget child) {
+                    if (value.isEntering) return SizedBox();
+                    return Consumer<ChangeIndexProvider>(
+                      builder: (BuildContext context, ChangeIndexProvider value,
+                          Widget child) {
+                        return Row(
+                          children: <Widget>[
+                            getTab(text: S.of(context).height, index: 0),
+                            getTab(text: S.of(context).weight, index: 1)
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
+                preferredSize: Size.fromHeight(60)),
           ),
         ];
       }, body: Consumer<ChangeModeEnterHeathProvider>(
@@ -171,30 +155,42 @@ class _ChildHeathState extends BaseState<ChildHeathScreen> {
     );
   }
 
-  Widget getTab(String text, bool isSelected) {
+  Widget getTab({String text, int index}) {
     return Expanded(
         child: InkWell(
-      child: Container(
-        margin: EdgeInsets.only(
-            left: SizeUtil.defaultSpace, right: SizeUtil.defaultSpace),
-        alignment: Alignment.center,
-        padding: SizeUtil.smallPadding,
-        decoration: BoxDecoration(
-            color: isSelected ? Colors.white : Colors.white.withOpacity(0.5),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30), topRight: Radius.circular(30))),
-        child: Text(
-          text,
-          style: TextStyle(
-              color: isSelected ? ColorUtil.blueLight : Colors.white,
-              fontWeight: FontWeight.bold),
+      child: InkWell(
+        child: Container(
+          margin: EdgeInsets.only(
+              left: SizeUtil.defaultSpace, right: SizeUtil.defaultSpace),
+          alignment: Alignment.center,
+          padding: SizeUtil.smallPadding,
+          decoration: BoxDecoration(
+              color: _changeIndexProvider.index == index
+                  ? Colors.white
+                  : Colors.white.withOpacity(0.5),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+          child: Text(
+            text,
+            style: TextStyle(
+                color: _changeIndexProvider.index == index
+                    ? ColorUtil.blueLight
+                    : Colors.white,
+                fontWeight: FontWeight.bold),
+          ),
         ),
+        onTap: () {
+          _changeIndexProvider.changeIndex(index);
+        },
       ),
     ));
   }
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _changeModeEnterHeathProvider)];
+    return [
+      ChangeNotifierProvider.value(value: _changeModeEnterHeathProvider),
+      ChangeNotifierProvider.value(value: _changeIndexProvider),
+    ];
   }
 }

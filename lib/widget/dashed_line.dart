@@ -9,7 +9,7 @@ class DashedLine extends CustomPainter {
 
   DashedLine(
       {this.color = ColorUtil.lineColor,
-      this.width = 1000,
+      this.width = 300,
       this.dashWidth = 1,
       this.dashSpace = 3});
 

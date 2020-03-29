@@ -1,6 +1,7 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/product/countdown_time.dart';
 import 'package:baby_garden_flutter/widget/product/discount_widget.dart';
 import 'package:baby_garden_flutter/widget/rounded_progress.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -74,6 +75,11 @@ class ItemFlashSaleProduct extends StatelessWidget {
             child: DiscountWidget(discount: 33),
             right: 0,
             top: 0,
+          ),
+          Positioned(
+            child: CountDownTime(seconds: 1000),
+            left: 0,
+            top: -10,
           )
         ],
       ),

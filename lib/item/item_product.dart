@@ -4,6 +4,7 @@ import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
+import 'package:baby_garden_flutter/widget/product/countdown_time.dart';
 import 'package:baby_garden_flutter/widget/product/discount_widget.dart';
 import 'package:baby_garden_flutter/widget/rounded_progress.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
@@ -65,19 +66,7 @@ class ItemProduct extends StatelessWidget {
             Positioned(
               child: !showTime
                   ? favoriteTag(context)
-                  : MyRaisedButton(
-                      onPressed: () {},
-                      padding: EdgeInsets.only(
-                          left: SizeUtil.smallSpace,
-                          right: SizeUtil.smallSpace,
-                          top: SizeUtil.tinySpace,
-                          bottom: SizeUtil.tinySpace),
-                      textStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: SizeUtil.textSizeSmall),
-                      text: "00:56:23",
-                      borderRadius: SizeUtil.bigRadius,
-                    ),
+                  : CountDownTime(seconds: 1000,),
               left: 0,
               top: 0,
             ),

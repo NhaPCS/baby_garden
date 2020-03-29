@@ -202,7 +202,10 @@ class _ReminderState extends BaseState<ReminderLayout> {
             width: double.infinity,
             margin: EdgeInsets.only(top: SizeUtil.smallSpace),
             child: CustomPaint(
-              painter: DashedLine(color: ColorUtil.primaryColor, dashSpace: 5),
+              painter: DashedLine(
+                  color: ColorUtil.primaryColor,
+                  dashSpace: 5,
+                  width: MediaQuery.of(context).size.width * 0.75),
             ),
           )
         : SizedBox(

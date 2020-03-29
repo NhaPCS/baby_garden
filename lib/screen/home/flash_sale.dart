@@ -49,7 +49,7 @@ class FlashSale extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: SizeUtil.defaultSpace),
+              margin: EdgeInsets.only(bottom: SizeUtil.midSmallSpace),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius:

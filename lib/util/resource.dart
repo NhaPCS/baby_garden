@@ -34,6 +34,13 @@ class ColorUtil {
   static const serviceItemUnselectColor = Color(0xffF6F6F6);
   static const Color textDark = Color(0xff444444);
 
+  static const List<Color> gradientColors = [
+    Color(0xffFFA503),
+    Color(0xffFF9D0D),
+    Color(0xffFF872A),
+    Color(0xffD89012)
+  ];
+
   static Color getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");
     if (hexColor.length == 6) {
