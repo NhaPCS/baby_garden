@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/get_product_category_provider.dart';
+import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/order/order_delivery_info_screen.dart';
@@ -19,15 +20,17 @@ void main() {
   initializeDateFormatting().then((_) => runApp(MultiProvider(
         providers: [
           Provider(create: (_) => AppProvider()),
-          ChangeNotifierProvider(create: (_) => GetProductCategoryProvider())
+          ChangeNotifierProvider(create: (_) => GetProductCategoryProvider()),
+          ChangeNotifierProvider(create: (_) => UserProvider()),
         ],
         child: MyApp(),
       )));
+
+
 }
 
 class MyApp extends StatefulWidget {
   // This widget is the root of your application.
-
   @override
   State<StatefulWidget> createState() {
     return _MyAppState();
@@ -41,6 +44,9 @@ class _MyAppState extends State<MyApp> {
     if (Provider.of<GetProductCategoryProvider>(context).categories == null ||
         Provider.of<GetProductCategoryProvider>(context).categories.isEmpty)
       Provider.of<GetProductCategoryProvider>(context).getProductCategories();
+    if (Provider.of<UserProvider>(context).userInfo == null ||
+        Provider.of<UserProvider>(context).userInfo.isEmpty)
+      Provider.of<UserProvider>(context).getUserInfo();
   }
 
   @override

@@ -7,6 +7,7 @@ import 'package:baby_garden_flutter/screen/login/login_screen.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_like_screen.dart';
 import 'package:baby_garden_flutter/screen/point_management/point_management_screen.dart';
 import 'package:baby_garden_flutter/screen/profile/account_manage_screen.dart';
+import 'package:baby_garden_flutter/screen/register/register_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_management/remind_management_screen.dart';
 import 'package:baby_garden_flutter/screen/seen_product/seen_product_screen.dart';
 import 'package:baby_garden_flutter/screen/setting/setting_screen.dart';
@@ -85,7 +86,9 @@ class _ProfileNoLoginScreenState extends BaseState<ProfileNoLoginScreen> {
                             right: SizeUtil.midSmallSpace),
                         child: RaisedButton(
                             color: Color(0xff00B9FF),
-                            onPressed: () {},
+                            onPressed: () {
+                              push(LoginScreen());
+                            },
                             child: Text(S.of(context).login,
                                 style: TextStyle(
                                     color: Colors.white,
@@ -93,7 +96,9 @@ class _ProfileNoLoginScreenState extends BaseState<ProfileNoLoginScreen> {
                       ),
                       RaisedButton(
                           color: ColorUtil.primaryColor,
-                          onPressed: () {},
+                          onPressed: () {
+                            push(RegisterScreen());
+                          },
                           child: Text(S.of(context).register,
                               style: TextStyle(
                                   color: Colors.white,
@@ -119,8 +124,10 @@ class _ProfileNoLoginScreenState extends BaseState<ProfileNoLoginScreen> {
     return ListView.builder(
         itemCount: entries.length,
         itemBuilder: (BuildContext context, int index) {
-          return GestureDetector(
-            child: Container(
+          return
+            GestureDetector(
+            child:
+            Container(
               padding: const EdgeInsets.all(SizeUtil.tinySpace),
               decoration: BoxDecoration(
                   border: Border(

@@ -1,15 +1,19 @@
+import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
+import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/customer_support/customer_support.dart';
 import 'package:baby_garden_flutter/screen/favorite_product/favorite_product.dart';
 import 'package:baby_garden_flutter/screen/login/login_screen.dart';
+import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_book_schedule.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_like_screen.dart';
 import 'package:baby_garden_flutter/screen/point_management/point_history_screen.dart';
 import 'package:baby_garden_flutter/screen/point_management/point_management_screen.dart';
 import 'package:baby_garden_flutter/screen/profile/account_manage_screen.dart';
 import 'package:baby_garden_flutter/screen/profile/user_infor.dart';
+import 'package:baby_garden_flutter/screen/register/register_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_management/remind_management_screen.dart';
 import 'package:baby_garden_flutter/screen/seen_product/seen_product_screen.dart';
 import 'package:baby_garden_flutter/screen/setting/setting_screen.dart';
@@ -53,9 +57,76 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
 
     return Column(children: <Widget>[
       getAppBar(title: S.of(context).myProfile, hasBack: false),
-      Container(
-          // user information
-          child: this.userInfor),
+      Consumer<UserProvider>(builder: (BuildContext context, UserProvider value, Widget child) {
+        return value.isLogin?Container(
+        // user information
+        child: this.userInfor):Container(
+            height: 100,
+            width: double.infinity,
+            padding: const EdgeInsets.only(
+                left: SizeUtil.smallSpace,
+                right: SizeUtil.smallSpace,
+                top: 12,
+                bottom: 12),
+            decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                      width: 1,
+                      style: BorderStyle.solid,
+                      color: Color.fromRGBO(206, 206, 206, 1)),
+                )),
+            // user information
+            child: Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(right: SizeUtil.smallSpace),
+                  child: Image.asset(
+                    'photo/logo.png',
+                    width: 70,
+                    height: 70,
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(top: SizeUtil.midSmallSpace),
+                      child: Text(
+                        S.of(context).profileWelcomeText,
+                        style: TextStyle(color: ColorUtil.darkGray),
+                      ),
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              right: SizeUtil.midSmallSpace),
+                          child: RaisedButton(
+                              color: Color(0xff00B9FF),
+                              onPressed: () {
+                                push(LoginScreen());
+                              },
+                              child: Text(S.of(context).login,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: SizeUtil.textSizeSmall))),
+                        ),
+                        RaisedButton(
+                            color: ColorUtil.primaryColor,
+                            onPressed: () {
+                              push(RegisterScreen());
+                            },
+                            child: Text(S.of(context).register,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: SizeUtil.textSizeSmall)))
+                      ],
+                    )
+                  ],
+                )
+              ],
+            ));
+      },),
       Expanded(
         child: entriesWidget(entries),
       ),
@@ -137,7 +208,10 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                       message: "Bạn có muốn đăng xuất không?",
                       positive: "Có",
                       negative: "Không", positiveClicked: () {
-                    push(LoginScreen());
+                    ShareValueProvider.shareValueProvider.saveUserId("");
+                    Provider.of<UserProvider>(context,listen: false).onChangeLogin(false);
+                    pushReplacement(MainScreen());
+
                   }, negativeClick: () {});
                   break;
               }
