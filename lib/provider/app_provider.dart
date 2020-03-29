@@ -32,7 +32,7 @@ class AppProvider {
     saleDetailSlideHeight = heightScreen * 0.27;
     expandHeaderHeight = heightScreen * 0.3;
     productImageHeight = heightScreen * 0.32;
-    productCartWidth = widthScreen * 0.3;
+    productCartWidth = widthScreen * 0.25;
     productCartHeight = productCartWidth * 0.7;
     width03 = widthScreen * 0.3;
     width05 = widthScreen * 0.5;
@@ -41,7 +41,7 @@ class AppProvider {
     homeCategoryHeight = widthScreen * 0.23;
     homeCategoryWidth = widthScreen/5;
     homeCategoryIconHeight = homeCategoryWidth*0.65;
-    childHeightBar = heightScreen * 0.4;
+    childHeightBar = heightScreen * 0.32;
     ;
 //    }
   }

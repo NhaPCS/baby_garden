@@ -46,9 +46,12 @@ class ItemProductHorizontal extends StatelessWidget {
                 child: Column(
               children: <Widget>[
                 Text(
-                  "Giày thời trang trẻ em style Hàn Quốc",
+                  "Giày thời trang trẻ em style Hàn Quốc AAA",
                   style: TextStyle(
                       color: ColorUtil.textGray, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: SizeUtil.tinySpace,
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -73,6 +76,7 @@ class ItemProductHorizontal extends StatelessWidget {
                   children: <Widget>[
                     Text(S.of(context).product_count),
                     ChangeQuantityWidget(
+                      height: 28,
                       textColor: ColorUtil.primaryColor,
                     )
                   ],
