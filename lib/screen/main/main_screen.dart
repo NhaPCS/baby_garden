@@ -3,10 +3,12 @@ import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
 import 'package:baby_garden_flutter/provider/get_product_category_provider.dart';
+import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/cart/cart_screen.dart';
 import 'package:baby_garden_flutter/screen/home/home_screen.dart';
 import 'package:baby_garden_flutter/screen/order/order_screen.dart';
+import 'package:baby_garden_flutter/screen/profile/profile_no_login_screen.dart';
 import 'package:baby_garden_flutter/screen/profile/profile_screen.dart';
 import 'package:baby_garden_flutter/screen/shopping/shopping_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -42,9 +44,16 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
     _tabController.addListener(() {
       _changeIndexProvider.changeIndex(_tabController.index);
     });
+
     super.initState();
     if (widget.index > 0) _tabController.animateTo(widget.index);
   }
+
+  Future<bool> isLogin() async{
+    String uID = await ShareValueProvider.shareValueProvider.getUserId();
+    return isLogin !="-1";
+  }
+
 
   @override
   Future<void> didChangeDependencies() async {
@@ -53,6 +62,7 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
 
   @override
   Widget buildWidget(BuildContext context) {
+
     return WillPopScope(
         child: Scaffold(
             body: TabBarView(

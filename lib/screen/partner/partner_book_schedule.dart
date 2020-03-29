@@ -793,34 +793,39 @@ class _PartnerBookScheduleScreenState
               TabBar(
                 controller: _dayTabController,
                 labelColor: Colors.white,
-                indicatorColor: ColorUtil.white,
                 indicatorPadding: EdgeInsets.all(0),
                 labelPadding: EdgeInsets.all(0),
                 indicator: BoxDecoration(
                     borderRadius: BorderRadius.circular(0),
                     color: Color(0xffFF7700)),
                 unselectedLabelColor: ColorUtil.textColor,
+                indicatorWeight: 0,
                 tabs: StringUtil.week
                     .map(
                       (e) => Tab(
-                    child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            e['dow'],
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: SizeUtil.textSizeNotiTime),
-                          ),
-                          Text(
-                            e['date'],
-                            style: TextStyle(
-                                fontWeight: FontWeight.normal, fontSize: 6),
-                          )
-                        ],
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Container(color: Colors.white, width: 1,),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              e['dow'],
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: SizeUtil.textSizeNotiTime),
+                            ),
+                            Text(
+                              e['date'],
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal, fontSize: 6),
+                            )
+                          ],
+                        ),
+                        Container(color: Colors.white, width: 1,),
+                      ] ,
                     ),
                   ),
                 )

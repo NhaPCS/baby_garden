@@ -1,6 +1,7 @@
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/get_banners_provider.dart';
 import 'package:baby_garden_flutter/provider/get_product_category_provider.dart';
+import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/order/order_delivery_info_screen.dart';
@@ -21,7 +22,8 @@ void main() {
         providers: [
           Provider(create: (_) => AppProvider()),
           ChangeNotifierProvider(create: (_) => GetProductCategoryProvider()),
-          ChangeNotifierProvider(create: (_) => GetBannersProvider())
+          ChangeNotifierProvider(create: (_) => GetBannersProvider()),
+          ChangeNotifierProvider(create: (_) => UserProvider()),
         ],
         child: MyApp(),
       )));
@@ -49,6 +51,10 @@ class _MyAppState extends State<MyApp> {
         Provider.of<GetBannersProvider>(context).banners.isEmpty) {
       Provider.of<GetBannersProvider>(context).getBanners();
     }
+    //get user info
+    if (Provider.of<UserProvider>(context).userInfo == null ||
+        Provider.of<UserProvider>(context).userInfo.isEmpty)
+      Provider.of<UserProvider>(context).getUserInfo();
   }
 
   @override

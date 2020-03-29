@@ -2,12 +2,13 @@ import 'dart:convert';
 
 import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/data/shared_value.dart';
+import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/view_model/base_view_model.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class LoginViewModel extends BaseViewModel{
 
@@ -16,7 +17,10 @@ class LoginViewModel extends BaseViewModel{
         password: password, phone: phone);
     if (data != null) {
       ShareValueProvider.shareValueProvider.saveUserInfo(jsonEncode(data));
-      RouteUtil.push(context,MainScreen());
+      Provider.of<UserProvider>(context,listen: false).getUserInfo();
+      RouteUtil.push(context,MainScreen(index: 4,));
+//      Navigator.of(context).pop();
+//      Navigator.of(context).pop();
     }
   }
 
