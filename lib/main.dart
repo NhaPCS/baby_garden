@@ -1,6 +1,6 @@
 import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/provider/get_banners_provider.dart';
 import 'package:baby_garden_flutter/provider/get_product_category_provider.dart';
-import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/order/order_delivery_info_screen.dart';
@@ -21,16 +21,15 @@ void main() {
         providers: [
           Provider(create: (_) => AppProvider()),
           ChangeNotifierProvider(create: (_) => GetProductCategoryProvider()),
-          ChangeNotifierProvider(create: (_) => UserProvider()),
+          ChangeNotifierProvider(create: (_) => GetBannersProvider())
         ],
         child: MyApp(),
       )));
-
-
 }
 
 class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+
   @override
   State<StatefulWidget> createState() {
     return _MyAppState();
@@ -41,12 +40,15 @@ class _MyAppState extends State<MyApp> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    // get product categories
     if (Provider.of<GetProductCategoryProvider>(context).categories == null ||
         Provider.of<GetProductCategoryProvider>(context).categories.isEmpty)
       Provider.of<GetProductCategoryProvider>(context).getProductCategories();
-    if (Provider.of<UserProvider>(context).userInfo == null ||
-        Provider.of<UserProvider>(context).userInfo.isEmpty)
-      Provider.of<UserProvider>(context).getUserInfo();
+    // get banners
+    if (Provider.of<GetBannersProvider>(context).banners == null ||
+        Provider.of<GetBannersProvider>(context).banners.isEmpty) {
+      Provider.of<GetBannersProvider>(context).getBanners();
+    }
   }
 
   @override

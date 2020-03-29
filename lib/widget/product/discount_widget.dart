@@ -16,6 +16,7 @@ class DiscountWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(discount<=0) return SizedBox();
     return Container(
       alignment: Alignment.center,
       width: size,

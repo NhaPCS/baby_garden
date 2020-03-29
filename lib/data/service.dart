@@ -74,8 +74,32 @@ Future<dynamic> changePassword(BuildContext context,
   return null;
 }
 
-Future<dynamic> productCategory(BuildContext context) async {
-  Response response = await get(context, path: "category");
+Future<dynamic> productCategory() async {
+  Response response = await get(null, path: "category", showLoading: false);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> banners() async {
+  Response response = await get(null, path: "banner", showLoading: false);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> listProducts(BuildContext context, String path,
+    {String categoryId, int index = START_PAGE, int numberPosts = PAGE_SIZE}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+
+  dynamic params = {
+    "user_id": userId,
+    "index": index.toString(),
+    "number_post": numberPosts.toString()
+  };
+  if (categoryId != null && categoryId.isNotEmpty) {
+    params['category_id'] = categoryId;
+  }
+  Response response =
+      await get(null, path: path, param: params, showLoading: false);
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -84,26 +108,32 @@ Future<Response> post(BuildContext context,
     {String path,
     dynamic param,
     bool hasAccessToken = false,
-    bool showErrorDialog = true}) async {
+    bool showErrorDialog = true,
+    bool showLoading = true}) async {
   Response response = await execute(context,
       path: path,
       param: param,
       hasAccessToken: hasAccessToken,
       showErrorDialog: showErrorDialog,
+      showLoading: showLoading,
       isPost: true);
   return response;
 }
 
-Future<Response> get(BuildContext context,
-    {String path,
-    dynamic param,
-    bool showErrorDialog = true,
-    bool hasAccessToken = false}) async {
+Future<Response> get(
+  BuildContext context, {
+  String path,
+  dynamic param,
+  bool showErrorDialog = true,
+  bool hasAccessToken = false,
+  bool showLoading = true,
+}) async {
   Response response = await execute(context,
       path: path,
       param: param,
       hasAccessToken: hasAccessToken,
       showErrorDialog: showErrorDialog,
+      showLoading: showLoading,
       isPost: false);
   return response;
 }
@@ -113,6 +143,7 @@ Future<Response> execute(BuildContext context,
     dynamic param,
     bool hasAccessToken = false,
     bool showErrorDialog = true,
+    bool showLoading = true,
     bool isPost = true}) async {
   if (_headers == null || _headers.isEmpty) {
     _headers = {};
@@ -121,16 +152,16 @@ Future<Response> execute(BuildContext context,
     //TODO post url must has http:// get: url generate by Url.http require param1: host param2: route param3: map parameter
     var url = 'http://$BASE_URL$SUB_URL$path';
     print('$param');
-    if (context != null && showErrorDialog) WidgetUtil.showLoading(context);
+    if (context != null && showLoading) WidgetUtil.showLoading(context);
     var response = isPost
         ? await http.post(url, body: param, headers: _headers)
         : await http.get(Uri.http(BASE_URL, '$SUB_URL$path', param),
             headers: _headers);
     print("REQ: ${response.request}");
     print("RES: ${response.body}");
-    if (context != null && showErrorDialog) Navigator.of(context).pop();
-    Response res =
-        parseResponse(context, response.body, hasAccessToken: hasAccessToken);
+    if (context != null && showLoading) Navigator.of(context).pop();
+    Response res = parseResponse(context, response.body,
+        hasAccessToken: hasAccessToken, showErrorDialog: showErrorDialog);
     return res;
   } on Exception catch (e) {
     print(e);
@@ -139,15 +170,16 @@ Future<Response> execute(BuildContext context,
 }
 
 Response parseResponse(BuildContext context, String responseBody,
-    {bool hasAccessToken}) {
+    {bool hasAccessToken, bool showErrorDialog = true}) {
   dynamic body = jsonDecode(responseBody);
   Response res = Response(
       message: body == null ? 0 : body['message'],
       errorId: body == null ? null : body['errorId'],
       data: body == null ? null : body['data']);
 
-  if (!res.isSuccess() && context != null) {
-    WidgetUtil.showErrorDialog(context, res.message);
+  if (!res.isSuccess()) {
+    if (context != null && showErrorDialog)
+      WidgetUtil.showErrorDialog(context, res.message);
   } else {
     if (hasAccessToken) {
       if (res.data != null && res.data['id'] != null) {

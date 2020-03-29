@@ -5,7 +5,7 @@ class GetProductCategoryProvider extends ChangeNotifier {
   List<dynamic> categories = List();
 
   Future<void> getProductCategories() async {
-    categories = await service.productCategory(null);
+    categories = await service.productCategory();
     notifyListeners();
   }
 }

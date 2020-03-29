@@ -10,7 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
-class LoginViewModel implements BaseViewModel{
+class LoginViewModel extends BaseViewModel{
 
   Future<void> onLogin({String phone, String password}) async {
     dynamic data = await login(context,

@@ -6,6 +6,7 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/product/discount_widget.dart';
 import 'package:baby_garden_flutter/widget/rounded_progress.dart';
+import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,7 @@ class ItemProduct extends StatelessWidget {
   final TextStyle nameStyle;
   final bool showTime;
   final int index;
+  final dynamic product;
 
   const ItemProduct(
       {Key key,
@@ -38,7 +40,8 @@ class ItemProduct extends StatelessWidget {
       this.nameStyle = const TextStyle(
           fontSize: SizeUtil.textSizeSmall, fontWeight: FontWeight.bold),
       this.showTime = false,
-      this.index = 0})
+      this.index = 0,
+      this.product})
       : super(key: key);
 
   @override
@@ -48,7 +51,6 @@ class ItemProduct extends StatelessWidget {
         width: width == null
             ? Provider.of<AppProvider>(context).productWidth
             : width,
-        padding: padding,
         margin: margin,
         height: height,
         decoration: BoxDecoration(
@@ -56,23 +58,33 @@ class ItemProduct extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(borderRadius))),
         child: Stack(
           children: <Widget>[
-            getMainContainer(context),
-            !showTime
-                ? SizedBox()
-                : MyRaisedButton(
-                    onPressed: () {},
-                    padding: EdgeInsets.only(
-                        left: SizeUtil.smallSpace,
-                        right: SizeUtil.smallSpace,
-                        top: SizeUtil.tinySpace,
-                        bottom: SizeUtil.tinySpace),
-                    textStyle: TextStyle(
-                        color: Colors.white, fontSize: SizeUtil.textSizeSmall),
-                    text: "00:56:23",
-                    borderRadius: SizeUtil.bigRadius,
-                  ),
+            Padding(
+              padding: padding,
+              child: getMainContainer(context),
+            ),
             Positioned(
-              child: DiscountWidget(discount: 33),
+              child: !showTime
+                  ? favoriteTag(context)
+                  : MyRaisedButton(
+                      onPressed: () {},
+                      padding: EdgeInsets.only(
+                          left: SizeUtil.smallSpace,
+                          right: SizeUtil.smallSpace,
+                          top: SizeUtil.tinySpace,
+                          bottom: SizeUtil.tinySpace),
+                      textStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: SizeUtil.textSizeSmall),
+                      text: "00:56:23",
+                      borderRadius: SizeUtil.bigRadius,
+                    ),
+              left: 0,
+              top: 0,
+            ),
+            Positioned(
+              child: DiscountWidget(
+                  discount:
+                      product == null ? 0 : int.parse(product['number_sales'])),
               right: 0,
               top: SizeUtil.smallSpace,
             )
@@ -95,8 +107,11 @@ class ItemProduct extends StatelessWidget {
         ),
         Expanded(
             child: CachedNetworkImage(
-          imageUrl:
-              StringUtil.dummyProduct[index % StringUtil.dummyProduct.length],
+          imageUrl: product == null ||
+                  product['image'] == null ||
+                  product['image'].isEmpty
+              ? ""
+              : product['image'][0],
           width: double.infinity,
           height: double.infinity,
           fit: BoxFit.fitWidth,
@@ -105,7 +120,7 @@ class ItemProduct extends StatelessWidget {
           height: SizeUtil.tinySpace,
         ),
         Text(
-          "Điện Thoại iPhone 11 Pro Max 64GB\n - Hàng Chính Hãng",
+          product == null ? "" : product['name'],
           maxLines: 2,
           textAlign: TextAlign.center,
           style: nameStyle,
@@ -117,7 +132,7 @@ class ItemProduct extends StatelessWidget {
           children: <Widget>[
             Expanded(
                 child: AutoSizeText(
-              "800.000 đ",
+              product == null ? "" : StringUtil.getPriceText(product['price']),
               maxFontSize: SizeUtil.textSizeSmall,
               minFontSize: SizeUtil.textSizeTiny,
               maxLines: 1,
@@ -129,7 +144,9 @@ class ItemProduct extends StatelessWidget {
               width: SizeUtil.tinySpace,
             ),
             Text(
-              "800.000 đ",
+              product == null
+                  ? ""
+                  : StringUtil.getPriceText(product['price_discount']),
               style:
                   TextStyle(color: ColorUtil.red, fontWeight: FontWeight.bold),
             )
@@ -155,5 +172,45 @@ class ItemProduct extends StatelessWidget {
         )
       ],
     );
+  }
+
+  Widget favoriteTag(BuildContext context) {
+    return '1' == product['is_favourite']
+        ? Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              SvgIcon(
+                'bg_favorite.svg',
+                width: 75,
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: SizeUtil.tinySpace),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.done,
+                      color: Colors.white,
+                      size: SizeUtil.iconSize,
+                    ),
+                    SizedBox(
+                      width: SizeUtil.tinySpace,
+                    ),
+                    Text(
+                      S.of(context).favorite,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: SizeUtil.textSizeSmall),
+                    )
+                  ],
+                ),
+              )
+            ],
+          )
+        : SizedBox(
+            width: 0,
+            height: 0,
+          );
   }
 }

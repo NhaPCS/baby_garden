@@ -19,6 +19,7 @@ class MyCarouselSlider extends StatefulWidget {
   final bool hasShadow;
   final ValueChanged<int> onItemPressed;
   final ValueChanged<int> onItemSelected;
+  final String imageAttrName;
 
   const MyCarouselSlider(
       {Key key,
@@ -35,7 +36,8 @@ class MyCarouselSlider extends StatefulWidget {
       this.width = double.infinity,
       this.hasShadow = false,
       this.onItemPressed,
-      this.onItemSelected})
+      this.onItemSelected,
+      this.imageAttrName})
       : super(key: key);
 
   @override
@@ -79,11 +81,7 @@ class _MyCarouselState extends State<MyCarouselSlider> {
                         color: widget.slideBackground,
                         boxShadow:
                             widget.hasShadow ? WidgetUtil.getShadow() : null,
-                        image: DecorationImage(
-                            image: widget.isAssetImage
-                                ? AssetImage(image)
-                                : CachedNetworkImageProvider(image),
-                            fit: widget.boxFit),
+                        image: getItem(image),
                         borderRadius: BorderRadius.all(
                             Radius.circular(widget.borderRadius))),
                   ),
@@ -121,5 +119,14 @@ class _MyCarouselState extends State<MyCarouselSlider> {
             ))
       ],
     );
+  }
+
+  DecorationImage getItem(dynamic image){
+    String imagePath = widget.imageAttrName==null?image:image[widget.imageAttrName];
+    return DecorationImage(
+        image: widget.isAssetImage
+            ? AssetImage(image)
+            : CachedNetworkImageProvider(imagePath),
+        fit: widget.boxFit);
   }
 }
