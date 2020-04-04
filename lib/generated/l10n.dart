@@ -461,10 +461,10 @@ class S {
     );
   }
 
-  String get happened {
+  String get pending {
     return Intl.message(
       'Sắp diễn ra',
-      name: 'happened',
+      name: 'pending',
       desc: '',
       args: [],
     );
@@ -3570,6 +3570,33 @@ class S {
     return Intl.message(
       'Vườn Của Bé ,Xin chào!',
       name: 'profileWelcomeText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get no_image {
+    return Intl.message(
+      'No image',
+      name: 'no_image',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get time_pending {
+    return Intl.message(
+      'Chưa bắt đầu',
+      name: 'time_pending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get time_ended {
+    return Intl.message(
+      'Đã kết thúc',
+      name: 'time_ended',
       desc: '',
       args: [],
     );

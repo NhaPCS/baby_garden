@@ -1,17 +1,18 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/image/my_cached_image.dart';
 import 'package:baby_garden_flutter/widget/product/countdown_time.dart';
 import 'package:baby_garden_flutter/widget/product/discount_widget.dart';
 import 'package:baby_garden_flutter/widget/rounded_progress.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ItemFlashSaleProduct extends StatelessWidget {
-  final String imageUrl;
+  final dynamic product;
 
-  const ItemFlashSaleProduct({Key key, this.imageUrl}) : super(key: key);
+  const ItemFlashSaleProduct({Key key, this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +26,10 @@ class ItemFlashSaleProduct extends StatelessWidget {
               Expanded(
                   child: Container(
                 padding: SizeUtil.smallPadding,
-                child: CachedNetworkImage(
-                  imageUrl: imageUrl,
-                  fit: BoxFit.cover,
+                child: MyCachedImage(
+                  url: product['image'] == null || product['image'].isEmpty
+                      ? ""
+                      : product['image'][0],
                 ),
                 decoration: BoxDecoration(
                     border: Border.all(color: ColorUtil.lightGray, width: 1)),
@@ -35,8 +37,8 @@ class ItemFlashSaleProduct extends StatelessWidget {
               SizedBox(
                 height: SizeUtil.smallSpace,
               ),
-              Text(
-                "Sữa Alene Úc 320g",
+              MyText(
+                product['name'],
                 style: TextStyle(
                     fontSize: SizeUtil.textSizeSmall,
                     fontWeight: FontWeight.bold),
@@ -46,16 +48,16 @@ class ItemFlashSaleProduct extends StatelessWidget {
               ),
               Row(
                 children: <Widget>[
-                  Text(
-                    "800.000 đ",
+                  MyText(
+                    StringUtil.getPriceText(product['price']),
                     style: TextStyle(
                         decoration: TextDecoration.lineThrough,
                         color: ColorUtil.textGray,
                         fontSize: SizeUtil.textSizeSmall),
                   ),
                   Expanded(child: SizedBox()),
-                  Text(
-                    "800.000 đ",
+                  MyText(
+                    StringUtil.getPriceText(product['price_discount']),
                     style: TextStyle(
                         color: ColorUtil.red, fontWeight: FontWeight.bold),
                   )
@@ -67,17 +69,18 @@ class ItemFlashSaleProduct extends StatelessWidget {
               RoundedProgress(
                 width: Provider.of<AppProvider>(context).flashSaleItemWidth,
                 height: 18,
-                label: S.of(context).sold_count("100", "200"),
+                value: StringUtil.getSalesPercent(product['number_sales'], product['number']),
+                label: S.of(context).sold_count(product['number_sales'], product['number']==null?"":product['number']),
               )
             ],
           ),
           Positioned(
-            child: DiscountWidget(discount: 33),
+            child: DiscountWidget(discount: StringUtil.getDiscountPercent(price: product['price'], discountPrice: product['price_discount'])),
             right: 0,
             top: 0,
           ),
           Positioned(
-            child: CountDownTime(seconds: 1000),
+            child: CountDownTime(startTime: product['time_start'],endTime: product['time_end'],),
             left: 0,
             top: -10,
           )

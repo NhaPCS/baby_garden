@@ -47,7 +47,7 @@
   "all": "Tất cả",
   "category": "Danh mục",
   "happening": "Đang diễn ra",
-  "happened": "Sắp diễn ra",
+  "pending": "Sắp diễn ra",
   "sold_count": "Đã bán {sold}/{total}",
   "joinDate": "Tham gia từ",
   "fullname": "Họ và tên",
@@ -392,5 +392,8 @@
   "home_hot_products": "HÀNG bán chạy",
   "home_discount_products": "HÀNG khuyến mãi",
   "view_shop": "Xem Shop",
-  "profileWelcomeText": "Vườn Của Bé ,Xin chào!"
+  "profileWelcomeText": "Vườn Của Bé ,Xin chào!",
+  "no_image": "No image",
+  "time_pending": "Chưa bắt đầu",
+  "time_ended": "Đã kết thúc"
 }

@@ -1,6 +1,10 @@
+import 'package:baby_garden_flutter/data/model/section.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_flashsale_product.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/provider/change_flashsale_mode_provider.dart';
+import 'package:baby_garden_flutter/provider/get_list_product_provider.dart';
+import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/list_product/list_product_screen.dart';
 import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -8,11 +12,42 @@ import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-class FlashSale extends StatelessWidget {
+class FlashSale extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
+  State<StatefulWidget> createState() {
+    return _FlashSaleState();
+  }
+}
+
+class _FlashSaleState extends BaseState<FlashSale> {
+  final GetListProductProvider _getListProductProvider =
+      GetListProductProvider();
+  final ChangeFlashSaleModeProvider _changeFlashSaleModeProvider =
+      ChangeFlashSaleModeProvider();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_getListProductProvider.products == null ||
+        _getListProductProvider.products.isEmpty) {
+      _loadData();
+    }
+  }
+
+  void _loadData() {
+    //TODO
+//    _getListProductProvider.getData(
+//        context, isPending ? "flashSalesPending" : "flashSales");
+    _getListProductProvider.getData(
+        context, _changeFlashSaleModeProvider.isPending ? "newProduct" : "newProduct",
+        numberPosts: 10, index: 1);
+  }
+
+  @override
+  Widget buildWidget(BuildContext context) {
     return GestureDetector(
       child: Container(
         width: double.infinity,
@@ -57,52 +92,41 @@ class FlashSale extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      SizedBox(
-                        width: SizeUtil.smallSpace,
-                      ),
-                      MyRaisedButton(
-                        onPressed: () {
-                          RouteUtil.push(
-                              context,
-                              ListProductScreen(
-                                  title: S.of(context).happening));
-                        },
-                        text: S.of(context).happening,
-                        color: ColorUtil.red,
-                        textStyle: TextStyle(color: Colors.white),
-                      ),
-                      SizedBox(
-                        width: SizeUtil.smallSpace,
-                      ),
-                      MyRaisedButton(
-                        onPressed: () {
-                          RouteUtil.push(
-                              context,
-                              ListProductScreen(
-                                  title: S.of(context).happened));
-                        },
-                        text: S.of(context).happened,
-                        color: Colors.white,
-                        textStyle: TextStyle(color: ColorUtil.red),
-                      )
-                    ],
+                  Consumer<ChangeFlashSaleModeProvider>(
+                    builder: (BuildContext context,
+                        ChangeFlashSaleModeProvider value, Widget child) {
+                      return Row(
+                        children: <Widget>[
+                          SizedBox(
+                            width: SizeUtil.smallSpace,
+                          ),
+                          _getModeButton(false),
+                          SizedBox(
+                            width: SizeUtil.smallSpace,
+                          ),
+                          _getModeButton(true)
+                        ],
+                      );
+                    },
                   ),
                   SizedBox(
                     height:
                         Provider.of<AppProvider>(context).flashSaleItemHeight,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 10,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          child: ItemFlashSaleProduct(
-                            imageUrl: StringUtil.dummyImageList[
-                                index % StringUtil.dummyImageList.length],
-                          ),
-                          onTap: () {
-                            RouteUtil.push(context, ProductDetailScreen());
+                    child: Consumer<GetListProductProvider>(
+                      builder: (BuildContext context,
+                          GetListProductProvider value, Widget child) {
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: value.products.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                              child: ItemFlashSaleProduct(
+                                product: value.products[index],
+                              ),
+                              onTap: () {
+                                RouteUtil.push(context, ProductDetailScreen());
+                              },
+                            );
                           },
                         );
                       },
@@ -120,8 +144,36 @@ class FlashSale extends StatelessWidget {
       ),
       onTap: () {
         RouteUtil.push(
-            context, ListProductScreen(title: S.of(context).happening));
+            context,
+            ListProductScreen(
+              section: Section(title: S.of(context).happening),
+            ));
       },
     );
+  }
+
+  Widget _getModeButton(bool isPending) {
+    return MyRaisedButton(
+      onPressed: () {
+        _changeFlashSaleModeProvider.changeMode(isPending);
+        _loadData();
+      },
+      text: isPending ? S.of(context).pending : S.of(context).happening,
+      color: _changeFlashSaleModeProvider.isPending == isPending
+          ? ColorUtil.red
+          : Colors.white,
+      textStyle: TextStyle(
+          color: _changeFlashSaleModeProvider.isPending == isPending
+              ? Colors.white
+              : ColorUtil.red),
+    );
+  }
+
+  @override
+  List<SingleChildWidget> providers() {
+    return [
+      ChangeNotifierProvider.value(value: _getListProductProvider),
+      ChangeNotifierProvider.value(value: _changeFlashSaleModeProvider),
+    ];
   }
 }

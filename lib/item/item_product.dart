@@ -66,7 +66,7 @@ class ItemProduct extends StatelessWidget {
             Positioned(
               child: !showTime
                   ? favoriteTag(context)
-                  : CountDownTime(seconds: 1000,),
+                  : CountDownTime(startTime: product['time_start'],endTime: product['time_end'],),
               left: 0,
               top: 0,
             ),

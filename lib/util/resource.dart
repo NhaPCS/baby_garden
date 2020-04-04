@@ -62,6 +62,10 @@ class StringUtil {
     }
   }
 
+  static double getSalesPercent(String numberSales, String total){
+    if(numberSales == null || total==null) return 0;
+    return int.parse(numberSales)/int.parse(total);
+  }
   static int getDiscountPercent({String price, String discountPrice}) {
     if (price == null ||
         price.isEmpty ||

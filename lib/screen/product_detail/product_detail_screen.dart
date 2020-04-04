@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/data/model/section.dart';
 import 'package:baby_garden_flutter/dialog/add_to_cart_bottom_dialog.dart';
 import 'package:baby_garden_flutter/dialog/report_product_dialog.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
@@ -291,7 +292,7 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
                 ),
                 onPressed: () {
                   push(ListProductScreen(
-                    title: S.of(context).same_product,
+                    section: Section(title: S.of(context).same_product),
                   ));
                 },
               )

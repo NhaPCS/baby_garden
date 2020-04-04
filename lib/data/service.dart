@@ -86,8 +86,18 @@ Future<dynamic> banners() async {
   return null;
 }
 
+Future<dynamic> flashSales() async {
+  return await listProducts(null, "flashSales");
+}
+
+Future<dynamic> flashSalesPending() async {
+  return await listProducts(null, "flashSalesPending");
+}
+
 Future<dynamic> listProducts(BuildContext context, String path,
-    {String categoryId, int index = START_PAGE, int numberPosts = PAGE_SIZE}) async {
+    {String categoryId,
+    int index = START_PAGE,
+    int numberPosts = PAGE_SIZE}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
 
   dynamic params = {
