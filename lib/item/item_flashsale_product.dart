@@ -75,7 +75,7 @@ class ItemFlashSaleProduct extends StatelessWidget {
             ],
           ),
           Positioned(
-            child: DiscountWidget(discount: StringUtil.getDiscountPercent(price: product['price'], discountPrice: product['price_discount'])),
+            child: DiscountWidget(discount: StringUtil.getDiscountPercent(product)),
             right: 0,
             top: 0,
           ),

@@ -62,18 +62,18 @@ class StringUtil {
     }
   }
 
-  static double getSalesPercent(String numberSales, String total){
-    if(numberSales == null || total==null) return 0;
-    return int.parse(numberSales)/int.parse(total);
+  static double getSalesPercent(String numberSales, String total) {
+    if (numberSales == null || total == null) return 0;
+    return int.parse(numberSales) / int.parse(total);
   }
-  static int getDiscountPercent({String price, String discountPrice}) {
-    if (price == null ||
-        price.isEmpty ||
-        discountPrice == null ||
-        discountPrice.isEmpty) return 0;
+
+  static int getDiscountPercent(dynamic product) {
+    if (product == null ||
+        product['price'] == null ||
+        product['price_discount'] == null) return 0;
     try {
-      double dP = double.parse(discountPrice);
-      double p = double.parse(price);
+      double dP = double.parse(product['price_discount']);
+      double p = double.parse(product['price']);
       int result = (((p - dP) / p) * 100).toInt();
       return result;
     } on Exception catch (e) {

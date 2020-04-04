@@ -5,7 +5,7 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/list_product/list_product_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
-import 'package:baby_garden_flutter/widget/product/list_product.dart';
+import 'package:baby_garden_flutter/widget/product/list_horizontal_product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -93,7 +93,7 @@ class _GridProductState extends BaseState<GridProduct> {
           Consumer<GetListProductProvider>(
             builder: (BuildContext context, GetListProductProvider value,
                 Widget child) {
-              return ListProduct(
+              return ListHorizontalProduct(
                 maxItems: widget.isHome ? value.products.length : null,
                 rowsCount: widget.isHome ? 1 : 2,
                 products: value.products,

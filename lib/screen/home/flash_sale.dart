@@ -41,8 +41,8 @@ class _FlashSaleState extends BaseState<FlashSale> {
     //TODO
 //    _getListProductProvider.getData(
 //        context, isPending ? "flashSalesPending" : "flashSales");
-    _getListProductProvider.getData(
-        context, _changeFlashSaleModeProvider.isPending ? "newProduct" : "newProduct",
+    _getListProductProvider.getData(context,
+        _changeFlashSaleModeProvider.isPending ? "newProduct" : "newProduct",
         numberPosts: 10, index: 1);
   }
 
@@ -124,7 +124,11 @@ class _FlashSaleState extends BaseState<FlashSale> {
                                 product: value.products[index],
                               ),
                               onTap: () {
-                                RouteUtil.push(context, ProductDetailScreen());
+                                RouteUtil.push(
+                                    context,
+                                    ProductDetailScreen(
+                                      productId: value.products[index]['id'],
+                                    ));
                               },
                             );
                           },

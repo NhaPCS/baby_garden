@@ -81,7 +81,7 @@ class ItemProduct extends StatelessWidget {
         ),
       ),
       onTap: () {
-        RouteUtil.push(context, ProductDetailScreen());
+        RouteUtil.push(context, ProductDetailScreen(productId: product['id'],));
       },
     );
   }

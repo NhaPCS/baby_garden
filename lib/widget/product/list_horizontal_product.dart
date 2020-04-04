@@ -5,14 +5,14 @@ import 'package:baby_garden_flutter/widget/product/view_more_product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ListProduct extends StatelessWidget {
+class ListHorizontalProduct extends StatelessWidget {
   final EdgeInsets padding;
   final int maxItems;
   final VoidCallback onViewMoreClick;
   final int rowsCount;
   final List<dynamic> products;
 
-  const ListProduct(
+  const ListHorizontalProduct(
       {Key key,
       this.padding = const EdgeInsets.all(0),
       this.maxItems,
@@ -46,6 +46,6 @@ class ListProduct extends StatelessWidget {
   }
 
   int getItemsCount() {
-    return maxItems != null ? maxItems : products == null ? products.length : 0;
+    return maxItems != null ? maxItems : products == null ? 0 : products.length;
   }
 }

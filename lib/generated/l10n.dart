@@ -434,6 +434,15 @@ class S {
     );
   }
 
+  String get collapse {
+    return Intl.message(
+      'Thu gọn',
+      name: 'collapse',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get all {
     return Intl.message(
       'Tất cả',
@@ -902,6 +911,15 @@ class S {
     );
   }
 
+  String get product_out_stock {
+    return Intl.message(
+      'Hết hàng',
+      name: 'product_out_stock',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get detail_info {
     return Intl.message(
       'Thông tin chi tiết',
@@ -983,10 +1001,28 @@ class S {
     );
   }
 
+  String get expect_to_buy {
+    return Intl.message(
+      'Dự kiến mua',
+      name: 'expect_to_buy',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get add_to_cart {
     return Intl.message(
       'Thêm vào giỏ hàng',
       name: 'add_to_cart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get get_notify_when_stocking {
+    return Intl.message(
+      'Nhận thông báo khi có hàng',
+      name: 'get_notify_when_stocking',
       desc: '',
       args: [],
     );

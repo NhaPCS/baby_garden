@@ -114,6 +114,16 @@ Future<dynamic> listProducts(BuildContext context, String path,
   return null;
 }
 
+Future<dynamic> productDetail(BuildContext context, {String productId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  Response response = await get(context,
+      path: 'productDetail',
+      param: {'user_id': userId, 'product_id': productId},
+      showLoading: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 Future<Response> post(BuildContext context,
     {String path,
     dynamic param,

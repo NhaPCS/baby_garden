@@ -57,9 +57,8 @@ class ReportProductDialog extends AlertDialog {
   @override
   Widget get content => ChangeNotifierProvider.value(
         value: _changeIndexProvider,
-        child: Container(
-          child: ListView(
-            shrinkWrap: true,
+        child: SingleChildScrollView(
+          child: Column(
             children: <Widget>[
               SizedBox(
                 height: SizeUtil.smallSpace,
