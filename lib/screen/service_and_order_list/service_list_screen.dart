@@ -1,6 +1,7 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/booking_detail_provider.dart';
 import 'package:baby_garden_flutter/provider/service_list_provider.dart';
+import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/order/order_detail_screen.dart';
 import 'package:baby_garden_flutter/screen/rated_detail/rated_detail_screen.dart';
@@ -57,7 +58,7 @@ class _ServiceListScreenState extends BaseState<ServiceListScreen> {
                         padding: EdgeInsets.all(0),
                         itemBuilder: (context, index) {
                           return new GestureDetector(onTap: (){
-                            Provider.of<BookingDetailProvider>(context,listen: false).getBookingDetail(1, value.listService[index]['id']);
+                            Provider.of<BookingDetailProvider>(context,listen: false).getBookingDetail(Provider.of<UserProvider>(context,listen: false).userInfo['id'], value.listService[index]['id']);
                             push(ServiceDetailScreen(title: widget.childTitle));
                           },
                               child: new ServiceItem(isShowBookingDate: false,itemData: value.listService[index],));

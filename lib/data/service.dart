@@ -154,7 +154,7 @@ Future<dynamic> rateBooking({String userID, int bookingID, double star , String 
 }
 
 //todo listBookingService
-Future<dynamic> listBookingService({int userId, int type}) async {
+Future<dynamic> listBookingService({String userId, int type}) async {
   Response response = await get(null,
       path: "listBookingService", param: {'user_id':userId.toString(),'type':type.toString()});
   if (response.isSuccess()) return response.data;
