@@ -5,6 +5,7 @@ import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 
 Map<String, String> _headers;
@@ -73,6 +74,122 @@ Future<dynamic> changePassword(BuildContext context,
   if (response.isSuccess()) return response.data;
   return null;
 }
+
+/*todo bookingService
+
+ */
+Future<dynamic> bookingService(BuildContext context,
+    {int userID, int shopID, }) async {
+  Response response = await post(context,
+      path: "bookingService", param: {'user_id': userID,
+        'shop_id': shopID});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+/*todo bookingProduct
+user_id: id người dùng
+shop_id: id shop
+date_booking: ngày đặt
+time_booking: giờ đặt
+promotion_code: mã khuyến mại
+is_receive: 1: nhận hàng tại shop, 0: giao hàng tận nơi
+payment: 1: tiền mặt, 2: chuyển khoản, 3: dùng điểm
+note: ghi chú
+ship_id: id đơn vị giao hàng
+address: địa chỉ nhận hàng
+ship_code: mã khuyến mại ship
+user_name: tên người nhận
+user_phone:sđt
+user_address: địa chỉ
+city_id: id thành phố
+district_id: id quận huyện
+*/
+Future<dynamic> bookingProduct(BuildContext context,
+    {int userID, int shopID, }) async {
+  Response response = await post(context,
+      path: "bookingProduct", param: {'user_id': userID,
+        'shop_id': shopID});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+//todo bookingDetail
+Future<dynamic> bookingDetail({int userId, var bookingID}) async {
+  Response response = await get(null,
+      path: "bookingDetail", param: {'user_id':userId.toString(),'booking_id':bookingID.toString()});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+//todo district
+Future<dynamic> district({String id}) async {
+  Response response = await get(null,
+      path: "district", param: {'city_id': id});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+
+//todo listShiper
+Future<dynamic> listShiper({int userId}) async {
+  Response response = await get(null, path: "listShiper",param: {'user_id':userId.toString()});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+//todo city
+Future<dynamic> city() async {
+  Response response = await get(null, path: "city");
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+//todo rateBooking
+Future<dynamic> rateBooking({String userID, int bookingID, double star , String content }) async {
+  Response response = await post(null,
+      path: "rateBooking", param: {'user_id': userID,
+        'booking_id': bookingID.toString(),'star':star.toString(),'content':content.toLowerCase()});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+//todo listBookingService
+Future<dynamic> listBookingService({int userId, int type}) async {
+  Response response = await get(null,
+      path: "listBookingService", param: {'user_id':userId.toString(),'type':type.toString()});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+//todo listBookingProduct
+Future<dynamic> listBookingProduct({int userId, int type}) async {
+  Response response = await get(null,
+      path: "listBookingProduct", param: {'user_id':userId,'type':type});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+//TODO paymentInfo
+Future<dynamic> paymentInfo() async {
+  Response response = await get(null,
+      path: "paymentInfo");
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+//TODO PAYMENT
+Future<dynamic> payment( {String userID,int bookingId,double money, String content, String note}) async{
+  Response response  = await post(null,path: "payment",param: {
+    'user_id': userID.toString(),
+    'booking_id': bookingId.toString(),
+    'money': money.toString(),
+    'content': content.toString(),
+    'note': note.toLowerCase(),
+  });
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 
 Future<dynamic> productCategory() async {
   Response response = await get(null, path: "category", showLoading: false);

@@ -1,8 +1,16 @@
 import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/provider/booking_detail_provider.dart';
+import 'package:baby_garden_flutter/provider/city_provider.dart';
+import 'package:baby_garden_flutter/provider/district_provider.dart';
 import 'package:baby_garden_flutter/provider/get_banners_provider.dart';
 import 'package:baby_garden_flutter/provider/get_product_category_provider.dart';
+import 'package:baby_garden_flutter/provider/order_list_provider.dart';
+import 'package:baby_garden_flutter/provider/payment_info_provider.dart';
+import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
+import 'package:baby_garden_flutter/provider/service_list_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
+import 'package:baby_garden_flutter/screen/checkout/checkout_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/order/order_delivery_info_screen.dart';
 import 'package:baby_garden_flutter/screen/order/order_detail_screen.dart';
@@ -24,6 +32,12 @@ void main() {
           ChangeNotifierProvider(create: (_) => GetProductCategoryProvider()),
           ChangeNotifierProvider(create: (_) => GetBannersProvider()),
           ChangeNotifierProvider(create: (_) => UserProvider()),
+          ChangeNotifierProvider(create: (_) => ServiceListProvider()),
+          ChangeNotifierProvider(create: (_) => OrderListProvider()),
+          ChangeNotifierProvider(create: (_) => BookingDetailProvider()),
+          ChangeNotifierProvider(create: (_) => CityProvider()),
+          ChangeNotifierProvider(create: (_) => DistrictProvider()),
+          ChangeNotifierProvider(create: (_) => ReceiveAddressListProvider()),
         ],
         child: MyApp(),
       )));
@@ -52,9 +66,11 @@ class _MyAppState extends State<MyApp> {
       Provider.of<GetBannersProvider>(context).getBanners();
     }
     //get user info
-    if (Provider.of<UserProvider>(context).userInfo == null ||
-        Provider.of<UserProvider>(context).userInfo.isEmpty)
       Provider.of<UserProvider>(context).getUserInfo();
+    //get user info
+    if (Provider.of<CityProvider>(context).cities == null ||
+        Provider.of<CityProvider>(context).cities.isEmpty)
+      Provider.of<CityProvider>(context,listen: false).getCities();
   }
 
   @override
@@ -91,7 +107,7 @@ class _MyAppState extends State<MyApp> {
             bodyText1: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
           )),
-      home: MainScreen(),
+      home: RatingDetailScreen(),
     );
   }
 }

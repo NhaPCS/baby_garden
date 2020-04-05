@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/order_list_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/rated_detail/rated_detail_screen.dart';
 import 'package:baby_garden_flutter/screen/rating_detail/rating_detail_screen.dart';
@@ -8,6 +9,7 @@ import 'package:baby_garden_flutter/widget/service_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 import 'order_detail_screen.dart';
 
@@ -49,17 +51,19 @@ class _OrderListScreenState extends BaseState<OrderListScreen>{
             child: Container(
               padding: EdgeInsets.only(bottom: SizeUtil.smallSpace),
               color: ColorUtil.lineColor,
-              child: ListView.builder(
-                  itemCount: 10,
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.all(0),
-                  itemBuilder: (context, index) {
-                    return new GestureDetector(onTap: (){
-                      push(OrderDetailScreen(title:widget.childTitle!=null?widget.childTitle:widget.title,state: widget.state,isShowNegativeButton: widget.isShowNegativeButton,isShowPositiveButton: widget.isShowPositiveButton,));
-                    },
-                        child: OrderItem(isRated: false,));
-                  }),
+              child:Consumer<OrderListProvider>(builder: (BuildContext context, OrderListProvider value, Widget child) {
+                return ListView.builder(
+                    itemCount: 10,
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.all(0),
+                    itemBuilder: (context, index) {
+                      return new GestureDetector(onTap: (){
+                        push(OrderDetailScreen(title:widget.childTitle!=null?widget.childTitle:widget.title,state: widget.state,isShowNegativeButton: widget.isShowNegativeButton,isShowPositiveButton: widget.isShowPositiveButton,));
+                      },
+                          child: OrderItem(isRated: false,));
+                    });
+              },)
             ),
           )
         ],

@@ -1,6 +1,9 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_faq.dart';
 import 'package:baby_garden_flutter/item/item_order_option.dart';
+import 'package:baby_garden_flutter/provider/booking_detail_provider.dart';
+import 'package:baby_garden_flutter/provider/order_list_provider.dart';
+import 'package:baby_garden_flutter/provider/service_list_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/booking/booking_rate_screen.dart';
 import 'package:baby_garden_flutter/screen/order/list_order_screen.dart';
@@ -9,6 +12,7 @@ import 'package:baby_garden_flutter/screen/service_and_order_list/service_list_s
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 class OrderScreen extends StatefulWidget {
   @override
@@ -47,6 +51,7 @@ class _OrderState extends BaseState<OrderScreen> {
                   .map((e) => InkWell(
                         child: ItemOrderOption(option: e),
                         onTap: () {
+                          Provider.of<OrderListProvider>(context).getListData(1, ORDER_OPTIONS.indexOf(e)+1);
                           switch(ORDER_OPTIONS.indexOf(e)){
                             case 0:// todo chờ thanh toán
                               push(OrderListScreen(
@@ -99,6 +104,8 @@ class _OrderState extends BaseState<OrderScreen> {
               children: SERVICE_OPTIONS
                   .map((e) => InkWell(
                   onTap: (){
+                    Provider.of<ServiceListProvider>(context,listen: false).getServiceList(1, SERVICE_OPTIONS.indexOf(e)+1);
+//                    Provider.of<BookingDetailProvider>(context,listen: false).getBookingDetail(1, 1);
                     switch(SERVICE_OPTIONS.indexOf(e)){
                       case 0 ://todo đã đặt lịch
                         push(ServiceListScreen(title: S.of(context).service_booked,state: 0,childTitle: "Đơn hàng VCB19.12.25",));

@@ -120,7 +120,7 @@ class _PartnerBookScheduleScreenState
     // TODO: implement buildWidget
     final productTabbarHei = SizeUtil.tabbar_fix_height +76;
     final List<Tab> myTabs = <Tab>[
-      Tab(text: S.of(context).book),
+      Tab(text: S.of(context).book,),
       Tab(
         child: Container(
           child: Row(
@@ -439,6 +439,7 @@ class _PartnerBookScheduleScreenState
                                       onTap: (val){
                                         _partnerTabbarProvider.onChange();
                                       },
+                                      indicatorWeight: 0,
                                       controller: _tabController,
                                       labelColor: Colors.white,
                                       indicatorColor: ColorUtil.white,

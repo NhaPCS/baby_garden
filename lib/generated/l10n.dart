@@ -1172,6 +1172,15 @@ class S {
     );
   }
 
+  String booking_code(dynamic code) {
+    return Intl.message(
+      'Mã đặt lịch $code',
+      name: 'booking_code',
+      desc: '',
+      args: [code],
+    );
+  }
+
   String order_with_code(dynamic code) {
     return Intl.message(
       'Đơn hàng $code',

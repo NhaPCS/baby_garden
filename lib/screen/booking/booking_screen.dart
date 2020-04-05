@@ -10,6 +10,8 @@ import 'package:baby_garden_flutter/provider/change_delivery_time_provider.dart'
 import 'package:baby_garden_flutter/provider/checkout_method_provider.dart';
 import 'package:baby_garden_flutter/provider/delivery_method_provider.dart';
 import 'package:baby_garden_flutter/provider/notify_switch_provider.dart';
+import 'package:baby_garden_flutter/provider/payment_info_provider.dart';
+import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
 import 'package:baby_garden_flutter/provider/shop_location_provider.dart';
 import 'package:baby_garden_flutter/provider/transfer_method_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
@@ -18,6 +20,7 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/custom_radio_button.dart';
 import 'package:baby_garden_flutter/widget/dot_line_separator.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +37,6 @@ class BookingScreen extends StatefulWidget {
 
 class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProviderStateMixin {
   final ChangeDeliveryTimeProvider _changeDeliveryTimeProvider = new ChangeDeliveryTimeProvider();
-  final ChangeDeliveryAddressProvider _changeDeliveryAddressProvider = new ChangeDeliveryAddressProvider();
   final DeliveryMethodProvider _deliveryMethodProvider = new DeliveryMethodProvider();
   final ShopLocationProvider _shopLocationProvider = new ShopLocationProvider();
   final NotifySwitchProvider _notifySwitchProvider = new NotifySwitchProvider();
@@ -47,6 +49,7 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
   void initState() {
     // TODO: implement initState
     _dayTabControler = TabController(vsync: this, length: 3);
+    _transferMethodProvider.getShips();
     super.initState();
   }
 
@@ -104,7 +107,7 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
                 onTap: () {
                   // Show address list
                   showDialog(
-                      context: context, builder: (_) => ChangeDeliveryAddressDialogue(changeDeliveryAddressProvider: _changeDeliveryAddressProvider,));
+                      context: context, builder: (_) => ChangeDeliveryAddressDialogue());
                 },
                 child: Text(
                   S.of(context).change,
@@ -117,13 +120,16 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
                   left: SizeUtil.bigSpacehigher,
                   top: SizeUtil.tinySpace,
                   bottom: SizeUtil.tinySpace),
-              child: Text(
-                "Lê Văn Lĩnh - 0975 441 005\n28 Phan Kế Bính\nPhường Cống Vị, Quận Ba Đình, Hà Nội",
-                style: TextStyle(
-                    fontSize: SizeUtil.textSizeSmall,
-                    height: 1.3,
-                    color: Colors.black),
-              ),
+              child: Consumer<ReceiveAddressListProvider>(builder: (BuildContext context, ReceiveAddressListProvider value, Widget child) {
+                String address = value.addressList.length>value.val?value.addressList[value.val]:"";
+                return Text(
+                  address,
+                  style: TextStyle(
+                      fontSize: SizeUtil.textSizeSmall,
+                      height: 1.3,
+                      color: Colors.black),
+                );
+              },),
             ),
           ),
           //TODO delivery menthod
@@ -379,7 +385,6 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
     // TODO: implement providers
     return [
       ChangeNotifierProvider.value(value: _changeDeliveryTimeProvider),
-      ChangeNotifierProvider.value(value: _changeDeliveryAddressProvider),
       ChangeNotifierProvider.value(value: _deliveryMethodProvider),
       ChangeNotifierProvider.value(value: _shopLocationProvider),
       ChangeNotifierProvider.value(value: _notifySwitchProvider),
@@ -394,138 +399,55 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          CustomRadioButton(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            titleContent: Row(
+          Column(children: value.ships.map((e) => Column(children: <Widget>[
+            CustomRadioButton(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Image.asset(
-                  'photo/ghn_icon.png',
-                  width: 40,
-                  height: 16,
-                ),
-                SizedBox(
-                  width: SizeUtil.tinySpace,
-                ),
-                Text(
-                  "Giao hàng nhanh",
-                  style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail),
-                ),
-              ],
-            ),
-            subTitle: Text(
-              S.of(context).delivery_plan("2 ngày"),
-              style: TextStyle(
-                  fontSize: SizeUtil.textSizeNotiTime, color: ColorUtil.gray),
-            ),
-            padding: const EdgeInsets.only(
-                left: SizeUtil.bigSpacehigher,
-                top: SizeUtil.smallSpace,
-                bottom: SizeUtil.smallSpace,right: SizeUtil.normalSpace),
-            value: 1,
-            groupValue: value.transferMenthod,
-            onChanged: (val) {
-              _transferMethodProvider.onChange(val);
-            },
-            trailing: Row(children: <Widget>[
-              Text('25.000 đ',style: TextStyle(fontSize: SizeUtil.textSizeTiny,decoration: TextDecoration.lineThrough,),),
-              SizedBox(width: SizeUtil.tinySpace,),
-              Text('5.000 đ',style: TextStyle(fontSize: SizeUtil.textSizeSmall,),),
-            ],),
-          ),
-          Container(
-              margin: EdgeInsets.only(
-                left: SizeUtil.notifyHintSpace,
+              titleContent: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  CachedNetworkImage(
+                    imageUrl: e['img'],
+                    width: 40,
+                    height: 16,
+                  ),
+                  SizedBox(
+                    width: SizeUtil.tinySpace,
+                  ),
+                  Text(
+                    e['name'],
+                    style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail),
+                  ),
+                ],
               ),
-              child: MySeparator(
-                color: ColorUtil.lineColor,
-                paddingLeft: SizeUtil.largeSpace,
-              )),
-          CustomRadioButton(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            titleContent: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Image.asset(
-                  'photo/ghtk.png',
-                  width: 24,
-                  height: 20,
-                ),
-                SizedBox(
-                  width: SizeUtil.tinySpace,
-                ),
-                Text(
-                  "Giao hàng tiết kiệm",
-                  style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail),
-                ),
-              ],
-            ),
-            subTitle: Text(
-              S.of(context).delivery_plan("4 ngày"),
-              style: TextStyle(
-                  fontSize: SizeUtil.textSizeNotiTime, color: ColorUtil.gray),
-            ),
-            padding: const EdgeInsets.only(
-                left: SizeUtil.bigSpacehigher,
-                top: SizeUtil.smallSpace,
-                bottom: SizeUtil.smallSpace,right: SizeUtil.normalSpace),
-            value: 2,
-            groupValue: value.transferMenthod,
-            onChanged: (val) {
-              _transferMethodProvider.onChange(val);
-            },
-            trailing: Text('28.000 đ',style: TextStyle(fontSize: SizeUtil.textSizeSmall,),),
-          ),
-          Container(
-              margin: EdgeInsets.only(
-                left: SizeUtil.notifyHintSpace,
+              subTitle: Text(
+                e['note'],
+                style: TextStyle(
+                    fontSize: SizeUtil.textSizeNotiTime, color: ColorUtil.gray),
               ),
-              child: MySeparator(
-                color: ColorUtil.lineColor,
-                paddingLeft: SizeUtil.largeSpace,
-              )),
-          CustomRadioButton(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            titleContent: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Image.asset(
-                  'photo/ahamove.png',
-                  width: 24,
-                  height: 20,
-                ),
-                SizedBox(
-                  width: SizeUtil.tinySpace,
-                ),
-                Text(
-                  "Ahamove",
-                  style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail),
-                ),
-              ],
+              padding: const EdgeInsets.only(
+                  left: SizeUtil.bigSpacehigher,
+                  top: SizeUtil.smallSpace,
+                  bottom: SizeUtil.smallSpace,right: SizeUtil.normalSpace),
+              value: value.ships.indexOf(e),
+              groupValue: value.transferMenthod,
+              onChanged: (val) {
+                _transferMethodProvider.onChange(val);
+              },
+              trailing: Row(children: <Widget>[
+                Text(e['price'],style: TextStyle(fontSize: SizeUtil.textSizeTiny,decoration: TextDecoration.lineThrough,),),
+                SizedBox(width: SizeUtil.tinySpace,),
+                Text(e['price_discount'],style: TextStyle(fontSize: SizeUtil.textSizeSmall,),),
+              ],),
             ),
-            subTitle: Text(
-              S.of(context).delivery_plan("4 giờ"),
-              style: TextStyle(
-                  fontSize: SizeUtil.textSizeNotiTime, color: ColorUtil.gray),
-            ),
-            padding: const EdgeInsets.only(
-                left: SizeUtil.bigSpacehigher,
-                top: SizeUtil.smallSpace,
-                bottom: SizeUtil.smallSpace,right: SizeUtil.normalSpace),
-            value: 3,
-            groupValue: value.transferMenthod,
-            onChanged: (val) {
-              _transferMethodProvider.onChange(val);
-            },
-            trailing: Text('35.000 đ',style: TextStyle(fontSize: SizeUtil.textSizeSmall,),),
-          ),
-          Container(
-              margin: EdgeInsets.only(
-                  left: SizeUtil.notifyHintSpace, bottom: SizeUtil.smallSpace),
-              child: MySeparator(
-                color: ColorUtil.lineColor,
-              )),
-          //todo promote code
+            Container(
+                margin: EdgeInsets.only(
+                  left: SizeUtil.notifyHintSpace,
+                ),
+                child: MySeparator(
+                  color: ColorUtil.lineColor,
+                  paddingLeft: SizeUtil.largeSpace,
+                ))
+          ],)).toList()),
           Padding(
             padding: const EdgeInsets.only(
                 left: SizeUtil.bigSpacehigher,

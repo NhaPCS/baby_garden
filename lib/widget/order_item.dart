@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 
 class OrderItem extends StatelessWidget {
   final bool isRated;
-
-  const OrderItem({Key key, this.isRated = true}) : super(key: key);
+  final dynamic itemData;
+  const OrderItem({Key key, this.isRated = true,@required this.itemData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

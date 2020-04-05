@@ -126,6 +126,7 @@
   "waitting_rate": "Chờ đánh giá",
   "rated": "Đã đánh giá",
   "order_code": "Mã đơn {code}",
+  "booking_code": "Mã đặt lịch {code}",
   "order_with_code": "Đơn hàng {code}",
   "supply_by": "Cung cấp bởi: ",
   "supply_by_supplier": "Cung cấp bởi: {supplier}",

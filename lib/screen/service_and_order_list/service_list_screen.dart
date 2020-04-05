@@ -1,4 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/booking_detail_provider.dart';
+import 'package:baby_garden_flutter/provider/service_list_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/order/order_detail_screen.dart';
 import 'package:baby_garden_flutter/screen/rated_detail/rated_detail_screen.dart';
@@ -10,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 class ServiceListScreen extends StatefulWidget {
   final String title;
@@ -46,17 +49,20 @@ class _ServiceListScreenState extends BaseState<ServiceListScreen> {
                 child: Container(
                   padding: EdgeInsets.only(bottom: SizeUtil.smallSpace),
                   color: ColorUtil.lineColor,
-                  child: ListView.builder(
-                      itemCount: 10,
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      padding: EdgeInsets.all(0),
-                      itemBuilder: (context, index) {
-                        return new GestureDetector(onTap: (){
-                          push(ServiceDetailScreen(title: widget.childTitle,state: widget.state,));
-                        },
-                          child: new ServiceItem(isShowBookingDate: false,));
-                      }),
+                  child:Consumer<ServiceListProvider>(builder: (BuildContext context, ServiceListProvider value, Widget child) {
+                    return ListView.builder(
+                        itemCount: value.listService.length,
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        padding: EdgeInsets.all(0),
+                        itemBuilder: (context, index) {
+                          return new GestureDetector(onTap: (){
+                            Provider.of<BookingDetailProvider>(context,listen: false).getBookingDetail(1, value.listService[index]['id']);
+                            push(ServiceDetailScreen(title: widget.childTitle));
+                          },
+                              child: new ServiceItem(isShowBookingDate: false,itemData: value.listService[index],));
+                        });
+                  },),
                 ),
               )
             ],

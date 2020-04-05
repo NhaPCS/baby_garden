@@ -1,12 +1,13 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ServiceItem extends StatelessWidget {
   final bool isShowBookingDate;
-
-  const ServiceItem({Key key, this.isShowBookingDate = true}) : super(key: key);
+ final dynamic itemData;
+  const ServiceItem({Key key, this.isShowBookingDate = true,@required this.itemData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class ServiceItem extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: Text(
-                      S.of(context).order_code("VCB19.12.25"),
+                      S.of(context).booking_code(itemData['code']),
                       style: TextStyle(
                           fontSize: SizeUtil.textSizeDefault,
                           color: ColorUtil.textColor),
@@ -44,7 +45,7 @@ class ServiceItem extends StatelessWidget {
                             color: ColorUtil.textColor),
                         children: <TextSpan>[
                           TextSpan(
-                            text: "Vườn Của Bé",
+                            text: itemData['shop_name'],
                             style: TextStyle(
                               color: ColorUtil.red,
                               fontSize: SizeUtil.textSizeSmall,
@@ -58,7 +59,7 @@ class ServiceItem extends StatelessWidget {
                   ? Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        S.of(context).booking_date("25/12/2019 12:25"),
+                        S.of(context).booking_date(itemData['date_booking']),
                         style: TextStyle(fontSize: SizeUtil.textSizeTiny),
                         textAlign: TextAlign.start,
                       ),
@@ -77,8 +78,10 @@ class ServiceItem extends StatelessWidget {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(top: SizeUtil.midSmallSpace),
-                    child: Image.asset("photo/rate_item_img.png",
-                        width: MediaQuery.of(context).size.width / 6),
+                    child: CachedNetworkImage(
+                      imageUrl: itemData['shop_img'],
+                      width: MediaQuery.of(context).size.width / 6,
+                    ),
                   ),
                   Expanded(
                     child: Container(
@@ -91,9 +94,9 @@ class ServiceItem extends StatelessWidget {
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              S.of(context).order_title,
+                              itemData['service_name'],
                               style:
-                                  TextStyle(fontSize: SizeUtil.textSizeSmall),
+                                  TextStyle(fontSize: SizeUtil.textSizeExpressDetail,color: ColorUtil.textColor),
                               textAlign: TextAlign.start,
                             ),
                           ),

@@ -208,8 +208,9 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                       message: "Bạn có muốn đăng xuất không?",
                       positive: "Có",
                       negative: "Không", positiveClicked: () {
-                    ShareValueProvider.shareValueProvider.saveUserId("");
-                    Provider.of<UserProvider>(context,listen: false).onChangeLogin(false);
+                    ShareValueProvider.shareValueProvider.saveUserId(null);
+                    ShareValueProvider.shareValueProvider.saveUserInfo(null);
+                    Provider.of<UserProvider>(context,listen: false).logout(false);
                     pushReplacement(MainScreen());
 
                   }, negativeClick: () {});
