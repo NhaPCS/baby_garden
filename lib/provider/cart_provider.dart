@@ -6,9 +6,11 @@ class CartProvider extends ChangeNotifier {
   Map<String, Shop> shops = Map();
   int badge = 0;
   int price = 0;
+  bool isRun = false;
 
   void getMyCart() {
     service.myCart();
+    isRun = true;
   }
 
   void addProduct(dynamic product) {

@@ -66,15 +66,19 @@ class _MyAppState extends State<MyApp> {
         Provider.of<GetBannersProvider>(context).banners.isEmpty) {
       Provider.of<GetBannersProvider>(context).getBanners();
     }
+
     //get user info
+    if (!Provider.of<UserProvider>(context).isRun)
       Provider.of<UserProvider>(context).getUserInfo();
+
     //get user info
     if (Provider.of<CityProvider>(context).cities == null ||
         Provider.of<CityProvider>(context).cities.isEmpty)
-      Provider.of<CityProvider>(context,listen: false).getCities();
+      Provider.of<CityProvider>(context, listen: false).getCities();
 
     //get my cart
-    Provider.of<CartProvider>(context).getMyCart();
+    if (!Provider.of<CartProvider>(context).isRun)
+      Provider.of<CartProvider>(context).getMyCart();
   }
 
   @override
