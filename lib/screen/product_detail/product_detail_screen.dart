@@ -3,6 +3,7 @@ import 'package:baby_garden_flutter/dialog/add_to_cart_bottom_dialog.dart';
 import 'package:baby_garden_flutter/dialog/report_product_dialog.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
 import 'package:baby_garden_flutter/provider/get_product_detail_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
@@ -306,6 +307,7 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
                     WidgetUtil.showRequireLoginDialog(context);
                     return;
                   }
+                  Provider.of<CartProvider>(context, listen: false).addProduct(productProvider.product);
                   pushAndReplaceAll(
                       MainScreen(
                         index: 2,

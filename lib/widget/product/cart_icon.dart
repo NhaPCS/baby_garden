@@ -23,7 +23,7 @@ class CartIcon extends StatelessWidget {
                   width: 30,
                 ),
               ),
-              value.shops == null || value.shops.isEmpty
+              value.badge == 0
                   ? SizedBox()
                   : Positioned(
                       child: Container(
