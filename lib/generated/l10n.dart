@@ -434,6 +434,15 @@ class S {
     );
   }
 
+  String get collapse {
+    return Intl.message(
+      'Thu gọn',
+      name: 'collapse',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get all {
     return Intl.message(
       'Tất cả',
@@ -461,10 +470,10 @@ class S {
     );
   }
 
-  String get happened {
+  String get pending {
     return Intl.message(
       'Sắp diễn ra',
-      name: 'happened',
+      name: 'pending',
       desc: '',
       args: [],
     );
@@ -893,10 +902,28 @@ class S {
     );
   }
 
+  String get favorited {
+    return Intl.message(
+      'Đã thích',
+      name: 'favorited',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get product_existing {
     return Intl.message(
       'Còn hàng',
       name: 'product_existing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get product_out_stock {
+    return Intl.message(
+      'Hết hàng',
+      name: 'product_out_stock',
       desc: '',
       args: [],
     );
@@ -983,10 +1010,28 @@ class S {
     );
   }
 
+  String get expect_to_buy {
+    return Intl.message(
+      'Dự kiến mua',
+      name: 'expect_to_buy',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get add_to_cart {
     return Intl.message(
       'Thêm vào giỏ hàng',
       name: 'add_to_cart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get get_notify_when_stocking {
+    return Intl.message(
+      'Nhận thông báo khi có hàng',
+      name: 'get_notify_when_stocking',
       desc: '',
       args: [],
     );
@@ -3570,6 +3615,51 @@ class S {
     return Intl.message(
       'Vườn Của Bé ,Xin chào!',
       name: 'profileWelcomeText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get no_image {
+    return Intl.message(
+      'No image',
+      name: 'no_image',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get time_pending {
+    return Intl.message(
+      'Chưa bắt đầu',
+      name: 'time_pending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get time_ended {
+    return Intl.message(
+      'Đã kết thúc',
+      name: 'time_ended',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get title_require_login {
+    return Intl.message(
+      'Yêu cầu đăng nhập',
+      name: 'title_require_login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get message_require_login {
+    return Intl.message(
+      'Bạn vui lòng đăng nhập để sử dụng chức năng này!',
+      name: 'message_require_login',
       desc: '',
       args: [],
     );

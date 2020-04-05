@@ -66,7 +66,7 @@ class ItemProduct extends StatelessWidget {
             Positioned(
               child: !showTime
                   ? favoriteTag(context)
-                  : CountDownTime(seconds: 1000,),
+                  : CountDownTime(startTime: product['time_start'],endTime: product['time_end'],),
               left: 0,
               top: 0,
             ),
@@ -81,7 +81,7 @@ class ItemProduct extends StatelessWidget {
         ),
       ),
       onTap: () {
-        RouteUtil.push(context, ProductDetailScreen());
+        RouteUtil.push(context, ProductDetailScreen(productId: product['id'],));
       },
     );
   }

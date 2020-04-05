@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/screen/login/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -62,14 +64,18 @@ class StringUtil {
     }
   }
 
-  static int getDiscountPercent({String price, String discountPrice}) {
-    if (price == null ||
-        price.isEmpty ||
-        discountPrice == null ||
-        discountPrice.isEmpty) return 0;
+  static double getSalesPercent(String numberSales, String total) {
+    if (numberSales == null || total == null) return 0;
+    return int.parse(numberSales) / int.parse(total);
+  }
+
+  static int getDiscountPercent(dynamic product) {
+    if (product == null ||
+        product['price'] == null ||
+        product['price_discount'] == null) return 0;
     try {
-      double dP = double.parse(discountPrice);
-      double p = double.parse(price);
+      double dP = double.parse(product['price_discount']);
+      double p = double.parse(product['price']);
       int result = (((p - dP) / p) * 100).toInt();
       return result;
     } on Exception catch (e) {
@@ -335,6 +341,28 @@ class SizeUtil {
 }
 
 class WidgetUtil {
+  static void showRequireLoginDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        child: AlertDialog(
+          content: Text(S.of(context).message_require_login),
+          title: Text(S.of(context).title_require_login),
+          actions: <Widget>[
+            FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(S.of(context).cancel)),
+            FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  RouteUtil.push(context, LoginScreen());
+                },
+                child: Text(S.of(context).login))
+          ],
+        ));
+  }
+
   static Widget paddingWidget(Widget widget,
       {EdgeInsets padding = const EdgeInsets.only(
           left: SizeUtil.smallSpace,

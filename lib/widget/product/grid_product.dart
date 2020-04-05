@@ -1,10 +1,11 @@
+import 'package:baby_garden_flutter/data/model/section.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_product_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/list_product/list_product_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
-import 'package:baby_garden_flutter/widget/product/list_product.dart';
+import 'package:baby_garden_flutter/widget/product/list_horizontal_product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -14,7 +15,7 @@ final int TOTAL_ITEMS = 7;
 
 class GridProduct extends StatefulWidget {
   final bool isHome;
-  final dynamic section;
+  final Section section;
 
   const GridProduct({
     Key key,
@@ -38,7 +39,8 @@ class _GridProductState extends BaseState<GridProduct> {
     if ((_getListProductProvider.products == null ||
             _getListProductProvider.products.isEmpty) &&
         widget.section != null) {
-      _getListProductProvider.getData(context, widget.section['path'], numberPosts: TOTAL_ITEMS);
+      _getListProductProvider.getData(context, widget.section.path,
+          numberPosts: TOTAL_ITEMS);
     }
   }
 
@@ -84,14 +86,14 @@ class _GridProductState extends BaseState<GridProduct> {
           ),
           ListCategory(
             onChangedCategory: (category) {
-              _getListProductProvider.getData(context, widget.section['path'],
+              _getListProductProvider.getData(context, widget.section.path,
                   categoryId: category['id'], numberPosts: TOTAL_ITEMS);
             },
           ),
           Consumer<GetListProductProvider>(
             builder: (BuildContext context, GetListProductProvider value,
                 Widget child) {
-              return ListProduct(
+              return ListHorizontalProduct(
                 maxItems: widget.isHome ? value.products.length : null,
                 rowsCount: widget.isHome ? 1 : 2,
                 products: value.products,
@@ -104,7 +106,6 @@ class _GridProductState extends BaseState<GridProduct> {
         RouteUtil.push(
             context,
             ListProductScreen(
-              title: getTitle(),
               section: widget.section,
             ));
       },
@@ -117,8 +118,6 @@ class _GridProductState extends BaseState<GridProduct> {
   }
 
   String getTitle() {
-    return widget.section == null || widget.section['title'] == null
-        ? ""
-        : widget.section['title'];
+    return widget.section == null ? "" : widget.section.title;
   }
 }
