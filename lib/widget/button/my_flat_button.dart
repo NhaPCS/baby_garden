@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,14 +40,19 @@ class MyFlatButton extends StatelessWidget {
                 text,
                 style: textStyle,
               )
-            : Wrap(
-                spacing: SizeUtil.smallSpace,
+            : Row(
                 children: <Widget>[
                   icon,
-                  Text(
+                  SizedBox(
+                    width: SizeUtil.smallSpace,
+                  ),
+                  Expanded(
+                      child: AutoSizeText(
                     text,
+                    maxFontSize: SizeUtil.textSizeDefault,
+                    minFontSize: SizeUtil.textSizeSmall,
                     style: textStyle,
-                  )
+                  ))
                 ],
               ),
         decoration: BoxDecoration(

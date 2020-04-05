@@ -13,13 +13,21 @@ class GetProductDetailProvider extends ChangeNotifier {
   Future<void> getProduct(BuildContext context, String productId) async {
     dynamic data = await service.productDetail(context, productId: productId);
     product = data;
+    if(product!=null) {
+      if(product['color'] == null){
+        DETAIL_INFO.removeWhere((element) => element['key']=='color');
+      }
+      if(product['size'] == null){
+        DETAIL_INFO.removeWhere((element) => element['key']=='size');
+      }
+    }
     notifyListeners();
   }
 
   bool isOutStock() {
-    return product != null ||
-        product['number'] != null ||
-        product['number_sales'] != null ||
+    return product == null ||
+        product['number'] == null ||
+        product['number_sales'] == null ||
         int.parse(product['number']) - int.parse(product['number_sales']) <= 0;
   }
 
@@ -29,10 +37,19 @@ class GetProductDetailProvider extends ChangeNotifier {
           .categories
           .firstWhere((element) => element['id'] == product[key]);
       if (category != null) return category['name'];
-    } else {
-      return product[key];
     }
-    return "";
+    if (key == 'size' || key == 'color') {
+      String value = "";
+      if (product[key] != null && product[key].isNotEmpty) {
+        for (dynamic s in product[key]) {
+          if ('1' == s['active']) {
+            value += '${s['name']} ';
+          }
+        }
+      }
+      return value;
+    }
+    return product[key];
   }
 
   void getDetailInfoKey(BuildContext context) {
@@ -56,7 +73,11 @@ class GetProductDetailProvider extends ChangeNotifier {
       },
       {
         'title': S.of(context).size,
-        'key': 'size_id',
+        'key': 'size',
+      },
+      {
+        'title': S.of(context).size,
+        'key': 'color',
       },
       {
         'title': S.of(context).customer_target,
