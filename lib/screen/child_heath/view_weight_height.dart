@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/screen/child_heath/list_suggest_for_child.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/chart/child_chart.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,55 @@ class ViewWeightHeight extends StatelessWidget {
                 Color(0xffFF9100)),
             getNotice(context, S.of(context).sdd_nang, Color(0xffFF0000)),
           ],
-        )
+        ),
+        SizedBox(
+          height: SizeUtil.smallSpace,
+        ),
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(
+              text: "Đánh giá kết quả: ",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, color: ColorUtil.blueLight)),
+          TextSpan(
+              text: "(Lần kiểm tra mới nhất: 15/06/2019 - 36 tháng)",
+              style: TextStyle(color: ColorUtil.blueLight)),
+        ])),
+        SizedBox(
+          height: SizeUtil.smallSpace,
+        ),
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(
+              text: "Chiều cao: ",
+              style: TextStyle(color: ColorUtil.textColor)),
+          TextSpan(
+              text: "Trẻ suy dinh dưỡng thể thấp còi, mức độ vừa",
+              style: TextStyle(color: ColorUtil.primaryColor)),
+        ])),
+        SizedBox(
+          height: SizeUtil.smallSpace,
+        ),
+        Text(
+          "Tư vấn dinh dưỡng:",
+          style: TextStyle(
+              color: ColorUtil.blueLight, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          height: SizeUtil.smallSpace,
+        ),
+        Text(
+            "Bé đang hơi khiêm tốn chiều cao một chút, bố mẹ có thể bổ sung thêm dinh dưỡng, hoặc xem lại chế độ ăn cho bé đã p..."),
+        SizedBox(
+          height: SizeUtil.smallSpace,
+        ),
+        Text(
+          "Sản phẩm gợi ý:",
+          style: TextStyle(
+              color: ColorUtil.blueLight, fontWeight: FontWeight.bold),
+        ),
+        ListSuggestForChild(),
+        ListSuggestForChild()
       ],
     );
   }

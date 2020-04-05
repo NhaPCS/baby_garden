@@ -1,9 +1,10 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_added_promo.dart';
 import 'package:baby_garden_flutter/item/item_product_cart.dart';
-import 'package:baby_garden_flutter/provider/payment_info_provider.dart';
+import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
+import 'package:baby_garden_flutter/screen/cart/product_by_shop.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/circle_checkbox.dart';
@@ -13,6 +14,10 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatefulWidget {
+  final VoidCallback onGoHome;
+
+  const CartScreen({Key key, this.onGoHome}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _CartState();
@@ -21,19 +26,37 @@ class CartScreen extends StatefulWidget {
 
 class _CartState extends BaseState<CartScreen> {
   final TextEditingController _promoCodeController = TextEditingController();
-  int count = 3;
 
   @override
   Widget buildWidget(BuildContext context) {
     return Column(
       children: <Widget>[
         getAppBar(title: S.of(context).cart.toUpperCase(), hasBack: false),
-        Expanded(
-            child: ListView.builder(
+        Expanded(child: Consumer<CartProvider>(
+          builder: (BuildContext context, CartProvider value, Widget child) {
+            if (value.shops == null || value.shops.isEmpty) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    S.of(context).no_product_in_cart,
+                    textAlign: TextAlign.center,
+                  ),
+                  MyRaisedButton(
+                      onPressed: () {
+                        widget.onGoHome();
+                      },
+                      text: S.of(context).go_shopping,
+                      textStyle: TextStyle(color: Colors.white),
+                      color: ColorUtil.primaryColor)
+                ],
+              );
+            }
+            return ListView.builder(
                 padding: EdgeInsets.all(0),
-                itemCount: count,
+                itemCount: value.shops.length + 1,
                 itemBuilder: (context, index) {
-                  if (index == count - 1) {
+                  if (index == value.shops.length) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -75,7 +98,7 @@ class _CartState extends BaseState<CartScreen> {
                             Row(
                               children: <Widget>[
                                 Expanded(child: Text(S.of(context).pre_count)),
-                                Text("640.000 đ")
+                                Text(StringUtil.getPriceText(value.price.toString()))
                               ],
                             ),
                             padding: SizeUtil.smallPadding),
@@ -111,32 +134,12 @@ class _CartState extends BaseState<CartScreen> {
                       ],
                     );
                   }
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      CircleCheckbox(
-                        text: Text(
-                          "Vườn Của Bé",
-                          style: TextStyle(
-                              color: ColorUtil.textGray,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        checkBg: Icons.radio_button_checked,
-                        uncheckBg: Icons.radio_button_unchecked,
-                        color: ColorUtil.primaryColor,
-                        activeColor: ColorUtil.primaryColor,
-                      ),
-                      WidgetUtil.getLine(
-                          margin: EdgeInsets.only(
-                              top: 0, bottom: SizeUtil.smallSpace)),
-                      ItemProductCart(),
-                      ItemProductCart(
-                        hasDashLine: false,
-                      ),
-                      WidgetUtil.getLine(margin: EdgeInsets.all(0), width: 5)
-                    ],
+                  return ProductByShop(
+                    shop: value.shops.values.toList()[index],
                   );
-                }))
+                });
+          },
+        ))
       ],
     );
   }

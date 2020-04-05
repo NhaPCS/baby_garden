@@ -1,9 +1,9 @@
-import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/data/model/section.dart';
 import 'package:baby_garden_flutter/item/item_product.dart';
-import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/provider/get_list_product_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:baby_garden_flutter/widget/loadmore/loadmore_gridview.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:flutter/material.dart';
@@ -11,11 +11,9 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class ListProductScreen extends StatefulWidget {
-  final String title;
-  final dynamic section;
+  final Section section;
 
-  const ListProductScreen({Key key, this.title, this.section})
-      : super(key: key);
+  const ListProductScreen({Key key, this.section}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -33,7 +31,7 @@ class _ListProductState extends BaseState<ListProductScreen> {
     if ((_getListProductProvider.products == null ||
             _getListProductProvider.products.isEmpty) &&
         widget.section != null) {
-      _getListProductProvider.getData(context, widget.section['path']);
+      _getListProductProvider.getData(context, widget.section.path);
     }
   }
 
@@ -41,19 +39,22 @@ class _ListProductState extends BaseState<ListProductScreen> {
   Widget buildWidget(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorUtil.lineColor,
-      appBar: getAppBar(
-          title: widget.title == null ? "" : widget.title.toUpperCase()),
+      appBar: getAppBar(title: widget.section.title, upperCase: true),
       body: Column(
         children: <Widget>[
           ListCategory(
             onChangedCategory: (category) {
-              _getListProductProvider.getData(context, widget.section['path'],
+              _getListProductProvider.getData(context, widget.section.path,
                   categoryId: category == null ? null : category['id']);
             },
           ),
           Expanded(child: Consumer<GetListProductProvider>(
             builder: (BuildContext context, GetListProductProvider value,
                 Widget child) {
+              if (value.products == null || value.products.isEmpty)
+                return LoadingView(
+                  isNoData: value.products != null,
+                );
               return LoadMoreGridView(
                 crossAxisCount: 2,
                 childAspectRatio: 0.8,
@@ -61,8 +62,8 @@ class _ListProductState extends BaseState<ListProductScreen> {
                 padding: EdgeInsets.only(
                     left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
                 reloadCallback: (int page) {
-                  _getListProductProvider
-                      .getData(context, widget.section['path'], index: page);
+                  _getListProductProvider.getData(context, widget.section.path,
+                      index: page);
                 },
                 totalPage: value.total,
                 itemBuilder: (context, index) {

@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -67,14 +68,15 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
       Color bgColor = ColorUtil.primaryColor,
       Color titleColor = Colors.white,
       Color backColor = Colors.white,
+      bool upperCase = false,
       Widget widget = null,
       List<Widget> actions}) {
     return AppBar(
       elevation: elevation,
       backgroundColor: bgColor,
       title: title != null
-          ? Text(
-              title,
+          ? MyText(
+              upperCase ? title.toUpperCase() : title,
               style: TextStyle(
                   fontSize: SizeUtil.textSizeBigger, color: titleColor),
             )

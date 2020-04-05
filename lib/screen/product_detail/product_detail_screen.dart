@@ -1,28 +1,39 @@
+import 'package:baby_garden_flutter/data/model/section.dart';
 import 'package:baby_garden_flutter/dialog/add_to_cart_bottom_dialog.dart';
 import 'package:baby_garden_flutter/dialog/report_product_dialog.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
+import 'package:baby_garden_flutter/provider/get_product_detail_provider.dart';
+import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/list_product/list_product_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/photo_view/photo_view_screen.dart';
+import 'package:baby_garden_flutter/screen/product_detail/content_view_moreable.dart';
 import 'package:baby_garden_flutter/screen/product_detail/store_info.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_icon.dart';
 import 'package:baby_garden_flutter/widget/button/my_flat_button.dart';
+import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
 import 'package:baby_garden_flutter/widget/product/cart_icon.dart';
 import 'package:baby_garden_flutter/widget/product/discount_widget.dart';
-import 'package:baby_garden_flutter/widget/product/favorite_tag.dart';
+import 'package:baby_garden_flutter/widget/product/favorite_product_button.dart';
 import 'package:baby_garden_flutter/widget/product/image_count.dart';
-import 'package:baby_garden_flutter/widget/product/list_product.dart';
+import 'package:baby_garden_flutter/widget/product/list_product_by_category.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailScreen extends StatefulWidget {
+  final String productId;
+
+  const ProductDetailScreen({Key key, this.productId}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _ProductScreenState();
@@ -30,8 +41,9 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends BaseState<ProductDetailScreen> {
-  List<dynamic> DETAIL_INFO;
   final ChangeIndexProvider _changeIndexProvider = ChangeIndexProvider();
+  final GetProductDetailProvider _getProductDetailProvider =
+      GetProductDetailProvider();
 
   @override
   void initState() {
@@ -40,33 +52,10 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
 
   @override
   void didChangeDependencies() {
-    DETAIL_INFO = [
-      {
-        'title': S.of(context).category,
-        'value': 'Thời trang trẻ em',
-        'valueColor': ColorUtil.blueLight
-      },
-      {
-        'title': S.of(context).sku_code,
-        'value': '49253225212525',
-      },
-      {
-        'title': S.of(context).brand,
-        'value': 'Adidas',
-      },
-      {
-        'title': S.of(context).origin,
-        'value': 'Việt Nam',
-      },
-      {
-        'title': S.of(context).size,
-        'value': 'Size 2, 3, 4 5',
-      },
-      {
-        'title': S.of(context).customer_target,
-        'value': 'Trẻ em từ 2 đến 3 tuổi',
-      },
-    ];
+    _getProductDetailProvider.getDetailInfoKey(context);
+    if (_getProductDetailProvider.product == null && widget.productId != null) {
+      _getProductDetailProvider.getProduct(context, widget.productId);
+    }
     super.didChangeDependencies();
   }
 
@@ -77,276 +66,305 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
         title: S.of(context).product_detail,
         actions: [CartIcon()],
       ),
-      body: ListView(
-        children: <Widget>[
-          Stack(
+      body: Consumer<GetProductDetailProvider>(
+        builder: (BuildContext context,
+            GetProductDetailProvider productProvider, Widget child) {
+          if (productProvider.product == null) return LoadingView();
+          return ListView(
             children: <Widget>[
-              MyCarouselSlider(
-                height: Provider.of<AppProvider>(context).productImageHeight,
-                borderRadius: 0,
-                margin: EdgeInsets.all(0),
-                images: StringUtil.dummyImageList,
-                onItemSelected: (index) {
-                  _changeIndexProvider.changeIndex(index);
-                },
-                onItemPressed: (index) {
-                  push(PhotoViewScreen(images: StringUtil.dummyImageList));
-                },
-              ),
-              Positioned(
-                child: DiscountWidget(
-                  discount: 33,
-                  textSizeMax: SizeUtil.textSizeDefault,
-                  size: 50,
-                ),
-                right: 0,
-                top: SizeUtil.smallSpace,
-              ),
-              Consumer<ChangeIndexProvider>(
-                builder: (BuildContext context, ChangeIndexProvider value,
-                    Widget child) {
-                  return ImageCount(
-                    text:
-                        "${value.index + 1}/${StringUtil.dummyImageList.length}",
-                  );
-                },
-              ),
-              Positioned(
-                  right: SizeUtil.smallSpace,
-                  bottom: SizeUtil.tinySpace,
-                  child: Row(
-                    children: <Widget>[
-                      ButtonIcon(
-                        padding: EdgeInsets.only(
-                            left: SizeUtil.smallSpace,
-                            right: SizeUtil.smallSpace,
-                            top: SizeUtil.tinySpace,
-                            bottom: SizeUtil.tinySpace),
-                        icon: Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.favorite,
-                              color: ColorUtil.red,
+              Stack(
+                children: <Widget>[
+                  MyCarouselSlider(
+                    height:
+                        Provider.of<AppProvider>(context).productImageHeight,
+                    borderRadius: 0,
+                    margin: EdgeInsets.all(0),
+                    images: productProvider.product['image'],
+                    boxFit: BoxFit.contain,
+                    slideBackground: Colors.white,
+                    onItemSelected: (index) {
+                      _changeIndexProvider.changeIndex(index);
+                    },
+                    onItemPressed: (index) {
+                      push(PhotoViewScreen(
+                        images: productProvider.product['image'],
+                        initIndex: index,
+                      ));
+                    },
+                  ),
+                  Positioned(
+                    child: DiscountWidget(
+                      discount: StringUtil.getDiscountPercent(
+                          productProvider.product),
+                      textSizeMax: SizeUtil.textSizeDefault,
+                      size: 50,
+                    ),
+                    right: 0,
+                    top: SizeUtil.smallSpace,
+                  ),
+                  Consumer<ChangeIndexProvider>(
+                    builder: (BuildContext context, ChangeIndexProvider value,
+                        Widget child) {
+                      return ImageCount(
+                        text:
+                            "${value.index + 1}/${productProvider.product['image'].length}",
+                      );
+                    },
+                  ),
+                  Positioned(
+                      right: SizeUtil.smallSpace,
+                      bottom: SizeUtil.tinySpace,
+                      child: Row(
+                        children: <Widget>[
+                          ButtonIcon(
+                            padding: EdgeInsets.only(
+                                left: SizeUtil.smallSpace,
+                                right: SizeUtil.smallSpace,
+                                top: SizeUtil.tinySpace,
+                                bottom: SizeUtil.tinySpace),
+                            icon: Row(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.favorite,
+                                  color: ColorUtil.red,
+                                  size: SizeUtil.iconSize,
+                                ),
+                                Text(
+                                  "112", // TODO chua co field tren api
+                                  style:
+                                      TextStyle(color: ColorUtil.primaryColor),
+                                )
+                              ],
+                            ),
+                            borderRadius: SizeUtil.iconSize,
+                            onPressed: () {
+                              //TODO
+                            },
+                          ),
+                          ButtonIcon(
+                            padding: SizeUtil.tinyPadding,
+                            icon: Icon(
+                              Icons.share,
+                              color: ColorUtil.primaryColor,
                               size: SizeUtil.iconSize,
                             ),
-                            Text(
-                              "112",
-                              style: TextStyle(color: ColorUtil.primaryColor),
-                            )
-                          ],
-                        ),
-                        borderRadius: SizeUtil.iconSize,
-                        onPressed: () {
-                          //TODO
-                        },
-                      ),
-                      ButtonIcon(
-                        padding: SizeUtil.tinyPadding,
-                        icon: Icon(
-                          Icons.share,
-                          color: ColorUtil.primaryColor,
-                          size: SizeUtil.iconSize,
-                        ),
-                        borderRadius: SizeUtil.iconSize,
-                        onPressed: () {
-                          //TODO
-                        },
-                      ),
-                      ButtonIcon(
-                        padding: SizeUtil.tinyPadding,
-                        icon: Icon(
-                          Icons.priority_high,
-                          color: ColorUtil.primaryColor,
-                          size: SizeUtil.iconSize,
-                        ),
-                        borderRadius: SizeUtil.iconSize,
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (_) => ReportProductDialog(context));
-                        },
-                      )
-                    ],
-                  ))
-            ],
-          ),
-          paddingContainer(Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              FavoriteTag(),
-              SizedBox(
-                width: SizeUtil.smallSpace,
+                            borderRadius: SizeUtil.iconSize,
+                            onPressed: () {
+                              //TODO
+                            },
+                          ),
+                          ButtonIcon(
+                            padding: SizeUtil.tinyPadding,
+                            icon: Icon(
+                              Icons.priority_high,
+                              color: ColorUtil.primaryColor,
+                              size: SizeUtil.iconSize,
+                            ),
+                            borderRadius: SizeUtil.iconSize,
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) => ReportProductDialog(context));
+                            },
+                          )
+                        ],
+                      ))
+                ],
               ),
-              Expanded(
-                  child: Text(
-                "Giày thời trang trẻ em style Hàn Quốc",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ))
-            ],
-          )),
-          paddingContainer(Text(
-            "Nhập mã VCB2020 để được giảm thêm 5% khi mua sản phẩm",
-            style: TextStyle(color: ColorUtil.textGray),
-          )),
-          paddingContainer(Row(
-            children: <Widget>[
-              Text(
-                "800.000 đ",
-                style: TextStyle(
-                    color: ColorUtil.red,
-                    fontWeight: FontWeight.bold,
-                    fontSize: SizeUtil.textSizeBigger),
-              ),
-              SizedBox(
-                width: SizeUtil.smallSpace,
-              ),
-              Text(
-                "800.000 đ",
-                style: TextStyle(
-                    color: ColorUtil.textGray,
-                    decoration: TextDecoration.lineThrough),
-              ),
-              Expanded(child: SizedBox()),
-              Text(
-                S.of(context).product_existing,
-                style: TextStyle(
-                    color: ColorUtil.blue, fontSize: SizeUtil.textSizeSmall),
-              )
-            ],
-          )),
-          WidgetUtil.getLine(width: 2),
-          StoreInfo(),
-          WidgetUtil.getLine(width: 2),
-          paddingContainer(Text(
-            S.of(context).detail_info,
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )),
-          SizedBox(
-            height: SizeUtil.smallSpace,
-          ),
-          Column(
-            children: DETAIL_INFO
-                .map((e) => infoRow(e, DETAIL_INFO.indexOf(e)))
-                .toList(),
-          ),
-          WidgetUtil.getLine(width: 2),
-          paddingContainer(Text(
-            S.of(context).product_description,
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )),
-          paddingContainer(
-              Text(
-                StringUtil.dummyText,
-                style: TextStyle(color: ColorUtil.textGray),
-              ),
-              padding: SizeUtil.smallPadding),
-          Center(
-            child: ButtonIcon(
-              icon: Text(
-                S.of(context).view_more,
-                style: TextStyle(
-                    color: ColorUtil.primaryColor,
-                    fontSize: SizeUtil.textSizeSmall),
-              ),
-              borderRadius: SizeUtil.bigRadius,
-              padding: EdgeInsets.only(
-                  left: SizeUtil.smallSpace,
-                  right: SizeUtil.smallSpace,
-                  top: SizeUtil.tinySpace,
-                  bottom: SizeUtil.tinySpace),
-              backgroundColor: Colors.transparent,
-            ),
-          ),
-          WidgetUtil.getLine(width: 2),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                  child: paddingContainer(
-                Text(
-                  S.of(context).same_product,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                padding: SizeUtil.smallPadding,
-              )),
-              ButtonIcon(
-                icon: Wrap(
-                  alignment: WrapAlignment.center,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: SizeUtil.tinySpace,
-                  children: <Widget>[
-                    Text(
-                      S.of(context).view_more,
-                      style: TextStyle(
-                          color: ColorUtil.primaryColor,
-                          fontSize: SizeUtil.textSizeSmall),
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      color: ColorUtil.primaryColor,
-                      size: SizeUtil.iconSizeSmall,
-                    )
-                  ],
-                ),
-                onPressed: () {
-                  push(ListProductScreen(
-                    title: S.of(context).same_product,
-                  ));
-                },
-              )
-            ],
-          ),
-          ListProduct(
-            padding: EdgeInsets.only(top: SizeUtil.tinySpace),
-          )
-        ],
-      ),
-      bottomNavigationBar: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          MyFlatButton(
-            onPressed: () {
-              //TODO
-              pushAndReplaceAll(
-                  MainScreen(
-                    index: 2,
+              paddingContainer(Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  FavoriteProductButton(
+                    product: productProvider.product,
                   ),
-                  "/main_screen");
-            },
-            height: 50,
-            text: S.of(context).buy_now,
-            textStyle: TextStyle(color: Colors.white),
-            borderRadius: 0,
-            padding: EdgeInsets.only(
-                left: SizeUtil.bigSpace,
-                right: SizeUtil.bigSpace,
-                top: SizeUtil.normalSpace,
-                bottom: SizeUtil.normalSpace),
-            color: ColorUtil.primaryColor,
-          ),
-          Expanded(
-            child: MyFlatButton(
-              height: 50,
-              onPressed: () {
-                showModalBottomSheet(
-                    isScrollControlled: true,
-                    context: context,
-                    builder: (_) => AddToCartBottomDialog());
-              },
-              text: S.of(context).add_to_cart,
-              textStyle: TextStyle(color: Colors.white),
-              borderRadius: 0,
-              padding: SizeUtil.normalPadding,
-              color: ColorUtil.blueLight,
-              icon: SvgIcon(
-                'ic_add_cart.svg',
-                height: SizeUtil.iconSize,
+                  SizedBox(
+                    width: SizeUtil.smallSpace,
+                  ),
+                  Expanded(
+                      child: Text(
+                    productProvider.product['name'],
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ))
+                ],
+              )),
+              //TODO chua co field tren API
+              paddingContainer(Text(
+                "Nhập mã VCB2020 để được giảm thêm 5% khi mua sản phẩm",
+                style: TextStyle(color: ColorUtil.textGray),
+              )),
+              paddingContainer(Row(
+                children: <Widget>[
+                  MyText(
+                    StringUtil.getPriceText(
+                        productProvider.product['price_discount']),
+                    style: TextStyle(
+                        color: ColorUtil.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: SizeUtil.textSizeBigger),
+                  ),
+                  SizedBox(
+                    width: SizeUtil.smallSpace,
+                  ),
+                  MyText(
+                    StringUtil.getPriceText(productProvider.product['price']),
+                    style: TextStyle(
+                        color: ColorUtil.textGray,
+                        decoration: TextDecoration.lineThrough),
+                  ),
+                  Expanded(child: SizedBox()),
+                  Text(
+                    productProvider.isOutStock()
+                        ? S.of(context).product_out_stock
+                        : S.of(context).product_existing,
+                    style: TextStyle(
+                        color: ColorUtil.blue,
+                        fontSize: SizeUtil.textSizeSmall),
+                  )
+                ],
+              )),
+              WidgetUtil.getLine(width: 2),
+              StoreInfo(),
+              WidgetUtil.getLine(width: 2),
+              paddingContainer(Text(
+                S.of(context).detail_info,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              )),
+              SizedBox(
+                height: SizeUtil.smallSpace,
               ),
-            ),
-          )
-        ],
+              Column(
+                children: _getProductDetailProvider.DETAIL_INFO
+                    .map((e) => infoRow(
+                        e, _getProductDetailProvider.DETAIL_INFO.indexOf(e)))
+                    .toList(),
+              ),
+              WidgetUtil.getLine(width: 2),
+              paddingContainer(Text(
+                S.of(context).product_description,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              )),
+              ContentViewMoreable(
+                content: productProvider.product['content'],
+              ),
+              WidgetUtil.getLine(width: 2, margin: EdgeInsets.all(0)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Expanded(
+                      child: paddingContainer(
+                    Text(
+                      S.of(context).same_product,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    padding: SizeUtil.smallPadding,
+                  )),
+                  ButtonIcon(
+                    icon: Wrap(
+                      alignment: WrapAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: SizeUtil.tinySpace,
+                      children: <Widget>[
+                        Text(
+                          S.of(context).view_more,
+                          style: TextStyle(
+                              color: ColorUtil.primaryColor,
+                              fontSize: SizeUtil.textSizeSmall),
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          color: ColorUtil.primaryColor,
+                          size: SizeUtil.iconSizeSmall,
+                        )
+                      ],
+                    ),
+                    onPressed: () {
+                      push(ListProductScreen(
+                        section: Section(title: S.of(context).same_product),
+                      ));
+                    },
+                  )
+                ],
+              ),
+              ListProductByCategory(
+                categoryId: productProvider.product['category_id'],
+              )
+            ],
+          );
+        },
+      ),
+      bottomNavigationBar: Consumer<GetProductDetailProvider>(
+        builder: (BuildContext context,
+            GetProductDetailProvider productProvider, Widget child) {
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              MyFlatButton(
+                onPressed: () {
+                  if (!Provider.of<UserProvider>(context, listen: false)
+                      .isLogin) {
+                    WidgetUtil.showRequireLoginDialog(context);
+                    return;
+                  }
+                  Provider.of<CartProvider>(context, listen: false).addProduct(productProvider.product);
+                  pushAndReplaceAll(
+                      MainScreen(
+                        index: 2,
+                      ),
+                      "/main_screen");
+                },
+                height: 50,
+                text: productProvider.isOutStock()
+                    ? S.of(context).expect_to_buy
+                    : S.of(context).buy_now,
+                textStyle: TextStyle(color: Colors.white),
+                borderRadius: 0,
+                padding: EdgeInsets.only(
+                    left: SizeUtil.bigSpace,
+                    right: SizeUtil.bigSpace,
+                    top: SizeUtil.normalSpace,
+                    bottom: SizeUtil.normalSpace),
+                color: ColorUtil.primaryColor,
+              ),
+              Expanded(
+                child: MyFlatButton(
+                  height: 50,
+                  onPressed: () {
+                    if (!Provider.of<UserProvider>(context, listen: false)
+                        .isLogin) {
+                      WidgetUtil.showRequireLoginDialog(context);
+                      return;
+                    }
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (_) => AddToCartBottomDialog(
+                              product: productProvider.product,
+                            ));
+                  },
+                  text: productProvider.isOutStock()
+                      ? S.of(context).get_notify_when_stocking
+                      : S.of(context).add_to_cart,
+                  textStyle: TextStyle(color: Colors.white),
+                  borderRadius: 0,
+                  padding: SizeUtil.normalPadding,
+                  color: ColorUtil.blueLight,
+                  icon: productProvider.isOutStock()
+                      ? Icon(
+                          Icons.notifications_active,
+                          color: Colors.white,
+                          size: SizeUtil.iconSize,
+                        )
+                      : SvgIcon(
+                          'ic_add_cart.svg',
+                          height: SizeUtil.iconSize,
+                        ),
+                ),
+              )
+            ],
+          );
+        },
       ),
     );
   }
@@ -357,14 +375,14 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
       child: Row(
         children: <Widget>[
           Expanded(
-            child: Text(
+            child: MyText(
               e['title'],
               style: TextStyle(color: ColorUtil.textGray),
             ),
           ),
           Expanded(
-            child: Text(
-              e['value'],
+            child: MyText(
+              _getProductDetailProvider.getValueByKey(context, e['key']),
               style: TextStyle(
                   color: e['valueColor'] == null
                       ? ColorUtil.textColor
@@ -390,6 +408,9 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _changeIndexProvider)];
+    return [
+      ChangeNotifierProvider.value(value: _changeIndexProvider),
+      ChangeNotifierProvider.value(value: _getProductDetailProvider),
+    ];
   }
 }

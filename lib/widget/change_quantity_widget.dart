@@ -10,22 +10,26 @@ import 'button/button_icon.dart';
 
 class ChangeQuantityWidget extends StatefulWidget {
   final ValueNotifier<int> quantityController;
+  final ValueChanged<int> quantityChanged;
   final int max;
   final Color buttonColor;
   final Color textColor;
   final double height;
   final EdgeInsets padding;
   final EdgeInsets containerMargin;
+  final int quantity;
 
   const ChangeQuantityWidget(
       {Key key,
       this.quantityController,
-      this.max = 10,
+      this.max = 200,
       this.buttonColor = ColorUtil.textGray,
       this.textColor = ColorUtil.textGray,
       this.height = 35,
       this.padding = SizeUtil.tinyPadding,
-      this.containerMargin = SizeUtil.smallPadding})
+      this.containerMargin = SizeUtil.smallPadding,
+      this.quantity,
+      this.quantityChanged})
       : super(key: key);
 
   @override
@@ -39,7 +43,15 @@ class _ChangeQuantityState extends BaseState<ChangeQuantityWidget> {
       ChangeQuantityProvider();
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget buildWidget(BuildContext context) {
+    if (widget.quantity != null) {
+      _changeQuantityProvider.count = widget.quantity;
+    }
     return Container(
       height: widget.height,
       margin: widget.containerMargin,
@@ -57,6 +69,9 @@ class _ChangeQuantityState extends BaseState<ChangeQuantityWidget> {
             onPressed: () {
               if (_changeQuantityProvider.count > 0)
                 _changeQuantityProvider.minusCount();
+              if (widget.quantityChanged != null) {
+                widget.quantityChanged(_changeQuantityProvider.count);
+              }
             },
           ),
           Container(
@@ -91,6 +106,9 @@ class _ChangeQuantityState extends BaseState<ChangeQuantityWidget> {
             onPressed: () {
               if (_changeQuantityProvider.count < widget.max)
                 _changeQuantityProvider.addCount();
+              if (widget.quantityChanged != null) {
+                widget.quantityChanged(_changeQuantityProvider.count);
+              }
             },
           )
         ],

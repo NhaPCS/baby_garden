@@ -6,6 +6,11 @@ class GetListProductProvider extends ChangeNotifier {
   int total;
   int totalPage;
 
+  void clearProduct() {
+    products=null;
+    notifyListeners();
+  }
+
   Future<void> getData(BuildContext context, String path,
       {String categoryId,
       int index = 1,

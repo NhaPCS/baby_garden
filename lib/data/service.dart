@@ -197,14 +197,49 @@ Future<dynamic> productCategory() async {
   return null;
 }
 
+Future<dynamic> serviceCategory() async {
+  Response response = await get(null, path: "serviceCategory", showLoading: false);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 Future<dynamic> banners() async {
   Response response = await get(null, path: "banner", showLoading: false);
   if (response.isSuccess()) return response.data;
   return null;
 }
 
+Future<dynamic> flashSales() async {
+  return await listProducts(null, "flashSales");
+}
+
+Future<dynamic> flashSalesPending() async {
+  return await listProducts(null, "flashSalesPending");
+}
+
+Future<dynamic> listShop(BuildContext context,
+    {String categoryId,
+      int index = START_PAGE,
+      int numberPosts = PAGE_SIZE}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "index": index.toString(),
+    "number_post": numberPosts.toString()
+  };
+  if (categoryId != null && categoryId.isNotEmpty) {
+    params['category_id'] = categoryId;
+  }
+  Response response =
+  await get(null, path: "listShop", param: params, showLoading: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 Future<dynamic> listProducts(BuildContext context, String path,
-    {String categoryId, int index = START_PAGE, int numberPosts = PAGE_SIZE}) async {
+    {String categoryId,
+    int index = START_PAGE,
+    int numberPosts = PAGE_SIZE}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
 
   dynamic params = {
@@ -221,37 +256,129 @@ Future<dynamic> listProducts(BuildContext context, String path,
   return null;
 }
 
+Future<dynamic> favoriteProduct(BuildContext context,
+    {String productId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+
+  dynamic params = {
+    "user_id": userId,
+    "product_id": productId,
+  };
+  Response response = await post(context,
+      path: 'favouriteProduct', param: params, requireLogin: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> unFavoriteProduct(BuildContext context,
+    {String productId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "product_id": productId,
+  };
+  Response response = await post(context,
+      path: 'unFavouriteProduct', param: params, requireLogin: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> productDetail(BuildContext context, {String productId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  Response response = await get(context,
+      path: 'productDetail',
+      param: {'user_id': userId, 'product_id': productId},
+      showLoading: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<void> addProductCart({List<dynamic> products}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  List<dynamic> ps = new List();
+  for (dynamic p in products) {
+    ps.add({
+      'product_id': p['id'],
+      'number': p['quantity'],
+      'color_id': p['color_id'],
+      'size_id': p['size_id'],
+    });
+  }
+  dynamic params = {
+    "user_id": userId,
+    "list_product": jsonEncode(ps),
+  };
+  Response response = await post(null,
+      path: 'addProductCart',
+      param: params,
+      requireLogin: true,
+      showLoading: false);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<void> deleteProductCart(dynamic product) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "product_id": product['id'],
+  };
+  Response response = await post(null,
+      path: 'deleteProduct',
+      param: params,
+      requireLogin: true,
+      showLoading: false);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> myCart() async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId
+  };
+  Response response = await get(null,
+      path: 'cartInfo',
+      param: params,
+      requireLogin: true,
+      showLoading: false);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 Future<Response> post(BuildContext context,
     {String path,
     dynamic param,
     bool hasAccessToken = false,
     bool showErrorDialog = true,
-    bool showLoading = true}) async {
+    bool showLoading = true,
+    bool requireLogin = false}) async {
   Response response = await execute(context,
       path: path,
       param: param,
       hasAccessToken: hasAccessToken,
       showErrorDialog: showErrorDialog,
       showLoading: showLoading,
-      isPost: true);
+      isPost: true,
+      requireLogin: requireLogin);
   return response;
 }
 
-Future<Response> get(
-  BuildContext context, {
-  String path,
-  dynamic param,
-  bool showErrorDialog = true,
-  bool hasAccessToken = false,
-  bool showLoading = true,
-}) async {
+Future<Response> get(BuildContext context,
+    {String path,
+    dynamic param,
+    bool showErrorDialog = true,
+    bool hasAccessToken = false,
+    bool showLoading = true,
+    bool requireLogin = false}) async {
   Response response = await execute(context,
       path: path,
       param: param,
       hasAccessToken: hasAccessToken,
       showErrorDialog: showErrorDialog,
       showLoading: showLoading,
-      isPost: false);
+      isPost: false,
+      requireLogin: requireLogin);
   return response;
 }
 
@@ -261,7 +388,17 @@ Future<Response> execute(BuildContext context,
     bool hasAccessToken = false,
     bool showErrorDialog = true,
     bool showLoading = true,
-    bool isPost = true}) async {
+    bool isPost = true,
+    bool requireLogin = false}) async {
+  if (requireLogin) {
+    String userId = await ShareValueProvider.shareValueProvider.getUserId();
+    if (userId == null || userId.isEmpty) {
+      if (context != null) {
+        WidgetUtil.showRequireLoginDialog(context);
+      }
+      return null;
+    }
+  }
   if (_headers == null || _headers.isEmpty) {
     _headers = {};
   }

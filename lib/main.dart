@@ -1,43 +1,26 @@
 import 'package:baby_garden_flutter/provider/app_provider.dart';
-import 'package:baby_garden_flutter/provider/booking_detail_provider.dart';
-import 'package:baby_garden_flutter/provider/city_provider.dart';
-import 'package:baby_garden_flutter/provider/district_provider.dart';
+import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/provider/get_banners_provider.dart';
 import 'package:baby_garden_flutter/provider/get_product_category_provider.dart';
-import 'package:baby_garden_flutter/provider/order_list_provider.dart';
-import 'package:baby_garden_flutter/provider/payment_info_provider.dart';
-import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
-import 'package:baby_garden_flutter/provider/service_list_provider.dart';
+import 'package:baby_garden_flutter/provider/get_service_category_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
-import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
-import 'package:baby_garden_flutter/screen/checkout/checkout_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
-import 'package:baby_garden_flutter/screen/order/order_delivery_info_screen.dart';
-import 'package:baby_garden_flutter/screen/order/order_detail_screen.dart';
-import 'package:baby_garden_flutter/screen/partner/partner_book_schedule.dart';
-import 'package:baby_garden_flutter/screen/rating_detail/rating_detail_screen.dart';
-import 'package:baby_garden_flutter/screen/vcb_express/vcb_express_screen.dart';
-import 'package:baby_garden_flutter/screen/welcome/welcome_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:provider/provider.dart';
+
 import 'generated/l10n.dart';
-import 'screen/remind_management/remind_edit_screen.dart';
 
 void main() {
   initializeDateFormatting().then((_) => runApp(MultiProvider(
         providers: [
           Provider(create: (_) => AppProvider()),
           ChangeNotifierProvider(create: (_) => GetProductCategoryProvider()),
+          ChangeNotifierProvider(create: (_) => GetServiceCategoryProvider()),
           ChangeNotifierProvider(create: (_) => GetBannersProvider()),
           ChangeNotifierProvider(create: (_) => UserProvider()),
-          ChangeNotifierProvider(create: (_) => ServiceListProvider()),
-          ChangeNotifierProvider(create: (_) => OrderListProvider()),
-          ChangeNotifierProvider(create: (_) => BookingDetailProvider()),
-          ChangeNotifierProvider(create: (_) => CityProvider()),
-          ChangeNotifierProvider(create: (_) => DistrictProvider()),
-          ChangeNotifierProvider(create: (_) => ReceiveAddressListProvider()),
+          ChangeNotifierProvider(create: (_) => CartProvider()),
         ],
         child: MyApp(),
       )));
@@ -60,17 +43,24 @@ class _MyAppState extends State<MyApp> {
     if (Provider.of<GetProductCategoryProvider>(context).categories == null ||
         Provider.of<GetProductCategoryProvider>(context).categories.isEmpty)
       Provider.of<GetProductCategoryProvider>(context).getProductCategories();
+
+    // get service categories
+    if (Provider.of<GetServiceCategoryProvider>(context).categories == null ||
+        Provider.of<GetServiceCategoryProvider>(context).categories.isEmpty)
+      Provider.of<GetServiceCategoryProvider>(context).getServiceCategories();
+
     // get banners
     if (Provider.of<GetBannersProvider>(context).banners == null ||
         Provider.of<GetBannersProvider>(context).banners.isEmpty) {
       Provider.of<GetBannersProvider>(context).getBanners();
     }
     //get user info
+    if (Provider.of<UserProvider>(context).userInfo == null ||
+        Provider.of<UserProvider>(context).userInfo.isEmpty)
       Provider.of<UserProvider>(context).getUserInfo();
-    //get user info
-    if (Provider.of<CityProvider>(context).cities == null ||
-        Provider.of<CityProvider>(context).cities.isEmpty)
-      Provider.of<CityProvider>(context,listen: false).getCities();
+
+    //get my cart
+    Provider.of<CartProvider>(context).getMyCart();
   }
 
   @override
@@ -107,7 +97,7 @@ class _MyAppState extends State<MyApp> {
             bodyText1: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
           )),
-      home: RatingDetailScreen(),
+      home: MainScreen(),
     );
   }
 }

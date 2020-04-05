@@ -1,17 +1,23 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/cart/select_product_property.dart';
 import 'package:baby_garden_flutter/widget/change_quantity_widget.dart';
 import 'package:baby_garden_flutter/widget/chip_tag.dart';
 import 'package:baby_garden_flutter/widget/circle_checkbox.dart';
 import 'package:baby_garden_flutter/widget/circle_image.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ItemProductHorizontal extends StatelessWidget {
   final bool isAttach;
+  final dynamic product;
+  final ValueNotifier<int> quantityController;
 
-  const ItemProductHorizontal({Key key, this.isAttach = false})
+  const ItemProductHorizontal(
+      {Key key, this.isAttach = false, this.product, this.quantityController})
       : super(key: key);
 
   @override
@@ -34,7 +40,9 @@ class ItemProductHorizontal extends StatelessWidget {
                     width: SizeUtil.smallSpace,
                   ),
             CircleImage(
-              imageUrl: StringUtil.dummyImage,
+              imageUrl: product['image'] == null || product['image'].isEmpty
+                  ? ""
+                  : product['image'][0],
               borderRadius: SizeUtil.smallRadius,
               width: Provider.of<AppProvider>(context).productCartWidth,
               height: Provider.of<AppProvider>(context).productCartHeight,
@@ -44,17 +52,21 @@ class ItemProductHorizontal extends StatelessWidget {
             ),
             Expanded(
                 child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  "Giày thời trang trẻ em style Hàn Quốc",
+                MyText(
+                  product['name'],
                   style: TextStyle(
                       color: ColorUtil.textGray, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: SizeUtil.tinySpace,
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      "800.000 đ",
+                      StringUtil.getPriceText(product['price_discount']),
                       style: TextStyle(
                           color: ColorUtil.red, fontWeight: FontWeight.bold),
                     ),
@@ -62,7 +74,7 @@ class ItemProductHorizontal extends StatelessWidget {
                       width: SizeUtil.smallSpace,
                     ),
                     Text(
-                      "800.000 đ",
+                      StringUtil.getPriceText(product['price']),
                       style: TextStyle(
                           fontSize: SizeUtil.textSizeSmall,
                           decoration: TextDecoration.lineThrough),
@@ -73,7 +85,11 @@ class ItemProductHorizontal extends StatelessWidget {
                   children: <Widget>[
                     Text(S.of(context).product_count),
                     ChangeQuantityWidget(
+                      height: 28,
                       textColor: ColorUtil.primaryColor,
+                      quantityChanged: (value) {
+                      product['quantity'] = value;
+                      },
                     )
                   ],
                 )
@@ -84,38 +100,16 @@ class ItemProductHorizontal extends StatelessWidget {
         WidgetUtil.getLine(
           width: 2,
         ),
-        WidgetUtil.paddingWidget(Text(
-          S.of(context).size,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        )),
-        WidgetUtil.paddingWidget(Wrap(
-          children: List.generate(10, (index) {
-            return ChipTag(
-              text: "Size ${index + 1}",
-              borderRadius: SizeUtil.tinyRadius,
-              fillColor: ColorUtil.lightGray,
-              borderColor: ColorUtil.lightGray,
-              selectedBorderColor: ColorUtil.primaryColor,
-              hasCheckable: true,
-            );
-          }),
-        )),
-        WidgetUtil.paddingWidget(Text(
-          S.of(context).color,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        )),
-        WidgetUtil.paddingWidget(Wrap(
-          children: List.generate(10, (index) {
-            return ChipTag(
-              text: "Đỏ",
-              borderRadius: SizeUtil.tinyRadius,
-              fillColor: ColorUtil.lightGray,
-              borderColor: ColorUtil.lightGray,
-              selectedBorderColor: ColorUtil.primaryColor,
-              hasCheckable: true,
-            );
-          }),
-        )),
+        SelectProductProperty(
+          title: S.of(context).size,
+          product: product,
+          property: 'size',
+        ),
+        SelectProductProperty(
+          title: S.of(context).color,
+          product: product,
+          property: 'color',
+        ),
         WidgetUtil.getLine(width: 3)
       ],
     );

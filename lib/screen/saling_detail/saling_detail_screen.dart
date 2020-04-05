@@ -6,7 +6,7 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/loadmore/loadmore_gridview.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
 import 'package:baby_garden_flutter/widget/product/image_count.dart';
-import 'package:baby_garden_flutter/widget/product/list_product.dart';
+import 'package:baby_garden_flutter/widget/product/list_horizontal_product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
