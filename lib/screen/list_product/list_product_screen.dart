@@ -3,6 +3,7 @@ import 'package:baby_garden_flutter/item/item_product.dart';
 import 'package:baby_garden_flutter/provider/get_list_product_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:baby_garden_flutter/widget/loadmore/loadmore_gridview.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,10 @@ class _ListProductState extends BaseState<ListProductScreen> {
           Expanded(child: Consumer<GetListProductProvider>(
             builder: (BuildContext context, GetListProductProvider value,
                 Widget child) {
+              if (value.products == null || value.products.isEmpty)
+                return LoadingView(
+                  isNoData: value.products != null,
+                );
               return LoadMoreGridView(
                 crossAxisCount: 2,
                 childAspectRatio: 0.8,
