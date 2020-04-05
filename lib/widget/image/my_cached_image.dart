@@ -6,13 +6,16 @@ import 'package:flutter/material.dart';
 class MyCachedImage extends StatelessWidget {
   final String url;
   final BoxFit boxFit;
+  final double width;
 
-  const MyCachedImage({Key key, this.url, this.boxFit = BoxFit.cover})
+  const MyCachedImage(
+      {Key key, this.url, this.boxFit = BoxFit.cover, this.width})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
+      width: width,
       imageUrl: url == null ? "" : url,
       fit: boxFit,
       errorWidget: (context, url, err) {
@@ -26,7 +29,7 @@ class MyCachedImage extends StatelessWidget {
       placeholder: (context, url) {
         return Center(
           child: CircularProgressIndicator(
-            valueColor: new AlwaysStoppedAnimation<Color>(ColorUtil.blue),
+            valueColor: new AlwaysStoppedAnimation<Color>(ColorUtil.primaryColor),
           ),
         );
       },

@@ -3718,6 +3718,24 @@ class S {
       args: [],
     );
   }
+
+  String get no_data {
+    return Intl.message(
+      'Chưa có dữ liệu',
+      name: 'no_data',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get reload {
+    return Intl.message(
+      'Tải lại',
+      name: 'reload',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -408,5 +408,7 @@
   "title_confirm_delete_cart": "Xác nhận",
   "message_confirm_delete_cart": "Bạn có muốn xoá sản phẩm này khỏi giỏ hàng không?",
   "yes": "Có",
-  "no": "Không"
+  "no": "Không",
+  "no_data": "Chưa có dữ liệu",
+  "reload": "Tải lại"
 }
