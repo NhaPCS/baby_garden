@@ -404,5 +404,9 @@
   "title_require_login": "Yêu cầu đăng nhập",
   "message_require_login": "Bạn vui lòng đăng nhập để sử dụng chức năng này!",
   "no_product_in_cart": "Bạn chưa có sản phẩm nào trong giỏ.\nShopping ngay nào!",
-  "go_shopping": "Shopping"
+  "go_shopping": "Shopping",
+  "title_confirm_delete_cart": "Xác nhận",
+  "message_confirm_delete_cart": "Bạn có muốn xoá sản phẩm này khỏi giỏ hàng không?",
+  "yes": "Có",
+  "no": "Không"
 }

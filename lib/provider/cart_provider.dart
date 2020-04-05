@@ -7,7 +7,6 @@ class CartProvider extends ChangeNotifier {
   int badge = 0;
   int price = 0;
 
-
   void getMyCart() {
     service.myCart();
   }
@@ -32,6 +31,25 @@ class CartProvider extends ChangeNotifier {
         price += int.parse(product['price_discount']) * product['quantity'];
     }
     service.addProductCart(products: [product]);
+    notifyListeners();
+  }
+
+  void deleteProduct(dynamic product) {
+    dynamic selected;
+    if (shops != null) {
+      shops.forEach((key, value) {
+        if (value.products != null) {
+          selected = value.products.firstWhere((element) =>
+              element['id'] == product['id'] &&
+              element['size_id'] == product['size_id'] &&
+              element['color_id'] == product['color_id']);
+          if (selected != null) {
+            value.products.remove(selected);
+          }
+        }
+      });
+    }
+    if (selected != null) service.deleteProductCart(selected);
     notifyListeners();
   }
 

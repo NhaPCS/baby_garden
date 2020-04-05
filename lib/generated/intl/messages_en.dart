@@ -267,6 +267,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "list_user_rated" : MessageLookupByLibrary.simpleMessage("Danh sách người đánh giá"),
     "login" : MessageLookupByLibrary.simpleMessage("Đăng nhập"),
     "logout" : MessageLookupByLibrary.simpleMessage("Đăng xuất"),
+    "message_confirm_delete_cart" : MessageLookupByLibrary.simpleMessage("Bạn có muốn xoá sản phẩm này khỏi giỏ hàng không?"),
     "message_require_login" : MessageLookupByLibrary.simpleMessage("Bạn vui lòng đăng nhập để sử dụng chức năng này!"),
     "mobilePhone" : MessageLookupByLibrary.simpleMessage("Số điện thoại"),
     "mobilePlaceholder" : MessageLookupByLibrary.simpleMessage("Nhập SĐT của bạn"),
@@ -277,6 +278,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "my_order" : MessageLookupByLibrary.simpleMessage("Đơn hàng của tôi "),
     "my_service" : MessageLookupByLibrary.simpleMessage("Dịch vụ của tôi"),
     "nameOfChild" : MessageLookupByLibrary.simpleMessage("Tên của bé"),
+    "no" : MessageLookupByLibrary.simpleMessage("Không"),
     "no_delivery_time_1" : MessageLookupByLibrary.simpleMessage("Không có giờ giao hàng"),
     "no_delivery_time_2" : MessageLookupByLibrary.simpleMessage("Vui lòng chọn ngày khác"),
     "no_image" : MessageLookupByLibrary.simpleMessage("No image"),
@@ -434,6 +436,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "time_ended" : MessageLookupByLibrary.simpleMessage("Đã kết thúc"),
     "time_pending" : MessageLookupByLibrary.simpleMessage("Chưa bắt đầu"),
     "time_using" : MessageLookupByLibrary.simpleMessage("Thời gian sử dụng"),
+    "title_confirm_delete_cart" : MessageLookupByLibrary.simpleMessage("Xác nhận"),
     "title_require_login" : MessageLookupByLibrary.simpleMessage("Yêu cầu đăng nhập"),
     "total" : MessageLookupByLibrary.simpleMessage("Thành tiền"),
     "total_order_price" : MessageLookupByLibrary.simpleMessage("Tổng đơn: "),
@@ -480,6 +483,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "welcome" : MessageLookupByLibrary.simpleMessage("Welcome"),
     "welcome_title" : MessageLookupByLibrary.simpleMessage("Ứng dụng mua sắm trực tuyến\nDành cho mẹ và bé"),
     "when_order_wrong" : MessageLookupByLibrary.simpleMessage("Khi nhận hàng không đúng với hàng tôi đặt?"),
+    "yes" : MessageLookupByLibrary.simpleMessage("Có"),
     "your_full_name" : MessageLookupByLibrary.simpleMessage("Họ tên của bạn")
   };
 }

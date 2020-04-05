@@ -3682,6 +3682,42 @@ class S {
       args: [],
     );
   }
+
+  String get title_confirm_delete_cart {
+    return Intl.message(
+      'Xác nhận',
+      name: 'title_confirm_delete_cart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get message_confirm_delete_cart {
+    return Intl.message(
+      'Bạn có muốn xoá sản phẩm này khỏi giỏ hàng không?',
+      name: 'message_confirm_delete_cart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get yes {
+    return Intl.message(
+      'Có',
+      name: 'yes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get no {
+    return Intl.message(
+      'Không',
+      name: 'no',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

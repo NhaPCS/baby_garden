@@ -126,7 +126,8 @@ class ItemProductCart extends StatelessWidget {
                             right: SizeUtil.smallSpace),
                         quantityChanged: (value) {
                           product['quantity'] = value;
-                          Provider.of<CartProvider>(context, listen: false).updateBadge();
+                          Provider.of<CartProvider>(context, listen: false)
+                              .updateBadge();
                         },
                       ),
                       Expanded(
@@ -154,7 +155,13 @@ class ItemProductCart extends StatelessWidget {
           icon: SvgIcon('ic_delete.svg'),
           padding: SizeUtil.smallPadding,
           onPressed: () {
-            //TODO
+            WidgetUtil.showConfirmDialog(context,
+                title: S.of(context).title_confirm_delete_cart,
+                message: S.of(context).message_confirm_delete_cart,
+                positive: S.of(context).yes, positiveClicked: () {
+              Provider.of<CartProvider>(context, listen: false)
+                  .deleteProduct(product);
+            }, negative: S.of(context).no);
           },
         ),
         Positioned(

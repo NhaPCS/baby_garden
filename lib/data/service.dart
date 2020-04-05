@@ -175,6 +175,20 @@ Future<void> addProductCart({List<dynamic> products}) async {
   return null;
 }
 
+Future<void> deleteProductCart(dynamic product) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "product_id": product['id'],
+  };
+  Response response = await post(null,
+      path: 'deleteProduct',
+      param: params,
+      requireLogin: true,
+      showLoading: false);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
 
 Future<dynamic> myCart() async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();

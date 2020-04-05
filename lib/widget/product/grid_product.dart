@@ -99,7 +99,6 @@ class _GridProductState extends BaseState<GridProduct> {
           Consumer<GetListProductProvider>(
             builder: (BuildContext context, GetListProductProvider value,
                 Widget child) {
-              print("SIZE ${value.products.length}");
               return ListHorizontalProduct(
                 maxItems: widget.isHome ? value.products.length : null,
                 rowsCount: widget.isHome ? 1 : 2,
