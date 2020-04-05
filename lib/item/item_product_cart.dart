@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/dialog/set_schedule_for_product_dialog.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/screen/remind_management/remind_add_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_icon.dart';
@@ -9,6 +10,7 @@ import 'package:baby_garden_flutter/widget/change_quantity_widget.dart';
 import 'package:baby_garden_flutter/widget/circle_image.dart';
 import 'package:baby_garden_flutter/widget/dashed_line.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,10 +18,12 @@ import 'package:provider/provider.dart';
 
 class ItemProductCart extends StatelessWidget {
   final bool hasDashLine;
+  final dynamic product;
 
   const ItemProductCart({
     Key key,
     this.hasDashLine = true,
+    this.product,
   }) : super(key: key);
 
   @override
@@ -51,8 +55,8 @@ class ItemProductCart extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   WidgetUtil.paddingWidget(
-                      Text(
-                        "Giày thời trang trẻ em style Hàn Quốc",
+                      MyText(
+                        product['name'],
                       ),
                       padding: EdgeInsets.only(right: SizeUtil.smallSpace)),
                   ButtonIcon(
@@ -92,7 +96,7 @@ class ItemProductCart extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       Text(
-                        "800.000 đ",
+                        StringUtil.getPriceText(product['price']),
                         style: TextStyle(
                             fontSize: SizeUtil.textSizeTiny,
                             decoration: TextDecoration.lineThrough),
@@ -102,7 +106,7 @@ class ItemProductCart extends StatelessWidget {
                       ),
                       Expanded(
                         child: AutoSizeText(
-                          "800.000 đ",
+                          StringUtil.getPriceText(product['price_discount']),
                           maxLines: 1,
                           maxFontSize: SizeUtil.textSizeDefault,
                           minFontSize: SizeUtil.textSizeSmall,
@@ -112,6 +116,7 @@ class ItemProductCart extends StatelessWidget {
                       ChangeQuantityWidget(
                         buttonColor: ColorUtil.primaryColor,
                         textColor: ColorUtil.textColor,
+                        quantity: product['quantity'],
                         height: 23,
                         padding: EdgeInsets.only(
                             left: SizeUtil.superTinySpace,
@@ -119,6 +124,10 @@ class ItemProductCart extends StatelessWidget {
                         containerMargin: EdgeInsets.only(
                             left: SizeUtil.smallSpace,
                             right: SizeUtil.smallSpace),
+                        quantityChanged: (value) {
+                          product['quantity'] = value;
+                          Provider.of<CartProvider>(context, listen: false).updateBadge();
+                        },
                       ),
                       Expanded(
                         child: Center(

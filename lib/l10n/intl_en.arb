@@ -402,5 +402,7 @@
   "time_pending": "Chưa bắt đầu",
   "time_ended": "Đã kết thúc",
   "title_require_login": "Yêu cầu đăng nhập",
-  "message_require_login": "Bạn vui lòng đăng nhập để sử dụng chức năng này!"
+  "message_require_login": "Bạn vui lòng đăng nhập để sử dụng chức năng này!",
+  "no_product_in_cart": "Bạn chưa có sản phẩm nào trong giỏ.\nShopping ngay nào!",
+  "go_shopping": "Shopping"
 }

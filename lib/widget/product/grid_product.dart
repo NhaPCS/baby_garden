@@ -16,11 +16,15 @@ final int TOTAL_ITEMS = 7;
 class GridProduct extends StatefulWidget {
   final bool isHome;
   final Section section;
+  final String categoryId;
+  final int totalCount;
 
   const GridProduct({
     Key key,
     @required this.section,
     this.isHome = false,
+    this.categoryId,
+    this.totalCount,
   }) : super(key: key);
 
   @override
@@ -40,7 +44,9 @@ class _GridProductState extends BaseState<GridProduct> {
             _getListProductProvider.products.isEmpty) &&
         widget.section != null) {
       _getListProductProvider.getData(context, widget.section.path,
-          numberPosts: TOTAL_ITEMS);
+          categoryId: widget.categoryId,
+          numberPosts:
+              widget.totalCount == null ? TOTAL_ITEMS : widget.totalCount);
     }
   }
 
@@ -93,6 +99,7 @@ class _GridProductState extends BaseState<GridProduct> {
           Consumer<GetListProductProvider>(
             builder: (BuildContext context, GetListProductProvider value,
                 Widget child) {
+              print("SIZE ${value.products.length}");
               return ListHorizontalProduct(
                 maxItems: widget.isHome ? value.products.length : null,
                 rowsCount: widget.isHome ? 1 : 2,

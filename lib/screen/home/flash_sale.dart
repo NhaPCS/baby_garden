@@ -38,11 +38,8 @@ class _FlashSaleState extends BaseState<FlashSale> {
   }
 
   void _loadData() {
-    //TODO
-//    _getListProductProvider.getData(
-//        context, isPending ? "flashSalesPending" : "flashSales");
     _getListProductProvider.getData(context,
-        _changeFlashSaleModeProvider.isPending ? "newProduct" : "newProduct",
+        _changeFlashSaleModeProvider.isPending ? "flashSalesPending" : "flashSales",
         numberPosts: 10, index: 1);
   }
 

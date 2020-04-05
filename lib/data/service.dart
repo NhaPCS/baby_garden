@@ -151,6 +151,45 @@ Future<dynamic> productDetail(BuildContext context, {String productId}) async {
   return null;
 }
 
+Future<void> addProductCart({List<dynamic> products}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  List<dynamic> ps = new List();
+  for (dynamic p in products) {
+    ps.add({
+      'product_id': p['id'],
+      'number': p['quantity'],
+      'color_id': p['color_id'],
+      'size_id': p['size_id'],
+    });
+  }
+  dynamic params = {
+    "user_id": userId,
+    "list_product": jsonEncode(ps),
+  };
+  Response response = await post(null,
+      path: 'addProductCart',
+      param: params,
+      requireLogin: true,
+      showLoading: false);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+
+Future<dynamic> myCart() async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId
+  };
+  Response response = await get(null,
+      path: 'cartInfo',
+      param: params,
+      requireLogin: true,
+      showLoading: false);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 Future<Response> post(BuildContext context,
     {String path,
     dynamic param,

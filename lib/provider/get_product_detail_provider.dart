@@ -76,7 +76,7 @@ class GetProductDetailProvider extends ChangeNotifier {
         'key': 'size',
       },
       {
-        'title': S.of(context).size,
+        'title': S.of(context).color,
         'key': 'color',
       },
       {

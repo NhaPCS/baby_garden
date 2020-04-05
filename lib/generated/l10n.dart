@@ -3664,6 +3664,24 @@ class S {
       args: [],
     );
   }
+
+  String get no_product_in_cart {
+    return Intl.message(
+      'Bạn chưa có sản phẩm nào trong giỏ.\nShopping ngay nào!',
+      name: 'no_product_in_cart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get go_shopping {
+    return Intl.message(
+      'Shopping',
+      name: 'go_shopping',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

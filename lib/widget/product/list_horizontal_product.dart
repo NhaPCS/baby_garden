@@ -23,6 +23,7 @@ class ListHorizontalProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("SIZE C  ${getItemsCount()}");
     return Container(
       color: ColorUtil.lineColor,
       padding: padding,
@@ -46,6 +47,12 @@ class ListHorizontalProduct extends StatelessWidget {
   }
 
   int getItemsCount() {
-    return maxItems != null ? maxItems : products == null ? 0 : products.length;
+    if (products != null) {
+      if (maxItems != null && products.length > maxItems)
+        return maxItems;
+      else
+        return products.length;
+    }
+    return 0;
   }
 }
