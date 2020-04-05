@@ -124,7 +124,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                     padding: EdgeInsets.only(
                         left: SizeUtil.notifyHintSpace, bottom: SizeUtil.tinySpace),
                     child: Text(
-                        "Vườn của bé\n0912677022\n38 Nguyễn Viết Xuan, Thanh Xuan, Hà Nội",
+                        value.bookingDetialData['address'],
                         style: TextStyle(
                             fontSize: SizeUtil.textSizeSmall,
                             height: 1.3,
@@ -305,7 +305,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                               fontWeight: FontWeight.bold),
                           children: <TextSpan>[
                             TextSpan(
-                              text: " 700.000 đ",
+                              text: value.bookingDetialData['total_money'],
                               style: TextStyle(
                                 color: ColorUtil.red,
                                 fontSize: SizeUtil
@@ -356,7 +356,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                                 style: TextStyle(
                                     fontSize: SizeUtil.textSizeExpressDetail)),
                             Spacer(),
-                            Text("12/01/2020 13:40",
+                            Text(value.bookingDetialData['time_cancel'],
                                 style: TextStyle(
                                     fontSize: SizeUtil.textSizeExpressDetail))
                           ],
@@ -378,7 +378,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                                 style: TextStyle(
                                     fontSize: SizeUtil.textSizeExpressDetail)),
                             Spacer(),
-                            Text("Muốn thay đổi loại dịch vụ",
+                            Text(value.bookingDetialData['reason_cancel'],
                                 style: TextStyle(
                                     fontSize: SizeUtil.textSizeExpressDetail))
                           ],

@@ -115,9 +115,9 @@ Future<dynamic> bookingProduct(BuildContext context,
 }
 
 //todo bookingDetail
-Future<dynamic> bookingDetail({int userId, var bookingID}) async {
+Future<dynamic> bookingDetail({String userId, var bookingID}) async {
   Response response = await get(null,
-      path: "bookingDetail", param: {'user_id':userId.toString(),'booking_id':bookingID.toString()});
+      path: "bookingDetail", param: {'user_id':userId,'booking_id':bookingID.toString()});
   if (response.isSuccess()) return response.data;
   return null;
 }
