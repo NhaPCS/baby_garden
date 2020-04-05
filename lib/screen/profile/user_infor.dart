@@ -1,25 +1,13 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/circle_image.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 
 class UserInfor extends StatelessWidget {
-  UserInfor(
-      {Key key,
-      this.username,
-      this.mobilePhone,
-      this.joinDate,
-      this.birthday,
-      this.password,
-      this.address,
-      this.gender})
-      : super(key: key);
+  final dynamic user;
 
-  final username;
-  final mobilePhone;
-  final joinDate;
-  final birthday;
-  final gender;
-  final password;
-  final address;
+  const UserInfor({Key key, this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +24,10 @@ class UserInfor extends StatelessWidget {
         children: <Widget>[
           Container(
             padding: EdgeInsets.only(left: 11, right: 11),
-            child: CircleAvatar(
-              radius: 50,
-              backgroundImage: ExactAssetImage("photo/profile_avatar.png"),
+            child: CircleImage(
+              imageUrl: user == null ? StringUtil.dummyImage : user['avatar'],
+              width: 50,
+              height: 50,
             ),
           ),
           Column(
@@ -46,13 +35,13 @@ class UserInfor extends StatelessWidget {
             children: <Widget>[
               Padding(
                   padding: const EdgeInsets.only(top: 16, bottom: 15),
-                  child: Text(
-                    username,
+                  child: MyText(
+                    user['name'],
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   )),
-              Text(mobilePhone),
+              MyText(user['phone']),
               SizedBox(height: 15),
-              Text(S.of(context).joinDate + ": " + joinDate)
+              Text("${S.of(context).joinDate}: ${user['date']}")
             ],
           ),
         ],

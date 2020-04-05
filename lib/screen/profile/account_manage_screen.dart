@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
+import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/address_setting/address_setting_screen.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/child_heath/child_heath_screen.dart';
@@ -20,13 +21,11 @@ class AccountManage extends StatefulWidget {
 class _AccountManageState extends BaseState<AccountManage> {
   final GetListProvider _getListProvider = GetListProvider();
   final UserInfor userInfor = UserInfor(
-    username: "Đinh Bộ Lĩnh",
-    mobilePhone: "0123456789",
-    joinDate: "13/02/2020",
-    password: "xxx",
-    address: "28 Phan Kế Bính, Ba Đình, Hà Nội",
-    birthday: "17/05/1993",
-    gender: "Nam",
+    user: {
+      'name': "Đinh Bộ Lĩnh",
+      'phone': '0123456789',
+      'avatar': StringUtil.dummyImage
+    },
   );
 
   final childInformation = ChildInfor(
@@ -47,13 +46,17 @@ class _AccountManageState extends BaseState<AccountManage> {
       return {'title': title, 'content': content, "icon": icon};
     }
 
+    dynamic user = Provider.of<UserProvider>(context).userInfo;
+
     final List<Map<String, String>> entries = <Map<String, String>>[
-      entry(S.of(context).fullname, userInfor.username, 'pencil.png'),
-      entry(S.of(context).mobilePhone, userInfor.mobilePhone, ''),
-      entry(S.of(context).birthday, userInfor.birthday, ''),
-      entry(S.of(context).gender, userInfor.gender, ''),
+      entry(S.of(context).fullname, user == null ? "" : user['name'],
+          'pencil.png'),
+      entry(S.of(context).mobilePhone, user == null ? "" : user['phone'], ''),
+      entry(S.of(context).birthday, user == null ? "" : user['birthday'], ''),
+      entry(S.of(context).gender,
+          user == null ? "" : user['gender'] == 1 ? "Nam" : "Nữ", ''),
       entry(S.of(context).password, S.of(context).changePassword, 'right.png'),
-      entry(S.of(context).address, userInfor.address, 'right.png'),
+      entry(S.of(context).address, '', 'right.png'),
     ];
 
     final List<Map<String, String>> childInforFields = <Map<String, String>>[

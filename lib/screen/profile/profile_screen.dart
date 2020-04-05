@@ -34,12 +34,6 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends BaseState<ProfileScreen> {
   final GetListProvider _getListProvider = GetListProvider();
 
-  final UserInfor userInfor = UserInfor(
-    username: "Đinh Bộ Lĩnh",
-    mobilePhone: "0123456789",
-    joinDate: "13/2/2020",
-  );
-
   @override
   Widget buildWidget(BuildContext context) {
     final List<Map<String, String>> entries = <Map<String, String>>[
@@ -57,76 +51,84 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
 
     return Column(children: <Widget>[
       getAppBar(title: S.of(context).myProfile, hasBack: false),
-      Consumer<UserProvider>(builder: (BuildContext context, UserProvider value, Widget child) {
-        return value.isLogin?Container(
-        // user information
-        child: this.userInfor):Container(
-            height: 100,
-            width: double.infinity,
-            padding: const EdgeInsets.only(
-                left: SizeUtil.smallSpace,
-                right: SizeUtil.smallSpace,
-                top: 12,
-                bottom: 12),
-            decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                      width: 1,
-                      style: BorderStyle.solid,
-                      color: Color.fromRGBO(206, 206, 206, 1)),
-                )),
-            // user information
-            child: Row(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: SizeUtil.smallSpace),
-                  child: Image.asset(
-                    'photo/logo.png',
-                    width: 70,
-                    height: 70,
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: SizeUtil.midSmallSpace),
-                      child: Text(
-                        S.of(context).profileWelcomeText,
-                        style: TextStyle(color: ColorUtil.darkGray),
-                      ),
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              right: SizeUtil.midSmallSpace),
-                          child: RaisedButton(
-                              color: Color(0xff00B9FF),
-                              onPressed: () {
-                                push(LoginScreen());
-                              },
-                              child: Text(S.of(context).login,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: SizeUtil.textSizeSmall))),
+      Consumer<UserProvider>(
+        builder: (BuildContext context, UserProvider value, Widget child) {
+          return value.isLogin
+              ? Container(
+                  // user information
+                  child: UserInfor(
+                  user: value.userInfo,
+                ))
+              : Container(
+                  height: 100,
+                  width: double.infinity,
+                  padding: const EdgeInsets.only(
+                      left: SizeUtil.smallSpace,
+                      right: SizeUtil.smallSpace,
+                      top: 12,
+                      bottom: 12),
+                  decoration: BoxDecoration(
+                      border: Border(
+                    bottom: BorderSide(
+                        width: 1,
+                        style: BorderStyle.solid,
+                        color: Color.fromRGBO(206, 206, 206, 1)),
+                  )),
+                  // user information
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(right: SizeUtil.smallSpace),
+                        child: Image.asset(
+                          'photo/logo.png',
+                          width: 70,
+                          height: 70,
                         ),
-                        RaisedButton(
-                            color: ColorUtil.primaryColor,
-                            onPressed: () {
-                              push(RegisterScreen());
-                            },
-                            child: Text(S.of(context).register,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: SizeUtil.textSizeSmall)))
-                      ],
-                    )
-                  ],
-                )
-              ],
-            ));
-      },),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: SizeUtil.midSmallSpace),
+                            child: Text(
+                              S.of(context).profileWelcomeText,
+                              style: TextStyle(color: ColorUtil.darkGray),
+                            ),
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    right: SizeUtil.midSmallSpace),
+                                child: RaisedButton(
+                                    color: Color(0xff00B9FF),
+                                    onPressed: () {
+                                      push(LoginScreen());
+                                    },
+                                    child: Text(S.of(context).login,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: SizeUtil.textSizeSmall))),
+                              ),
+                              RaisedButton(
+                                  color: ColorUtil.primaryColor,
+                                  onPressed: () {
+                                    push(RegisterScreen());
+                                  },
+                                  child: Text(S.of(context).register,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: SizeUtil.textSizeSmall)))
+                            ],
+                          )
+                        ],
+                      )
+                    ],
+                  ));
+        },
+      ),
       Expanded(
         child: entriesWidget(entries),
       ),
@@ -141,6 +143,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
   Widget entriesWidget(List<Map<String, String>> entries) {
     return ListView.builder(
         itemCount: entries.length,
+        padding: EdgeInsets.all(0),
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             child: Container(
@@ -210,9 +213,9 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                       negative: "Không", positiveClicked: () {
                     ShareValueProvider.shareValueProvider.saveUserId(null);
                     ShareValueProvider.shareValueProvider.saveUserInfo(null);
-                    Provider.of<UserProvider>(context,listen: false).logout(false);
+                    Provider.of<UserProvider>(context, listen: false)
+                        .logout(false);
                     pushReplacement(MainScreen());
-
                   }, negativeClick: () {});
                   break;
               }
