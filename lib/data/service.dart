@@ -162,9 +162,9 @@ Future<dynamic> listBookingService({int userId, int type}) async {
 }
 
 //todo listBookingProduct
-Future<dynamic> listBookingProduct({int userId, int type}) async {
+Future<dynamic> listBookingProduct({String userId, int type}) async {
   Response response = await get(null,
-      path: "listBookingProduct", param: {'user_id':userId,'type':type});
+      path: "listBookingProduct", param: {'user_id':userId,'type':type.toString()});
   if (response.isSuccess()) return response.data;
   return null;
 }

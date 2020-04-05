@@ -4,6 +4,7 @@ import 'package:baby_garden_flutter/item/item_order_option.dart';
 import 'package:baby_garden_flutter/provider/booking_detail_provider.dart';
 import 'package:baby_garden_flutter/provider/order_list_provider.dart';
 import 'package:baby_garden_flutter/provider/service_list_provider.dart';
+import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/booking/booking_rate_screen.dart';
 import 'package:baby_garden_flutter/screen/order/list_order_screen.dart';
@@ -51,39 +52,44 @@ class _OrderState extends BaseState<OrderScreen> {
                   .map((e) => InkWell(
                         child: ItemOrderOption(option: e),
                         onTap: () {
-                          Provider.of<OrderListProvider>(context).getListData(1, ORDER_OPTIONS.indexOf(e)+1);
-                          switch(ORDER_OPTIONS.indexOf(e)){
-                            case 0:// todo chờ thanh toán
-                              push(OrderListScreen(
-                                title: e['title'].replaceAll("\n", " "),isShowNegativeButton: true,isShowPositiveButton: true,state: 0,
-                              ));
-                              break;
-                            case 1://todo chờ xác nhận
-                              push(OrderListScreen(
-                                title: e['title'].replaceAll("\n", " "),isShowNegativeButton: true,state: 1,
-                              ));
-                              break;
-                            case 2://todo nhận hàng tại shop
-                              push(OrderListScreen(title: S.of(context).receive_in_shop,state: 2,isShowPositiveButton: true,isShowNegativeButton: true,));
-                              break;
-                            case 3://todo đang đóng gói
-                              push(OrderListScreen(
-                                title: e['title'].replaceAll("\n", " "),state: 3,
-                              ));
-                              break;
-                            case 4://todo đang vận chuyển
-                              push(OrderListScreen(state: 4,title: S.of(context).delivering,));
-                              break;
-                            case 5://todo đơn hàng thành công
-                              push(OrderListScreen(title: S.of(context).ordered,state: 5,isShowPositiveButton: true,childTitle: "Đơn hàng VCB19.12.25",));
-                              break;
-                            case 6://todo đơn hàng đã huỷ
-                              push(OrderListScreen(title: S.of(context).canceled_order,state: 6,isShowPositiveButton: true,childTitle: "Chi tiết huỷ đơn",));
-                              break;
-                            default://todo đánh giá đơn hàng
-                              push(BookingRateScreen(isService:  false,));
-                              break;
+                          if (Provider.of<UserProvider>(context,listen: false).isLogin){
+                            Provider.of<OrderListProvider>(context,listen: false).getListData(Provider.of<UserProvider>(context,listen: false).userInfo['id'], ORDER_OPTIONS.indexOf(e)+1);
+                            switch(ORDER_OPTIONS.indexOf(e)){
+                              case 0:// todo chờ thanh toán
+                                push(OrderListScreen(
+                                  title: e['title'].replaceAll("\n", " "),isShowNegativeButton: true,isShowPositiveButton: true,state: 0,
+                                ));
+                                break;
+                              case 1://todo chờ xác nhận
+                                push(OrderListScreen(
+                                  title: e['title'].replaceAll("\n", " "),isShowNegativeButton: true,state: 1,
+                                ));
+                                break;
+                              case 2://todo nhận hàng tại shop
+                                push(OrderListScreen(title: S.of(context).receive_in_shop,state: 2,isShowPositiveButton: true,isShowNegativeButton: true,));
+                                break;
+                              case 3://todo đang đóng gói
+                                push(OrderListScreen(
+                                  title: e['title'].replaceAll("\n", " "),state: 3,
+                                ));
+                                break;
+                              case 4://todo đang vận chuyển
+                                push(OrderListScreen(state: 4,title: S.of(context).delivering,));
+                                break;
+                              case 5://todo đơn hàng thành công
+                                push(OrderListScreen(title: S.of(context).ordered,state: 5,isShowPositiveButton: true,childTitle: "Đơn hàng VCB19.12.25",));
+                                break;
+                              case 6://todo đơn hàng đã huỷ
+                                push(OrderListScreen(title: S.of(context).canceled_order,state: 6,isShowPositiveButton: true,childTitle: "Chi tiết huỷ đơn",));
+                                break;
+                              default://todo đánh giá đơn hàng
+                                push(BookingRateScreen(isService:  false,));
+                                break;
+                            }
+                          }else{
+                            WidgetUtil.showRequireLoginDialog(context);
                           }
+
 
                         },
                       ))
@@ -104,22 +110,27 @@ class _OrderState extends BaseState<OrderScreen> {
               children: SERVICE_OPTIONS
                   .map((e) => InkWell(
                   onTap: (){
-                    Provider.of<ServiceListProvider>(context,listen: false).getServiceList(1, SERVICE_OPTIONS.indexOf(e)+1);
-//                    Provider.of<BookingDetailProvider>(context,listen: false).getBookingDetail(1, 1);
-                    switch(SERVICE_OPTIONS.indexOf(e)){
-                      case 0 ://todo đã đặt lịch
-                        push(ServiceListScreen(title: S.of(context).service_booked,state: 0,childTitle: "Đơn hàng VCB19.12.25",));
-                        break;
-                      case 1 ://todo đã sử dụng
-                        push(ServiceListScreen(title: S.of(context).used_service,state: 1,childTitle:"Đơn hàng VCB19.12.25" ,));
-                        break;
-                      case 2 :// todo đã huỷ đặt lịch
-                        push(ServiceListScreen(title: S.of(context).canceled_service,state: 2,childTitle: "Chi tiết huỷ đơn",));
-                        break;
-                      default://todo đánh giá dịch vụ
-                        push(BookingRateScreen(isService: true,));
-                        break;
+                    var provider = Provider.of<UserProvider>(context,listen: false);
+                    if (provider.isLogin){
+                      Provider.of<ServiceListProvider>(context,listen: false).getServiceList(provider.userInfo['id'], SERVICE_OPTIONS.indexOf(e)+1);
+                      switch(SERVICE_OPTIONS.indexOf(e)){
+                        case 0 ://todo đã đặt lịch
+                          push(ServiceListScreen(title: S.of(context).service_booked,state: 0,childTitle: "Đơn hàng VCB19.12.25",));
+                          break;
+                        case 1 ://todo đã sử dụng
+                          push(ServiceListScreen(title: S.of(context).used_service,state: 1,childTitle:"Đơn hàng VCB19.12.25" ,));
+                          break;
+                        case 2 :// todo đã huỷ đặt lịch
+                          push(ServiceListScreen(title: S.of(context).canceled_service,state: 2,childTitle: "Chi tiết huỷ đơn",));
+                          break;
+                        default://todo đánh giá dịch vụ
+                          push(BookingRateScreen(isService: true,));
+                          break;
+                      }
+                    }else{
+                      WidgetUtil.showRequireLoginDialog(context);
                     }
+
                   },
                   child: ItemOrderOption(option: e)))
                   .toList(),

@@ -1,5 +1,7 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/booking_detail_provider.dart';
 import 'package:baby_garden_flutter/provider/order_list_provider.dart';
+import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/rated_detail/rated_detail_screen.dart';
 import 'package:baby_garden_flutter/screen/rating_detail/rating_detail_screen.dart';
@@ -53,12 +55,13 @@ class _OrderListScreenState extends BaseState<OrderListScreen>{
               color: ColorUtil.lineColor,
               child:Consumer<OrderListProvider>(builder: (BuildContext context, OrderListProvider value, Widget child) {
                 return ListView.builder(
-                    itemCount: 10,
+                    itemCount: value.orderList.length,
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     padding: EdgeInsets.all(0),
                     itemBuilder: (context, index) {
                       return new GestureDetector(onTap: (){
+                        Provider.of<BookingDetailProvider>(context,listen: false).getBookingDetail(Provider.of<UserProvider>(context,listen: false).userInfo['id'], value.orderList[index]['id']);
                         push(OrderDetailScreen(title:widget.childTitle!=null?widget.childTitle:widget.title,state: widget.state,isShowNegativeButton: widget.isShowNegativeButton,isShowPositiveButton: widget.isShowPositiveButton,));
                       },
                           child: OrderItem(isRated: false,));
