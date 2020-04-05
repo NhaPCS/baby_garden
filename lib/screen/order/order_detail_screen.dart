@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/dialog/receive_barcode_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/payment_info_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
 import 'package:baby_garden_flutter/screen/checkout/checkout_screen.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 import 'order_delivery_info_screen.dart';
 

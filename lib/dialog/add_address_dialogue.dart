@@ -1,11 +1,14 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/city_provider.dart';
+import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/circle_checkbox.dart';
+import 'package:baby_garden_flutter/widget/drop_down_formfield.dart';
 import 'package:baby_garden_flutter/widget/my_text_field.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class AddingAddressDialogue extends StatelessWidget{
+class AddingAddressDialogue extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -15,6 +18,10 @@ class AddingAddressDialogue extends StatelessWidget{
         ),
         child: StatefulBuilder(
           builder: (context, setState) {
+            final TextEditingController _receiveNameController =new  TextEditingController();
+            final TextEditingController _receivePhoneController =new TextEditingController();
+            final TextEditingController _receiveAddressController =new TextEditingController();
+            bool isDefaultAddress = false;
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
@@ -64,11 +71,12 @@ class AddingAddressDialogue extends StatelessWidget{
                   MyTextField(
                     hint: S.of(context).enter_receiver_name,
                     title: S.of(context).add_receiver,
-                    titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                    titleStyle: TextStyle(fontSize: SizeUtil.textSizeSmall),
                     hintStyle: TextStyle(
                       fontSize: SizeUtil.textSizeSmall,
                     ),
                     contentPadding: EdgeInsets.all(0),
+                    textEditingController: _receiveNameController ,
                     padding: EdgeInsets.only(
                         top: SizeUtil.smallSpace,
                         left: SizeUtil.smallSpace,
@@ -79,11 +87,12 @@ class AddingAddressDialogue extends StatelessWidget{
                   MyTextField(
                     hint: S.of(context).enter_receive_phone,
                     title: S.of(context).phone,
-                    titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                    titleStyle: TextStyle(fontSize: SizeUtil.textSizeSmall),
                     hintStyle: TextStyle(
                       fontSize: SizeUtil.textSizeSmall,
                     ),
                     contentPadding: EdgeInsets.all(0),
+                    textEditingController: _receivePhoneController,
                     inputType: TextInputType.phone,
                     padding: EdgeInsets.only(
                         top: SizeUtil.smallSpace,
@@ -95,11 +104,12 @@ class AddingAddressDialogue extends StatelessWidget{
                   MyTextField(
                     hint: S.of(context).enter_address,
                     title: S.of(context).delivery_address,
-                    titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                    titleStyle: TextStyle(fontSize: SizeUtil.textSizeSmall),
                     hintStyle: TextStyle(
                       fontSize: SizeUtil.textSizeSmall,
                     ),
                     contentPadding: EdgeInsets.all(0),
+                    textEditingController: _receiveAddressController,
                     padding: EdgeInsets.only(
                         top: SizeUtil.smallSpace,
                         left: SizeUtil.smallSpace,
@@ -107,60 +117,53 @@ class AddingAddressDialogue extends StatelessWidget{
                     showTrailing: false,
                     isBorder: false,
                   ),
-                  MyTextField(
-                    hint: S.of(context).choose_province,
-                    title: S.of(context).province,
-                    titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
-                    hintStyle: TextStyle(
-                      fontSize: SizeUtil.textSizeSmall,
-                    ),
-                    contentPadding: EdgeInsets.all(0),
-                    padding: EdgeInsets.only(
-                        top: SizeUtil.smallSpace,
-                        left: SizeUtil.smallSpace,
-                        right: SizeUtil.smallSpace),
-                    showTrailing: true,
-                    onTrailingTap: () {},
-                    isBorder: false,
-                  ),
-                  MyTextField(
-                    hint: S.of(context).choose_district,
-                    title: S.of(context).district,
-                    titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
-                    hintStyle: TextStyle(
-                      fontSize: SizeUtil.textSizeSmall,
-                    ),
-                    contentPadding: EdgeInsets.all(0),
-                    padding: EdgeInsets.only(
-                        top: SizeUtil.smallSpace,
-                        left: SizeUtil.smallSpace,
-                        right: SizeUtil.smallSpace),
-                    showTrailing: true,
-                    onTrailingTap: () {},
-                    isBorder: false,
-                  ),
-                  MyTextField(
-                    hint: S.of(context).choose_sub_district,
-                    title: S.of(context).sub_district,
-                    titleStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
-                    hintStyle: TextStyle(
-                      fontSize: SizeUtil.textSizeSmall,
-                    ),
-                    contentPadding: EdgeInsets.all(0),
-                    padding: EdgeInsets.only(
-                        top: SizeUtil.smallSpace,
-                        left: SizeUtil.smallSpace,
-                        right: SizeUtil.smallSpace),
-                    showTrailing: true,
-                    onTrailingTap: () {},
-                    isBorder: false,
-                  ),
+                  Consumer<CityProvider>(builder: (BuildContext context, CityProvider value, Widget child) {
+                    return Column(
+                      children: <Widget>[
+                        DropDownFormField(
+                          value: value.cityVal,
+                          titleText: S.of(context).province,
+                          hintText: S.of(context).choose_province,
+                          onChanged: (val) {
+                            Provider.of<CityProvider>(context,listen: false).onChangeCity(val);
+                          },
+//                          dataSource: value.cities!=null||value.cities.isNotEmpty?value.cities:[{'name':'name'}],
+                          dataSource: value.cities,
+                          textField: 'name',
+                        ),
+                        DropDownFormField(
+                          value: value.districtVal,
+                          titleText: S.of(context).district,
+                          hintText: S.of(context).choose_district,
+                          onChanged: (val) {
+                            Provider.of<CityProvider>(context,listen: false).onChangeDistrict(val);
+                          },
+//                          dataSource: value.districts!=null||value.districts.isNotEmpty?value.districts:[{'name':'name'}],
+                          dataSource: value.districts,
+                          textField: 'name',
+                        ),
+                        DropDownFormField(
+                          value: value.subDistrictVal,
+                          titleText: S.of(context).sub_district,
+                          hintText: S.of(context).choose_sub_district,
+                          onChanged: (val) {
+                            Provider.of<CityProvider>(context,listen: false).onChangeSubDistrict(val);
+                          },
+                          dataSource: value.districts,
+                          textField: 'name',
+                        )
+                      ],
+                    );
+                  },),
                   SizedBox(
                     height: SizeUtil.smallSpace,
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
                     child: CircleCheckbox(
+                      onChanged: (val){
+                        Provider.of<CityProvider>(context,listen: false).onChangeDefault(val);
+                      },
                         padding: const EdgeInsets.only(
                             left: SizeUtil.tinySpace,
                             right: 0,
@@ -186,8 +189,8 @@ class AddingAddressDialogue extends StatelessWidget{
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
-                              Radius.circular(SizeUtil.smallRadius),
-                            )),
+                          Radius.circular(SizeUtil.smallRadius),
+                        )),
                         color: ColorUtil.primaryColor,
                         child: Text(
                           S.of(context).cancel,
@@ -203,12 +206,38 @@ class AddingAddressDialogue extends StatelessWidget{
                       ),
                       RaisedButton(
                         onPressed: () {
-                          Navigator.of(context).pop();
+                          print("change  $isDefaultAddress");
+                          String error = "";
+                          var provider = Provider.of<CityProvider>(context,listen: false);
+                          if (_receiveNameController.text.trim().length==0){
+                            error ="Vui lòng nhập Tên ";
+                          }else if (_receivePhoneController.text.trim().length==0){
+                            error ="Vui lòng nhập Số điện thoại ";
+                          }else if (_receiveAddressController.text.trim().length==0){
+                            error ="Vui lòng nhập địa chỉ (số nhà, tên đường) ";
+                          }else if (provider.cityVal==null){
+                            error ="Vui lòng chọn tỉnh/thành phố  ";
+                          }else if (provider.districtVal==null){
+                            error ="Vui lòng chọn quận/huyện  ";
+                          }else if (provider.subDistrictVal==null){
+                            error ="Vui lòng chọn phường/xã ";
+                          }
+                          print(error);
+                          if (error.length==0){
+                            String address = "${_receiveNameController.text.trim()} - ${_receivePhoneController.text.trim()}\n ${_receiveAddressController.text.trim()} \n Phường , Quận ${provider.districts[provider.districtVal]['name']}, ${provider.cities[provider.cityVal]['name']}";
+                            Provider.of<ReceiveAddressListProvider>(context,listen: false).onAddAddress(address,Provider.of<CityProvider>(context,listen: false).isDefault);
+                            Provider.of<CityProvider>(context,listen: false).reset();
+                            Navigator.of(context).pop();
+                            print("asdas das $isDefaultAddress");
+                          }else{
+                            WidgetUtil.showErrorDialog(context, error);
+                          }
+
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
-                              Radius.circular(SizeUtil.smallRadius),
-                            )),
+                          Radius.circular(SizeUtil.smallRadius),
+                        )),
                         color: ColorUtil.primaryColor,
                         child: Text(
                           S.of(context).add_new,
@@ -227,5 +256,4 @@ class AddingAddressDialogue extends StatelessWidget{
           },
         ));
   }
-
 }

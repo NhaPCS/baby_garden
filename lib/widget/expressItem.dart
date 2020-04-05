@@ -45,50 +45,50 @@ class ExpressItem extends StatelessWidget {
               ],
             ),
             SizedBox(height: SizeUtil.tinySpace,),
-            Row(
-              children: <Widget>[
-                Image.asset("photo/express_item_img.png",
-                    width: MediaQuery.of(context).size.width*3 / 16,height: MediaQuery.of(context).size.width*3 / 16,fit: BoxFit.cover,),
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.only(left: SizeUtil.tinySpace),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(
-                          height: SizeUtil.tinySpace,
-                        ),
-                        Text(
-                          S.of(context).express_short_content,
-                          style: TextStyle(fontSize: SizeUtil.textSizeSmall),
-                          textAlign: TextAlign.start,
-                        ),
-                        SizedBox(
-                          height: SizeUtil.tinySpace,
-                        ),
-                        Wrap(
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          direction: Axis.horizontal,
-                          alignment: WrapAlignment.start,
-                          children: <Widget>[
-                            Icon(
-                              Icons.access_alarm,
-                              color: ColorUtil.textHint,
-                              size: SizeUtil.iconSizeSmall,
-                            ),
-                            Text(
-                              S.of(context).express_time,
-                              style: TextStyle(
-                                  color: ColorUtil.textHint,
-                                  fontSize: SizeUtil.textSizeSmall),
-                            ),
-                          ],
-                        ),
-                      ],
+            Container(
+              height: MediaQuery.of(context).size.width*3 / 16 +2,
+              child: Row(
+                children: <Widget>[
+                  Image.asset("photo/express_item_img.png",
+                      width: MediaQuery.of(context).size.width*3 / 16,height: MediaQuery.of(context).size.width*3 / 16,fit: BoxFit.cover,),
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.only(left: SizeUtil.tinySpace),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            S.of(context).express_short_content,
+                            style: TextStyle(fontSize: SizeUtil.textSizeSmall),
+                            textAlign: TextAlign.start,
+                            maxLines: 4,
+                          ),
+                          Spacer(),
+                          Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            direction: Axis.horizontal,
+                            alignment: WrapAlignment.start,
+                            children: <Widget>[
+                              Icon(
+                                Icons.access_alarm,
+                                color: ColorUtil.textHint,
+                                size: SizeUtil.iconSizeSmall,
+                              ),
+                              Text(
+                                S.of(context).express_time,
+                                style: TextStyle(
+                                    color: ColorUtil.textHint,
+                                    fontSize: SizeUtil.textSizeSmall),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             )
           ],
         ),

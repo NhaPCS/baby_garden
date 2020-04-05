@@ -26,8 +26,10 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onChangeLogin(val){
+  void logout(val){
     isLogin = val;
+    userInfo = Map();
+
     notifyListeners();
   }
 }

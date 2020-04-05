@@ -1,11 +1,15 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/view_model/rate_booking_view_model.dart';
 import 'package:baby_garden_flutter/widget/rating_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 class RatingDetailScreen extends StatefulWidget {
   @override
@@ -15,10 +19,12 @@ class RatingDetailScreen extends StatefulWidget {
   }
 }
 
-class _RatingDetailScreenState extends BaseState<RatingDetailScreen> {
+class _RatingDetailScreenState extends BaseStateModel<RatingDetailScreen,RateBookingViewModel> {
+  final TextEditingController _noteController = new TextEditingController();
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
+
     return Scaffold(
       appBar: getAppBar(
         title: S.of(context).order_rating("vcb19.12.15"),
@@ -160,6 +166,7 @@ class _RatingDetailScreenState extends BaseState<RatingDetailScreen> {
                   child: Column(
                     children: <Widget>[
                       TextField(
+                        controller: _noteController,
                         style: TextStyle(fontSize: SizeUtil.textSizeSmall),
                         decoration: InputDecoration(
                             hintText: S.of(context).rating_hint,
@@ -223,6 +230,7 @@ class _RatingDetailScreenState extends BaseState<RatingDetailScreen> {
               child:
               RaisedButton(
                 onPressed: () {
+                  getViewModel().onRateBooking(userID: Provider.of<UserProvider>(context,listen: false).userInfo['id'],bookingId: 1,star: 4,content: _noteController.text.trim());
                   Navigator.of(context).pop();
                 },
                 shape: RoundedRectangleBorder(
@@ -248,5 +256,11 @@ class _RatingDetailScreenState extends BaseState<RatingDetailScreen> {
   List<SingleChildWidget> providers() {
     // TODO: implement providers
     return null;
+  }
+
+  @override
+  RateBookingViewModel initViewModel() {
+    // TODO: implement initViewModel
+    return new RateBookingViewModel(context);
   }
 }

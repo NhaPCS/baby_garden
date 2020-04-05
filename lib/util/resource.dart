@@ -332,7 +332,7 @@ class SizeUtil {
   static const double lineHeight = 5;
   static const double delivery_code_height = 36;
 
-  static const double tabbar_fix_height = 50;
+  static const double tabbar_fix_height = 40;
 
   static const double textSpaceTiny = 1;
   static const double textSpaceSmall = 2;

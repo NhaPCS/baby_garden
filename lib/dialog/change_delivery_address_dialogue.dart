@@ -1,6 +1,8 @@
 import 'package:baby_garden_flutter/dialog/add_address_dialogue.dart';
+import 'package:baby_garden_flutter/dialog/report_product_dialog.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/change_delivery_address_provider.dart';
+import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/custom_radio_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,13 +11,11 @@ import 'package:provider/provider.dart';
 
 class ChangeDeliveryAddressDialogue extends StatelessWidget{
 
-  final ChangeDeliveryAddressProvider changeDeliveryAddressProvider;
-  const ChangeDeliveryAddressDialogue({Key key,this.changeDeliveryAddressProvider}):super(key:key);
+  const ChangeDeliveryAddressDialogue({Key key}):super(key:key);
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return ChangeNotifierProvider.value(value: changeDeliveryAddressProvider,
-    child: Dialog(
+    return Dialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
         ),
@@ -45,7 +45,7 @@ class ChangeDeliveryAddressDialogue extends StatelessWidget{
                 ),
               ),
               child:
-              Consumer<ChangeDeliveryAddressProvider>(builder: (BuildContext context, ChangeDeliveryAddressProvider value, Widget child) {
+              Consumer<ReceiveAddressListProvider>(builder: (BuildContext context, ReceiveAddressListProvider value, Widget child) {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -69,68 +69,27 @@ class ChangeDeliveryAddressDialogue extends StatelessWidget{
                     SizedBox(
                       height: SizeUtil.smallSpace,
                     ),
-                    CustomRadioButton(
-                      titleContent: Text(
-                        "Lê Văn Lĩnh - 0975 441 005\n28 Phan Kế Bính\nPhường Cống Vị, Quận Ba Đình, Hà Nội",
-                        style: TextStyle(
-                            fontSize: SizeUtil.textSizeSmall,
-                            color: Colors.black),
-                      ),
-                      padding: const EdgeInsets.only(
-                          bottom: SizeUtil.tinySpace,
-                          top: SizeUtil.tinySpace,
-                          left: SizeUtil.smallSpace,
-                          right: SizeUtil.smallSpace),
-                      value: 0,
-                      groupValue: changeDeliveryAddressProvider.deliveryAddress,
-                      iconSize: SizeUtil.iconSize,
-                      titleSize: SizeUtil.textSizeSmall,
-                      onChanged: (val) {
-                        changeDeliveryAddressProvider.onChangeAddress(val);
-//                      setDeliveryAddress(val);
-                      },
-                    ),
-                    CustomRadioButton(
-                      titleContent: Text(
-                        "Lê Văn Lĩnh - 0975 441 005\n28 Phan Kế Bính\nPhường Cống Vị, Quận Ba Đình, Hà Nội",
-                        style: TextStyle(
-                            fontSize: SizeUtil.textSizeSmall,
-                            color: Colors.black),
-                      ),
-                      padding: const EdgeInsets.only(
-                          bottom: SizeUtil.tinySpace,
-                          top: SizeUtil.tinySpace,
-                          left: SizeUtil.smallSpace,
-                          right: SizeUtil.smallSpace),
-                      value: 1,
-                      groupValue: changeDeliveryAddressProvider.deliveryAddress,
-                      iconSize: SizeUtil.iconSize,
-                      titleSize: SizeUtil.textSizeSmall,
-                      onChanged: (val) {
-                        changeDeliveryAddressProvider.onChangeAddress(val);
-//                      setDeliveryAddress(val);
-                      },
-                    ),
-                    CustomRadioButton(
-                      titleContent: Text(
-                        "Lê Văn Lĩnh - 0975 441 005\n28 Phan Kế Bính\nPhường Cống Vị, Quận Ba Đình, Hà Nội",
-                        style: TextStyle(
-                            fontSize: SizeUtil.textSizeSmall,
-                            color: Colors.black),
-                      ),
-                      padding: const EdgeInsets.only(
-                          bottom: SizeUtil.tinySpace,
-                          top: SizeUtil.tinySpace,
-                          left: SizeUtil.smallSpace,
-                          right: SizeUtil.smallSpace),
-                      value: 2,
-                      groupValue: changeDeliveryAddressProvider.deliveryAddress,
-                      iconSize: SizeUtil.iconSize,
-                      titleSize: SizeUtil.textSizeSmall,
-                      onChanged: (val) {
-                        changeDeliveryAddressProvider.onChangeAddress(val);
-//                      setDeliveryAddress(val);
-                      },
+                    Column(
+                      children: List.generate(value.addressList.length, (index) => CustomRadioButton(
+                        titleContent: Text(
+                          value.addressList[index],
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                              color: Colors.black),
+                        ),
+                        padding: const EdgeInsets.only(
+                            bottom: SizeUtil.tinySpace,
+                            top: SizeUtil.tinySpace,
+                            left: SizeUtil.smallSpace,
+                            right: SizeUtil.smallSpace),
+                        value: index,//const value
+                        groupValue: Provider.of<ReceiveAddressListProvider>(context,listen: false).val,// dynamic value
+                        iconSize: SizeUtil.iconSize,
+                        titleSize: SizeUtil.textSizeSmall,
+                        onChanged: (val) {
+                          Provider.of<ReceiveAddressListProvider>(context,listen: false).onChangeVal(val);
+                        },
+                      )),
                     ),
                     SizedBox(
                       height: SizeUtil.smallSpace,
@@ -142,6 +101,9 @@ class ChangeDeliveryAddressDialogue extends StatelessWidget{
                           onPressed: () {
                             showDialog(
                                 context: context, builder: (BuildContext context) => AddingAddressDialogue());
+//                            showDialog(
+//                                context: context,
+//                                builder: (_) => ReportProductDialog(context));
                           },
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(
@@ -185,7 +147,7 @@ class ChangeDeliveryAddressDialogue extends StatelessWidget{
               },),
             );
           },
-        )));
+        ));
   }
 
 }
