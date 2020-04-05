@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 
 class ReportProductDialog extends AlertDialog {
   final BuildContext context;
+  final TextEditingController _controller = new TextEditingController();
   ChangeIndexProvider _changeIndexProvider = ChangeIndexProvider();
 
   ReportProductDialog(this.context);
@@ -120,7 +121,7 @@ class ReportProductDialog extends AlertDialog {
                 height: SizeUtil.smallSpace,
               ),
               MyTextField(
-                textEditingController: null,
+                textEditingController: _controller,
                 borderRadius: SizeUtil.smallRadius,
                 borderColor: ColorUtil.textGray,
                 hint: S.of(context).report_title_hint,

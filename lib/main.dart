@@ -1,21 +1,15 @@
 import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/provider/get_banners_provider.dart';
 import 'package:baby_garden_flutter/provider/get_product_category_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
-import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
-import 'package:baby_garden_flutter/screen/order/order_delivery_info_screen.dart';
-import 'package:baby_garden_flutter/screen/order/order_detail_screen.dart';
-import 'package:baby_garden_flutter/screen/partner/partner_book_schedule.dart';
-import 'package:baby_garden_flutter/screen/rating_detail/rating_detail_screen.dart';
-import 'package:baby_garden_flutter/screen/vcb_express/vcb_express_screen.dart';
-import 'package:baby_garden_flutter/screen/welcome/welcome_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:provider/provider.dart';
+
 import 'generated/l10n.dart';
-import 'screen/remind_management/remind_edit_screen.dart';
 
 void main() {
   initializeDateFormatting().then((_) => runApp(MultiProvider(
@@ -24,6 +18,7 @@ void main() {
           ChangeNotifierProvider(create: (_) => GetProductCategoryProvider()),
           ChangeNotifierProvider(create: (_) => GetBannersProvider()),
           ChangeNotifierProvider(create: (_) => UserProvider()),
+          ChangeNotifierProvider(create: (_) => CartProvider()),
         ],
         child: MyApp(),
       )));
@@ -55,6 +50,9 @@ class _MyAppState extends State<MyApp> {
     if (Provider.of<UserProvider>(context).userInfo == null ||
         Provider.of<UserProvider>(context).userInfo.isEmpty)
       Provider.of<UserProvider>(context).getUserInfo();
+
+    //get my cart
+    Provider.of<CartProvider>(context).getMyCart();
   }
 
   @override

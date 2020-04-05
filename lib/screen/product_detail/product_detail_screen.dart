@@ -3,8 +3,10 @@ import 'package:baby_garden_flutter/dialog/add_to_cart_bottom_dialog.dart';
 import 'package:baby_garden_flutter/dialog/report_product_dialog.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
 import 'package:baby_garden_flutter/provider/get_product_detail_provider.dart';
+import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/list_product/list_product_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
@@ -20,7 +22,6 @@ import 'package:baby_garden_flutter/widget/product/cart_icon.dart';
 import 'package:baby_garden_flutter/widget/product/discount_widget.dart';
 import 'package:baby_garden_flutter/widget/product/favorite_product_button.dart';
 import 'package:baby_garden_flutter/widget/product/image_count.dart';
-import 'package:baby_garden_flutter/widget/product/list_horizontal_product.dart';
 import 'package:baby_garden_flutter/widget/product/list_product_by_category.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
 import 'package:baby_garden_flutter/widget/text/my_text.dart';
@@ -85,7 +86,10 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
                       _changeIndexProvider.changeIndex(index);
                     },
                     onItemPressed: (index) {
-                      push(PhotoViewScreen(images: StringUtil.dummyImageList));
+                      push(PhotoViewScreen(
+                        images: productProvider.product['image'],
+                        initIndex: index,
+                      ));
                     },
                   ),
                   Positioned(
@@ -170,7 +174,9 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
               paddingContainer(Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  FavoriteProductButton(product: productProvider.product,),
+                  FavoriteProductButton(
+                    product: productProvider.product,
+                  ),
                   SizedBox(
                     width: SizeUtil.smallSpace,
                   ),
@@ -240,7 +246,7 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
               ContentViewMoreable(
                 content: productProvider.product['content'],
               ),
-              WidgetUtil.getLine(width: 2),
+              WidgetUtil.getLine(width: 2, margin: EdgeInsets.all(0)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -280,7 +286,9 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
                   )
                 ],
               ),
-              ListProductByCategory(categoryId: productProvider.product['category_id'],)
+              ListProductByCategory(
+                categoryId: productProvider.product['category_id'],
+              )
             ],
           );
         },
@@ -294,7 +302,12 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
             children: <Widget>[
               MyFlatButton(
                 onPressed: () {
-                  //TODO
+                  if (!Provider.of<UserProvider>(context, listen: false)
+                      .isLogin) {
+                    WidgetUtil.showRequireLoginDialog(context);
+                    return;
+                  }
+                  Provider.of<CartProvider>(context, listen: false).addProduct(productProvider.product);
                   pushAndReplaceAll(
                       MainScreen(
                         index: 2,
@@ -318,10 +331,17 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
                 child: MyFlatButton(
                   height: 50,
                   onPressed: () {
+                    if (!Provider.of<UserProvider>(context, listen: false)
+                        .isLogin) {
+                      WidgetUtil.showRequireLoginDialog(context);
+                      return;
+                    }
                     showModalBottomSheet(
                         isScrollControlled: true,
                         context: context,
-                        builder: (_) => AddToCartBottomDialog());
+                        builder: (_) => AddToCartBottomDialog(
+                              product: productProvider.product,
+                            ));
                   },
                   text: productProvider.isOutStock()
                       ? S.of(context).get_notify_when_stocking

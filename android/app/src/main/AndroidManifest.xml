@@ -10,7 +10,7 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="baby_garden_flutter"
+        android:label="Vườn của bé"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity
