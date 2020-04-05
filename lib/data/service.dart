@@ -114,6 +114,33 @@ Future<dynamic> listProducts(BuildContext context, String path,
   return null;
 }
 
+Future<dynamic> favoriteProduct(BuildContext context,
+    {String productId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+
+  dynamic params = {
+    "user_id": userId,
+    "product_id": productId,
+  };
+  Response response = await post(context,
+      path: 'favouriteProduct', param: params, requireLogin: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> unFavoriteProduct(BuildContext context,
+    {String productId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "product_id": productId,
+  };
+  Response response = await post(context,
+      path: 'unFavouriteProduct', param: params, requireLogin: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 Future<dynamic> productDetail(BuildContext context, {String productId}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(context,
@@ -129,32 +156,34 @@ Future<Response> post(BuildContext context,
     dynamic param,
     bool hasAccessToken = false,
     bool showErrorDialog = true,
-    bool showLoading = true}) async {
+    bool showLoading = true,
+    bool requireLogin = false}) async {
   Response response = await execute(context,
       path: path,
       param: param,
       hasAccessToken: hasAccessToken,
       showErrorDialog: showErrorDialog,
       showLoading: showLoading,
-      isPost: true);
+      isPost: true,
+      requireLogin: requireLogin);
   return response;
 }
 
-Future<Response> get(
-  BuildContext context, {
-  String path,
-  dynamic param,
-  bool showErrorDialog = true,
-  bool hasAccessToken = false,
-  bool showLoading = true,
-}) async {
+Future<Response> get(BuildContext context,
+    {String path,
+    dynamic param,
+    bool showErrorDialog = true,
+    bool hasAccessToken = false,
+    bool showLoading = true,
+    bool requireLogin = false}) async {
   Response response = await execute(context,
       path: path,
       param: param,
       hasAccessToken: hasAccessToken,
       showErrorDialog: showErrorDialog,
       showLoading: showLoading,
-      isPost: false);
+      isPost: false,
+      requireLogin: requireLogin);
   return response;
 }
 
@@ -164,7 +193,17 @@ Future<Response> execute(BuildContext context,
     bool hasAccessToken = false,
     bool showErrorDialog = true,
     bool showLoading = true,
-    bool isPost = true}) async {
+    bool isPost = true,
+    bool requireLogin = false}) async {
+  if (requireLogin) {
+    String userId = await ShareValueProvider.shareValueProvider.getUserId();
+    if (userId == null || userId.isEmpty) {
+      if (context != null) {
+        WidgetUtil.showRequireLoginDialog(context);
+      }
+      return null;
+    }
+  }
   if (_headers == null || _headers.isEmpty) {
     _headers = {};
   }

@@ -96,6 +96,7 @@
   "notify_booking_success": "Chúc mừng quý khách đã đặt hàng thành công ",
   "product_detail": "Chi tiết sản phẩm",
   "favorite": "Yêu thích",
+  "favorited": "Đã thích",
   "product_existing": "Còn hàng",
   "product_out_stock": "Hết hàng",
   "detail_info": "Thông tin chi tiết",
@@ -399,5 +400,7 @@
   "profileWelcomeText": "Vườn Của Bé ,Xin chào!",
   "no_image": "No image",
   "time_pending": "Chưa bắt đầu",
-  "time_ended": "Đã kết thúc"
+  "time_ended": "Đã kết thúc",
+  "title_require_login": "Yêu cầu đăng nhập",
+  "message_require_login": "Bạn vui lòng đăng nhập để sử dụng chức năng này!"
 }

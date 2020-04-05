@@ -18,7 +18,7 @@ import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
 import 'package:baby_garden_flutter/widget/product/cart_icon.dart';
 import 'package:baby_garden_flutter/widget/product/discount_widget.dart';
-import 'package:baby_garden_flutter/widget/product/favorite_tag.dart';
+import 'package:baby_garden_flutter/widget/product/favorite_product_button.dart';
 import 'package:baby_garden_flutter/widget/product/image_count.dart';
 import 'package:baby_garden_flutter/widget/product/list_horizontal_product.dart';
 import 'package:baby_garden_flutter/widget/product/list_product_by_category.dart';
@@ -170,7 +170,7 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
               paddingContainer(Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  FavoriteTag(),
+                  FavoriteProductButton(product: productProvider.product,),
                   SizedBox(
                     width: SizeUtil.smallSpace,
                   ),

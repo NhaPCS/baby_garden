@@ -902,6 +902,15 @@ class S {
     );
   }
 
+  String get favorited {
+    return Intl.message(
+      'Đã thích',
+      name: 'favorited',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get product_existing {
     return Intl.message(
       'Còn hàng',
@@ -3633,6 +3642,24 @@ class S {
     return Intl.message(
       'Đã kết thúc',
       name: 'time_ended',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get title_require_login {
+    return Intl.message(
+      'Yêu cầu đăng nhập',
+      name: 'title_require_login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get message_require_login {
+    return Intl.message(
+      'Bạn vui lòng đăng nhập để sử dụng chức năng này!',
+      name: 'message_require_login',
       desc: '',
       args: [],
     );

@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/screen/login/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -339,6 +341,28 @@ class SizeUtil {
 }
 
 class WidgetUtil {
+  static void showRequireLoginDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        child: AlertDialog(
+          content: Text(S.of(context).message_require_login),
+          title: Text(S.of(context).title_require_login),
+          actions: <Widget>[
+            FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(S.of(context).cancel)),
+            FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  RouteUtil.push(context, LoginScreen());
+                },
+                child: Text(S.of(context).login))
+          ],
+        ));
+  }
+
   static Widget paddingWidget(Widget widget,
       {EdgeInsets padding = const EdgeInsets.only(
           left: SizeUtil.smallSpace,
