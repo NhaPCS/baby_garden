@@ -80,6 +80,12 @@ Future<dynamic> productCategory() async {
   return null;
 }
 
+Future<dynamic> serviceCategory() async {
+  Response response = await get(null, path: "serviceCategory", showLoading: false);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 Future<dynamic> banners() async {
   Response response = await get(null, path: "banner", showLoading: false);
   if (response.isSuccess()) return response.data;
@@ -92,6 +98,25 @@ Future<dynamic> flashSales() async {
 
 Future<dynamic> flashSalesPending() async {
   return await listProducts(null, "flashSalesPending");
+}
+
+Future<dynamic> listShop(BuildContext context,
+    {String categoryId,
+      int index = START_PAGE,
+      int numberPosts = PAGE_SIZE}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "index": index.toString(),
+    "number_post": numberPosts.toString()
+  };
+  if (categoryId != null && categoryId.isNotEmpty) {
+    params['category_id'] = categoryId;
+  }
+  Response response =
+  await get(null, path: "listShop", param: params, showLoading: true);
+  if (response.isSuccess()) return response.data;
+  return null;
 }
 
 Future<dynamic> listProducts(BuildContext context, String path,
@@ -175,6 +200,20 @@ Future<void> addProductCart({List<dynamic> products}) async {
   return null;
 }
 
+Future<void> deleteProductCart(dynamic product) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "product_id": product['id'],
+  };
+  Response response = await post(null,
+      path: 'deleteProduct',
+      param: params,
+      requireLogin: true,
+      showLoading: false);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
 
 Future<dynamic> myCart() async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();

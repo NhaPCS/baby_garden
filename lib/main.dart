@@ -2,6 +2,7 @@ import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/provider/get_banners_provider.dart';
 import 'package:baby_garden_flutter/provider/get_product_category_provider.dart';
+import 'package:baby_garden_flutter/provider/get_service_category_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -16,6 +17,7 @@ void main() {
         providers: [
           Provider(create: (_) => AppProvider()),
           ChangeNotifierProvider(create: (_) => GetProductCategoryProvider()),
+          ChangeNotifierProvider(create: (_) => GetServiceCategoryProvider()),
           ChangeNotifierProvider(create: (_) => GetBannersProvider()),
           ChangeNotifierProvider(create: (_) => UserProvider()),
           ChangeNotifierProvider(create: (_) => CartProvider()),
@@ -41,6 +43,12 @@ class _MyAppState extends State<MyApp> {
     if (Provider.of<GetProductCategoryProvider>(context).categories == null ||
         Provider.of<GetProductCategoryProvider>(context).categories.isEmpty)
       Provider.of<GetProductCategoryProvider>(context).getProductCategories();
+
+    // get service categories
+    if (Provider.of<GetServiceCategoryProvider>(context).categories == null ||
+        Provider.of<GetServiceCategoryProvider>(context).categories.isEmpty)
+      Provider.of<GetServiceCategoryProvider>(context).getServiceCategories();
+
     // get banners
     if (Provider.of<GetBannersProvider>(context).banners == null ||
         Provider.of<GetBannersProvider>(context).banners.isEmpty) {

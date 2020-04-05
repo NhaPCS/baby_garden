@@ -1,22 +1,25 @@
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/image/my_cached_image.dart';
 import 'package:baby_garden_flutter/widget/rating_bar.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PartnerItem extends StatelessWidget {
-  PartnerItem();
+  final dynamic shop;
+
+  const PartnerItem({Key key, this.shop}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Card(
         elevation: 2,
         child: Stack(
           children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.circular(4.0),
-              child: Image.asset(
-                "photo/partner_item_img.png",
+              child: MyCachedImage(
+                url: shop['img'],
                 width: MediaQuery.of(context).size.width,
               ),
             ),
@@ -37,7 +40,7 @@ class PartnerItem extends StatelessWidget {
                   children: <Widget>[
                     RatingBar(
                       starSize: SizeUtil.iconSize,
-                      value: 4,
+                      value: shop['star'] == null ? 0 : int.parse(shop['star']),
                       enable: false,
                       isIcon: true,
                       showRateCount: false,
@@ -46,8 +49,8 @@ class PartnerItem extends StatelessWidget {
                     SizedBox(
                       width: SizeUtil.tinySpace,
                     ),
-                    Text(
-                      "4.0",
+                    MyText(
+                      shop['star'],
                       style: TextStyle(
                           fontSize: SizeUtil.textSizeTiny, color: Colors.white),
                     )
@@ -75,23 +78,25 @@ class PartnerItem extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            "30 SHINE",
+                          MyText(
+                            shop['service'],
                             style: TextStyle(
                                 fontSize: SizeUtil.textSizeBigger,
                                 color: ColorUtil.yellowPartnerColor,
                                 fontWeight: FontWeight.bold),
                           ),
-                          Text(
-                            "367 Nguyễn Đình Chiểu, Quận 3 , TP.HCM",
+                          MyText(
+                            shop['address'],
                             style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.white,
                                 fontWeight: FontWeight.normal),
                           ),
-                          SizedBox(height: 2,),
+                          SizedBox(
+                            height: 2,
+                          ),
                           Text(
-                            "Cắt tóc đẹp trai!",
+                            shop['introduce'],
                             style: TextStyle(
                                 fontSize: SizeUtil.textSizeSmall,
                                 color: Colors.white,
@@ -115,8 +120,8 @@ class PartnerItem extends StatelessWidget {
                             SizedBox(
                               width: SizeUtil.tinySpace,
                             ),
-                            Text(
-                              "234",
+                            MyText(
+                              shop['number_like'],
                               style: TextStyle(
                                   fontSize: SizeUtil.textSizeDefault,
                                   color: Colors.white,
@@ -138,8 +143,8 @@ class PartnerItem extends StatelessWidget {
                             SizedBox(
                               width: SizeUtil.tinySpace,
                             ),
-                            Text(
-                              "12",
+                            MyText(
+                              shop['number_comment'],
                               style: TextStyle(
                                   fontSize: SizeUtil.textSizeDefault,
                                   color: Colors.white,
