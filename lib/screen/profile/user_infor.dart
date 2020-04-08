@@ -1,10 +1,11 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/circle_image.dart';
+import 'package:baby_garden_flutter/widget/image/circle_image.dart';
 import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 
 class UserInfor extends StatelessWidget {
+  // TODO-QAnh: không cần truyền vào,dùng Provider để lấy luôn
   final dynamic user;
 
   const UserInfor({Key key, this.user}) : super(key: key);
@@ -12,6 +13,7 @@ class UserInfor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // TODO-QAnh: không set height, để wrap
       height: 125,
       decoration: BoxDecoration(
           border: Border(
@@ -49,7 +51,8 @@ class UserInfor extends StatelessWidget {
     );
   }
 }
-
+// TODO-QAnh: k để chung 1 file
+// file này k có nọi dung gì?
 class ChildInfor extends StatelessWidget {
   final avatar;
   final childName;

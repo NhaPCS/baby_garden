@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
+// TODO-QAnh: nhieu VoucherScreen the? k biet dung cai nao?
+// TODO-QAnh: khong dung folder voi screen khac
 class VoucherScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -61,7 +63,9 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
           Expanded(
             child: ListView(
                 children: sampleVouchers.map((voucher) {
+                  // TODO-QAnh: item thi tao widget item rieng
               return Container(
+                // TODO-QAnh: Container nay de lam gi? bo di
                 child: Stack(
                   alignment: Alignment.bottomCenter,
                   children: <Widget>[
@@ -105,6 +109,7 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(6)),
                       child: Padding(
+                        // TODO-QAnh: container co padding, bo Padding nay di
                         padding: const EdgeInsets.all(17.0),
                         child: Column(children: <Widget>[
                           Text(voucher.description,
@@ -156,6 +161,7 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
   }
 }
 
+// TODO-QAnh: khong dung chung file
 class VoucherDetail {
   final String image;
   final String description;
@@ -174,6 +180,7 @@ class VoucherDetail {
 
 enum VoucherType { took, used, expired, aboutToExpire }
 
+// TODO-QAnh: khong dung chung file, tham khao DrawTriangle ben widget
 class DrawTriangle extends CustomPainter {
   Paint _paint;
 

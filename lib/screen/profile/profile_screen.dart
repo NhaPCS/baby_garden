@@ -19,7 +19,7 @@ import 'package:baby_garden_flutter/screen/seen_product/seen_product_screen.dart
 import 'package:baby_garden_flutter/screen/setting/setting_screen.dart';
 import 'package:baby_garden_flutter/screen/voucher/voucher_management_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -60,6 +60,8 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                   user: value.userInfo,
                 ))
               : Container(
+            // TODO-QAnh: k set height, để wrap
+            // TODO-QAnh: cái này nên tạo 1 widget riêng cho trường hợp chưa login
                   height: 100,
                   width: double.infinity,
                   padding: const EdgeInsets.only(
@@ -112,6 +114,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                                             color: Colors.white,
                                             fontSize: SizeUtil.textSizeSmall))),
                               ),
+                              // TODO-QAnh: dung MyRasiedButton
                               RaisedButton(
                                   color: ColorUtil.primaryColor,
                                   onPressed: () {
@@ -155,6 +158,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                     style: BorderStyle.solid,
                     color: Color.fromRGBO(206, 206, 206, 1)),
               )),
+              // TODO-QAnh: k set height, để wrap
               height: 50,
               child: Row(
                 children: <Widget>[
@@ -206,6 +210,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                   push(SettingScreen());
                   break;
                 case 9:
+                // TODO-Nha: check lai,
                   WidgetUtil.showConfirmDialog(context,
                       title: "Xác nhận",
                       message: "Bạn có muốn đăng xuất không?",

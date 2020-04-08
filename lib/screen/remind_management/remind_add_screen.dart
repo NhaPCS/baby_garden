@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import '../base_state.dart';
 
+// TODO-QAnh:screen đặt ở folder riêng, khong de chung trong 1 folder
 class RemindAddScreen extends StatefulWidget {
   @override
   _RemindAddScreen createState() => _RemindAddScreen();
@@ -29,6 +30,7 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
               Container(
                   decoration: setBorder('bottom', ColorUtil.darkGray, 1),
                   height: SizeUtil.hugSpace,
+                  // TODO-QAnh: bo Padding di, trong Container co padding
                   child: Padding(
                     padding: const EdgeInsets.all(SizeUtil.smallSpace),
                     child: Row(
@@ -36,6 +38,7 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
                         Icon(Icons.add,
                             color: ColorUtil.primaryColor,
                             size: SizeUtil.iconSizeBig),
+                        // TODO-QAnh: thay Padding = SizeBox(width:) cho đỡ lồng view
                         Padding(
                           padding:
                               const EdgeInsets.only(left: SizeUtil.smallSpace),
@@ -47,9 +50,11 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
                       ],
                     ),
                   )),
+              // TODO-QAnh:xem lai doan nay dang bi thieu Pixel
               Expanded(
                 child: ReminderLayout(),
               ),
+              // TODO-QAnh: button dung MyRaisedButton
               Container(
                 padding: SizeUtil.normalPadding,
                 child: ButtonTheme(

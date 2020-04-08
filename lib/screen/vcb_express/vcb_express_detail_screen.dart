@@ -2,16 +2,16 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/my_text_field.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 
+// TODO-Hung: de trong folder rieng, k de chung voi screen khac
 class VCBExpressDetailScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _VCBExpressDetailScreenState();
   }
 }
@@ -21,7 +21,6 @@ class _VCBExpressDetailScreenState extends BaseState<VCBExpressDetailScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: getAppBar(title: S.of(context).vcb_express.toUpperCase()),
@@ -32,7 +31,9 @@ class _VCBExpressDetailScreenState extends BaseState<VCBExpressDetailScreen> {
                 left: SizeUtil.smallSpace,
                 right: SizeUtil.smallSpace,
                 top: SizeUtil.smallSpace),
+            // TODO-Hung: trong listView co padding, bo padding ben tren di
             child: ListView(children: <Widget>[
+              // TODO-Hung: co listview con dung Column lam gi? bo di
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -73,6 +74,7 @@ class _VCBExpressDetailScreenState extends BaseState<VCBExpressDetailScreen> {
                     height: SizeUtil.tinySpace,
                   ),
                   Card(
+                    // TODO-Hung: k them anh test, xoa het anh test di
                     child: Image.asset("photo/vcb_exp_detail_img.png",
                         width: MediaQuery.of(context).size.width),
                   ),
@@ -90,6 +92,7 @@ class _VCBExpressDetailScreenState extends BaseState<VCBExpressDetailScreen> {
             ]),
           ),
         ),
+        // TODO-Hung: cai nay co the dung trong bottomNavigationBar của Scaffold, body sẽ không có Column nữa
         Container(
           color: ColorUtil.lineColor,
           padding: EdgeInsets.only(
@@ -122,6 +125,7 @@ class _VCBExpressDetailScreenState extends BaseState<VCBExpressDetailScreen> {
               SizedBox(
                 width: SizeUtil.tinySpace,
               ),
+              // TODO-Hung: dung ButtonIcon
               GestureDetector(
                 child: Icon(
                   Icons.send,
@@ -170,6 +174,7 @@ class _VCBExpressDetailScreenState extends BaseState<VCBExpressDetailScreen> {
               SizedBox(
                 width: SizeUtil.tinySpace,
               ),
+              // TODO-Hung: dung ButtonIcon
               GestureDetector(
                 child: Icon(
                   Icons.share,
@@ -185,7 +190,6 @@ class _VCBExpressDetailScreenState extends BaseState<VCBExpressDetailScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
     return null;
   }
 }

@@ -6,7 +6,6 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/welcome/welcome_guide_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +17,9 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeState extends BaseState<WelcomeScreen> {
+  // TODO-QAnh: k dung bỏ đi
   final GetListProvider _getListProvider = GetListProvider();
+  // TODO-QAnh: k dùng, bỏ đi, tạo new Timer thôi
   Timer _timer;
 
   _WelcomeState() {
@@ -32,6 +33,7 @@ class _WelcomeState extends BaseState<WelcomeScreen> {
 //    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       body: Center(
+        // TODO-Hung: column cung co center, bỏ Center trên đi
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

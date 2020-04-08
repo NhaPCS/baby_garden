@@ -1,9 +1,10 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/my_text_field.dart';
+import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// TODO-QAnh: dialog thì move vào folder dialog
 class AddChildDialog extends StatefulWidget {
   @override
   _ShowAddAddressDialogState createState() => _ShowAddAddressDialogState();
@@ -19,11 +20,13 @@ class _ShowAddAddressDialogState extends State<AddChildDialog> {
       {'title': S.of(context).dateOfBirth}
     ];
 
+    // TODO-QAnh: Dialog phải bọc ngoài cùng. dialog này đang k nằm giữa màn hình
     return SingleChildScrollView(
       child: Dialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(SizeUtil.bigRadius),
         ),
+        // TODO-QAnh: Conatiner đang k có tác dụng gì? bỏ đi
         child: Container(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -80,14 +83,17 @@ Widget listInputView(List<Map<String, String>> listInput) {
   return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: listInput.map((input) {
+        // TODO-QAnh: để Padding bao ngoài Column
         return Padding(
           padding: EdgeInsets.only(
               top: SizeUtil.midSpace,
               left: SizeUtil.midSpace,
               right: SizeUtil.midSpace),
+          // TODO-QAnh: Column ở đây thừa, bỏ đi
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                // TODO-QAnh:trong MyTextField có elevation rồi, k cần Container để tạo shadow nưuax
                 Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(SizeUtil.tinyRadius),
@@ -120,6 +126,7 @@ Widget dialogBtn(context) {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
+        // TODO-QAnh: dung MyRaisedButton
         ButtonTheme(
           minWidth: 90,
           height: SizeUtil.biggerSpace,
@@ -141,6 +148,7 @@ Widget dialogBtn(context) {
         SizedBox(
           width: SizeUtil.hugSpace,
         ),
+        // TODO-QAnh: dung MyRaisedButton
         ButtonTheme(
           minWidth: 90,
           height: SizeUtil.biggerSpace,

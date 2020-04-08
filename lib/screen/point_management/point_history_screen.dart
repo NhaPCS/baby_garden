@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
+// TODO-QAnh: them chu Screen o cuoi
 class PointHistory extends StatefulWidget {
   final image;
   final name;
@@ -21,6 +22,7 @@ class PointHistory extends StatefulWidget {
 class _PointHistoryState extends BaseState<PointHistory> {
   final GetListProvider _getListProvider = GetListProvider();
 
+  // TODO-QAnh: k tạo widget trước như này, sau này ghép API vẫn phải move vào dưới
   final pointCard = PointHistoryCard(
     image: "photo/voucherVCB.png",
     history: "Mua đơn hàng #AHQ123 thành...",
@@ -36,10 +38,12 @@ class _PointHistoryState extends BaseState<PointHistory> {
         body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              // TODO-QAnh: line thì dùng WidgetUtil.getLine
               Container(
                 height: 5,
                 color: Color.fromRGBO(228, 228, 228, 1),
               ),
+              // TODO-QAnh: thay Conatiner = Padding
               Container(
                 padding: EdgeInsets.only(left: 8, top: 10),
                 child: Text(
@@ -50,8 +54,10 @@ class _PointHistoryState extends BaseState<PointHistory> {
                       color: Color.fromRGBO(46, 95, 109, 1)),
                 ),
               ),
+              // TODO-QAnh: Conatiner ở đây k có tác dụng gì, bỏ đi
               Container(
                 child: Column(
+                  // TODO-QAnh: chỗ này phải dùng ListView mới đúng
                   children: <Widget>[pointCard, pointCard, pointCard],
                 ),
               ),

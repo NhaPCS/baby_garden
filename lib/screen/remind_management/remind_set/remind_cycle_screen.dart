@@ -2,12 +2,13 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/my_text_field.dart';
+import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
+// TODO-QAnh:screen đặt ở folder riêng, khong de chung trong 1 folder
 class RemindCycleScreen extends StatefulWidget {
   @override
   _RemindCycleScreenState createState() => _RemindCycleScreenState();
@@ -26,6 +27,7 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
                 margin: EdgeInsets.only(top: 8),
                 width: double.infinity,
                 decoration: setBorder('top', Color(0xffE1D9D9), 1),
+                // TODO-QAnh: trong Container co padding roi, bo Padding nay di
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15, top: 18, bottom: 18),
                   child: Text(
@@ -39,11 +41,13 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
             Expanded(
                 child: Container(
               decoration: setBorder('top', Color(0xffE4E4E4), 6),
+                  // TODO-QAnh: bỏ cái Column này đi, move lên Column trên, k để lồng nhau
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Row(
                     children: <Widget>[
+                      // TODO-QAnh: dung CircleCheckBox
                       Checkbox(
                           value: true,
                           onChanged: (bool value) {
@@ -56,6 +60,7 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
                   ),
                   Row(
                     children: <Widget>[
+                      // TODO-QAnh: dung CircleCheckBox
                       Checkbox(
                           value: false,
                           onChanged: (bool value) {
@@ -68,6 +73,7 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
                   ),
                   Row(
                     children: <Widget>[
+                      // TODO-QAnh: dung CircleCheckBox
                       Checkbox(
                           value: false,
                           onChanged: (bool value) {
@@ -100,6 +106,7 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
                 ],
               ),
             )),
+            // TODO-QAnh: button thi dung MyRaisedButton
             GestureDetector(
               child: Container(
                 margin: SizeUtil.normalPadding,

@@ -22,6 +22,8 @@ class _SeenProductScreen extends BaseState<SeenProductScreen> {
         appBar: getAppBar(title: S.of(context).seenProduct),
         body: Column(children: <Widget>[
           Container(
+            // TODO-QAnh: bỏ 1 column đi
+            // TODO-QAnh: cái này phải dùng ListView mới đúng
             child: Column(
               children: <Widget>[
                 ProductCard(

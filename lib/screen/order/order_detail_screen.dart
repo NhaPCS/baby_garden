@@ -1,21 +1,17 @@
 import 'package:baby_garden_flutter/dialog/receive_barcode_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/payment_info_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
 import 'package:baby_garden_flutter/screen/checkout/checkout_screen.dart';
 import 'package:baby_garden_flutter/screen/rating_detail/rating_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nested/nested.dart';
-import 'package:provider/provider.dart';
 
 import 'order_delivery_info_screen.dart';
 
+// TODO-Hung: screen mới thì move ra folder mới, không để chung
 class OrderDetailScreen extends StatefulWidget {
   final bool isShowPositiveButton;
   final bool isShowNegativeButton;
@@ -32,7 +28,6 @@ class OrderDetailScreen extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _OrderDetailScreenState();
   }
 }
@@ -40,7 +35,6 @@ class OrderDetailScreen extends StatefulWidget {
 class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
     bool isDelivering = widget.state == 4;
     return Scaffold(
         appBar: getAppBar(
@@ -52,6 +46,7 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
           titleColor: Colors.white,
           backColor: Colors.white,
         ),
+        // TODO-Hung: SafeArea de lam gi?
         body: SafeArea(
             child: ListView(children: <Widget>[
           WidgetUtil.getLine(
@@ -69,12 +64,14 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
+                    // TODO-Hung: move vao file arb
                     "Mã đơn hàng: VCB19.12.25\nNgày đặt hàng: 20/12/2019 - 12:25",
                     style: TextStyle(height: 1.5),
                   ),
                   RichText(
                     text: TextSpan(children: <TextSpan>[
                       TextSpan(
+                        // TODO-Hung: move vao file arb
                           text: "Cung cấp bởi:",
                           style: TextStyle(
                               color: ColorUtil.textColor,
@@ -91,6 +88,7 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
               )),
           //TODO delivery address
           WidgetUtil.getLine(width: 1, margin: EdgeInsets.all(0)),
+              // TODO-Hung: thấy nhiều widget tương đồng, viết ra 1 hàm cho gọn
           Padding(
             padding: const EdgeInsets.only(
                 left: SizeUtil.normalSpace,
@@ -218,6 +216,7 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
           ),
           isDelivering
               ? Column(
+            // TODO-Hung: cái đường mô tả đang vận chuyển này hình như dùng nhiều màn. move ra widget riêng
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     //TODO delivery info
@@ -359,12 +358,14 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
             child: Column(
                 children: List.generate(
                     3,
+                    // TODO-Hung: nó là 1 item, để ra widget riêng trong folder item
                     (index) => Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.only(
                                   top: SizeUtil.midSmallSpace),
+                              // TODO-Hung: không add ảnh test vào resource, dùng ảnh mạng trong StringUtil.dummyImage
                               child: Image.asset("photo/order_img.png",
                                   width: MediaQuery.of(context).size.width / 6),
                             ),
@@ -516,6 +517,7 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                         bottom: SizeUtil.midSmallSpace),
                     child: Row(
                       children: <Widget>[
+                        // TODO-Hung: move to arb file
                         Text("Hủy vào lúc",
                             style: TextStyle(
                                 fontSize: SizeUtil.textSizeExpressDetail)),
@@ -538,6 +540,7 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                         bottom: SizeUtil.midSmallSpace),
                     child: Row(
                       children: <Widget>[
+                        // TODO-Hung: move to arb file
                         Text("Lý do hủy",
                             style: TextStyle(
                                 fontSize: SizeUtil.textSizeExpressDetail)),
@@ -587,9 +590,11 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                 ),
               ):SizedBox(
             height: SizeUtil.smallSpace,),
+              // TODO-Hung: dung MyRaisedButton
               widget.isShowNegativeButton?RaisedButton(
                 onPressed: () {
                   //TODO booking
+                  // TODO-Hung: move to arb file
                   WidgetUtil.showConfirmDialog(context,
                       message: "Bạn có muốn thực sự muốn huỷ ?",
                       title: "Chú ý", positiveClicked: () {
@@ -619,7 +624,6 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
     return [];
   }
 }

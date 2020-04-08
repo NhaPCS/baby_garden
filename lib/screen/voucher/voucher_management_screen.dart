@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import '../base_state.dart';
 
+// TODO-QAnh: khong dung folder voi screen khac
 class VoucherManagement extends StatefulWidget {
   @override
   _VoucherManageState createState() => _VoucherManageState();
@@ -54,10 +55,12 @@ class _VoucherManageState extends BaseState<VoucherManagement> {
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar: getAppBar(title: S.of(context).voucherManage),
+          // TODO-QAnh: duplicate DefaultTabController
           body: DefaultTabController(
             length: vouchers.length,
             child: Column(
               children: <Widget>[
+                // TODO-QAnh: tao shadow bang elevation trong Material, bo Container nay di
                 Container(
                   width: double.infinity,
                   constraints: BoxConstraints(maxHeight: 150.0),
@@ -88,6 +91,7 @@ class _VoucherManageState extends BaseState<VoucherManagement> {
                     margin: EdgeInsets.only(top: SizeUtil.smallSpace),
                     child: TabBarView(
                       children: vouchers.map((Vouchers vouchers) {
+                        // TODO-QAnh: khong can truyen context
                         return VoucherList(
                             voucherList: vouchers.vouchers, context: context);
                       }).toList(),
@@ -108,6 +112,7 @@ class _VoucherManageState extends BaseState<VoucherManagement> {
   }
 }
 
+// TODO-QAnh: khong viet chung file, de trong data/model
 class Vouchers {
   Vouchers({this.typeTitle, this.vouchers});
 
@@ -115,6 +120,7 @@ class Vouchers {
   final List<VoucherCard> vouchers;
 }
 
+// TODO-QAnh: khong viet chung file, de file rieng
 class VoucherList extends StatelessWidget {
   final BuildContext context;
   VoucherList({Key key, this.voucherList, this.context}) : super(key: key);

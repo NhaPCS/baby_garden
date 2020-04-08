@@ -3745,6 +3745,15 @@ class S {
       args: [],
     );
   }
+
+  String message_empty(dynamic key) {
+    return Intl.message(
+      'Vui lòng nhập \$$key để tiếp tục',
+      name: 'message_empty',
+      desc: '',
+      args: [key],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

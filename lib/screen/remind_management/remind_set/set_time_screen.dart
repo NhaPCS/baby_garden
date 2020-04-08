@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
+// TODO-QAnh:screen đặt ở folder riêng, khong de chung trong 1 folder
 class SetTimeScreen extends StatefulWidget {
   @override
   _SetTimeScreenState createState() => _SetTimeScreenState();
@@ -26,6 +27,7 @@ class _SetTimeScreenState extends BaseState<SetTimeScreen> {
                 margin: EdgeInsets.only(top: 8),
                 width: double.infinity,
                 decoration: setBorder('top', Color(0xffE1D9D9), 1),
+                // TODO-QAnh: trong container co padding roi, khong can Padding nay nua
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15, top: 18, bottom: 18),
                   child: Text(
@@ -71,6 +73,7 @@ class _SetTimeScreenState extends BaseState<SetTimeScreen> {
                 child: Container(
               decoration: setBorder('top', Color(0xffE4E4E4), 6),
             )),
+            // TODO-QAnh: button dung MyRaisedButton
             GestureDetector(
               child: Container(
                 margin: SizeUtil.normalPadding,

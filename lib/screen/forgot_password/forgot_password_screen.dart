@@ -6,8 +6,8 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/view_model/forgot_pass_view_model.dart';
-import 'package:baby_garden_flutter/widget/my_password_textfield.dart';
-import 'package:baby_garden_flutter/widget/my_text_field.dart';
+import 'package:baby_garden_flutter/widget/input/my_password_textfield.dart';
+import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
@@ -16,13 +16,13 @@ import 'package:provider/provider.dart';
 class ForgotPasswordScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _ForgotPasswordScreenState();
   }
 }
 
 class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,ForgotPasswordViewModel> {
   final ChangePassProvider _changePassProvider = new ChangePassProvider();
+  // TODO-Hung: cái WaittingOTPProvider của m cũng dùng cho mỗi cái input OTP, nên tạo riêng 1 cái widget OTPTextInput
   final WaittingOTPProvider _waittingOTPProvider = new WaittingOTPProvider();
   final EnterPhoneNumberProvider _enterPhoneNumberProvider =
       new EnterPhoneNumberProvider();
@@ -35,7 +35,6 @@ class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,For
 
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
 //    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       appBar: getAppBar(
@@ -52,6 +51,7 @@ class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,For
               width: MediaQuery.of(context).size.width / 3,
               height: MediaQuery.of(context).size.width / 4,
             ),
+            // TODO-Hung: cái hobo này của m có vẻ dùng nhiều chỗ, tạo 1 cái widget tên là HoboText đi
             Text(S.of(context).app_name,
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -63,6 +63,7 @@ class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,For
               builder: (BuildContext context, EnterPhoneNumberProvider value,
                   Widget child) {
                 if (value.isEnterPhoneNumber) {
+                  // TODO-Hung: thấy cả màn đều có padding mà, dùng padding của ListView luôn
                   return Padding(
                       padding: const EdgeInsets.only(
                           left: SizeUtil.defaultSpace,
@@ -144,9 +145,12 @@ class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,For
                   left: SizeUtil.defaultSpace,
                   right: SizeUtil.defaultSpace,
                 ),
+                // TODO-Hung: thay bằng double.infinity
                 width: MediaQuery.of(context).size.width,
+                // TODO-Hung: dùng MyRaisedButton
                 child: RaisedButton(
                   onPressed: () async {
+                    // TODO-Hung: nên để mấy cái verify input này vào 1 hàm riêng, nao làm hỏi t t bẩu, k nên để nhiều ở hàm onPress
                     if (_phoneControler.text.trim().length > 0) {
                       if(_enterPhoneNumberProvider.isEnterPhoneNumber){
                         if(_newPasswordControler.text.trim().length==0||_reenterNewPasswordControler.text.trim().length==0){
@@ -216,14 +220,13 @@ class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,For
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
+    // TODO-Hung: stop trc khi dispose
     _waittingOTPProvider.stopTimer();
   }
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
     return [
       ChangeNotifierProvider.value(value: _enterPhoneNumberProvider),
       ChangeNotifierProvider.value(value: _changePassProvider),
@@ -233,7 +236,6 @@ class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,For
 
   @override
   ForgotPasswordViewModel initViewModel() {
-    // TODO: implement initViewModel
     return new ForgotPasswordViewModel();
   }
 }

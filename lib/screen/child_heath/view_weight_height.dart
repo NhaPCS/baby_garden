@@ -38,10 +38,12 @@ class ViewWeightHeight extends StatelessWidget {
         RichText(
             text: TextSpan(children: [
           TextSpan(
+            // TODO-Nha: move to arb file
               text: "Đánh giá kết quả: ",
               style: TextStyle(
                   fontWeight: FontWeight.bold, color: ColorUtil.blueLight)),
           TextSpan(
+            // TODO-Nha: move to arb file
               text: "(Lần kiểm tra mới nhất: 15/06/2019 - 36 tháng)",
               style: TextStyle(color: ColorUtil.blueLight)),
         ])),
@@ -51,9 +53,11 @@ class ViewWeightHeight extends StatelessWidget {
         RichText(
             text: TextSpan(children: [
           TextSpan(
+            // TODO-Nha: move to arb file
               text: "Chiều cao: ",
               style: TextStyle(color: ColorUtil.textColor)),
           TextSpan(
+            // TODO-Nha: move to arb file
               text: "Trẻ suy dinh dưỡng thể thấp còi, mức độ vừa",
               style: TextStyle(color: ColorUtil.primaryColor)),
         ])),
@@ -61,6 +65,7 @@ class ViewWeightHeight extends StatelessWidget {
           height: SizeUtil.smallSpace,
         ),
         Text(
+          // TODO-Nha: move to arb file
           "Tư vấn dinh dưỡng:",
           style: TextStyle(
               color: ColorUtil.blueLight, fontWeight: FontWeight.bold),
@@ -69,11 +74,13 @@ class ViewWeightHeight extends StatelessWidget {
           height: SizeUtil.smallSpace,
         ),
         Text(
+          // TODO-Nha: move to arb file
             "Bé đang hơi khiêm tốn chiều cao một chút, bố mẹ có thể bổ sung thêm dinh dưỡng, hoặc xem lại chế độ ăn cho bé đã p..."),
         SizedBox(
           height: SizeUtil.smallSpace,
         ),
         Text(
+          // TODO-Nha: move to arb file
           "Sản phẩm gợi ý:",
           style: TextStyle(
               color: ColorUtil.blueLight, fontWeight: FontWeight.bold),

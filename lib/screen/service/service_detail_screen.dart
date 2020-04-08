@@ -4,7 +4,7 @@ import 'package:baby_garden_flutter/provider/booking_detail_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/rating_detail/rating_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,7 +17,6 @@ class ServiceDetailScreen extends StatefulWidget{
   const ServiceDetailScreen({Key key,this.title}):super(key: key);
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _ServiceDetailScreenState();
   }
 
@@ -26,7 +25,6 @@ class ServiceDetailScreen extends StatefulWidget{
 class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
     return Scaffold(
         appBar: getAppBar(
           title: widget.title,
@@ -38,6 +36,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
         body: Container(
           width: MediaQuery.of(context).size.width,
           child: Consumer<BookingDetailProvider>(builder: (BuildContext context, BookingDetailProvider value, Widget child) {
+            // TODO-Hung: moi state tạo 1 widget riêng để phân biệt cho dễ nhìn, loạn lắm. khi nhin vao phai hien state 0 la gi, state 1 la gi
             int state = 0;
             var bookingDetialData = value.bookingDetialData;
             switch (bookingDetialData['active']){
@@ -54,6 +53,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
             return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  // TODO-Hung: mấy cái màu này để ở util đi
                   WidgetUtil.getLine(
                       width: SizeUtil.smallSpace,
                       margin: EdgeInsets.all(0),
@@ -70,12 +70,14 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
+                            // TODO-Hung: cho vao file arb
                             "Mã đặt lịch: ${bookingDetialData['value']}\nNgày đặt lịch: ${bookingDetialData['date_booking']} - ${bookingDetialData['time_booking']}",
                             style: TextStyle(height: 1.5),
                           ),
                           RichText(
                             text: TextSpan(children: <TextSpan>[
                               TextSpan(
+                                // TODO-Hung: cho vao file arb
                                   text: "Cung cấp bởi:",
                                   style: TextStyle(
                                       color: ColorUtil.textColor,
@@ -297,6 +299,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                         bottom: SizeUtil.midSmallSpace),
                     child: RichText(
                       text: TextSpan(
+                        // TODO-Hung: cho vao file arb
                           text: "Tổng đơn: ",
                           style: TextStyle(
                               height: 1.5,
@@ -330,10 +333,12 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                             bottom: SizeUtil.midSmallSpace),
                         child: Row(
                           children: <Widget>[
+                            // TODO-Hung: cho vao file arb
                             Text("Hủy bởi",
                                 style: TextStyle(
                                     fontSize: SizeUtil.textSizeExpressDetail)),
                             Spacer(),
+                            // TODO-Hung: cho vao file arb
                             Text("người đặt",
                                 style: TextStyle(
                                     fontSize: SizeUtil.textSizeExpressDetail, color: ColorUtil.primaryColor))
@@ -352,6 +357,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                             bottom: SizeUtil.midSmallSpace),
                         child: Row(
                           children: <Widget>[
+                            // TODO-Hung: cho vao file arb
                             Text("Hủy vào lúc",
                                 style: TextStyle(
                                     fontSize: SizeUtil.textSizeExpressDetail)),
@@ -374,6 +380,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                             bottom: SizeUtil.midSmallSpace),
                         child: Row(
                           children: <Widget>[
+                            // TODO-Hung: cho vao file arb
                             Text("Lý do hủy",
                                 style: TextStyle(
                                     fontSize: SizeUtil.textSizeExpressDetail)),

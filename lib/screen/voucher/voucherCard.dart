@@ -3,7 +3,9 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// TODO-QAnh: nếu là item viết phải kết thúc bằng Item
 class VoucherCard extends StatelessWidget {
+  // TODO-QAnh: data truyền vào object, không để chi tiết các thuộc tính của object
   final image;
   final description;
   final partner;
@@ -22,6 +24,7 @@ class VoucherCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // TODO-QAnh: cai nay để tạo shadow à? Card cũng có elevation rồi
       margin: EdgeInsets.only(
         top: SizeUtil.midSmallSpace,
       ),
@@ -35,6 +38,7 @@ class VoucherCard extends StatelessWidget {
         ],
       ),
       width: double.infinity,
+      // TODO-QAnh: để wrap, k fix height
       height: 90,
       child: Card(
         shape: RoundedRectangleBorder(
@@ -55,6 +59,7 @@ class VoucherCard extends StatelessWidget {
                   )
                 ],
                 border: Border.all(color: ColorUtil.darkGray, width: 0.3)),
+            // TODO-QAnh: dung CircleImage
             child: ClipRRect(
               child: Image.asset(
                 this.image,
@@ -65,8 +70,10 @@ class VoucherCard extends StatelessWidget {
           ),
           Expanded(
             child: Container(
+              // TODO-QAnh: k fix height, mà đã Expand rồi sao cần fix height? Container này bỏ đi cũng đc
                 height: 90,
                 padding: EdgeInsets.only(top: SizeUtil.tinySpace, left: 35),
+                // TODO-QAnh: dung Column
                 child: ListView(
                     padding: const EdgeInsets.all(SizeUtil.midSmallSpace),
                     physics: NeverScrollableScrollPhysics(),

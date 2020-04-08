@@ -16,7 +16,7 @@ class CustomRadioButton extends StatelessWidget {
       this.trailing,
       this.titleContent,
         this.subTitle,
-      this.crossAxisAlignment = CrossAxisAlignment.center});
+      this.crossAxisAlignment = CrossAxisAlignment.center, this.checkedValue});
 
   final String label;
   final EdgeInsets padding;
@@ -31,6 +31,9 @@ class CustomRadioButton extends StatelessWidget {
   final Widget titleContent;
   final Widget subTitle;
   final CrossAxisAlignment crossAxisAlignment;
+  // TODO-Hung: chuyển widget này sang stateful và dùng ValueNotifier để lấy giá trị đã chọn, không phải phụ thuộc vào provider của class cha nữa
+  // Tất cả các provider sẽ chuyển thành ValueNotifier (cách làm này giống controller của TextField)
+  final ValueNotifier<int> checkedValue;
 
   @override
   Widget build(BuildContext context) {

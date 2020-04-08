@@ -411,5 +411,6 @@
   "yes": "Có",
   "no": "Không",
   "no_data": "Chưa có dữ liệu",
-  "reload": "Tải lại"
+  "reload": "Tải lại",
+  "message_empty": "Vui lòng nhập ${key} để tiếp tục"
 }

@@ -10,6 +10,7 @@ import 'package:provider/single_child_widget.dart';
 import '../../base_state.dart';
 import 'tab_contact_screen.dart';
 
+// TODO-QAnh: khong dung folder voi screen khac
 class VoucherDetailScreen extends StatefulWidget {
   @override
   _VoucherDetailScreenState createState() => _VoucherDetailScreenState();
@@ -33,10 +34,12 @@ class _VoucherDetailScreenState extends BaseState<VoucherDetailScreen> {
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar:getAppBar(title: S.of(context).voucherDetail),
+          // TODO-QAnh: duplicate DefaultTabController
           body: DefaultTabController(
             length: tabsBar.length,
             child: Column(
               children: <Widget>[
+                // TODO-QAnh: dùng elevation của Material, khong cần tạo Container tạo shadow
                 Container(
                   width: double.infinity,
                   constraints: BoxConstraints(maxHeight: 150.0),
@@ -64,9 +67,11 @@ class _VoucherDetailScreenState extends BaseState<VoucherDetailScreen> {
                 Expanded(
                   child: TabBarView(
                     children: [
+                      // TODO-QAnh: không cần truyền contexxt
                       TabInfoScreen(context: context),
                       TabGuideScreen(),
                       TabImageScreen(),
+                      // TODO-QAnh: không cần truyền contexxt
                       TabContactScreen(context: context),
                     ],
                   ),

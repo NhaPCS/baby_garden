@@ -22,7 +22,6 @@ class ServiceListScreen extends StatefulWidget {
   const ServiceListScreen({Key key,this.title,@required this.childTitle, this.state = 0}):super(key: key);
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _ServiceListScreenState();
   }
 }
@@ -30,7 +29,6 @@ class ServiceListScreen extends StatefulWidget {
 class _ServiceListScreenState extends BaseState<ServiceListScreen> {
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
     return Scaffold(
       appBar: getAppBar(
         title:  widget.title,
@@ -39,6 +37,7 @@ class _ServiceListScreenState extends BaseState<ServiceListScreen> {
         titleColor: Colors.white,
         backColor: Colors.white,
       ),
+      // TODO-Hung: dung SafeArea de lam gi nhi? bo di
       body: SafeArea(
           child: Column(
             children: <Widget>[
@@ -73,11 +72,11 @@ class _ServiceListScreenState extends BaseState<ServiceListScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
     return null;
   }
 }
 
+// TODO-Hung: k de chung file
 class ColoredTabBar extends Container implements PreferredSizeWidget {
   ColoredTabBar(this.color, this.tabBar);
 

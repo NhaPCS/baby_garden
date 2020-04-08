@@ -5,7 +5,7 @@ import 'package:baby_garden_flutter/provider/segment_control_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/saling_detail/saling_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/my_text_field.dart';
+import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:baby_garden_flutter/widget/notify_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,6 @@ import 'package:provider/provider.dart';
 class NotifyScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _NotifyScreenState();
   }
 }
@@ -30,7 +29,6 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _focusNode.addListener(() {
       print(" initState " + _focusNode.hasFocus.toString());
@@ -40,7 +38,6 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
     return Scaffold(
         appBar: getAppBar(
           title: S.of(context).notify,
@@ -49,11 +46,13 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
           titleColor: Colors.white,
           backColor: Colors.white,
         ),
+        // TODO-Hung: dùng SafeArea ở đây làm gì nhỉ
         body: SafeArea(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
+            // TODO-Hung: tạo widget riêng đi
             Consumer<SegmentControlProvider>(
               builder: (BuildContext context, SegmentControlProvider value,
                   Widget child) {
@@ -84,6 +83,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                 child: Column(
                   children: <Widget>[
                     //todo search notify
+                    // TODO-Hung: cái row này phải move lên trên trong column bên trên chứ,  lồng nhiều Column quá
                     Row(
                       children: <Widget>[
                         Expanded(
@@ -150,6 +150,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                                             _notifySwitchProvider.onChange();
                                           },
                                         ),
+                                        // TODO-Hung: tạo widget riêng đi, mà có MySwitcher rồi đó
                                         Consumer<NotifySwitchProvider>(builder: (BuildContext context, NotifySwitchProvider value, Widget child) {
                                           return Transform.scale(
                                             scale: 1,
@@ -173,6 +174,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                       ],
                     ),
                     //todo notify list
+                    // TODO-Hung: đoạn expand này sẽ thay đoạn expand bên trên
                     Expanded(
                       child: ListView.builder(
                           itemCount: 10,
@@ -199,7 +201,6 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
     return [
       ChangeNotifierProvider.value(value: _segmentControlProvider),
       ChangeNotifierProvider.value(value: _notifySearchProvider),

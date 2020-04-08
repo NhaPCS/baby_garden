@@ -6,13 +6,16 @@ import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/voucher/voucher_detail/voucher_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/circle_image.dart';
+import 'package:baby_garden_flutter/widget/image/circle_image.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
+// TODO-QAnh: de trong folder rieng, k de chung voi screen khac
+// TODO-QAnh: sao ten file voi ten class khong khop nhau?
+// // TODO-QAnh: em đang thấy có tận VoucherScreen, anh check lại xem
 class VoucherScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -71,6 +74,7 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
                 onTap: () {
                   push(VoucherDetailScreen());
                 },
+                // TODO-QAnh: tạo file widget cho item riêng
                 child: Container(
                   child: Stack(
                     alignment: AlignmentDirectional.bottomCenter,
@@ -109,6 +113,7 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
                           ]),
                       Container(
                         margin: EdgeInsets.all(9),
+                        // TODO-QAnh: khong fix height, để wrap
                         height: 90,
                         decoration: BoxDecoration(
                             color: Colors.white,
@@ -185,6 +190,7 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
   }
 }
 
+// TODO-QAnh: k de chung file, model thì đặt trong folder data/model
 class VoucherDetail {
   final String image;
   final String description;
@@ -203,6 +209,7 @@ class VoucherDetail {
 
 enum VoucherType { took, used, expired, aboutToExpire }
 
+// TODO-QAnh: đặt ra file riêng, không đặt chung file, em đã tạo widget DrawTriangle, anh xem dung chung luon
 class DrawTriangle extends CustomPainter {
   Paint _paint;
 

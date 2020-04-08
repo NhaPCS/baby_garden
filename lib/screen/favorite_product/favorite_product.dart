@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
+// TODO-QAnh: tên screen phải có chữ Screen ở cuối
 class FavoriteProduct extends StatefulWidget {
   @override
   _FavoriteProduct createState() => _FavoriteProduct();
@@ -16,42 +17,48 @@ class FavoriteProduct extends StatefulWidget {
 class _FavoriteProduct extends BaseState<FavoriteProduct> {
   final GetListProvider _getListProvider = GetListProvider();
 
-
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
         appBar: getAppBar(title: S.of(context).favoriteProduct),
+        // TODO-QAnh: cái này là list, phải dùng ListView
         body: Column(children: <Widget>[
+          // TODO-QAnh:bỏ container đi, cố gắng không để thừa Widget như này
           Container(
+            // TODO-QAnh: trên có column rồi nhưng bên dưới vẫn để column?
             child: Column(
-              children: <Widget>[ProductCard(
-                onTap: (){
-                  push(ProductDetailScreen());
-                },
-                image: "photo/sample_product.png",
-                description: "Sữa Alene dành cho bé thể tích 320ml...",
-                price: "900000",
-                datetime: "13/2/2020",
-                favorite: true,
-              ), ProductCard(
-                onTap: (){
-                  push(ProductDetailScreen());
-                },
-                image: "photo/sample_product.png",
-                description: "Sữa Alene dành cho bé thể tích 320ml...",
-                price: "900000",
-                datetime: "13/2/2020",
-                favorite: true,
-              ), ProductCard(
-                onTap: (){
-                  push(ProductDetailScreen());
-                },
-                image: "photo/sample_product.png",
-                description: "Sữa Alene dành cho bé thể tích 320ml...",
-                price: "900000",
-                datetime: "13/2/2020",
-                favorite: true,
-              )],
+              children: <Widget>[
+                ProductCard(
+                  onTap: () {
+                    push(ProductDetailScreen());
+                  },
+                  image: "photo/sample_product.png",
+                  description: "Sữa Alene dành cho bé thể tích 320ml...",
+                  price: "900000",
+                  datetime: "13/2/2020",
+                  favorite: true,
+                ),
+                ProductCard(
+                  onTap: () {
+                    push(ProductDetailScreen());
+                  },
+                  image: "photo/sample_product.png",
+                  description: "Sữa Alene dành cho bé thể tích 320ml...",
+                  price: "900000",
+                  datetime: "13/2/2020",
+                  favorite: true,
+                ),
+                ProductCard(
+                  onTap: () {
+                    push(ProductDetailScreen());
+                  },
+                  image: "photo/sample_product.png",
+                  description: "Sữa Alene dành cho bé thể tích 320ml...",
+                  price: "900000",
+                  datetime: "13/2/2020",
+                  favorite: true,
+                )
+              ],
             ),
           ),
         ]));

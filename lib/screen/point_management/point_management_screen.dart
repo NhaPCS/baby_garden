@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
+// TODO-QAnh: them chu Screen o cuoi
 class PointManagement extends StatefulWidget {
   @override
   _SeenProduct createState() => _SeenProduct();
@@ -25,10 +26,14 @@ class _SeenProduct extends BaseState<PointManagement> {
   Widget buildWidget(BuildContext context) {
     return Scaffold(
         appBar: getAppBar(title: S.of(context).pointManage),
+        // TODO-QAnh: lồng nhiều Column quá, để 1 cái ListView thôi
         body: Column(children: <Widget>[
+          // TODO-QAnh: bỏ Container này đi
           Container(
+            // TODO-QAnh: bỏ Column này đi
             child: Column(
               children: <Widget>[
+                // TODO-QAnh: line dùng WidgetUtil.getLine
                 Container(
                   height: 5,
                   color: Color.fromRGBO(228, 228, 228, 1),

@@ -2,19 +2,17 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/filter_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/expressItem.dart';
 import 'package:baby_garden_flutter/widget/rating_bar.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
+// TODO-Hung: ten file thieu _screen
 class ListUserRatedScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _ListUserRatedScreenState();
   }
 }
@@ -33,6 +31,7 @@ class _ListUserRatedScreenState extends BaseState<ListUserRatedScreen> {
         titleColor: Colors.white,
         backColor: Colors.white,
       ),
+      // TODO-Hung: SafeArea lam gi? k dung bo di
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -94,6 +93,7 @@ class _ListUserRatedScreenState extends BaseState<ListUserRatedScreen> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                // TODO-Hung: dung list.map cho dep
                 children: <Widget>[
                   Expanded(
                     child: StarItem(
@@ -163,11 +163,11 @@ class _ListUserRatedScreenState extends BaseState<ListUserRatedScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
     return [ChangeNotifierProvider.value(value: _filterProvider)];
   }
 }
 
+// TODO-Hung: k de chung file, tao file item rieng
 class TagItem extends StatelessWidget {
   final bool isSelected;
   final String title;
@@ -211,6 +211,8 @@ class TagItem extends StatelessWidget {
   }
 }
 
+// TODO-Hung: k de chung file, tao file item rieng
+// thang nay voi TagItem tương đối nhau, để chung thì tốt
 class StarItem extends StatelessWidget {
   final bool isSelected;
   final int star;
@@ -261,13 +263,14 @@ class StarItem extends StatelessWidget {
   }
 }
 
+// TODO-Hung: ten class phai bat dau bang chu hoa,k dat chung file, tao file rieng
 class userRatedItem extends StatelessWidget {
   const userRatedItem({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
+      // TODO-Hung: k fix cung co dc k?
       margin: EdgeInsets.only(left:8.0,right: 8.0,top: 2.0,bottom: 2.0),
       child: Card(
         elevation: 4,

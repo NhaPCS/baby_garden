@@ -8,6 +8,7 @@ import 'package:provider/single_child_widget.dart';
 import '../base_state.dart';
 import 'remindCard.dart';
 
+// TODO-QAnh:screen đặt ở folder riêng, khong de chung trong 1 folder
 class RemindManagementScreen extends StatefulWidget {
   @override
   _RemindManageState createState() => _RemindManageState();
@@ -49,6 +50,7 @@ class _RemindManageState extends BaseState<RemindManagementScreen> {
           title: S.of(context).remindManage,
         ),
         body: Column(children: <Widget>[
+          // TODO-QAnh column chỉ có 1 container? bỏ đi
           Container(
             child: Column(
               children: <Widget>[remind1, remind2, remind1],

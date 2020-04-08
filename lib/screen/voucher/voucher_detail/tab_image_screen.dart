@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TabImageScreen extends StatelessWidget {
+  // TODO-QAnh: khong add anh test vao asset, xoa het anh test di
   final images = [
     'photo/voucherViettel.png',
     'photo/voucherViettel.png',
@@ -26,6 +27,7 @@ class TabImageScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold),
             ),
           ),
+          // TODO-QAnh: nên dùng ListView thôi, với index==0 thì là text, else là image
           Column(
             children: images.map((e) => Image.asset(e)).toList(),
           )

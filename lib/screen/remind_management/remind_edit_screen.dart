@@ -3,7 +3,7 @@ import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/screen/remind_management/remind_add_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_management/remind_management_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +11,7 @@ import 'package:provider/single_child_widget.dart';
 import '../base_state.dart';
 import 'remindCard.dart';
 
+// TODO-QAnh:screen đặt ở folder riêng, khong de chung trong 1 folder
 class RemindEditScreen extends StatefulWidget {
   @override
   _RemindEditScreen createState() => _RemindEditScreen();

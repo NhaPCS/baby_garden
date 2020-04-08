@@ -10,17 +10,16 @@ import 'package:provider/provider.dart';
 class SettingScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _SettingScreenState();
   }
 }
 
 class _SettingScreenState extends BaseState<SettingScreen> {
+  // TODO-Hung: tạo widget riêng cho từng cái swicher, không dùng chung
   final SwitchProvider _settingProvider = new SwitchProvider();
 
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
     return Scaffold(
       appBar: getAppBar(
           title: S.of(context).setting,
@@ -28,7 +27,9 @@ class _SettingScreenState extends BaseState<SettingScreen> {
           bgColor: ColorUtil.primaryColor,
           titleColor: Colors.white,
           backColor: Colors.white),
+      // TODO-Hung: trong column center dc ma
       body: Center(
+        // TODO-Hung: chuyển sang dùng ListView cũng đc.
         child: Column(
           children: <Widget>[
             Image.asset("photo/logo.png",
@@ -41,6 +42,7 @@ class _SettingScreenState extends BaseState<SettingScreen> {
             Consumer<SwitchProvider>(
               builder:
                   (BuildContext context, SwitchProvider value, Widget child) {
+                    // TODO-Hung: tạo widget riêng cho từng cái swicher, không dùng chung
                 return SwitchListTile(
                   value: value.isSwitch1,
                   onChanged: (bool newValue) {
@@ -57,6 +59,7 @@ class _SettingScreenState extends BaseState<SettingScreen> {
                 );
               },
             ),
+            // TODO-Hung: dung WidgetUtil.getLine
             Container(
               height: 1,
               width: MediaQuery.of(context).size.width,
@@ -70,12 +73,14 @@ class _SettingScreenState extends BaseState<SettingScreen> {
             Consumer<SwitchProvider>(
               builder:
                   (BuildContext context, SwitchProvider value, Widget child) {
+                    // TODO-Hung: tạo widget riêng cho từng cái swicher, không dùng chung
                 return SwitchListTile(
                   value: value.isSwitch2,
                   onChanged: (bool newValue) {
                     _settingProvider.onSwitch2(newValue);
                   },
                   title: Text(
+                    // TODO-Hung: dat ten ro rang ra
                     S.of(context).setting_2,
                     textAlign: TextAlign.start,
                     style: TextStyle(
@@ -105,6 +110,7 @@ class _SettingScreenState extends BaseState<SettingScreen> {
                     _settingProvider.onSwitch3(newValue);
                   },
                   title: Text(
+                    // TODO-Hung: dat ten ro rang ra
                     S.of(context).setting_3,
                     textAlign: TextAlign.start,
                     style: TextStyle(
@@ -134,6 +140,7 @@ class _SettingScreenState extends BaseState<SettingScreen> {
                     _settingProvider.onSwitch4(newValue);
                   },
                   title: Text(
+                    // TODO-Hung: dat ten ro rang ra
                     S.of(context).setting_4,
                     textAlign: TextAlign.start,
                     style: TextStyle(
@@ -162,7 +169,6 @@ class _SettingScreenState extends BaseState<SettingScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
     return [
       ChangeNotifierProvider.value(value: _settingProvider),
     ];

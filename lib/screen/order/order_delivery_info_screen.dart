@@ -1,16 +1,16 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 
+// TODO-Hung: screen mới thì move ra folder mới, không để chung
 class OrderDeliveryInfoScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _OrderDeliveryInfoScreenState();
   }
 }
@@ -18,7 +18,6 @@ class OrderDeliveryInfoScreen extends StatefulWidget {
 class _OrderDeliveryInfoScreenState extends BaseState<OrderDeliveryInfoScreen> {
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
     return Scaffold(
         appBar: getAppBar(
           title: S.of(context).delivery_info,
@@ -27,6 +26,7 @@ class _OrderDeliveryInfoScreenState extends BaseState<OrderDeliveryInfoScreen> {
           titleColor: Colors.white,
           backColor: Colors.white,
         ),
+        // TODO-Hung: safeArea lam gi nhi?
         body: SafeArea(
             child: ListView(children: <Widget>[
           WidgetUtil.getLine(
@@ -87,41 +87,42 @@ class _OrderDeliveryInfoScreenState extends BaseState<OrderDeliveryInfoScreen> {
             isShowSeparate: true,
             separateLinePadding: EdgeInsets.only(left: SizeUtil.smallSpace),
           ),
-              TrackingItem(
-                isFirstItem: false,
-                padding: EdgeInsets.only( left: SizeUtil.smallSpace),
-                title: "Lưu kho",
-                subTitle: "25-12-2019 9:30",
-                isShowSeparate: true,
-                separateLinePadding: EdgeInsets.only(left: SizeUtil.smallSpace),
-              ),
-              TrackingItem(
-                isFirstItem: false,
-                padding: EdgeInsets.only( left: SizeUtil.smallSpace),
-                title: "Đang lấy hàng",
-                subTitle: "25-12-2019 9:30",
-                isShowSeparate: true,
-                separateLinePadding: EdgeInsets.only(left: SizeUtil.smallSpace),
-              ),
-              TrackingItem(
-                isFirstItem: false,
-                padding: EdgeInsets.only( left: SizeUtil.smallSpace),
-                title: "Chờ lấy hàng",
-                subTitle: "25-12-2019 9:30",
-                isShowSeparate: true,
-                separateLinePadding: EdgeInsets.only(left: SizeUtil.smallSpace),
-              ),
-WidgetUtil.getLine(width: 4,margin: EdgeInsets.all(0),color: Color(0xffDFDFDF))
+          TrackingItem(
+            isFirstItem: false,
+            padding: EdgeInsets.only(left: SizeUtil.smallSpace),
+            title: "Lưu kho",
+            subTitle: "25-12-2019 9:30",
+            isShowSeparate: true,
+            separateLinePadding: EdgeInsets.only(left: SizeUtil.smallSpace),
+          ),
+          TrackingItem(
+            isFirstItem: false,
+            padding: EdgeInsets.only(left: SizeUtil.smallSpace),
+            title: "Đang lấy hàng",
+            subTitle: "25-12-2019 9:30",
+            isShowSeparate: true,
+            separateLinePadding: EdgeInsets.only(left: SizeUtil.smallSpace),
+          ),
+          TrackingItem(
+            isFirstItem: false,
+            padding: EdgeInsets.only(left: SizeUtil.smallSpace),
+            title: "Chờ lấy hàng",
+            subTitle: "25-12-2019 9:30",
+            isShowSeparate: true,
+            separateLinePadding: EdgeInsets.only(left: SizeUtil.smallSpace),
+          ),
+          WidgetUtil.getLine(
+              width: 4, margin: EdgeInsets.all(0), color: Color(0xffDFDFDF))
         ])));
   }
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
     return [];
   }
 }
 
+// TODO-Hung: move ra folder item
 class TrackingItem extends StatelessWidget {
   final EdgeInsets padding;
   final EdgeInsets separateLinePadding;
@@ -151,7 +152,6 @@ class TrackingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Padding(
       padding: padding,
       child: Row(
@@ -166,7 +166,8 @@ class TrackingItem extends StatelessWidget {
                       width: 1,
                       height: SizeUtil.defaultSpace,
                     ),
-              Icon(Icons.radio_button_checked,
+              Icon(
+                Icons.radio_button_checked,
                 size: SizeUtil.iconSizeSmall,
                 color: targetColor,
               ),
@@ -199,7 +200,10 @@ class TrackingItem extends StatelessWidget {
                     color: ColorUtil.textColor),
               ),
               isShowSeparate
-                  ? WidgetUtil.getLine(width: 1, margin: separateLinePadding,color: Color(0xffDFDFDF))
+                  ? WidgetUtil.getLine(
+                      width: 1,
+                      margin: separateLinePadding,
+                      color: Color(0xffDFDFDF))
                   : SizedBox()
             ],
           ),

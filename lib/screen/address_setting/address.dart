@@ -3,6 +3,8 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// TODO-QAnh: đây là item trong 1 list nên phải đặt tên là address_item và đặt trong folder item
+// TODO-QAnh: bỏ fix cứng kích thước
 class Address extends StatelessWidget {
   final address;
   final isDefault;
@@ -13,6 +15,7 @@ class Address extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      // TODO-QAnh: bỏ set height
       height: 63,
       margin: EdgeInsets.only(left: 8, right: 8),
       decoration: setBorder("bottom", Color.fromRGBO(154, 154, 154, 1), 1),
@@ -28,6 +31,7 @@ class Address extends StatelessWidget {
             child: Text(address),
           ),
           Expanded(
+            // TODO-QAnh: phần này có thể check bằng cách isDefault? Padding(): SizeBox()
             child: Visibility(
               visible: isDefault,
               child: Padding(

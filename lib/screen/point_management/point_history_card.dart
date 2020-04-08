@@ -2,6 +2,7 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// TODO-QAnh: đây là item phải thêm chữ Item ở cuối tên và move vào folder item
 class PointHistoryCard extends StatelessWidget {
   final image;
   final history;
@@ -26,6 +27,7 @@ class PointHistoryCard extends StatelessWidget {
       margin: EdgeInsets.only(left: 10, right: 10),
       height: 90,
       child: Row(children: <Widget>[
+        // TODO-QAnh: thay bằng CircleImage, modify để load đc ảnh asset
         Container(
           decoration: BoxDecoration(
               color: Color.fromRGBO(236, 236, 236, 1),
@@ -48,7 +50,9 @@ class PointHistoryCard extends StatelessWidget {
         ),
         Expanded(
           child: Container(
+            // TODO-QAnh: thay Container = Padding
               padding: EdgeInsets.only(top: 20, left: 10),
+              // TODO-QAnh: thay ListView = Column
               child: ListView(
                   padding: const EdgeInsets.all(8),
                   physics: NeverScrollableScrollPhysics(),
@@ -65,6 +69,7 @@ class PointHistoryCard extends StatelessWidget {
                                 fontSize: 12))),
                   ])),
         ),
+        // TODO-QAnh: thay Container = Padding
         Container(
           padding: EdgeInsets.only(right: 8, top: 25),
           child: Column(children: <Widget>[

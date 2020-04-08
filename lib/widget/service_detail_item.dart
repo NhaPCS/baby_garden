@@ -1,18 +1,19 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// TODO-Hung: widget là chỗ để custom widget, không phải để item, để vào folder item
 class ServiceDetailItem extends StatelessWidget{
   final bool isSelected ;
   const ServiceDetailItem({Key key,this.isSelected = false}):super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return GestureDetector(
       child: Container(
+        // TODO-Hung: để làm shadow à? dùng Card
         width: MediaQuery.of(context).size.width/2,
         padding: EdgeInsets.all(2),
         margin: EdgeInsets.only(bottom: 2, left: 1,right: 1),

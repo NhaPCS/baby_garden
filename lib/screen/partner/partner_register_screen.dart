@@ -2,11 +2,12 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/my_text_field.dart';
+import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
+// TODO-QAnh: màn hình phải kết thúc bằng chữ Screen
 class PartnerRegister extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -47,6 +48,7 @@ class _PartnerRegisterState extends BaseState<PartnerRegister> {
             child: Text(S.of(context).partnerRegisHeadTitle,
                 style: TextStyle(color: Color.fromRGBO(84, 83, 83, 1)))),
         Expanded(
+          // TODO-QAnh: dung Card để tạo độ bóng
           child: Container(
               margin: EdgeInsets.only(bottom: 14),
               width: double.infinity,
@@ -60,6 +62,7 @@ class _PartnerRegisterState extends BaseState<PartnerRegister> {
                       offset: Offset(0.0, 3.0),
                     )
                   ]),
+              // TODO-QAnh: bỏ Container đi, không dùng làm gì
               child: Container(
                   child: ListView.builder(
                       itemCount: fields.length,
@@ -73,10 +76,12 @@ class _PartnerRegisterState extends BaseState<PartnerRegister> {
           width: double.infinity,
           height: 46,
           // color: Color.fromRGBO(255, 142, 30, 1),
+          // TODO-QAnh: ddùng MyRaisedButton, bỏ Conatiner phía trên đi
           child: RaisedButton(
             color: Color.fromRGBO(255, 142, 30, 1),
             onPressed: () async {},
             textColor: Colors.white,
+            // TODO-QAnh: chuyen vao file arb
             child: Text('Đăng ký trở thành đối tác',
                 style: TextStyle(fontSize: 16)),
           ),

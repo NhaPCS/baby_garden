@@ -23,7 +23,7 @@ import 'package:baby_garden_flutter/widget/product/discount_widget.dart';
 import 'package:baby_garden_flutter/widget/product/favorite_product_button.dart';
 import 'package:baby_garden_flutter/widget/product/image_count.dart';
 import 'package:baby_garden_flutter/widget/product/list_product_by_category.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';

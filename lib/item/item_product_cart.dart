@@ -7,9 +7,9 @@ import 'package:baby_garden_flutter/screen/remind_management/remind_add_screen.d
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_icon.dart';
 import 'package:baby_garden_flutter/widget/change_quantity_widget.dart';
-import 'package:baby_garden_flutter/widget/circle_image.dart';
-import 'package:baby_garden_flutter/widget/dashed_line.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/image/circle_image.dart';
+import 'package:baby_garden_flutter/widget/line/dashed_line.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

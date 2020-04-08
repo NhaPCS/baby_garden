@@ -1,9 +1,9 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+// TODO-Hung: widget là chỗ để custom widget, không phải để item, để vào folder item
 class NotifyItem extends StatelessWidget {
   final TextEditingController searchTextController;
 
@@ -33,6 +33,7 @@ class NotifyItem extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                // TODO-Hung: dùng CircleImage, custom lại để hiển thị đc ImageAsset
                 Card(
                   child: Image.asset("photo/logo.png",
                       width: MediaQuery.of(context).size.width / 6),
@@ -44,6 +45,7 @@ class NotifyItem extends StatelessWidget {
                   elevation: 3.0,
                 ),
                 Expanded(
+                  // TODO-Hung: thay Conatiner bằng Padding
                     child: Container(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

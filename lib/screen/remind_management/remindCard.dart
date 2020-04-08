@@ -6,7 +6,9 @@ import 'package:baby_garden_flutter/widget/button/button_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// TODO-QAnh: item thi phải có chữ Item ở cuối
 class RemindCard extends StatelessWidget {
+  // TODO-QAnh: truyen vao Object, không truyền từng giá trị thế này
   final id;
   final image;
   final description;
@@ -31,6 +33,7 @@ class RemindCard extends StatelessWidget {
     return Container(
       decoration: setBorder('bottom', Color.fromRGBO(197, 193, 193, 1), 1),
       width: double.infinity,
+      // TODO-QAnh: k fix height, để wrap
       height: 110,
       child: Card(
         margin: EdgeInsets.only(top: 0),
@@ -44,7 +47,9 @@ class RemindCard extends StatelessWidget {
           ),
           Expanded(
             child: Container(
+              // TODO-QAnh: sao expand rồi mà vân cần set height?
                 height: 100,
+                // TODO-QAnh: k dung ListView, dung Column
                 child: ListView(
                     padding: const EdgeInsets.all(SizeUtil.midSmallSpace),
                     physics: NeverScrollableScrollPhysics(),

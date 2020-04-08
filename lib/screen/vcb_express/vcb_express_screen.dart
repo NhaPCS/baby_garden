@@ -5,16 +5,17 @@ import 'package:baby_garden_flutter/screen/vcb_express/vcb_express_detail_screen
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/expressItem.dart';
 import 'package:baby_garden_flutter/widget/notify_item.dart';
+import 'package:baby_garden_flutter/widget/partner/list_service_category.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
+// TODO-Hung: de trong folder rieng, k de chung voi screen khac
 class VCBExpressScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _VCBExpressScreenState();
   }
 }
@@ -23,13 +24,12 @@ class _VCBExpressScreenState extends BaseState<VCBExpressScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
     return Scaffold(
       backgroundColor: ColorUtil.lineColor,
       appBar: getAppBar(title: S.of(context).vcb_express.toUpperCase()),
       body: Column(
         children: <Widget>[
-          ListCategory(),
+          ListServiceCategory(),
           Expanded(
             child: ListView.builder(
                 itemCount: 10,

@@ -2,10 +2,11 @@ import 'dart:math';
 
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// TODO-Hung: widget là chỗ để custom widget, không phải để item, để vào folder item
 class OrderItem extends StatelessWidget {
   final bool isRated;
   final dynamic itemData;

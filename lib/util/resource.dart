@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:baby_garden_flutter/data/model/param.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/login/login_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -534,6 +535,19 @@ class WidgetUtil {
           offset: Offset(0, 2),
           blurRadius: 0.8),
     ];
+  }
+
+  static verifyParams(BuildContext context,
+      {List<Param> params, bool showErrorDialog = true}) {
+    for (Param p in params) {
+      if (p.value == null || p.value.isEmpty) {
+        if (showErrorDialog)
+          WidgetUtil.showErrorDialog(
+              context, S.of(context).message_empty(p.key));
+        return false;
+      }
+    }
+    return true;
   }
 }
 

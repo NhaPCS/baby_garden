@@ -13,12 +13,13 @@ import 'package:baby_garden_flutter/screen/seen_product/seen_product_screen.dart
 import 'package:baby_garden_flutter/screen/setting/setting_screen.dart';
 import 'package:baby_garden_flutter/screen/voucher/voucher_management_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
+// TODO-QAnh: sao lại cần tạo hẳn màn mới nhỉ, nó chỉ thay đổi mỗi header của profile screen thôi. xem bỏ class này đi
 class ProfileNoLoginScreen extends StatefulWidget {
   @override
   _ProfileNoLoginScreenState createState() => _ProfileNoLoginScreenState();

@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'add_address_modal.dart';
 import 'address.dart';
 
+// TODO-QAnh: sửa lại tất cả số liệu fix cứng của kích thước và text
 class AddressSettingScreen extends StatefulWidget {
   @override
   _SeenProduct createState() => _SeenProduct();
@@ -41,8 +42,10 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
   Widget header() {
     return Container(
       margin: EdgeInsets.only(left: 8, right: 8),
+      // TODO-QAnh: bỏ fix height
       height: 50,
       width: double.infinity,
+      // TODO-QAnh: cái này chỉ để lấy 1 cái line nên bỏ Conatiner đi, dùng WidgetUtil để add 1 cái line
       decoration: setBorder("bottom", Color.fromRGBO(112, 112, 112, 1), 1),
       child: Padding(
         padding: const EdgeInsets.only(top: 15.0, left: 8),
@@ -58,7 +61,9 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
     return Container(
       height: 103,
       width: double.infinity,
+      // TODO-QAnh: cái này chỉ để lấy 1 cái line nên bỏ Conatiner đi, dùng WidgetUtil để add 1 cái line
       decoration: setBorder("bottom", Color.fromRGBO(228, 228, 228, 1), 5),
+      // TODO-QAnh: bỏ colum này đi, dùng Column phía trên thôi
       child: Column(children: <Widget>[
         Row(children: <Widget>[
           Expanded(
@@ -87,6 +92,7 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
           ),
         ]),
         Container(
+          // TODO-QAnh: bỏ set height cho container
           height: 48,
           margin: EdgeInsets.only(left: 8, right: 8, top: 6),
           decoration: BoxDecoration(
@@ -117,8 +123,10 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
 
   Widget myAddress() {
     return Container(
+      // TODO-QAnh: bỏ set height đi, bỏ conatiner này đi
       height: address.length * 63.toDouble() + 80,
       child: Container(
+        // TODO-QAnh: bỏ container này luôn, dùng line thì dùng WidgetUtil.getLine
         decoration: setBorder("bottom", Color.fromRGBO(228, 228, 228, 1), 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,6 +146,7 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
               child: ListView.builder(
                   itemCount: address.length,
                   itemBuilder: (BuildContext context, int index) {
+                    // TODO-QAnh: bỏ container này đi
                     return Container(child: address[index]);
                   }),
             )
@@ -148,6 +157,7 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
   }
 
   Widget addAddress() {
+    // TODO-QAnh: nếu chỉ có width và height thì dùng SizeBox
     return Container(
         width: double.infinity,
         child: Padding(

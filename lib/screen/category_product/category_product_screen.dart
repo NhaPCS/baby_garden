@@ -4,7 +4,7 @@ import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/provider/change_parent_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/category_product/sliver_category_delegate.dart';
+import 'package:baby_garden_flutter/widget/delegate/sliver_category_delegate.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/loadmore/loadmore_nested_scrollview.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';

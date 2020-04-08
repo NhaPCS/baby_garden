@@ -1,7 +1,7 @@
 import 'package:baby_garden_flutter/data/model/shop.dart';
 import 'package:baby_garden_flutter/item/item_product_cart.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/circle_checkbox.dart';
+import 'package:baby_garden_flutter/widget/checkbox/circle_checkbox.dart';
 import 'package:flutter/material.dart';
 
 class ProductByShop extends StatelessWidget {

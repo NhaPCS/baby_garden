@@ -10,7 +10,6 @@ import 'package:nested/nested.dart';
 class RatedDetailScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _RatedDetailScreenState();
   }
 }
@@ -18,7 +17,6 @@ class RatedDetailScreen extends StatefulWidget {
 class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
     return Scaffold(
       appBar: getAppBar(
         title: S.of(context).order_rating("vcb19.12.15"),
@@ -32,12 +30,14 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
           Padding(
             padding: EdgeInsets.only(
                 left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
+            // TODO-Hung: bỏ được cái column này đi thì tốt, có thể dùng RichText
             child: Column(
               children: <Widget>[
                 SizedBox(
                   height: SizeUtil.tinySpace,
                 ),
                 Container(
+                  // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
                   alignment: Alignment.centerLeft,
                   child: Text(
                     S.of(context).order_with_code("VCB19.12.25"),
@@ -50,6 +50,7 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
                   height: SizeUtil.tinySpace,
                 ),
                 Container(
+                  // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
                   alignment: Alignment.centerLeft,
                   child: Text(
                     S.of(context).order_date("25/12/2019 12:25"),
@@ -61,6 +62,7 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
                   height: SizeUtil.tinySpace,
                 ),
                 Container(
+                  // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
                   alignment: Alignment.centerLeft,
                   child: Text(
                     S.of(context).receiving_date("25/12/2019 12:25"),
@@ -71,6 +73,7 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
               ],
             ),
           ),
+          // TODO-Hung: dung WigetUtil.getLine
           Container(
             margin: EdgeInsets.only(
                 top: SizeUtil.smallSpace, bottom: SizeUtil.tinySpace),
@@ -89,10 +92,12 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
                 Image.asset("photo/order_img.png",
                     width: MediaQuery.of(context).size.width / 6),
                 Expanded(
+                  // TODO-Hung: thay Container = Padding
                   child: Container(
                     padding: EdgeInsets.only(left: SizeUtil.smallSpace),
                     child: Column(
                       children: <Widget>[
+                        // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
                         Container(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -104,6 +109,7 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
                         SizedBox(
                           height: SizeUtil.tinySpace,
                         ),
+                        // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
                         Container(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -111,6 +117,7 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
                             style: TextStyle(fontSize: SizeUtil.textSizeSmall),
                           ),
                         ),
+                        // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
                         Container(
                           child: RatingBar(
                             enable: false,
@@ -129,6 +136,7 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
               ],
             ),
           ),
+          // TODO-Hung: dung WidgetUtil.getLine
           Container(
             width: MediaQuery.of(context).size.width,
             height: 1,
@@ -142,6 +150,7 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
           ),
           Row(
             children: <Widget>[
+              // TODO-Hung: Sao row nay lại chỉ có 1 widget? bỏ row đi
               Expanded(
                 child: Container(
                   padding: EdgeInsets.only(
@@ -149,12 +158,14 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
                       right: SizeUtil.normalSpace,
                       top: SizeUtil.smallSpace,
                       bottom: SizeUtil.smallSpace),
+                  // TODO-Hung: k cho anh test vào photo, dùng StringUtil.dummyImage
                   child: Image.asset("photo/rated_detail_img.png",
                       width: MediaQuery.of(context).size.width / 6),
                 ),
               )
             ],
           ),
+          // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
           Container(
             child: Text("10-01-2020 12:17"),
             padding: EdgeInsets.only(left: SizeUtil.smallSpace),
@@ -167,7 +178,6 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
     return null;
   }
 }

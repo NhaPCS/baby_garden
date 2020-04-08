@@ -5,21 +5,19 @@ import 'package:baby_garden_flutter/dialog/point_checkout_dialogue.dart';
 import 'package:baby_garden_flutter/dialog/privacy_policy_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_added_promo.dart';
-import 'package:baby_garden_flutter/provider/change_delivery_address_provider.dart';
 import 'package:baby_garden_flutter/provider/change_delivery_time_provider.dart';
 import 'package:baby_garden_flutter/provider/checkout_method_provider.dart';
 import 'package:baby_garden_flutter/provider/delivery_method_provider.dart';
 import 'package:baby_garden_flutter/provider/notify_switch_provider.dart';
-import 'package:baby_garden_flutter/provider/payment_info_provider.dart';
 import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
 import 'package:baby_garden_flutter/provider/shop_location_provider.dart';
 import 'package:baby_garden_flutter/provider/transfer_method_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/checkout/checkout_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/custom_radio_button.dart';
-import 'package:baby_garden_flutter/widget/dot_line_separator.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/checkbox/custom_radio_button.dart';
+import 'package:baby_garden_flutter/widget/line/dot_line_separator.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -47,7 +45,6 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
 
   @override
   void initState() {
-    // TODO: implement initState
     _dayTabControler = TabController(vsync: this, length: 3);
     _transferMethodProvider.getShips();
     super.initState();
@@ -55,6 +52,7 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
 
   @override
   Widget buildWidget(BuildContext context) {
+    // TODO-Hung: code không dùng bỏ đi
     final List<Tab> myTabs = <Tab>[
       Tab(
         child: Text(
@@ -80,7 +78,6 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
         ),
       ),
     ];
-    // TODO: implement buildWidget
     return Scaffold(
       appBar: getAppBar(
           title: S.of(context).booking,
@@ -90,7 +87,6 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
           backColor: Colors.white),
       body: ListView(
         children: <Widget>[
-          //TODO delivery address
           ListTitleCustom(
             padding: const EdgeInsets.only(
                 left: SizeUtil.normalSpace,
@@ -400,6 +396,7 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Column(children: value.ships.map((e) => Column(children: <Widget>[
+            // TODO-Hung: chuyển sang widget riêng, để trong item
             CustomRadioButton(
               crossAxisAlignment: CrossAxisAlignment.center,
               titleContent: Row(
@@ -467,6 +464,7 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
                   height: SizeUtil.tinySpace,
                 ),
                 Container(
+                  // TODO-Hung: không cần set height
                   height: SizeUtil.delivery_code_height,
                   child: Row(
                     children: <Widget>[
@@ -488,6 +486,7 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
                       SizedBox(
                         width: SizeUtil.smallSpace,
                       ),
+                      // TODO-Hung: dùng MyRaisedButton để không phải set height
                       RaisedButton(
                         onPressed: () {
                           //TODO booking
@@ -673,6 +672,7 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
           //todo shop location
           value.deliveryMenthod == 1
               ? Consumer<ShopLocationProvider>(builder: (BuildContext context, ShopLocationProvider value, Widget child) {
+            // TODO-Hung: chuyển sang map list children
                 return Column(
                   children: <Widget>[
                     CustomRadioButton(
@@ -762,6 +762,7 @@ class _BookingScreenState extends BaseState<BookingScreen> with SingleTickerProv
   }
 }
 
+// TODO-Hung: không để custom view ở đây, để trong widget, với đặt tên rõ ra
 class ListTitleCustom extends StatelessWidget {
   final Widget icon;
   final String title;
