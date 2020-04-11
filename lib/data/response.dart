@@ -1,7 +1,7 @@
-class Response {
+class Response<D extends dynamic> {
   String message;
   dynamic errorId;
-  dynamic data;
+  D data;
 
   Response({this.message, this.errorId, this.data});
 

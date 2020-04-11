@@ -1,11 +1,10 @@
-import 'package:baby_garden_flutter/data/model/shop.dart';
 import 'package:baby_garden_flutter/item/item_product_cart.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/checkbox/circle_checkbox.dart';
 import 'package:flutter/material.dart';
 
 class ProductByShop extends StatelessWidget {
-  final Shop shop;
+  final dynamic shop;
 
   const ProductByShop({Key key, this.shop}) : super(key: key);
 
@@ -16,7 +15,7 @@ class ProductByShop extends StatelessWidget {
       children: <Widget>[
         CircleCheckbox(
           text: Text(
-            shop.name,
+            shop['shop_name'],
             style: TextStyle(
                 color: ColorUtil.textGray, fontWeight: FontWeight.bold),
           ),
@@ -29,10 +28,10 @@ class ProductByShop extends StatelessWidget {
             margin: EdgeInsets.only(top: 0, bottom: SizeUtil.smallSpace)),
         Column(
             children: List.generate(
-                shop.products.length,
+                shop['product'].length,
                 (index) => ItemProductCart(
-                      hasDashLine: index < shop.products.length - 1,
-                      product: shop.products[index],
+                      hasDashLine: index < shop['product'].length - 1,
+                      product: shop['product'][index],
                     ))),
         WidgetUtil.getLine(margin: EdgeInsets.all(0), width: 5)
       ],
