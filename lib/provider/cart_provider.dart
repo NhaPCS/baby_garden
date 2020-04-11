@@ -1,74 +1,44 @@
-import 'package:baby_garden_flutter/data/model/shop.dart';
 import 'package:flutter/material.dart';
 import 'package:baby_garden_flutter/data/service.dart' as service;
 
 class CartProvider extends ChangeNotifier {
-  Map<String, Shop> shops = Map();
+  List<dynamic> shops = List();
   int badge = 0;
   int price = 0;
   bool isRun = false;
 
-  void getMyCart() {
-    service.myCart();
+  Future<void> getMyCart() async {
+    shops = await service.myCart();
     isRun = true;
-  }
-
-  void addProduct(dynamic product) {
-    Shop shop = shops[product['shop_id']];
-    if (shop != null) {
-      if (shop.products == null) {
-        shop.products = new List();
-      }
-      shop.products.add(product);
-    } else {
-      shop = new Shop(
-          id: product['shop_id'], name: "no name ${product['shop_id']}");
-      shop.products = List();
-      shop.products.add(product);
-      shops[product['shop_id']] = shop;
-    }
-    if (product['quantity'] != null) {
-      badge += product['quantity'];
-      if (product['price_discount'] != null)
-        price += int.parse(product['price_discount']) * product['quantity'];
-    }
-    service.addProductCart(products: [product]);
-    notifyListeners();
-  }
-
-  void deleteProduct(dynamic product) {
-    dynamic selected;
+    badge = 0;
+    price = 0;
     if (shops != null) {
-      shops.forEach((key, value) {
-        if (value.products != null) {
-          selected = value.products.firstWhere((element) =>
-              element['id'] == product['id'] &&
-              element['size_id'] == product['size_id'] &&
-              element['color_id'] == product['color_id']);
-          if (selected != null) {
-            value.products.remove(selected);
-          }
+      shops.forEach((element) {
+        if (element != null && element['product'] != null) {
+          element['product'].forEach((p) {
+            int number = int.parse(p['number']);
+            badge += number;
+            if (p['price_discount'] != null)
+              price += int.parse(p['price_discount']) * number;
+          });
         }
       });
     }
-    if (selected != null) service.deleteProductCart(selected);
     notifyListeners();
   }
 
-  void updateBadge() {
-    badge = 0;
-    price = 0;
-    shops.forEach((key, value) {
-      if (value.products != null)
-        for (dynamic p in value.products) {
-          if (p['quantity'] != null) {
-            badge += p['quantity'];
-            if (p['price_discount'] != null)
-              price += int.parse(p['price_discount']) * p['quantity'];
-          }
-        }
-    });
-    print("AAAAAAA ${price}");
-    notifyListeners();
+  Future<void> addProduct(dynamic product) async {
+    await service.addProductCart(products: [product]);
+    getMyCart();
+  }
+
+  Future<void> deleteProduct(dynamic product) async {
+    if (product != null) await service.deleteProductCart(product);
+    getMyCart();
+  }
+
+  Future<void> editProductCart(dynamic product, int number) async {
+    await service.editProductCart(product: product, number: number);
+    getMyCart();
   }
 }

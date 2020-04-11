@@ -133,7 +133,7 @@ class _CartState extends BaseState<CartScreen> {
                     );
                   }
                   return ProductByShop(
-                    shop: value.shops.values.toList()[index],
+                    shop: value.shops[index],
                   );
                 });
           },

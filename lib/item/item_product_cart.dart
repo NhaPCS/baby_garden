@@ -3,13 +3,12 @@ import 'package:baby_garden_flutter/dialog/set_schedule_for_product_dialog.dart'
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
-import 'package:baby_garden_flutter/screen/remind_management/remind_add_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_icon.dart';
 import 'package:baby_garden_flutter/widget/change_quantity_widget.dart';
 import 'package:baby_garden_flutter/widget/image/circle_image.dart';
-import 'package:baby_garden_flutter/widget/line/dashed_line.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/line/dashed_line.dart';
 import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -116,7 +115,7 @@ class ItemProductCart extends StatelessWidget {
                       ChangeQuantityWidget(
                         buttonColor: ColorUtil.primaryColor,
                         textColor: ColorUtil.textColor,
-                        quantity: product['quantity'],
+                        quantity: int.parse(product['number']),
                         height: 23,
                         padding: EdgeInsets.only(
                             left: SizeUtil.superTinySpace,
@@ -125,9 +124,8 @@ class ItemProductCart extends StatelessWidget {
                             left: SizeUtil.smallSpace,
                             right: SizeUtil.smallSpace),
                         quantityChanged: (value) {
-                          product['quantity'] = value;
                           Provider.of<CartProvider>(context, listen: false)
-                              .updateBadge();
+                              .editProductCart(product, value);
                         },
                       ),
                       Expanded(
