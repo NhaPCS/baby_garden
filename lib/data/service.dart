@@ -105,11 +105,27 @@ user_address: địa chỉ
 city_id: id thành phố
 district_id: id quận huyện
 */
-Future<dynamic> bookingProduct(BuildContext context,
-    {int userID, int shopID, }) async {
-  Response response = await post(context,
-      path: "bookingProduct", param: {'user_id': userID,
-        'shop_id': shopID});
+Future<dynamic> bookingProduct({String userID, String shopID,String bookingDate,String bookingTime, String promoteCode, String isReceiveInShop,
+      String paymentMethod, String note, String shipID, String address, String shipCode,String userName,
+      String userPhone,String userAddress,String cityID,String districtID
+    }) async {
+  Response response = await post(null,
+      path: "bookingProduct",
+      param: {'user_id': userID.toString(),
+              'shop_id': shopID.toString(),
+        'date_booking': bookingDate,
+        'time_booking': bookingTime,
+        'promotion_code': promoteCode,
+        'is_receive': isReceiveInShop,
+        'payment': paymentMethod,
+        'note': note,
+        'ship_id': shipID,
+        'address': address,
+        'ship_code': shipCode,
+        'user_name': userName,
+        'user_phone': userPhone,
+        'city_id': cityID,
+        'district_id': districtID});
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -345,6 +361,8 @@ Future<dynamic> myCart() async {
   if (response.isSuccess()) return response.data;
   return null;
 }
+
+
 
 Future<Response> post(BuildContext context,
     {String path,

@@ -1,16 +1,30 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/city_provider.dart';
 import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
+import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/circle_checkbox.dart';
 import 'package:baby_garden_flutter/widget/drop_down_formfield.dart';
 import 'package:baby_garden_flutter/widget/my_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-class AddingAddressDialogue extends StatelessWidget {
+class AddingAddressDialogue extends StatefulWidget {
+
   @override
-  Widget build(BuildContext context) {
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _AddingAddressDialogueState();
+  }
+}
+
+class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue>{
+  final TextEditingController _receiveNameController =new  TextEditingController();
+  final TextEditingController _receivePhoneController =new TextEditingController();
+  final TextEditingController _receiveAddressController =new TextEditingController();
+  @override
+  Widget buildWidget(BuildContext context) {
     // TODO: implement build
     return Dialog(
         shape: RoundedRectangleBorder(
@@ -18,11 +32,8 @@ class AddingAddressDialogue extends StatelessWidget {
         ),
         child: StatefulBuilder(
           builder: (context, setState) {
-            final TextEditingController _receiveNameController =new  TextEditingController();
-            final TextEditingController _receivePhoneController =new TextEditingController();
-            final TextEditingController _receiveAddressController =new TextEditingController();
-            bool isDefaultAddress = false;
-            return Container(
+            return
+              Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
                 color: Colors.white,
@@ -127,7 +138,6 @@ class AddingAddressDialogue extends StatelessWidget {
                           onChanged: (val) {
                             Provider.of<CityProvider>(context,listen: false).onChangeCity(val);
                           },
-//                          dataSource: value.cities!=null||value.cities.isNotEmpty?value.cities:[{'name':'name'}],
                           dataSource: value.cities,
                           textField: 'name',
                         ),
@@ -138,7 +148,6 @@ class AddingAddressDialogue extends StatelessWidget {
                           onChanged: (val) {
                             Provider.of<CityProvider>(context,listen: false).onChangeDistrict(val);
                           },
-//                          dataSource: value.districts!=null||value.districts.isNotEmpty?value.districts:[{'name':'name'}],
                           dataSource: value.districts,
                           textField: 'name',
                         ),
@@ -161,9 +170,9 @@ class AddingAddressDialogue extends StatelessWidget {
                   Container(
                     alignment: Alignment.centerLeft,
                     child: CircleCheckbox(
-                      onChanged: (val){
-                        Provider.of<CityProvider>(context,listen: false).onChangeDefault(val);
-                      },
+                        onChanged: (val){
+                          Provider.of<CityProvider>(context,listen: false).onChangeDefault(val);
+                        },
                         padding: const EdgeInsets.only(
                             left: SizeUtil.tinySpace,
                             right: 0,
@@ -189,8 +198,8 @@ class AddingAddressDialogue extends StatelessWidget {
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
-                          Radius.circular(SizeUtil.smallRadius),
-                        )),
+                              Radius.circular(SizeUtil.smallRadius),
+                            )),
                         color: ColorUtil.primaryColor,
                         child: Text(
                           S.of(context).cancel,
@@ -206,7 +215,6 @@ class AddingAddressDialogue extends StatelessWidget {
                       ),
                       RaisedButton(
                         onPressed: () {
-                          print("change  $isDefaultAddress");
                           String error = "";
                           var provider = Provider.of<CityProvider>(context,listen: false);
                           if (_receiveNameController.text.trim().length==0){
@@ -224,11 +232,10 @@ class AddingAddressDialogue extends StatelessWidget {
                           }
                           print(error);
                           if (error.length==0){
-                            String address = "${_receiveNameController.text.trim()} - ${_receivePhoneController.text.trim()}\n ${_receiveAddressController.text.trim()} \n Phường , Quận ${provider.districts[provider.districtVal]['name']}, ${provider.cities[provider.cityVal]['name']}";
+                            dynamic address = {'userName':_receiveNameController.text.trim(),'phone':_receivePhoneController.text.trim(),'address':_receiveAddressController.text.trim(),'districtName':provider.districts[provider.districtVal]['name'],'districtID':provider.districts[provider.districtVal]['id'],'city':provider.cities[provider.cityVal]['name'],'cityID':provider.cities[provider.cityVal]['id']};
                             Provider.of<ReceiveAddressListProvider>(context,listen: false).onAddAddress(address,Provider.of<CityProvider>(context,listen: false).isDefault);
                             Provider.of<CityProvider>(context,listen: false).reset();
                             Navigator.of(context).pop();
-                            print("asdas das $isDefaultAddress");
                           }else{
                             WidgetUtil.showErrorDialog(context, error);
                           }
@@ -236,8 +243,8 @@ class AddingAddressDialogue extends StatelessWidget {
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
-                          Radius.circular(SizeUtil.smallRadius),
-                        )),
+                              Radius.circular(SizeUtil.smallRadius),
+                            )),
                         color: ColorUtil.primaryColor,
                         child: Text(
                           S.of(context).add_new,
@@ -256,4 +263,11 @@ class AddingAddressDialogue extends StatelessWidget {
           },
         ));
   }
+
+  @override
+  List<SingleChildWidget> providers() {
+    // TODO: implement providers
+    return [];
+  }
+
 }

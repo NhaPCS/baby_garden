@@ -72,7 +72,7 @@ class ChangeDeliveryAddressDialogue extends StatelessWidget{
                     Column(
                       children: List.generate(value.addressList.length, (index) => CustomRadioButton(
                         titleContent: Text(
-                          value.addressList[index],
+                          value.getFullAddress(index),
                           style: TextStyle(
                               fontSize: SizeUtil.textSizeSmall,
                               color: Colors.black),
@@ -101,9 +101,6 @@ class ChangeDeliveryAddressDialogue extends StatelessWidget{
                           onPressed: () {
                             showDialog(
                                 context: context, builder: (BuildContext context) => AddingAddressDialogue());
-//                            showDialog(
-//                                context: context,
-//                                builder: (_) => ReportProductDialog(context));
                           },
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(
