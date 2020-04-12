@@ -6,6 +6,7 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/child_heath/child_heath_screen.dart';
 import 'package:baby_garden_flutter/screen/change_password/change_password_screen.dart';
 import 'package:baby_garden_flutter/screen/profile/add_child_dialog.dart';
+import 'package:baby_garden_flutter/screen/profile/child_infor.dart';
 import 'package:baby_garden_flutter/screen/profile/user_infor.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,12 +24,12 @@ class AccountManage extends StatefulWidget {
 class _AccountManageState extends BaseState<AccountManage> {
   final GetListProvider _getListProvider = GetListProvider();
   final UserInfor userInfor = UserInfor(
-    user: {
-      'name': "Đinh Bộ Lĩnh",
-      'phone': '0123456789',
-      'avatar': StringUtil.dummyImage
-    },
-  );
+      // user: {
+      //   'name': "Đinh Bộ Lĩnh",
+      //   'phone': '0123456789',
+      //   'avatar': StringUtil.dummyImage
+      // },
+      );
 
   final childInformation = ChildInfor(
     childName: 'Hùng gay',
