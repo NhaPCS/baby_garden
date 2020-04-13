@@ -23,13 +23,7 @@ class AccountManage extends StatefulWidget {
 
 class _AccountManageState extends BaseState<AccountManage> {
   final GetListProvider _getListProvider = GetListProvider();
-  final UserInfor userInfor = UserInfor(
-      // user: {
-      //   'name': "Đinh Bộ Lĩnh",
-      //   'phone': '0123456789',
-      //   'avatar': StringUtil.dummyImage
-      // },
-      );
+  final UserInfor userInfor = UserInfor();
 
   final childInformation = ChildInfor(
     childName: 'Hùng gay',
