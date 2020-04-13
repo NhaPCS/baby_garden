@@ -13,8 +13,6 @@ class UserInfor extends StatelessWidget {
     return Consumer<UserProvider>(
         builder: (BuildContext context, UserProvider value, Widget child) {
       var user = value.userInfo;
-      user['date'] = reFormatDate(user['date']);
-
       return Container(
         padding: EdgeInsets.only(
             left: SizeUtil.smallSpace,
@@ -46,19 +44,12 @@ class UserInfor extends StatelessWidget {
                       fontSize: SizeUtil.textSizeBigger),
                 ),
                 MyText(user['phone']),
-                Text("${S.of(context).joinDate}: ${user['date']}")
+                Text("${S.of(context).joinDate}: ${DateUtil.formatDDMMyyyy(user['date'])}")
               ],
             ),
           ],
         ),
       );
     });
-  }
-
-  String reFormatDate(date) {
-    final parsedDate = DateTime.parse(date);
-    final formatter = new DateFormat.yMd();
-    String formatted = formatter.format(parsedDate);
-    return formatted;
   }
 }
