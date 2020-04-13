@@ -44,7 +44,8 @@ class UserInfor extends StatelessWidget {
                       fontSize: SizeUtil.textSizeBigger),
                 ),
                 MyText(user['phone']),
-                Text("${S.of(context).joinDate}: ${DateUtil.formatDDMMyyyy(user['date'])}")
+                Text(
+                    "${S.of(context).joinDate}: ${DateUtil.formatDDMMyyyy(user['date'])}")
               ],
             ),
           ],

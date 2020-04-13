@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
@@ -7,7 +5,7 @@ import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/account/account_manage_screen.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/customer_support/customer_support.dart';
-import 'package:baby_garden_flutter/screen/favorite_product/favorite_product.dart';
+import 'package:baby_garden_flutter/screen/favorite_product/favorite_product_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_like_screen.dart';
 import 'package:baby_garden_flutter/screen/point_management/point_management_screen.dart';
@@ -143,7 +141,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                   push(VoucherManagement());
                   break;
                 case 4:
-                  push(FavoriteProduct());
+                  push(FavoriteProductScreen());
                   break;
                 case 5:
                   push(PartnerLikeScreen());
