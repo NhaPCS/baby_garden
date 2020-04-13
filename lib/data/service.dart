@@ -130,6 +130,40 @@ Future<dynamic> bookingProduct({String userID, String shopID,String bookingDate,
   return null;
 }
 
+//todo notification
+Future<dynamic> notification({String userID}) async{
+  Response response  = await get(null,path: "notification",param: {'user_id':userID});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+//todo notificationDetail
+Future<dynamic> notificationDetail({String userID,String notifyID}) async{
+  Response response  = await get(null,path: "notificationDetail",param: {'index':userID,'noty_id':notifyID});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+//todo deleteNoty
+Future<dynamic> deleteNoty({String userID,String notifyID}) async{
+  Response response  = await get(null,path: "deleteNoty",param: {'index':userID,'noty_id':notifyID});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+//todo news
+Future<dynamic> news({String index,String numberPost}) async{
+  Response response  = await get(null,path: "news",param: {'index':index,'number_post':numberPost});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+//todo newsDetail
+Future<dynamic> newsDetail({String newID}) async{
+  Response response  = await get(null,path: "newsDetail",param: {'news_id':newID});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 //todo bookingDetail
 Future<dynamic> bookingDetail({String userId, var bookingID}) async {
   Response response = await get(null,
