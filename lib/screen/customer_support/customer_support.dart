@@ -119,7 +119,7 @@ class _CustomerSupportScreenState extends BaseState<CustomerSupportScreen> {
           WidgetUtil.getLine(margin: EdgeInsets.only(left: SizeUtil.defaultSpace,right: SizeUtil.defaultSpace),color: ColorUtil.gray),
           ListTile(
             onTap: (){
-              push(PartnerRegister());
+              push(PartnerRegisterScreen());
             },
             leading: Image.asset("photo/support_partner.png",
                 width: SizeUtil.iconSizeBig),

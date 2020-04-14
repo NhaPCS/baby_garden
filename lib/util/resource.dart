@@ -39,6 +39,7 @@ class ColorUtil {
   static const Color darkGray = Color(0xff707070);
   static const serviceItemUnselectColor = Color(0xffF6F6F6);
   static const Color textDark = Color(0xff444444);
+  static const Color grayEC = Color(0xffececec);
 
   static const List<Color> gradientColors = [
     Color(0xffFFA503),

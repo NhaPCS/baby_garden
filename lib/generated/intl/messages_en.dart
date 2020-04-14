@@ -35,7 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m7(date) => "Ngày sử dung: ${date}";
 
-  static m8(key) => "Vui lòng nhập \$${key} để tiếp tục";
+  static m8(key) => "Vui lòng nhập ${key} để tiếp tục";
 
   static m9(time) => "Thời gian: ${time}";
 
@@ -372,6 +372,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "reenter_new_password" : MessageLookupByLibrary.simpleMessage("Nhập lại mật khẩu mới"),
     "reenter_password" : MessageLookupByLibrary.simpleMessage("Nhập lại mật khẩu"),
     "register" : MessageLookupByLibrary.simpleMessage(" Đăng ký "),
+    "register_partner" : MessageLookupByLibrary.simpleMessage("Đăng ký trở thành đối tác"),
+    "register_partner_success" : MessageLookupByLibrary.simpleMessage("Đăng ký trở thành đối tác thành công!"),
     "register_success" : MessageLookupByLibrary.simpleMessage("Đăng ký thành công"),
     "reload" : MessageLookupByLibrary.simpleMessage("Tải lại"),
     "remember_password" : MessageLookupByLibrary.simpleMessage("Ghi nhớ mật khẩu"),

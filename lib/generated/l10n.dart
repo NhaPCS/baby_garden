@@ -3748,7 +3748,7 @@ class S {
 
   String message_empty(dynamic key) {
     return Intl.message(
-      'Vui lòng nhập \$$key để tiếp tục',
+      'Vui lòng nhập $key để tiếp tục',
       name: 'message_empty',
       desc: '',
       args: [key],
@@ -3786,6 +3786,24 @@ class S {
     return Intl.message(
       'Lấy ảnh từ thư viện',
       name: 'from_gallery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get register_partner {
+    return Intl.message(
+      'Đăng ký trở thành đối tác',
+      name: 'register_partner',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get register_partner_success {
+    return Intl.message(
+      'Đăng ký trở thành đối tác thành công!',
+      name: 'register_partner_success',
       desc: '',
       args: [],
     );

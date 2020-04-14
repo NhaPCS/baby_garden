@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:baby_garden_flutter/data/model/param.dart';
 import 'package:baby_garden_flutter/data/response.dart';
 import 'package:baby_garden_flutter/data/shared_value.dart';
+import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -395,6 +397,25 @@ Future<Response> reportProduct(BuildContext context,
   dynamic files = {"img": img};
   Response response = await postMultiPart(context,
       path: 'reportProduct', param: params, files: files, requireLogin: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
+Future<Response> registerPartner(BuildContext context,
+    {String shopName, String phone, String address, String job}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "name": shopName,
+    "phone": phone,
+    "address": address,
+    "job": job,
+  };
+  Response response = await post(context,
+      path: 'registerPartner',
+      param: params,
+      requireLogin: true,
+      showLoading: true);
   if (response.isSuccess()) return response;
   return null;
 }
