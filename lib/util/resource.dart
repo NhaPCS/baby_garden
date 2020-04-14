@@ -64,6 +64,7 @@ class DateUtil {
     return new DateFormat("dd/MM/yyyy").format(date);
   }
 }
+
 class StringUtil {
   static String getPriceText(String price) {
     if (price == null || price.isEmpty) return "";

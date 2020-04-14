@@ -48,7 +48,10 @@ class AddressItem extends StatelessWidget {
             onTap: () {},
             child: Padding(
               padding: const EdgeInsets.only(right: 8.0),
-              child: Text(S.of(context).edit),
+              child: Text(
+                S.of(context).edit,
+                style: TextStyle(fontSize: SizeUtil.textSizeSmall),
+              ),
             ),
           ),
         ],

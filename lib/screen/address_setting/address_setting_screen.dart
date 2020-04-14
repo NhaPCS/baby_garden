@@ -8,9 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
-
 import 'add_address_modal.dart';
-// import 'address.dart';
 
 class AddressSettingScreen extends StatefulWidget {
   @override
@@ -22,7 +20,6 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
       GetListAddressProvider();
   final _defaultPadding = const EdgeInsets.only(
       top: SizeUtil.normalSpace, left: SizeUtil.midSmallSpace);
-  final List<AddressItem> addressList = [];
 
   @override
   void didChangeDependencies() {
@@ -34,6 +31,7 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
+    final List<AddressItem> addressList = [];
     return Scaffold(
         appBar: getAppBar(title: S.of(context).addressAccount),
         body:
@@ -54,9 +52,15 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
                 WidgetUtil.getLine(color: Colors.black),
                 addressSetting(),
                 WidgetUtil.getLine(width: SizeUtil.lineHeight),
-                myAddress(),
-                WidgetUtil.getLine(width: SizeUtil.lineHeight),
-                addAddress(),
+                Padding(
+                  padding: _defaultPadding,
+                  child: Text(
+                    S.of(context).myAddress,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: ColorUtil.darkGray),
+                  ),
+                ),
+                myAddress(addressList),
               ]);
         }));
   }
@@ -74,7 +78,10 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
 
   Widget addressSetting() {
     return Padding(
-      padding: _defaultPadding,
+      padding: const EdgeInsets.only(
+          top: SizeUtil.normalSpace,
+          left: SizeUtil.midSmallSpace,
+          right: SizeUtil.midSmallSpace),
       child: Column(children: <Widget>[
         Row(children: <Widget>[
           Expanded(
@@ -94,21 +101,20 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
                   fontSize: SizeUtil.textSizeSmall),
             ),
           ),
-          SizedBox(width: 8),
+          SizedBox(width: SizeUtil.midSmallSpace),
         ]),
         SizedBox(
-          height: 8,
+          height: SizeUtil.midSmallSpace,
         ),
         Container(
-          margin: EdgeInsets.all(0),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
+              borderRadius: BorderRadius.circular(SizeUtil.tinyRadius),
               color: ColorUtil.serviceItemUnselectColor),
           child: Center(
             child: Row(children: <Widget>[
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(15),
+                  padding: SizeUtil.normalPadding,
                   child: Text(
                     _getListAddressProvider.mainAddress,
                     style: TextStyle(color: Colors.black),
@@ -116,7 +122,7 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
+                  padding: const EdgeInsets.only(right: SizeUtil.midSmallSpace),
                   child: Icon(
                     Icons.location_on,
                     color: ColorUtil.primaryColor,
@@ -129,30 +135,16 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
     );
   }
 
-  Widget myAddress() {
-    return Container(
-      // TODO-QAnh: bỏ set height đi, bỏ conatiner này đi
-      height: addressList.length * 63.toDouble() + 80,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget myAddress(List<AddressItem> addressList) {
+    return Expanded(
+      child: ListView(
         children: <Widget>[
-          Padding(
-            padding: _defaultPadding,
-            child: Text(
-              S.of(context).myAddress,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, color: ColorUtil.darkGray),
-            ),
+          Column(
+            children: addressList.map((e) => e).toList(),
           ),
-
-          // list view address
-          Expanded(
-            child: ListView.builder(
-                itemCount: addressList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return addressList[index];
-                }),
-          ),
+          WidgetUtil.getLine(width: SizeUtil.lineHeight),
+          addAddress(),
+          SizedBox(height: SizeUtil.largeSpace)
         ],
       ),
     );
