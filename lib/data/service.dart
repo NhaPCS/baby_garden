@@ -507,6 +507,38 @@ Future<Response> registerPartner(BuildContext context,
 }
 
 
+Future<dynamic> getUserInfo(BuildContext context,
+    {@required String userId}) async {
+  Response response = await post(context, path: "", param: {'user_id': userId});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> listAddress() async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+
+  dynamic params = {"user_id": userId};
+
+  Response response =
+  await get(null, path: "listAddress", param: params, showLoading: false);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> listFavouriteShop(BuildContext context,
+    {int index = START_PAGE,
+      int numberPosts = PAGE_SIZE}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "index": index.toString(),
+    "number_post": numberPosts.toString()
+  };
+  Response response =
+  await get(null, path: "listFavouriteShop", param: params);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
 
 Future<Response> post(BuildContext context,
     {String path,
@@ -650,22 +682,4 @@ Response parseResponse(BuildContext context, String responseBody,
     }
   }
   return res;
-}
-
-Future<dynamic> getUserInfo(BuildContext context,
-    {@required String userId}) async {
-  Response response = await post(context, path: "", param: {'user_id': userId});
-  if (response.isSuccess()) return response.data;
-  return null;
-}
-
-Future<dynamic> listAddress() async {
-  String userId = await ShareValueProvider.shareValueProvider.getUserId();
-
-  dynamic params = {"user_id": userId};
-
-  Response response =
-      await get(null, path: "listAddress", param: params, showLoading: false);
-  if (response.isSuccess()) return response.data;
-  return null;
 }

@@ -1,14 +1,16 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/change_category_provider.dart';
+import 'package:baby_garden_flutter/provider/get_list_partner_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_book_schedule.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:baby_garden_flutter/widget/partner_item.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
+
 // TODO-Hung: screen mới thì move ra folder mới, không để chung
 class PartnerLikeScreen extends StatefulWidget {
   @override
@@ -18,8 +20,17 @@ class PartnerLikeScreen extends StatefulWidget {
 }
 
 class _PartnerLikeScreen extends BaseState<PartnerLikeScreen> {
-  final ChangeCategoryProvider _changeCategoryProvider =
-      ChangeCategoryProvider();
+  final GetListPartnerProvider _getListPartnerProvider =
+      GetListPartnerProvider();
+
+  @override
+  void didChangeDependencies() {
+    if (_getListPartnerProvider.shops == null ||
+        _getListPartnerProvider.shops.isEmpty) {
+      _getListPartnerProvider.getListFavouriteShop(context);
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -33,20 +44,31 @@ class _PartnerLikeScreen extends BaseState<PartnerLikeScreen> {
           ),
           ListCategory(),
           Expanded(
-            child: ListView.builder(
-                itemCount: 10,
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                padding: EdgeInsets.only(left: SizeUtil.tinySpace,right: SizeUtil.tinySpace),
-                itemBuilder: (context, index) {
-                  return new GestureDetector(
-                    child: new PartnerItem(),
-                    onTap: () {
-                      push(PartnerBookScheduleScreen("1","VUON CUA BE","Thời trang"));
-//                      push(VCBExpressDetailScreen());
-                    },
+            child: Consumer<GetListPartnerProvider>(
+              builder: (BuildContext context, GetListPartnerProvider value,
+                  Widget child) {
+                if (value.shops == null || value.shops.isEmpty)
+                  return LoadingView(
+                    isNoData: value.shops != null,
                   );
-                }),
+                return ListView.builder(
+                    itemCount: value.shops.length,
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.only(
+                        left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
+                    itemBuilder: (context, index) {
+                      return new GestureDetector(
+                        child: new PartnerItem(shop: value.shops[index]),
+                        onTap: () {
+                          push(PartnerBookScheduleScreen(
+                              "1", "VUON CUA BE", "Thời trang"));
+//                      push(VCBExpressDetailScreen());
+                        },
+                      );
+                    });
+              },
+            ),
           )
         ],
       ),
@@ -55,6 +77,6 @@ class _PartnerLikeScreen extends BaseState<PartnerLikeScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _changeCategoryProvider)];
+    return [ChangeNotifierProvider.value(value: _getListPartnerProvider)];
   }
 }

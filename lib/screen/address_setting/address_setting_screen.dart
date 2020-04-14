@@ -38,14 +38,15 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
         appBar: getAppBar(title: S.of(context).addressAccount),
         body:
             Consumer<GetListAddressProvider>(builder: (context, value, child) {
-          for (var _address in value.address) {
-            var address = Address(
-                id: _address['id'],
-                date: _address['date'],
-                active: _address['active'] == '1' ? true : false,
-                address: _address['address']);
-            addressList.add(AddressItem(address: address));
-          }
+          if (value.address != null)
+            for (var _address in value.address) {
+              var address = Address(
+                  id: _address['id'],
+                  date: _address['date'],
+                  active: _address['active'] == '1' ? true : false,
+                  address: _address['address']);
+              addressList.add(AddressItem(address: address));
+            }
 
           return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
