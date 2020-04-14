@@ -36,7 +36,7 @@ class StoreInfo extends StatelessWidget {
         Expanded(child: SizedBox()),
         MyRaisedButton(
           onPressed: () {
-            RouteUtil.push(context, PartnerBookScheduleScreen());
+//            RouteUtil.push(context, PartnerBookScheduleScreen());
           },
           borderColor: ColorUtil.primaryColor,
           borderWidth: 2,

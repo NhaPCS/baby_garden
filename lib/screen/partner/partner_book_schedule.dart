@@ -1,4 +1,6 @@
+import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/dialog/booking_dialogue.dart';
+import 'package:baby_garden_flutter/dialog/booking_schedule_success_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_product.dart';
 import 'package:baby_garden_flutter/provider/booking_service_detail_provider.dart';
@@ -10,13 +12,13 @@ import 'package:baby_garden_flutter/provider/partner_book_tabbar_provider.dart';
 import 'package:baby_garden_flutter/provider/partner_schedule_get_header_hei.dart';
 import 'package:baby_garden_flutter/provider/partner_tabbar_provider.dart';
 import 'package:baby_garden_flutter/provider/see_more_provider.dart';
-import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
-import 'package:baby_garden_flutter/screen/category_product/sliver_category_delegate.dart';
+import 'package:baby_garden_flutter/screen/partner/partner_book_schedule_success.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/view_model/booking_service_view_model.dart';
-import 'package:baby_garden_flutter/widget/custom_radio_button.dart';
+import 'package:baby_garden_flutter/widget/checkbox/custom_radio_button.dart';
+import 'package:baby_garden_flutter/widget/delegate/sliver_category_delegate.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:baby_garden_flutter/widget/service_detail_item.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -27,12 +29,11 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class PartnerBookScheduleScreen extends StatefulWidget {
-  String shopID;
-  String shopName;
-  String category;
+  final String shopID;
+  final String shopName;
+  final String category;
 
-  PartnerBookScheduleScreen(this.shopID, this.shopName, this.category)
-      : super();
+  const PartnerBookScheduleScreen(this.shopID, this.shopName, this.category) : super();
 
   @override
   State<StatefulWidget> createState() {
@@ -47,16 +48,12 @@ class _PartnerBookScheduleScreenState
   final SeeMoreProvider _seeMoreProvider = SeeMoreProvider();
   final PartnerChooseLocation _partnerChooseLocation = PartnerChooseLocation();
   final PartnerTabbarProvider _partnerTabbarProvider = PartnerTabbarProvider();
-  final PartnerGetHeightProvider _getHeightProvider =
-      PartnerGetHeightProvider();
+  final PartnerGetHeightProvider _getHeightProvider = PartnerGetHeightProvider();
   final ChangeServiceProvider _serviceProvider = ChangeServiceProvider();
   final ChangeDateProvider _dateProvider = ChangeDateProvider();
-  final ChangeScheduleTimeProvider _scheduleTimeProvider =
-      ChangeScheduleTimeProvider();
-  final PartnerBookTabbarProvider _bookTabbarProvider =
-      PartnerBookTabbarProvider();
-  final BookingServiceDetailProvider _bookingServiceDetailProvider =
-      BookingServiceDetailProvider();
+  final ChangeScheduleTimeProvider _scheduleTimeProvider = ChangeScheduleTimeProvider();
+  final PartnerBookTabbarProvider _bookTabbarProvider = PartnerBookTabbarProvider();
+  final BookingServiceDetailProvider _bookingServiceDetailProvider = BookingServiceDetailProvider();
 
   TabController _tabController;
   TabController _dayTabController;
@@ -92,9 +89,7 @@ class _PartnerBookScheduleScreenState
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
-    _bookingServiceDetailProvider.getdata(
-        Provider.of<UserProvider>(context, listen: false).userID,
-        widget.shopID);
+    _bookingServiceDetailProvider.getdata(widget.shopID);
     super.didChangeDependencies();
   }
 
@@ -313,9 +308,7 @@ class _PartnerBookScheduleScreenState
                                                     shopValue.data !=
                                                         null
                                                         ? shopValue
-                                                        .data[
-                                                    'number_like']
-                                                        : "12",
+                                                        .data['number_like'] : "12",
                                                     style: TextStyle(
                                                         fontSize: SizeUtil
                                                             .textSizeSmall,
@@ -428,11 +421,10 @@ class _PartnerBookScheduleScreenState
   }
 
   Widget bookingContent(dynamic data) {
-    print(data['address']);
-    dynamic chooseService;
-    String addressChoose;
-    String date;
-    String time;
+//    print(data['address']);
+    dynamic chooseService = data['service']!=null&&data['service'].length>0?data['service'][0]:{};
+    String addressChoose= data['address']!=null&&data['address'].length>0?data['address'][0]['address']:"";
+    String time = StringUtil.time[0]['time'];
     return ListView(
       children: <Widget>[
         Column(
@@ -452,7 +444,7 @@ class _PartnerBookScheduleScreenState
             //todo client list
             Consumer<PartnerChooseLocation>(builder: (BuildContext context, PartnerChooseLocation value, Widget child) {
                 return Column(
-                  children: List.generate(data['address'].length, (index) => CustomRadioButton(
+                  children: List.generate(data['address']!=null?data['address'].length:0, (index) => CustomRadioButton(
                     titleContent: Text(data['address'][index]['address']),
                     padding: const EdgeInsets.only(
                         left: SizeUtil.smallSpace,
@@ -475,7 +467,7 @@ class _PartnerBookScheduleScreenState
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                S.of(context).choose_service(data['service'].length),
+                S.of(context).choose_service(data['service']!=null?data['service'].length:0),
                 style: TextStyle(
                     color: ColorUtil.textColor,
                     fontSize: SizeUtil.textSizeDefault,
@@ -496,7 +488,7 @@ class _PartnerBookScheduleScreenState
                       crossAxisCount: 2, childAspectRatio: 3.3),
                   padding: EdgeInsets.only(
                       left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
-                  itemCount: data['service'].length,
+                  itemCount: data['service']!=null?data['service'].length:0,
                   itemBuilder: (context, index) {
                     bool isSelected = _serviceProvider != null &&
                         _serviceProvider.index == index;
@@ -647,20 +639,43 @@ class _PartnerBookScheduleScreenState
                     top: SizeUtil.tinySpace,
                     bottom: SizeUtil.tinySpace),
                 width: MediaQuery.of(context).size.width,
-                child: RaisedButton(
-                  onPressed: () {
-                    List<dynamic> confirmForm = [
-                      {'title': 'Dịch vụ đã đặt: ', 'content': chooseService['content']},
-                      {'title': 'Giá niêm yết:  ', 'content': '\nKhách hàng đã có thẻ hoặc mã voucher vui lòng mang tới cửa hàng để được hưởng đầy đủ ưu đãi.', 'value': chooseService['price']},
-                      {'title': 'Ngày sử dụng: ', 'content': StringUtil.week[_dayTabController.index]['date']},
-                      {'title': 'Thời gian: ', 'content': time},
-                      {'title': 'Thời gian thực hiện: ', 'content': chooseService['ex_time']},
-                    ];
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) =>
-                            BookingDialogue(context,confirmForm,widget.shopID,addressChoose,StringUtil.week[_dayTabController.index]['date'],time,chooseService['id']));
-                  },
+                child: RaisedButton (
+                  onPressed: () async{
+                    String userId = await ShareValueProvider.shareValueProvider.getUserId();
+                    if (userId == null || userId.isEmpty) {
+                      if (context != null) {
+                        WidgetUtil.showRequireLoginDialog(context);
+                      }
+                    }else{
+                      List<dynamic> confirmForm = [
+                        {'title': 'Dịch vụ đã đặt: ', 'content': chooseService['content']},
+                        {'title': 'Giá niêm yết:  ', 'content': '\nKhách hàng đã có thẻ hoặc mã voucher vui lòng mang tới cửa hàng để được hưởng đầy đủ ưu đãi.', 'value': chooseService['price']},
+                        {'title': 'Ngày sử dụng: ', 'content': StringUtil.week[_dayTabController.index]['date']},
+                        {'title': 'Thời gian: ', 'content': time},
+                        {'title': 'Thời gian thực hiện: ', 'content': chooseService['ex_time']},
+                      ];
+                      await showDialog(
+                          context: context,
+                          builder: (BuildContext context) => BookingDialogue(context,confirmForm,
+                              widget.shopID,addressChoose,StringUtil.week[_dayTabController.index]['date'],
+                              time,chooseService['id'])).then((value) async => {
+                                if(value!=null&&value){
+                                  print("true"),
+                                  await showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          BookingScheduleSuccessDialogue(context)).then((value) => {
+                                            if(value==null||value){
+                                              RouteUtil.pushReplacement(context, PartnerBookScheduleSuccessScreen(chooseService,_dayTabController.index,_scheduleTimeProvider.timeIndex))
+                                            }
+                                  })
+                                }else{
+                                  print("false")
+                                }
+                      });
+
+                      }
+                    },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
                     Radius.circular(SizeUtil.smallRadius),

@@ -1,11 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/news_detail_provider.dart';
-import 'package:baby_garden_flutter/provider/vcb_express_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/my_text_field.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +11,7 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class VCBExpressDetailScreen extends StatefulWidget {
-  String newsID;
-
-
+  final String newsID;
   VCBExpressDetailScreen(this.newsID):super();
 
   @override

@@ -151,6 +151,34 @@ Future<dynamic> bookingProduct({String userID, String shopID,String bookingDate,
   return null;
 }
 
+Future<dynamic> listVoucher({String index, String numberPost,String category }) async {
+  Response response = await get(null,
+      path: "listVoucher", param: {'index': index, 'number_post': numberPost,'category_id':category});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> listVoucherUser({String userID}) async {
+  Response response = await get(null,
+      path: "listVoucherUser", param: {'user_id': userID});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> listVoucherShop({ String shopID }) async {
+  Response response = await get(null,
+      path: "listVoucherShop", param: { 'shop_id': shopID});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> voucherDetail({String userID, String shopID }) async {
+  Response response = await get(null,
+      path: "voucherDetail", param: {'user_id': userID, 'shop_id': shopID});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 //todo notification
 Future<dynamic> notification({String userID}) async{
   Response response  = await get(null,path: "notification",param: {'user_id':userID});
@@ -166,7 +194,7 @@ Future<dynamic> notificationDetail({String userID,String notifyID}) async{
 }
 //todo deleteNoty
 Future<dynamic> deleteNoty({String userID,String notifyID}) async{
-  Response response  = await get(null,path: "deleteNoty",param: {'index':userID,'noty_id':notifyID});
+  Response response  = await post(null,path: "deleteNoty",param: {'index':userID,'noty_id':notifyID});
   if (response.isSuccess()) return response.data;
   return null;
 }
