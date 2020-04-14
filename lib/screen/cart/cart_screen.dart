@@ -119,7 +119,7 @@ class _CartState extends BaseState<CartScreen> {
                           child: MyRaisedButton(
                             onPressed: () {
                               //TODO
-                              push(BookingScreen());
+//                              push(BookingScreen(shopID: value.shops.values.toList()[0],promoteCode: "promoteCode here",));
                             },
                             text: S.of(context).take_order.toUpperCase(),
                             textStyle: TextStyle(

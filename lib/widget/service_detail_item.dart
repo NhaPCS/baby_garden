@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 // TODO-Hung: widget là chỗ để custom widget, không phải để item, để vào folder item
 class ServiceDetailItem extends StatelessWidget{
   final bool isSelected ;
-  const ServiceDetailItem({Key key,this.isSelected = false}):super(key: key);
+  final dynamic data;
+  const ServiceDetailItem({Key key,this.data,this.isSelected = false}):super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class ServiceDetailItem extends StatelessWidget{
                   top: SizeUtil.smallSpace,
                   bottom: SizeUtil.smallSpace),
               child: Text(
-                "Ủ mầm tái sinh dành cho da mặt",textAlign: TextAlign.start,
+                data['content'],textAlign: TextAlign.start,
                 style: TextStyle(
                     fontSize: 12, color: isSelected?Colors.white:Color(0xff646464)),
               ),
@@ -55,7 +56,7 @@ class ServiceDetailItem extends StatelessWidget{
               top: 2,
               right: 2,
               child: Text(
-                S.of(context).service_time_range("60"),
+                S.of(context).service_time_range(data['ex_time'].toString().replaceAll(" phút", "")),
                 style: TextStyle(fontSize: 7,color: Colors.white),
                 textAlign: TextAlign.center,
               ),

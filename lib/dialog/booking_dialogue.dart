@@ -1,13 +1,24 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/user_provider.dart';
+import 'package:baby_garden_flutter/screen/partner/partner_book_schedule_success.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import 'package:baby_garden_flutter/data/service.dart' as service;
 import 'booking_schedule_success_dialogue.dart';
 
 class BookingDialogue extends Dialog {
   final BuildContext context;
+  final List<dynamic> serviceData;
+  final String shopID;
+  final String address;
+  final String day;
+  final String time;
+  final String serviceID;
 
-  BookingDialogue(this.context);
+
+  BookingDialogue(this.context, this.serviceData, this.shopID, this.address,
+      this.day, this.time, this.serviceID);
 
   @override
   // TODO: implement shape
@@ -63,7 +74,7 @@ class BookingDialogue extends Dialog {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
-                children: StringUtil.confirmForm
+                children: serviceData
                     .map((e) => Padding(
                         padding: const EdgeInsets.only(
                             left: SizeUtil.smallSpace,
@@ -112,7 +123,7 @@ class BookingDialogue extends Dialog {
               children: <Widget>[
                 RaisedButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pop(false);
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
@@ -132,12 +143,14 @@ class BookingDialogue extends Dialog {
                   width: SizeUtil.smallSpace,
                 ),
                 RaisedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) =>
-                            BookingScheduleSuccessDialogue(context));
+                  onPressed: () async{
+                    var userID = Provider.of<UserProvider>(context,listen: false).userInfo['id'];
+                    dynamic data = await service.bookingService(userID: userID,shopID: shopID,dateBooking: day,timeBooking: time,serviceID: serviceID,address: address);
+                    if (data !=null){
+                      Navigator.of(context).pop(true);
+                    }else{
+                      Navigator.of(context).pop(false);
+                    }
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(

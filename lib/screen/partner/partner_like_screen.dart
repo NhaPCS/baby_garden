@@ -42,7 +42,7 @@ class _PartnerLikeScreen extends BaseState<PartnerLikeScreen> {
                   return new GestureDetector(
                     child: new PartnerItem(),
                     onTap: () {
-                      push(PartnerBookScheduleScreen());
+                      push(PartnerBookScheduleScreen("1","VUON CUA BE","Thời trang"));
 //                      push(VCBExpressDetailScreen());
                     },
                   );

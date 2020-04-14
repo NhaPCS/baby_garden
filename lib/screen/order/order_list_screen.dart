@@ -65,7 +65,7 @@ class _OrderListScreenState extends BaseState<OrderListScreen>{
                         Provider.of<BookingDetailProvider>(context,listen: false).getBookingDetail(Provider.of<UserProvider>(context,listen: false).userInfo['id'], value.orderList[index]['id']);
                         push(OrderDetailScreen(title:widget.childTitle!=null?widget.childTitle:widget.title,state: widget.state,isShowNegativeButton: widget.isShowNegativeButton,isShowPositiveButton: widget.isShowPositiveButton,));
                       },
-                          child: OrderItem(isRated: false,));
+                          child: OrderItem(isRated: false,itemData: value.orderList[index],));
                     });
               },)
             ),

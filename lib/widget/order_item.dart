@@ -2,11 +2,12 @@ import 'dart:math';
 
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// TODO-Hung: widget là chỗ để custom widget, không phải để item, để vào folder item
+import 'image/svg_icon.dart';
+
 class OrderItem extends StatelessWidget {
   final bool isRated;
   final dynamic itemData;
@@ -15,6 +16,7 @@ class OrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    dynamic orderItem = itemData['list_product'].length>0?itemData['list_product'][0]:null;
     return Column(
       children: <Widget>[
         WidgetUtil.getLine(
@@ -36,7 +38,7 @@ class OrderItem extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: Text(
-                      S.of(context).order_with_code("VCB19.12.25"),
+                      S.of(context).order_with_code(itemData['code']),
                       style: TextStyle(
                           fontSize: SizeUtil.textSizeDefault,
                           color: ColorUtil.textColor),
@@ -50,7 +52,7 @@ class OrderItem extends StatelessWidget {
                             color: ColorUtil.textColor),
                         children: <TextSpan>[
                           TextSpan(
-                            text: "Vườn Của Bé",
+                            text: itemData['shop_name'],
                             style: TextStyle(
                               height: 2,
                               color: ColorUtil.red,
@@ -62,7 +64,7 @@ class OrderItem extends StatelessWidget {
                 ],
               ),
               Text(
-                S.of(context).order_date("25/12/2019 12:25"),
+                S.of(context).order_date("${itemData['date_booking']} ${itemData['time_booking']}"),
                 style: TextStyle(fontSize: SizeUtil.textSizeTiny),
                 textAlign: TextAlign.start,
               ),
@@ -87,8 +89,11 @@ class OrderItem extends StatelessWidget {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(top: SizeUtil.midSmallSpace),
-                    child: Image.asset("photo/order_img.png",
-                        width: MediaQuery.of(context).size.width / 6),
+                    child: orderItem==null?Image.asset("photo/order_img.png",
+                        width: MediaQuery.of(context).size.width / 6):CachedNetworkImage(
+                      imageUrl: itemData['shop_img'],
+                      width: MediaQuery.of(context).size.width / 6,
+                    ),
                   ),
                   Expanded(
                     child: Container(
@@ -103,7 +108,7 @@ class OrderItem extends StatelessWidget {
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              S.of(context).order_title,
+                              orderItem==null?S.of(context).order_title:orderItem['name'],
                               style:
                                   TextStyle(fontSize: SizeUtil.textSizeSmall),
                               textAlign: TextAlign.start,
@@ -118,14 +123,14 @@ class OrderItem extends StatelessWidget {
                             alignment: Alignment.centerLeft,
                             child: RichText(
                               text: TextSpan(
-                                  text: "340 000 đ X",
+                                  text: orderItem==null?"340 000 đ X":orderItem['price'] + " X ",
                                   style: TextStyle(
                                       fontSize: SizeUtil.textSizeSmall,
                                       color: ColorUtil.textColor,
                                       fontWeight: FontWeight.bold),
                                   children: <TextSpan>[
                                     TextSpan(
-                                      text: " 2",
+                                      text: orderItem==null?" 2":orderItem['number'],
                                       style: TextStyle(
                                         color: ColorUtil.textColor,
                                         fontSize: SizeUtil.textSizeSmall,
@@ -183,7 +188,7 @@ class OrderItem extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                       child: Text(
-                    S.of(context).order_count_summary(4),
+                    S.of(context).order_count_summary(itemData['list_product'].length),
                     style: TextStyle(fontSize: SizeUtil.textSizeTiny),
                   )),
                   RichText(
@@ -195,7 +200,7 @@ class OrderItem extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                         children: <TextSpan>[
                           TextSpan(
-                            text: "700 000 đ",
+                            text: itemData['total_money'] + 'đ',
                             style: TextStyle(
                               color: ColorUtil.red,
                               fontSize: SizeUtil.textSizeSmall,
