@@ -1,15 +1,16 @@
+import 'package:baby_garden_flutter/data/model/address.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// TODO-QAnh: đây là item trong 1 list nên phải đặt tên là address_item và đặt trong folder item
 // TODO-QAnh: bỏ fix cứng kích thước
-class Address extends StatelessWidget {
-  final address;
+class AddressItem extends StatelessWidget {
+  final Address address;
   final isDefault;
 
-  const Address({Key key, this.address, this.isDefault}) : super(key: key);
+  const AddressItem({Key key, this.address, this.isDefault = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class Address extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
-            child: Text(address),
+            child: Text(address.address),
           ),
           Expanded(
             // TODO-QAnh: phần này có thể check bằng cách isDefault? Padding(): SizeBox()
