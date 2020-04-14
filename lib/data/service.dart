@@ -476,3 +476,14 @@ Future<dynamic> getUserInfo(BuildContext context,
   if (response.isSuccess()) return response.data;
   return null;
 }
+
+Future<dynamic> listAddress() async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+
+  dynamic params = {"user_id": userId};
+
+  Response response =
+      await get(null, path: "listAddress", param: params, showLoading: false);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
