@@ -53,6 +53,13 @@ class ColorUtil {
   }
 }
 
+class DateUtil {
+  static final String serverFormatDate = "yyyy-MM-dd HH:mm:ss";
+  static String formatDDMMyyyy(String rawDate) {
+    DateTime date = new DateFormat(serverFormatDate).parse(rawDate);
+    return new DateFormat("dd/MM/yyyy").format(date);
+  }
+}
 class StringUtil {
   static String getPriceText(String price) {
     if (price == null || price.isEmpty) return "";

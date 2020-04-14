@@ -2,18 +2,15 @@ import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
+import 'package:baby_garden_flutter/screen/account/account_manage_screen.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/customer_support/customer_support.dart';
-import 'package:baby_garden_flutter/screen/favorite_product/favorite_product.dart';
-import 'package:baby_garden_flutter/screen/login/login_screen.dart';
+import 'package:baby_garden_flutter/screen/favorite_product/favorite_product_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
-import 'package:baby_garden_flutter/screen/partner/partner_book_schedule.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_like_screen.dart';
-import 'package:baby_garden_flutter/screen/point_management/point_history_screen.dart';
 import 'package:baby_garden_flutter/screen/point_management/point_management_screen.dart';
-import 'package:baby_garden_flutter/screen/profile/account_manage_screen.dart';
+import 'package:baby_garden_flutter/screen/profile/header_without_login.dart';
 import 'package:baby_garden_flutter/screen/profile/user_infor.dart';
-import 'package:baby_garden_flutter/screen/register/register_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_management/remind_management_screen.dart';
 import 'package:baby_garden_flutter/screen/seen_product/seen_product_screen.dart';
 import 'package:baby_garden_flutter/screen/setting/setting_screen.dart';
@@ -22,7 +19,6 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
@@ -49,93 +45,25 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
       {'icon': 'profile_logout', 'title': S.of(context).logout}
     ];
 
-    return Column(children: <Widget>[
-      getAppBar(title: S.of(context).myProfile, hasBack: false),
-      Consumer<UserProvider>(
-        builder: (BuildContext context, UserProvider value, Widget child) {
-          return value.isLogin
-              ? Container(
-                  // user information
-                  child: UserInfor(
-                  user: value.userInfo,
-                ))
-              : Container(
-            // TODO-QAnh: k set height, để wrap
-            // TODO-QAnh: cái này nên tạo 1 widget riêng cho trường hợp chưa login
-                  height: 100,
-                  width: double.infinity,
-                  padding: const EdgeInsets.only(
-                      left: SizeUtil.smallSpace,
-                      right: SizeUtil.smallSpace,
-                      top: 12,
-                      bottom: 12),
-                  decoration: BoxDecoration(
-                      border: Border(
-                    bottom: BorderSide(
-                        width: 1,
-                        style: BorderStyle.solid,
-                        color: Color.fromRGBO(206, 206, 206, 1)),
-                  )),
-                  // user information
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(right: SizeUtil.smallSpace),
-                        child: Image.asset(
-                          'photo/logo.png',
-                          width: 70,
-                          height: 70,
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: SizeUtil.midSmallSpace),
-                            child: Text(
-                              S.of(context).profileWelcomeText,
-                              style: TextStyle(color: ColorUtil.darkGray),
-                            ),
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    right: SizeUtil.midSmallSpace),
-                                child: RaisedButton(
-                                    color: Color(0xff00B9FF),
-                                    onPressed: () {
-                                      push(LoginScreen());
-                                    },
-                                    child: Text(S.of(context).login,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: SizeUtil.textSizeSmall))),
-                              ),
-                              // TODO-QAnh: dung MyRasiedButton
-                              RaisedButton(
-                                  color: ColorUtil.primaryColor,
-                                  onPressed: () {
-                                    push(RegisterScreen());
-                                  },
-                                  child: Text(S.of(context).register,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: SizeUtil.textSizeSmall)))
-                            ],
-                          )
-                        ],
-                      )
-                    ],
-                  ));
-        },
-      ),
-      Expanded(
-        child: entriesWidget(entries),
-      ),
-    ]);
+    return SingleChildScrollView(
+      child: Column(children: <Widget>[
+        getAppBar(title: S.of(context).myProfile, hasBack: false),
+        Consumer<UserProvider>(
+          builder: (BuildContext context, UserProvider value, Widget child) {
+            return Column(
+              children: <Widget>[
+                value.isLogin
+                    ? Container(
+                        // user information
+                        child: UserInfor())
+                    : HeaderWithoutLogin(),
+                entriesWidget(entries: entries, logined: value.isLogin),
+              ],
+            );
+          },
+        ),
+      ]),
+    );
   }
 
   @override
@@ -143,44 +71,62 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
     return [ChangeNotifierProvider.value(value: _getListProvider)];
   }
 
-  Widget entriesWidget(List<Map<String, String>> entries) {
+  Widget entriesWidget(
+      {@required List<Map<String, String>> entries, bool logined}) {
     return ListView.builder(
+        shrinkWrap: true,
         itemCount: entries.length,
         padding: EdgeInsets.all(0),
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
-            child: Container(
-              padding: const EdgeInsets.all(SizeUtil.tinySpace),
-              decoration: BoxDecoration(
-                  border: Border(
-                bottom: BorderSide(
-                    width: 1,
-                    style: BorderStyle.solid,
-                    color: Color.fromRGBO(206, 206, 206, 1)),
-              )),
-              // TODO-QAnh: k set height, để wrap
-              height: 50,
-              child: Row(
-                children: <Widget>[
-                  SvgIcon(
-                    '${entries[index]['icon']}.svg',
-                    color: (index == 0)
-                        ? ColorUtil.primaryColor
-                        : ColorUtil.black33,
-                    width: SizeUtil.iconSizeBigger,
-                    height: SizeUtil.iconSizeBigger,
-                    padding: EdgeInsets.only(
-                        left: SizeUtil.midSpace, right: SizeUtil.normalSpace),
-                  ),
-                  Text(entries[index]['title'],
-                      style: TextStyle(
-                          color: (index == 0)
-                              ? ColorUtil.primaryColor
-                              : ColorUtil.black33)),
-                ],
+            child: Visibility(
+              visible: !(!logined && index == 9),
+              child: Container(
+                padding: const EdgeInsets.all(SizeUtil.tinySpace),
+                decoration: BoxDecoration(
+                    border: Border(
+                  bottom: BorderSide(
+                      width: 1,
+                      style: BorderStyle.solid,
+                      color: Color.fromRGBO(206, 206, 206, 1)),
+                )),
+                child: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: <Widget>[
+                    SvgIcon(
+                      '${entries[index]['icon']}.svg',
+                      color: (index == 0 && logined)
+                          ? ColorUtil.primaryColor
+                          : ColorUtil.black33,
+                      width: SizeUtil.iconSizeBigger,
+                      height: SizeUtil.iconSizeBigger,
+                      padding: EdgeInsets.only(
+                          left: SizeUtil.midSpace,
+                          right: SizeUtil.normalSpace,
+                          top: SizeUtil.tinySpace,
+                          bottom: SizeUtil.tinySpace),
+                    ),
+                    Text(entries[index]['title'],
+                        style: TextStyle(
+                            color: (index == 0 && logined)
+                                ? ColorUtil.primaryColor
+                                : ColorUtil.black33)),
+                  ],
+                ),
               ),
             ),
             onTap: () {
+              if (!logined) {
+                switch (index) {
+                  case 7:
+                    push(CustomerSupportScreen());
+                    break;
+                  default:
+                    WidgetUtil.showRequireLoginDialog(context);
+                }
+
+                return;
+              }
               switch (index) {
                 case 0:
                   push(AccountManage());
@@ -195,7 +141,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                   push(VoucherManagement());
                   break;
                 case 4:
-                  push(FavoriteProduct());
+                  push(FavoriteProductScreen());
                   break;
                 case 5:
                   push(PartnerLikeScreen());
@@ -210,7 +156,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                   push(SettingScreen());
                   break;
                 case 9:
-                // TODO-Nha: check lai,
+                  // TODO-Nha: check lai,
                   WidgetUtil.showConfirmDialog(context,
                       title: "Xác nhận",
                       message: "Bạn có muốn đăng xuất không?",

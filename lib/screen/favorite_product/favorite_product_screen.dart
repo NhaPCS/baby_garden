@@ -8,12 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-class SeenProductScreen extends StatefulWidget {
+class FavoriteProductScreen extends StatefulWidget {
   @override
-  _SeenProductScreen createState() => _SeenProductScreen();
+  _FavoriteProductScreen createState() => _FavoriteProductScreen();
 }
 
-class _SeenProductScreen extends BaseState<SeenProductScreen> {
+class _FavoriteProductScreen extends BaseState<FavoriteProductScreen> {
   final GetListProductProvider _getListProductProvider =
       GetListProductProvider();
 
@@ -22,14 +22,14 @@ class _SeenProductScreen extends BaseState<SeenProductScreen> {
     super.didChangeDependencies();
     if ((_getListProductProvider.products == null ||
         _getListProductProvider.products.isEmpty)) {
-      _getListProductProvider.getData(context, 'listProductView');
+      _getListProductProvider.getData(context, 'listFavouriteProduct');
     }
   }
 
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
-        appBar: getAppBar(title: S.of(context).seenProduct),
+        appBar: getAppBar(title: S.of(context).favoriteProduct),
         body: Consumer<GetListProductProvider>(
           builder: (context, value, child) {
             return ListView.builder(
