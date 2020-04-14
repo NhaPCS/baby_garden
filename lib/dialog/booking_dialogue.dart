@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
+import 'package:baby_garden_flutter/screen/partner/partner_book_schedule_success.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -122,7 +123,7 @@ class BookingDialogue extends Dialog {
               children: <Widget>[
                 RaisedButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pop(false);
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
@@ -146,11 +147,9 @@ class BookingDialogue extends Dialog {
                     var userID = Provider.of<UserProvider>(context,listen: false).userInfo['id'];
                     dynamic data = await service.bookingService(userID: userID,shopID: shopID,dateBooking: day,timeBooking: time,serviceID: serviceID,address: address);
                     if (data !=null){
-                      Navigator.of(context).pop();
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              BookingScheduleSuccessDialogue(context));
+                      Navigator.of(context).pop(true);
+                    }else{
+                      Navigator.of(context).pop(false);
                     }
                   },
                   shape: RoundedRectangleBorder(

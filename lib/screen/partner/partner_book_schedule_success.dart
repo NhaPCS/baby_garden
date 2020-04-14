@@ -6,6 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 
 class PartnerBookScheduleSuccessScreen extends StatefulWidget{
+  final dynamic data;
+  final int dateIndex;
+  final int timeIndex;
+
+  const PartnerBookScheduleSuccessScreen(this.data, this.dateIndex, this.timeIndex):super();
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -24,7 +30,7 @@ class _PartnerBookScheduleSuccessScreen extends BaseState<PartnerBookScheduleSuc
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(left:SizeUtil.smallSpace,top: SizeUtil.tinySpace,bottom: SizeUtil.midSmallSpace),
-            child: Text('Chăm sóc da mặt từ cơ bản đến nâng cao',style: TextStyle(color: ColorUtil.primaryColor,fontWeight: FontWeight.bold,fontSize: SizeUtil.textSizeDefault),),
+            child: Text(widget.data['name'],style: TextStyle(color: ColorUtil.primaryColor,fontWeight: FontWeight.bold,fontSize: SizeUtil.textSizeDefault),),
           ),
           Padding(
             padding: const EdgeInsets.only(left:SizeUtil.smallSpace),
@@ -35,7 +41,7 @@ class _PartnerBookScheduleSuccessScreen extends BaseState<PartnerBookScheduleSuc
                     style: TextStyle(color: ColorUtil.textColor,fontSize: SizeUtil.textSizeSmall)
                 ),
                 TextSpan(
-                  text: '150.000 đ',
+                  text: StringUtil.getPriceText(widget.data['price']),
                   style: TextStyle(color: Colors.red,fontSize: SizeUtil.textSizeSmall)
                 )
               ]
@@ -44,7 +50,7 @@ class _PartnerBookScheduleSuccessScreen extends BaseState<PartnerBookScheduleSuc
           ),
           Padding(
             padding: const EdgeInsets.only(left:SizeUtil.smallSpace,bottom: SizeUtil.tinySpace),
-            child: Text('Thời gian thực hiện: 120 phút',style: TextStyle(color: ColorUtil.textColor,fontSize: SizeUtil.textSizeSmall,height: 1.5)),
+            child: Text('Thời gian thực hiện: ${widget.data['ex_time']}',style: TextStyle(color: ColorUtil.textColor,fontSize: SizeUtil.textSizeSmall,height: 1.5)),
           ),
           WidgetUtil.getLine(width: 1,margin: EdgeInsets.all(0),color: ColorUtil.lineColor),
           Padding(
@@ -53,7 +59,7 @@ class _PartnerBookScheduleSuccessScreen extends BaseState<PartnerBookScheduleSuc
           ),
           Padding(
             padding: const EdgeInsets.only(left:SizeUtil.smallSpace,top: SizeUtil.midSmallSpace,right: SizeUtil.smallSpace),
-            child: Text('Khi đến với Thẩm mỹ viện SPA, bạn hoàn toàn được trảinghiệm quá trình chăm sóc da chuyên sâu theo quy chuẩncủa Bộ Y tế. Mỗi một dịch vụ chăm sóc da sẽ có quy trìnhthực hiện riêng biệt nhằm đem đến hiệu quả tốt nhất chochị em.'
+            child: Text(widget.data['content']
             ,style: TextStyle(fontSize: SizeUtil.textSizeSmall,color: ColorUtil.textColor),),
           ),
           Padding(
@@ -76,7 +82,7 @@ class _PartnerBookScheduleSuccessScreen extends BaseState<PartnerBookScheduleSuc
               .map((e) => Expanded(
                 child: Container(
                 padding: EdgeInsets.all(3),
-                  color: StringUtil.week.indexOf(e)==2?ColorUtil.primaryColor:Color(0xffF2F2F2),
+                  color: StringUtil.week.indexOf(e)==widget.dateIndex?ColorUtil.primaryColor:Color(0xffF2F2F2),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -85,14 +91,14 @@ class _PartnerBookScheduleSuccessScreen extends BaseState<PartnerBookScheduleSuc
                       Text(
                         e['dow'],
                         style: TextStyle(
-                          color: StringUtil.week.indexOf(e)==2?Colors.white:Colors.blue,
+                          color: StringUtil.week.indexOf(e)==widget.dateIndex?Colors.white:Colors.blue,
                             fontWeight: FontWeight.bold,
                             fontSize: SizeUtil.textSizeNotiTime),
                       ),
                       Text(
                         e['date'],
                         style: TextStyle(
-                            color: StringUtil.week.indexOf(e)==2?Colors.white:Colors.blue,
+                            color: StringUtil.week.indexOf(e)==widget.dateIndex?Colors.white:Colors.blue,
                             fontWeight: FontWeight.normal, fontSize: 6),
                       )
                     ],
@@ -115,12 +121,12 @@ class _PartnerBookScheduleSuccessScreen extends BaseState<PartnerBookScheduleSuc
 
                 return Container(
                   margin: EdgeInsets.all(1),
-                  color: index==5?Colors.red:Color(0xffF2F2F2),
+                  color: index==widget.timeIndex?Colors.red:Color(0xffF2F2F2),
                   child: Center(
                     child: Text(
                       StringUtil.time[index]['time'],
                       style: TextStyle(
-                        color: index==5?Colors.white:ColorUtil.textColor,
+                        color: index==widget.timeIndex?Colors.white:ColorUtil.textColor,
                           fontSize: SizeUtil.textSizeTiny),
                       textAlign: TextAlign.center,
                     ),
