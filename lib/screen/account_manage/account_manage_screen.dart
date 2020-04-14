@@ -14,16 +14,13 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-// TODO-QAnh: them chu Screen o cuoi
-// TODO-QAnh: đặt ra folder riêng, k đặt chung folder với screen khác
-class AccountManage extends StatefulWidget {
+class AccountManageScreen extends StatefulWidget {
   @override
-  _AccountManageState createState() => _AccountManageState();
+  _AccountManageScreenState createState() => _AccountManageScreenState();
 }
 
-class _AccountManageState extends BaseState<AccountManage> {
+class _AccountManageScreenState extends BaseState<AccountManageScreen> {
   final GetListProvider _getListProvider = GetListProvider();
-  final UserInfor userInfor = UserInfor();
 
   final childInformation = ChildInfor(
     childName: 'Hùng gay',
@@ -44,7 +41,6 @@ class _AccountManageState extends BaseState<AccountManage> {
     }
 
     dynamic user = Provider.of<UserProvider>(context).userInfo;
-
     final List<Map<String, String>> entries = <Map<String, String>>[
       entry(S.of(context).fullname, user == null ? "" : user['name'],
           'pencil.png'),
@@ -69,7 +65,7 @@ class _AccountManageState extends BaseState<AccountManage> {
         body: Column(children: <Widget>[
           // user information
           Container(
-              child: this.userInfor,
+              child: UserInfor(),
               decoration:
                   setBorder("bottom", Color.fromRGBO(206, 206, 206, 1), 1)),
           // entries

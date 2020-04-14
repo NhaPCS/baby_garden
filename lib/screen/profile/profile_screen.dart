@@ -2,7 +2,7 @@ import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
-import 'package:baby_garden_flutter/screen/account/account_manage_screen.dart';
+import 'package:baby_garden_flutter/screen/account_manage/account_manage_screen.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/customer_support/customer_support.dart';
 import 'package:baby_garden_flutter/screen/favorite_product/favorite_product_screen.dart';
@@ -129,7 +129,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
               }
               switch (index) {
                 case 0:
-                  push(AccountManage());
+                  push(AccountManageScreen());
                   break;
                 case 1:
                   push(PointManagement());
