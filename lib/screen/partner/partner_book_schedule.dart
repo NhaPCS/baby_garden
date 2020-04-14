@@ -1,6 +1,7 @@
 import 'package:baby_garden_flutter/dialog/booking_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/item_product.dart';
+import 'package:baby_garden_flutter/provider/booking_service_detail_provider.dart';
 import 'package:baby_garden_flutter/provider/change_date_provider.dart';
 import 'package:baby_garden_flutter/provider/change_schedule_provider.dart';
 import 'package:baby_garden_flutter/provider/change_service_provider.dart';
@@ -9,12 +10,16 @@ import 'package:baby_garden_flutter/provider/partner_book_tabbar_provider.dart';
 import 'package:baby_garden_flutter/provider/partner_schedule_get_header_hei.dart';
 import 'package:baby_garden_flutter/provider/partner_tabbar_provider.dart';
 import 'package:baby_garden_flutter/provider/see_more_provider.dart';
+import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/screen/category_product/sliver_category_delegate.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/view_model/booking_service_view_model.dart';
 import 'package:baby_garden_flutter/widget/custom_radio_button.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:baby_garden_flutter/widget/service_detail_item.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +27,13 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class PartnerBookScheduleScreen extends StatefulWidget {
+  String shopID;
+  String shopName;
+  String category;
+
+  PartnerBookScheduleScreen(this.shopID, this.shopName, this.category)
+      : super();
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -30,7 +42,8 @@ class PartnerBookScheduleScreen extends StatefulWidget {
 }
 
 class _PartnerBookScheduleScreenState
-    extends BaseState<PartnerBookScheduleScreen> with TickerProviderStateMixin {
+    extends BaseStateModel<PartnerBookScheduleScreen, BookingServiceViewModel>
+    with TickerProviderStateMixin {
   final SeeMoreProvider _seeMoreProvider = SeeMoreProvider();
   final PartnerChooseLocation _partnerChooseLocation = PartnerChooseLocation();
   final PartnerTabbarProvider _partnerTabbarProvider = PartnerTabbarProvider();
@@ -42,7 +55,8 @@ class _PartnerBookScheduleScreenState
       ChangeScheduleTimeProvider();
   final PartnerBookTabbarProvider _bookTabbarProvider =
       PartnerBookTabbarProvider();
-  List<dynamic> detailInfo = List();
+  final BookingServiceDetailProvider _bookingServiceDetailProvider =
+      BookingServiceDetailProvider();
 
   TabController _tabController;
   TabController _dayTabController;
@@ -52,6 +66,7 @@ class _PartnerBookScheduleScreenState
   final ValueNotifier<double> _rowHeight = ValueNotifier<double>(-1);
   double _rowHeightFull = 0;
   double imageHeight = 151;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -63,17 +78,8 @@ class _PartnerBookScheduleScreenState
         _bookTabbarProvider.onChangeIndex(_tabController.index);
       }
     });
-
     _dayTabController.addListener(() {});
-
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => {
-          _rowHeight.value = _rowKey.currentContext.size.height,//TODO min height
-          _rowHeightFull = _rowKeyFull.currentContext.size.height,//TODO max height
-        imageHeight = _bannerKey.currentContext.size.height,//TODO max height
-          print(_rowHeight.value), //todo min height
-          print(_rowHeightFull) // todo expand full height
-        });
   }
 
   @override
@@ -86,65 +92,74 @@ class _PartnerBookScheduleScreenState
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
-    detailInfo = [
-      {
-        'title': "Điện thoại:",
-        'value': '0912 677 022',
-        'valueColor': ColorUtil.blueLight,
-        'button': 'ĐÃ THÍCH'
-      },
-      {
-        'title': "Địa chỉ: ",
-        'value': '38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội, Thanh Xuân, Hà Nội,',
-        'action_title': 'Chỉ đường'
-      },
-      {
-        'title': 'Loại dịch vụ: ',
-        'value': 'SPA Thẩm Mỹ, Khám Thai',
-        'valueColor': ColorUtil.blueLight
-      },
-      {
-        'title': 'Giới thiệu: ',
-        'value':
-            'Đây là cửa hàng chuyên cung cấp sữa bỉm cho bé, và dịch vụ làm đẹp cho mẹ, để xem thêm thông tin...',
-        'full_value':
-            'Đây là cửa hàng chuyên cung cấp sữa bỉm cho bé, và dịch vụ làm đẹp cho mẹ, để xem thêm thông tin sau do la ca mot bau troi tu cach. Chua bao gio co mot ai sanh kip anh cua em o day Chua bao gio co mot ai sanh kip anh cua em o day Chua bao gio co mot ai sanh kip anh cua em o day',
-        'see_more': 'Xem thêm'
-      }
-    ];
+    _bookingServiceDetailProvider.getdata(
+        Provider.of<UserProvider>(context, listen: false).userID,
+        widget.shopID);
     super.didChangeDependencies();
   }
 
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
-    final productTabbarHei = SizeUtil.tabbar_fix_height +76;
-    final List<Tab> myTabs = <Tab>[
-      Tab(text: S.of(context).book,),
+    final productTabbarHei = SizeUtil.tabbar_fix_height + 76;
+    List<Tab> myTabs = <Tab>[
       Tab(
-        child: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                S.of(context).product,
-              ),
-              Text(
-                '(12)',
-                style: TextStyle(fontSize: SizeUtil.textSizeTiny),
-              )
-            ],
-          ),
-        ),
+        text: S.of(context).book,
+      ),
+      Tab(
+        text: S.of(context).product,
       ),
     ];
 
     //todo get hei set
-    return Consumer<PartnerGetHeightProvider>(builder:
-        (BuildContext context, PartnerGetHeightProvider value, Widget child) {
-      //todo ValueListenableBuilder is observe view height value <_rowheight>
-      return ValueListenableBuilder<double>(
+    return Consumer<BookingServiceDetailProvider>(builder:
+        (BuildContext context, BookingServiceDetailProvider shopValue,
+            Widget child) {
+      print("BookingServiceDetailProvider ${shopValue.data}   ${_rowHeight.value}");
+      if(shopValue.data!=null &&_rowHeight.value == -1){
+        print("BookingServiceDetailProvider ${shopValue.data}");
+        WidgetsBinding.instance.addPostFrameCallback((_) => {
+          if (_rowKey.currentContext != null)
+            _rowHeight.value = _rowKey.currentContext.size.height,
+          //TODO min height
+          if (_rowKeyFull.currentContext != null)
+            _rowHeightFull = _rowKeyFull.currentContext.size.height,
+          //TODO max height
+          if (_bannerKey.currentContext != null)
+            imageHeight = _bannerKey.currentContext.size.height,
+          //TODO max height
+          print("addPostFrameCallback ${_rowHeight.value}"),
+          //todo min height
+          print(_rowHeightFull)
+          // todo expand full height
+        });
+
+        myTabs = <Tab>[
+          Tab(
+            text: S.of(context).book,
+          ),
+          Tab(
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    S.of(context).product,
+                  ),
+                  Text(
+                    "(${shopValue.products.length.toString()})",
+                    style: TextStyle(fontSize: SizeUtil.textSizeTiny),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ];
+      }
+      return shopValue.data == null
+          ? Container()
+          : ValueListenableBuilder<double>(
           valueListenable: _rowHeight,
           builder: (BuildContext context, double height, Widget child) {
             return Scaffold(
@@ -153,540 +168,258 @@ class _PartnerBookScheduleScreenState
                 body: TabBarView(
                     controller: _tabController,
                     children: myTabs.map((Tab tab) {
-                      return myTabs.indexOf(tab) == 0 ? bookingContent()
-                          : productContent();
-                    }).toList()
-                ),
+                      return myTabs.indexOf(tab) == 0 ? bookingContent(shopValue.data) : productContent(shopValue.products);
+                    }).toList()),
                 //todo get height view
                 headerSliverBuilder: (context, isScrollInner) {
                   return [
                     new SliverAppBar(
-                      title: new Text(
-                        S.of(context).app_name_title.toUpperCase(),
-                        style: TextStyle(color: Colors.white),
-                      ),
+                      title: new Text(widget.shopName, style: TextStyle(color: Colors.white),),
                       leading: BaseState.getLeading(context),
                       centerTitle: true,
                       pinned: true,
                       forceElevated: isScrollInner,
                     ),
-                    Consumer<SeeMoreProvider>(builder: (BuildContext context, SeeMoreProvider value, Widget child) {
-                      double hei = (value.isShow?_rowHeightFull:_rowHeight.value) + imageHeight + 7;
-                      print("hei: ${hei}");
-                      return SliverPersistentHeader(
-                        pinned: false,
-                        floating: false,
-                        delegate: SliverCategoryDelegate(
-                            Column(
-                              children: <Widget>[
-                                Stack(
-                                  children: <Widget>[
-                                    Image.asset(
-                                      "photo/partner_item_img.png",
-                                      fit: BoxFit.fitWidth,
-                                      width: MediaQuery.of(context)
-                                          .size
-                                          .width,
-                                      height: imageHeight,
-                                    ),
-                                    Positioned(
-                                      bottom: SizeUtil.smallSpace,
-                                      right: SizeUtil.smallSpace,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Container(
-                                            padding: EdgeInsets.only(
-                                                left: SizeUtil
-                                                    .midSmallSpace,
-                                                right: SizeUtil
-                                                    .midSmallSpace,
-                                                top: SizeUtil.tinySpace,
-                                                bottom:
-                                                SizeUtil.tinySpace),
-                                            decoration: BoxDecoration(
-                                                color: Color(0xffF6F6F6),
-                                                borderRadius: BorderRadius
-                                                    .all(Radius.circular(
-                                                    SizeUtil
-                                                        .smallRadius))),
-                                            child: Wrap(
-                                              direction: Axis.horizontal,
-                                              children: <Widget>[
-                                                Image.asset(
-                                                  "photo/comment_img.png",
-                                                  width: SizeUtil
-                                                      .iconSizeDefault,
-                                                  height: SizeUtil
-                                                      .iconSizeDefault,
-                                                ),
-                                                SizedBox(
-                                                  width:
-                                                  SizeUtil.tinySpace,
-                                                ),
-                                                Text(
-                                                  "12",
-                                                  style: TextStyle(
-                                                      fontSize: SizeUtil
-                                                          .textSizeSmall,
-                                                      color: ColorUtil
-                                                          .textColor,
-                                                      fontWeight:
-                                                      FontWeight
-                                                          .normal),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: SizeUtil.smallSpace,
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.only(
-                                                left: SizeUtil
-                                                    .midSmallSpace,
-                                                right: SizeUtil
-                                                    .midSmallSpace,
-                                                top: SizeUtil.tinySpace,
-                                                bottom:
-                                                SizeUtil.tinySpace),
-                                            decoration: BoxDecoration(
-                                                color: Color(0xffF6F6F6),
-                                                borderRadius: BorderRadius
-                                                    .all(Radius.circular(
-                                                    SizeUtil
-                                                        .smallRadius))),
-                                            child: Wrap(
-                                              direction: Axis.horizontal,
-                                              children: <Widget>[
-                                                Image.asset(
-                                                  "photo/heart.png",
-                                                  width: SizeUtil
-                                                      .iconSizeDefault,
-                                                  height: SizeUtil
-                                                      .iconSizeDefault,
-                                                ),
-                                                SizedBox(
-                                                  width:
-                                                  SizeUtil.tinySpace,
-                                                ),
-                                                Text(
-                                                  "234",
-                                                  style: TextStyle(
-                                                      fontSize: SizeUtil
-                                                          .textSizeSmall,
-                                                      color: ColorUtil
-                                                          .textColor,
-                                                      fontWeight:
-                                                      FontWeight
-                                                          .normal),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
+                    Consumer<SeeMoreProvider>(
+                      builder: (BuildContext context,
+                          SeeMoreProvider value, Widget child) {
+                        double hei = (value.isShow ? _rowHeightFull : _rowHeight.value) + imageHeight + 7;
+                        print("hei: ${hei}");
+                        return SliverPersistentHeader(
+                          pinned: false,
+                          floating: false,
+                          delegate: SliverCategoryDelegate(
+                              Column(
+                                children: <Widget>[
+                                  Stack(
+                                    children: <Widget>[
+                                      shopValue.data != null
+                                          ? CachedNetworkImage(
+                                        imageUrl: shopValue
+                                            .data['img'],
+                                        width: MediaQuery.of(
+                                            context)
+                                            .size
+                                            .width,
+                                        height: imageHeight,
+                                      )
+                                          : Image.asset(
+                                        "photo/partner_item_img.png",
+                                        fit: BoxFit.fitWidth,
+                                        width: MediaQuery.of(
+                                            context)
+                                            .size
+                                            .width,
+                                        height: imageHeight,
                                       ),
-                                    )
-                                  ],
-                                ),
-                                Column(
-                                  children: detailInfo // info
-                                      .map(
-                                          (e) => paddingContainer(
-                                          e['see_more'] == null
-                                              ? Row(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: <Widget>[
-                                              Expanded(
-                                                child: RichText(
-                                                  textAlign:
-                                                  TextAlign
-                                                      .start,
-                                                  text: TextSpan(
-                                                      text: e[
-                                                      'title'],
-                                                      style: TextStyle(
-                                                          color: ColorUtil
-                                                              .textColor,
-                                                          fontWeight: FontWeight
-                                                              .bold),
-                                                      children: <
-                                                          TextSpan>[
-                                                        TextSpan(
-
-                                                            text: " "+ e['value'],
-                                                            style: TextStyle(fontSize: SizeUtil.textSizeSmall, color: e['valueColor'] == null ? ColorUtil.textColor : e['valueColor'], decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
-                                                      ]),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: SizeUtil
-                                                    .tinySpace,
-                                              ),
-                                              SizedBox(width: e['action_title'] ==
-                                                  null
-                                                  ?0:SizeUtil.tinySpace,),
-                                              e['action_title'] ==
-                                                  null
-                                                  ? SizedBox()
-                                                  : InkWell(
-                                                onTap:
-                                                    () {},
-                                                child:
-                                                Text(
-                                                  e['action_title'],
-                                                  style: TextStyle(
-                                                      fontSize:
-                                                      SizeUtil.textSizeSmall,
-                                                      color: ColorUtil.blueLight),
-                                                ),
-                                              ),
-                                              e['button'] ==
-                                                  null
-                                                  ? SizedBox()
-                                                  : RaisedButton(
-                                                onPressed:
-                                                    () {},
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.all(
+                                      Positioned(
+                                        bottom: SizeUtil.smallSpace,
+                                        right: SizeUtil.smallSpace,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment
+                                              .center,
+                                          children: <Widget>[
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  left: SizeUtil
+                                                      .midSmallSpace,
+                                                  right: SizeUtil
+                                                      .midSmallSpace,
+                                                  top: SizeUtil
+                                                      .tinySpace,
+                                                  bottom: SizeUtil
+                                                      .tinySpace),
+                                              decoration: BoxDecoration(
+                                                  color: Color(
+                                                      0xffF6F6F6),
+                                                  borderRadius:
+                                                  BorderRadius.all(
                                                       Radius.circular(
-                                                          SizeUtil.smallRadius),
-                                                    )),
-                                                color: ColorUtil
-                                                    .primaryColor,
-                                                child:
-                                                Text(
-                                                  e['button'],
-                                                  style: TextStyle(
-                                                      fontSize:
-                                                      SizeUtil.textSizeDefault,
-                                                      color: Colors.white,
-                                                      fontStyle: FontStyle.normal,
-                                                      fontWeight: FontWeight.normal),
-                                                ),
+                                                          SizeUtil
+                                                              .smallRadius))),
+                                              child: Wrap(
+                                                direction:
+                                                Axis.horizontal,
+                                                children: <Widget>[
+                                                  Image.asset(
+                                                    "photo/comment_img.png",
+                                                    width: SizeUtil
+                                                        .iconSizeDefault,
+                                                    height: SizeUtil
+                                                        .iconSizeDefault,
+                                                  ),
+                                                  SizedBox(
+                                                    width: SizeUtil
+                                                        .tinySpace,
+                                                  ),
+                                                  Text(
+                                                    shopValue.data !=
+                                                        null
+                                                        ? shopValue
+                                                        .data[
+                                                    'number_comment']
+                                                        : "212",
+                                                    style: TextStyle(
+                                                        fontSize: SizeUtil
+                                                            .textSizeSmall,
+                                                        color: ColorUtil
+                                                            .textColor,
+                                                        fontWeight:
+                                                        FontWeight
+                                                            .normal),
+                                                  ),
+                                                ],
                                               ),
-                                            ],
-                                          )
-                                              : GestureDetector(
-                                            onTap: () {
-                                              print("tapped");
-                                              _seeMoreProvider
-                                                  .onChange();
-                                            },
-                                            child:
-                                            RichText(
-                                              textAlign:
-                                              TextAlign
-                                                  .start,
-                                              text: TextSpan(
-                                                  text: e[
-                                                  'title'],
-                                                  style: TextStyle(
-                                                      color: ColorUtil
-                                                          .textColor,
-                                                      fontWeight: FontWeight
-                                                          .bold),
-                                                  children: <
-                                                      TextSpan>[
-                                                    TextSpan(
-                                                        text: value.isShow
-                                                            ? e['full_value']
-                                                            : e['value'],
-                                                        style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail, color: ColorUtil.textColor, decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
-                                                    TextSpan(
-                                                      text: value.isShow
-                                                          ? ''
-                                                          : e['see_more'],
-                                                      style: TextStyle(
-                                                          fontSize: SizeUtil.textSizeSmall,
-                                                          color: ColorUtil.blueLight,
-                                                          decoration: TextDecoration.none,
-                                                          fontWeight: FontWeight.normal),
-                                                      recognizer: TapGestureRecognizer()
-                                                        ..onTap = () =>
-                                                        {
-                                                          print("tapped")
-                                                        },
-                                                    ),
-                                                  ]),
                                             ),
-                                          )))
-                                      .toList(),
-                                ),
-                                SizedBox(
-                                  height: SizeUtil.tinySpace,
-                                ),
-                              ],
-                            ),
-                            hei,
-                            hei),
-                      );
-                    },),
-                    Consumer<PartnerTabbarProvider>(builder: (BuildContext context, PartnerTabbarProvider value, Widget child) {
-                      return SliverPersistentHeader(
-                        pinned: true,
-                        floating: false,
-                        delegate: SliverCategoryDelegate(
-                            Column(
-                              children: <Widget>[
-                                Container(
-                                  height: SizeUtil.tabbar_fix_height,
-                                  child: ColoredTabBar(
-                                    ColorUtil.lineColor,
-                                    TabBar(
-                                      onTap: (val){
-                                        _partnerTabbarProvider.onChange();
-                                      },
-                                      indicatorWeight: 0,
-                                      controller: _tabController,
-                                      labelColor: Colors.white,
-                                      indicatorColor: ColorUtil.white,
-                                      indicator: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.circular(0),
-                                          color: ColorUtil.primaryColor),
-                                      unselectedLabelColor:
-                                      ColorUtil.textColor,
-                                      tabs: myTabs,
-                                    ),
+                                            SizedBox(
+                                              width:
+                                              SizeUtil.smallSpace,
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  left: SizeUtil
+                                                      .midSmallSpace,
+                                                  right: SizeUtil
+                                                      .midSmallSpace,
+                                                  top: SizeUtil
+                                                      .tinySpace,
+                                                  bottom: SizeUtil
+                                                      .tinySpace),
+                                              decoration: BoxDecoration(
+                                                  color: Color(
+                                                      0xffF6F6F6),
+                                                  borderRadius:
+                                                  BorderRadius.all(
+                                                      Radius.circular(
+                                                          SizeUtil
+                                                              .smallRadius))),
+                                              child: Wrap(
+                                                direction:
+                                                Axis.horizontal,
+                                                children: <Widget>[
+                                                  Image.asset(
+                                                    "photo/heart.png",
+                                                    width: SizeUtil
+                                                        .iconSizeDefault,
+                                                    height: SizeUtil
+                                                        .iconSizeDefault,
+                                                  ),
+                                                  SizedBox(
+                                                    width: SizeUtil
+                                                        .tinySpace,
+                                                  ),
+                                                  Text(
+                                                    shopValue.data !=
+                                                        null
+                                                        ? shopValue
+                                                        .data[
+                                                    'number_like']
+                                                        : "12",
+                                                    style: TextStyle(
+                                                        fontSize: SizeUtil
+                                                            .textSizeSmall,
+                                                        color: ColorUtil
+                                                            .textColor,
+                                                        fontWeight:
+                                                        FontWeight
+                                                            .normal),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                  decoration: BoxDecoration(boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey,
-                                      blurRadius: 5.0,
+                                  //todo shop info
+                                  shopInfo(shopValue.data,
+                                      value.isShow, widget.category),
+                                  SizedBox(
+                                    height: SizeUtil.tinySpace,
+                                  ),
+                                ],
+                              ),
+                              hei,
+                              hei),
+                        );
+                      },
+                    ),
+                    Consumer<PartnerTabbarProvider>(
+                      builder: (BuildContext context,
+                          PartnerTabbarProvider value, Widget child) {
+                        return SliverPersistentHeader(
+                          pinned: true,
+                          floating: false,
+                          delegate: SliverCategoryDelegate(
+                              Column(
+                                children: <Widget>[
+                                  Container(
+                                    height:
+                                    SizeUtil.tabbar_fix_height,
+                                    child: ColoredTabBar(
+                                      ColorUtil.lineColor,
+                                      TabBar(
+                                        onTap: (val) {
+                                          _partnerTabbarProvider
+                                              .onChange();
+                                        },
+                                        indicatorWeight: 0,
+                                        controller: _tabController,
+                                        labelColor: Colors.white,
+                                        indicatorColor:
+                                        ColorUtil.white,
+                                        indicator: BoxDecoration(
+                                            borderRadius:
+                                            BorderRadius.circular(
+                                                0),
+                                            color: ColorUtil
+                                                .primaryColor),
+                                        unselectedLabelColor:
+                                        ColorUtil.textColor,
+                                        tabs: myTabs,
+                                      ),
                                     ),
-                                  ]),
-                                ),
-                                value.isProduct?ListCategory():SizedBox()
-                              ],
-                            ),
-                            value.isProduct?productTabbarHei:SizeUtil.tabbar_fix_height,
-                          value.isProduct?productTabbarHei:SizeUtil.tabbar_fix_height),
-                      );
-                    },)
+                                    decoration:
+                                    BoxDecoration(boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey,
+                                        blurRadius: 5.0,
+                                      ),
+                                    ]),
+                                  ),
+                                  value.isProduct
+                                      ? ListCategory()
+                                      : SizedBox()
+                                ],
+                              ),
+                              value.isProduct
+                                  ? productTabbarHei
+                                  : SizeUtil.tabbar_fix_height,
+                              value.isProduct
+                                  ? productTabbarHei
+                                  : SizeUtil.tabbar_fix_height),
+                        );
+                      },
+                    )
                   ];
                 },
               )
                   : Column(
                 children: <Widget>[
                   //TODO get detail info min height
-                  Image.asset(
-                    "photo/partner_item_img.png",
+                  CachedNetworkImage(
+                    imageUrl: shopValue.data['img'],
                     fit: BoxFit.fitWidth,
                     key: _bannerKey,
-                    width: MediaQuery.of(context)
-                        .size
-                        .width,
+                    width: MediaQuery.of(context).size.width,
                   ),
-                  Column(
-                    key: _rowKey,
-                    mainAxisSize: MainAxisSize.min,
-                    children: detailInfo // info
-                        .map((e) => paddingContainer(e['see_more'] ==
-                        null
-                        ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: RichText(
-                            textAlign:
-                            TextAlign
-                                .start,
-                            text: TextSpan(
-                                text: e[
-                                'title'],
-                                style: TextStyle(
-                                    color: ColorUtil
-                                        .textColor,
-                                    fontWeight: FontWeight
-                                        .bold),
-                                children: <
-                                    TextSpan>[
-                                  TextSpan(
-
-                                      text: " "+ e['value'],
-                                      style: TextStyle(fontSize: SizeUtil.textSizeSmall, color: e['valueColor'] == null ? ColorUtil.textColor : e['valueColor'], decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
-                                ]),
-                          ),
-                        ),
-                        SizedBox(
-                          width: SizeUtil
-                              .tinySpace,
-                        ),
-                        SizedBox(width: e['action_title'] ==
-                            null
-                            ?0:SizeUtil.tinySpace,),
-                        e['action_title'] ==
-                            null
-                            ? SizedBox()
-                            : InkWell(
-                          onTap:
-                              () {},
-                          child:
-                          Text(
-                            e['action_title'],
-                            style: TextStyle(
-                                fontSize:
-                                SizeUtil.textSizeSmall,
-                                color: ColorUtil.blueLight),
-                          ),
-                        ),
-                        e['button'] ==
-                            null
-                            ? SizedBox()
-                            : RaisedButton(
-                          onPressed:
-                              () {},
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(
-                                    SizeUtil.smallRadius),
-                              )),
-                          color: ColorUtil
-                              .primaryColor,
-                          child:
-                          Text(
-                            e['button'],
-                            style: TextStyle(
-                                fontSize:
-                                SizeUtil.textSizeDefault,
-                                color: Colors.white,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.normal),
-                          ),
-                        ),
-                      ],
-                    )
-                        : RichText(
-                      textAlign: TextAlign.start,
-                      text: TextSpan(
-                          text: e['title'],
-                          style: TextStyle(
-                              color: ColorUtil.textColor,
-                              fontWeight: FontWeight.bold),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: e['value'],
-                                style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail, color: ColorUtil.textColor, decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
-                            TextSpan(
-                              text:  e['see_more'],
-                              style: TextStyle(
-                                  fontSize: SizeUtil.textSizeSmall,
-                                  color: ColorUtil.blueLight,
-                                  decoration: TextDecoration.none,
-                                  fontWeight: FontWeight.normal),
-                            ),
-                          ]),
-                    )))
-                        .toList(),
-                  ),
+                  shopHeiInfo(shopValue.data, false, widget.category,
+                      _rowKey),
                   //TODO get detail info max height
-                  Column(
-                    key: _rowKeyFull,
-                    mainAxisSize: MainAxisSize.min,
-                    children: detailInfo // info
-                        .map((e) => paddingContainer(e['see_more'] ==
-                        null
-                        ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: RichText(
-                            textAlign:
-                            TextAlign
-                                .start,
-                            text: TextSpan(
-                                text: e[
-                                'title'],
-                                style: TextStyle(
-                                    color: ColorUtil
-                                        .textColor,
-                                    fontWeight: FontWeight
-                                        .bold),
-                                children: <
-                                    TextSpan>[
-                                  TextSpan(
-
-                                      text: " "+ e['value'],
-                                      style: TextStyle(fontSize: SizeUtil.textSizeSmall, color: e['valueColor'] == null ? ColorUtil.textColor : e['valueColor'], decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
-                                ]),
-                          ),
-                        ),
-                        SizedBox(
-                          width: SizeUtil
-                              .tinySpace,
-                        ),
-                        SizedBox(width: e['action_title'] ==
-                            null
-                            ?0:SizeUtil.tinySpace,),
-                        e['action_title'] ==
-                            null
-                            ? SizedBox()
-                            : InkWell(
-                          onTap:
-                              () {},
-                          child:
-                          Text(
-                            e['action_title'],
-                            style: TextStyle(
-                                fontSize:
-                                SizeUtil.textSizeSmall,
-                                color: ColorUtil.blueLight),
-                          ),
-                        ),
-                        e['button'] ==
-                            null
-                            ? SizedBox()
-                            : RaisedButton(
-                          onPressed:
-                              () {},
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(
-                                    SizeUtil.smallRadius),
-                              )),
-                          color: ColorUtil
-                              .primaryColor,
-                          child:
-                          Text(
-                            e['button'],
-                            style: TextStyle(
-                                fontSize:
-                                SizeUtil.textSizeDefault,
-                                color: Colors.white,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.normal),
-                          ),
-                        ),
-                      ],
-                    )
-                        : RichText(
-                      textAlign: TextAlign.start,
-                      text: TextSpan(
-                          text: e['title'],
-                          style: TextStyle(
-                              color: ColorUtil.textColor,
-                              fontWeight: FontWeight.bold),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: e['full_value'],
-                                style: TextStyle(
-                                    fontSize: SizeUtil
-                                        .textSizeExpressDetail,
-                                    color:
-                                    ColorUtil.textColor,
-                                    decoration:
-                                    TextDecoration.none,
-                                    fontWeight:
-                                    FontWeight.normal)),
-                          ]),
-                    )))
-                        .toList(),
-                  ),
+                  shopHeiInfo(shopValue.data, true, widget.category,
+                      _rowKeyFull)
                 ],
               ),
             );
@@ -694,7 +427,12 @@ class _PartnerBookScheduleScreenState
     });
   }
 
-  Widget bookingContent() {
+  Widget bookingContent(dynamic data) {
+    print(data['address']);
+    dynamic chooseService;
+    String addressChoose;
+    String date;
+    String time;
     return ListView(
       children: <Widget>[
         Column(
@@ -713,31 +451,31 @@ class _PartnerBookScheduleScreenState
             WidgetUtil.getLine(margin: EdgeInsets.all(0), width: 2),
             //todo client list
             Consumer<PartnerChooseLocation>(builder: (BuildContext context, PartnerChooseLocation value, Widget child) {
-              return Column(
-                children: StringUtil.clientList
-                    .map((ele) => CustomRadioButton(
-                  titleContent:
-                  Text(ele['address']),
-                  padding: const EdgeInsets.only(
-                      left: SizeUtil.smallSpace, top: SizeUtil.smallSpace),
-                  value: StringUtil.clientList.indexOf(ele),
-                  groupValue: value.val,
-                  iconSize: SizeUtil.iconSize,
-                  titleSize: SizeUtil.textSizeSmall,
-                  onChanged: (val) {
-                    _partnerChooseLocation.onChange(val);
-                  },
-                ),)
-                    .toList(),
-              );
-            },),
+                return Column(
+                  children: List.generate(data['address'].length, (index) => CustomRadioButton(
+                    titleContent: Text(data['address'][index]['address']),
+                    padding: const EdgeInsets.only(
+                        left: SizeUtil.smallSpace,
+                        top: SizeUtil.smallSpace),
+                    value: index,
+                    groupValue: value.val,
+                    iconSize: SizeUtil.iconSize,
+                    titleSize: SizeUtil.textSizeSmall,
+                    onChanged: (val) {
+                      addressChoose = data['address'][val]['address'];
+                      _partnerChooseLocation.onChange(val);
+                    },
+                  ))
+                );
+              },
+            ),
             WidgetUtil.getLine(
                 margin: EdgeInsets.only(top: SizeUtil.smallSpace), width: 2),
             //todo choose service title
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                S.of(context).choose_service("25"),
+                S.of(context).choose_service(data['service'].length),
                 style: TextStyle(
                     color: ColorUtil.textColor,
                     fontSize: SizeUtil.textSizeDefault,
@@ -758,18 +496,18 @@ class _PartnerBookScheduleScreenState
                       crossAxisCount: 2, childAspectRatio: 3.3),
                   padding: EdgeInsets.only(
                       left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
-                  itemCount: 10,
+                  itemCount: data['service'].length,
                   itemBuilder: (context, index) {
                     bool isSelected = _serviceProvider != null &&
                         _serviceProvider.index == index;
                     return GestureDetector(
                         onTap: () {
-                          if (_serviceProvider != null &&
-                              _serviceProvider.index != index) {
+                          if (_serviceProvider != null && _serviceProvider.index != index) {
+                            chooseService = data['service'][index];
                             _serviceProvider.onSelectService(index);
                           }
                         },
-                        child: ServiceDetailItem(
+                        child: ServiceDetailItem(data: data['service'][index],
                           isSelected: isSelected,
                         ));
                   },
@@ -804,32 +542,39 @@ class _PartnerBookScheduleScreenState
                 tabs: StringUtil.week
                     .map(
                       (e) => Tab(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Container(color: Colors.white, width: 1,),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text(
-                              e['dow'],
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: SizeUtil.textSizeNotiTime),
+                            Container(
+                              color: Colors.white,
+                              width: 1,
                             ),
-                            Text(
-                              e['date'],
-                              style: TextStyle(
-                                  fontWeight: FontWeight.normal, fontSize: 6),
-                            )
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  e['dow'],
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: SizeUtil.textSizeNotiTime),
+                                ),
+                                Text(
+                                  e['date'],
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 6),
+                                )
+                              ],
+                            ),
+                            Container(
+                              color: Colors.white,
+                              width: 1,
+                            ),
                           ],
                         ),
-                        Container(color: Colors.white, width: 1,),
-                      ] ,
-                    ),
-                  ),
-                )
+                      ),
+                    )
                     .toList(),
               ),
             ),
@@ -837,8 +582,7 @@ class _PartnerBookScheduleScreenState
             Consumer<ChangeScheduleTimeProvider>(
               builder: (BuildContext context, ChangeScheduleTimeProvider value,
                   Widget child) {
-                return
-                  Container(
+                return Container(
                   height: MediaQuery.of(context).size.width / 3.50,
                   width: MediaQuery.of(context).size.width,
                   color: Colors.white,
@@ -852,44 +596,44 @@ class _PartnerBookScheduleScreenState
                       bool isSelected = _scheduleTimeProvider != null &&
                           _scheduleTimeProvider.timeIndex == index;
                       print(StringUtil.time[index]['off']);
-                      return StringUtil.time[index]['off']==null?
-                        GestureDetector(
-                          onTap: () {
-                            if (_scheduleTimeProvider != null &&
-                                _scheduleTimeProvider.timeIndex != index) {
-                              _scheduleTimeProvider.onSelectedTime(index);
-                            }
-                          },
-                          child:
-                          Container(
-                            margin: EdgeInsets.all(1),
-                            color: isSelected
-                                ? Color(0xffFF7700)
-                                : ColorUtil.lineColor,
-                            child: Center(
-                              child: Text(
-                                StringUtil.time[index]['time'],
-                                style: TextStyle(
-                                    fontSize: SizeUtil.textSizeTiny,
-                                    color: isSelected
-                                        ? Colors.white
-                                        : ColorUtil.textColor),
-                                textAlign: TextAlign.center,
+                      return StringUtil.time[index]['off'] == null
+                          ? GestureDetector(
+                              onTap: () {
+                                if (_scheduleTimeProvider != null && _scheduleTimeProvider.timeIndex != index) {
+                                  time = StringUtil.time[index]['time'];
+                                  _scheduleTimeProvider.onSelectedTime(index);
+                                }
+                              },
+                              child: Container(
+                                margin: EdgeInsets.all(1),
+                                color: isSelected
+                                    ? Color(0xffFF7700)
+                                    : ColorUtil.lineColor,
+                                child: Center(
+                                  child: Text(
+                                    StringUtil.time[index]['time'],
+                                    style: TextStyle(
+                                        fontSize: SizeUtil.textSizeTiny,
+                                        color: isSelected
+                                            ? Colors.white
+                                            : ColorUtil.textColor),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ))
+                          : Container(
+                              margin: EdgeInsets.all(1),
+                              color: ColorUtil.red,
+                              child: Center(
+                                child: Text(
+                                  StringUtil.time[index]['time'],
+                                  style: TextStyle(
+                                      fontSize: SizeUtil.textSizeTiny,
+                                      color: Colors.white),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
-                            ),
-                          )):Container(
-                        margin: EdgeInsets.all(1),
-                        color: ColorUtil.red,
-                        child: Center(
-                          child: Text(
-                            StringUtil.time[index]['time'],
-                            style: TextStyle(
-                                fontSize: SizeUtil.textSizeTiny,
-                                color: Colors.white),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      );
+                            );
                     },
                   ),
                 );
@@ -905,15 +649,22 @@ class _PartnerBookScheduleScreenState
                 width: MediaQuery.of(context).size.width,
                 child: RaisedButton(
                   onPressed: () {
+                    List<dynamic> confirmForm = [
+                      {'title': 'Dịch vụ đã đặt: ', 'content': chooseService['content']},
+                      {'title': 'Giá niêm yết:  ', 'content': '\nKhách hàng đã có thẻ hoặc mã voucher vui lòng mang tới cửa hàng để được hưởng đầy đủ ưu đãi.', 'value': chooseService['price']},
+                      {'title': 'Ngày sử dụng: ', 'content': StringUtil.week[_dayTabController.index]['date']},
+                      {'title': 'Thời gian: ', 'content': time},
+                      {'title': 'Thời gian thực hiện: ', 'content': chooseService['ex_time']},
+                    ];
                     showDialog(
                         context: context,
                         builder: (BuildContext context) =>
-                            BookingDialogue(context));
+                            BookingDialogue(context,confirmForm,widget.shopID,addressChoose,StringUtil.week[_dayTabController.index]['date'],time,chooseService['id']));
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
-                        Radius.circular(SizeUtil.smallRadius),
-                      )),
+                    Radius.circular(SizeUtil.smallRadius),
+                  )),
                   color: ColorUtil.primaryColor,
                   child: Padding(
                     padding: const EdgeInsets.all(SizeUtil.midSpace),
@@ -933,7 +684,7 @@ class _PartnerBookScheduleScreenState
     );
   }
 
-  Widget productContent() {
+  Widget productContent(List<dynamic> products) {
     return Column(
       children: <Widget>[
         Expanded(
@@ -943,11 +694,12 @@ class _PartnerBookScheduleScreenState
                 crossAxisCount: 2, childAspectRatio: 0.78),
             padding: EdgeInsets.only(
                 left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
-            itemCount: 20,
+            itemCount: products.length,
             itemBuilder: (context, index) {
-              bool isSelected =
-                  _serviceProvider != null && _serviceProvider.index == index;
+//              bool isSelected =
+//                  _serviceProvider != null && _serviceProvider.index == index;
               return ItemProduct(
+                product: products[index],
                 width: MediaQuery.of(context).size.width * 0.5,
                 borderRadius: SizeUtil.tinyRadius,
                 showSoldCount: false,
@@ -961,6 +713,348 @@ class _PartnerBookScheduleScreenState
             },
           ),
         ),
+      ],
+    );
+  }
+
+  Widget shopInfo(dynamic data, bool isShow, String category) {
+    if (data == null) {
+      print("shopInfo $data");
+      return Container(
+        height: 0,
+      );
+    }
+    String content = data['introduce'];
+    bool isShowSeeMore = content != null && data['introduce'].length > 100;
+    return Column(
+      children: <Widget>[
+        paddingContainer(Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: RichText(
+                textAlign: TextAlign.start,
+                text: TextSpan(
+                    text: "Điện thoại: ",
+                    style: TextStyle(
+                        color: ColorUtil.textColor,
+                        fontWeight: FontWeight.bold),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: " " + data["phone"],
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                              color: ColorUtil.blueLight,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.normal)),
+                    ]),
+              ),
+            ),
+            SizedBox(
+              width: SizeUtil.tinySpace,
+            ),
+            RaisedButton(
+              onPressed: () {},
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                Radius.circular(SizeUtil.smallRadius),
+              )),
+              color: ColorUtil.primaryColor,
+              child: Text(
+                data['is_favourite'] == "1" ? "Đã thích" : "Thích",
+                style: TextStyle(
+                    fontSize: SizeUtil.textSizeDefault,
+                    color: Colors.white,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.normal),
+              ),
+            ),
+          ],
+        )),
+        paddingContainer(Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: RichText(
+                textAlign: TextAlign.start,
+                text: TextSpan(
+                    text: "Địa chỉ: ",
+                    style: TextStyle(
+                        color: ColorUtil.textColor,
+                        fontWeight: FontWeight.bold),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: data['address'] != null &&
+                                  data['address'].length > 0
+                              ? data['address'][0]["address"]
+                              : "",
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                              color: ColorUtil.textColor,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.normal)),
+                    ]),
+              ),
+            ),
+            SizedBox(
+              width: SizeUtil.tinySpace,
+            ),
+            SizedBox(
+              width: SizeUtil.tinySpace,
+            ),
+            InkWell(
+              onTap: () {},
+              child: Text(
+                "Chỉ đường",
+                style: TextStyle(
+                    fontSize: SizeUtil.textSizeSmall,
+                    color: ColorUtil.blueLight),
+              ),
+            ),
+          ],
+        )),
+        paddingContainer(Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: RichText(
+                textAlign: TextAlign.start,
+                text: TextSpan(
+                    text: "Loại dịch vụ: ",
+                    style: TextStyle(
+                        color: ColorUtil.textColor,
+                        fontWeight: FontWeight.bold),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: category,
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                              color: ColorUtil.blueLight,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.normal)),
+                    ]),
+              ),
+            )
+          ],
+        )),
+        paddingContainer(Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                if (isShowSeeMore) {
+                  print("tapped");
+                  _seeMoreProvider.onChange();
+                }
+              },
+              child: RichText(
+                textAlign: TextAlign.start,
+                text: TextSpan(
+                    text: "Giới thiệu: ",
+                    style: TextStyle(
+                        color: ColorUtil.textColor,
+                        fontWeight: FontWeight.bold),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: isShowSeeMore &&!isShow
+                              ? content.substring(0, 100)
+                              : content,
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeExpressDetail,
+                              color: ColorUtil.textColor,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.normal)),
+                      TextSpan(
+                        text: isShowSeeMore &&!isShow ? 'See_more':"",
+                        style: TextStyle(
+                            fontSize: SizeUtil.textSizeSmall,
+                            color: ColorUtil.blueLight,
+                            decoration: TextDecoration.none,
+                            fontWeight: FontWeight.normal),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => {print("tapped")},
+                      ),
+                    ]),
+              ),
+            ),
+          ],
+        )),
+      ],
+    );
+  }
+
+  Widget shopHeiInfo(dynamic data, bool isShow, String category, Key key) {
+    if (data == null) {
+      print("shopInfo $data");
+      return Container(
+        height: 0,
+      );
+    }
+    String content = data['introduce'];
+    bool isShowSeeMore = content != null && data['introduce'].length > 100;
+    return Column(
+      key: key,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        paddingContainer(Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: RichText(
+                textAlign: TextAlign.start,
+                text: TextSpan(
+                    text: "Điện thoại: ",
+                    style: TextStyle(
+                        color: ColorUtil.textColor,
+                        fontWeight: FontWeight.bold),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: " " + data["phone"],
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                              color: ColorUtil.blueLight,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.normal)),
+                    ]),
+              ),
+            ),
+            SizedBox(
+              width: SizeUtil.tinySpace,
+            ),
+            RaisedButton(
+              onPressed: () {},
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                Radius.circular(SizeUtil.smallRadius),
+              )),
+              color: ColorUtil.primaryColor,
+              child: Text(
+                data['is_favourite'] == "1" ? "Đã thích" : "Thích",
+                style: TextStyle(
+                    fontSize: SizeUtil.textSizeDefault,
+                    color: Colors.white,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.normal),
+              ),
+            ),
+          ],
+        )),
+        paddingContainer(Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: RichText(
+                textAlign: TextAlign.start,
+                text: TextSpan(
+                    text: "Địa chỉ: ",
+                    style: TextStyle(
+                        color: ColorUtil.textColor,
+                        fontWeight: FontWeight.bold),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: data['address'] != null &&
+                                  data['address'].length > 0
+                              ? data['address'][0]['address']
+                              : "",
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                              color: ColorUtil.textColor,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.normal)),
+                    ]),
+              ),
+            ),
+            SizedBox(
+              width: SizeUtil.tinySpace,
+            ),
+            SizedBox(
+              width: SizeUtil.tinySpace,
+            ),
+            InkWell(
+              onTap: () {},
+              child: Text(
+                "Chỉ đường",
+                style: TextStyle(
+                    fontSize: SizeUtil.textSizeSmall,
+                    color: ColorUtil.blueLight),
+              ),
+            ),
+          ],
+        )),
+        paddingContainer(Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: RichText(
+                textAlign: TextAlign.start,
+                text: TextSpan(
+                    text: "Loại dịch vụ: ",
+                    style: TextStyle(
+                        color: ColorUtil.textColor,
+                        fontWeight: FontWeight.bold),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: category,
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                              color: ColorUtil.blueLight,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.normal)),
+                    ]),
+              ),
+            )
+          ],
+        )),
+        paddingContainer(Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                if (isShowSeeMore) {
+                  print("tapped");
+                  _seeMoreProvider.onChange();
+                }
+              },
+              child: RichText(
+                textAlign: TextAlign.start,
+                text: TextSpan(
+                    text: "Giới thiệu: ",
+                    style: TextStyle(
+                        color: ColorUtil.textColor,
+                        fontWeight: FontWeight.bold),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: isShowSeeMore && !isShow
+                              ? content.substring(0, 100)
+                              : content,
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeExpressDetail,
+                              color: ColorUtil.textColor,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.normal)),
+                      TextSpan(
+                        text: isShowSeeMore && !isShow ? 'See_more': "",
+                        style: TextStyle(
+                            fontSize: SizeUtil.textSizeSmall,
+                            color: ColorUtil.blueLight,
+                            decoration: TextDecoration.none,
+                            fontWeight: FontWeight.normal),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => {print("tapped")},
+                      ),
+                    ]),
+              ),
+            ),
+          ],
+        )),
       ],
     );
   }
@@ -988,6 +1082,13 @@ class _PartnerBookScheduleScreenState
       ChangeNotifierProvider.value(value: _getHeightProvider),
       ChangeNotifierProvider.value(value: _partnerChooseLocation),
       ChangeNotifierProvider.value(value: _partnerTabbarProvider),
+      ChangeNotifierProvider.value(value: _bookingServiceDetailProvider),
     ];
+  }
+
+  @override
+  BookingServiceViewModel initViewModel() {
+    // TODO: implement initViewModel
+    return BookingServiceViewModel(context);
   }
 }

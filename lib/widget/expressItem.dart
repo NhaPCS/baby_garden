@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class ExpressItem extends StatelessWidget {
   dynamic data;
-  ExpressItem(Key key,{this.data}) : super(key: key);
+  ExpressItem({this.data}) : super();
 
   @override
   Widget build(BuildContext context) {

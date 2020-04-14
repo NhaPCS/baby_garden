@@ -34,6 +34,7 @@ class _PartnerListScreenState extends BaseState<PartnerListScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
+    String categoryName="";
     return Scaffold(
       backgroundColor: ColorUtil.lineColor,
       appBar: getAppBar(title: S.of(context).partner.toUpperCase()),
@@ -42,6 +43,7 @@ class _PartnerListScreenState extends BaseState<PartnerListScreen> {
           ListServiceCategory(
             onChangedCategory: (category) {
               _selectedCategoryId = category == null ? null : category['id'];
+              categoryName = category == null ?"Tất cả":category['name'];
               _getListPartnerProvider.getListShops(context,
                   categoryId: _selectedCategoryId);
             },
@@ -68,7 +70,7 @@ class _PartnerListScreenState extends BaseState<PartnerListScreen> {
                           shop: value.shops[index],
                         ),
                         onTap: () {
-                          push(PartnerBookScheduleScreen());
+                          push(PartnerBookScheduleScreen(value.shops[index]['id'],value.shops[index]['name'],categoryName));
                         },
                       );
                     });

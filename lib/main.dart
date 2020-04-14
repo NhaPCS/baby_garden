@@ -11,6 +11,7 @@ import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/provider/get_service_category_provider.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
+import 'package:baby_garden_flutter/screen/notify/notify_screen.dart';
 import 'package:baby_garden_flutter/screen/vcb_express/vcb_express_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
@@ -116,7 +117,7 @@ class _MyAppState extends State<MyApp> {
             bodyText1: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
           )),
-      home: VCBExpressScreen(),
+      home: MainScreen(),
     );
   }
 }

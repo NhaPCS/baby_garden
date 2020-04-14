@@ -76,13 +76,31 @@ Future<dynamic> changePassword(BuildContext context,
 }
 
 /*todo bookingService
-
+user_id: id người dùng
+shop_id: id shop
+date_booking: ngày đặt
+time_booking: giờ đặt
+service_id: id dịch vụ
+address: địa chỉ
  */
-Future<dynamic> bookingService(BuildContext context,
-    {int userID, int shopID, }) async {
-  Response response = await post(context,
-      path: "bookingService", param: {'user_id': userID,
-        'shop_id': shopID});
+Future<dynamic> bookingService({String userID, String shopID,String dateBooking, String timeBooking, String serviceID, String address }) async {
+  Response response = await post(null,
+      path: "bookingService", param: {'user_id': userID, 'shop_id': shopID,'date_booking':dateBooking,'time_booking':timeBooking,'service_id':serviceID,'address':address});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> shopDetail({String userID, String shopID }) async {
+  Response response = await get(null,
+      path: "shopDetail", param: {'user_id': userID, 'shop_id': shopID});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+//todo listProductShop
+Future<dynamic> listProductShop({String userID, String shopID }) async {
+  Response response = await get(null,
+      path: "listProductShop", param: {'user_id': userID, 'shop_id': shopID});
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -180,6 +198,8 @@ Future<dynamic> district({String id}) async {
 }
 
 
+
+
 //todo listShiper
 Future<dynamic> listShiper({int userId}) async {
   Response response = await get(null, path: "listShiper",param: {'user_id':userId.toString()});
@@ -252,6 +272,8 @@ Future<dynamic> serviceCategory() async {
   if (response.isSuccess()) return response.data;
   return null;
 }
+
+
 
 Future<dynamic> banners() async {
   Response response = await get(null, path: "banner", showLoading: false);

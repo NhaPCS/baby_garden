@@ -47,9 +47,9 @@ class _VCBExpressScreenState extends BaseState<VCBExpressScreen> {
                   padding: EdgeInsets.all(0),
                   itemBuilder: (context, index) {
                     return new GestureDetector(
-                      child: new ExpressItem(value.newList[index]),
+                      child: new ExpressItem(data: value.newList[index],),
                       onTap: () {
-                        push(VCBExpressDetailScreen());
+                        push(VCBExpressDetailScreen(value.newList[index]['id']));
                       },
                     );
                   });
