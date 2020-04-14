@@ -3746,10 +3746,64 @@ class S {
 
   String message_empty(Object key) {
     return Intl.message(
-      'Vui lòng nhập \$$key để tiếp tục',
+      'Vui lòng nhập $key để tiếp tục',
       name: 'message_empty',
       desc: '',
       args: [key],
+    );
+  }
+
+  String get title_select_pick_image {
+    return Intl.message(
+      'Chọn ảnh',
+      name: 'title_select_pick_image',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get message_select_pick_image {
+    return Intl.message(
+      'Bạn muốn chụp ảnh từ camera hay lấy ảnh từ thư viên?',
+      name: 'message_select_pick_image',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get from_camera {
+    return Intl.message(
+      'Chụp ảnh',
+      name: 'from_camera',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get from_gallery {
+    return Intl.message(
+      'Lấy ảnh từ thư viện',
+      name: 'from_gallery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get register_partner {
+    return Intl.message(
+      'Đăng ký trở thành đối tác',
+      name: 'register_partner',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get register_partner_success {
+    return Intl.message(
+      'Đăng ký trở thành đối tác thành công!',
+      name: 'register_partner_success',
+      desc: '',
+      args: [],
     );
   }
 }

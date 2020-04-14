@@ -1,11 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:baby_garden_flutter/data/model/param.dart';
 import 'package:baby_garden_flutter/data/response.dart';
 import 'package:baby_garden_flutter/data/shared_value.dart';
+import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 
 Map<String, String> _headers;
@@ -372,6 +374,52 @@ Future<dynamic> myCart() async {
   return null;
 }
 
+Future<dynamic> reportTitle() async {
+  Response response = await get(null, path: 'reportTitle', showLoading: false);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<Response> reportProduct(BuildContext context,
+    {String productId,
+    String title,
+    String content,
+    String titleId,
+    File img}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "product_id": productId,
+    "title": title,
+    "content": content,
+    "titleId": titleId
+  };
+  dynamic files = {"img": img};
+  Response response = await postMultiPart(context,
+      path: 'reportProduct', param: params, files: files, requireLogin: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
+Future<Response> registerPartner(BuildContext context,
+    {String shopName, String phone, String address, String job}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "name": shopName,
+    "phone": phone,
+    "address": address,
+    "job": job,
+  };
+  Response response = await post(context,
+      path: 'registerPartner',
+      param: params,
+      requireLogin: true,
+      showLoading: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
 Future<Response> post(BuildContext context,
     {String path,
     dynamic param,
@@ -443,6 +491,52 @@ Future<Response> execute(BuildContext context,
     Response res = parseResponse(context, response.body,
         hasAccessToken: hasAccessToken, showErrorDialog: showErrorDialog);
     return res;
+  } on Exception catch (e) {
+    print(e);
+  }
+  return Response();
+}
+
+Future<Response> postMultiPart(BuildContext context,
+    {String path,
+    Map<String, String> param,
+    Map<String, File> files,
+    bool showErrorDialog = true,
+    bool showLoading = true,
+    bool requireLogin = false}) async {
+  if (requireLogin) {
+    String userId = await ShareValueProvider.shareValueProvider.getUserId();
+    if (userId == null || userId.isEmpty) {
+      if (context != null) {
+        WidgetUtil.showRequireLoginDialog(context);
+      }
+      return null;
+    }
+  }
+  try {
+    var url = 'http://$BASE_URL$SUB_URL$path';
+
+    http.MultipartRequest request =
+        new http.MultipartRequest('POST', Uri.parse(url));
+
+    files.forEach((key, value) async {
+      if (value != null)
+        request.files.add(await http.MultipartFile.fromPath(key, value.path));
+    });
+    request.fields.addAll(param);
+    request.headers.addAll(_headers);
+
+    if (context != null && showLoading) WidgetUtil.showLoading(context);
+    http.StreamedResponse response = await request.send();
+    print("REQ ${request.fields}  ${request.files.toString()}");
+    String res = await response.stream.bytesToString();
+
+    if (context != null && showLoading) Navigator.pop(context);
+    print("RES $res");
+
+    Response responseData = parseResponse(context, res,
+        hasAccessToken: false, showErrorDialog: showErrorDialog);
+    return responseData;
   } on Exception catch (e) {
     print(e);
   }

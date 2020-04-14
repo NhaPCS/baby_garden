@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:baby_garden_flutter/data/model/param.dart';
@@ -5,7 +6,9 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/login/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ColorUtil {
   static const Color primaryColor = Color(0xffFF8918);
@@ -36,6 +39,7 @@ class ColorUtil {
   static const Color darkGray = Color(0xff707070);
   static const serviceItemUnselectColor = Color(0xffF6F6F6);
   static const Color textDark = Color(0xff444444);
+  static const Color grayEC = Color(0xffececec);
 
   static const List<Color> gradientColors = [
     Color(0xffFFA503),
@@ -348,7 +352,41 @@ class SizeUtil {
   static const double textSpaceBig = 4;
 }
 
+class FileUtil {
+  static Future<File> compressFile(File file) async {
+    try {
+      if (file.lengthSync() > 1024 * 1024 &&
+          (file.path.endsWith("jpg") || file.path.endsWith("jpeg"))) /*1MB*/ {
+        Directory tempFolder = await getTemporaryDirectory();
+        File compressedFile = await FlutterImageCompress.compressAndGetFile(
+            file.path,
+            "${tempFolder.path}/${DateTime.now().toIso8601String()}.jpg",
+            quality: 60);
+        if (compressedFile != null) {
+          print(
+              "compressed file ${compressedFile.path}  ${compressedFile.lengthSync()}");
+          return compressedFile;
+        }
+      }
+    } on Exception catch (e) {
+      print(e);
+    }
+    return file;
+  }
+}
+
 class WidgetUtil {
+  static void showPickImageDialog(BuildContext context,
+      {VoidCallback onCameraClick, VoidCallback onGalleryClick}) {
+    showConfirmDialog(context,
+        title: S.of(context).title_select_pick_image,
+        message: S.of(context).message_select_pick_image,
+        positive: S.of(context).from_camera,
+        negative: S.of(context).from_gallery,
+        positiveClicked: onCameraClick,
+        negativeClick: onGalleryClick);
+  }
+
   static void showRequireLoginDialog(BuildContext context) {
     showDialog(
         context: context,

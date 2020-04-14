@@ -35,7 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m7(date) => "Ngày sử dung: ${date}";
 
-  static m8(key) => "Vui lòng nhập \$${key} để tiếp tục";
+  static m8(key) => "Vui lòng nhập ${key} để tiếp tục";
 
   static m9(time) => "Thời gian: ${time}";
 
@@ -236,6 +236,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "finish" : MessageLookupByLibrary.simpleMessage("Hoàn thành"),
     "finish_checkout" : MessageLookupByLibrary.simpleMessage("hoàn tất thanh toán"),
     "foget_pasword" : MessageLookupByLibrary.simpleMessage("Quên mật khẩu"),
+    "from_camera" : MessageLookupByLibrary.simpleMessage("Chụp ảnh"),
+    "from_gallery" : MessageLookupByLibrary.simpleMessage("Lấy ảnh từ thư viện"),
     "fullname" : MessageLookupByLibrary.simpleMessage("Họ và tên"),
     "gender" : MessageLookupByLibrary.simpleMessage("Giới tính"),
     "getCode" : MessageLookupByLibrary.simpleMessage("lấy mã"),
@@ -275,6 +277,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "message_confirm_delete_cart" : MessageLookupByLibrary.simpleMessage("Bạn có muốn xoá sản phẩm này khỏi giỏ hàng không?"),
     "message_empty" : m8,
     "message_require_login" : MessageLookupByLibrary.simpleMessage("Bạn vui lòng đăng nhập để sử dụng chức năng này!"),
+    "message_select_pick_image" : MessageLookupByLibrary.simpleMessage("Bạn muốn chụp ảnh từ camera hay lấy ảnh từ thư viên?"),
     "mobilePhone" : MessageLookupByLibrary.simpleMessage("Số điện thoại"),
     "mobilePlaceholder" : MessageLookupByLibrary.simpleMessage("Nhập SĐT của bạn"),
     "month" : MessageLookupByLibrary.simpleMessage("Tháng"),
@@ -369,6 +372,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "reenter_new_password" : MessageLookupByLibrary.simpleMessage("Nhập lại mật khẩu mới"),
     "reenter_password" : MessageLookupByLibrary.simpleMessage("Nhập lại mật khẩu"),
     "register" : MessageLookupByLibrary.simpleMessage(" Đăng ký "),
+    "register_partner" : MessageLookupByLibrary.simpleMessage("Đăng ký trở thành đối tác"),
+    "register_partner_success" : MessageLookupByLibrary.simpleMessage("Đăng ký trở thành đối tác thành công!"),
     "register_success" : MessageLookupByLibrary.simpleMessage("Đăng ký thành công"),
     "reload" : MessageLookupByLibrary.simpleMessage("Tải lại"),
     "remember_password" : MessageLookupByLibrary.simpleMessage("Ghi nhớ mật khẩu"),
@@ -446,6 +451,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "time_using" : MessageLookupByLibrary.simpleMessage("Thời gian sử dụng"),
     "title_confirm_delete_cart" : MessageLookupByLibrary.simpleMessage("Xác nhận"),
     "title_require_login" : MessageLookupByLibrary.simpleMessage("Yêu cầu đăng nhập"),
+    "title_select_pick_image" : MessageLookupByLibrary.simpleMessage("Chọn ảnh"),
     "total" : MessageLookupByLibrary.simpleMessage("Thành tiền"),
     "total_order_price" : MessageLookupByLibrary.simpleMessage("Tổng đơn: "),
     "transfer_content" : MessageLookupByLibrary.simpleMessage("Nội dung CK:"),
