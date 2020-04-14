@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 
+// TODO-QAnh: đây là item phải thêm chữ Item ở cuối tên và move vào folder item
 class PointCard extends StatelessWidget {
   final image;
   final name;
@@ -19,6 +20,7 @@ class PointCard extends StatelessWidget {
       decoration: setBorder('bottom', Color(0xffC9C8C8), 1),
       margin: EdgeInsets.only(
           left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
+      // TODO-QAnh: không set height như này, set height cho image và để wrap content
       height: 80,
       child: GestureDetector(
         onTap: () {
@@ -41,9 +43,11 @@ class PointCard extends StatelessWidget {
             ),
           ),
           Expanded(
+            // TODO-QAnh: thay Container bằng Padding
             child: Container(
                 // height: 90,
                 padding: EdgeInsets.only(top: SizeUtil.smallSpace),
+                // TODO-QAnh: thay ListView bằng Column
                 child: ListView(
                     padding: const EdgeInsets.all(SizeUtil.midSmallSpace),
                     physics: NeverScrollableScrollPhysics(),
@@ -56,12 +60,14 @@ class PointCard extends StatelessWidget {
                       Padding(
                           padding:
                               const EdgeInsets.only(top: SizeUtil.tinySpace),
+                          // TODO-QAnh: chuyển sang file arb
                           child: Text(this.point.toString() + ' điểm',
                               style: TextStyle(
                                   color: ColorUtil.darkGray,
                                   fontSize: SizeUtil.textSizeBigger))),
                     ])),
           ),
+          // TODO-QAnh: k dùng ảnh png, dùng Icon
           Image.asset(
             'photo/right.png',
             width: 10,

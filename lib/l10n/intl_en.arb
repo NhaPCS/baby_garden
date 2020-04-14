@@ -411,5 +411,12 @@
   "yes": "Có",
   "no": "Không",
   "no_data": "Chưa có dữ liệu",
-  "reload": "Tải lại"
+  "reload": "Tải lại",
+  "message_empty": "Vui lòng nhập {key} để tiếp tục",
+  "title_select_pick_image": "Chọn ảnh",
+  "message_select_pick_image": "Bạn muốn chụp ảnh từ camera hay lấy ảnh từ thư viên?",
+  "from_camera": "Chụp ảnh",
+  "from_gallery": "Lấy ảnh từ thư viện",
+  "register_partner": "Đăng ký trở thành đối tác",
+  "register_partner_success": "Đăng ký trở thành đối tác thành công!"
 }

@@ -5,9 +5,9 @@ import 'package:baby_garden_flutter/screen/forgot_password/forgot_password_scree
 import 'package:baby_garden_flutter/screen/register/register_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/view_model/login_view_model.dart';
-import 'package:baby_garden_flutter/widget/circle_checkbox.dart';
-import 'package:baby_garden_flutter/widget/my_password_textfield.dart';
-import 'package:baby_garden_flutter/widget/my_text_field.dart';
+import 'package:baby_garden_flutter/widget/checkbox/circle_checkbox.dart';
+import 'package:baby_garden_flutter/widget/input/my_password_textfield.dart';
+import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,12 +17,12 @@ import 'package:provider/provider.dart';
 class LoginScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _LoginScreenState();
   }
 }
 
 class _LoginScreenState extends BaseStateModel<LoginScreen, LoginViewModel> {
+  // TODO-Hung: k dùng nữa à? bỏ đi
   final ShowHidePassProvider _showHidePassProvider = new ShowHidePassProvider();
   final TextEditingController _phoneControler = new TextEditingController();
   final TextEditingController _passControler = new TextEditingController();
@@ -47,6 +47,7 @@ class _LoginScreenState extends BaseStateModel<LoginScreen, LoginViewModel> {
             Expanded(
               child: SizedBox(),
             ),
+            // TODO-Hung: thấy cả màn đều có padding đó, thay cái Column thàng ListView thì đẹp
             Padding(
                 padding: const EdgeInsets.only(
                     left: SizeUtil.bigSpace,
@@ -91,6 +92,7 @@ class _LoginScreenState extends BaseStateModel<LoginScreen, LoginViewModel> {
                     right: SizeUtil.bigSpace,
                     top: SizeUtil.smallSpace),
                 width: MediaQuery.of(context).size.width,
+                // TODO-Hung: dùng MyRaisedButton
                 child: RaisedButton(
                   onPressed: () async {
                     getViewModel().onLogin(password: _passControler.text, phone: _phoneControler.text);
@@ -158,7 +160,6 @@ class _LoginScreenState extends BaseStateModel<LoginScreen, LoginViewModel> {
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
     return [ChangeNotifierProvider.value(value: _showHidePassProvider)];
   }
 

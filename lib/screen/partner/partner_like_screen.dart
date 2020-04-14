@@ -9,11 +9,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
-
+// TODO-Hung: screen mới thì move ra folder mới, không để chung
 class PartnerLikeScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _PartnerLikeScreen();
   }
 }
@@ -24,7 +23,6 @@ class _PartnerLikeScreen extends BaseState<PartnerLikeScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
     return Scaffold(
       backgroundColor: ColorUtil.lineColor,
       appBar: getAppBar(title: S.of(context).familier_partner.toUpperCase()),
@@ -57,7 +55,6 @@ class _PartnerLikeScreen extends BaseState<PartnerLikeScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
     return [ChangeNotifierProvider.value(value: _changeCategoryProvider)];
   }
 }

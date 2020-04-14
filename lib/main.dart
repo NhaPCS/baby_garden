@@ -1,9 +1,11 @@
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/booking_detail_provider.dart';
+import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/provider/city_provider.dart';
 import 'package:baby_garden_flutter/provider/district_provider.dart';
 import 'package:baby_garden_flutter/provider/get_banners_provider.dart';
 import 'package:baby_garden_flutter/provider/get_product_category_provider.dart';
+import 'package:baby_garden_flutter/provider/get_service_category_provider.dart';
 import 'package:baby_garden_flutter/provider/order_list_provider.dart';
 import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
 import 'package:baby_garden_flutter/provider/notify_control_provider.dart';
@@ -12,8 +14,6 @@ import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/provider/get_service_category_provider.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
-import 'package:baby_garden_flutter/screen/notify/notify_screen.dart';
-import 'package:baby_garden_flutter/screen/vcb_express/vcb_express_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -36,7 +36,6 @@ void main() {
           ChangeNotifierProvider(create: (_) => DistrictProvider()),
           ChangeNotifierProvider(create: (_) => ReceiveAddressListProvider()),
           ChangeNotifierProvider(create: (_) => CartProvider()),
-          ChangeNotifierProvider(create: (_) => NotifyProvider()),
         ],
         child: MyApp(),
       )));

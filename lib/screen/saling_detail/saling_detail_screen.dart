@@ -15,7 +15,6 @@ import 'package:provider/provider.dart';
 class SalingDetailScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _SalingDetailScreenState();
   }
 }
@@ -23,7 +22,6 @@ class SalingDetailScreen extends StatefulWidget {
 class _SalingDetailScreenState extends BaseState<SalingDetailScreen> {
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
     return Scaffold(
       appBar: getAppBar(
         title: S.of(context).saling_detail,
@@ -100,6 +98,7 @@ class _SalingDetailScreenState extends BaseState<SalingDetailScreen> {
                 SizedBox(
                   height: SizeUtil.superTinySpace,
                 ),
+                // TODO-Hung: k add anh test vao. dung dummyImage. xoá hết ảnh test đi
                 Image.asset(
                   "photo/saling_detail_img.png.png",
                   width: MediaQuery.of(context).size.width,
@@ -107,6 +106,7 @@ class _SalingDetailScreenState extends BaseState<SalingDetailScreen> {
               ],
             ),
           ),
+          // TODO-Hung: dung WidgetUtil.getLine
           Container(
             color: ColorUtil.lineColor,
             height: SizeUtil.smallSpace,
@@ -150,6 +150,7 @@ class _SalingDetailScreenState extends BaseState<SalingDetailScreen> {
               ],
             ),
           ),
+          // TODO-Hung: dung WidgetUtil.getLine
           Container(
             color: ColorUtil.lineColor,
             height: SizeUtil.smallSpace,
@@ -186,7 +187,6 @@ class _SalingDetailScreenState extends BaseState<SalingDetailScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
     return null;
   }
 }

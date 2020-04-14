@@ -1,7 +1,8 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/screen/partner/partner_book_schedule.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
-import 'package:baby_garden_flutter/widget/circle_image.dart';
+import 'package:baby_garden_flutter/widget/image/circle_image.dart';
 import 'package:baby_garden_flutter/widget/rating_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +36,7 @@ class StoreInfo extends StatelessWidget {
         Expanded(child: SizedBox()),
         MyRaisedButton(
           onPressed: () {
-            //TODO
+            RouteUtil.push(context, PartnerBookScheduleScreen());
           },
           borderColor: ColorUtil.primaryColor,
           borderWidth: 2,

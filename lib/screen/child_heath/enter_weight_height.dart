@@ -2,7 +2,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/child_heath/check_child_info_dialog.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/my_text_field.dart';
+import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:nested/nested.dart';
@@ -39,6 +39,7 @@ class _EnterWeightState extends BaseState<EnterWeightHeight> {
         ),
         MyTextField(
           textEditingController: _heightController,
+          // TODO-Nha: move to arb file
           hint: "Nhập chiều cao của bé",
           suffix: Padding(
             padding: SizeUtil.smallPadding,
@@ -57,10 +58,12 @@ class _EnterWeightState extends BaseState<EnterWeightHeight> {
         ),
         MyTextField(
           textEditingController: _heightController,
+          // TODO-Nha: move to arb file
           hint: "Nhập cân nặng của bé",
           suffix: Padding(
             padding: SizeUtil.smallPadding,
             child: Text(
+              // TODO-Nha: move to arb file
               "(kg)",
               textAlign: TextAlign.center,
               style: TextStyle(color: ColorUtil.primaryColor),
@@ -76,6 +79,7 @@ class _EnterWeightState extends BaseState<EnterWeightHeight> {
         MyTextField(
           textEditingController: _heightController,
           maxLines: 5,
+          // TODO-Nha: move to arb file
           hint:
               "Bố/mẹ viết lại những lưu bút tại thời điểm kiểm tra của bé tại đây nhé!",
           borderRadius: 10,
@@ -101,12 +105,14 @@ class _EnterWeightState extends BaseState<EnterWeightHeight> {
                     size: 100,
                   ),
                   Text(
+                    // TODO-Nha: move to arb file
                     "Bấm vào đây",
                     style: TextStyle(
                         color: ColorUtil.primaryColor,
                         fontSize: SizeUtil.textSizeSmall),
                   ),
                   Text(
+                    // TODO-Nha: move to arb file
                     "Lưu trữ kỷ niệm bạn upload ảnh mới nhất của bé nhé",
                     textAlign: TextAlign.center,
                     style: TextStyle(color: ColorUtil.primaryColor),

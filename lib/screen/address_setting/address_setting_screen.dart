@@ -1,6 +1,8 @@
+import 'package:baby_garden_flutter/data/model/address.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/item/item_address.dart';
+import 'package:baby_garden_flutter/provider/get_list_address_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,7 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 import 'add_address_modal.dart';
-import 'address.dart';
+// import 'address.dart';
 
 class AddressSettingScreen extends StatefulWidget {
   @override
@@ -16,100 +18,112 @@ class AddressSettingScreen extends StatefulWidget {
 }
 
 class _SeenProduct extends BaseState<AddressSettingScreen> {
-  final GetListProvider _getListProvider = GetListProvider();
+  final GetListAddressProvider _getListAddressProvider =
+      GetListAddressProvider();
+  final _defaultPadding = const EdgeInsets.only(
+      top: SizeUtil.normalSpace, left: SizeUtil.midSmallSpace);
+  final List<AddressItem> addressList = [];
 
-  final List<Address> address = [
-    Address(address: "28 Phan Kế Bính, Ba Đình, Hà Nội", isDefault: true),
-    Address(address: "12 Dịch Vọng, Cầu Giấy, Hà Nội", isDefault: false),
-    Address(address: "28 Cát Linh, Hà Đông, Hà Nội", isDefault: false),
-  ];
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_getListAddressProvider.mainAddress == null) {
+      _getListAddressProvider.getData();
+    }
+  }
 
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
         appBar: getAppBar(title: S.of(context).addressAccount),
-        body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              header(),
-              addressSetting(),
-              myAddress(),
-              addAddress(),
-            ]));
+        body:
+            Consumer<GetListAddressProvider>(builder: (context, value, child) {
+          for (var _address in value.address) {
+            var address = Address(
+                id: _address['id'],
+                date: _address['date'],
+                active: _address['active'] == '1' ? true : false,
+                address: _address['address']);
+            addressList.add(AddressItem(address: address));
+          }
+
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                header(),
+                WidgetUtil.getLine(color: Colors.black),
+                addressSetting(),
+                WidgetUtil.getLine(width: SizeUtil.lineHeight),
+                myAddress(),
+                WidgetUtil.getLine(width: SizeUtil.lineHeight),
+                addAddress(),
+              ]);
+        }));
   }
 
   Widget header() {
-    return Container(
-      margin: EdgeInsets.only(left: 8, right: 8),
-      height: 50,
-      width: double.infinity,
-      decoration: setBorder("bottom", Color.fromRGBO(112, 112, 112, 1), 1),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 15.0, left: 8),
-        child: Text(
-          S.of(context).defaultAddress,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        ),
+    return Padding(
+      padding: _defaultPadding,
+      child: Text(
+        S.of(context).defaultAddress,
+        style: TextStyle(
+            fontWeight: FontWeight.bold, fontSize: SizeUtil.textSizeBigger),
       ),
     );
   }
 
   Widget addressSetting() {
-    return Container(
-      height: 103,
-      width: double.infinity,
-      decoration: setBorder("bottom", Color.fromRGBO(228, 228, 228, 1), 5),
+    return Padding(
+      padding: _defaultPadding,
       child: Column(children: <Widget>[
         Row(children: <Widget>[
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 15.0, left: 8),
-              child: Text(
-                S.of(context).addressSetting,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(112, 112, 112, 1)),
-              ),
+            child: Text(
+              S.of(context).addressSetting,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, color: ColorUtil.darkGray),
             ),
           ),
           GestureDetector(
             onTap: () {},
-            child: Padding(
-              padding: const EdgeInsets.only(top: 15, right: 8.0),
-              child: Text(
-                S.of(context).edit,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(112, 112, 112, 1),
-                    fontSize: 12),
-              ),
+            child: Text(
+              S.of(context).edit,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: ColorUtil.darkGray,
+                  fontSize: SizeUtil.textSizeSmall),
             ),
           ),
+          SizedBox(width: 8),
         ]),
+        SizedBox(
+          height: 8,
+        ),
         Container(
-          height: 48,
-          margin: EdgeInsets.only(left: 8, right: 8, top: 6),
+          margin: EdgeInsets.all(0),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
-              color: Color.fromRGBO(246, 246, 246, 1)),
-          child: Row(children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Text(
-                  "28 Phan Kế Bính, Ba Đình, Hà Nội",
-                  style: TextStyle(color: Colors.black),
+              color: ColorUtil.serviceItemUnselectColor),
+          child: Center(
+            child: Row(children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Text(
+                    _getListAddressProvider.mainAddress,
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
               ),
-            ),
-            Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Icon(
-                  Icons.location_on,
-                  color: ColorUtil.primaryColor,
-                  size: 27,
-                )),
-          ]),
+              Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Icon(
+                    Icons.location_on,
+                    color: ColorUtil.primaryColor,
+                    size: SizeUtil.iconSizeBigger,
+                  )),
+            ]),
+          ),
         ),
       ]),
     );
@@ -117,68 +131,61 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
 
   Widget myAddress() {
     return Container(
-      height: address.length * 63.toDouble() + 80,
-      child: Container(
-        decoration: setBorder("bottom", Color.fromRGBO(228, 228, 228, 1), 5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 15, left: 8.0),
-              child: Text(
-                S.of(context).myAddress,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(112, 112, 112, 1)),
-              ),
+      // TODO-QAnh: bỏ set height đi, bỏ conatiner này đi
+      height: addressList.length * 63.toDouble() + 80,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: _defaultPadding,
+            child: Text(
+              S.of(context).myAddress,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, color: ColorUtil.darkGray),
             ),
+          ),
 
-            // list view address
-            Expanded(
-              child: ListView.builder(
-                  itemCount: address.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(child: address[index]);
-                  }),
-            )
-          ],
-        ),
+          // list view address
+          Expanded(
+            child: ListView.builder(
+                itemCount: addressList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return addressList[index];
+                }),
+          ),
+        ],
       ),
     );
   }
 
   Widget addAddress() {
-    return Container(
-        width: double.infinity,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 8.0, top: 12),
-          child: GestureDetector(
-            onTap: () {
-              // show dialog
-              final addAddress = ShowAddAddressDialog();
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) => addAddress);
-            },
-            child: Row(children: <Widget>[
-              Icon(
-                Icons.add,
-                size: 30,
-                color: ColorUtil.primaryColor,
-              ),
-              Text(
-                S.of(context).addAddress,
-                style: TextStyle(
-                    color: Color.fromRGBO(112, 112, 112, 1),
-                    fontWeight: FontWeight.bold),
-              )
-            ]),
+    return Padding(
+      padding: _defaultPadding,
+      child: GestureDetector(
+        onTap: () {
+          // show dialog
+          final addAddress = ShowAddAddressDialog();
+          showDialog(
+              context: context, builder: (BuildContext context) => addAddress);
+        },
+        child: Row(children: <Widget>[
+          Icon(
+            Icons.add,
+            size: SizeUtil.iconSizeBig,
+            color: ColorUtil.primaryColor,
           ),
-        ));
+          Text(
+            S.of(context).addAddress,
+            style: TextStyle(
+                color: ColorUtil.darkGray, fontWeight: FontWeight.bold),
+          )
+        ]),
+      ),
+    );
   }
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _getListProvider)];
+    return [ChangeNotifierProvider.value(value: _getListAddressProvider)];
   }
 }

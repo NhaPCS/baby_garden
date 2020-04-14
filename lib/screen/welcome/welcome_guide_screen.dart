@@ -12,7 +12,6 @@ import 'package:nested/nested.dart';
 class WelcomeGuideScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _WelcomeGuideScreenState();
   }
 }
@@ -20,10 +19,10 @@ class WelcomeGuideScreen extends StatefulWidget {
 class _WelcomeGuideScreenState extends BaseState<WelcomeGuideScreen> {
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       body: Center(
+        // TODO-Hung: column cung co center, bỏ Center trên đi
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -72,7 +71,6 @@ class _WelcomeGuideScreenState extends BaseState<WelcomeGuideScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
     return null;
   }
 }

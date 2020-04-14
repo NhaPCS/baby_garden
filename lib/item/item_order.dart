@@ -1,7 +1,7 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/circle_image.dart';
+import 'package:baby_garden_flutter/widget/image/circle_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

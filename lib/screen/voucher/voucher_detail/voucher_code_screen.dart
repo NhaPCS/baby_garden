@@ -1,8 +1,8 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/my_text_field.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 import '../../base_state.dart';
 
+// TODO-QAnh: khong dung folder voi screen khac
 class VoucherCodeScreen extends StatefulWidget {
   final BuildContext context;
 
@@ -28,6 +29,7 @@ class _VoucherCodeScreenState extends BaseState<VoucherCodeScreen> {
       appBar: getAppBar(title: S.of(widget.context).voucherCode), //
       body: Padding(
         padding: EdgeInsets.only(top: 10),
+        // TODO-QAnh: trong ListView cung co padding, bo Padding o tren di
         child: ListView(
           children: <Widget>[
             Padding(
@@ -62,10 +64,12 @@ class _VoucherCodeScreenState extends BaseState<VoucherCodeScreen> {
                       border:
                           Border.all(color: ColorUtil.primaryColor, width: 1)),
                   child: Padding(
+                    // // TODO-QAnh: Container padding dc, bo Padding nay di
                     padding: const EdgeInsets.only(
                         top: SizeUtil.normalSpace,
                         bottom: SizeUtil.normalSpace),
                     child: Center(
+                      // // TODO-QAnh: Container center dc, bo Center nay di
                       child: Text(code,
                           style: TextStyle(
                               fontSize: SizeUtil.textSizeHuge,
@@ -76,6 +80,7 @@ class _VoucherCodeScreenState extends BaseState<VoucherCodeScreen> {
                 Positioned(
                   bottom: 22,
                   right: 15,
+                  // // TODO-QAnh: Container lam gi? bo di
                   child: Container(
                     child: Column(children: <Widget>[
                       SvgIcon(
@@ -99,6 +104,7 @@ class _VoucherCodeScreenState extends BaseState<VoucherCodeScreen> {
             Container(
               width: double.infinity,
               decoration: setBorder('top', Color(0xffE4E4E4), 6),
+              // // TODO-QAnh: Container co padding, bo Padding nay di
               child: Padding(
                 padding: SizeUtil.smallPadding,
                 child: Text(
@@ -135,6 +141,7 @@ class _VoucherCodeScreenState extends BaseState<VoucherCodeScreen> {
               },
               child: Padding(
                 padding: SizeUtil.smallPadding,
+                // // TODO-QAnh: Container padding dc, bo Padding nay di
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
@@ -160,6 +167,7 @@ class _VoucherCodeScreenState extends BaseState<VoucherCodeScreen> {
             GestureDetector(
               onTap: () {},
               child: Padding(
+                // // TODO-QAnh: Container padding dc, bo Padding nay di
                 padding: SizeUtil.smallPadding,
                 child: Container(
                   decoration: BoxDecoration(

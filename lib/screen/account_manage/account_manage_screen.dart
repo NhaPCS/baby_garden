@@ -6,6 +6,7 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/child_heath/child_heath_screen.dart';
 import 'package:baby_garden_flutter/screen/change_password/change_password_screen.dart';
 import 'package:baby_garden_flutter/screen/profile/add_child_dialog.dart';
+import 'package:baby_garden_flutter/screen/profile/child_infor.dart';
 import 'package:baby_garden_flutter/screen/profile/user_infor.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,20 +14,13 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-class AccountManage extends StatefulWidget {
+class AccountManageScreen extends StatefulWidget {
   @override
-  _AccountManageState createState() => _AccountManageState();
+  _AccountManageScreenState createState() => _AccountManageScreenState();
 }
 
-class _AccountManageState extends BaseState<AccountManage> {
+class _AccountManageScreenState extends BaseState<AccountManageScreen> {
   final GetListProvider _getListProvider = GetListProvider();
-  final UserInfor userInfor = UserInfor(
-    user: {
-      'name': "Đinh Bộ Lĩnh",
-      'phone': '0123456789',
-      'avatar': StringUtil.dummyImage
-    },
-  );
 
   final childInformation = ChildInfor(
     childName: 'Hùng gay',
@@ -47,7 +41,6 @@ class _AccountManageState extends BaseState<AccountManage> {
     }
 
     dynamic user = Provider.of<UserProvider>(context).userInfo;
-
     final List<Map<String, String>> entries = <Map<String, String>>[
       entry(S.of(context).fullname, user == null ? "" : user['name'],
           'pencil.png'),
@@ -72,7 +65,7 @@ class _AccountManageState extends BaseState<AccountManage> {
         body: Column(children: <Widget>[
           // user information
           Container(
-              child: this.userInfor,
+              child: UserInfor(),
               decoration:
                   setBorder("bottom", Color.fromRGBO(206, 206, 206, 1), 1)),
           // entries
@@ -89,7 +82,9 @@ class _AccountManageState extends BaseState<AccountManage> {
 
   Widget entriesWidget(List<Map<String, String>> entries) {
     return Container(
+      // TODO-QAnh: k fix cứng height, để wrap
       height: 228,
+      // TODO-QAnh: cái ListView không nên để ở đây, để scroll cả màn thì hợp lý hơn, list con đang không scroll đc
       child: ListView.builder(
           itemCount: entries.length,
           itemBuilder: (BuildContext context, int index) {
@@ -97,6 +92,7 @@ class _AccountManageState extends BaseState<AccountManage> {
               padding: const EdgeInsets.only(left: 11.0, right: 11),
               decoration:
                   setBorder('bottom', Color.fromRGBO(206, 206, 206, 1), 1),
+              // TODO-QAnh: k fix height, để wrap
               height: 38,
               child: GestureDetector(
                 onTap: () {
@@ -136,6 +132,7 @@ class _AccountManageState extends BaseState<AccountManage> {
   Widget entriesChildInfor(List<Map<String, String>> entries) {
     return GestureDetector(
       child: Container(
+        // TODO-QAnh: k fix height, để wrap
         height: 111,
         child: ListView.builder(
             itemCount: entries.length,
@@ -178,10 +175,12 @@ class _AccountManageState extends BaseState<AccountManage> {
     );
   }
 
+  // cái này đang lồng nhiều view quá
   Widget childInfor(List<Map<String, String>> childInforFields) {
     return Column(children: <Widget>[
       headerChildInfor(),
       // child information
+      // TODO-QAnh: thừa Column, bỏ đi, đang lồng tận 2 column
       Column(children: <Widget>[
         Container(
           padding: EdgeInsets.all(10),
@@ -215,6 +214,7 @@ class _AccountManageState extends BaseState<AccountManage> {
   Widget headerChildInfor() {
     return Container(
       padding: EdgeInsets.all(10),
+      // TODO-QAnh: k fix height, de wrap
       height: 38,
       decoration: setBorder("bottom", Color.fromRGBO(206, 206, 206, 1), 1),
       child: Row(

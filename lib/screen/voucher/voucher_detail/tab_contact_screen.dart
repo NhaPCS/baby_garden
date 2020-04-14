@@ -12,6 +12,7 @@ class TabContactScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
+        // TODO-QAnh: khong add anh test vao asset, xoa het anh test di
         Image.asset(
           'photo/voucherViettel.png',
         ),
@@ -98,6 +99,7 @@ class TabContactScreen extends StatelessWidget {
                         )
                       ])),
                 ),
+                // TODO-QAnh: khong add anh test vao asset, xoa het anh test di
                 Image.asset('photo/google_map.png')
               ]),
         ),

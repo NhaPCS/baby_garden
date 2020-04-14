@@ -9,7 +9,6 @@ import 'package:nested/nested.dart';
 class CustomerSupportScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _CustomerSupportScreenState();
   }
 }
@@ -17,7 +16,6 @@ class CustomerSupportScreen extends StatefulWidget {
 class _CustomerSupportScreenState extends BaseState<CustomerSupportScreen> {
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
     return Scaffold(
       appBar: getAppBar(
         title: S.of(context).customer_support,
@@ -39,6 +37,7 @@ class _CustomerSupportScreenState extends BaseState<CustomerSupportScreen> {
             height: SizeUtil.defaultSpace,
           ),
           ListTile(
+            // TODO-Hung: dùng circleImage, modify để dùng đc assetImage
             leading: Card(
                 color: ColorUtil.logoBgColor,
                 shape: RoundedRectangleBorder(
@@ -55,6 +54,7 @@ class _CustomerSupportScreenState extends BaseState<CustomerSupportScreen> {
           ),
           WidgetUtil.getLine(margin: EdgeInsets.only(left: SizeUtil.defaultSpace,right: SizeUtil.defaultSpace),color: ColorUtil.gray),
           ListTile(
+            // TODO-Hung: dùng circleImage, modify để dùng đc assetImage
             leading: Card(
               color: ColorUtil.colorAccent,
               shape: RoundedRectangleBorder(
@@ -72,6 +72,7 @@ class _CustomerSupportScreenState extends BaseState<CustomerSupportScreen> {
           ),
           WidgetUtil.getLine(margin: EdgeInsets.only(left: SizeUtil.defaultSpace,right: SizeUtil.defaultSpace),color: ColorUtil.gray),
           ListTile(
+            // TODO-Hung: dùng circleImage, modify để dùng đc assetImage
             leading: Card(
               color: ColorUtil.colorAccent,
               shape: RoundedRectangleBorder(
@@ -90,6 +91,7 @@ class _CustomerSupportScreenState extends BaseState<CustomerSupportScreen> {
           WidgetUtil.getLine(margin: EdgeInsets.only(left: SizeUtil.defaultSpace,right: SizeUtil.defaultSpace),color: ColorUtil.gray),
           ListTile(
             leading: Card(
+              // TODO-Hung: dùng circleImage, modify để dùng đc assetImage
               color: ColorUtil.customerSupportUpdate,
               shape: RoundedRectangleBorder(
                 //TODO set radius
@@ -117,7 +119,7 @@ class _CustomerSupportScreenState extends BaseState<CustomerSupportScreen> {
           WidgetUtil.getLine(margin: EdgeInsets.only(left: SizeUtil.defaultSpace,right: SizeUtil.defaultSpace),color: ColorUtil.gray),
           ListTile(
             onTap: (){
-              push(PartnerRegister());
+              push(PartnerRegisterScreen());
             },
             leading: Image.asset("photo/support_partner.png",
                 width: SizeUtil.iconSizeBig),
@@ -135,7 +137,6 @@ class _CustomerSupportScreenState extends BaseState<CustomerSupportScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
     return null;
   }
 }

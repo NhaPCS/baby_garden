@@ -1,20 +1,17 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
-import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/view_model/rate_booking_view_model.dart';
 import 'package:baby_garden_flutter/widget/rating_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class RatingDetailScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _RatingDetailScreenState();
   }
 }
@@ -23,8 +20,6 @@ class _RatingDetailScreenState extends BaseStateModel<RatingDetailScreen,RateBoo
   final TextEditingController _noteController = new TextEditingController();
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
-
     return Scaffold(
       appBar: getAppBar(
         title: S.of(context).order_rating("vcb19.12.15"),
@@ -38,12 +33,14 @@ class _RatingDetailScreenState extends BaseStateModel<RatingDetailScreen,RateBoo
           Padding(
             padding: EdgeInsets.only(
                 left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
+            // TODO-Hung: bỏ được cái column này đi thì tốt, có thể dùng RichText
             child: Column(
               children: <Widget>[
                 SizedBox(
                   height: SizeUtil.tinySpace,
                 ),
                 Container(
+                  // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
                   alignment: Alignment.centerLeft,
                   child: Text(
                     S.of(context).order_with_code("VCB19.12.25"),
@@ -56,6 +53,7 @@ class _RatingDetailScreenState extends BaseStateModel<RatingDetailScreen,RateBoo
                   height: SizeUtil.tinySpace,
                 ),
                 Container(
+                  // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
                   alignment: Alignment.centerLeft,
                   child: Text(
                     S.of(context).order_date("25/12/2019 12:25"),
@@ -67,6 +65,7 @@ class _RatingDetailScreenState extends BaseStateModel<RatingDetailScreen,RateBoo
                   height: SizeUtil.tinySpace,
                 ),
                 Container(
+                  // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
                   alignment: Alignment.centerLeft,
                   child: Text(
                     S.of(context).receiving_date("25/12/2019 12:25"),
@@ -80,6 +79,7 @@ class _RatingDetailScreenState extends BaseStateModel<RatingDetailScreen,RateBoo
           Expanded(
             child: ListView(
               children: List.generate(3, (index) => Column(children: <Widget>[
+                // TODO-Hung: đây là item, tạo file riêng
                 WidgetUtil.getLine(width:SizeUtil.tinySpace,margin:  EdgeInsets.only(
                     top: SizeUtil.smallSpace, bottom: SizeUtil.tinySpace),color: ColorUtil.lineColor,),
                 Padding(
@@ -93,11 +93,13 @@ class _RatingDetailScreenState extends BaseStateModel<RatingDetailScreen,RateBoo
                       Image.asset("photo/order_img.png",
                           width: MediaQuery.of(context).size.width / 6),
                       Expanded(
+                        // TODO-Hung: thay Container bang Padding
                         child: Container(
                           padding: EdgeInsets.only(left: SizeUtil.smallSpace),
                           child: Column(
                             children: <Widget>[
                               Container(
+                                // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   S.of(context).order_title,
@@ -109,6 +111,7 @@ class _RatingDetailScreenState extends BaseStateModel<RatingDetailScreen,RateBoo
                                 height: SizeUtil.tinySpace,
                               ),
                               Container(
+                                // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   S.of(context).supply_by_supplier("Vườn của bé"),
@@ -122,6 +125,7 @@ class _RatingDetailScreenState extends BaseStateModel<RatingDetailScreen,RateBoo
                     ],
                   ),
                 ),
+                // TODO-Hung: thay Container = Padding
                 Container(
                   padding: EdgeInsets.only(
                       top: SizeUtil.tinySpace, bottom: SizeUtil.smallSpace),
@@ -134,6 +138,7 @@ class _RatingDetailScreenState extends BaseStateModel<RatingDetailScreen,RateBoo
                     starSize: SizeUtil.iconSizeBig,
                   ),
                 ),
+                // TODO-Hung: Dung MyTextField sẽ bỏ đc Container dài ngoằng này
                 Container(
                   margin: EdgeInsets.only(
                       left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
@@ -163,6 +168,7 @@ class _RatingDetailScreenState extends BaseStateModel<RatingDetailScreen,RateBoo
                   ),
                   padding: EdgeInsets.only(
                       left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
+                  // TODO-Hung: Column này k cần, bỏ đi
                   child: Column(
                     children: <Widget>[
                       TextField(
@@ -183,6 +189,7 @@ class _RatingDetailScreenState extends BaseStateModel<RatingDetailScreen,RateBoo
                       SizeUtil.smallSpace, right:  SizeUtil.smallSpace,top:  SizeUtil.tinySpace
                     ),
                     width: MediaQuery.of(context).size.width,
+                    // TODO-Hung: dung MyRaisedButton se bỏ đc cái đoạn dài ngoằng này
                     child: RaisedButton(
                       onPressed: () {
                         Navigator.of(context).pop();
@@ -222,6 +229,7 @@ class _RatingDetailScreenState extends BaseStateModel<RatingDetailScreen,RateBoo
               ],)),
             ),
           ),
+          // TODO-Hung: Dung MyRaisedButton
           Container(
               padding: const EdgeInsets.all(
                 SizeUtil.smallSpace,
@@ -254,13 +262,11 @@ class _RatingDetailScreenState extends BaseStateModel<RatingDetailScreen,RateBoo
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
     return null;
   }
 
   @override
   RateBookingViewModel initViewModel() {
-    // TODO: implement initViewModel
     return new RateBookingViewModel(context);
   }
 }

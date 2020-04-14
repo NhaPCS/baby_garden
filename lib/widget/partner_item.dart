@@ -5,6 +5,7 @@ import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// TODO-Hung: widget là chỗ để custom widget, không phải để item, để vào folder item
 class PartnerItem extends StatelessWidget {
   final dynamic shop;
 
@@ -12,11 +13,13 @@ class PartnerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(shop==null) return SizedBox();
     return Card(
         elevation: 2,
         child: Stack(
           children: <Widget>[
             ClipRRect(
+              // TODO-Hung: nên dùng border cho cả card
               borderRadius: BorderRadius.circular(4.0),
               child: MyCachedImage(
                 url: shop['img'],
@@ -33,6 +36,7 @@ class PartnerItem extends StatelessWidget {
                     top: SizeUtil.tinySpace,
                     bottom: SizeUtil.tinySpace),
                 decoration: BoxDecoration(
+                  // TODO-Hung: màu đen thì để Colors.black la duoc ma
                     color: Color(0xff000000).withOpacity(0.5),
                     borderRadius:
                         BorderRadius.all(Radius.circular(SizeUtil.tinyRadius))),
@@ -69,6 +73,7 @@ class PartnerItem extends StatelessWidget {
                     top: SizeUtil.tinySpace,
                     bottom: SizeUtil.tinySpace),
                 decoration: BoxDecoration(
+                  // TODO-Hung: màu đen thì để Colors.black la duoc ma
                     color: Color(0xff000000).withOpacity(0.5),
                     borderRadius:
                         BorderRadius.all(Radius.circular(SizeUtil.tinyRadius))),
@@ -108,6 +113,7 @@ class PartnerItem extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
+                        // TODO-Hung: icon và 1 số: để widget riêng thì tốt
                         Wrap(
                           crossAxisAlignment: WrapCrossAlignment.center,
                           direction: Axis.horizontal,

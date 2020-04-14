@@ -4,7 +4,7 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/image/my_cached_image.dart';
 import 'package:baby_garden_flutter/widget/product/countdown_time.dart';
 import 'package:baby_garden_flutter/widget/product/discount_widget.dart';
-import 'package:baby_garden_flutter/widget/rounded_progress.dart';
+import 'package:baby_garden_flutter/widget/loading/rounded_progress.dart';
 import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

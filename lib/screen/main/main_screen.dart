@@ -1,19 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
-import 'package:baby_garden_flutter/provider/get_product_category_provider.dart';
-import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/cart/cart_screen.dart';
 import 'package:baby_garden_flutter/screen/home/home_screen.dart';
 import 'package:baby_garden_flutter/screen/order/order_screen.dart';
-import 'package:baby_garden_flutter/screen/profile/profile_no_login_screen.dart';
 import 'package:baby_garden_flutter/screen/profile/profile_screen.dart';
 import 'package:baby_garden_flutter/screen/shopping/shopping_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,11 +44,6 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
 
     super.initState();
     if (widget.index > 0) _tabController.animateTo(widget.index);
-  }
-
-  Future<bool> isLogin() async {
-    String uID = await ShareValueProvider.shareValueProvider.getUserId();
-    return isLogin != "-1";
   }
 
   @override
@@ -141,6 +132,7 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
 
   BottomNavigationBarItem getTabItem(
       {String title, String iconName, int index, int count}) {
+    // TODO-Nha: check lại phần này
     return BottomNavigationBarItem(
         icon: count == null || count <= 0
             ? SvgIcon(

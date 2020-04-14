@@ -1,93 +1,76 @@
+import 'package:baby_garden_flutter/data/model/product.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ProductCard extends StatelessWidget {
-  final image;
-  final description;
-  final price;
-  final datetime;
-  final favorite;
+class ProductItem extends StatelessWidget {
+  final Product product;
+  // TODO-QAnh: vì là sản phẩm yêu thích nên em nghĩ lúc nào favorite chả bằng true?
+  // cái này dùng chung cho sản phẩm yêu thích và sản phẩm đã xem nhé
   final Function onTap;
-
-  ProductCard(
-      {Key key,
-      this.image,
-      this.description,
-      this.price,
-      this.datetime,
-      this.onTap,
-      this.favorite})
-      : super(key: key);
+  ProductItem({Key key, this.onTap, @required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print(product.isFavorite);
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: Card(
         margin: EdgeInsets.only(
             top: SizeUtil.normalSpace,
             right: SizeUtil.smallSpace,
             left: SizeUtil.smallSpace),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 6,
-                color: Color.fromRGBO(0, 0, 0, 0.16),
-                offset: Offset(0.0, 3.0),
-              )
-            ],
-            border: Border.all(
-                color: Color.fromRGBO(112, 112, 112, 1), width: 0.3)),
-        width: double.infinity,
-        height: 110,
-        child: Card(
-          margin: EdgeInsets.only(top: 0),
-          child: Row(children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(5.0),
-              child: Image.asset(
-                this.image,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(SizeUtil.tinyRadius),
+        ),
+        elevation: SizeUtil.defaultElevation,
+        child: Row(children: <Widget>[
+          SizedBox(width: SizeUtil.smallSpace),
+          Flexible(
+            child: ClipRRect(
+              child: Image.network(
+                product.image[0],
+                fit: BoxFit.cover,
                 width: 94.0,
                 height: 94.0,
               ),
             ),
-            Expanded(
-              child: Container(
-                  height: 100,
-                  padding: EdgeInsets.only(top: 0),
-                  child: ListView(
-                      padding: const EdgeInsets.all(8),
-                      physics: NeverScrollableScrollPhysics(),
-                      children: <Widget>[
-                        Text(this.description),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5),
-                          child: Text(
-                            this.price + ' đ',
-                            style: TextStyle(color: Colors.red, fontSize: 16),
+          ),
+          Flexible(
+            flex: 3,
+            child: Padding(
+                padding: SizeUtil.defaultPadding,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(product.name),
+                      SizedBox(height: SizeUtil.tinySpace),
+                      Text(
+                        StringUtil.getPriceText(product.price),
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontSize: SizeUtil.textSizeBigger),
+                      ),
+                      SizedBox(height: SizeUtil.tinySpace),
+                      Row(
+                        children: <Widget>[
+                          Text(DateUtil.formatDDMMyyyy(product.date),
+                              style: TextStyle(
+                                  color: Color.fromRGBO(10, 133, 158, 1),
+                                  fontSize: SizeUtil.textSizeSmall)),
+                          Spacer(),
+                          Icon(
+                            Icons.favorite,
+                            color: product.isFavorite == true
+                                ? Colors.pink
+                                : Colors.white,
+                            size: SizeUtil.iconSizeBigger,
                           ),
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.only(top: 5),
-                            child: Text(this.datetime,
-                                style: TextStyle(
-                                    color: Color.fromRGBO(10, 133, 158, 1),
-                                    fontSize: 12))),
-                      ])),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 40, right: 15),
-              child: Icon(
-                Icons.favorite,
-                color: favorite == true ? Colors.pink : Colors.white,
-                size: 21.0,
-                semanticLabel: 'Text to announce in accessibility modes',
-              ),
-            ),
-          ]),
-        ),
+                        ],
+                      ),
+                    ])),
+          ),
+        ]),
       ),
     );
   }

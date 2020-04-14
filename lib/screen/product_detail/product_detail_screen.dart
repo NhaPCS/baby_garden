@@ -1,6 +1,6 @@
 import 'package:baby_garden_flutter/data/model/section.dart';
 import 'package:baby_garden_flutter/dialog/add_to_cart_bottom_dialog.dart';
-import 'package:baby_garden_flutter/dialog/report_product_dialog.dart';
+import 'package:baby_garden_flutter/dialog/report_product/report_product_dialog.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
@@ -23,7 +23,7 @@ import 'package:baby_garden_flutter/widget/product/discount_widget.dart';
 import 'package:baby_garden_flutter/widget/product/favorite_product_button.dart';
 import 'package:baby_garden_flutter/widget/product/image_count.dart';
 import 'package:baby_garden_flutter/widget/product/list_product_by_category.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -164,7 +164,7 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
                             onPressed: () {
                               showDialog(
                                   context: context,
-                                  builder: (_) => ReportProductDialog(context));
+                                  builder: (_) => ReportProductDialog( productId: productProvider.product['id'],));
                             },
                           )
                         ],
@@ -307,7 +307,8 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
                     WidgetUtil.showRequireLoginDialog(context);
                     return;
                   }
-                  Provider.of<CartProvider>(context, listen: false).addProduct(productProvider.product);
+                  Provider.of<CartProvider>(context, listen: false)
+                      .addProduct(productProvider.product);
                   pushAndReplaceAll(
                       MainScreen(
                         index: 2,

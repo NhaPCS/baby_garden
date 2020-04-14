@@ -11,6 +11,7 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+// TODO-QAnh:screen đặt ở folder riêng, khong de chung trong 1 folder
 class SetDateScreen extends StatefulWidget {
   @override
   _SetDateScreenState createState() => _SetDateScreenState();
@@ -20,6 +21,7 @@ class _SetDateScreenState extends BaseState<SetDateScreen> {
   final GetListProvider _getListProvider = GetListProvider();
   CalendarController _calenderController;
 
+  // TODO-QAnh: k dung bo di
   final locale = 'vi';
 
   @override
@@ -40,6 +42,7 @@ class _SetDateScreenState extends BaseState<SetDateScreen> {
                 margin: EdgeInsets.only(top: 8),
                 width: double.infinity,
                 decoration: setBorder('top', Color(0xffE1D9D9), 1),
+                // TODO-QAnh: trong container co padding roi, khong can Padding nay nua
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15, top: 18, bottom: 18),
                   child: Text(
@@ -53,10 +56,12 @@ class _SetDateScreenState extends BaseState<SetDateScreen> {
             Container(
                 decoration: setBorder('top', Color(0xffE4E4E4), 6),
                 padding: EdgeInsets.only(top: 20),
+                // TODO-QAnh: Column chỉ có 1 widget? bỏ Column đi
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   // calender table
                   children: <Widget>[
+                    // TODO-QAnh: xem lai cai Calender nay đang bị thiếu pixel
                     TableCalendar(
                       locale: this.locale,
                       calendarController: _calenderController,
@@ -78,7 +83,7 @@ class _SetDateScreenState extends BaseState<SetDateScreen> {
                 child: Container(
               decoration: setBorder('top', Color(0xffE4E4E4), 6),
             )),
-            // button
+            // TODO-QAnh: button dung MyRaisedButton
             GestureDetector(
               child: Container(
                 margin: SizeUtil.normalPadding,

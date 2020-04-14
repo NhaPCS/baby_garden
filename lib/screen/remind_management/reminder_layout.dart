@@ -4,8 +4,8 @@ import 'package:baby_garden_flutter/screen/remind_management/remind_set/remind_c
 import 'package:baby_garden_flutter/screen/remind_management/remind_set/set_date_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_management/remind_set/set_time_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/dashed_line.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/line/dashed_line.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 
@@ -39,6 +39,7 @@ class _ReminderState extends BaseState<ReminderLayout> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: List.generate(order.length, (index) {
+        // TODO-QAnh: để ra 1 widget riêng cho dễ nhìn
         return Padding(
           padding: const EdgeInsets.only(top: SizeUtil.normalSpace),
           child: Row(children: <Widget>[
@@ -70,9 +71,11 @@ class _ReminderState extends BaseState<ReminderLayout> {
       children: <Widget>[
         Theme(
           data: ThemeData(unselectedWidgetColor: Colors.orange),
+          // TODO-QAnh: chuyen sang dung CircleCheckBox
           child: Checkbox(
               value: isRemindUse ? this.remindUsed : this.remindBuy,
               onChanged: (bool value) {
+                // TODO-QAnh: k dung setState
                 setState(() {
                   if (isRemindUse) {
                     this.remindUsed = !this.remindUsed;

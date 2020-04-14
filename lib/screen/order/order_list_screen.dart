@@ -15,6 +15,8 @@ import 'package:provider/provider.dart';
 
 import 'order_detail_screen.dart';
 
+// TODO-Hung: screen mới thì move ra folder mới, không để chung
+// class này với list_order_screen đang giống nhau, nếu m chỉ dùng class này thì xoá class kia của t đi
 class OrderListScreen extends StatefulWidget{
   final String title;
   final String childTitle;
@@ -25,7 +27,6 @@ class OrderListScreen extends StatefulWidget{
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _OrderListScreenState();
   }
 

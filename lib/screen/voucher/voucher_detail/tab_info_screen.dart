@@ -27,6 +27,7 @@ class _TabInfoScreenState extends BaseState<TabInfoScreen> {
       Expanded(
         child: ListView(
           children: <Widget>[
+            // TODO-QAnh: khong add anh test vao asset, xoa het anh test di
             Container(
               child: Image.asset(
                 'photo/voucherViettel.png',
@@ -57,6 +58,7 @@ class _TabInfoScreenState extends BaseState<TabInfoScreen> {
                             BorderRadius.circular(SizeUtil.tinyRadius),
                         color: Color(0xff13A208),
                       ),
+                      // TODO-QAnh: trong container co padidng roi, bo Padding di
                       child: Padding(
                         padding: EdgeInsets.all(SizeUtil.smallSpace),
                         child: Text(
@@ -88,6 +90,7 @@ class _TabInfoScreenState extends BaseState<TabInfoScreen> {
                   ),
                   Container(
                     decoration: setBorder('bottom', Color(0xffF4F4F4), 5),
+                    // TODO-QAnh: trong container co padidng roi, bo Padding di
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Center(
@@ -133,6 +136,7 @@ class _TabInfoScreenState extends BaseState<TabInfoScreen> {
       Consumer<ButtonPartnerInfoProvider>(
         builder: (BuildContext context, ButtonPartnerInfoProvider value,
             Widget child) {
+          // TODO-QAnh: button dung MyRaisedButton
           return GestureDetector(
             child: Container(
               margin: SizeUtil.normalPadding,
@@ -173,6 +177,7 @@ class _TabInfoScreenState extends BaseState<TabInfoScreen> {
   }
 
   Widget getCodeDialog(context) {
+    // TODO-QAnh: button dung MyRaisedButton
     return Dialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(SizeUtil.tinyRadius),
@@ -216,6 +221,7 @@ class _TabInfoScreenState extends BaseState<TabInfoScreen> {
   }
 
   Widget dialogBtn(context) {
+    // TODO-QAnh: button dung MyRaisedButton
     return Padding(
       padding: const EdgeInsets.only(
           left: SizeUtil.defaultSpace,

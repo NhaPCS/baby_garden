@@ -3,8 +3,8 @@ import 'package:baby_garden_flutter/provider/change_pass_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/view_model/change_pass_view_model.dart';
-import 'package:baby_garden_flutter/widget/my_password_textfield.dart';
-import 'package:baby_garden_flutter/widget/my_text_field.dart';
+import 'package:baby_garden_flutter/widget/input/my_password_textfield.dart';
+import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -13,20 +13,19 @@ import 'package:provider/provider.dart';
 class ChangePasswordScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _ChangePasswordScreenState();
   }
 
 }
 
 class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,ChangePasswordViewModel> {
+  // TODO-Hung: k dùng bỏ đi
   final ChangePassProvider _changePassProvider = new ChangePassProvider();
   final TextEditingController _oldPasswordControler = new TextEditingController();
   final TextEditingController _newPasswordControler = new TextEditingController();
   final TextEditingController _reenterNewPasswordControler = new TextEditingController();
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
     return Scaffold(
       appBar: getAppBar(
           title: S
@@ -54,6 +53,7 @@ class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,Cha
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 22, fontFamily: "hobo")),
             SizedBox(height: SizeUtil.defaultSpace,),
+            // TODO-Hung: tất cả widget trong listView đều có padding nên là bỏ mấy Container này đi, thay bằng padding của ListView
             Container(
                 margin: const EdgeInsets.only(
                     left: SizeUtil.defaultSpace,
@@ -103,6 +103,7 @@ class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,Cha
                     .of(context)
                     .size
                     .width,
+                // TODO-Hung: dùng MyRaisedButton
                 child: RaisedButton(
                   onPressed: () async{
                     var check = checkCondition();
@@ -130,6 +131,7 @@ class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,Cha
     );
   }
 
+  // TODO-Hung: cho vào arb file
   String checkCondition() {
     if (_oldPasswordControler.text.trim().length == 0) {
       return "Please Enter name";
@@ -146,13 +148,11 @@ class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,Cha
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
     return [ChangeNotifierProvider.value(value: _changePassProvider)];
   }
 
   @override
   ChangePasswordViewModel initViewModel() {
-    // TODO: implement initViewModel
     return new ChangePasswordViewModel();
   }
 

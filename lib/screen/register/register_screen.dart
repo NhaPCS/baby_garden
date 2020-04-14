@@ -3,9 +3,9 @@ import 'package:baby_garden_flutter/provider/change_pass_provider.dart';
 import 'package:baby_garden_flutter/provider/waiting_otp_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/view_model/register_view_model.dart';
-import 'package:baby_garden_flutter/widget/my_password_textfield.dart';
-import 'package:baby_garden_flutter/widget/my_text_field.dart';
-import 'package:baby_garden_flutter/widget/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/input/my_password_textfield.dart';
+import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,13 +17,13 @@ import '../base_state_model.dart';
 class RegisterScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _RegisterScreenState();
   }
 }
 
 class _RegisterScreenState
     extends BaseStateModel<RegisterScreen, RegisterViewModel> {
+  // TODO-Hung: tao widget rieng cho OTP
   final WaittingOTPProvider _waittingOTPProvider = new WaittingOTPProvider();
   final ChangePassProvider _changePassProvider = new ChangePassProvider();
   final TextEditingController _nameControler = new TextEditingController();
@@ -47,6 +47,7 @@ class _RegisterScreenState
           bgColor: Colors.white,
           titleColor: ColorUtil.primaryColor,
           backColor: ColorUtil.primaryColor),
+      // TODO-Hung: center lam gi? bo di
       body: Center(
           child: ListView(
         padding: const EdgeInsets.only(
@@ -117,6 +118,7 @@ class _RegisterScreenState
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
+          // TODO-Hung: chuyen sang tao Widget de nhap OTP
           Consumer<WaittingOTPProvider>(
             builder: (BuildContext context, WaittingOTPProvider value,
                 Widget child) {
@@ -152,8 +154,10 @@ class _RegisterScreenState
           SizedBox(
             height: SizeUtil.defaultSpace,
           ),
+          // TODO-Hung: dung MyRaisedButton
           RaisedButton(
             onPressed: () async {
+              // TODO-Hung: cho mat phan verify nay vào 1 hàm chung, k đẻ if else qúa nhiều, dung ham WidgetUtil.verifyParams
               String check = checkRegisterCondition(isShowOTP);
               if (check.trim().length == 0) {
                 if (isShowOTP) {//todo check show otp input
@@ -207,6 +211,7 @@ class _RegisterScreenState
           SizedBox(
             height: SizeUtil.defaultSpace,
           ),
+          // TODO-Hung: chuyen sng tao Widget rieng cho nhap OTP
           Consumer<WaittingOTPProvider>(
             builder: (BuildContext context, WaittingOTPProvider value,
                 Widget child) {
@@ -264,6 +269,7 @@ class _RegisterScreenState
   }
 
   String checkRegisterCondition(bool isShowOTP) {
+    // TODO-Hung: dung WidgetUtil.verifyParam
     if (_nameControler.text.trim().length == 0) {
       return "Please Enter name";
     } else if (_phoneControler.text.trim().length == 0) {
@@ -293,12 +299,12 @@ class _RegisterScreenState
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+    // TODO-Hung: de truoc dispose
     _waittingOTPProvider.stopTimer();
   }
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
     return [
       ChangeNotifierProvider.value(value: _waittingOTPProvider),
       ChangeNotifierProvider.value(value: _changePassProvider)
@@ -307,7 +313,6 @@ class _RegisterScreenState
 
   @override
   RegisterViewModel initViewModel() {
-    // TODO: implement initViewModel
     return new RegisterViewModel(context);
   }
 }

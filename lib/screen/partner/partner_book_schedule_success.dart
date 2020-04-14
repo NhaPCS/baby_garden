@@ -4,7 +4,7 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
-
+// TODO-Hung: screen mới thì move ra folder mới, không để chung
 class PartnerBookScheduleSuccessScreen extends StatefulWidget{
   final dynamic data;
   final int dateIndex;
@@ -14,7 +14,6 @@ class PartnerBookScheduleSuccessScreen extends StatefulWidget{
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _PartnerBookScheduleSuccessScreen();
   }
 
@@ -23,7 +22,6 @@ class PartnerBookScheduleSuccessScreen extends StatefulWidget{
 class _PartnerBookScheduleSuccessScreen extends BaseState<PartnerBookScheduleSuccessScreen>{
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
     return Scaffold(
       appBar: getAppBar(title: S.of(context).service_detail),
       body: ListView(
@@ -76,6 +74,7 @@ class _PartnerBookScheduleSuccessScreen extends BaseState<PartnerBookScheduleSuc
             padding: const EdgeInsets.only(left:SizeUtil.smallSpace,bottom: SizeUtil.midSmallSpace,right: SizeUtil.smallSpace),
             child: Text('Thời gian',style: TextStyle(color: Colors.black, fontSize: SizeUtil.textSizeExpressDetail,fontWeight: FontWeight.bold),),
           ),
+          // TODO-Hung: cái calendar này m dùng nhiều màn mà? move ra widget riêng đi
           Row(
             mainAxisSize: MainAxisSize.max,
             children: StringUtil.week

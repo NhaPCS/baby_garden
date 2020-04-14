@@ -1,18 +1,22 @@
+import 'package:baby_garden_flutter/data/model/address.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Address extends StatelessWidget {
-  final address;
+// TODO-QAnh: bỏ fix cứng kích thước
+class AddressItem extends StatelessWidget {
+  final Address address;
   final isDefault;
 
-  const Address({Key key, this.address, this.isDefault}) : super(key: key);
+  const AddressItem({Key key, this.address, this.isDefault = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      // TODO-QAnh: bỏ set height
       height: 63,
       margin: EdgeInsets.only(left: 8, right: 8),
       decoration: setBorder("bottom", Color.fromRGBO(154, 154, 154, 1), 1),
@@ -25,9 +29,10 @@ class Address extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
-            child: Text(address),
+            child: Text(address.address),
           ),
           Expanded(
+            // TODO-QAnh: phần này có thể check bằng cách isDefault? Padding(): SizeBox()
             child: Visibility(
               visible: isDefault,
               child: Padding(

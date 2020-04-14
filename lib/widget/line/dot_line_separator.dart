@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// TODO-Hung: tên file và tên class phải tương ứng với nhau
 class MySeparator extends StatelessWidget {
   final double height;
   final Color color;
