@@ -2,6 +2,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/screen/voucher/voucherCard.dart';
 import 'package:baby_garden_flutter/screen/voucher/voucher_detail/voucher_detail_screen.dart';
+import 'package:baby_garden_flutter/screen/voucher/voucher_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -51,7 +51,8 @@ class BookingScheduleSuccessDialogue extends Dialog{
         ),
         RaisedButton(
           onPressed: () {
-            Navigator.of(context).pop(true);
+            Navigator.of(context).pop();
+            RouteUtil.push(context, PartnerBookScheduleSuccessScreen());
           },
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(

@@ -1,14 +1,13 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/svg_icon.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NotifyItem extends StatelessWidget {
-  final dynamic data;
-  final Function deleteNotify;
-  const NotifyItem({this.data,this.deleteNotify}) : super();
+  final TextEditingController searchTextController;
+
+  const NotifyItem({Key key, this.searchTextController}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +34,8 @@ class NotifyItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Card(
-                  child:CachedNetworkImage(imageUrl: data['shop_img'],width: MediaQuery.of(context).size.width / 6,
-                    height: MediaQuery.of(context).size.width / 6,fit: BoxFit.cover,),
+                  child: Image.asset("photo/logo.png",
+                      width: MediaQuery.of(context).size.width / 6),
                   color: ColorUtil.logoBgColor,
                   shape: RoundedRectangleBorder(
                     //TODO set radius
@@ -50,7 +49,7 @@ class NotifyItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        data['title'],
+                        S.of(context).notify_title,
                         textAlign: TextAlign.start,
                         style: TextStyle(
                             fontSize: SizeUtil.textSizeBigger,
@@ -61,7 +60,7 @@ class NotifyItem extends StatelessWidget {
                         height: SizeUtil.tinySpace,
                       ),
                       Text(
-                        data['content'],
+                        S.of(context).notify_booking_success,
                         style: TextStyle(
                             fontSize: SizeUtil.textSizeSmall,
                             color: ColorUtil.textHint),
@@ -73,14 +72,14 @@ class NotifyItem extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: Text(
-                              data['date'],
+                              S.of(context).notice_time("10:30 15/09/2020"),
                               style: TextStyle(
                                   fontSize: SizeUtil.textSizeNotiTime,
                                   color: ColorUtil.textHint),
                             ),
                           ),
                           Text(
-                            S.of(context).send_by(data['shop_name']),
+                            S.of(context).send_by("Vườn của bé"),
                             style: TextStyle(
                                 color: ColorUtil.primaryColor,
                                 fontSize: SizeUtil.textSizeNotiTime),
@@ -95,13 +94,10 @@ class NotifyItem extends StatelessWidget {
             ),
           ),
           Positioned(
-            child: GestureDetector(
-              onTap: deleteNotify,
-              child: SvgIcon(
-                'ic_delete.svg',
-                width: SizeUtil.iconSize,
-                color: ColorUtil.textHint,
-              ),
+            child: SvgIcon(
+              'ic_delete.svg',
+              width: SizeUtil.iconSize,
+              color: ColorUtil.textHint,
             ),
             right: SizeUtil.smallSpace,
             top: SizeUtil.smallSpace,

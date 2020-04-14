@@ -1,11 +1,10 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/notify_switch_provider.dart';
 import 'package:baby_garden_flutter/provider/search_notify_provider.dart';
-import 'package:baby_garden_flutter/provider/notify_control_provider.dart';
+import 'package:baby_garden_flutter/provider/segment_control_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/saling_detail/saling_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:baby_garden_flutter/widget/my_text_field.dart';
 import 'package:baby_garden_flutter/widget/notify_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,6 +22,7 @@ class NotifyScreen extends StatefulWidget {
 }
 
 class _NotifyScreenState extends BaseState<NotifyScreen> {
+  final SegmentControlProvider _segmentControlProvider = new SegmentControlProvider();
   final TextEditingController searchTextController = new TextEditingController();
   final NotifySearchProvider _notifySearchProvider = new NotifySearchProvider();
   final NotifySwitchProvider _notifySwitchProvider = new NotifySwitchProvider();
@@ -54,8 +54,8 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Consumer<NotifyProvider>(
-              builder: (BuildContext context, NotifyProvider value,
+            Consumer<SegmentControlProvider>(
+              builder: (BuildContext context, SegmentControlProvider value,
                   Widget child) {
                 return CupertinoSegmentedControl(
                   children: {
@@ -63,7 +63,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                     1: Text(S.of(context).personal)
                   },
                   onValueChanged: (value) {
-                    Provider.of<NotifyProvider>(context,listen: false).onSegmentChange(value);
+                    _segmentControlProvider.onSegmentChange(value);
                   },
                   groupValue: value.currentValue,
                   selectedColor: ColorUtil.primaryColor,
@@ -173,40 +173,21 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                       ],
                     ),
                     //todo notify list
-                    Consumer<NotifyProvider>(builder: (BuildContext context, NotifyProvider value, Widget child) {
-                      List<dynamic> data;
-                      try {
-                         data  = value.currentValue==0?value.promotions:value.private;
-                      } catch (e) {
-                        print(e);
-                        data = List();
-                      }
-                      if (data == null || data.isEmpty)
-                        return LoadingView(
-                          isNoData: data != null,
-                          onReload: (){
-                            Navigator.of(context).pop();
-                          },
-                        );
-                      return Expanded(
-                        child: ListView.builder(
-                            itemCount: data.length,
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            padding: EdgeInsets.all(0),
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: (){
-                                  push(SalingDetailScreen());
-                                },
-                                child: NotifyItem(data: data[index],deleteNotify: (){
-                                  Provider.of<NotifyProvider>(context,listen: false).deleteNotify(index);
-                                  data.removeAt(index);
-                                },),
-                              );
-                            }),
-                      );
-                    },)
+                    Expanded(
+                      child: ListView.builder(
+                          itemCount: 10,
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          padding: EdgeInsets.all(0),
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: (){
+                                push(SalingDetailScreen());
+                              },
+                              child: NotifyItem(),
+                            );
+                          }),
+                    )
                   ],
                 ),
                 color: ColorUtil.lineColor,
@@ -220,6 +201,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
   List<SingleChildWidget> providers() {
     // TODO: implement providers
     return [
+      ChangeNotifierProvider.value(value: _segmentControlProvider),
       ChangeNotifierProvider.value(value: _notifySearchProvider),
       ChangeNotifierProvider.value(value: _notifySwitchProvider),
     ];

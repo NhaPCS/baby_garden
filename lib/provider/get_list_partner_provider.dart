@@ -6,7 +6,6 @@ class GetListPartnerProvider extends ChangeNotifier {
 
   Future<void> getListShops(BuildContext context, {String categoryId}) async {
     var data = await service.listShop(context, categoryId: categoryId);
-    print(data);
     if (data != null) {
       shops = data['list'];
       notifyListeners();

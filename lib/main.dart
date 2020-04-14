@@ -8,7 +8,6 @@ import 'package:baby_garden_flutter/provider/get_product_category_provider.dart'
 import 'package:baby_garden_flutter/provider/get_service_category_provider.dart';
 import 'package:baby_garden_flutter/provider/order_list_provider.dart';
 import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
-import 'package:baby_garden_flutter/provider/notify_control_provider.dart';
 import 'package:baby_garden_flutter/provider/service_list_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
@@ -82,10 +81,6 @@ class _MyAppState extends State<MyApp> {
     //get my cart
     if (!Provider.of<CartProvider>(context).isRun)
       Provider.of<CartProvider>(context).getMyCart();
-
-    //todo get notify
-    if (Provider.of<NotifyProvider>(context).promotions == null)
-      Provider.of<NotifyProvider>(context).getNotify();
   }
 
   @override

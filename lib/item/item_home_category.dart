@@ -4,7 +4,7 @@ import 'package:baby_garden_flutter/screen/category_product/category_product_scr
 import 'package:baby_garden_flutter/screen/child_heath/child_heath_screen.dart';
 import 'package:baby_garden_flutter/screen/partner/partner_list_screen.dart';
 import 'package:baby_garden_flutter/screen/vcb_express/vcb_express_screen.dart';
-import 'package:baby_garden_flutter/screen/voucher/voucher_detail/voucher_screen.dart';
+import 'package:baby_garden_flutter/screen/voucher/voucher_detail/provider_infor_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
