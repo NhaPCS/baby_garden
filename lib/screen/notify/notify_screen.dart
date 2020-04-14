@@ -1,27 +1,27 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/notify_switch_provider.dart';
 import 'package:baby_garden_flutter/provider/search_notify_provider.dart';
-import 'package:baby_garden_flutter/provider/segment_control_provider.dart';
+import 'package:baby_garden_flutter/provider/notify_control_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/saling_detail/saling_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
+import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:baby_garden_flutter/widget/notify_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class NotifyScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
+    // TODO: implement createState
     return _NotifyScreenState();
   }
 }
 
 class _NotifyScreenState extends BaseState<NotifyScreen> {
-  final SegmentControlProvider _segmentControlProvider = new SegmentControlProvider();
   final TextEditingController searchTextController = new TextEditingController();
   final NotifySearchProvider _notifySearchProvider = new NotifySearchProvider();
   final NotifySwitchProvider _notifySwitchProvider = new NotifySwitchProvider();
@@ -29,6 +29,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
     _focusNode.addListener(() {
       print(" initState " + _focusNode.hasFocus.toString());
@@ -38,6 +39,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
+    // TODO: implement buildWidget
     return Scaffold(
         appBar: getAppBar(
           title: S.of(context).notify,
@@ -46,15 +48,13 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
           titleColor: Colors.white,
           backColor: Colors.white,
         ),
-        // TODO-Hung: dùng SafeArea ở đây làm gì nhỉ
         body: SafeArea(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            // TODO-Hung: tạo widget riêng đi
-            Consumer<SegmentControlProvider>(
-              builder: (BuildContext context, SegmentControlProvider value,
+            Consumer<NotifyProvider>(
+              builder: (BuildContext context, NotifyProvider value,
                   Widget child) {
                 return CupertinoSegmentedControl(
                   children: {
@@ -62,7 +62,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                     1: Text(S.of(context).personal)
                   },
                   onValueChanged: (value) {
-                    _segmentControlProvider.onSegmentChange(value);
+                    Provider.of<NotifyProvider>(context,listen: false).onSegmentChange(value);
                   },
                   groupValue: value.currentValue,
                   selectedColor: ColorUtil.primaryColor,
@@ -83,7 +83,6 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                 child: Column(
                   children: <Widget>[
                     //todo search notify
-                    // TODO-Hung: cái row này phải move lên trên trong column bên trên chứ,  lồng nhiều Column quá
                     Row(
                       children: <Widget>[
                         Expanded(
@@ -150,7 +149,6 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                                             _notifySwitchProvider.onChange();
                                           },
                                         ),
-                                        // TODO-Hung: tạo widget riêng đi, mà có MySwitcher rồi đó
                                         Consumer<NotifySwitchProvider>(builder: (BuildContext context, NotifySwitchProvider value, Widget child) {
                                           return Transform.scale(
                                             scale: 1,
@@ -174,22 +172,42 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                       ],
                     ),
                     //todo notify list
-                    // TODO-Hung: đoạn expand này sẽ thay đoạn expand bên trên
-                    Expanded(
-                      child: ListView.builder(
-                          itemCount: 10,
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          padding: EdgeInsets.all(0),
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: (){
-                                push(SalingDetailScreen());
-                              },
-                              child: NotifyItem(),
-                            );
-                          }),
-                    )
+                    Consumer<NotifyProvider>(builder: (BuildContext context, NotifyProvider value, Widget child) {
+                      //TODO-Hung: viet lai doan nay di, nhin kinh qua
+                      List<dynamic> data;
+                      try {
+                         data  = value.currentValue==0?value.promotions:value.private;
+                      } catch (e) {
+                        print(e);
+                        data = List();
+                      }
+                      if (data == null || data.isEmpty)
+                        return LoadingView(
+                          isNoData: data != null,
+                          onReload: (){
+                            //TODO-Hung: k pop ở đây
+//                            Navigator.of(context).pop();
+                          },
+                        );
+                      return Expanded(
+                        child: ListView.builder(
+                            itemCount: data.length,
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            padding: EdgeInsets.all(0),
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: (){
+                                  push(SalingDetailScreen());
+                                },
+                                child: NotifyItem(data: data[index],deleteNotify: (){
+                                  Provider.of<NotifyProvider>(context,listen: false).deleteNotify(index);
+                                  data.removeAt(index);
+                                },),
+                              );
+                            }),
+                      );
+                    },)
                   ],
                 ),
                 color: ColorUtil.lineColor,
@@ -201,8 +219,8 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
 
   @override
   List<SingleChildWidget> providers() {
+    // TODO: implement providers
     return [
-      ChangeNotifierProvider.value(value: _segmentControlProvider),
       ChangeNotifierProvider.value(value: _notifySearchProvider),
       ChangeNotifierProvider.value(value: _notifySwitchProvider),
     ];

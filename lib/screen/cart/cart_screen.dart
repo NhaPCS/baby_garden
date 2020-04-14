@@ -118,7 +118,6 @@ class _CartState extends BaseState<CartScreen> {
                           width: double.infinity,
                           child: MyRaisedButton(
                             onPressed: () {
-                              //TODO
                               push(BookingScreen());
                             },
                             text: S.of(context).take_order.toUpperCase(),

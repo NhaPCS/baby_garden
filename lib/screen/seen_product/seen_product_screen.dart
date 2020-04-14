@@ -3,6 +3,7 @@ import 'package:baby_garden_flutter/provider/get_list_product_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/favorite_product/product_card.dart';
 import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
+import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -32,6 +33,10 @@ class _SeenProductScreen extends BaseState<SeenProductScreen> {
         appBar: getAppBar(title: S.of(context).seenProduct),
         body: Consumer<GetListProductProvider>(
           builder: (context, value, child) {
+            if (value.products == null || value.products.isEmpty)
+              return LoadingView(
+                isNoData: value.products != null,
+              );
             return ListView.builder(
                 shrinkWrap: true,
                 itemCount: value.products.length,

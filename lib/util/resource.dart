@@ -131,16 +131,8 @@ class StringUtil {
   ];
 
   static List<dynamic> confirmForm = [
-    {
-      'title': 'Dịch vụ đã đặt: ',
-      'content': 'Chăm sóc da mặt từ cơ bản đến nâng cao'
-    },
-    {
-      'title': 'Giá niêm yết:  ',
-      'content':
-          '\nKhách hàng đã có thẻ hoặc mã voucher vui lòng mang tới cửa hàng để được hưởng đầy đủ ưu đãi.',
-      'value': '150.000 đ'
-    },
+    {'title': 'Dịch vụ đã đặt: ', 'content': 'Chăm sóc da mặt từ cơ bản đến nâng cao'},
+    {'title': 'Giá niêm yết:  ', 'content': '\nKhách hàng đã có thẻ hoặc mã voucher vui lòng mang tới cửa hàng để được hưởng đầy đủ ưu đãi.', 'value': '150.000 đ'},
     {'title': 'Ngày sử dụng: ', 'content': '14/02/2020'},
     {'title': 'Thời gian: ', 'content': '10:00'},
     {'title': 'Thời gian thực hiện: ', 'content': '120 Phút'},
