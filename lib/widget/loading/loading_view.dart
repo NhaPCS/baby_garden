@@ -14,7 +14,7 @@ class LoadingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isNoData) {
-      return Column(
+      return Center(child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
@@ -29,7 +29,7 @@ class LoadingView extends StatelessWidget {
               textStyle: TextStyle(color: Colors.white),
               color: ColorUtil.primaryColor)
         ],
-      );
+      ),);
     }
     return Center(
       child: CircularProgressIndicator(
