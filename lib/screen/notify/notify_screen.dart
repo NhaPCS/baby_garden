@@ -173,6 +173,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                     ),
                     //todo notify list
                     Consumer<NotifyProvider>(builder: (BuildContext context, NotifyProvider value, Widget child) {
+                      //TODO-Hung: viet lai doan nay di, nhin kinh qua
                       List<dynamic> data;
                       try {
                          data  = value.currentValue==0?value.promotions:value.private;
@@ -184,7 +185,8 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                         return LoadingView(
                           isNoData: data != null,
                           onReload: (){
-                            Navigator.of(context).pop();
+                            //TODO-Hung: k pop ở đây
+//                            Navigator.of(context).pop();
                           },
                         );
                       return Expanded(

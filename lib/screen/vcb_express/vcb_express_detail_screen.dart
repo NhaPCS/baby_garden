@@ -4,6 +4,8 @@ import 'package:baby_garden_flutter/provider/news_detail_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
+import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +40,7 @@ class _VCBExpressDetailScreenState extends BaseState<VCBExpressDetailScreen> {
       backgroundColor: Colors.white,
       appBar: getAppBar(title: S.of(context).vcb_express.toUpperCase()),
       body: Consumer<NewsDetailProvider>(builder: (BuildContext context, NewsDetailProvider value, Widget child) {
+        if(value.currentDetail == null) return LoadingView();
         return Column(children: <Widget>[
           Expanded(
             child: Padding(
@@ -49,7 +52,7 @@ class _VCBExpressDetailScreenState extends BaseState<VCBExpressDetailScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
+                    MyText(
                       value.currentDetail['title'],
                       style: TextStyle(
                           fontSize: SizeUtil.textSizeBigger,

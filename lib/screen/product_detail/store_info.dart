@@ -36,7 +36,9 @@ class StoreInfo extends StatelessWidget {
         Expanded(child: SizedBox()),
         MyRaisedButton(
           onPressed: () {
-//            RouteUtil.push(context, PartnerBookScheduleScreen());
+            //TODO-Hung: check lai cho nay, không truyền data như này, phải có name
+            RouteUtil.push(context,PartnerBookScheduleScreen(
+                "1", "VUON CUA BE", "Thời trang"));
           },
           borderColor: ColorUtil.primaryColor,
           borderWidth: 2,
