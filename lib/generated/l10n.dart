@@ -3754,6 +3754,42 @@ class S {
       args: [key],
     );
   }
+
+  String get title_select_pick_image {
+    return Intl.message(
+      'Chọn ảnh',
+      name: 'title_select_pick_image',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get message_select_pick_image {
+    return Intl.message(
+      'Bạn muốn chụp ảnh từ camera hay lấy ảnh từ thư viên?',
+      name: 'message_select_pick_image',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get from_camera {
+    return Intl.message(
+      'Chụp ảnh',
+      name: 'from_camera',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get from_gallery {
+    return Intl.message(
+      'Lấy ảnh từ thư viện',
+      name: 'from_gallery',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

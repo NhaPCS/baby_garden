@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CircleImage extends StatelessWidget {
   final String imageUrl;
+  final File imageFile;
   final double borderRadius;
   final double width;
   final double height;
@@ -11,10 +14,11 @@ class CircleImage extends StatelessWidget {
   const CircleImage(
       {Key key,
       this.imageUrl,
-        this.margin = const EdgeInsets.all(4),
+      this.margin = const EdgeInsets.all(4),
       this.borderRadius,
       @required this.width,
-      @required this.height})
+      @required this.height,
+      this.imageFile})
       : super(key: key);
 
   @override
@@ -31,7 +35,10 @@ class CircleImage extends StatelessWidget {
           borderRadius: BorderRadius.all(
               Radius.circular(borderRadius == null ? width : borderRadius)),
           image: DecorationImage(
-              image: CachedNetworkImageProvider(imageUrl), fit: BoxFit.cover),
+              image: imageUrl != null
+                  ? CachedNetworkImageProvider(imageUrl)
+                  : imageFile != null ? FileImage(imageFile) : null,
+              fit: BoxFit.cover),
         ),
       ),
     );
