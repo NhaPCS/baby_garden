@@ -1,5 +1,5 @@
 import 'package:baby_garden_flutter/data/model/section.dart';
-import 'package:baby_garden_flutter/item/item_product.dart';
+import 'package:baby_garden_flutter/item/product_item.dart';
 import 'package:baby_garden_flutter/provider/get_list_product_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -67,7 +67,7 @@ class _ListProductState extends BaseState<ListProductScreen> {
                 },
                 totalPage: value.total,
                 itemBuilder: (context, index) {
-                  return ItemProduct(
+                  return ProductItem(
                     product: value.products[index],
                     index: index,
                     width: MediaQuery.of(context).size.width * 0.5,

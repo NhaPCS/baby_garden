@@ -1,13 +1,12 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
+import 'package:baby_garden_flutter/screen/account_manage/dialog/add_child_dialog.dart';
+import 'package:baby_garden_flutter/screen/account_manage/widget/child_infor.dart';
 import 'package:baby_garden_flutter/screen/address_setting/address_setting_screen.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/child_heath/child_heath_screen.dart';
 import 'package:baby_garden_flutter/screen/change_password/change_password_screen.dart';
-import 'package:baby_garden_flutter/screen/profile/add_child_dialog.dart';
-import 'package:baby_garden_flutter/screen/profile/child_infor.dart';
-import 'package:baby_garden_flutter/screen/profile/user_infor.dart';
+import 'package:baby_garden_flutter/screen/child_heath/child_heath_screen.dart';
+import 'package:baby_garden_flutter/screen/profile/widget/user_infor.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +19,6 @@ class AccountManageScreen extends StatefulWidget {
 }
 
 class _AccountManageScreenState extends BaseState<AccountManageScreen> {
-  final GetListProvider _getListProvider = GetListProvider();
-
   final childInformation = ChildInfor(
     childName: 'Hùng gay',
     gender: 'Nam',
@@ -252,6 +249,6 @@ class _AccountManageScreenState extends BaseState<AccountManageScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _getListProvider)];
+    return null;
   }
 }

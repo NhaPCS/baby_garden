@@ -2,7 +2,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/change_pass_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/view_model/change_pass_view_model.dart';
+import 'package:baby_garden_flutter/screen/change_password/view_model/change_pass_view_model.dart';
 import 'package:baby_garden_flutter/widget/input/my_password_textfield.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/cupertino.dart';

@@ -1,13 +1,11 @@
 import 'dart:async';
 
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/welcome/welcome_guide_screen.dart';
+import 'package:baby_garden_flutter/screen/welcome_guide/welcome_guide_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
-import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatefulWidget {
   @override
@@ -17,8 +15,6 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeState extends BaseState<WelcomeScreen> {
-  // TODO-QAnh: k dung bỏ đi
-  final GetListProvider _getListProvider = GetListProvider();
   // TODO-QAnh: k dùng, bỏ đi, tạo new Timer thôi
   Timer _timer;
 
@@ -63,6 +59,6 @@ class _WelcomeState extends BaseState<WelcomeScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _getListProvider)];
+    return [];
   }
 }

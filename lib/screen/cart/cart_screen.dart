@@ -1,9 +1,9 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/item/item_added_promo.dart';
+import 'package:baby_garden_flutter/item/added_promo_item.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
-import 'package:baby_garden_flutter/screen/cart/product_by_shop.dart';
+import 'package:baby_garden_flutter/screen/cart/widget/product_by_shop.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
@@ -89,8 +89,8 @@ class _CartState extends BaseState<CartScreen> {
                                 borderRadius: SizeUtil.tinyRadius)
                           ],
                         )),
-                        ItemAddedPromo(),
-                        ItemAddedPromo(),
+                        AddedPromoItem(),
+                        AddedPromoItem(),
                         WidgetUtil.getLine(width: 2, margin: EdgeInsets.all(0)),
                         WidgetUtil.paddingWidget(
                             Row(

@@ -1,7 +1,6 @@
+import 'package:baby_garden_flutter/data/service.dart' as service;
 import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:flutter/cupertino.dart';
-
-import 'package:baby_garden_flutter/data/service.dart' as service;
 class NotifyProvider extends ChangeNotifier{
   int currentValue = 0;
   List<dynamic> promotions ;

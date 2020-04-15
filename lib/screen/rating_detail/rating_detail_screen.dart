@@ -2,7 +2,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/view_model/rate_booking_view_model.dart';
+import 'package:baby_garden_flutter/screen/rating_detail/view_model/rate_booking_view_model.dart';
 import 'package:baby_garden_flutter/widget/rating_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

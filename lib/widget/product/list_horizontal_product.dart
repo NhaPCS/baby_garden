@@ -1,4 +1,4 @@
-import 'package:baby_garden_flutter/item/item_product.dart';
+import 'package:baby_garden_flutter/item/product_item.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/product/view_more_product.dart';
@@ -34,7 +34,7 @@ class ListHorizontalProduct extends StatelessWidget {
           if (maxItems != null && index == maxItems - 1) {
             return ViewMoreProduct();
           } else
-            return ItemProduct(
+            return ProductItem(
               index: index,
               product: products == null ? null : products[index],
             );

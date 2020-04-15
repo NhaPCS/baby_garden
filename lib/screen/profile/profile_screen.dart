@@ -1,20 +1,19 @@
 import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/account_manage/account_manage_screen.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/customer_support/customer_support.dart';
+import 'package:baby_garden_flutter/screen/customer_support/customer_support_screen.dart';
 import 'package:baby_garden_flutter/screen/favorite_product/favorite_product_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
-import 'package:baby_garden_flutter/screen/partner/partner_like_screen.dart';
+import 'package:baby_garden_flutter/screen/partner_like/partner_like_screen.dart';
 import 'package:baby_garden_flutter/screen/point_management/point_management_screen.dart';
-import 'package:baby_garden_flutter/screen/profile/header_without_login.dart';
-import 'package:baby_garden_flutter/screen/profile/user_infor.dart';
+import 'package:baby_garden_flutter/screen/profile/widget/header_without_login.dart';
+import 'package:baby_garden_flutter/screen/profile/widget/user_infor.dart';
 import 'package:baby_garden_flutter/screen/remind_management/remind_management_screen.dart';
 import 'package:baby_garden_flutter/screen/seen_product/seen_product_screen.dart';
 import 'package:baby_garden_flutter/screen/setting/setting_screen.dart';
-import 'package:baby_garden_flutter/screen/voucher/voucher_management_screen.dart';
+import 'package:baby_garden_flutter/screen/voucher_management/voucher_management_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,7 +27,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends BaseState<ProfileScreen> {
-  final GetListProvider _getListProvider = GetListProvider();
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -68,7 +66,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _getListProvider)];
+    return [];
   }
 
   Widget entriesWidget(

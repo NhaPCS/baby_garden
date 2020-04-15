@@ -1,11 +1,10 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/change_pass_provider.dart';
+import 'package:baby_garden_flutter/screen/forgot_password/provider/enter_phone_number_provider.dart';
 import 'package:baby_garden_flutter/provider/waiting_otp_provider.dart';
-import 'package:baby_garden_flutter/provider/enter_phone_number_provider.dart';
-import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/view_model/forgot_pass_view_model.dart';
+import 'package:baby_garden_flutter/screen/forgot_password/view_model/forgot_pass_view_model.dart';
 import 'package:baby_garden_flutter/widget/input/my_password_textfield.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/material.dart';
