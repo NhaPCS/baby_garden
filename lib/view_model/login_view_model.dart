@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:baby_garden_flutter/data/model/param.dart';
 import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/data/shared_value.dart';
+import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -13,14 +15,15 @@ import 'package:provider/provider.dart';
 class LoginViewModel extends BaseViewModel{
 
   Future<void> onLogin({String phone, String password}) async {
-    dynamic data = await login(context,
-        password: password, phone: phone);
+    if (!WidgetUtil.verifyParams(context,params: [ Param(key: S.of(context).phone,value: phone),Param(key: S.of(context).password,value: password)])){
+      print("passsed");
+      return null;
+    }
+    dynamic data = await login(context, password: password, phone: phone);
     if (data != null) {
       ShareValueProvider.shareValueProvider.saveUserInfo(jsonEncode(data));
       Provider.of<UserProvider>(context,listen: false).getUserInfo();
       RouteUtil.push(context,MainScreen(index: 4,));
-//      Navigator.of(context).pop();
-//      Navigator.of(context).pop();
     }
   }
 

@@ -2,6 +2,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/SwitchProvider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/text/hobo_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -34,10 +35,7 @@ class _SettingScreenState extends BaseState<SettingScreen> {
           children: <Widget>[
             Image.asset("photo/logo.png",
                 width: MediaQuery.of(context).size.width *4/ 16),
-            Text(S.of(context).app_name,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: SizeUtil.textSizeBigger, fontFamily: "hobo")),
+            HoboText(fontSize: SizeUtil.textSizeBigger),
             SizedBox(height: SizeUtil.bigSpace,),
             Consumer<SwitchProvider>(
               builder:
