@@ -1,12 +1,10 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/item/item_product.dart';
+import 'package:baby_garden_flutter/item/product_item.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/loadmore/loadmore_gridview.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
 import 'package:baby_garden_flutter/widget/product/image_count.dart';
-import 'package:baby_garden_flutter/widget/product/list_horizontal_product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -166,7 +164,7 @@ class _SalingDetailScreenState extends BaseState<SalingDetailScreen> {
               padding: EdgeInsets.only(
                   left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
               itemBuilder: (context, index) {
-                return ItemProduct(
+                return ProductItem(
                   width: MediaQuery.of(context).size.width * 0.5,
                   borderRadius: SizeUtil.tinyRadius,
                   showSoldCount: false,

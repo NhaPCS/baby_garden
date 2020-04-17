@@ -1,14 +1,12 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/item/item_faq.dart';
-import 'package:baby_garden_flutter/item/item_order_option.dart';
-import 'package:baby_garden_flutter/provider/booking_detail_provider.dart';
+import 'package:baby_garden_flutter/screen/order/item/faq_item.dart';
+import 'package:baby_garden_flutter/screen/order/item/order_option_item.dart';
 import 'package:baby_garden_flutter/provider/order_list_provider.dart';
 import 'package:baby_garden_flutter/provider/service_list_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/booking/booking_rate_screen.dart';
-import 'package:baby_garden_flutter/screen/order/list_order_screen.dart';
-import 'package:baby_garden_flutter/screen/order/order_list_screen.dart';
+import 'package:baby_garden_flutter/screen/booking_rate/booking_rate_screen.dart';
+import 'package:baby_garden_flutter/screen/order_list/order_list_screen.dart';
 import 'package:baby_garden_flutter/screen/service_and_order_list/service_list_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +48,7 @@ class _OrderState extends BaseState<OrderScreen> {
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
               children: ORDER_OPTIONS
                   .map((e) => InkWell(
-                        child: ItemOrderOption(option: e),
+                        child: OrderOptionItem(option: e),
                         onTap: () {
                           if (Provider.of<UserProvider>(context,listen: false).isLogin){
                             Provider.of<OrderListProvider>(context,listen: false).getListData(Provider.of<UserProvider>(context,listen: false).userInfo['id'], ORDER_OPTIONS.indexOf(e)+1);
@@ -132,7 +130,7 @@ class _OrderState extends BaseState<OrderScreen> {
                     }
 
                   },
-                  child: ItemOrderOption(option: e)))
+                  child: OrderOptionItem(option: e)))
                   .toList(),
             ),
             Text(
@@ -145,7 +143,7 @@ class _OrderState extends BaseState<OrderScreen> {
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: FAQS.map((e) => ItemFaq(question: e)).toList(),
+              children: FAQS.map((e) => FaqItem(question: e)).toList(),
             )
           ],
         ))

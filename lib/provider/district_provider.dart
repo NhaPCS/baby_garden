@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:baby_garden_flutter/data/service.dart' as service;
+import 'package:flutter/cupertino.dart';
 
 class DistrictProvider extends ChangeNotifier {
   List<dynamic> districts = List();

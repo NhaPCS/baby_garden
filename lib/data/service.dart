@@ -1,14 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:baby_garden_flutter/data/model/param.dart';
 import 'package:baby_garden_flutter/data/response.dart';
 import 'package:baby_garden_flutter/data/shared_value.dart';
-import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 
 Map<String, String> _headers;
@@ -65,11 +62,8 @@ Future<dynamic> verifyCode(BuildContext context,
 Future<dynamic> forgetPassword(BuildContext context, {String phone}) async {
   Response response =
       await post(context, path: "forgetPassword", param: {'phone': phone});
-  if (response.isSuccess()) {
-    return response.data;
-  } else{
-    return response.message;
-  }
+  if (response.isSuccess()) return response.data;
+  return null;
 }
 
 //TODO require FORGET PASSWORD
@@ -526,6 +520,38 @@ Future<Response> registerPartner(BuildContext context,
 }
 
 
+Future<dynamic> getUserInfo(BuildContext context,
+    {@required String userId}) async {
+  Response response = await post(context, path: "", param: {'user_id': userId});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> listAddress() async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+
+  dynamic params = {"user_id": userId};
+
+  Response response =
+  await get(null, path: "listAddress", param: params, showLoading: false);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> listFavouriteShop(BuildContext context,
+    {int index = START_PAGE,
+      int numberPosts = PAGE_SIZE}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "index": index.toString(),
+    "number_post": numberPosts.toString()
+  };
+  Response response =
+  await get(null, path: "listFavouriteShop", param: params);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
 
 Future<Response> post(BuildContext context,
     {String path,
@@ -669,22 +695,4 @@ Response parseResponse(BuildContext context, String responseBody,
     }
   }
   return res;
-}
-
-Future<dynamic> getUserInfo(BuildContext context,
-    {@required String userId}) async {
-  Response response = await post(context, path: "", param: {'user_id': userId});
-  if (response.isSuccess()) return response.data;
-  return null;
-}
-
-Future<dynamic> listAddress() async {
-  String userId = await ShareValueProvider.shareValueProvider.getUserId();
-
-  dynamic params = {"user_id": userId};
-
-  Response response =
-      await get(null, path: "listAddress", param: params, showLoading: false);
-  if (response.isSuccess()) return response.data;
-  return null;
 }

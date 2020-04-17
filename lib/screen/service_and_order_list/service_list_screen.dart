@@ -1,17 +1,12 @@
-import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/booking_detail_provider.dart';
 import 'package:baby_garden_flutter/provider/service_list_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/order/order_detail_screen.dart';
-import 'package:baby_garden_flutter/screen/rated_detail/rated_detail_screen.dart';
-import 'package:baby_garden_flutter/screen/service/service_detail_screen.dart';
+import 'package:baby_garden_flutter/screen/service_detail/service_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/order_item.dart';
-import 'package:baby_garden_flutter/widget/service_item.dart';
+import 'package:baby_garden_flutter/item/service_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 

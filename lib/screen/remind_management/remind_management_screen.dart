@@ -1,12 +1,10 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/get_list_provider.dart';
-import 'package:baby_garden_flutter/screen/remind_management/remind_add_screen.dart';
-import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/screen/remind_add/remind_add_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+
 import '../base_state.dart';
-import 'remindCard.dart';
+import 'item/remind_card_item.dart';
 
 // TODO-QAnh:screen đặt ở folder riêng, khong de chung trong 1 folder
 class RemindManagementScreen extends StatefulWidget {
@@ -15,9 +13,8 @@ class RemindManagementScreen extends StatefulWidget {
 }
 
 class _RemindManageState extends BaseState<RemindManagementScreen> {
-  final GetListProvider _getListProvider = GetListProvider();
 
-  final remind1 = RemindCard(
+  final remind1 = RemindCardItem(
     id: 1,
     image: "photo/sample_product.png",
     description:
@@ -27,7 +24,7 @@ class _RemindManageState extends BaseState<RemindManagementScreen> {
     remindType: RemindType.remindBuy,
   );
 
-  final remind2 = RemindCard(
+  final remind2 = RemindCardItem(
     image: "photo/sample_product.png",
     description: "Sữa Alene dành cho bé thể tích 320ml...",
     price: "900.000",
@@ -61,6 +58,6 @@ class _RemindManageState extends BaseState<RemindManagementScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _getListProvider)];
+    return [];
   }
 }

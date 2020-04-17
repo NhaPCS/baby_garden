@@ -1,11 +1,9 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/provider/get_list_provider.dart';
-import 'package:baby_garden_flutter/screen/point_management/point_card.dart';
+import 'package:baby_garden_flutter/screen/point_management/item/point_card_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
-import 'package:provider/provider.dart';
 
 // TODO-QAnh: them chu Screen o cuoi
 class PointManagement extends StatefulWidget {
@@ -14,9 +12,8 @@ class PointManagement extends StatefulWidget {
 }
 
 class _SeenProduct extends BaseState<PointManagement> {
-  final GetListProvider _getListProvider = GetListProvider();
 
-  final product = PointCard(
+  final product = PointCardItem(
     image: "photo/voucherVCB.png",
     name: "Vườn của bé",
     point: 200,
@@ -49,6 +46,6 @@ class _SeenProduct extends BaseState<PointManagement> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _getListProvider)];
+    return [];
   }
 }

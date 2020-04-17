@@ -1,5 +1,5 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/item/item_big_category.dart';
+import 'package:baby_garden_flutter/item/big_category_item.dart';
 import 'package:baby_garden_flutter/provider/change_parent_category_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +35,7 @@ class ListParentCategory extends StatelessWidget {
               return ListView(
                 children: List.generate(5, (index) {
                   return GestureDetector(
-                    child: ItemBigCategory(
+                    child: BigCategoryItem(
                       isSelected: changeCategoryProvider.index == index,
                     ),
                     onTap: () {

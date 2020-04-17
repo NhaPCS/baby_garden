@@ -1,15 +1,16 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/vcb_express_provider.dart';
+import 'package:baby_garden_flutter/screen/vcb_express/provider/vcb_express_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'file:///C:/Users/EDU-LIVE/Documents/GitHub/baby_garden/lib/screen/vcb_express_detail/vcb_express_detail_screen.dart';
+import 'package:baby_garden_flutter/screen/vcb_express_detail/vcb_express_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/expressItem.dart';
+import 'package:baby_garden_flutter/screen/vcb_express/item/express_item.dart';
 import 'package:baby_garden_flutter/widget/partner/list_service_category.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
+// TODO-Hung: de trong folder rieng, k de chung voi screen khac
 class VCBExpressScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {

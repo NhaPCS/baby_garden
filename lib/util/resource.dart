@@ -577,34 +577,11 @@ class WidgetUtil {
   static verifyParams(BuildContext context,
       {List<Param> params, bool showErrorDialog = true}) {
     for (Param p in params) {
-      print(p.checkType);
-      switch(p.checkType){
-        case CheckType.NULL_OR_EMPTY_VALUE : // null and empty value
-          if (p.value == null || p.value.isEmpty) {
-            if (showErrorDialog)
-              WidgetUtil.showErrorDialog(
-                  context, S.of(context).message_empty(p.key));
-            return false;
-          }
-          break;
-        case CheckType.COMPARE_VALUE: //compare value
-          if (p.value != p.valueConpare){
-            if (showErrorDialog)
-              WidgetUtil.showErrorDialog(
-                  context, p.key);
-            return false;
-          }
-          break;
-        case CheckType.EMAIL_FORMAT: //  email format
-          if(p.value == null || p.value.isEmpty || RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(p.value)){
-            if (showErrorDialog)
-              WidgetUtil.showErrorDialog(
-                  context, p.key);
-            return false;
-          }
-          break;
-        default :
-          return false;
+      if (p.value == null || p.value.isEmpty) {
+        if (showErrorDialog)
+          WidgetUtil.showErrorDialog(
+              context, S.of(context).message_empty(p.key));
+        return false;
       }
     }
     return true;

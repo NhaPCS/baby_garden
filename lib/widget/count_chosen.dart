@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:flutter/material.dart';
 
 class CountChosen extends StatefulWidget {
   final String suffixText;

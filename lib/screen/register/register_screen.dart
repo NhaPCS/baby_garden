@@ -2,11 +2,9 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/change_pass_provider.dart';
 import 'package:baby_garden_flutter/provider/waiting_otp_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/view_model/register_view_model.dart';
+import 'package:baby_garden_flutter/screen/register/view_model/register_view_model.dart';
 import 'package:baby_garden_flutter/widget/input/my_password_textfield.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
-import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
-import 'package:baby_garden_flutter/widget/text/hobo_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -59,7 +57,10 @@ class _RegisterScreenState
             width: MediaQuery.of(context).size.width / 3,
             height: MediaQuery.of(context).size.width / 4,
           ),
-          HoboText(fontSize: 1,),
+          Text(S.of(context).app_name,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: SizeUtil.textSizeLogo, fontFamily: "hobo")),
           SizedBox(
             height: SizeUtil.defaultSpace,
           ),
