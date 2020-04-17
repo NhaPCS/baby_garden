@@ -81,6 +81,22 @@ Future<dynamic> changePassword(BuildContext context,
   return null;
 }
 
+//TODO require favouriteShop
+Future<dynamic> favouriteShop({String userID, String shopID}) async {
+  Response response = await post(null,
+      path: "favouriteShop", param: {'user_id': userID, 'shop_id': shopID});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+//TODO require unFavouriteShop
+Future<dynamic> unFavouriteShop({String userID, String shopID}) async {
+  Response response = await post(null,
+      path: "unFavouriteShop", param: {'user_id': userID, 'shop_id': shopID});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 /*todo bookingService
 user_id: id người dùng
 shop_id: id shop

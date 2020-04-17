@@ -776,13 +776,19 @@ class _PartnerBookScheduleScreenState
                 Radius.circular(SizeUtil.smallRadius),
               )),
               color: ColorUtil.primaryColor,
-              child: Text(
-                data['is_favourite'] == "1" ? "Đã thích" : "Thích",
-                style: TextStyle(
-                    fontSize: SizeUtil.textSizeDefault,
-                    color: Colors.white,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.normal),
+              child: InkWell(
+                onTap: (){
+                  data['is_favourite'] == "0" ? {getViewModel().onAddFavouriteShop(widget.shopID),data['is_favourite']='1'}:{getViewModel().onUnFavouriteShop(widget.shopID),data['is_favourite']='0'};
+                  _bookingServiceDetailProvider.getdata(widget.shopID);
+                },
+                child: Text(
+                  data['is_favourite'] == "1" ? "Đã thích" : "Thích",
+                  style: TextStyle(
+                      fontSize: SizeUtil.textSizeDefault,
+                      color: Colors.white,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.normal),
+                ),
               ),
             ),
           ],

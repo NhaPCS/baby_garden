@@ -16,4 +16,13 @@ class BookingServiceDetailProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void onChangeFavorite(isAdd){
+    if(isAdd){
+
+    }else{
+
+    }
+    notifyListeners();
+  }
+
 }
