@@ -537,6 +537,17 @@ Future<dynamic> listFavouriteShop(BuildContext context,
   return null;
 }
 
+Future<dynamic> listPromotion() async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+  };
+  Response response =
+  await get(null, path: "listPromotion", param: params, requireLogin: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 Future<Response> post(BuildContext context,
     {String path,
     dynamic param,

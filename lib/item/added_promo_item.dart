@@ -6,12 +6,18 @@ import 'package:flutter/material.dart';
 class AddedPromoItem extends StatelessWidget {
   final VoidCallback onRemoved;
   final EdgeInsets padding;
+  final dynamic promotion;
 
-  const AddedPromoItem({Key key, this.onRemoved,this.padding= const EdgeInsets.only(
-      left: SizeUtil.smallSpace,
-      right: SizeUtil.smallSpace,
-      top: SizeUtil.tinySpace,
-      bottom: SizeUtil.tinySpace)}) : super(key: key);
+  const AddedPromoItem(
+      {Key key,
+      this.onRemoved,
+      this.padding = const EdgeInsets.only(
+          left: SizeUtil.smallSpace,
+          right: SizeUtil.smallSpace,
+          top: SizeUtil.tinySpace,
+          bottom: SizeUtil.tinySpace),
+      this.promotion})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +36,12 @@ class AddedPromoItem extends StatelessWidget {
               child: RichText(
                   text: TextSpan(children: [
             TextSpan(
-              text: "VCB100k",
+              text: promotion['code'],
               style: TextStyle(
                   color: ColorUtil.textGray, fontSize: SizeUtil.textSizeSmall),
             ),
             TextSpan(
-              text: "(giảm giá 100.000 trên tổng đơn hàng)",
+              text: "(${promotion['title']})",
               style: TextStyle(
                   color: ColorUtil.primaryColor,
                   fontSize: SizeUtil.textSizeSmall),
