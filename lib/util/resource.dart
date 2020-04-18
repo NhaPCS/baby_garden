@@ -18,6 +18,7 @@ class ColorUtil {
   static const Color textHint = Color(0xff646464);
   static const Color black33 = Color(0xff333333);
   static const Color green = Color(0xff13BE2A);
+  static const Color greenDarker = Color(0xff13A208);
   static const Color red = Color(0xffFF0000);
   static const Color blue = Color(0xff047194);
   static const Color blueLight = Color(0xff00AAE9);
@@ -59,12 +60,34 @@ class ColorUtil {
 
 class DateUtil {
   static final String serverFormatDate = "yyyy-MM-dd HH:mm:ss";
+
   static String formatDDMMyyyy(String rawDate) {
     DateTime date = new DateFormat(serverFormatDate).parse(rawDate);
     return new DateFormat("dd/MM/yyyy").format(date);
   }
 }
+
 class StringUtil {
+  /*"active:
+  1: đã đặt,
+  2: xác nhận,
+  3: hoàn thành,
+  4: huỷ,
+  5:đang đóng gói,
+  6: đang vận chuyển"*/
+  static String getVoucherStatus(BuildContext context, String active) {
+    if (active == null) return "";
+    switch (active) {
+      case "1":
+        return S.of(context).voucher_not_get;
+      case "2":
+        return S.of(context).voucher_got;
+      case "3":
+        return S.of(context).voucher_used;
+    }
+    return "";
+  }
+
   static String getPriceText(String price) {
     if (price == null || price.isEmpty) return "";
     try {
@@ -130,8 +153,16 @@ class StringUtil {
   ];
 
   static List<dynamic> confirmForm = [
-    {'title': 'Dịch vụ đã đặt: ', 'content': 'Chăm sóc da mặt từ cơ bản đến nâng cao'},
-    {'title': 'Giá niêm yết:  ', 'content': '\nKhách hàng đã có thẻ hoặc mã voucher vui lòng mang tới cửa hàng để được hưởng đầy đủ ưu đãi.', 'value': '150.000 đ'},
+    {
+      'title': 'Dịch vụ đã đặt: ',
+      'content': 'Chăm sóc da mặt từ cơ bản đến nâng cao'
+    },
+    {
+      'title': 'Giá niêm yết:  ',
+      'content':
+          '\nKhách hàng đã có thẻ hoặc mã voucher vui lòng mang tới cửa hàng để được hưởng đầy đủ ưu đãi.',
+      'value': '150.000 đ'
+    },
     {'title': 'Ngày sử dụng: ', 'content': '14/02/2020'},
     {'title': 'Thời gian: ', 'content': '10:00'},
     {'title': 'Thời gian thực hiện: ', 'content': '120 Phút'},

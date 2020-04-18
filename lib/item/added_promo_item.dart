@@ -36,12 +36,12 @@ class AddedPromoItem extends StatelessWidget {
               child: RichText(
                   text: TextSpan(children: [
             TextSpan(
-              text: promotion['code'],
+              text: promotion == null ? "" : promotion['code'],
               style: TextStyle(
                   color: ColorUtil.textGray, fontSize: SizeUtil.textSizeSmall),
             ),
             TextSpan(
-              text: "(${promotion['title']})",
+              text: "(${promotion == null ? "" : promotion['title']})",
               style: TextStyle(
                   color: ColorUtil.primaryColor,
                   fontSize: SizeUtil.textSizeSmall),
