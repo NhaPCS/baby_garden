@@ -186,9 +186,10 @@ Future<dynamic> listVoucher({int index, String categoryId}) async {
   return null;
 }
 
-Future<dynamic> listVoucherUser({String userID}) async {
+Future<dynamic> listVoucherUser() async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response =
-      await get(null, path: "listVoucherUser", param: {'user_id': userID});
+      await get(null, path: "listVoucherUser", param: {'user_id': userId});
   if (response.isSuccess()) return response.data;
   return null;
 }

@@ -68,6 +68,7 @@ class DateUtil {
 }
 
 class StringUtil {
+
   /*"active:
   1: đã đặt,
   2: xác nhận,
