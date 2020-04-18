@@ -3,6 +3,7 @@ import 'package:baby_garden_flutter/item/added_promo_item.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
+import 'package:baby_garden_flutter/screen/cart/provider/get_promotions_provider.dart';
 import 'package:baby_garden_flutter/screen/cart/widget/product_by_shop.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
@@ -24,7 +25,13 @@ class CartScreen extends StatefulWidget {
 
 class _CartState extends BaseState<CartScreen> {
   final TextEditingController _promoCodeController = TextEditingController();
+  final GetPromotionsProvider _getPromotionsProvider = GetPromotionsProvider();
 
+  @override
+  void initState() {
+    super.initState();
+    _getPromotionsProvider.getPromotions();
+  }
   @override
   Widget buildWidget(BuildContext context) {
     return Column(
@@ -89,14 +96,26 @@ class _CartState extends BaseState<CartScreen> {
                                 borderRadius: SizeUtil.tinyRadius)
                           ],
                         )),
-                        AddedPromoItem(),
-                        AddedPromoItem(),
+                        Consumer<GetPromotionsProvider>(
+                          builder: (BuildContext context,
+                              GetPromotionsProvider value, Widget child) {
+                            if (value.promotions == null ||
+                                value.promotions.isEmpty) return SizedBox();
+                            return Column(
+                                children: value.promotions
+                                    .map((e) => AddedPromoItem(
+                                          promotion: e,
+                                        ))
+                                    .toList());
+                          },
+                        ),
                         WidgetUtil.getLine(width: 2, margin: EdgeInsets.all(0)),
                         WidgetUtil.paddingWidget(
                             Row(
                               children: <Widget>[
                                 Expanded(child: Text(S.of(context).pre_count)),
-                                Text(StringUtil.getPriceText(value.price.toString()))
+                                Text(StringUtil.getPriceText(
+                                    value.price.toString()))
                               ],
                             ),
                             padding: SizeUtil.smallPadding),
@@ -143,6 +162,6 @@ class _CartState extends BaseState<CartScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [];
+    return [ChangeNotifierProvider.value(value: _getPromotionsProvider)];
   }
 }

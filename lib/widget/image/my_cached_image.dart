@@ -7,15 +7,17 @@ class MyCachedImage extends StatelessWidget {
   final String url;
   final BoxFit boxFit;
   final double width;
+  final double height;
 
   const MyCachedImage(
-      {Key key, this.url, this.boxFit = BoxFit.cover, this.width})
+      {Key key, this.url, this.boxFit = BoxFit.cover, this.width, this.height})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       width: width,
+      height: height,
       imageUrl: url == null ? "" : url,
       fit: boxFit,
       errorWidget: (context, url, err) {

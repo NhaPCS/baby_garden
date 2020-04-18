@@ -13,6 +13,7 @@ class MyRaisedButton extends StatelessWidget {
   final Color borderColor;
   final Widget icon;
   final double elevation;
+  final bool matchParent;
 
   const MyRaisedButton(
       {Key key,
@@ -29,7 +30,8 @@ class MyRaisedButton extends StatelessWidget {
       this.icon,
       this.elevation,
       this.borderWidth = 0,
-      this.borderColor = Colors.transparent})
+      this.borderColor = Colors.transparent,
+      this.matchParent = false})
       : super(key: key);
 
   @override
@@ -58,7 +60,7 @@ class MyRaisedButton extends StatelessWidget {
             borderRadius: new BorderRadius.circular(borderRadius),
             side: BorderSide(color: borderColor, width: borderWidth)),
       ),
-      minWidth: 0,
+      minWidth: matchParent ? double.infinity : 0,
       height: 0,
       padding: padding,
     );

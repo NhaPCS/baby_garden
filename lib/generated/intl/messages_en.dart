@@ -73,9 +73,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m26(supplier) => "Cung cấp bởi: ${supplier}";
 
-  static m27(date) => "Ngày sử dung: ${date}";
+  static m27(date, time) => "Dùng đến: ${date} - ${time}";
 
-  static m28(time) => "Thời trang cho bé | ${time}";
+  static m28(date) => "Ngày sử dung: ${date}";
+
+  static m29(time) => "Thời trang cho bé | ${time}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -274,6 +276,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "list_user_rated" : MessageLookupByLibrary.simpleMessage("Danh sách người đánh giá"),
     "login" : MessageLookupByLibrary.simpleMessage("Đăng nhập"),
     "logout" : MessageLookupByLibrary.simpleMessage("Đăng xuất"),
+    "mess_get_code_voucher_success" : MessageLookupByLibrary.simpleMessage("Lấy mã code thành công!"),
     "message_confirm_delete_cart" : MessageLookupByLibrary.simpleMessage("Bạn có muốn xoá sản phẩm này khỏi giỏ hàng không?"),
     "message_empty" : m8,
     "message_require_login" : MessageLookupByLibrary.simpleMessage("Bạn vui lòng đăng nhập để sử dụng chức năng này!"),
@@ -467,15 +470,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "upload_notice" : MessageLookupByLibrary.simpleMessage("(Upload hình ảnh thanh toán chuyển khoản thành công)"),
     "useCode" : MessageLookupByLibrary.simpleMessage("Sử dụng mã"),
     "use_service" : MessageLookupByLibrary.simpleMessage("Sử dụng dịch vụ"),
+    "use_to_time" : m27,
     "used" : MessageLookupByLibrary.simpleMessage("Đã\nsử dụng"),
     "usedVoucher" : MessageLookupByLibrary.simpleMessage("Đã sử dụng"),
     "used_service" : MessageLookupByLibrary.simpleMessage("Dịch vụ đã sử dụng"),
-    "using_date" : m27,
+    "using_date" : m28,
     "vcb_contact" : MessageLookupByLibrary.simpleMessage("Thông tin liên hệ với VCB"),
     "vcb_ex_detail_ctm_hint" : MessageLookupByLibrary.simpleMessage("Viết bình luận của bạn"),
     "vcb_ex_detail_first_content" : MessageLookupByLibrary.simpleMessage("Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn."),
     "vcb_ex_detail_full_title" : MessageLookupByLibrary.simpleMessage("Thời trang dành cho bé năm 2019 phong cách xuân hè."),
-    "vcb_ex_detail_post_time" : m28,
+    "vcb_ex_detail_post_time" : m29,
     "vcb_ex_detail_second_content" : MessageLookupByLibrary.simpleMessage("Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn."),
     "vcb_ex_detail_short_title" : MessageLookupByLibrary.simpleMessage("Vườn của bé: Thời trang dành cho bé\n năm 2019"),
     "vcb_express" : MessageLookupByLibrary.simpleMessage("VCB Express"),
@@ -489,6 +493,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "voucherCode" : MessageLookupByLibrary.simpleMessage("Mã khuyến mãi"),
     "voucherDetail" : MessageLookupByLibrary.simpleMessage("Chi tiết Voucher"),
     "voucherManage" : MessageLookupByLibrary.simpleMessage("Quản lý voucher"),
+    "voucher_get_code" : MessageLookupByLibrary.simpleMessage("Lấy mã"),
+    "voucher_got" : MessageLookupByLibrary.simpleMessage("Đã lấy mã"),
+    "voucher_info" : MessageLookupByLibrary.simpleMessage("Thông tin Voucher"),
+    "voucher_not_get" : MessageLookupByLibrary.simpleMessage("Chưa lấy mã"),
+    "voucher_use_code" : MessageLookupByLibrary.simpleMessage("Sử dụng mã"),
+    "voucher_used" : MessageLookupByLibrary.simpleMessage("Đã sử dụng"),
     "waiting_confirm" : MessageLookupByLibrary.simpleMessage("Chờ\nxác nhận"),
     "waiting_payment" : MessageLookupByLibrary.simpleMessage("Chờ\nthanh toán"),
     "waitting_rate" : MessageLookupByLibrary.simpleMessage("Chờ đánh giá"),
