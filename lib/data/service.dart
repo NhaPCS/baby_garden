@@ -120,9 +120,10 @@ Future<dynamic> bookingService(
   return null;
 }
 
-Future<dynamic> shopDetail({String userID, String shopID}) async {
+Future<dynamic> shopDetail({ String shopID}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
-      path: "shopDetail", param: {'user_id': userID, 'shop_id': shopID});
+      path: "shopDetail", param: {'user_id': userId, 'shop_id': shopID});
   if (response.isSuccess()) return response.data;
   return null;
 }
