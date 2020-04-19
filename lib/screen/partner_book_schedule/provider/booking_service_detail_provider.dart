@@ -7,7 +7,7 @@ class BookingServiceDetailProvider extends ChangeNotifier {
   List<dynamic> products = List();
   Future<dynamic> getdata( String shopID) async {
     String userID = await ShareValueProvider.shareValueProvider.getUserId();
-    data = await shopDetail(userID:"1", shopID: "1");
+    data = await shopDetail( shopID: shopID);
     products = await listProductShop(userID:userID, shopID: shopID);
     if (data != null) {
       print("BookingServiceDetailProvider $data");
