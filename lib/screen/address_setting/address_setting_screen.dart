@@ -4,6 +4,7 @@ import 'package:baby_garden_flutter/screen/address_setting/item/item_address.dar
 import 'package:baby_garden_flutter/screen/address_setting/provider/get_list_address_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -62,7 +63,7 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
                         fontWeight: FontWeight.bold, color: ColorUtil.darkGray),
                   ),
                 ),
-                addressList.length > 0 ? myAddress(addressList) : SizedBox(),
+                myAddress(addressList),
               ]);
         }));
   }
@@ -117,7 +118,7 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
               Expanded(
                 child: Padding(
                   padding: SizeUtil.normalPadding,
-                  child: Text(
+                  child: MyText(
                     _getListAddressProvider.mainAddress,
                     style: TextStyle(color: Colors.black),
                   ),
@@ -141,9 +142,11 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
     return Expanded(
       child: ListView(
         children: <Widget>[
-          Column(
-            children: addressList.map((e) => e).toList(),
-          ),
+          addressList.length > 0
+              ? Column(
+                  children: addressList.map((e) => e).toList(),
+                )
+              : SizedBox(),
           WidgetUtil.getLine(width: SizeUtil.lineHeight),
           addAddress(),
           SizedBox(height: SizeUtil.largeSpace)
