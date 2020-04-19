@@ -1,19 +1,16 @@
-import 'package:baby_garden_flutter/dialog/promotion_dialog.dart';
-import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/item/item_home_category.dart';
+import 'package:baby_garden_flutter/screen/home/dialog/promotion_dialog.dart';
+import 'package:baby_garden_flutter/screen/home/item/home_category_item.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
-import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/provider/get_banners_provider.dart';
-import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/widget/delegate/sliver_category_delegate.dart';
 import 'package:baby_garden_flutter/screen/photo_view/photo_view_screen.dart';
 import 'package:baby_garden_flutter/screen/search/search_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/view_model/home_view_model.dart';
+import 'package:baby_garden_flutter/screen/home/view_model/home_view_model.dart';
+import 'package:baby_garden_flutter/widget/delegate/sliver_category_delegate.dart';
+import 'package:baby_garden_flutter/widget/input/search_bar.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
 import 'package:baby_garden_flutter/widget/product/grid_product.dart';
 import 'package:baby_garden_flutter/widget/product/notify_icon.dart';
-import 'package:baby_garden_flutter/widget/search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,7 +18,7 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 import '../base_state_model.dart';
-import 'flash_sale.dart';
+import 'widget/flash_sale.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -114,7 +111,7 @@ class _HomeState extends BaseStateModel<HomeScreen, HomeViewModel> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: getViewModel()
                           .HOME_CATEGORIES
-                          .map((e) => ItemHomeCategory(
+                          .map((e) => HomeCategoryItem(
                                 category: e,
                               ))
                           .toList(),

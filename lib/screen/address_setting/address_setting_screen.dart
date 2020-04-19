@@ -1,14 +1,15 @@
 import 'package:baby_garden_flutter/data/model/address.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/item/item_address.dart';
-import 'package:baby_garden_flutter/provider/get_list_address_provider.dart';
+import 'package:baby_garden_flutter/screen/address_setting/item/item_address.dart';
+import 'package:baby_garden_flutter/screen/address_setting/provider/get_list_address_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
-import 'add_address_modal.dart';
+import 'dialog/add_address_dialog.dart';
+// import 'address.dart';
 
 class AddressSettingScreen extends StatefulWidget {
   @override
@@ -20,6 +21,7 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
       GetListAddressProvider();
   final _defaultPadding = const EdgeInsets.only(
       top: SizeUtil.normalSpace, left: SizeUtil.midSmallSpace);
+  final List<ItemAddress> addressList = [];
 
   @override
   void didChangeDependencies() {
@@ -31,7 +33,7 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
-    final List<AddressItem> addressList = [];
+    final List<ItemAddress> addressList = [];
     return Scaffold(
         appBar: getAppBar(title: S.of(context).addressAccount),
         body:
@@ -43,7 +45,7 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
                   date: _address['date'],
                   active: _address['active'] == '1' ? true : false,
                   address: _address['address']);
-              addressList.add(AddressItem(address: address));
+              addressList.add(ItemAddress(address: address));
             }
 
           return Column(
@@ -136,7 +138,7 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
     );
   }
 
-  Widget myAddress(List<AddressItem> addressList) {
+  Widget myAddress(List<ItemAddress> addressList) {
     return Expanded(
       child: ListView(
         children: <Widget>[
@@ -157,7 +159,7 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
       child: GestureDetector(
         onTap: () {
           // show dialog
-          final addAddress = ShowAddAddressDialog();
+          final addAddress = AddAddressDialog();
           showDialog(
               context: context, builder: (BuildContext context) => addAddress);
         },

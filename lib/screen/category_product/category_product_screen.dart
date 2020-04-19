@@ -1,11 +1,10 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/item/item_product.dart';
+import 'package:baby_garden_flutter/item/product_item.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
-import 'package:baby_garden_flutter/provider/change_category_provider.dart';
 import 'package:baby_garden_flutter/provider/change_parent_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/widget/delegate/sliver_category_delegate.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/delegate/sliver_category_delegate.dart';
 import 'package:baby_garden_flutter/widget/loadmore/loadmore_nested_scrollview.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:baby_garden_flutter/widget/product/list_parent_category.dart';
@@ -35,7 +34,7 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
                 childAspectRatio: 0.7,
               ),
               itemBuilder: (context, index) {
-                return ItemProduct(
+                return ProductItem(
                   index: index,
                   width: MediaQuery.of(context).size.width * 0.5,
                   borderRadius: SizeUtil.tinyRadius,

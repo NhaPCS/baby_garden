@@ -1,11 +1,11 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
-import 'package:baby_garden_flutter/provider/change_mode_enter_heath_provider.dart';
+import 'package:baby_garden_flutter/screen/child_heath/provider/change_mode_enter_heath_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/child_heath/enter_weight_height.dart';
-import 'package:baby_garden_flutter/screen/child_heath/select_child_dropdow.dart';
-import 'package:baby_garden_flutter/screen/child_heath/view_weight_height.dart';
+import 'package:baby_garden_flutter/screen/child_heath/widget/enter_weight_height.dart';
+import 'package:baby_garden_flutter/screen/child_heath/widget/select_child_dropdow.dart';
+import 'package:baby_garden_flutter/screen/child_heath/widget/view_weight_height.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/image/circle_image.dart';
@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-import 'check_child_info_dialog.dart';
+import 'dialog/check_child_info_dialog.dart';
 
 class ChildHeathScreen extends StatefulWidget {
   @override

@@ -1,13 +1,13 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/notify_switch_provider.dart';
-import 'package:baby_garden_flutter/provider/search_notify_provider.dart';
 import 'package:baby_garden_flutter/provider/notify_control_provider.dart';
+import 'package:baby_garden_flutter/provider/notify_switch_provider.dart';
+import 'package:baby_garden_flutter/screen/notify/provider/search_notify_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/saling_detail/saling_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
-import 'package:baby_garden_flutter/widget/notify_item.dart';
+import 'package:baby_garden_flutter/screen/notify/item/notify_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';

@@ -1,23 +1,23 @@
-import 'package:baby_garden_flutter/dialog/change_delivery_address_dialogue.dart';
-import 'package:baby_garden_flutter/dialog/change_delivery_time_dialogue.dart';
-import 'package:baby_garden_flutter/dialog/credit_transfer_checkout_dialogue.dart';
-import 'package:baby_garden_flutter/dialog/point_checkout_dialogue.dart';
-import 'package:baby_garden_flutter/dialog/privacy_policy_dialogue.dart';
+import 'package:baby_garden_flutter/screen/booking/dialog/change_delivery_address_dialogue.dart';
+import 'package:baby_garden_flutter/screen/booking/dialog/change_delivery_time_dialogue.dart';
+import 'package:baby_garden_flutter/screen/booking/dialog/credit_transfer_checkout_dialogue.dart';
+import 'package:baby_garden_flutter/screen/booking/dialog/point_checkout_dialogue.dart';
+import 'package:baby_garden_flutter/screen/booking/dialog/privacy_policy_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/item/item_added_promo.dart';
+import 'package:baby_garden_flutter/item/added_promo_item.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
-import 'package:baby_garden_flutter/provider/change_delivery_time_provider.dart';
-import 'package:baby_garden_flutter/provider/checkout_method_provider.dart';
-import 'package:baby_garden_flutter/provider/delivery_method_provider.dart';
+import 'package:baby_garden_flutter/screen/booking/provider/change_delivery_time_provider.dart';
+import 'package:baby_garden_flutter/screen/booking/provider/checkout_method_provider.dart';
+import 'package:baby_garden_flutter/screen/booking/provider/delivery_method_provider.dart';
 import 'package:baby_garden_flutter/provider/notify_switch_provider.dart';
 import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
-import 'package:baby_garden_flutter/provider/shop_location_provider.dart';
-import 'package:baby_garden_flutter/provider/transfer_method_provider.dart';
+import 'package:baby_garden_flutter/screen/booking/provider/shop_location_provider.dart';
+import 'package:baby_garden_flutter/screen/booking/provider/transfer_method_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/screen/checkout/checkout_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/view_model/booking_product_view_model.dart';
+import 'package:baby_garden_flutter/screen/booking/view_model/booking_product_view_model.dart';
 import 'package:baby_garden_flutter/widget/checkbox/custom_radio_button.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:baby_garden_flutter/widget/line/dot_line_separator.dart';
@@ -31,7 +31,8 @@ import 'package:provider/provider.dart';
 class BookingScreen extends StatefulWidget {
   var shopID;
   String promoteCode;
-  BookingScreen({this.shopID,this.promoteCode}):super();
+
+  BookingScreen({this.shopID, this.promoteCode}) : super();
 
   @override
   State<StatefulWidget> createState() {
@@ -53,8 +54,9 @@ class _BookingScreenState
       new CheckoutMethodProvider();
   final TransferMethodProvider _transferMethodProvider =
       new TransferMethodProvider();
- final TextEditingController  _promoteShipCodeController = new TextEditingController();
- final TextEditingController  _noteController = new TextEditingController();
+  final TextEditingController _promoteShipCodeController =
+      new TextEditingController();
+  final TextEditingController _noteController = new TextEditingController();
 
   TabController _dayTabControler;
 
@@ -366,22 +368,37 @@ class _BookingScreenState
               child: RaisedButton(
                 onPressed: () async {
                   //TODO booking
-                  var receiveAddress = Provider.of<ReceiveAddressListProvider>(context,listen: false);
+                  var receiveAddress = Provider.of<ReceiveAddressListProvider>(
+                      context,
+                      listen: false);
                   var address;
-                  if (receiveAddress.addressList.length>receiveAddress.val){
+                  if (receiveAddress.addressList.length > receiveAddress.val) {
                     address = receiveAddress.addressList[receiveAddress.val];
                   }
-                  if (address==null){
-                    WidgetUtil.showMessageDialog(context, message: "Vui lòng nhập địa chỉ nhận hàng ", title: "Thiếu thông tin");
-                  }else {
-                    var data = await getViewModel().onBookingProduct( widget.shopID.toString(), widget.promoteCode.toLowerCase(),
-                        _deliveryMethodProvider.deliveryMenthod.toString(), _checkoutMethodProvider.checkoutMenthod.toString(),
-                        _noteController.text.toString(), _transferMethodProvider.ships[_transferMethodProvider.transferMenthod]['id'], "address", _promoteShipCodeController.text.trim(), address['userName'], address['phone'],
-                        address['address'], address['cityID'], address['districtID']);
+                  if (address == null) {
+                    WidgetUtil.showMessageDialog(context,
+                        message: "Vui lòng nhập địa chỉ nhận hàng ",
+                        title: "Thiếu thông tin");
+                  } else {
+                    var data = await getViewModel().onBookingProduct(
+                        widget.shopID.toString(),
+                        widget.promoteCode.toLowerCase(),
+                        _deliveryMethodProvider.deliveryMenthod.toString(),
+                        _checkoutMethodProvider.checkoutMenthod.toString(),
+                        _noteController.text.toString(),
+                        _transferMethodProvider
+                                .ships[_transferMethodProvider.transferMenthod]
+                            ['id'],
+                        "address",
+                        _promoteShipCodeController.text.trim(),
+                        address['userName'],
+                        address['phone'],
+                        address['address'],
+                        address['cityID'],
+                        address['districtID']);
 //                  print("book : don vi van chuyen ${_transferMethodProvider.ships[_transferMethodProvider.transferMenthod]['id']} ${_promoteShipCodeController.text.trim()} ${address['userName']} ${address['phone']} ${address['address']} ${address['cityID']} ${address['districtID']}");
                     push(CheckoutScreen());
                   }
-
                 },
                 color: ColorUtil.primaryColor,
                 shape: RoundedRectangleBorder(
@@ -422,7 +439,6 @@ class _BookingScreenState
     return Consumer<TransferMethodProvider>(
       builder:
           (BuildContext context, TransferMethodProvider value, Widget child) {
-
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -566,11 +582,11 @@ class _BookingScreenState
                       ],
                     ),
                   ),
-                  ItemAddedPromo(
+                  AddedPromoItem(
                     padding:
                         EdgeInsets.only(top: SizeUtil.tinySpace, bottom: 0),
                   ),
-                  ItemAddedPromo(
+                  AddedPromoItem(
                     padding:
                         EdgeInsets.only(top: SizeUtil.tinySpace, bottom: 0),
                   ),
