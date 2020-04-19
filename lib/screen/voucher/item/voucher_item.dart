@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/voucher_detail/voucher_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -41,18 +42,26 @@ class VoucherItem extends StatelessWidget {
             ),
             Positioned(
                 left: 0,
-                top: SizeUtil.smallSpace,
-                child: Transform.rotate(
-                    angle: -90 * pi / 360,
-                    child: Text(
-                      StringUtil.getVoucherStatus(context, voucher['active']),
-                      style: TextStyle(
-                          fontSize: SizeUtil.textSizeSmall,
-                          fontWeight: FontWeight.bold,
-                          color: voucher['active'] == '1'
-                              ? Colors.blue
-                              : Colors.orange),
-                    ))),
+                top: 0,
+                child: Container(
+                  padding: SizeUtil.tinyPadding,
+                  child: Transform.rotate(
+                      angle: -90 * pi / 360,
+                      child: AutoSizeText(
+                        StringUtil.getVoucherStatus(context, voucher['active']),
+                        minFontSize: SizeUtil.textSizeMini,
+                        maxFontSize: SizeUtil.textSizeTiny,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: SizeUtil.textSizeSmall,
+                            fontWeight: FontWeight.bold,
+                            color: voucher['active'] == '1'
+                                ? Colors.blue
+                                : Colors.orange),
+                      )),
+                  width: 50,
+                  height: 50,
+                )),
             Container(
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(6)),
