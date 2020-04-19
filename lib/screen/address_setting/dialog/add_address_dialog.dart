@@ -114,7 +114,8 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
       },
       text: Text(
         S.of(context).set_delivery_address,
-        style: TextStyle(color: ColorUtil.black33, fontSize: 12),
+        style: TextStyle(
+            color: ColorUtil.black33, fontSize: SizeUtil.textSizeSmall),
       ),
     );
   }
@@ -129,7 +130,7 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
         S.of(context).addAddress,
         style: TextStyle(
             color: ColorUtil.primaryColor,
-            fontSize: 16,
+            fontSize: SizeUtil.textSizeBigger,
             fontWeight: FontWeight.bold),
       ),
     );
@@ -184,7 +185,7 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
               await postAddNewAddress(context,
                   address: newAddress, isMain: checkDefaultAdd ? 1 : 0);
               Provider.of<CityProvider>(context, listen: false).reset();
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(true);
             } else {
               WidgetUtil.showErrorDialog(context, error);
             }
