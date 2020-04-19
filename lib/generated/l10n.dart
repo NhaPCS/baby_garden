@@ -3844,6 +3844,78 @@ class S {
       args: [],
     );
   }
+
+  String get voucher_get_code {
+    return Intl.message(
+      'Lấy mã',
+      name: 'voucher_get_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get voucher_use_code {
+    return Intl.message(
+      'Sử dụng mã',
+      name: 'voucher_use_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get voucher_used {
+    return Intl.message(
+      'Đã sử dụng',
+      name: 'voucher_used',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get voucher_not_get {
+    return Intl.message(
+      'Chưa lấy mã',
+      name: 'voucher_not_get',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get voucher_got {
+    return Intl.message(
+      'Đã lấy mã',
+      name: 'voucher_got',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String use_to_time(dynamic date, dynamic time) {
+    return Intl.message(
+      'Dùng đến: $date - $time',
+      name: 'use_to_time',
+      desc: '',
+      args: [date, time],
+    );
+  }
+
+  String get voucher_info {
+    return Intl.message(
+      'Thông tin Voucher',
+      name: 'voucher_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mess_get_code_voucher_success {
+    return Intl.message(
+      'Lấy mã code thành công!',
+      name: 'mess_get_code_voucher_success',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
