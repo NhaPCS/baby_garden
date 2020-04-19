@@ -33,11 +33,11 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
-    final List<ItemAddress> addressList = [];
     return Scaffold(
         appBar: getAppBar(title: S.of(context).addressAccount),
         body:
             Consumer<GetListAddressProvider>(builder: (context, value, child) {
+          final List<ItemAddress> addressList = [];
           if (value.address != null)
             for (var _address in value.address) {
               var address = Address(

@@ -13,6 +13,7 @@ class GetListAddressProvider extends ChangeNotifier {
     dynamic data = await service.listAddress();
 
     if (data != null && data.length != 0) {
+      address.clear();
       address = data['list_address'];
       mainAddress = data['main_address'];
 
