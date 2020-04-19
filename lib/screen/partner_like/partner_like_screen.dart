@@ -61,8 +61,7 @@ class _PartnerLikeScreen extends BaseState<PartnerLikeScreen> {
                       return new GestureDetector(
                         child: new PartnerItem(shop: value.shops[index]),
                         onTap: () {
-                          push(PartnerBookScheduleScreen(
-                              "1", "VUON CUA BE", "Thời trang"));
+                          push(PartnerBookScheduleScreen(shopID:"1"));
 //                      push(VCBExpressDetailScreen());
                         },
                       );

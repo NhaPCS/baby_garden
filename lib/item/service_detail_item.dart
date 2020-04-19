@@ -4,24 +4,22 @@ import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// TODO-Hung: widget là chỗ để custom widget, không phải để item, để vào folder item
 class ServiceDetailItem extends StatelessWidget{
   final bool isSelected ;
   final dynamic data;
-  const ServiceDetailItem({Key key,this.data,this.isSelected = false}):super(key: key);
+  final Function onBook ;
+  const ServiceDetailItem({Key key,this.data,this.isSelected = false,this.onBook}):super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        // TODO-Hung: để làm shadow à? dùng Card
         width: MediaQuery.of(context).size.width/2,
         padding: EdgeInsets.all(2),
         margin: EdgeInsets.only(bottom: 2, left: 1,right: 1),
         decoration: BoxDecoration(
           color: isSelected?ColorUtil.primaryColor:ColorUtil.serviceItemUnselectColor,
             shape: BoxShape.rectangle,
-            // BoxShape.circle or BoxShape.retangle
             boxShadow: [
               BoxShadow(
                 color: Colors.grey,
@@ -64,10 +62,13 @@ class ServiceDetailItem extends StatelessWidget{
             Positioned(
               right: 0,
               bottom: 0,
-              child: Text(
-                "Chi tiết",
-                style: TextStyle(
-                    fontSize: SizeUtil.textSizeTiny, color: isSelected?Colors.white:ColorUtil.blueLight),
+              child: InkWell(
+                onTap: onBook,
+                child: Text(
+                  "Chi tiết",
+                  style: TextStyle(
+                      fontSize: SizeUtil.textSizeTiny, color: isSelected?Colors.white:ColorUtil.blueLight),
+                ),
               ),
             )
           ],

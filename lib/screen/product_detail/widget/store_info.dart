@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/partner_book_schedule/partner_book_schedule_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -35,10 +36,19 @@ class StoreInfo extends StatelessWidget {
         ),
         Expanded(child: SizedBox()),
         MyRaisedButton(
-          onPressed: () {
-            //TODO-Hung: check lai cho nay, không truyền data như này, phải có name
-            RouteUtil.push(context,PartnerBookScheduleScreen(
-                "1", "VUON CUA BE", "Thời trang"));
+          onPressed: () async {
+            String userId =
+                await ShareValueProvider.shareValueProvider.getUserId();
+            if (userId == null || userId.isEmpty) {
+              if (context != null) {
+                WidgetUtil.showRequireLoginDialog(context);
+              }
+              return null;
+            } else {
+              RouteUtil.push(
+                  context,
+                  PartnerBookScheduleScreen(shopID: "1"));
+            }
           },
           borderColor: ColorUtil.primaryColor,
           borderWidth: 2,
