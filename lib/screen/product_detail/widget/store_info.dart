@@ -49,7 +49,6 @@ class StoreInfo extends StatelessWidget {
                   context,
                   PartnerBookScheduleScreen(
                       shopID: "1",
-                      shopName: "VUON CUA BE",
                       category: "Thời trang"));
             }
           },

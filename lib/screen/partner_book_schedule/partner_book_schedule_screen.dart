@@ -30,13 +30,12 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-
+//todo get category from cateID
 class PartnerBookScheduleScreen extends StatefulWidget {
   final String shopID;
-  final String shopName;
   final String category;
 
-  const PartnerBookScheduleScreen({this.shopID, this.shopName, this.category}) : super();
+  const PartnerBookScheduleScreen({this.shopID, this.category}) : super();
 
   @override
   State<StatefulWidget> createState() {
@@ -162,7 +161,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
                             return [
                               new SliverAppBar(
                                 title: new Text(
-                                  widget.shopName,
+                                  shopValue.data['name'],
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 leading: BaseState.getLeading(context),
@@ -539,7 +538,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
     if (data == null) {
       return Container(height: 0);
     }
-    String content = data['service'][0]['content'];
+    String content = data['introduce'];
     bool isShowSeeMore = content != null && content.length > 100;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -625,7 +624,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
         height: 0,
       );
     }
-    String content = data['service'][0]['content'];
+    String content = data['introduce'];
     bool isShowSeeMore = content != null && content.length > 100;
     String contentShow = S.of(context).introduce + (isShowSeeMore && !isShow ? content.substring(0, 100) : content) + (isShowSeeMore && !isShow ? 'See_more' : "");
     return Column(
