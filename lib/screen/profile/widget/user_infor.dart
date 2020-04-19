@@ -1,12 +1,16 @@
+import 'dart:io';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
+import 'package:baby_garden_flutter/screen/profile/widget/change_avatar.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/image/circle_image.dart';
 import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserInfor extends StatelessWidget {
+  final ValueChanged<File> onSelectImage;
+  const UserInfor({Key key, this.onSelectImage}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(
@@ -28,10 +32,8 @@ class UserInfor extends StatelessWidget {
         child: Wrap(
           spacing: SizeUtil.smallSpace,
           children: <Widget>[
-            CircleImage(
-                imageUrl: user == null ? StringUtil.dummyImage : user['avatar'],
-                width: SizeUtil.iconSizeLarge,
-                height: SizeUtil.iconSizeLarge),
+            ChangeAvatar(
+                avatarUrl: user['avatar'], onSelectImage: onSelectImage),
             Wrap(
               direction: Axis.vertical,
               spacing: SizeUtil.tinySpace,

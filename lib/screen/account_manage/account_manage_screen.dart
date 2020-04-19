@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/account_manage/dialog/add_child_dialog.dart';
@@ -62,7 +63,8 @@ class _AccountManageScreenState extends BaseState<AccountManageScreen> {
         body: Column(children: <Widget>[
           // user information
           Container(
-              child: UserInfor(),
+              child: UserInfor(
+                  onSelectImage: (file) => updateAvatar(context, img: file)),
               decoration:
                   setBorder("bottom", Color.fromRGBO(206, 206, 206, 1), 1)),
           // entries

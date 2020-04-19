@@ -3,10 +3,12 @@ import 'dart:io';
 
 import 'package:baby_garden_flutter/data/response.dart';
 import 'package:baby_garden_flutter/data/shared_value.dart';
+import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 Map<String, String> _headers;
 
@@ -745,4 +747,36 @@ Response parseResponse(BuildContext context, String responseBody,
     }
   }
   return res;
+}
+
+Future<Response> postAddNewAddress(BuildContext context,
+    {String address, int isMain}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "address": address,
+    "is_main": isMain.toString(),
+  };
+  Response response = await post(context,
+      path: 'addAddress', param: params, requireLogin: true, showLoading: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
+Future<Response> updateAvatar(BuildContext context, {File img}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+  };
+  dynamic files = {"img": img};
+  Response response = await postMultiPart(context,
+      path: 'updateAvatar', param: params, files: files, requireLogin: true);
+
+  if (response.isSuccess()) {
+    Provider.of<UserProvider>(context, listen: false)
+        .updateAvatar(response.data);
+    return response;
+  }
+
+  return null;
 }

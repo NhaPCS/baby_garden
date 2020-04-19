@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 import 'dialog/add_address_dialog.dart';
-// import 'address.dart';
 
 class AddressSettingScreen extends StatefulWidget {
   @override
@@ -63,7 +62,7 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
                         fontWeight: FontWeight.bold, color: ColorUtil.darkGray),
                   ),
                 ),
-                myAddress(addressList),
+                addressList.length > 0 ? myAddress(addressList) : SizedBox(),
               ]);
         }));
   }
@@ -161,7 +160,10 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
           // show dialog
           final addAddress = AddAddressDialog();
           showDialog(
-              context: context, builder: (BuildContext context) => addAddress);
+              context: context,
+              builder: (BuildContext context) => addAddress).then((value) {
+            if (value != null && value) _getListAddressProvider.getData();
+          });
         },
         child: Row(children: <Widget>[
           Icon(

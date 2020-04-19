@@ -190,6 +190,6 @@ class MyTextField extends StatelessWidget {
         ? OutlineInputBorder(
             borderSide: BorderSide(color: borderColor, width: borderWidth),
             borderRadius: BorderRadius.all(Radius.circular(borderRadius)))
-        : null;
+        : InputBorder.none;
   }
 }
