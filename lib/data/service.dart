@@ -76,17 +76,19 @@ Future<dynamic> changePassword(BuildContext context,
 }
 
 //TODO require favouriteShop
-Future<dynamic> favouriteShop({String userID, String shopID}) async {
+Future<dynamic> favouriteShop({ String shopID}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await post(null,
-      path: "favouriteShop", param: {'user_id': userID, 'shop_id': shopID});
+      path: "favouriteShop", param: {'user_id': userId, 'shop_id': shopID});
   if (response.isSuccess()) return response.data;
   return null;
 }
 
 //TODO require unFavouriteShop
-Future<dynamic> unFavouriteShop({String userID, String shopID}) async {
+Future<dynamic> unFavouriteShop({String shopID}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await post(null,
-      path: "unFavouriteShop", param: {'user_id': userID, 'shop_id': shopID});
+      path: "unFavouriteShop", param: {'user_id': userId, 'shop_id': shopID});
   if (response.isSuccess()) return response.data;
   return null;
 }

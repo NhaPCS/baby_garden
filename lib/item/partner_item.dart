@@ -5,7 +5,6 @@ import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// TODO-Hung: widget là chỗ để custom widget, không phải để item, để vào folder item
 class PartnerItem extends StatelessWidget {
   final dynamic shop;
 

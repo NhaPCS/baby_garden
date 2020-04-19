@@ -22,14 +22,6 @@ class BookingServiceViewModel extends BaseViewModel {
     if (data != null) {}
   }
 
-  Future<void> onAddFavouriteShop(String shopID) async{
-    dynamic data = await favouriteShop(userID: userID,shopID: shopID);
-  }
-
-  Future<void> onUnFavouriteShop(String shopID) async{
-    dynamic data = await unFavouriteShop(userID: userID,shopID: shopID);
-  }
-
 
   @override
   BuildContext context;
