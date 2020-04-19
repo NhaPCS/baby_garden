@@ -10,13 +10,10 @@ class BookingDialogue extends Dialog {
   final List<dynamic> serviceData;
   final String shopID;
   final String address;
-  final String day;
-  final String time;
   final String serviceID;
 
 
-  BookingDialogue(this.context, this.serviceData, this.shopID, this.address,
-      this.day, this.time, this.serviceID);
+  const BookingDialogue({this.context, this.serviceData, this.shopID, this.address, this.serviceID}):super();
 
   @override
   // TODO: implement shape
@@ -85,7 +82,7 @@ class BookingDialogue extends Dialog {
                                 color: ColorUtil.textColor,
                                 fontSize: SizeUtil.textSizeSmall,
                                 fontWeight: FontWeight.bold),
-                            children: StringUtil.confirmForm.indexOf(e) != 1
+                            children: serviceData.indexOf(e) != 1
                                 ? <TextSpan>[
                                     TextSpan(
                                       text: e['content'],
@@ -97,7 +94,7 @@ class BookingDialogue extends Dialog {
                                   ]
                                 : <TextSpan>[
                                     TextSpan(
-                                      text: e['value'],
+                                      text: StringUtil.getPriceText(e['value']),
                                       style: TextStyle(
                                           color: ColorUtil.red,
                                           fontSize: SizeUtil.textSizeSmall),
@@ -143,7 +140,7 @@ class BookingDialogue extends Dialog {
                 RaisedButton(
                   onPressed: () async{
                     var userID = Provider.of<UserProvider>(context,listen: false).userInfo['id'];
-                    dynamic data = await service.bookingService(userID: userID,shopID: shopID,dateBooking: day,timeBooking: time,serviceID: serviceID,address: address);
+                    dynamic data = await service.bookingService(userID: userID,shopID: shopID,dateBooking: serviceData[2]['content'],timeBooking: serviceData[3]['content'],serviceID: serviceID,address: address);
                     if (data !=null){
                       Navigator.of(context).pop(true);
                     }else{

@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_partner_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
@@ -67,8 +68,16 @@ class _PartnerListScreenState extends BaseState<PartnerListScreen> {
                         child: new PartnerItem(
                           shop: value.shops[index],
                         ),
-                        onTap: () {
-                          push(PartnerBookScheduleScreen(value.shops[index]['id'],value.shops[index]['name'],categoryName));
+                        onTap: () async{
+                          String userId = await ShareValueProvider.shareValueProvider.getUserId();
+                          if (userId == null || userId.isEmpty) {
+                            if (context != null) {
+                              WidgetUtil.showRequireLoginDialog(context);
+                            }
+                            return null;
+                          }else{
+                            push(PartnerBookScheduleScreen(shopID:value.shops[index]['id']));
+                          }
                         },
                       );
                     });

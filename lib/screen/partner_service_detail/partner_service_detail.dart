@@ -1,25 +1,31 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/partner/date_picker.dart';
+import 'package:baby_garden_flutter/widget/partner/time_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 // TODO-Hung: screen mới thì move ra folder mới, không để chung
-class PartnerBookScheduleSuccessScreen extends StatefulWidget{
+class PartnerServiceDetailScreen extends StatefulWidget{
   final dynamic data;
-  final int dateIndex;
-  final int timeIndex;
 
-  const PartnerBookScheduleSuccessScreen(this.data, this.dateIndex, this.timeIndex):super();
+  const PartnerServiceDetailScreen({this.data}):super();
 
   @override
   State<StatefulWidget> createState() {
-    return _PartnerBookScheduleSuccessScreen();
+    return _PartnerServiceDetailScreenScreen();
   }
 
 }
 
-class _PartnerBookScheduleSuccessScreen extends BaseState<PartnerBookScheduleSuccessScreen>{
+class _PartnerServiceDetailScreenScreen extends BaseState<PartnerServiceDetailScreen> with TickerProviderStateMixin{
+  int dateIndex = 0;
+  int timeScheduleIndex = 0;
+  String dateValue = "";
+  final ValueNotifier<int> _timeValueController = ValueNotifier(0);
+  final ValueNotifier<int> _dateValueController = ValueNotifier(0);
+
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
@@ -74,66 +80,38 @@ class _PartnerBookScheduleSuccessScreen extends BaseState<PartnerBookScheduleSuc
             padding: const EdgeInsets.only(left:SizeUtil.smallSpace,bottom: SizeUtil.midSmallSpace,right: SizeUtil.smallSpace),
             child: Text('Thời gian',style: TextStyle(color: Colors.black, fontSize: SizeUtil.textSizeExpressDetail,fontWeight: FontWeight.bold),),
           ),
-          // TODO-Hung: cái calendar này m dùng nhiều màn mà? move ra widget riêng đi
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: StringUtil.week
-              .map((e) => Expanded(
-                child: Container(
-                padding: EdgeInsets.all(3),
-                  color: StringUtil.week.indexOf(e)==widget.dateIndex?ColorUtil.primaryColor:Color(0xffF2F2F2),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        e['dow'],
-                        style: TextStyle(
-                          color: StringUtil.week.indexOf(e)==widget.dateIndex?Colors.white:Colors.blue,
-                            fontWeight: FontWeight.bold,
-                            fontSize: SizeUtil.textSizeNotiTime),
-                      ),
-                      Text(
-                        e['date'],
-                        style: TextStyle(
-                            color: StringUtil.week.indexOf(e)==widget.dateIndex?Colors.white:Colors.blue,
-                            fontWeight: FontWeight.normal, fontSize: 6),
-                      )
-                    ],
+          DatePicker(onValueChange:(val){
+            dateValue = val['date'];
+          },unSelectedColor: ColorUtil.blue,valueController: _dateValueController,),
+          TimePicker(valueController: _timeValueController,),
+          Container(
+              padding: const EdgeInsets.only(
+                  left: SizeUtil.smallSpace,
+                  right: SizeUtil.smallSpace,
+                  top: SizeUtil.tinySpace,
+                  bottom: SizeUtil.tinySpace),
+              width: MediaQuery.of(context).size.width,
+              child: RaisedButton (
+                onPressed: () async{
+                  Navigator.pop(context,{'dateValue':dateValue,'date':_dateValueController.value,'time':_timeValueController.value});
+                },
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(SizeUtil.smallRadius),
+                    )),
+                color: ColorUtil.primaryColor,
+                child: Padding(
+                  padding: const EdgeInsets.all(SizeUtil.midSpace),
+                  child: Text(
+                    S.of(context).book,
+                    style: TextStyle(
+                        fontSize: SizeUtil.textSizeDefault,
+                        color: Colors.white,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
-              ),
-          )
-              .toList(),),
-          Container(
-            height: MediaQuery.of(context).size.width / 3.50,
-            width: MediaQuery.of(context).size.width,
-            color: Colors.white,
-            child: GridView.builder(
-              scrollDirection: Axis.horizontal,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4, childAspectRatio: 0.5),
-              padding: EdgeInsets.all(0),
-              itemCount: StringUtil.time.length,
-              itemBuilder: (context, index) {
-
-                return Container(
-                  margin: EdgeInsets.all(1),
-                  color: index==widget.timeIndex?Colors.red:Color(0xffF2F2F2),
-                  child: Center(
-                    child: Text(
-                      StringUtil.time[index]['time'],
-                      style: TextStyle(
-                        color: index==widget.timeIndex?Colors.white:ColorUtil.textColor,
-                          fontSize: SizeUtil.textSizeTiny),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                );
-              },
-            ),
-          )
+              )),
         ],
       ),
     );
@@ -142,7 +120,8 @@ class _PartnerBookScheduleSuccessScreen extends BaseState<PartnerBookScheduleSuc
   @override
   List<SingleChildWidget> providers() {
     // TODO: implement providers
-    return [];
+    return [
+    ];
   }
 
 }

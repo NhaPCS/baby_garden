@@ -79,8 +79,7 @@ class _InfoTabState extends BaseState<InfoTab> {
             InkWell(
               onTap: () {
                 //TODO-hung: chi truyen shop_id thoi
-                push(PartnerBookScheduleScreen(widget.voucher['shop_id'],
-                    widget.voucher['shop_name'], ""));
+                push(PartnerBookScheduleScreen(shopID:widget.voucher['shop_id']));
               },
               child: Padding(
                 padding: EdgeInsets.only(

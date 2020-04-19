@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// TODO-Hung: widget là chỗ để custom widget, không phải để item, để vào folder item
 class ServiceItem extends StatelessWidget {
   final bool isShowBookingDate;
  final dynamic itemData;

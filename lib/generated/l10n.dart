@@ -533,6 +533,15 @@ class S {
     );
   }
 
+  String get address_form {
+    return Intl.message(
+      'Địa chỉ: ',
+      name: 'address_form',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get mobilePhone {
     return Intl.message(
       'Số điện thoại',
@@ -542,10 +551,37 @@ class S {
     );
   }
 
+  String get mobilePhone_form {
+    return Intl.message(
+      'Điện thoại: ',
+      name: 'mobilePhone_form',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get category_product {
     return Intl.message(
       'Danh mục sản phẩm',
       name: 'category_product',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get service_type {
+    return Intl.message(
+      'Loại dịch vụ: ',
+      name: 'service_type',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get introduce {
+    return Intl.message(
+      'Giới thiệu: ',
+      name: 'introduce',
       desc: '',
       args: [],
     );
