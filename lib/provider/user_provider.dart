@@ -20,4 +20,9 @@ class UserProvider extends ChangeNotifier {
     userID = "";
     notifyListeners();
   }
+
+  void updateAvatar(String avatarUrl) {
+    userInfo['avatar'] = avatarUrl;
+    notifyListeners();
+  }
 }

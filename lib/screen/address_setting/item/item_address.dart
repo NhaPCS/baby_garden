@@ -4,7 +4,6 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// TODO-QAnh: bỏ fix cứng kích thước
 class ItemAddress extends StatelessWidget {
   final Address address;
   final isDefault;
@@ -16,39 +15,41 @@ class ItemAddress extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      // TODO-QAnh: bỏ set height
-      height: 63,
-      margin: EdgeInsets.only(left: 8, right: 8),
+      padding: EdgeInsets.only(
+          top: SizeUtil.defaultSpace, bottom: SizeUtil.defaultSpace),
+      margin: EdgeInsets.only(
+        left: SizeUtil.midSmallSpace,
+        right: SizeUtil.midSmallSpace,
+      ),
       decoration: setBorder("bottom", Color.fromRGBO(154, 154, 154, 1), 1),
       child: Row(
         children: <Widget>[
-          Icon(
-            Icons.location_on,
-            color: Colors.blue,
-            size: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Text(address.address),
-          ),
+          Icon(Icons.location_on,
+              color: Colors.blue, size: SizeUtil.iconMidSize),
           Expanded(
-            // TODO-QAnh: phần này có thể check bằng cách isDefault? Padding(): SizeBox()
-            child: Visibility(
-              visible: isDefault,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Text(
-                  "(${S.of(context).isDefault})",
-                  style: TextStyle(color: Colors.orange, fontSize: 12),
-                ),
-              ),
+            child: Padding(
+              padding: const EdgeInsets.only(left: SizeUtil.midSmallSpace),
+              child: Text(address.address),
             ),
           ),
+          isDefault
+              ? Padding(
+                  padding: const EdgeInsets.only(left: SizeUtil.midSmallSpace),
+                  child: Text(
+                    "(${S.of(context).isDefault})",
+                    style: TextStyle(
+                        color: Colors.orange, fontSize: SizeUtil.textSizeSmall),
+                  ),
+                )
+              : SizedBox(),
           GestureDetector(
             onTap: () {},
             child: Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Text(S.of(context).edit),
+              padding: const EdgeInsets.only(right: SizeUtil.midSmallSpace),
+              child: Text(
+                S.of(context).edit,
+                style: TextStyle(fontSize: SizeUtil.textSizeSmall),
+              ),
             ),
           ),
         ],

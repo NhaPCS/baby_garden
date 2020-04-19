@@ -21,7 +21,7 @@ class CityProvider extends ChangeNotifier {
     this.subDistrictVal = null;
     if (districts != null)
       districts.clear();
-    else{
+    else {
       districts = List();
     }
     districts = await service.district(id: val.toString());
@@ -33,7 +33,7 @@ class CityProvider extends ChangeNotifier {
     this.subDistrictVal = null;
     if (subDistricts != null)
       subDistricts.clear();
-    else{
+    else {
       subDistricts = List();
     }
     subDistricts = await service.district(id: val.toString());
@@ -45,7 +45,7 @@ class CityProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onChangeDefault(val){
+  void onChangeDefault(val) {
     isDefault = val;
   }
 

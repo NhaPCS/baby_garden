@@ -15,8 +15,7 @@ class GetListAddressProvider extends ChangeNotifier {
     if (data != null && data.length != 0) {
       address = data['list_address'];
       mainAddress = data['main_address'];
-      print('du lieu');
-      print(address);
+
       notifyListeners();
     }
   }

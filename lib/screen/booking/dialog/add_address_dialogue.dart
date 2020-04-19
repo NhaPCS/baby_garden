@@ -11,7 +11,6 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class AddingAddressDialogue extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -19,10 +18,13 @@ class AddingAddressDialogue extends StatefulWidget {
   }
 }
 
-class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue>{
-  final TextEditingController _receiveNameController =new  TextEditingController();
-  final TextEditingController _receivePhoneController =new TextEditingController();
-  final TextEditingController _receiveAddressController =new TextEditingController();
+class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue> {
+  final TextEditingController _receiveNameController =
+      new TextEditingController();
+  final TextEditingController _receivePhoneController =
+      new TextEditingController();
+  final TextEditingController _receiveAddressController =
+      new TextEditingController();
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement build
@@ -32,8 +34,7 @@ class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue>{
         ),
         child: StatefulBuilder(
           builder: (context, setState) {
-            return
-              Container(
+            return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
                 color: Colors.white,
@@ -87,7 +88,7 @@ class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue>{
                       fontSize: SizeUtil.textSizeSmall,
                     ),
                     contentPadding: EdgeInsets.all(0),
-                    textEditingController: _receiveNameController ,
+                    textEditingController: _receiveNameController,
                     padding: EdgeInsets.only(
                         top: SizeUtil.smallSpace,
                         left: SizeUtil.smallSpace,
@@ -128,50 +129,57 @@ class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue>{
                     showTrailing: false,
                     isBorder: false,
                   ),
-                  Consumer<CityProvider>(builder: (BuildContext context, CityProvider value, Widget child) {
-                    return Column(
-                      children: <Widget>[
-                        DropDownFormField(
-                          value: value.cityVal,
-                          titleText: S.of(context).province,
-                          hintText: S.of(context).choose_province,
-                          onChanged: (val) {
-                            Provider.of<CityProvider>(context,listen: false).onChangeCity(val);
-                          },
-                          dataSource: value.cities,
-                          textField: 'name',
-                        ),
-                        DropDownFormField(
-                          value: value.districtVal,
-                          titleText: S.of(context).district,
-                          hintText: S.of(context).choose_district,
-                          onChanged: (val) {
-                            Provider.of<CityProvider>(context,listen: false).onChangeDistrict(val);
-                          },
-                          dataSource: value.districts,
-                          textField: 'name',
-                        ),
-                        DropDownFormField(
-                          value: value.subDistrictVal,
-                          titleText: S.of(context).sub_district,
-                          hintText: S.of(context).choose_sub_district,
-                          onChanged: (val) {
-                            Provider.of<CityProvider>(context,listen: false).onChangeSubDistrict(val);
-                          },
-                          dataSource: value.districts,
-                          textField: 'name',
-                        )
-                      ],
-                    );
-                  },),
+                  Consumer<CityProvider>(
+                    builder: (BuildContext context, CityProvider value,
+                        Widget child) {
+                      return Column(
+                        children: <Widget>[
+                          DropDownFormField(
+                            value: value.cityVal,
+                            titleText: S.of(context).province,
+                            hintText: S.of(context).choose_province,
+                            onChanged: (val) {
+                              Provider.of<CityProvider>(context, listen: false)
+                                  .onChangeCity(val);
+                            },
+                            dataSource: value.cities,
+                            textField: 'name',
+                          ),
+                          DropDownFormField(
+                            value: value.districtVal,
+                            titleText: S.of(context).district,
+                            hintText: S.of(context).choose_district,
+                            onChanged: (val) {
+                              Provider.of<CityProvider>(context, listen: false)
+                                  .onChangeDistrict(val);
+                            },
+                            dataSource: value.districts,
+                            textField: 'name',
+                          ),
+                          DropDownFormField(
+                            value: value.subDistrictVal,
+                            titleText: S.of(context).sub_district,
+                            hintText: S.of(context).choose_sub_district,
+                            onChanged: (val) {
+                              Provider.of<CityProvider>(context, listen: false)
+                                  .onChangeSubDistrict(val);
+                            },
+                            dataSource: value.districts,
+                            textField: 'name',
+                          )
+                        ],
+                      );
+                    },
+                  ),
                   SizedBox(
                     height: SizeUtil.smallSpace,
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
                     child: CircleCheckbox(
-                        onChanged: (val){
-                          Provider.of<CityProvider>(context,listen: false).onChangeDefault(val);
+                        onChanged: (val) {
+                          Provider.of<CityProvider>(context, listen: false)
+                              .onChangeDefault(val);
                         },
                         padding: const EdgeInsets.only(
                             left: SizeUtil.tinySpace,
@@ -198,8 +206,8 @@ class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue>{
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
-                              Radius.circular(SizeUtil.smallRadius),
-                            )),
+                          Radius.circular(SizeUtil.smallRadius),
+                        )),
                         color: ColorUtil.primaryColor,
                         child: Text(
                           S.of(context).cancel,
@@ -216,35 +224,59 @@ class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue>{
                       RaisedButton(
                         onPressed: () {
                           String error = "";
-                          var provider = Provider.of<CityProvider>(context,listen: false);
-                          if (_receiveNameController.text.trim().length==0){
-                            error ="Vui lòng nhập Tên ";
-                          }else if (_receivePhoneController.text.trim().length==0){
-                            error ="Vui lòng nhập Số điện thoại ";
-                          }else if (_receiveAddressController.text.trim().length==0){
-                            error ="Vui lòng nhập địa chỉ (số nhà, tên đường) ";
-                          }else if (provider.cityVal==null){
-                            error ="Vui lòng chọn tỉnh/thành phố  ";
-                          }else if (provider.districtVal==null){
-                            error ="Vui lòng chọn quận/huyện  ";
-                          }else if (provider.subDistrictVal==null){
-                            error ="Vui lòng chọn phường/xã ";
+                          var provider =
+                              Provider.of<CityProvider>(context, listen: false);
+                          if (_receiveNameController.text.trim().length == 0) {
+                            error = "Vui lòng nhập Tên ";
+                          } else if (_receivePhoneController.text
+                                  .trim()
+                                  .length ==
+                              0) {
+                            error = "Vui lòng nhập Số điện thoại ";
+                          } else if (_receiveAddressController.text
+                                  .trim()
+                                  .length ==
+                              0) {
+                            error =
+                                "Vui lòng nhập địa chỉ (số nhà, tên đường) ";
+                          } else if (provider.cityVal == null) {
+                            error = "Vui lòng chọn tỉnh/thành phố  ";
+                          } else if (provider.districtVal == null) {
+                            error = "Vui lòng chọn quận/huyện  ";
+                          } else if (provider.subDistrictVal == null) {
+                            error = "Vui lòng chọn phường/xã ";
                           }
                           print(error);
-                          if (error.length==0){
-                            dynamic address = {'userName':_receiveNameController.text.trim(),'phone':_receivePhoneController.text.trim(),'address':_receiveAddressController.text.trim(),'districtName':provider.districts[provider.districtVal]['name'],'districtID':provider.districts[provider.districtVal]['id'],'city':provider.cities[provider.cityVal]['name'],'cityID':provider.cities[provider.cityVal]['id']};
-                            Provider.of<ReceiveAddressListProvider>(context,listen: false).onAddAddress(address,Provider.of<CityProvider>(context,listen: false).isDefault);
-                            Provider.of<CityProvider>(context,listen: false).reset();
+                          if (error.length == 0) {
+                            dynamic address = {
+                              'userName': _receiveNameController.text.trim(),
+                              'phone': _receivePhoneController.text.trim(),
+                              'address': _receiveAddressController.text.trim(),
+                              'districtName': provider
+                                  .districts[provider.districtVal]['name'],
+                              'districtID': provider
+                                  .districts[provider.districtVal]['id'],
+                              'city': provider.cities[provider.cityVal]['name'],
+                              'cityID': provider.cities[provider.cityVal]['id']
+                            };
+                            Provider.of<ReceiveAddressListProvider>(context,
+                                    listen: false)
+                                .onAddAddress(
+                                    address,
+                                    Provider.of<CityProvider>(context,
+                                            listen: false)
+                                        .isDefault);
+                            Provider.of<CityProvider>(context, listen: false)
+                                .reset();
                             Navigator.of(context).pop();
-                          }else{
+                          } else {
                             WidgetUtil.showErrorDialog(context, error);
                           }
-
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
-                              Radius.circular(SizeUtil.smallRadius),
-                            )),
+                          Radius.circular(SizeUtil.smallRadius),
+                        )),
                         color: ColorUtil.primaryColor,
                         child: Text(
                           S.of(context).add_new,
@@ -269,5 +301,4 @@ class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue>{
     // TODO: implement providers
     return [];
   }
-
 }

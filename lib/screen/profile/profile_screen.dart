@@ -27,7 +27,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends BaseState<ProfileScreen> {
-
   @override
   Widget buildWidget(BuildContext context) {
     final List<Map<String, String>> entries = <Map<String, String>>[
