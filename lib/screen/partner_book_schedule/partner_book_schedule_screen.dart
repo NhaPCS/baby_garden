@@ -33,9 +33,8 @@ import 'package:provider/provider.dart';
 //todo get category from cateID
 class PartnerBookScheduleScreen extends StatefulWidget {
   final String shopID;
-  final String category;
 
-  const PartnerBookScheduleScreen({this.shopID, this.category}) : super();
+  const PartnerBookScheduleScreen({this.shopID}) : super();
 
   @override
   State<StatefulWidget> createState() {
@@ -208,8 +207,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
                                               ],
                                             ),
                                             //todo shop info
-                                            shopInfo(shopValue.data,
-                                                value.isShow, widget.category),
+                                            shopInfo(shopValue.data, value.isShow),
                                             SizedBox(
                                               height: SizeUtil.tinySpace,
                                             ),
@@ -283,10 +281,10 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
                               key: _bannerKey,
                               width: MediaQuery.of(context).size.width,
                             ),
-                            shopHeiInfo(shopValue.data, false, widget.category,
+                            shopHeiInfo(shopValue.data, false,
                                 _rowKey),
                             //TODO get detail info max height
-                            shopHeiInfo(shopValue.data, true, widget.category,
+                            shopHeiInfo(shopValue.data, true,
                                 _rowKeyFull)
                           ],
                         ),
@@ -534,7 +532,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
     );
   }
 
-  Widget shopInfo(dynamic data, bool isShow, String category) {
+  Widget shopInfo(dynamic data, bool isShow) {
     if (data == null) {
       return Container(height: 0);
     }
@@ -578,7 +576,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
             ),
           ],
         )),
-        paddingContainer(ShopInfoForm(isExpanded: false,title: S.of(context).service_type,content: category,contentColor: ColorUtil.blueLight,)),
+        paddingContainer(ShopInfoForm(isExpanded: false,title: S.of(context).service_type,content: data['category_id'],contentColor: ColorUtil.blueLight,)),
         paddingContainer(RichText(
           textAlign: TextAlign.start,
           text: TextSpan(
@@ -618,7 +616,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
     );
   }
 
-  Widget shopHeiInfo(dynamic data, bool isShow, String category, Key key) {
+  Widget shopHeiInfo(dynamic data, bool isShow, Key key) {
     if (data == null) {
       return Container(
         height: 0,
@@ -634,7 +632,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
         paddingContainer(FavoriteShopButton(isFavorite: true,shopId: "1",)),
         paddingContainer(ShopInfoForm(isExpanded: false,title: S.of(context).address_form,content: data['address'] != null &&
             data['address'].length > 0 ? data['address'][0]["address"] : "")),
-        paddingContainer(ShopInfoForm(isExpanded: false,title: S.of(context).service_type,content: category,contentColor: ColorUtil.blueLight,)),
+        paddingContainer(ShopInfoForm(isExpanded: false,title: S.of(context).service_type,content: "",contentColor: ColorUtil.blueLight,)),
         paddingContainer(Text( contentShow, style: TextStyle(
               color: ColorUtil.textColor,
               fontWeight: FontWeight.normal),)),

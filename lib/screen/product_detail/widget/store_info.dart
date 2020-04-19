@@ -47,9 +47,7 @@ class StoreInfo extends StatelessWidget {
             } else {
               RouteUtil.push(
                   context,
-                  PartnerBookScheduleScreen(
-                      shopID: "1",
-                      category: "Thời trang"));
+                  PartnerBookScheduleScreen(shopID: "1"));
             }
           },
           borderColor: ColorUtil.primaryColor,
