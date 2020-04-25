@@ -4,6 +4,7 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/screen/register/view_model/register_view_model.dart';
 import 'package:baby_garden_flutter/widget/input/my_password_textfield.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
+import 'package:baby_garden_flutter/widget/text/hobo_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -55,10 +56,7 @@ class _RegisterScreenState
             width: MediaQuery.of(context).size.width / 3,
             height: MediaQuery.of(context).size.width / 4,
           ),
-          Text(S.of(context).app_name,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: SizeUtil.textSizeLogo, fontFamily: "hobo")),
+          HoboText(fontSize: 1,),
           SizedBox(
             height: SizeUtil.defaultSpace,
           ),

@@ -64,8 +64,11 @@ Future<dynamic> verifyCode(BuildContext context,
 Future<dynamic> forgetPassword(BuildContext context, {String phone}) async {
   Response response =
       await post(context, path: "forgetPassword", param: {'phone': phone});
-  if (response.isSuccess()) return response.data;
-  return null;
+  if (response.isSuccess()) {
+    return response.data;
+  } else{
+    return response.message;
+  }
 }
 
 //TODO require FORGET PASSWORD
