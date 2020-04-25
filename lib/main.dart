@@ -18,7 +18,6 @@ import 'generated/l10n.dart';
 void main() {
   initializeDateFormatting().then((_) => runApp(MultiProvider(
         providers: [
-          //TODO-hung: check lai dong nay
           Provider(create: (_) => AppProvider()),
           ChangeNotifierProvider(create: (_) => GetProductCategoryProvider()),
           ChangeNotifierProvider(create: (_) => GetServiceCategoryProvider()),
