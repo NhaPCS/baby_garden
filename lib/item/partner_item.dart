@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/screen/partner_book_schedule/widget/shop_icon_info.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/image/my_cached_image.dart';
 import 'package:baby_garden_flutter/widget/rating_bar.dart';
@@ -8,17 +9,17 @@ import 'package:flutter/material.dart';
 class PartnerItem extends StatelessWidget {
   final dynamic shop;
 
-  const PartnerItem({Key key, this.shop}) : super(key: key);
+  const PartnerItem({this.shop}) : super();
 
   @override
   Widget build(BuildContext context) {
-    if(shop==null) return SizedBox();
+    if (shop == null) return SizedBox();
     return Card(
         elevation: 2,
         child: Stack(
           children: <Widget>[
             ClipRRect(
-              // TODO-Hung: nên dùng border cho cả card
+              // TODO không dùng card shape border vì k clip dc ảnh
               borderRadius: BorderRadius.circular(4.0),
               child: MyCachedImage(
                 url: shop['img'],
@@ -35,8 +36,7 @@ class PartnerItem extends StatelessWidget {
                     top: SizeUtil.tinySpace,
                     bottom: SizeUtil.tinySpace),
                 decoration: BoxDecoration(
-                  // TODO-Hung: màu đen thì để Colors.black la duoc ma
-                    color: Color(0xff000000).withOpacity(0.5),
+                    color: Colors.black.withOpacity(0.5),
                     borderRadius:
                         BorderRadius.all(Radius.circular(SizeUtil.tinyRadius))),
                 child: Row(
@@ -72,8 +72,7 @@ class PartnerItem extends StatelessWidget {
                     top: SizeUtil.tinySpace,
                     bottom: SizeUtil.tinySpace),
                 decoration: BoxDecoration(
-                  // TODO-Hung: màu đen thì để Colors.black la duoc ma
-                    color: Color(0xff000000).withOpacity(0.5),
+                    color: Colors.black.withOpacity(0.5),
                     borderRadius:
                         BorderRadius.all(Radius.circular(SizeUtil.tinyRadius))),
                 child: Row(
@@ -112,51 +111,27 @@ class PartnerItem extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        // TODO-Hung: icon và 1 số: để widget riêng thì tốt
-                        Wrap(
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          direction: Axis.horizontal,
-                          children: <Widget>[
-                            Image.asset(
-                              "photo/heart.png",
-                              width: SizeUtil.iconSizeBigger,
-                              height: SizeUtil.iconSizeBigger,
-                            ),
-                            SizedBox(
-                              width: SizeUtil.tinySpace,
-                            ),
-                            MyText(
-                              shop['number_like'],
-                              style: TextStyle(
-                                  fontSize: SizeUtil.textSizeDefault,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal),
-                            ),
-                          ],
+                        ShopIconInfo(
+                          icon: "photo/heart.png",
+                          textData: shop['number_like'],
+                          bgColor: ColorUtil.white,
+                          isPadding: false,
+                          iconSize: SizeUtil.iconSizeBigger,
+                          textSize: SizeUtil.textSizeDefault,
+                          textColor: Colors.white,
                         ),
                         SizedBox(
                           height: SizeUtil.tinySpace,
                         ),
-                        Wrap(
-                          direction: Axis.horizontal,
-                          children: <Widget>[
-                            Image.asset(
-                              "photo/comment_img.png",
-                              width: SizeUtil.iconSizeBigger,
-                              height: SizeUtil.iconSizeBigger,
-                            ),
-                            SizedBox(
-                              width: SizeUtil.tinySpace,
-                            ),
-                            MyText(
-                              shop['number_comment'],
-                              style: TextStyle(
-                                  fontSize: SizeUtil.textSizeDefault,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal),
-                            ),
-                          ],
-                        )
+                        ShopIconInfo(
+                          icon: "photo/comment_img.png",
+                          textData: shop['number_comment'],
+                          bgColor: ColorUtil.white,
+                          isPadding: false,
+                          iconSize: SizeUtil.iconSizeBigger,
+                          textSize: SizeUtil.textSizeDefault,
+                          textColor: Colors.white,
+                        ),
                       ],
                     )
                   ],

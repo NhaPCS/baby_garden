@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-// TODO-Hung: screen mới thì move ra folder mới, không để chung
 class PartnerLikeScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -25,11 +24,14 @@ class _PartnerLikeScreen extends BaseState<PartnerLikeScreen> {
 
   @override
   void didChangeDependencies() {
-    if (_getListPartnerProvider.shops == null ||
-        _getListPartnerProvider.shops.isEmpty) {
-      _getListPartnerProvider.getListFavouriteShop(context);
-    }
     super.didChangeDependencies();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _getListPartnerProvider.getListFavouriteShop();
+    super.initState();
   }
 
   @override
@@ -62,7 +64,6 @@ class _PartnerLikeScreen extends BaseState<PartnerLikeScreen> {
                         child: new PartnerItem(shop: value.shops[index]),
                         onTap: () {
                           push(PartnerBookScheduleScreen(shopID:"1"));
-//                      push(VCBExpressDetailScreen());
                         },
                       );
                     });

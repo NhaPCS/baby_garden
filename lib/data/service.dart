@@ -64,8 +64,11 @@ Future<dynamic> verifyCode(BuildContext context,
 Future<dynamic> forgetPassword(BuildContext context, {String phone}) async {
   Response response =
       await post(context, path: "forgetPassword", param: {'phone': phone});
-  if (response.isSuccess()) return response.data;
-  return null;
+  if (response.isSuccess()) {
+    return response.data;
+  } else{
+    return response.message;
+  }
 }
 
 //TODO require FORGET PASSWORD
@@ -242,26 +245,29 @@ Future<Response> getCodeVoucher(BuildContext context,
 }
 
 //todo notification
-Future<dynamic> notification({String userID}) async {
+Future<dynamic> notification() async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response =
-      await get(null, path: "notification", param: {'user_id': userID});
+      await get(null, path: "notification", param: {'user_id': userId});
   if (response.isSuccess()) return response.data;
   return null;
 }
 
 //todo notificationDetail
-Future<dynamic> notificationDetail({String userID, String notifyID}) async {
+Future<dynamic> notificationDetail({ String notifyID}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
       path: "notificationDetail",
-      param: {'index': userID, 'noty_id': notifyID});
+      param: {'index': userId, 'noty_id': notifyID});
   if (response.isSuccess()) return response.data;
   return null;
 }
 
 //todo deleteNoty
-Future<dynamic> deleteNoty({String userID, String notifyID}) async {
+Future<dynamic> deleteNoty({ String notifyID}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await post(null,
-      path: "deleteNoty", param: {'index': userID, 'noty_id': notifyID});
+      path: "deleteNoty", param: {'user_id': userId, 'noty_id': notifyID});
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -283,7 +289,8 @@ Future<dynamic> newsDetail({String newID}) async {
 }
 
 //todo bookingDetail
-Future<dynamic> bookingDetail({String userId, var bookingID}) async {
+Future<dynamic> bookingDetail({ var bookingID}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
       path: "bookingDetail",
       param: {'user_id': userId, 'booking_id': bookingID.toString()});
@@ -299,9 +306,10 @@ Future<dynamic> district({String id}) async {
 }
 
 //todo listShiper
-Future<dynamic> listShiper({int userId}) async {
+Future<dynamic> listShiper() async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
-      path: "listShiper", param: {'user_id': userId.toString()});
+      path: "listShiper", param: {'user_id': userId});
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -315,9 +323,10 @@ Future<dynamic> city() async {
 
 //todo rateBooking
 Future<dynamic> rateBooking(
-    {String userID, int bookingID, double star, String content}) async {
+    { int bookingID, double star, String content}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await post(null, path: "rateBooking", param: {
-    'user_id': userID,
+    'user_id': userId,
     'booking_id': bookingID.toString(),
     'star': star.toString(),
     'content': content.toLowerCase()
@@ -327,16 +336,18 @@ Future<dynamic> rateBooking(
 }
 
 //todo listBookingService
-Future<dynamic> listBookingService({String userId, int type}) async {
+Future<dynamic> listBookingService({ int type}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
       path: "listBookingService",
-      param: {'user_id': userId.toString(), 'type': type.toString()});
+      param: {'user_id': userId, 'type': type.toString()});
   if (response.isSuccess()) return response.data;
   return null;
 }
 
 //todo listBookingProduct
-Future<dynamic> listBookingProduct({String userId, int type}) async {
+Future<dynamic> listBookingProduct({ int type}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
       path: "listBookingProduct",
       param: {'user_id': userId, 'type': type.toString()});
@@ -600,8 +611,7 @@ Future<dynamic> listAddress() async {
   return null;
 }
 
-Future<dynamic> listFavouriteShop(BuildContext context,
-    {int index = START_PAGE, int numberPosts = PAGE_SIZE}) async {
+Future<dynamic> listFavouriteShop({int index = START_PAGE, int numberPosts = PAGE_SIZE}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {
     "user_id": userId,

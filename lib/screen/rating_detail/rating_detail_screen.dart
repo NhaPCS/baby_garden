@@ -238,7 +238,7 @@ class _RatingDetailScreenState extends BaseStateModel<RatingDetailScreen,RateBoo
               child:
               RaisedButton(
                 onPressed: () {
-                  getViewModel().onRateBooking(userID: Provider.of<UserProvider>(context,listen: false).userInfo['id'],bookingId: 1,star: 4,content: _noteController.text.trim());
+                  getViewModel().onRateBooking(bookingId: 1,star: 4,content: _noteController.text.trim());
                   Navigator.of(context).pop();
                 },
                 shape: RoundedRectangleBorder(

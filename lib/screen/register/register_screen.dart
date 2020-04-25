@@ -1,10 +1,10 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/change_pass_provider.dart';
 import 'package:baby_garden_flutter/provider/waiting_otp_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/screen/register/view_model/register_view_model.dart';
 import 'package:baby_garden_flutter/widget/input/my_password_textfield.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
+import 'package:baby_garden_flutter/widget/text/hobo_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,7 +24,6 @@ class _RegisterScreenState
     extends BaseStateModel<RegisterScreen, RegisterViewModel> {
   // TODO-Hung: tao widget rieng cho OTP
   final WaittingOTPProvider _waittingOTPProvider = new WaittingOTPProvider();
-  final ChangePassProvider _changePassProvider = new ChangePassProvider();
   final TextEditingController _nameControler = new TextEditingController();
   final TextEditingController _phoneControler = new TextEditingController();
   final TextEditingController _passControler = new TextEditingController();
@@ -57,10 +56,7 @@ class _RegisterScreenState
             width: MediaQuery.of(context).size.width / 3,
             height: MediaQuery.of(context).size.width / 4,
           ),
-          Text(S.of(context).app_name,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: SizeUtil.textSizeLogo, fontFamily: "hobo")),
+          HoboText(fontSize: 1,),
           SizedBox(
             height: SizeUtil.defaultSpace,
           ),
@@ -296,17 +292,15 @@ class _RegisterScreenState
 
   @override
   void dispose() {
+    _waittingOTPProvider.stopTimer();
     // TODO: implement dispose
     super.dispose();
-    // TODO-Hung: de truoc dispose
-    _waittingOTPProvider.stopTimer();
   }
 
   @override
   List<SingleChildWidget> providers() {
     return [
       ChangeNotifierProvider.value(value: _waittingOTPProvider),
-      ChangeNotifierProvider.value(value: _changePassProvider)
     ];
   }
 

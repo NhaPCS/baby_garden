@@ -7,7 +7,7 @@ class TransferMethodProvider extends ChangeNotifier{
   List<dynamic> ships = List();
 
   Future<void> getShips() async{
-    ships = await service.listShiper(userId: 1);
+    ships = await service.listShiper();
     try {
       final menthod = ships[transferMenthod];
       price = int.parse(menthod['price']) - int.parse(menthod['price_discount']);

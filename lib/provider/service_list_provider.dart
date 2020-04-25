@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 class ServiceListProvider extends ChangeNotifier{
   List<dynamic> listService = List();
 
-  Future<void> getServiceList(String userID, int type) async{
+  Future<void> getServiceList(int type) async{
     listService.clear();
-    listService = await service.listBookingService(userId: userID,type: type);
+    listService = await service.listBookingService(type: type);
     notifyListeners();
   }
 }
