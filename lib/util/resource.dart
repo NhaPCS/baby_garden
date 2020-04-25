@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:baby_garden_flutter/data/model/param.dart';
@@ -5,7 +6,9 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/login/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ColorUtil {
   static const Color primaryColor = Color(0xffFF8918);
@@ -15,8 +18,9 @@ class ColorUtil {
   static const Color textHint = Color(0xff646464);
   static const Color black33 = Color(0xff333333);
   static const Color green = Color(0xff13BE2A);
+  static const Color greenDarker = Color(0xff13A208);
   static const Color red = Color(0xffFF0000);
-  static const Color blue = Color(0xff047194);
+  static const Color blue = Color(0xff49aefc);
   static const Color blueLight = Color(0xff00AAE9);
   static const Color gray = Color(0xffA8A8A8);
   static const Color lightGray = Color(0xffEFEFEF);
@@ -36,6 +40,7 @@ class ColorUtil {
   static const Color darkGray = Color(0xff707070);
   static const serviceItemUnselectColor = Color(0xffF6F6F6);
   static const Color textDark = Color(0xff444444);
+  static const Color grayEC = Color(0xffececec);
 
   static const List<Color> gradientColors = [
     Color(0xffFFA503),
@@ -53,7 +58,37 @@ class ColorUtil {
   }
 }
 
+class DateUtil {
+  static final String serverFormatDate = "yyyy-MM-dd HH:mm:ss";
+
+  static String formatDDMMyyyy(String rawDate) {
+    DateTime date = new DateFormat(serverFormatDate).parse(rawDate);
+    return new DateFormat("dd/MM/yyyy").format(date);
+  }
+}
+
 class StringUtil {
+
+  /*"active:
+  1: đã đặt,
+  2: xác nhận,
+  3: hoàn thành,
+  4: huỷ,
+  5:đang đóng gói,
+  6: đang vận chuyển"*/
+  static String getVoucherStatus(BuildContext context, String active) {
+    if (active == null) return "";
+    switch (active) {
+      case "1":
+        return S.of(context).voucher_not_get;
+      case "2":
+        return S.of(context).voucher_got;
+      case "3":
+        return S.of(context).voucher_used;
+    }
+    return "";
+  }
+
   static String getPriceText(String price) {
     if (price == null || price.isEmpty) return "";
     try {
@@ -341,7 +376,41 @@ class SizeUtil {
   static const double textSpaceBig = 4;
 }
 
+class FileUtil {
+  static Future<File> compressFile(File file) async {
+    try {
+      if (file.lengthSync() > 1024 * 1024 &&
+          (file.path.endsWith("jpg") || file.path.endsWith("jpeg"))) /*1MB*/ {
+        Directory tempFolder = await getTemporaryDirectory();
+        File compressedFile = await FlutterImageCompress.compressAndGetFile(
+            file.path,
+            "${tempFolder.path}/${DateTime.now().toIso8601String()}.jpg",
+            quality: 60);
+        if (compressedFile != null) {
+          print(
+              "compressed file ${compressedFile.path}  ${compressedFile.lengthSync()}");
+          return compressedFile;
+        }
+      }
+    } on Exception catch (e) {
+      print(e);
+    }
+    return file;
+  }
+}
+
 class WidgetUtil {
+  static void showPickImageDialog(BuildContext context,
+      {VoidCallback onCameraClick, VoidCallback onGalleryClick}) {
+    showConfirmDialog(context,
+        title: S.of(context).title_select_pick_image,
+        message: S.of(context).message_select_pick_image,
+        positive: S.of(context).from_camera,
+        negative: S.of(context).from_gallery,
+        positiveClicked: onCameraClick,
+        negativeClick: onGalleryClick);
+  }
+
   static void showRequireLoginDialog(BuildContext context) {
     showDialog(
         context: context,

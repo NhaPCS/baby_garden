@@ -61,7 +61,8 @@ class DropDownFormField extends StatelessWidget {
                 onChanged: (int newValue) {
                   if (onChanged != null) onChanged(newValue);
                 },
-                items: List.generate(dataSource!=null?dataSource.length:0, (index) {
+                items: List.generate(dataSource != null ? dataSource.length : 0,
+                    (index) {
                   var source = dataSource[index];
                   return DropdownMenuItem<int>(
                     value: index,

@@ -1,29 +1,23 @@
 import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/get_list_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
+import 'package:baby_garden_flutter/screen/account_manage/account_manage_screen.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/customer_support/customer_support.dart';
-import 'package:baby_garden_flutter/screen/favorite_product/favorite_product.dart';
-import 'package:baby_garden_flutter/screen/login/login_screen.dart';
+import 'package:baby_garden_flutter/screen/customer_support/customer_support_screen.dart';
+import 'package:baby_garden_flutter/screen/favorite_product/favorite_product_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
-import 'package:baby_garden_flutter/screen/partner/partner_book_schedule.dart';
-import 'package:baby_garden_flutter/screen/partner/partner_like_screen.dart';
-import 'package:baby_garden_flutter/screen/point_management/point_history_screen.dart';
+import 'package:baby_garden_flutter/screen/partner_like/partner_like_screen.dart';
 import 'package:baby_garden_flutter/screen/point_management/point_management_screen.dart';
-import 'package:baby_garden_flutter/screen/profile/account_manage_screen.dart';
-import 'package:baby_garden_flutter/screen/profile/header_without_login.dart';
-import 'package:baby_garden_flutter/screen/profile/user_infor.dart';
-import 'package:baby_garden_flutter/screen/register/register_screen.dart';
+import 'package:baby_garden_flutter/screen/profile/widget/header_without_login.dart';
+import 'package:baby_garden_flutter/screen/profile/widget/user_infor.dart';
 import 'package:baby_garden_flutter/screen/remind_management/remind_management_screen.dart';
 import 'package:baby_garden_flutter/screen/seen_product/seen_product_screen.dart';
 import 'package:baby_garden_flutter/screen/setting/setting_screen.dart';
-import 'package:baby_garden_flutter/screen/voucher/voucher_management_screen.dart';
+import 'package:baby_garden_flutter/screen/voucher_management/voucher_management_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
@@ -33,8 +27,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends BaseState<ProfileScreen> {
-  final GetListProvider _getListProvider = GetListProvider();
-
   @override
   Widget buildWidget(BuildContext context) {
     final List<Map<String, String>> entries = <Map<String, String>>[
@@ -50,35 +42,34 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
       {'icon': 'profile_logout', 'title': S.of(context).logout}
     ];
 
-    return Column(children: <Widget>[
-      getAppBar(title: S.of(context).myProfile, hasBack: false),
-      Consumer<UserProvider>(
-        builder: (BuildContext context, UserProvider value, Widget child) {
-          return Column(
-            children: <Widget>[
-              value.isLogin
-                  ? Container(
-                      // user information
-                      child: UserInfor(
-                      user: value.userInfo,
-                    ))
-                  : HeaderWithoutLogin(),
-              entriesWidget(entries: entries, logined: value.isLogin),
-            ],
-          );
-        },
-      ),
-    ]);
+    return SingleChildScrollView(
+      child: Column(children: <Widget>[
+        getAppBar(title: S.of(context).myProfile, hasBack: false),
+        Consumer<UserProvider>(
+          builder: (BuildContext context, UserProvider value, Widget child) {
+            return Column(
+              children: <Widget>[
+                value.isLogin
+                    ? Container(
+                        // user information
+                        child: UserInfor())
+                    : HeaderWithoutLogin(),
+                entriesWidget(entries: entries, logined: value.isLogin),
+              ],
+            );
+          },
+        ),
+      ]),
+    );
   }
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _getListProvider)];
+    return [];
   }
 
   Widget entriesWidget(
       {@required List<Map<String, String>> entries, bool logined}) {
-    print(logined);
     return ListView.builder(
         shrinkWrap: true,
         itemCount: entries.length,
@@ -101,7 +92,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                   children: <Widget>[
                     SvgIcon(
                       '${entries[index]['icon']}.svg',
-                      color: (index == 0)
+                      color: (index == 0 && logined)
                           ? ColorUtil.primaryColor
                           : ColorUtil.black33,
                       width: SizeUtil.iconSizeBigger,
@@ -114,7 +105,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                     ),
                     Text(entries[index]['title'],
                         style: TextStyle(
-                            color: (index == 0)
+                            color: (index == 0 && logined)
                                 ? ColorUtil.primaryColor
                                 : ColorUtil.black33)),
                   ],
@@ -122,9 +113,20 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
               ),
             ),
             onTap: () {
+              if (!logined) {
+                switch (index) {
+                  case 7:
+                    push(CustomerSupportScreen());
+                    break;
+                  default:
+                    WidgetUtil.showRequireLoginDialog(context);
+                }
+
+                return;
+              }
               switch (index) {
                 case 0:
-                  push(AccountManage());
+                  push(AccountManageScreen());
                   break;
                 case 1:
                   push(PointManagement());
@@ -136,7 +138,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                   push(VoucherManagement());
                   break;
                 case 4:
-                  push(FavoriteProduct());
+                  push(FavoriteProductScreen());
                   break;
                 case 5:
                   push(PartnerLikeScreen());

@@ -1,10 +1,10 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/show_hide_pass_provider.dart';
+import 'package:baby_garden_flutter/screen/login/provider/show_hide_pass_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/screen/forgot_password/forgot_password_screen.dart';
 import 'package:baby_garden_flutter/screen/register/register_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/view_model/login_view_model.dart';
+import 'package:baby_garden_flutter/screen/login/view_model/login_view_model.dart';
 import 'package:baby_garden_flutter/widget/checkbox/circle_checkbox.dart';
 import 'package:baby_garden_flutter/widget/input/my_password_textfield.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';

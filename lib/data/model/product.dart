@@ -1,15 +1,20 @@
 class Product {
-  int id;
-  int userId;
-  int productId;
-  int shopId;
-  int number;
-  int sizeId;
-  int colorId;
-  int price;
+  String id;
+  String shopId;
+  String categoryId;
+  String name;
+  String price;
   String date;
-  int active;
-  String productName;
-  int priceDiscount;
-  List<String> image;
+  bool isFavorite;
+  List<dynamic> image;
+
+  Product(
+      {this.id,
+      this.shopId,
+      this.categoryId,
+      this.name,
+      this.price,
+      this.date,
+      this.isFavorite,
+      this.image});
 }

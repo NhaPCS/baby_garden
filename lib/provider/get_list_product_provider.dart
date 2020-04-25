@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/data/model/product.dart';
 import 'package:baby_garden_flutter/data/service.dart' as service;
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,7 @@ class GetListProductProvider extends ChangeNotifier {
   int totalPage;
 
   void clearProduct() {
-    products=null;
+    products = null;
     notifyListeners();
   }
 
@@ -17,11 +18,26 @@ class GetListProductProvider extends ChangeNotifier {
       int numberPosts = service.PAGE_SIZE}) async {
     dynamic data = await service.listProducts(context, path,
         categoryId: categoryId, index: index, numberPosts: numberPosts);
-    if (data != null) {
+    // add check case data as emty array like list product view
+    if (data != null && data.length != 0) {
       products = data['list'];
       total = data['total'];
-      totalPage = (data['total'] / numberPosts).toInt()+1;
+      totalPage = (data['total'] / numberPosts).toInt() + 1;
       notifyListeners();
     }
+  }
+
+  Product getProduct(int index) {
+    final product = Product(
+        id: products[index]['id'],
+        shopId: products[index]['shop_id'],
+        categoryId: products[index]['category_id'],
+        name: products[index]['name'],
+        price: products[index]['price'],
+        date: products[index]['date'],
+        isFavorite: products[index]['is_favourite'] == '1' ? true : false,
+        image: products[index]['image']);
+
+    return product;
   }
 }

@@ -1,5 +1,5 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/screen/child_heath/chart_clicked_info_dialog.dart';
+import 'package:baby_garden_flutter/screen/child_heath/dialog/chart_clicked_info_dialog.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';

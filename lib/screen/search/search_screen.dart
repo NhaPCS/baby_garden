@@ -1,13 +1,13 @@
 import 'dart:math';
 
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/searching_provider.dart';
+import 'package:baby_garden_flutter/screen/search/provider/searching_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_icon.dart';
 import 'package:baby_garden_flutter/widget/chip_tag.dart';
-import 'package:baby_garden_flutter/widget/search_bar.dart';
+import 'package:baby_garden_flutter/widget/input/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';

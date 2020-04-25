@@ -7,6 +7,14 @@ Baby Garden
 
 
 ## Rules
+### Cấu trúc 1 screen
+- name_screen
+  `widget`: chứa các file widget
+  `provider`: chứa các file provider
+  `item`: chứa các item
+  `view_model`
+
+
 ### Cấu trúc app
 1. UI
 - Mỗi màn hình sẽ nằm trong folder lib/screen. ví dụ màn home sẽ nằm ở screen/home/home_screen.dart
