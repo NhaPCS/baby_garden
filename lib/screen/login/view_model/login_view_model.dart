@@ -18,9 +18,7 @@ class LoginViewModel extends BaseViewModel{
     if (data != null) {
       ShareValueProvider.shareValueProvider.saveUserInfo(jsonEncode(data));
       Provider.of<UserProvider>(context,listen: false).getUserInfo();
-      RouteUtil.push(context,MainScreen(index: 4,));
-//      Navigator.of(context).pop();
-//      Navigator.of(context).pop();
+      RouteUtil.pushAndReplaceAll(context,MainScreen(index: 4,),"/main");
     }
   }
 

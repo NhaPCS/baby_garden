@@ -36,19 +36,22 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
           width: MediaQuery.of(context).size.width,
           child: Consumer<BookingDetailProvider>(builder: (BuildContext context, BookingDetailProvider value, Widget child) {
             // TODO-Hung: moi state tạo 1 widget riêng để phân biệt cho dễ nhìn, loạn lắm. khi nhin vao phai hien state 0 la gi, state 1 la gi
+            if(value.bookingDetialData==null)
+              return Container();
             int state = 0;
             var bookingDetialData = value.bookingDetialData;
             switch (bookingDetialData['active']){
-              case 1:
+              case '1':
                 state = 0;
                 break;
-              case 3:
+              case '3':
                 state = 1;
                 break;
               default:
                 state = 2;
                 break;
             }
+            print('BookingDetailProvider $state');
             return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
