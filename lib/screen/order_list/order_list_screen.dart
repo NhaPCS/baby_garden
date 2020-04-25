@@ -28,6 +28,14 @@ class OrderListScreen extends StatefulWidget{
 }
 
 class _OrderListScreenState extends BaseState<OrderListScreen>{
+ final OrderListProvider _orderListProvider  = OrderListProvider();
+  @override
+  void initState() {
+    // TODO: implement initState
+    _orderListProvider.getListData(widget.state+1);
+    super.initState();
+  }
+
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
@@ -57,7 +65,6 @@ class _OrderListScreenState extends BaseState<OrderListScreen>{
                     padding: EdgeInsets.all(0),
                     itemBuilder: (context, index) {
                       return new GestureDetector(onTap: (){
-                        Provider.of<BookingDetailProvider>(context,listen: false).getBookingDetail(Provider.of<UserProvider>(context,listen: false).userInfo['id'], value.orderList[index]['id']);
                         push(OrderDetailScreen(title:widget.childTitle!=null?widget.childTitle:widget.title,state: widget.state,isShowNegativeButton: widget.isShowNegativeButton,isShowPositiveButton: widget.isShowPositiveButton,));
                       },
                           child: OrderItem(isRated: false,itemData: value.orderList[index],));
@@ -73,23 +80,7 @@ class _OrderListScreenState extends BaseState<OrderListScreen>{
   @override
   List<SingleChildWidget> providers() {
     // TODO: implement providers
-    return [];
+    return [ChangeNotifierProvider.value(value: _orderListProvider)];
   }
 
-}
-
-class ColoredTabBar extends Container implements PreferredSizeWidget {
-  ColoredTabBar(this.color, this.tabBar);
-
-  final Color color;
-  final TabBar tabBar;
-
-  @override
-  Size get preferredSize => tabBar.preferredSize;
-
-  @override
-  Widget build(BuildContext context) => Container(
-    color: color,
-    child: tabBar,
-  );
 }

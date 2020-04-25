@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 
 class RateBookingViewModel extends BaseViewModel{
 
-  Future<void> onRateBooking({String userID,int bookingId,double star , String content }) async {
-    dynamic data = await rateBooking(userID: userID,bookingID: bookingId,star: star,content: content);
+  Future<void> onRateBooking({int bookingId,double star , String content }) async {
+    dynamic data = await rateBooking(bookingID: bookingId,star: star,content: content);
     if (data != null) {
     }
   }

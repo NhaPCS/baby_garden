@@ -1,10 +1,10 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/notify_control_provider.dart';
-import 'package:baby_garden_flutter/provider/notify_switch_provider.dart';
 import 'package:baby_garden_flutter/screen/notify/provider/search_notify_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/saling_detail/saling_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/button/switchButton.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:baby_garden_flutter/screen/notify/item/notify_item.dart';
@@ -24,7 +24,7 @@ class NotifyScreen extends StatefulWidget {
 class _NotifyScreenState extends BaseState<NotifyScreen> {
   final TextEditingController searchTextController = new TextEditingController();
   final NotifySearchProvider _notifySearchProvider = new NotifySearchProvider();
-  final NotifySwitchProvider _notifySwitchProvider = new NotifySwitchProvider();
+  final ValueNotifier<bool> _hideReadedNotifyController= new ValueNotifier(false);
   final FocusNode _focusNode = FocusNode();
 
   @override
@@ -32,7 +32,6 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
     // TODO: implement initState
     super.initState();
     _focusNode.addListener(() {
-      print(" initState " + _focusNode.hasFocus.toString());
       _notifySearchProvider.onChangeFocus(_focusNode.hasFocus);
     });
   }
@@ -146,22 +145,18 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                                                 fontSize: SizeUtil.textSizeSmall),
                                           ),
                                           onTap: (){
-                                            _notifySwitchProvider.onChange();
+                                            _hideReadedNotifyController.value = !_hideReadedNotifyController.value;
                                           },
                                         ),
-                                        Consumer<NotifySwitchProvider>(builder: (BuildContext context, NotifySwitchProvider value, Widget child) {
-                                          return Transform.scale(
-                                            scale: 1,
-                                            child: Switch(
-                                              value: value.isEnable,
-                                              onChanged: (bool newValue) {
-                                                _notifySwitchProvider.onChange();
-                                              },
-                                              activeColor: ColorUtil.primaryColor,
-                                              inactiveThumbColor: ColorUtil.gray,
-                                            ),
-                                          );
-                                        },),
+                                        Transform.scale(
+                                          scale: 1,
+                                          child: SwitchButton(
+                                            valueChanged: (result){
+                                              _hideReadedNotifyController.value = result;
+                                            },
+                                            valueController: _hideReadedNotifyController,
+                                          ),
+                                        )
                                       ],
                                     ))
                                 : SizedBox(
@@ -173,20 +168,12 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                     ),
                     //todo notify list
                     Consumer<NotifyProvider>(builder: (BuildContext context, NotifyProvider value, Widget child) {
-                      //TODO-Hung: viet lai doan nay di, nhin kinh qua
-                      List<dynamic> data;
-                      try {
-                         data  = value.currentValue==0?value.promotions:value.private;
-                      } catch (e) {
-                        print(e);
-                        data = List();
-                      }
+                      List<dynamic> data = value.isPromote?value.promotions:value.private;
                       if (data == null || data.isEmpty)
                         return LoadingView(
                           isNoData: data != null,
                           onReload: (){
-                            //TODO-Hung: k pop ở đây
-//                            Navigator.of(context).pop();
+                            Provider.of<NotifyProvider>(context,listen: false).getNotify();
                           },
                         );
                       return Expanded(
@@ -202,7 +189,6 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                                 },
                                 child: NotifyItem(data: data[index],deleteNotify: (){
                                   Provider.of<NotifyProvider>(context,listen: false).deleteNotify(index);
-                                  data.removeAt(index);
                                 },),
                               );
                             }),
@@ -222,7 +208,6 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
     // TODO: implement providers
     return [
       ChangeNotifierProvider.value(value: _notifySearchProvider),
-      ChangeNotifierProvider.value(value: _notifySwitchProvider),
     ];
   }
 }

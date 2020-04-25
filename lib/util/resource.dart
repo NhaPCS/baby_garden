@@ -33,6 +33,7 @@ class ColorUtil {
   static const Color flashSaleColor = Color(0xffF77102);
   static const Color bgProgressOrange = Color(0xffFFB483);
   static const Color white = Color(0xffffff);
+  static const Color whiteIcon = Color(0xffF6F6F6);
   static const Color logoBgColor = Color(0xffE1F2F9);
   static const Color transGray = Color(0x66EFEFEF);
   static const Color grayLine = Color(0xff646464);

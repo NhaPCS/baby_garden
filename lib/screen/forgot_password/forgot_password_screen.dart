@@ -1,5 +1,4 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/change_pass_provider.dart';
 import 'package:baby_garden_flutter/screen/forgot_password/provider/enter_phone_number_provider.dart';
 import 'package:baby_garden_flutter/provider/waiting_otp_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
@@ -20,7 +19,6 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,ForgotPasswordViewModel> {
-  final ChangePassProvider _changePassProvider = new ChangePassProvider();
   // TODO-Hung: cái WaittingOTPProvider của m cũng dùng cho mỗi cái input OTP, nên tạo riêng 1 cái widget OTPTextInput
   final WaittingOTPProvider _waittingOTPProvider = new WaittingOTPProvider();
   final EnterPhoneNumberProvider _enterPhoneNumberProvider =
@@ -228,7 +226,6 @@ class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,For
   List<SingleChildWidget> providers() {
     return [
       ChangeNotifierProvider.value(value: _enterPhoneNumberProvider),
-      ChangeNotifierProvider.value(value: _changePassProvider),
       ChangeNotifierProvider.value(value: _waittingOTPProvider),
     ];
   }

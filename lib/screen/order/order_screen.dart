@@ -51,7 +51,7 @@ class _OrderState extends BaseState<OrderScreen> {
                         child: OrderOptionItem(option: e),
                         onTap: () {
                           if (Provider.of<UserProvider>(context,listen: false).isLogin){
-                            Provider.of<OrderListProvider>(context,listen: false).getListData(Provider.of<UserProvider>(context,listen: false).userInfo['id'], ORDER_OPTIONS.indexOf(e)+1);
+//                            Provider.of<OrderListProvider>(context,listen: false).getListData(ORDER_OPTIONS.indexOf(e)+1);
                             switch(ORDER_OPTIONS.indexOf(e)){
                               case 0:// todo chờ thanh toán
                                 push(OrderListScreen(
@@ -110,7 +110,7 @@ class _OrderState extends BaseState<OrderScreen> {
                   onTap: (){
                     var provider = Provider.of<UserProvider>(context,listen: false);
                     if (provider.isLogin){
-                      Provider.of<ServiceListProvider>(context,listen: false).getServiceList(provider.userInfo['id'], SERVICE_OPTIONS.indexOf(e)+1);
+//                      Provider.of<ServiceListProvider>(context,listen: false).getServiceList( SERVICE_OPTIONS.indexOf(e)+1);
                       switch(SERVICE_OPTIONS.indexOf(e)){
                         case 0 ://todo đã đặt lịch
                           push(ServiceListScreen(title: S.of(context).service_booked,state: 0,childTitle: "Đơn hàng VCB19.12.25",));

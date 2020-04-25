@@ -10,13 +10,16 @@ import '../widget/image/svg_icon.dart';
 
 class OrderItem extends StatelessWidget {
   final bool isRated;
-  final dynamic itemData;
-  const OrderItem({Key key, this.isRated = true,@required this.itemData}) : super(key: key);
+  dynamic itemData;
+  OrderItem({ this.isRated = true,@required this.itemData}) : super();
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    dynamic orderItem = itemData['list_product'].length>0?itemData['list_product'][0]:null;
+    dynamic orderItem = itemData!=null&&itemData['list_product'].length>0?itemData['list_product'][0]:null;
+    if (itemData==null){
+      itemData = {'code':"0",'shop_name':"",'date_booking':"",'time_booking':'',"shop_img":"",'total_money':'','list_product':''};
+    }
     return Column(
       children: <Widget>[
         WidgetUtil.getLine(

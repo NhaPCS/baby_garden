@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/dialog/receive_barcode_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/booking_detail_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/checkout/checkout_screen.dart';
 import 'package:baby_garden_flutter/screen/rating_detail/rating_detail_screen.dart';
@@ -8,6 +9,7 @@ import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 import '../order_delivery_info/order_delivery_info_screen.dart';
 
@@ -17,13 +19,14 @@ class OrderDetailScreen extends StatefulWidget {
   final bool isShowNegativeButton;
   final String title;
   final int state;
+  final String bookingId;
 
   const OrderDetailScreen(
       {Key key,
       this.title,
       this.isShowNegativeButton = false,
       this.isShowPositiveButton = false,
-      this.state = 0})
+      this.state = 0, this.bookingId = "0"})
       : super(key: key);
 
   @override
@@ -33,6 +36,15 @@ class OrderDetailScreen extends StatefulWidget {
 }
 
 class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
+  final BookingDetailProvider _bookingDetailProvider = BookingDetailProvider();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _bookingDetailProvider.getBookingDetail(widget.bookingId);
+    super.initState();
+  }
+
   @override
   Widget buildWidget(BuildContext context) {
     bool isDelivering = widget.state == 4;
@@ -624,6 +636,6 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [];
+    return [ChangeNotifierProvider.value(value: _bookingDetailProvider)];
   }
 }

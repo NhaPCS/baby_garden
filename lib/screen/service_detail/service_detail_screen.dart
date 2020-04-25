@@ -12,8 +12,8 @@ import 'package:provider/provider.dart';
 
 class ServiceDetailScreen extends StatefulWidget{
   final String title;
-
-  const ServiceDetailScreen({Key key,this.title}):super(key: key);
+  final String bookingId;
+  const ServiceDetailScreen({this.title,this.bookingId="0"}):super();
   @override
   State<StatefulWidget> createState() {
     return _ServiceDetailScreenState();
@@ -22,6 +22,14 @@ class ServiceDetailScreen extends StatefulWidget{
 }
 
 class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
+  final BookingDetailProvider _bookingDetailProvider = BookingDetailProvider();
+  @override
+  void initState() {
+    // TODO: implement initState
+    _bookingDetailProvider.getBookingDetail(widget.bookingId);
+    super.initState();
+  }
+
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
@@ -459,7 +467,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
   @override
   List<SingleChildWidget> providers() {
     // TODO: implement providers
-    return [];
+    return [ChangeNotifierProvider.value(value: _bookingDetailProvider)];
   }
 
 }

@@ -22,6 +22,14 @@ class ServiceListScreen extends StatefulWidget {
 }
 
 class _ServiceListScreenState extends BaseState<ServiceListScreen> {
+  final ServiceListProvider _serviceListProvider = ServiceListProvider();
+  @override
+  void initState() {
+    // TODO: implement initState
+    _serviceListProvider.getServiceList(widget.state+1);
+    super.initState();
+  }
+
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
@@ -32,58 +40,38 @@ class _ServiceListScreenState extends BaseState<ServiceListScreen> {
         titleColor: Colors.white,
         backColor: Colors.white,
       ),
-      // TODO-Hung: dung SafeArea de lam gi nhi? bo di
-      body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: SizeUtil.tinySpace,
-                color: Colors.white,
-              ),
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.only(bottom: SizeUtil.smallSpace),
-                  color: ColorUtil.lineColor,
-                  child:Consumer<ServiceListProvider>(builder: (BuildContext context, ServiceListProvider value, Widget child) {
-                    return ListView.builder(
-                        itemCount: value.listService.length,
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.all(0),
-                        itemBuilder: (context, index) {
-                          return new GestureDetector(onTap: (){
-                            Provider.of<BookingDetailProvider>(context,listen: false).getBookingDetail(Provider.of<UserProvider>(context,listen: false).userInfo['id'], value.listService[index]['id']);
-                            push(ServiceDetailScreen(title: widget.childTitle));
-                          },
-                              child: new ServiceItem(isShowBookingDate: false,itemData: value.listService[index],));
-                        });
-                  },),
-                ),
-              )
-            ],
-          )),
+      body: Column(
+        children: <Widget>[
+          Container(
+            height: SizeUtil.tinySpace,
+            color: Colors.white,
+          ),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.only(bottom: SizeUtil.smallSpace),
+              color: ColorUtil.lineColor,
+              child:Consumer<ServiceListProvider>(builder: (BuildContext context, ServiceListProvider value, Widget child) {
+                return ListView.builder(
+                    itemCount: value.listService.length,
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.all(0),
+                    itemBuilder: (context, index) {
+                      return new GestureDetector(onTap: (){
+                        push(ServiceDetailScreen(title: widget.childTitle,bookingId: value.listService[index]['id'],));
+                      },
+                          child: new ServiceItem(isShowBookingDate: false,itemData: value.listService[index],));
+                    });
+              },),
+            ),
+          )
+        ],
+      ),
     );
   }
 
   @override
   List<SingleChildWidget> providers() {
-    return null;
+    return [ChangeNotifierProvider.value(value: _serviceListProvider)];
   }
-}
-
-// TODO-Hung: k de chung file
-class ColoredTabBar extends Container implements PreferredSizeWidget {
-  ColoredTabBar(this.color, this.tabBar);
-
-  final Color color;
-  final TabBar tabBar;
-
-  @override
-  Size get preferredSize => tabBar.preferredSize;
-
-  @override
-  Widget build(BuildContext context) => Container(
-    color: color,
-    child: tabBar,
-  );
 }

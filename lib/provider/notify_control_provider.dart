@@ -3,18 +3,19 @@ import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:flutter/cupertino.dart';
 class NotifyProvider extends ChangeNotifier{
   int currentValue = 0;
+  bool isPromote = true;
   List<dynamic> promotions ;
   List<dynamic> private ;
   int notifyCount = 0;
   void onSegmentChange(int value){
     currentValue = value;
+    isPromote = value == 0;
     notifyListeners();
   }
 
 
   Future<void> getNotify()async {
-    String userId = await ShareValueProvider.shareValueProvider.getUserId();
-    dynamic data = await service.notification(userID: userId);
+    dynamic data = await service.notification();
     if(data!=null){
       promotions = data['promotion'];
       private = data['private'];
@@ -24,11 +25,16 @@ class NotifyProvider extends ChangeNotifier{
   }
 
   Future<void> deleteNotify(int index)async{
-    String userId = await ShareValueProvider.shareValueProvider.getUserId();
-    String id = currentValue==0?promotions[index]['id']:private[index]['id'];
-    dynamic data = await service.deleteNoty(userID: userId,notifyID: id);
-    if(data!=null){
-      notifyListeners();
+    print("deleteNotify $index");
+    String id = "0" ;
+    if(isPromote){
+      promotions.removeAt(index);
+      id = promotions[index]['id'];
+    }else{
+      private.removeAt(index);
+      id = private[index]['id'];
     }
+    dynamic data = await service.deleteNoty(notifyID: id);
+    notifyListeners();
   }
 }
