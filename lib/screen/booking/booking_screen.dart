@@ -2,7 +2,7 @@ import 'package:baby_garden_flutter/screen/booking/dialog/change_delivery_addres
 import 'package:baby_garden_flutter/screen/booking/dialog/change_delivery_time_dialogue.dart';
 import 'package:baby_garden_flutter/screen/booking/dialog/credit_transfer_checkout_dialogue.dart';
 import 'package:baby_garden_flutter/screen/booking/dialog/point_checkout_dialogue.dart';
-import 'package:baby_garden_flutter/screen/booking/dialog/privacy_policy_dialogue.dart';
+import 'package:baby_garden_flutter/dialog/privacy_policy_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/added_promo_item.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
@@ -16,6 +16,7 @@ import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/screen/booking/widget/list_title_custom.dart';
 import 'package:baby_garden_flutter/screen/checkout/checkout_screen.dart';
+import 'package:baby_garden_flutter/widget/button/privacy_policy_button.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/screen/booking/view_model/booking_product_view_model.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
@@ -289,50 +290,7 @@ class _BookingScreenState
               width: 1,
               color: ColorUtil.lineColor,
               margin: EdgeInsets.only(bottom: SizeUtil.smallSpace)),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  //todo change icon
-                },
-                child: SvgIcon(
-                  'select_icon.svg',
-                  width: SizeUtil.iconSizeDefault,
-                  height: SizeUtil.iconSizeDefault,
-                ),
-              ),
-              SizedBox(
-                width: SizeUtil.smallSpace,
-              ),
-              RichText(
-                text: TextSpan(children: <TextSpan>[
-                  TextSpan(
-                      recognizer: new TapGestureRecognizer()..onTap = () => {},
-                      text: "Đồng ý với ",
-                      style: TextStyle(
-                          color: ColorUtil.textColor,
-                          fontSize: SizeUtil.textSizeSmall)),
-                  TextSpan(
-                      recognizer: new TapGestureRecognizer()
-                        ..onTap = () => showDialog(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                PrivacyAndPolicyDialogue()),
-                      text: "Chính sách & Điều khoản dịch vụ ",
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: SizeUtil.textSizeSmall)),
-                  TextSpan(
-                      text: "của Shop",
-                      style: TextStyle(
-                          color: ColorUtil.textColor,
-                          fontSize: SizeUtil.textSizeSmall)),
-                ]),
-              ),
-            ],
-          ),
+          PrivacyPolicyButton(),
           MyRaisedButton(
             onPressed: () async {
               //TODO booking

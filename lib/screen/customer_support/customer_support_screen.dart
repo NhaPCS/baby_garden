@@ -1,7 +1,9 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/customer_support/widget/circle_icon_title.dart';
 import 'package:baby_garden_flutter/screen/partner_register/partner_register_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/image/circle_image.dart';
 import 'package:baby_garden_flutter/widget/text/hobo_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,98 +36,41 @@ class _CustomerSupportScreenState extends BaseState<CustomerSupportScreen> {
           SizedBox(
             height: SizeUtil.defaultSpace,
           ),
-          ListTile(
-            // TODO-Hung: dùng circleImage, modify để dùng đc assetImage
-            leading: Card(
-                color: ColorUtil.logoBgColor,
-                shape: RoundedRectangleBorder(
-                  //TODO set radius
-                  borderRadius: BorderRadius.circular(SizeUtil.bigRadius),
-                ),
-                child: Image.asset("photo/logo.png",
-                    width: SizeUtil.iconSizeBig)),
-            title: Text(S.of(context).vcb_present,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontSize: SizeUtil.textSizeDefault,
-                )),
+          CircleIconTitle(
+            bgColor: ColorUtil.logoBgColor,
+            img: "photo/logo.png",
+            title: S.of(context).vcb_present,
           ),
           WidgetUtil.getLine(margin: EdgeInsets.only(left: SizeUtil.defaultSpace,right: SizeUtil.defaultSpace),color: ColorUtil.gray),
-          ListTile(
-            // TODO-Hung: dùng circleImage, modify để dùng đc assetImage
-            leading: Card(
-              color: ColorUtil.colorAccent,
-              shape: RoundedRectangleBorder(
-                //TODO set radius
-                borderRadius: BorderRadius.circular(SizeUtil.bigRadius),
-              ),
-              child: Image.asset("photo/support_contact.png",
-                  width: SizeUtil.iconSizeBig),
-            ),
-            title: Text(S.of(context).vcb_contact,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontSize: SizeUtil.textSizeDefault,
-                )),
+          CircleIconTitle(
+            bgColor: ColorUtil.colorAccent,
+            img: "photo/support_contact.png",
+            title: S.of(context).vcb_contact,
           ),
           WidgetUtil.getLine(margin: EdgeInsets.only(left: SizeUtil.defaultSpace,right: SizeUtil.defaultSpace),color: ColorUtil.gray),
-          ListTile(
-            // TODO-Hung: dùng circleImage, modify để dùng đc assetImage
-            leading: Card(
-              color: ColorUtil.colorAccent,
-              shape: RoundedRectangleBorder(
-                //TODO set radius
-                borderRadius: BorderRadius.circular(SizeUtil.bigRadius),
-              ),
-              child: Image.asset("photo/support_guide.png",
-                  width: SizeUtil.iconSizeBig),
-            ),
-            title: Text(S.of(context).buy_guide,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontSize: SizeUtil.textSizeDefault,
-                )),
+          CircleIconTitle(
+            bgColor: ColorUtil.colorAccent,
+            img: "photo/support_guide.png",
+            title: S.of(context).buy_guide,
           ),
           WidgetUtil.getLine(margin: EdgeInsets.only(left: SizeUtil.defaultSpace,right: SizeUtil.defaultSpace),color: ColorUtil.gray),
-          ListTile(
-            leading: Card(
-              // TODO-Hung: dùng circleImage, modify để dùng đc assetImage
-              color: ColorUtil.customerSupportUpdate,
-              shape: RoundedRectangleBorder(
-                //TODO set radius
-                borderRadius: BorderRadius.circular(SizeUtil.bigRadius),
-              ),
-              child: Image.asset("photo/support_update.png",
-                  width: SizeUtil.iconSizeBig),
-            ),
-            title: Text(S.of(context).update_info_guide,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontSize: SizeUtil.textSizeDefault,
-                )),
+          CircleIconTitle(
+            bgColor: ColorUtil.customerSupportUpdate,
+            img: "photo/support_update.png",
+            title: S.of(context).update_info_guide,
           ),
           WidgetUtil.getLine(margin: EdgeInsets.only(left: SizeUtil.defaultSpace,right: SizeUtil.defaultSpace),color: ColorUtil.gray),
-          ListTile(
-            leading: Image.asset("photo/support_term.png",
-                width: SizeUtil.iconSizeBig),
-            title: Text(S.of(context).policy,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontSize: SizeUtil.textSizeDefault,
-                )),
+          CircleIconTitle(
+            img: "photo/support_term.png",
+            title: S.of(context).policy,
           ),
           WidgetUtil.getLine(margin: EdgeInsets.only(left: SizeUtil.defaultSpace,right: SizeUtil.defaultSpace),color: ColorUtil.gray),
-          ListTile(
+          CircleIconTitle(
             onTap: (){
               push(PartnerRegisterScreen());
             },
-            leading: Image.asset("photo/support_partner.png",
-                width: SizeUtil.iconSizeBig),
-            title: Text(S.of(context).vcb_register_partner,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontSize: SizeUtil.textSizeDefault,
-                )),
+            img: "photo/support_partner.png",
+            title: S.of(context).vcb_register_partner,
           ),
           WidgetUtil.getLine(margin: EdgeInsets.only(left: SizeUtil.defaultSpace,right: SizeUtil.defaultSpace),color: ColorUtil.gray),
         ],
