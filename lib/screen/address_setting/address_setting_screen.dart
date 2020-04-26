@@ -8,7 +8,6 @@ import 'package:baby_garden_flutter/screen/address_setting/provider/get_list_add
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
-import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -17,10 +16,10 @@ import 'dialog/add_address_dialog.dart';
 
 class AddressSettingScreen extends StatefulWidget {
   @override
-  _SeenProduct createState() => _SeenProduct();
+  _AddressSettingScreenState createState() => _AddressSettingScreenState();
 }
 
-class _SeenProduct extends BaseState<AddressSettingScreen> {
+class _AddressSettingScreenState extends BaseState<AddressSettingScreen> {
   final GetListAddressProvider _getListAddressProvider =
       GetListAddressProvider();
   final _defaultPadding = const EdgeInsets.only(
@@ -109,22 +108,11 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
                   fontWeight: FontWeight.bold, color: ColorUtil.darkGray),
             ),
           ),
-          GestureDetector(
-            onTap: () async {
-              _getListAddressProvider.isEditingMainAddress(true);
-              print('xxx');
-              final newAddress =
-                  '241 Xuan Thuy, Dich Vong Hau, Cau Giay, Ha noi';
-              // edit main address
-              // await postAddAddress(context, address: newAddress, isMain: 1);
-            },
-            child: Text(
-              S.of(context).edit,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: ColorUtil.darkGray,
-                  fontSize: SizeUtil.textSizeSmall),
-            ),
+          Column(
+            children: [
+              commonBtnMainAddress(),
+              commonBtnMainAddress(isDone: true)
+            ],
           ),
           SizedBox(width: SizeUtil.midSmallSpace),
         ]),
@@ -141,6 +129,8 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
                 child: Padding(
                   padding: SizeUtil.normalPadding,
                   child: MyTextField(
+                      maxLines: null,
+                      inputType: TextInputType.text,
                       enable: _getListAddressProvider.isEditingMain,
                       contentPadding: EdgeInsets.only(left: 0),
                       textStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
@@ -150,10 +140,14 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
               ),
               Padding(
                   padding: const EdgeInsets.only(right: SizeUtil.midSmallSpace),
-                  child: Icon(
-                    Icons.location_on,
-                    color: ColorUtil.primaryColor,
-                    size: SizeUtil.iconSizeBigger,
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.location_on,
+                        color: ColorUtil.primaryColor,
+                        size: SizeUtil.iconSizeBigger,
+                      )
+                    ],
                   )),
             ]),
           ),
@@ -205,6 +199,41 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
           )
         ]),
       ),
+    );
+  }
+
+  Widget commonBtnMainAddress({bool isDone = false}) {
+    final onTapDone = () {
+      final newAddress = mainAddressCtrl.text.trim();
+
+      if (newAddress.isEmpty ||
+          newAddress == _getListAddressProvider.mainAddress) {
+        _getListAddressProvider.isEditingMainAddress(false);
+        return;
+      }
+
+      // edit main address
+      postAddAddress(context, address: newAddress, isMain: 1).then((_) {
+        _getListAddressProvider.isEditingMainAddress(false);
+        _getListAddressProvider.onChangeMainAddress(newAddress);
+      });
+    };
+
+    return Visibility(
+      visible: isDone
+          ? _getListAddressProvider.isEditingMain
+          : !_getListAddressProvider.isEditingMain,
+      child: GestureDetector(
+          onTap: isDone
+              ? onTapDone
+              : () => _getListAddressProvider.isEditingMainAddress(true),
+          child: Text(
+            isDone ? S.of(context).done : S.of(context).edit,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: ColorUtil.darkGray,
+                fontSize: SizeUtil.textSizeSmall),
+          )),
     );
   }
 

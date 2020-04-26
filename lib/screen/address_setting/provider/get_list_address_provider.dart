@@ -5,6 +5,7 @@ class GetListAddressProvider extends ChangeNotifier {
   List<dynamic> address = List();
   String mainAddress;
   bool isEditingMain = false;
+  bool isDefaultAddress = false;
 
   void clearAddress() {
     address = null;
@@ -15,7 +16,7 @@ class GetListAddressProvider extends ChangeNotifier {
     dynamic data = await service.listAddress();
 
     if (data != null && data.length != 0) {
-      address.clear();
+      address = [];
       address = data['list_address'];
       mainAddress = data['main_address'];
 
@@ -25,6 +26,16 @@ class GetListAddressProvider extends ChangeNotifier {
 
   void isEditingMainAddress(bool val) {
     isEditingMain = val;
+    notifyListeners();
+  }
+
+  void onChangeMainAddress(String val) {
+    this.mainAddress = val;
+    notifyListeners();
+  }
+
+  void onChangeIskDefaultAddress(bool val) {
+    this.isDefaultAddress = val;
     notifyListeners();
   }
 }

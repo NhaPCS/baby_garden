@@ -1,6 +1,7 @@
 import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/city_provider.dart';
+import 'package:baby_garden_flutter/screen/address_setting/provider/get_list_address_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/checkbox/circle_checkbox.dart';
@@ -10,15 +11,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddAddressDialog extends StatefulWidget {
-  @override
-  _AddAddressDialogState createState() => _AddAddressDialogState();
-}
+// class AddAddressDialog extends StatefulWidget {
+//   @override
+//   _AddAddressDialogState createState() => _AddAddressDialogState();
+// }
 
-// TODO-QAnh: Không dùng setState ở đây, nên dùng provider vì khi setState nó sẽ build lại cả dialog
-class _AddAddressDialogState extends State<AddAddressDialog> {
-  var checkDefaultAdd = false;
+class AddAddressDialog extends StatelessWidget {
   final detailCtrl = TextEditingController();
+  final GetListAddressProvider _getListAddressProvider =
+      GetListAddressProvider();
 
   Widget build(BuildContext context) {
     return Dialog(
@@ -30,7 +31,7 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                title(),
+                title(context),
                 Padding(
                   padding: EdgeInsets.only(
                       left: SizeUtil.midSpace, top: SizeUtil.midSpace),
@@ -98,19 +99,18 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
                     );
                   },
                 ),
-                checkAddressDefault(),
+                checkAddressDefault(context),
                 dialogBtn(context)
               ]),
         ));
   }
 
-  Widget checkAddressDefault() {
+  Widget checkAddressDefault(BuildContext context) {
     return CircleCheckbox(
-      checked: this.checkDefaultAdd,
+      checked: this._getListAddressProvider.isDefaultAddress,
       onChanged: (bool value) {
-        setState(() {
-          this.checkDefaultAdd = !this.checkDefaultAdd;
-        });
+        this._getListAddressProvider.isDefaultAddress =
+            !this._getListAddressProvider.isDefaultAddress;
       },
       text: Text(
         S.of(context).set_delivery_address,
@@ -120,7 +120,7 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
     );
   }
 
-  Widget title() {
+  Widget title(BuildContext context) {
     return Container(
       padding:
           EdgeInsets.only(top: SizeUtil.midSpace, bottom: SizeUtil.midSpace),
@@ -183,8 +183,10 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
               final newAddress = "$detail, $commune, $district, $city";
 
               await postAddAddress(context,
-                  address: newAddress, isMain: checkDefaultAdd ? 1 : 0);
+                  address: newAddress,
+                  isMain: _getListAddressProvider.isDefaultAddress ? 1 : 0);
               Provider.of<CityProvider>(context, listen: false).reset();
+              _getListAddressProvider.getData();
               Navigator.of(context).pop(true);
             } else {
               WidgetUtil.showErrorDialog(context, error);
