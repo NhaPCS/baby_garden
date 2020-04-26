@@ -1,11 +1,11 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/order_delivery_info/widget/tracking_item.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 
-// TODO-Hung: screen mới thì move ra folder mới, không để chung
 class OrderDeliveryInfoScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -24,9 +24,7 @@ class _OrderDeliveryInfoScreenState extends BaseState<OrderDeliveryInfoScreen> {
           titleColor: Colors.white,
           backColor: Colors.white,
         ),
-        // TODO-Hung: safeArea lam gi nhi?
-        body: SafeArea(
-            child: ListView(children: <Widget>[
+        body: ListView(children: <Widget>[
           WidgetUtil.getLine(
               width: SizeUtil.smallSpace,
               margin: EdgeInsets.all(0),
@@ -111,102 +109,11 @@ class _OrderDeliveryInfoScreenState extends BaseState<OrderDeliveryInfoScreen> {
           ),
           WidgetUtil.getLine(
               width: 4, margin: EdgeInsets.all(0), color: Color(0xffDFDFDF))
-        ])));
+        ]));
   }
 
   @override
   List<SingleChildWidget> providers() {
     return [];
-  }
-}
-
-// TODO-Hung: move ra folder item
-class TrackingItem extends StatelessWidget {
-  final EdgeInsets padding;
-  final EdgeInsets separateLinePadding;
-  final bool isShowSeparate;
-  final bool isFirstItem;
-  final Color targetColor;
-  final Color firstLineColor;
-  final Color secondLineColor;
-  final String title;
-  final String subTitle;
-
-  const TrackingItem(
-      {Key key,
-      this.padding = const EdgeInsets.only(
-          left: SizeUtil.normalSpace,
-          right: SizeUtil.normalSpace,
-          top: SizeUtil.midSmallSpace),
-      this.title,
-      this.subTitle,
-      this.isFirstItem = false,
-      this.targetColor = const Color(0xff6C6C6C),
-      this.firstLineColor = const Color(0xff6C6C6C),
-      this.secondLineColor = const Color(0xff6C6C6C),
-      this.separateLinePadding = const EdgeInsets.all(0),
-      this.isShowSeparate = false})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: padding,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              isFirstItem
-                  ? SizedBox()
-                  : Container(
-                      color: firstLineColor,
-                      width: 1,
-                      height: SizeUtil.defaultSpace,
-                    ),
-              Icon(
-                Icons.radio_button_checked,
-                size: SizeUtil.iconSizeSmall,
-                color: targetColor,
-              ),
-              Container(
-                color: const Color(0xff6C6C6C),
-                width: 1,
-                height: 24,
-              )
-            ],
-          ),
-          SizedBox(
-            width: SizeUtil.smallSpace,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                title,
-                style: TextStyle(
-                    fontSize: SizeUtil.textSizeExpressDetail,
-                    color: targetColor),
-              ),
-              SizedBox(
-                height: SizeUtil.tinySpace,
-              ),
-              Text(
-                subTitle,
-                style: TextStyle(
-                    fontSize: SizeUtil.textSizeSmall,
-                    color: ColorUtil.textColor),
-              ),
-              isShowSeparate
-                  ? WidgetUtil.getLine(
-                      width: 1,
-                      margin: separateLinePadding,
-                      color: Color(0xffDFDFDF))
-                  : SizedBox()
-            ],
-          ),
-        ],
-      ),
-    );
   }
 }

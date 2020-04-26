@@ -343,12 +343,10 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                             bottom: SizeUtil.midSmallSpace),
                         child: Row(
                           children: <Widget>[
-                            // TODO-Hung: cho vao file arb
-                            Text("Hủy bởi",
+                            Text(S.of(context).cancel_by,
                                 style: TextStyle(
                                     fontSize: SizeUtil.textSizeExpressDetail)),
                             Spacer(),
-                            // TODO-Hung: cho vao file arb
                             Text("người đặt",
                                 style: TextStyle(
                                     fontSize: SizeUtil.textSizeExpressDetail, color: ColorUtil.primaryColor))
@@ -367,8 +365,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                             bottom: SizeUtil.midSmallSpace),
                         child: Row(
                           children: <Widget>[
-                            // TODO-Hung: cho vao file arb
-                            Text("Hủy vào lúc",
+                            Text(S.of(context).cancel_time,
                                 style: TextStyle(
                                     fontSize: SizeUtil.textSizeExpressDetail)),
                             Spacer(),
@@ -391,7 +388,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                         child: Row(
                           children: <Widget>[
                             // TODO-Hung: cho vao file arb
-                            Text("Lý do hủy",
+                            Text(S.of(context).cancel_reason,
                                 style: TextStyle(
                                     fontSize: SizeUtil.textSizeExpressDetail)),
                             Spacer(),

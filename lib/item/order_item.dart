@@ -1,8 +1,9 @@
 import 'dart:math';
 
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/item/product_order_item.dart';
+import 'package:baby_garden_flutter/screen/checkout/widget/rich_text_form.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,22 +12,32 @@ import '../widget/image/svg_icon.dart';
 class OrderItem extends StatelessWidget {
   final bool isRated;
   dynamic itemData;
-  OrderItem({ this.isRated = true,@required this.itemData}) : super();
+
+  OrderItem({this.isRated = true, @required this.itemData}) : super();
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    dynamic orderItem = itemData!=null&&itemData['list_product'].length>0?itemData['list_product'][0]:null;
-    if (itemData==null){
-      itemData = {'code':"0",'shop_name':"",'date_booking':"",'time_booking':'',"shop_img":"",'total_money':'','list_product':''};
+    dynamic orderItem = itemData != null && itemData['list_product'].length > 0
+        ? itemData['list_product'][0]
+        : null;
+    if (itemData == null) {
+      itemData = {
+        'code': "0",
+        'shop_name': "",
+        'date_booking': "",
+        'time_booking': '',
+        "shop_img": "",
+        'total_money': '',
+        'list_product': ''
+      };
     }
     return Column(
       children: <Widget>[
         WidgetUtil.getLine(
-          width: SizeUtil.tinySpace,
-          color: ColorUtil.lineColor,
-          margin: EdgeInsets.all(0)
-        ),
+            width: SizeUtil.tinySpace,
+            color: ColorUtil.lineColor,
+            margin: EdgeInsets.all(0)),
         Container(
           color: Colors.white,
           padding: EdgeInsets.only(
@@ -47,27 +58,23 @@ class OrderItem extends StatelessWidget {
                           color: ColorUtil.textColor),
                     ),
                   ),
-                  RichText(
-                    text: TextSpan(
-                        text: S.of(context).supply_by,
-                        style: TextStyle(
-                            fontSize: SizeUtil.textSizeSmall,
-                            color: ColorUtil.textColor),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: itemData['shop_name'],
-                            style: TextStyle(
-                              height: 2,
-                              color: ColorUtil.red,
-                              fontSize: SizeUtil.textSizeSmall,
-                            ),
-                          ),
-                        ]),
+                  RichTextForm(
+                    title: S.of(context).supply_by,
+                    titleStyle:  TextStyle(
+                        fontSize: SizeUtil.textSizeSmall,
+                        color: ColorUtil.textColor),
+                    content: itemData['shop_name'],
+                    contentStyle: TextStyle(
+                      height: 2,
+                      color: ColorUtil.red,
+                      fontSize: SizeUtil.textSizeSmall,
+                    ),
                   )
                 ],
               ),
               Text(
-                S.of(context).order_date("${itemData['date_booking']} ${itemData['time_booking']}"),
+                S.of(context).order_date(
+                    "${itemData['date_booking']} ${itemData['time_booking']}"),
                 style: TextStyle(fontSize: SizeUtil.textSizeTiny),
                 textAlign: TextAlign.start,
               ),
@@ -87,75 +94,15 @@ class OrderItem extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 color: ColorUtil.gray,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: SizeUtil.midSmallSpace),
-                    child: orderItem==null?Image.asset("photo/order_img.png",
-                        width: MediaQuery.of(context).size.width / 6):CachedNetworkImage(
-                      imageUrl: itemData['shop_img'],
-                      width: MediaQuery.of(context).size.width / 6,
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.only(left: SizeUtil.smallSpace),
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: isRated
-                                ? SizeUtil.tinySpace
-                                : SizeUtil.smallSpace,
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              orderItem==null?S.of(context).order_title:orderItem['name'],
-                              style:
-                                  TextStyle(fontSize: SizeUtil.textSizeSmall),
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                          SizedBox(
-                            height: isRated
-                                ? SizeUtil.tinySpace
-                                : SizeUtil.defaultSpace,
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            child: RichText(
-                              text: TextSpan(
-                                  text: orderItem==null?"340 000 đ X":orderItem['price'] + " X ",
-                                  style: TextStyle(
-                                      fontSize: SizeUtil.textSizeSmall,
-                                      color: ColorUtil.textColor,
-                                      fontWeight: FontWeight.bold),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: orderItem==null?" 2":orderItem['number'],
-                                      style: TextStyle(
-                                        color: ColorUtil.textColor,
-                                        fontSize: SizeUtil.textSizeSmall,
-                                      ),
-                                    ),
-                                  ]),
-                            ),
-                          ),
-                          SizedBox(
-                            height: SizeUtil.tinySpace,
-                          ),
-                          isRated
-                              ? Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: StarDisplay(value: 3),
-                                )
-                              : SizedBox(),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
+              ProductOrderItem(
+                title: orderItem == null
+                    ? S.of(context).order_title
+                    : orderItem['name'],
+                price: StringUtil.getPriceText(
+                        orderItem == null ? "340000" : orderItem['price']) +
+                    " X ",
+                productCount: orderItem == null ? " 2" : orderItem['number'],
+                star: isRated ? 3 : null,
               ),
               isRated
                   ? SizedBox()
@@ -191,26 +138,23 @@ class OrderItem extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                       child: Text(
-                    S.of(context).order_count_summary(itemData['list_product'].length),
+                    S
+                        .of(context)
+                        .order_count_summary(itemData['list_product'].length),
                     style: TextStyle(fontSize: SizeUtil.textSizeTiny),
                   )),
-                  RichText(
-                    text: TextSpan(
-                        text: S.of(context).invoice,
-                        style: TextStyle(
-                            fontSize: SizeUtil.textSizeSmall,
-                            color: ColorUtil.textColor,
-                            fontWeight: FontWeight.bold),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: itemData['total_money'] + 'đ',
-                            style: TextStyle(
-                              color: ColorUtil.red,
-                              fontSize: SizeUtil.textSizeSmall,
-                            ),
-                          ),
-                        ]),
-                  ),
+                  RichTextForm(
+                    title: S.of(context).invoice,
+                    titleStyle: TextStyle(
+                        fontSize: SizeUtil.textSizeSmall,
+                        color: ColorUtil.textColor,
+                        fontWeight: FontWeight.bold),
+                    content: StringUtil.getPriceText(itemData['total_money']),
+                    contentStyle: TextStyle(
+                      color: ColorUtil.red,
+                      fontSize: SizeUtil.textSizeSmall,
+                    ),
+                  )
                 ],
               ),
               SizedBox(
@@ -220,35 +164,6 @@ class OrderItem extends StatelessWidget {
           ),
         )
       ],
-    );
-  }
-}
-
-class StarDisplay extends StatelessWidget {
-  final int value;
-  final Color bgColor;
-
-  final double size;
-
-  const StarDisplay(
-      {Key key,
-      this.value = 0,
-      this.bgColor = ColorUtil.primaryColor,
-      this.size = SizeUtil.iconSizeDefault})
-      : assert(value != null),
-        super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: List.generate(5, (index) {
-        return Icon(
-          index < value ? Icons.star : Icons.star_border,
-          color: bgColor,
-          size: size,
-        );
-      }),
     );
   }
 }

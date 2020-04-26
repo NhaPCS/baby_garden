@@ -8,6 +8,9 @@ import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart'
 import 'package:baby_garden_flutter/provider/notify_control_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/customer_support/customer_support_screen.dart';
+import 'package:baby_garden_flutter/screen/list_user_rated/list_user_rated_screen.dart';
+import 'package:baby_garden_flutter/screen/main/main_screen.dart';
+import 'package:baby_garden_flutter/screen/order_detail/order_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -113,7 +116,7 @@ class _MyAppState extends State<MyApp> {
             bodyText1: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
           )),
-      home: CustomerSupportScreen(),
+      home: MainScreen(),
     );
   }
 }
