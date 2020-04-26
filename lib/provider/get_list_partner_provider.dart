@@ -13,9 +13,9 @@ class GetListPartnerProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getListFavouriteShop(BuildContext context, {int index=1}) async {
+  Future<void> getListFavouriteShop( {int index=1}) async {
     //TODO phai xu ly loadmore va refresh
-    var data = await service.listFavouriteShop(context, index: index);
+    var data = await service.listFavouriteShop( index: index);
     print(data);
     if (data != null) {
       shops = data['list'];

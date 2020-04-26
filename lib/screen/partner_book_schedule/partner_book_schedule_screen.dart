@@ -551,7 +551,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
               width: SizeUtil.tinySpace,
             ),
             //todo like button
-            FavoriteShopButton(isFavorite: data['is_favourite']==1,shopId: widget.shopID,)
+            FavoriteShopButton(isFavorite: data['is_favourite']=="1",shopId: widget.shopID,)
           ],
         )),
         paddingContainer(Row(

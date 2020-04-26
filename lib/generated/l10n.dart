@@ -3923,6 +3923,87 @@ class S {
       args: [],
     );
   }
+
+  String get alert_missing_enter_name {
+    return Intl.message(
+      'Vui lòng nhập tên',
+      name: 'alert_missing_enter_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get alert_missing_enter_new_password {
+    return Intl.message(
+      'Vui lòng nhập mật khẩu',
+      name: 'alert_missing_enter_new_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get alert_missing_enter_new_repassword {
+    return Intl.message(
+      'Vui lòng nhập lại mật khẩu',
+      name: 'alert_missing_enter_new_repassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get alert_compare_pass_repass {
+    return Intl.message(
+      'mật khẩu và nhập lại mật khẩu chưa trùng khớp',
+      name: 'alert_compare_pass_repass',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get alert_resert_pass_success {
+    return Intl.message(
+      'Đổi mật khẩu thành công, mời bạn tiếp tục mua hàng',
+      name: 'alert_resert_pass_success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get alert_code_expire_time {
+    return Intl.message(
+      'Code đã hết hạn, bạn vui lòng thử lại sau',
+      name: 'alert_code_expire_time',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get new_password {
+    return Intl.message(
+      'Mật khẩu mới',
+      name: 'new_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get renew_password {
+    return Intl.message(
+      'Xác nhận mật khẩu mới',
+      name: 'renew_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get old_password {
+    return Intl.message(
+      'Mật khẩu cũ',
+      name: 'old_password',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

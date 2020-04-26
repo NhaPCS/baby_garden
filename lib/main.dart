@@ -1,17 +1,13 @@
 import 'package:baby_garden_flutter/provider/app_provider.dart';
-import 'package:baby_garden_flutter/provider/booking_detail_provider.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/provider/city_provider.dart';
-import 'package:baby_garden_flutter/provider/district_provider.dart';
 import 'package:baby_garden_flutter/provider/get_banners_provider.dart';
 import 'package:baby_garden_flutter/provider/get_product_category_provider.dart';
 import 'package:baby_garden_flutter/provider/get_service_category_provider.dart';
-import 'package:baby_garden_flutter/provider/order_list_provider.dart';
 import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
 import 'package:baby_garden_flutter/provider/notify_control_provider.dart';
-import 'package:baby_garden_flutter/provider/service_list_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
-import 'package:baby_garden_flutter/screen/main/main_screen.dart';
+import 'package:baby_garden_flutter/screen/customer_support/customer_support_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -22,17 +18,12 @@ import 'generated/l10n.dart';
 void main() {
   initializeDateFormatting().then((_) => runApp(MultiProvider(
         providers: [
-          //TODO-hung: check lai dong nay
           Provider(create: (_) => AppProvider()),
           ChangeNotifierProvider(create: (_) => GetProductCategoryProvider()),
           ChangeNotifierProvider(create: (_) => GetServiceCategoryProvider()),
           ChangeNotifierProvider(create: (_) => GetBannersProvider()),
           ChangeNotifierProvider(create: (_) => UserProvider()),
-          ChangeNotifierProvider(create: (_) => ServiceListProvider()),
-          ChangeNotifierProvider(create: (_) => OrderListProvider()),
-          ChangeNotifierProvider(create: (_) => BookingDetailProvider()),
           ChangeNotifierProvider(create: (_) => CityProvider()),
-          ChangeNotifierProvider(create: (_) => DistrictProvider()),
           ChangeNotifierProvider(create: (_) => ReceiveAddressListProvider()),
           ChangeNotifierProvider(create: (_) => CartProvider()),
           ChangeNotifierProvider(create: (_) => NotifyProvider()),
@@ -122,7 +113,7 @@ class _MyAppState extends State<MyApp> {
             bodyText1: TextStyle(
                 color: ColorUtil.textColor, fontSize: SizeUtil.textSizeDefault),
           )),
-      home: MainScreen(),
+      home: CustomerSupportScreen(),
     );
   }
 }

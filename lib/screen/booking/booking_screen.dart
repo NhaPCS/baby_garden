@@ -2,22 +2,25 @@ import 'package:baby_garden_flutter/screen/booking/dialog/change_delivery_addres
 import 'package:baby_garden_flutter/screen/booking/dialog/change_delivery_time_dialogue.dart';
 import 'package:baby_garden_flutter/screen/booking/dialog/credit_transfer_checkout_dialogue.dart';
 import 'package:baby_garden_flutter/screen/booking/dialog/point_checkout_dialogue.dart';
-import 'package:baby_garden_flutter/screen/booking/dialog/privacy_policy_dialogue.dart';
+import 'package:baby_garden_flutter/dialog/privacy_policy_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/added_promo_item.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/screen/booking/provider/change_delivery_time_provider.dart';
 import 'package:baby_garden_flutter/screen/booking/provider/checkout_method_provider.dart';
 import 'package:baby_garden_flutter/screen/booking/provider/delivery_method_provider.dart';
-import 'package:baby_garden_flutter/provider/notify_switch_provider.dart';
 import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
 import 'package:baby_garden_flutter/screen/booking/provider/shop_location_provider.dart';
 import 'package:baby_garden_flutter/screen/booking/provider/transfer_method_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
+import 'package:baby_garden_flutter/screen/booking/widget/list_title_custom.dart';
 import 'package:baby_garden_flutter/screen/checkout/checkout_screen.dart';
+import 'package:baby_garden_flutter/widget/button/privacy_policy_button.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/screen/booking/view_model/booking_product_view_model.dart';
+import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
+import 'package:baby_garden_flutter/widget/button/switchButton.dart';
 import 'package:baby_garden_flutter/widget/checkbox/custom_radio_button.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:baby_garden_flutter/widget/line/dot_line_separator.dart';
@@ -29,10 +32,10 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class BookingScreen extends StatefulWidget {
-  var shopID;
-  String promoteCode;
+  final String shopID;
+  final String promoteCode;
 
-  BookingScreen({this.shopID, this.promoteCode}) : super();
+  const BookingScreen({this.shopID, this.promoteCode}) : super();
 
   @override
   State<StatefulWidget> createState() {
@@ -49,7 +52,6 @@ class _BookingScreenState
   final DeliveryMethodProvider _deliveryMethodProvider =
       new DeliveryMethodProvider();
   final ShopLocationProvider _shopLocationProvider = new ShopLocationProvider();
-  final NotifySwitchProvider _notifySwitchProvider = new NotifySwitchProvider();
   final CheckoutMethodProvider _checkoutMethodProvider =
       new CheckoutMethodProvider();
   final TransferMethodProvider _transferMethodProvider =
@@ -57,7 +59,7 @@ class _BookingScreenState
   final TextEditingController _promoteShipCodeController =
       new TextEditingController();
   final TextEditingController _noteController = new TextEditingController();
-
+  final ValueNotifier<bool> _pointCheckoutValueController = ValueNotifier(false);
   TabController _dayTabControler;
 
   @override
@@ -83,11 +85,6 @@ class _BookingScreenState
         children: <Widget>[
           //TODO delivery address
           ListTitleCustom(
-            padding: const EdgeInsets.only(
-                left: SizeUtil.normalSpace,
-                right: SizeUtil.normalSpace,
-                top: SizeUtil.midSmallSpace,
-                bottom: SizeUtil.midSmallSpace),
             icon: SvgIcon(
               'ic_receive_location.svg',
               width: SizeUtil.iconSizeDefault,
@@ -131,18 +128,13 @@ class _BookingScreenState
           ),
           //TODO delivery menthod
           ListTitleCustom(
-            padding: const EdgeInsets.only(
-                left: SizeUtil.normalSpace,
-                right: SizeUtil.normalSpace,
-                top: SizeUtil.midSmallSpace,
-                bottom: SizeUtil.midSmallSpace),
             icon: SvgIcon(
               'ic_receive_method.svg',
               width: SizeUtil.iconSizeDefault,
               height: SizeUtil.iconSizeDefault,
             ),
             title: S.of(context).type_of_delivery,
-            content: getDeliveryMenthod(),
+            content: getDeliveryMethod(),
           ),
           //TODO receive time
           Consumer<DeliveryMethodProvider>(
@@ -150,11 +142,6 @@ class _BookingScreenState
                 Widget child) {
               return value.deliveryMenthod == 1
                   ? ListTitleCustom(
-                      padding: const EdgeInsets.only(
-                          left: SizeUtil.normalSpace,
-                          right: SizeUtil.normalSpace,
-                          top: SizeUtil.midSmallSpace,
-                          bottom: SizeUtil.midSmallSpace),
                       icon: SvgIcon(
                         'ic_transfer_info.svg',
                         width: SizeUtil.iconSizeDefault,
@@ -187,7 +174,6 @@ class _BookingScreenState
                             ),
                             InkWell(
                               onTap: () {
-                                print("chaskdkasn das d");
                                 showDialog(
                                     context: context,
                                     builder: (_) => ChangeDeliveryTimeDialogue(
@@ -213,26 +199,16 @@ class _BookingScreenState
           ),
           //TODO CHECKOUT MENTHOD
           ListTitleCustom(
-            padding: const EdgeInsets.only(
-                left: SizeUtil.normalSpace,
-                right: SizeUtil.normalSpace,
-                top: SizeUtil.midSmallSpace,
-                bottom: SizeUtil.midSmallSpace),
             icon: SvgIcon(
               'ic_payment_method.svg',
               width: SizeUtil.iconSizeDefault,
               height: SizeUtil.iconSizeDefault,
             ),
             title: S.of(context).type_of_checkout,
-            content: getCheckoutMenthod(),
+            content: getCheckoutMethod(),
           ),
           //TODO transfer menthod
           ListTitleCustom(
-              padding: const EdgeInsets.only(
-                  left: SizeUtil.normalSpace,
-                  right: SizeUtil.normalSpace,
-                  top: SizeUtil.midSmallSpace,
-                  bottom: SizeUtil.midSmallSpace),
               icon: SvgIcon(
                 'ic_transfer_method.svg',
                 width: SizeUtil.iconSizeDefault,
@@ -314,109 +290,54 @@ class _BookingScreenState
               width: 1,
               color: ColorUtil.lineColor,
               margin: EdgeInsets.only(bottom: SizeUtil.smallSpace)),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  //todo change icon
-                },
-                child: SvgIcon(
-                  'select_icon.svg',
-                  width: SizeUtil.iconSizeDefault,
-                  height: SizeUtil.iconSizeDefault,
-                ),
-              ),
-              SizedBox(
-                width: SizeUtil.smallSpace,
-              ),
-              RichText(
-                text: TextSpan(children: <TextSpan>[
-                  TextSpan(
-                      recognizer: new TapGestureRecognizer()..onTap = () => {},
-                      text: "Đồng ý với ",
-                      style: TextStyle(
-                          color: ColorUtil.textColor,
-                          fontSize: SizeUtil.textSizeSmall)),
-                  TextSpan(
-                      recognizer: new TapGestureRecognizer()
-                        ..onTap = () => showDialog(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                PrivacyAndPolicyDialogue()),
-                      text: "Chính sách & Điều khoản dịch vụ ",
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: SizeUtil.textSizeSmall)),
-                  TextSpan(
-                      text: "của Shop",
-                      style: TextStyle(
-                          color: ColorUtil.textColor,
-                          fontSize: SizeUtil.textSizeSmall)),
-                ]),
-              ),
-            ],
+          PrivacyPolicyButton(),
+          MyRaisedButton(
+            onPressed: () async {
+              //TODO booking
+              var receiveAddress = Provider.of<ReceiveAddressListProvider>(
+                  context,
+                  listen: false);
+              var address;
+              if (receiveAddress.addressList.length > receiveAddress.val) {
+                address = receiveAddress.addressList[receiveAddress.val];
+              }
+              if (address == null) {
+                WidgetUtil.showMessageDialog(context,
+                    message: "Vui lòng nhập địa chỉ nhận hàng ",
+                    title: "Thiếu thông tin");
+              } else {
+                await getViewModel().onBookingProduct(
+                    widget.shopID.toString(),
+                    widget.promoteCode.toLowerCase(),
+                    _deliveryMethodProvider.deliveryMenthod.toString(),
+                    _checkoutMethodProvider.checkoutMenthod.toString(),
+                    _noteController.text.toString(),
+                    _transferMethodProvider
+                        .ships[_transferMethodProvider.transferMenthod]
+                    ['id'],
+                    "address",
+                    _promoteShipCodeController.text.trim(),
+                    address['userName'],
+                    address['phone'],
+                    address['address'],
+                    address['cityID'],
+                    address['districtID']);
+                push(CheckoutScreen());
+              }
+            },
+            color: ColorUtil.primaryColor,
+            text: S.of(context).booking_submit.toUpperCase(),
+            textStyle: TextStyle(
+                fontSize: SizeUtil.textSizeDefault,
+                color: Colors.white,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.bold),
+            padding: const EdgeInsets.only(
+                left: SizeUtil.smallSpace,
+                right: SizeUtil.smallSpace,
+                top: SizeUtil.smallSpace,
+                bottom: SizeUtil.smallSpace),
           ),
-          Container(
-              padding: const EdgeInsets.only(
-                  left: SizeUtil.smallSpace,
-                  right: SizeUtil.smallSpace,
-                  top: SizeUtil.smallSpace,
-                  bottom: SizeUtil.smallSpace),
-              width: MediaQuery.of(context).size.width,
-              child: RaisedButton(
-                onPressed: () async {
-                  //TODO booking
-                  var receiveAddress = Provider.of<ReceiveAddressListProvider>(
-                      context,
-                      listen: false);
-                  var address;
-                  if (receiveAddress.addressList.length > receiveAddress.val) {
-                    address = receiveAddress.addressList[receiveAddress.val];
-                  }
-                  if (address == null) {
-                    WidgetUtil.showMessageDialog(context,
-                        message: "Vui lòng nhập địa chỉ nhận hàng ",
-                        title: "Thiếu thông tin");
-                  } else {
-                    var data = await getViewModel().onBookingProduct(
-                        widget.shopID.toString(),
-                        widget.promoteCode.toLowerCase(),
-                        _deliveryMethodProvider.deliveryMenthod.toString(),
-                        _checkoutMethodProvider.checkoutMenthod.toString(),
-                        _noteController.text.toString(),
-                        _transferMethodProvider
-                                .ships[_transferMethodProvider.transferMenthod]
-                            ['id'],
-                        "address",
-                        _promoteShipCodeController.text.trim(),
-                        address['userName'],
-                        address['phone'],
-                        address['address'],
-                        address['cityID'],
-                        address['districtID']);
-//                  print("book : don vi van chuyen ${_transferMethodProvider.ships[_transferMethodProvider.transferMenthod]['id']} ${_promoteShipCodeController.text.trim()} ${address['userName']} ${address['phone']} ${address['address']} ${address['cityID']} ${address['districtID']}");
-                    push(CheckoutScreen());
-                  }
-                },
-                color: ColorUtil.primaryColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                  Radius.circular(SizeUtil.tinyRadius),
-                )),
-                child: Container(
-                  padding: EdgeInsets.all(SizeUtil.midSpace),
-                  child: Text(
-                    S.of(context).booking_submit.toUpperCase(),
-                    style: TextStyle(
-                        fontSize: SizeUtil.textSizeDefault,
-                        color: Colors.white,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              )),
         ],
       ),
     );
@@ -429,7 +350,6 @@ class _BookingScreenState
       ChangeNotifierProvider.value(value: _changeDeliveryTimeProvider),
       ChangeNotifierProvider.value(value: _deliveryMethodProvider),
       ChangeNotifierProvider.value(value: _shopLocationProvider),
-      ChangeNotifierProvider.value(value: _notifySwitchProvider),
       ChangeNotifierProvider.value(value: _checkoutMethodProvider),
       ChangeNotifierProvider.value(value: _transferMethodProvider),
     ];
@@ -628,7 +548,7 @@ class _BookingScreenState
     );
   }
 
-  Widget getCheckoutMenthod() {
+  Widget getCheckoutMethod() {
     return Consumer<CheckoutMethodProvider>(
       builder:
           (BuildContext context, CheckoutMethodProvider value, Widget child) {
@@ -700,16 +620,13 @@ class _BookingScreenState
                 children: <Widget>[
                   GestureDetector(
                     onTap: () {
-                      setState(() {
-                        print("tab change ${_notifySwitchProvider.isEnable}");
-                        _notifySwitchProvider.onChange();
-                        if (_notifySwitchProvider.isEnable) {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  PointCheckoutDialogue());
-                        }
-                      });
+                      _pointCheckoutValueController.value = !_pointCheckoutValueController.value;
+                      if (_pointCheckoutValueController.value) {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                PointCheckoutDialogue());
+                      }
                     },
                     child: Text(
                       S.of(context).point_payment(
@@ -718,26 +635,16 @@ class _BookingScreenState
                     ),
                   ),
                   Spacer(),
-                  Consumer<NotifySwitchProvider>(
-                    builder: (BuildContext context, NotifySwitchProvider value,
-                        Widget child) {
-                      return Switch(
-                        value: value.isEnable,
-                        onChanged: (val) {
-                          print("change ${_notifySwitchProvider.isEnable}");
-                          _notifySwitchProvider.onChange();
-                          if (_notifySwitchProvider.isEnable) {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    PointCheckoutDialogue());
-                          }
-                        },
-                        activeColor: ColorUtil.primaryColor,
-                        inactiveThumbColor: ColorUtil.gray,
-                      );
-                    },
-                  ),
+                  SwitchButton(
+                    valueController: _pointCheckoutValueController,
+                    valueChanged: (result){
+                    if (result) {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) =>
+                              PointCheckoutDialogue());
+                    }
+                  },),
                 ],
               ),
             )
@@ -747,7 +654,7 @@ class _BookingScreenState
     );
   }
 
-  Widget getDeliveryMenthod() {
+  Widget getDeliveryMethod() {
     return Consumer<DeliveryMethodProvider>(
       builder:
           (BuildContext context, DeliveryMethodProvider value, Widget child) {
@@ -772,78 +679,21 @@ class _BookingScreenState
                     builder: (BuildContext context, ShopLocationProvider value,
                         Widget child) {
                       return Column(
-                        children: <Widget>[
-                          CustomRadioButton(
-                            titleContent:
-                                Text("38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội"),
-                            padding: const EdgeInsets.only(
-                                left: SizeUtil.hugSpace,
-                                bottom: SizeUtil.tinySpace),
-                            value: 1,
-                            groupValue: value.shopLocation,
-                            iconSize: SizeUtil.iconSize,
-                            titleSize: SizeUtil.textSizeSmall,
-                            onChanged: (val) {
-                              _shopLocationProvider.onChange(val);
-                            },
-                          ),
-                          CustomRadioButton(
-                            titleContent:
-                                Text("38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội"),
-                            padding: const EdgeInsets.only(
-                                left: SizeUtil.hugSpace,
-                                bottom: SizeUtil.tinySpace),
-                            value: 2,
-                            groupValue: value.shopLocation,
-                            iconSize: SizeUtil.iconSize,
-                            titleSize: SizeUtil.textSizeSmall,
-                            onChanged: (val) {
-                              _shopLocationProvider.onChange(val);
-                            },
-                          ),
-                          CustomRadioButton(
-                            titleContent:
-                                Text("38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội"),
-                            padding: const EdgeInsets.only(
-                                left: SizeUtil.hugSpace,
-                                bottom: SizeUtil.tinySpace),
-                            value: 3,
-                            groupValue: value.shopLocation,
-                            iconSize: SizeUtil.iconSize,
-                            titleSize: SizeUtil.textSizeSmall,
-                            onChanged: (val) {
-                              _shopLocationProvider.onChange(val);
-                            },
-                          ),
-                          CustomRadioButton(
-                            titleContent:
-                                Text("38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội"),
-                            padding: const EdgeInsets.only(
-                                left: SizeUtil.hugSpace,
-                                bottom: SizeUtil.tinySpace),
-                            value: 4,
-                            groupValue: value.shopLocation,
-                            iconSize: SizeUtil.iconSize,
-                            titleSize: SizeUtil.textSizeSmall,
-                            onChanged: (val) {
-                              _shopLocationProvider.onChange(val);
-                            },
-                          ),
-                          CustomRadioButton(
-                            titleContent:
-                                Text("38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội"),
-                            padding: const EdgeInsets.only(
-                                left: SizeUtil.hugSpace,
-                                bottom: SizeUtil.tinySpace),
-                            value: 5,
-                            groupValue: value.shopLocation,
-                            iconSize: SizeUtil.iconSize,
-                            titleSize: SizeUtil.textSizeSmall,
-                            onChanged: (val) {
-                              _shopLocationProvider.onChange(val);
-                            },
-                          ),
-                        ],
+                        children: List.generate(4, (index) =>
+                            CustomRadioButton(
+                          titleContent:
+                          Text("38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội"),
+                          padding: const EdgeInsets.only(
+                              left: SizeUtil.hugSpace,
+                              bottom: SizeUtil.tinySpace),
+                          value: index,
+                          groupValue: value.shopLocation,
+                          iconSize: SizeUtil.iconSize,
+                          titleSize: SizeUtil.textSizeSmall,
+                          onChanged: (val) {
+                            _shopLocationProvider.onChange(val);
+                          },
+                        )),
                       );
                     },
                   )
@@ -870,64 +720,5 @@ class _BookingScreenState
   BookingProductViewModel initViewModel() {
     // TODO: implement initViewModel
     return new BookingProductViewModel(context);
-  }
-}
-
-class ListTitleCustom extends StatelessWidget {
-  final Widget icon;
-  final String title;
-  final Widget trailing;
-  final double iconAndTitleSpace;
-  final EdgeInsets padding;
-  final Widget content;
-
-  const ListTitleCustom(
-      {Key key,
-      this.icon,
-      this.title,
-      this.trailing,
-      this.iconAndTitleSpace = SizeUtil.smallSpace,
-      this.padding = const EdgeInsets.only(
-          left: SizeUtil.normalSpace,
-          right: SizeUtil.normalSpace,
-          top: SizeUtil.midSmallSpace,
-          bottom: SizeUtil.midSmallSpace),
-      this.content})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: padding,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              icon != null ? icon : SizedBox(),
-              SizedBox(
-                width: iconAndTitleSpace,
-              ),
-              Text(title,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                      fontSize: SizeUtil.textSizeExpressTitle,
-                      color: Colors.black)),
-              Spacer(),
-              trailing != null ? trailing : SizedBox(),
-            ],
-          ),
-        ),
-        WidgetUtil.getLine(
-            color: ColorUtil.lineColor, margin: EdgeInsets.all(0), width: 1),
-        content != null ? content : SizedBox(),
-        WidgetUtil.getLine(
-            color: ColorUtil.lineColor, margin: EdgeInsets.all(0), width: 6),
-      ],
-    );
   }
 }

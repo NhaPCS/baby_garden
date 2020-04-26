@@ -44,6 +44,7 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
         body:
             Consumer<GetListAddressProvider>(builder: (context, value, child) {
           final List<ItemAddress> addressList = [];
+
           if (value.address != null)
             for (var _address in value.address) {
               var address = Address(
