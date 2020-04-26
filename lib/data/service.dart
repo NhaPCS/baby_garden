@@ -634,6 +634,72 @@ Future<dynamic> listPromotion() async {
   return null;
 }
 
+
+Future<Response> addUserAddress(BuildContext context,
+    {String address, int isMain}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "address": address,
+    "is_main": isMain.toString(),
+  };
+
+  Response response = await post(context,
+      path: "addAddress", param: params, requireLogin: true, showLoading: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
+Future<Response> editUserAddress(BuildContext context,
+    {String address, int isMain, String addressId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "address": address,
+    "is_main": isMain.toString(),
+    "address_id": addressId
+  };
+
+  Response response = await post(context,
+      path: "editAddress", param: params, requireLogin: true, showLoading: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
+Future<Response> updateAvatar(BuildContext context, {File img}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+  };
+  dynamic files = {"img": img};
+  Response response = await postMultiPart(context,
+      path: 'updateAvatar', param: params, files: files, requireLogin: true);
+
+  if (response.isSuccess()) {
+    Provider.of<UserProvider>(context, listen: false)
+        .updateAvatar(response.data);
+    return response;
+  }
+
+  return null;
+}
+
+Future<Response> deleteAddress(BuildContext context,
+    {@required String addressId}) async {
+  print('address id ' + addressId);
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId, 'address_id': addressId};
+
+  Response response = await post(context,
+      path: 'deleteAddress',
+      param: params,
+      requireLogin: true,
+      showLoading: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
+
 Future<Response> post(BuildContext context,
     {String path,
     dynamic param,
@@ -776,59 +842,4 @@ Response parseResponse(BuildContext context, String responseBody,
     }
   }
   return res;
-}
-
-Future<Response> postAddAddress(BuildContext context,
-    {String address, int isMain, String addressId}) async {
-  String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  dynamic params = {
-    "user_id": userId,
-    "address": address,
-    "is_main": isMain.toString(),
-  };
-
-  var path = 'addAddress';
-
-  if (addressId != null) {
-    params['address_id'] = addressId;
-    path = 'editAddress';
-  }
-
-  Response response = await post(context,
-      path: path, param: params, requireLogin: true, showLoading: true);
-  if (response.isSuccess()) return response;
-  return null;
-}
-
-Future<Response> updateAvatar(BuildContext context, {File img}) async {
-  String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  dynamic params = {
-    "user_id": userId,
-  };
-  dynamic files = {"img": img};
-  Response response = await postMultiPart(context,
-      path: 'updateAvatar', param: params, files: files, requireLogin: true);
-
-  if (response.isSuccess()) {
-    Provider.of<UserProvider>(context, listen: false)
-        .updateAvatar(response.data);
-    return response;
-  }
-
-  return null;
-}
-
-Future<Response> deleteAddress(BuildContext context,
-    {@required String addressId}) async {
-  print('address id ' + addressId);
-  String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  dynamic params = {"user_id": userId, 'address_id': addressId};
-
-  Response response = await post(context,
-      path: 'deleteAddress',
-      param: params,
-      requireLogin: true,
-      showLoading: true);
-  if (response.isSuccess()) return response;
-  return null;
 }

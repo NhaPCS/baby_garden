@@ -1,17 +1,18 @@
 // import 'dart:html';
 
 import 'package:baby_garden_flutter/data/model/address.dart';
-import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/address_setting/item/item_address.dart';
 import 'package:baby_garden_flutter/screen/address_setting/provider/get_list_address_provider.dart';
-import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/address_setting/view_model/address_setting_view_model.dart';
+import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
+
 import 'dialog/add_address_dialog.dart';
 
 class AddressSettingScreen extends StatefulWidget {
@@ -19,7 +20,7 @@ class AddressSettingScreen extends StatefulWidget {
   _AddressSettingScreenState createState() => _AddressSettingScreenState();
 }
 
-class _AddressSettingScreenState extends BaseState<AddressSettingScreen> {
+class _AddressSettingScreenState extends BaseStateModel<AddressSettingScreen, AddressSettingViewModel> {
   final GetListAddressProvider _getListAddressProvider =
       GetListAddressProvider();
   final _defaultPadding = const EdgeInsets.only(
@@ -52,10 +53,12 @@ class _AddressSettingScreenState extends BaseState<AddressSettingScreen> {
                   active: _address['active'] == '1' ? true : false,
                   address: _address['address']);
               addressList.add(ItemAddress(
-                address: address,
+                address: ValueNotifier(address),
+                onEditAddress: (address, addressId){
+                  getViewModel().editAddress(address: address, addressId: addressId);
+                },
                 onDeleteAddress: (id) {
-                  if (id.isEmpty) return;
-                  value.address.removeWhere((element) => element['id'] == id);
+                  getViewModel().deleteAddress(addressId: id);
                 },
               ));
             }
@@ -179,12 +182,12 @@ class _AddressSettingScreenState extends BaseState<AddressSettingScreen> {
       child: GestureDetector(
         onTap: () {
           // show dialog
-          final addAddress = AddAddressDialog();
+          final addAddress = AddAddressDialog( addAddressCallBack: (address, isMain){
+            getViewModel().addAddress(address: address, isMain: isMain);
+          },);
           showDialog(
               context: context,
-              builder: (BuildContext context) => addAddress).then((value) {
-            if (value != null && value) _getListAddressProvider.getData();
-          });
+              builder: (BuildContext context) => addAddress);
         },
         child: Row(children: <Widget>[
           Icon(
@@ -213,10 +216,7 @@ class _AddressSettingScreenState extends BaseState<AddressSettingScreen> {
       }
 
       // edit main address
-      postAddAddress(context, address: newAddress, isMain: 1).then((_) {
-        _getListAddressProvider.isEditingMainAddress(false);
-        _getListAddressProvider.onChangeMainAddress(newAddress);
-      });
+      getViewModel().addAddress(address: newAddress, isMain: 1);
     };
 
     return Visibility(
@@ -240,5 +240,10 @@ class _AddressSettingScreenState extends BaseState<AddressSettingScreen> {
   @override
   List<SingleChildWidget> providers() {
     return [ChangeNotifierProvider.value(value: _getListAddressProvider)];
+  }
+
+  @override
+  AddressSettingViewModel initViewModel() {
+    return AddressSettingViewModel(context, _getListAddressProvider);
   }
 }

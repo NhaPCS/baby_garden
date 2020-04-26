@@ -15,6 +15,10 @@ class GetListAddressProvider extends ChangeNotifier {
   Future<void> getData() async {
     dynamic data = await service.listAddress();
 
+    updateData(data);
+  }
+
+  void updateData(dynamic data) {
     if (data != null && data.length != 0) {
       address = [];
       address = data['list_address'];

@@ -16,10 +16,15 @@ import 'package:provider/provider.dart';
 //   _AddAddressDialogState createState() => _AddAddressDialogState();
 // }
 
+typedef AddAddressCallBack = void Function(String address, int isMain);
+
 class AddAddressDialog extends StatelessWidget {
   final detailCtrl = TextEditingController();
   final GetListAddressProvider _getListAddressProvider =
       GetListAddressProvider();
+  final AddAddressCallBack addAddressCallBack;
+
+  AddAddressDialog({Key key, this.addAddressCallBack}) : super(key: key);
 
   Widget build(BuildContext context) {
     return Dialog(
@@ -182,11 +187,8 @@ class AddAddressDialog extends StatelessWidget {
 
               final newAddress = "$detail, $commune, $district, $city";
 
-              await postAddAddress(context,
-                  address: newAddress,
-                  isMain: _getListAddressProvider.isDefaultAddress ? 1 : 0);
+              addAddressCallBack(newAddress,_getListAddressProvider.isDefaultAddress ? 1 : 0 );
               Provider.of<CityProvider>(context, listen: false).reset();
-              _getListAddressProvider.getData();
               Navigator.of(context).pop(true);
             } else {
               WidgetUtil.showErrorDialog(context, error);
