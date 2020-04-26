@@ -182,7 +182,7 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
 
               final newAddress = "$detail, $commune, $district, $city";
 
-              await postAddNewAddress(context,
+              await postAddAddress(context,
                   address: newAddress, isMain: checkDefaultAdd ? 1 : 0);
               Provider.of<CityProvider>(context, listen: false).reset();
               Navigator.of(context).pop(true);

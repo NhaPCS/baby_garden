@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 class GetListAddressProvider extends ChangeNotifier {
   List<dynamic> address = List();
   String mainAddress;
+  bool isEditingMain = false;
+
   void clearAddress() {
     address = null;
     notifyListeners();
@@ -19,5 +21,10 @@ class GetListAddressProvider extends ChangeNotifier {
 
       notifyListeners();
     }
+  }
+
+  void isEditingMainAddress(bool val) {
+    isEditingMain = val;
+    notifyListeners();
   }
 }

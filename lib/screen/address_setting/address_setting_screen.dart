@@ -1,9 +1,13 @@
+// import 'dart:html';
+
 import 'package:baby_garden_flutter/data/model/address.dart';
+import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/address_setting/item/item_address.dart';
 import 'package:baby_garden_flutter/screen/address_setting/provider/get_list_address_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +26,8 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
   final _defaultPadding = const EdgeInsets.only(
       top: SizeUtil.normalSpace, left: SizeUtil.midSmallSpace);
   final List<ItemAddress> addressList = [];
+
+  final mainAddressCtrl = TextEditingController();
 
   @override
   void didChangeDependencies() {
@@ -45,7 +51,13 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
                   date: _address['date'],
                   active: _address['active'] == '1' ? true : false,
                   address: _address['address']);
-              addressList.add(ItemAddress(address: address));
+              addressList.add(ItemAddress(
+                address: address,
+                onDeleteAddress: (id) {
+                  if (id.isEmpty) return;
+                  value.address.removeWhere((element) => element['id'] == id);
+                },
+              ));
             }
 
           return Column(
@@ -80,6 +92,8 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
   }
 
   Widget addressSetting() {
+    mainAddressCtrl.text = _getListAddressProvider.mainAddress;
+
     return Padding(
       padding: const EdgeInsets.only(
           top: SizeUtil.normalSpace,
@@ -95,7 +109,14 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
             ),
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () async {
+              _getListAddressProvider.isEditingMainAddress(true);
+              print('xxx');
+              final newAddress =
+                  '241 Xuan Thuy, Dich Vong Hau, Cau Giay, Ha noi';
+              // edit main address
+              // await postAddAddress(context, address: newAddress, isMain: 1);
+            },
             child: Text(
               S.of(context).edit,
               style: TextStyle(
@@ -118,10 +139,12 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
               Expanded(
                 child: Padding(
                   padding: SizeUtil.normalPadding,
-                  child: MyText(
-                    _getListAddressProvider.mainAddress,
-                    style: TextStyle(color: Colors.black),
-                  ),
+                  child: MyTextField(
+                      enable: _getListAddressProvider.isEditingMain,
+                      contentPadding: EdgeInsets.only(left: 0),
+                      textStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                      isBorder: false,
+                      textEditingController: mainAddressCtrl),
                 ),
               ),
               Padding(

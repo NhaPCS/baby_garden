@@ -430,5 +430,6 @@
   "voucher_got": "Đã lấy mã",
   "use_to_time": "Dùng đến: {date} - {time}",
   "voucher_info": "Thông tin Voucher",
-  "mess_get_code_voucher_success": "Lấy mã code thành công!"
+  "mess_get_code_voucher_success": "Lấy mã code thành công!",
+  "done": "Xong"
 }
