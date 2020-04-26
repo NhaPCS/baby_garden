@@ -1,10 +1,13 @@
+// import 'dart:html';
+
 import 'package:baby_garden_flutter/data/model/address.dart';
+import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/address_setting/item/item_address.dart';
 import 'package:baby_garden_flutter/screen/address_setting/provider/get_list_address_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/text/my_text.dart';
+import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -13,15 +16,17 @@ import 'dialog/add_address_dialog.dart';
 
 class AddressSettingScreen extends StatefulWidget {
   @override
-  _SeenProduct createState() => _SeenProduct();
+  _AddressSettingScreenState createState() => _AddressSettingScreenState();
 }
 
-class _SeenProduct extends BaseState<AddressSettingScreen> {
+class _AddressSettingScreenState extends BaseState<AddressSettingScreen> {
   final GetListAddressProvider _getListAddressProvider =
       GetListAddressProvider();
   final _defaultPadding = const EdgeInsets.only(
       top: SizeUtil.normalSpace, left: SizeUtil.midSmallSpace);
   final List<ItemAddress> addressList = [];
+
+  final mainAddressCtrl = TextEditingController();
 
   @override
   void didChangeDependencies() {
@@ -38,6 +43,7 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
         body:
             Consumer<GetListAddressProvider>(builder: (context, value, child) {
           final List<ItemAddress> addressList = [];
+
           if (value.address != null)
             for (var _address in value.address) {
               var address = Address(
@@ -45,7 +51,13 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
                   date: _address['date'],
                   active: _address['active'] == '1' ? true : false,
                   address: _address['address']);
-              addressList.add(ItemAddress(address: address));
+              addressList.add(ItemAddress(
+                address: address,
+                onDeleteAddress: (id) {
+                  if (id.isEmpty) return;
+                  value.address.removeWhere((element) => element['id'] == id);
+                },
+              ));
             }
 
           return Column(
@@ -80,6 +92,8 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
   }
 
   Widget addressSetting() {
+    mainAddressCtrl.text = _getListAddressProvider.mainAddress;
+
     return Padding(
       padding: const EdgeInsets.only(
           top: SizeUtil.normalSpace,
@@ -94,15 +108,11 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
                   fontWeight: FontWeight.bold, color: ColorUtil.darkGray),
             ),
           ),
-          GestureDetector(
-            onTap: () {},
-            child: Text(
-              S.of(context).edit,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: ColorUtil.darkGray,
-                  fontSize: SizeUtil.textSizeSmall),
-            ),
+          Column(
+            children: [
+              commonBtnMainAddress(),
+              commonBtnMainAddress(isDone: true)
+            ],
           ),
           SizedBox(width: SizeUtil.midSmallSpace),
         ]),
@@ -118,18 +128,26 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
               Expanded(
                 child: Padding(
                   padding: SizeUtil.normalPadding,
-                  child: MyText(
-                    _getListAddressProvider.mainAddress,
-                    style: TextStyle(color: Colors.black),
-                  ),
+                  child: MyTextField(
+                      maxLines: null,
+                      inputType: TextInputType.text,
+                      enable: _getListAddressProvider.isEditingMain,
+                      contentPadding: EdgeInsets.only(left: 0),
+                      textStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                      isBorder: false,
+                      textEditingController: mainAddressCtrl),
                 ),
               ),
               Padding(
                   padding: const EdgeInsets.only(right: SizeUtil.midSmallSpace),
-                  child: Icon(
-                    Icons.location_on,
-                    color: ColorUtil.primaryColor,
-                    size: SizeUtil.iconSizeBigger,
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.location_on,
+                        color: ColorUtil.primaryColor,
+                        size: SizeUtil.iconSizeBigger,
+                      )
+                    ],
                   )),
             ]),
           ),
@@ -181,6 +199,41 @@ class _SeenProduct extends BaseState<AddressSettingScreen> {
           )
         ]),
       ),
+    );
+  }
+
+  Widget commonBtnMainAddress({bool isDone = false}) {
+    final onTapDone = () {
+      final newAddress = mainAddressCtrl.text.trim();
+
+      if (newAddress.isEmpty ||
+          newAddress == _getListAddressProvider.mainAddress) {
+        _getListAddressProvider.isEditingMainAddress(false);
+        return;
+      }
+
+      // edit main address
+      postAddAddress(context, address: newAddress, isMain: 1).then((_) {
+        _getListAddressProvider.isEditingMainAddress(false);
+        _getListAddressProvider.onChangeMainAddress(newAddress);
+      });
+    };
+
+    return Visibility(
+      visible: isDone
+          ? _getListAddressProvider.isEditingMain
+          : !_getListAddressProvider.isEditingMain,
+      child: GestureDetector(
+          onTap: isDone
+              ? onTapDone
+              : () => _getListAddressProvider.isEditingMainAddress(true),
+          child: Text(
+            isDone ? S.of(context).done : S.of(context).edit,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: ColorUtil.darkGray,
+                fontSize: SizeUtil.textSizeSmall),
+          )),
     );
   }
 

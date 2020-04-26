@@ -432,6 +432,7 @@
   "use_to_time": "Dùng đến: {date} - {time}",
   "voucher_info": "Thông tin Voucher",
   "mess_get_code_voucher_success": "Lấy mã code thành công!",
+  "done": "Xong",
   "alert_missing_enter_name": "Vui lòng nhập tên",
   "alert_missing_enter_new_password": "Vui lòng nhập mật khẩu",
   "alert_missing_enter_new_repassword": "Vui lòng nhập lại mật khẩu",

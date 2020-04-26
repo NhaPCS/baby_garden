@@ -81,7 +81,7 @@ Future<dynamic> changePassword(BuildContext context,
 }
 
 //TODO require favouriteShop
-Future<dynamic> favouriteShop({ String shopID}) async {
+Future<dynamic> favouriteShop({String shopID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await post(null,
       path: "favouriteShop", param: {'user_id': userId, 'shop_id': shopID});
@@ -125,7 +125,7 @@ Future<dynamic> bookingService(
   return null;
 }
 
-Future<dynamic> shopDetail({ String shopID}) async {
+Future<dynamic> shopDetail({String shopID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
       path: "shopDetail", param: {'user_id': userId, 'shop_id': shopID});
@@ -778,16 +778,24 @@ Response parseResponse(BuildContext context, String responseBody,
   return res;
 }
 
-Future<Response> postAddNewAddress(BuildContext context,
-    {String address, int isMain}) async {
+Future<Response> postAddAddress(BuildContext context,
+    {String address, int isMain, String addressId}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {
     "user_id": userId,
     "address": address,
     "is_main": isMain.toString(),
   };
+
+  var path = 'addAddress';
+
+  if (addressId != null) {
+    params['address_id'] = addressId;
+    path = 'editAddress';
+  }
+
   Response response = await post(context,
-      path: 'addAddress', param: params, requireLogin: true, showLoading: true);
+      path: path, param: params, requireLogin: true, showLoading: true);
   if (response.isSuccess()) return response;
   return null;
 }
@@ -807,5 +815,20 @@ Future<Response> updateAvatar(BuildContext context, {File img}) async {
     return response;
   }
 
+  return null;
+}
+
+Future<Response> deleteAddress(BuildContext context,
+    {@required String addressId}) async {
+  print('address id ' + addressId);
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId, 'address_id': addressId};
+
+  Response response = await post(context,
+      path: 'deleteAddress',
+      param: params,
+      requireLogin: true,
+      showLoading: true);
+  if (response.isSuccess()) return response;
   return null;
 }

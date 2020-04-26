@@ -217,6 +217,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "detail_info" : MessageLookupByLibrary.simpleMessage("Thông tin chi tiết"),
     "distributor_name" : MessageLookupByLibrary.simpleMessage("nhà cung cấp "),
     "district" : MessageLookupByLibrary.simpleMessage("Quận/ Huyện"),
+    "done" : MessageLookupByLibrary.simpleMessage("Xong"),
     "dont_have_account" : MessageLookupByLibrary.simpleMessage("Bạn chưa có tài khoản?"),
     "edit" : MessageLookupByLibrary.simpleMessage("Sửa"),
     "editReminder" : MessageLookupByLibrary.simpleMessage("Sửa lịch nhắc"),
