@@ -11,7 +11,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
-// TODO-Hung: screen mới thì move ra folder mới, không để chung
 class PartnerListScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
