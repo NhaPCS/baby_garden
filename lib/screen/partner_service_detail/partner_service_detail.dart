@@ -6,7 +6,6 @@ import 'package:baby_garden_flutter/widget/partner/time_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
-// TODO-Hung: screen mới thì move ra folder mới, không để chung
 class PartnerServiceDetailScreen extends StatefulWidget{
   final dynamic data;
 

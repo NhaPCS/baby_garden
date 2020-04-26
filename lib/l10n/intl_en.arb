@@ -104,7 +104,7 @@
   "product_existing": "Còn hàng",
   "product_out_stock": "Hết hàng",
   "detail_info": "Thông tin chi tiết",
-  "sku_code": "Mã SKU",
+  "sku_code": "Mã SKU: {code}",
   "brand": "Thương hiệu",
   "origin": "Xuất xứ",
   "size": "Kích thước",
@@ -314,6 +314,7 @@
   "booking_success": "Đặt Hàng Thành Công",
   "congratulation_booking": "Chúc mừng Anh/chị {username} đã đặt hàng\nthành công ",
   "order_code_title": "Mã đơn hàng:",
+  "order_header": "Mã đơn hàng: {orderCode}\nNgày đặt hàng: {orderDate}",
   "continue_buying": "Tiếp tục mua sắm",
   "view_order": "Xem đơn hàng",
   "cancel": "Hủy bỏ",
@@ -440,5 +441,11 @@
   "alert_code_expire_time": "Code đã hết hạn, bạn vui lòng thử lại sau",
   "new_password": "Mật khẩu mới",
   "renew_password": "Xác nhận mật khẩu mới",
-  "old_password": "Mật khẩu cũ"
+  "old_password": "Mật khẩu cũ",
+  "cancel_reason": "Lý do hủy",
+  "cancel_time": "Hủy vào lúc",
+  "cancel_by": "Hủy bởi",
+  "change_service_type": "Muốn thay đổi loại dịch vụ",
+  "cancel_question": "Bạn có muốn thực sự muốn huỷ ?",
+  "attenion" : "Chú ý"
 }

@@ -42,6 +42,7 @@ class ColorUtil {
   static const serviceItemUnselectColor = Color(0xffF6F6F6);
   static const Color textDark = Color(0xff444444);
   static const Color grayEC = Color(0xffececec);
+  static const Color trackingTargetColor = Color(0xff6C6C6C);
 
   static const List<Color> gradientColors = [
     Color(0xffFFA503),

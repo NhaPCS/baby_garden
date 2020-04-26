@@ -972,12 +972,12 @@ class S {
     );
   }
 
-  String get sku_code {
+  String sku_code(dynamic code) {
     return Intl.message(
-      'Mã SKU',
+      'Mã SKU: $code',
       name: 'sku_code',
       desc: '',
-      args: [],
+      args: [code],
     );
   }
 
@@ -2862,6 +2862,15 @@ class S {
     );
   }
 
+  String order_header(dynamic orderCode, dynamic orderDate) {
+    return Intl.message(
+      'Mã đơn hàng: $orderCode\nNgày đặt hàng: $orderDate',
+      name: 'order_header',
+      desc: '',
+      args: [orderCode, orderDate],
+    );
+  }
+
   String get continue_buying {
     return Intl.message(
       'Tiếp tục mua sắm',
@@ -4000,6 +4009,60 @@ class S {
     return Intl.message(
       'Mật khẩu cũ',
       name: 'old_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cancel_reason {
+    return Intl.message(
+      'Lý do hủy',
+      name: 'cancel_reason',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cancel_time {
+    return Intl.message(
+      'Hủy vào lúc',
+      name: 'cancel_time',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cancel_by {
+    return Intl.message(
+      'Hủy bởi',
+      name: 'cancel_by',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get change_service_type {
+    return Intl.message(
+      'Muốn thay đổi loại dịch vụ',
+      name: 'change_service_type',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cancel_question {
+    return Intl.message(
+      'Bạn có muốn thực sự muốn huỷ ?',
+      name: 'cancel_question',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get attenion {
+    return Intl.message(
+      'Chú ý',
+      name: 'attenion',
       desc: '',
       args: [],
     );

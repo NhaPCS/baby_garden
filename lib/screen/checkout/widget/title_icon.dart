@@ -16,6 +16,10 @@ class TitleIcon extends StatelessWidget {
   final EdgeInsets iconPadding;
   final TextStyle titleStyle;
   final TextStyle contentStyle;
+  final Color iconColor;
+  final String trailingText;
+  final double iconSize;
+  final double iconSVGSize;
 
   const TitleIcon(
       {this.title,
@@ -28,8 +32,11 @@ class TitleIcon extends StatelessWidget {
       this.icon,
       this.iconPadding = const EdgeInsets.all(0),
       this.titleStyle = const TextStyle(
-          color: ColorUtil.textColor,
-          fontSize: SizeUtil.textSizeExpressDetail), this.contentStyle})
+          color: ColorUtil.textColor, fontSize: SizeUtil.textSizeExpressDetail),
+      this.contentStyle,
+      this.iconColor = Colors.red,
+      this.iconSize = SizeUtil.iconMidSize,
+      this.iconSVGSize = SizeUtil.iconSize, this.trailingText})
       : super();
 
   @override
@@ -46,15 +53,15 @@ class TitleIcon extends StatelessWidget {
                   padding: iconPadding,
                   child: Icon(
                     icon,
-                    size: SizeUtil.iconMidSize,
-                    color: ColorUtil.primaryColor,
+                    size: iconSize,
+                    color: iconColor,
                   ),
                 )
               : SvgIcon(
                   svgIcon,
-                  width: SizeUtil.iconSize,
-                  height: SizeUtil.iconSize,
-                  color: Colors.red,
+                  width: iconSVGSize,
+                  height: iconSVGSize,
+                  color: iconColor,
                 ),
           SizedBox(
             width: SizeUtil.smallSpace,
@@ -78,10 +85,15 @@ class TitleIcon extends StatelessWidget {
                       bottom: SizeUtil.tinySpace),
                   child: GestureDetector(
                       onTap: onTrailingTap,
-                      child: SvgIcon(
+                      child: trailingText==null?SvgIcon(
                         "ic_copy.svg",
                         width: SizeUtil.iconSizeDefault,
                         height: SizeUtil.iconSizeDefault,
+                      ):Text(
+                        trailingText,
+                        style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: SizeUtil.textSizeNotiTime),
                       )),
                 )
               : SizedBox(),
