@@ -9,23 +9,25 @@ import 'intl/messages_all.dart';
 // **************************************************************************
 
 class S {
-  S();
+  S(this.localeName);
   
   static const AppLocalizationDelegate delegate =
     AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final String name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
+    final String name = locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
-      return S();
+      return S(localeName);
     });
   } 
 
   static S of(BuildContext context) {
     return Localizations.of<S>(context, S);
   }
+
+  final String localeName;
 
   String get app_name_title {
     return Intl.message(
@@ -324,7 +326,7 @@ class S {
     );
   }
 
-  String count_down_time(Object time) {
+  String count_down_time(dynamic time) {
     return Intl.message(
       '(0:$time)',
       name: 'count_down_time',
@@ -477,7 +479,7 @@ class S {
     );
   }
 
-  String sold_count(Object sold, Object total) {
+  String sold_count(dynamic sold, dynamic total) {
     return Intl.message(
       'Đã bán $sold/$total',
       name: 'sold_count',
@@ -882,7 +884,7 @@ class S {
     );
   }
 
-  String send_by(Object author) {
+  String send_by(dynamic author) {
     return Intl.message(
       'Gửi bởi: $author',
       name: 'send_by',
@@ -891,7 +893,7 @@ class S {
     );
   }
 
-  String notice_time(Object time) {
+  String notice_time(dynamic time) {
     return Intl.message(
       'Thời gian: $time',
       name: 'notice_time',
@@ -1242,7 +1244,7 @@ class S {
     );
   }
 
-  String order_code(Object code) {
+  String order_code(dynamic code) {
     return Intl.message(
       'Mã đơn $code',
       name: 'order_code',
@@ -1251,7 +1253,7 @@ class S {
     );
   }
 
-  String booking_code(Object code) {
+  String booking_code(dynamic code) {
     return Intl.message(
       'Mã đặt lịch $code',
       name: 'booking_code',
@@ -1260,7 +1262,7 @@ class S {
     );
   }
 
-  String order_with_code(Object code) {
+  String order_with_code(dynamic code) {
     return Intl.message(
       'Đơn hàng $code',
       name: 'order_with_code',
@@ -1278,7 +1280,7 @@ class S {
     );
   }
 
-  String supply_by_supplier(Object supplier) {
+  String supply_by_supplier(dynamic supplier) {
     return Intl.message(
       'Cung cấp bởi: $supplier',
       name: 'supply_by_supplier',
@@ -1287,7 +1289,7 @@ class S {
     );
   }
 
-  String booking_date(Object time) {
+  String booking_date(dynamic time) {
     return Intl.message(
       'Ngày đặt lịch: $time',
       name: 'booking_date',
@@ -1296,7 +1298,7 @@ class S {
     );
   }
 
-  String order_date(Object date) {
+  String order_date(dynamic date) {
     return Intl.message(
       'Ngày đặt hàng: $date',
       name: 'order_date',
@@ -1305,7 +1307,7 @@ class S {
     );
   }
 
-  String date_of_expiration_holding(Object date) {
+  String date_of_expiration_holding(dynamic date) {
     return Intl.message(
       'Ngày hết hạn giữ hàng: $date',
       name: 'date_of_expiration_holding',
@@ -1332,7 +1334,7 @@ class S {
     );
   }
 
-  String overall_time(Object minute) {
+  String overall_time(dynamic minute) {
     return Intl.message(
       'Thời gian thực hiện: $minute phút',
       name: 'overall_time',
@@ -1341,7 +1343,7 @@ class S {
     );
   }
 
-  String order_detail(Object price, Object count) {
+  String order_detail(dynamic price, dynamic count) {
     return Intl.message(
       '$price x $count',
       name: 'order_detail',
@@ -1350,7 +1352,7 @@ class S {
     );
   }
 
-  String order_count_summary(Object count) {
+  String order_count_summary(dynamic count) {
     return Intl.message(
       'Tổng $count sản phẩm',
       name: 'order_count_summary',
@@ -1359,7 +1361,7 @@ class S {
     );
   }
 
-  String expiry_date(Object date) {
+  String expiry_date(dynamic date) {
     return Intl.message(
       'Ngày sử dung: $date',
       name: 'expiry_date',
@@ -1386,7 +1388,7 @@ class S {
     );
   }
 
-  String order_rating(Object code) {
+  String order_rating(dynamic code) {
     return Intl.message(
       'Đánh giá đơn $code',
       name: 'order_rating',
@@ -1395,7 +1397,7 @@ class S {
     );
   }
 
-  String receiving_date(Object date) {
+  String receiving_date(dynamic date) {
     return Intl.message(
       'Ngày nhận hàng: $date',
       name: 'receiving_date',
@@ -1422,7 +1424,7 @@ class S {
     );
   }
 
-  String using_date(Object date) {
+  String using_date(dynamic date) {
     return Intl.message(
       'Ngày sử dung: $date',
       name: 'using_date',
@@ -1791,7 +1793,7 @@ class S {
     );
   }
 
-  String vcb_ex_detail_post_time(Object time) {
+  String vcb_ex_detail_post_time(dynamic time) {
     return Intl.message(
       'Thời trang cho bé | $time',
       name: 'vcb_ex_detail_post_time',
@@ -1836,7 +1838,7 @@ class S {
     );
   }
 
-  String saling_detail_title(Object title) {
+  String saling_detail_title(dynamic title) {
     return Intl.message(
       '[BIG SAle] $title',
       name: 'saling_detail_title',
@@ -1845,7 +1847,7 @@ class S {
     );
   }
 
-  String saling_detail_time(Object time) {
+  String saling_detail_time(dynamic time) {
     return Intl.message(
       'Thời gian áp dung: $time',
       name: 'saling_detail_time',
@@ -1881,7 +1883,7 @@ class S {
     );
   }
 
-  String choose_service(Object number) {
+  String choose_service(dynamic number) {
     return Intl.message(
       'Chọn dịch vụ ($number dịch vụ)',
       name: 'choose_service',
@@ -1890,7 +1892,7 @@ class S {
     );
   }
 
-  String service_time_range(Object minute) {
+  String service_time_range(dynamic minute) {
     return Intl.message(
       '$minute\nPhút',
       name: 'service_time_range',
@@ -2322,7 +2324,7 @@ class S {
     );
   }
 
-  String point_payment(Object point) {
+  String point_payment(dynamic point) {
     return Intl.message(
       'Thanh toán điểm hiện có [$point]',
       name: 'point_payment',
@@ -2331,7 +2333,7 @@ class S {
     );
   }
 
-  String delivery_plan(Object day) {
+  String delivery_plan(dynamic day) {
     return Intl.message(
       'Dự kiến giao khoảng $day',
       name: 'delivery_plan',
@@ -2718,7 +2720,7 @@ class S {
     );
   }
 
-  String shop(Object shop) {
+  String shop(dynamic shop) {
     return Intl.message(
       'Shop $shop',
       name: 'shop',
@@ -2844,7 +2846,7 @@ class S {
     );
   }
 
-  String congratulation_booking(Object username) {
+  String congratulation_booking(dynamic username) {
     return Intl.message(
       'Chúc mừng Anh/chị $username đã đặt hàng\nthành công ',
       name: 'congratulation_booking',
@@ -3132,7 +3134,7 @@ class S {
     );
   }
 
-  String reminderTimeAt(Object order) {
+  String reminderTimeAt(dynamic order) {
     return Intl.message(
       'Thời gian nhắc lần $order',
       name: 'reminderTimeAt',
@@ -3789,7 +3791,7 @@ class S {
     );
   }
 
-  String message_empty(Object key) {
+  String message_empty(dynamic key) {
     return Intl.message(
       'Vui lòng nhập $key để tiếp tục',
       name: 'message_empty',
@@ -3897,7 +3899,7 @@ class S {
     );
   }
 
-  String use_to_time(Object date, Object time) {
+  String use_to_time(dynamic date, dynamic time) {
     return Intl.message(
       'Dùng đến: $date - $time',
       name: 'use_to_time',
@@ -4074,7 +4076,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
 
   List<Locale> get supportedLocales {
     return const <Locale>[
-      Locale.fromSubtags(languageCode: 'en'),
+      Locale('en', ''),
     ];
   }
 
