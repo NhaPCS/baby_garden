@@ -43,6 +43,7 @@ class ColorUtil {
   static const Color textDark = Color(0xff444444);
   static const Color grayEC = Color(0xffececec);
   static const Color trackingTargetColor = Color(0xff6C6C6C);
+  static const Color lineLightGray = Color(0xffCECECE);
 
   static const List<Color> gradientColors = [
     Color(0xffFFA503),
@@ -70,7 +71,6 @@ class DateUtil {
 }
 
 class StringUtil {
-
   /*"active:
   1: đã đặt,
   2: xác nhận,
@@ -612,8 +612,8 @@ class WidgetUtil {
       {List<Param> params, bool showErrorDialog = true}) {
     for (Param p in params) {
       print(p.checkType);
-      switch(p.checkType){
-        case CheckType.NULL_OR_EMPTY_VALUE : // null and empty value
+      switch (p.checkType) {
+        case CheckType.NULL_OR_EMPTY_VALUE: // null and empty value
           if (p.value == null || p.value.isEmpty) {
             if (showErrorDialog)
               WidgetUtil.showErrorDialog(
@@ -622,22 +622,21 @@ class WidgetUtil {
           }
           break;
         case CheckType.COMPARE_VALUE: //compare value
-          if (p.value != p.valueConpare){
-            if (showErrorDialog)
-              WidgetUtil.showErrorDialog(
-                  context, p.key);
+          if (p.value != p.valueConpare) {
+            if (showErrorDialog) WidgetUtil.showErrorDialog(context, p.key);
             return false;
           }
           break;
         case CheckType.EMAIL_FORMAT: //  email format
-          if(p.value == null || p.value.isEmpty || RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(p.value)){
-            if (showErrorDialog)
-              WidgetUtil.showErrorDialog(
-                  context, p.key);
+          if (p.value == null ||
+              p.value.isEmpty ||
+              RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                  .hasMatch(p.value)) {
+            if (showErrorDialog) WidgetUtil.showErrorDialog(context, p.key);
             return false;
           }
           break;
-        default :
+        default:
           return false;
       }
     }

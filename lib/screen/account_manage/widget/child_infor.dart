@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class ChildInfor extends StatelessWidget {
+class ChildInfor {
   final avatar;
   final childName;
   final gender;
@@ -15,11 +15,5 @@ class ChildInfor extends StatelessWidget {
       this.gender,
       this.birthday,
       this.healthIndex,
-      this.lastDayCheck})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
+      this.lastDayCheck});
 }
