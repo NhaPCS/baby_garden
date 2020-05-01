@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/screen/remind_management/provider/remind_calendar_provider.dart';
 import 'package:baby_garden_flutter/screen/remind_management/widget/reminder_layout.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class RemindAddScreen extends StatefulWidget {
 class _RemindAddScreen extends BaseState<RemindAddScreen> {
   var remindBuy = false;
   var remindUsed = false;
+  RemindCalendarProvider remindCalenderProvider = RemindCalendarProvider();
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -26,28 +28,25 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                  decoration: setBorder('bottom', ColorUtil.darkGray, 1),
-                  height: SizeUtil.hugSpace,
-                  // TODO-QAnh: bo Padding di, trong Container co padding
-                  child: Padding(
-                    padding: const EdgeInsets.all(SizeUtil.smallSpace),
-                    child: Row(
-                      children: <Widget>[
-                        Icon(Icons.add,
-                            color: ColorUtil.primaryColor,
-                            size: SizeUtil.iconSizeBig),
-                        // TODO-QAnh: thay Padding = SizeBox(width:) cho đỡ lồng view
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: SizeUtil.smallSpace),
-                          child: Text(S.of(context).selectRemindProduct,
-                              style: TextStyle(
-                                  color: ColorUtil.darkGray,
-                                  fontWeight: FontWeight.bold)),
-                        )
-                      ],
-                    ),
-                  )),
+                decoration: setBorder('bottom', ColorUtil.darkGray, 1),
+                padding: const EdgeInsets.all(SizeUtil.smallSpace),
+                height: SizeUtil.hugSpace,
+                child: Row(
+                  children: <Widget>[
+                    Icon(Icons.add,
+                        color: ColorUtil.primaryColor,
+                        size: SizeUtil.iconSizeBig),
+                    // TODO-QAnh: thay Padding = SizeBox(width:) cho đỡ lồng view
+                    Padding(
+                      padding: const EdgeInsets.only(left: SizeUtil.smallSpace),
+                      child: Text(S.of(context).selectRemindProduct,
+                          style: TextStyle(
+                              color: ColorUtil.darkGray,
+                              fontWeight: FontWeight.bold)),
+                    )
+                  ],
+                ),
+              ),
               // TODO-QAnh:xem lai doan nay dang bi thieu Pixel
               Expanded(
                 child: ReminderLayout(),
@@ -62,7 +61,11 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
                   height: SizeUtil.biggerSpace,
                   child: RaisedButton(
                     padding: SizeUtil.normalPadding,
-                    onPressed: () {},
+                    onPressed: () {
+                      if (!validateInput()) return;
+
+                      remindCalenderProvider.addNewCalendar(context);
+                    },
                     child: Text(
                       S.of(context).addReminder,
                       style: TextStyle(fontSize: SizeUtil.textSizeBigger),
@@ -77,5 +80,10 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
   @override
   List<SingleChildWidget> providers() {
     return [];
+  }
+
+  bool validateInput() {
+    // add more condition after
+    return remindCalenderProvider.newRemindCalendar.productId != null;
   }
 }
