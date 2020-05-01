@@ -43,6 +43,11 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
     <true/>
-
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Ứng dụng cần quyền truy cập thư viện ảnh của bạn để thực hiện chức năng này.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Ứng dụng cần quyền truy cập thư camera của bạn để thực hiện chức năng này.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Ứng dụng cần quyền truy cập thư microphone của bạn để thực hiện chức năng này.</string>
 </dict>
 </plist>

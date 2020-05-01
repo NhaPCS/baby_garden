@@ -1,10 +1,13 @@
+import 'dart:io';
+
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
+import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/screen/child_heath/provider/change_mode_enter_heath_provider.dart';
-import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/child_heath/provider/get_baby_test_result_provider.dart';
 import 'package:baby_garden_flutter/screen/child_heath/provider/get_list_baby_provider.dart';
+import 'package:baby_garden_flutter/screen/child_heath/view_model/child_health_view_model.dart';
 import 'package:baby_garden_flutter/screen/child_heath/widget/enter_weight_height.dart';
 import 'package:baby_garden_flutter/screen/child_heath/widget/select_child_dropdow.dart';
 import 'package:baby_garden_flutter/screen/child_heath/widget/view_weight_height.dart';
@@ -25,13 +28,19 @@ class ChildHeathScreen extends StatefulWidget {
   }
 }
 
-class _ChildHeathState extends BaseState<ChildHeathScreen> {
+class _ChildHeathState
+    extends BaseStateModel<ChildHeathScreen, ChildHealthViewModel> {
   final ValueNotifier<dynamic> _dropdownController = ValueNotifier(null);
+  final ValueNotifier<File> _imageController = ValueNotifier(null);
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _noteController = TextEditingController();
   final ChangeModeEnterHeathProvider _changeModeEnterHeathProvider =
       ChangeModeEnterHeathProvider();
   final ChangeIndexProvider _changeIndexProvider = ChangeIndexProvider();
   final GetListBabyProvider _getListBabyProvider = GetListBabyProvider();
-  final GetBabyTestResultProvider _getBabyTestResultProvider = GetBabyTestResultProvider();
+  final GetBabyTestResultProvider _getBabyTestResultProvider =
+      GetBabyTestResultProvider();
 
   @override
   void initState() {
@@ -114,8 +123,10 @@ class _ChildHeathState extends BaseState<ChildHeathScreen> {
                     return SelectChildDropDown(
                       babies: value.babies,
                       controller: _dropdownController,
-                      onChangeChild: (selectedChild){
-                        _getBabyTestResultProvider.testResult(babyId: selectedChild['id'], type: _changeIndexProvider.index+1);
+                      onChangeChild: (selectedChild) {
+                        _getBabyTestResultProvider.testResult(
+                            babyId: selectedChild['id'],
+                            type: _changeIndexProvider.index + 1);
                       },
                     );
                   },
@@ -146,12 +157,14 @@ class _ChildHeathState extends BaseState<ChildHeathScreen> {
       }, body: Consumer<ChangeModeEnterHeathProvider>(
         builder: (BuildContext context, ChangeModeEnterHeathProvider value,
             Widget child) {
-          if (value.isEntering)
+          if (value.isEntering) {
             return EnterWeightHeight(
-              onDoneEnter: () {
-                _changeModeEnterHeathProvider.changeMode(false);
-              },
+              heightController: _heightController,
+              weightController: _weightController,
+              noteController: _noteController,
+              imageController: _imageController,
             );
+          }
           return ViewWeightHeight();
         },
       )),
@@ -159,16 +172,35 @@ class _ChildHeathState extends BaseState<ChildHeathScreen> {
         padding: SizeUtil.normalPadding,
         child: MyRaisedButton(
           onPressed: () {
+            if (_dropdownController.value == null) return;
             if (_changeModeEnterHeathProvider.isEntering) {
               showDialog(
                   context: context,
                   builder: (context) {
-                    return CheckChildInfoDialog(onDonePress: () {
-                      _changeModeEnterHeathProvider.changeMode(false);
-                    });
+                    return CheckChildInfoDialog(
+                        height: _heightController.text,
+                        weight: _weightController.text,
+                        note: _noteController.text,
+                        image: _imageController.value,
+                        onDonePress: () async {
+                          bool success = await getViewModel().addTest(
+                              babyId: _dropdownController.value['id'],
+                              height: _heightController.text,
+                              weight: _weightController.text,
+                              note: _noteController.text,
+                              img: _imageController.value);
+                          if (success)
+                            _changeModeEnterHeathProvider.changeMode(false);
+                        });
                   });
+            } else{
+              _heightController.text = "";
+              _weightController.text = "";
+              _noteController.text = "";
+              _imageController.value = null;
+              _changeModeEnterHeathProvider.changeMode(true);
             }
-            _changeModeEnterHeathProvider.changeMode(true);
+
           },
           color: ColorUtil.primaryColor,
           text: S.of(context).enter_weight_height.toUpperCase(),
@@ -219,5 +251,10 @@ class _ChildHeathState extends BaseState<ChildHeathScreen> {
       ChangeNotifierProvider.value(value: _getListBabyProvider),
       ChangeNotifierProvider.value(value: _getBabyTestResultProvider),
     ];
+  }
+
+  @override
+  ChildHealthViewModel initViewModel() {
+    return ChildHealthViewModel(context);
   }
 }
