@@ -3,6 +3,8 @@ import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
 import 'package:baby_garden_flutter/screen/child_heath/provider/change_mode_enter_heath_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/child_heath/provider/get_baby_test_result_provider.dart';
+import 'package:baby_garden_flutter/screen/child_heath/provider/get_list_baby_provider.dart';
 import 'package:baby_garden_flutter/screen/child_heath/widget/enter_weight_height.dart';
 import 'package:baby_garden_flutter/screen/child_heath/widget/select_child_dropdow.dart';
 import 'package:baby_garden_flutter/screen/child_heath/widget/view_weight_height.dart';
@@ -24,9 +26,18 @@ class ChildHeathScreen extends StatefulWidget {
 }
 
 class _ChildHeathState extends BaseState<ChildHeathScreen> {
+  final ValueNotifier<dynamic> _dropdownController = ValueNotifier(null);
   final ChangeModeEnterHeathProvider _changeModeEnterHeathProvider =
       ChangeModeEnterHeathProvider();
   final ChangeIndexProvider _changeIndexProvider = ChangeIndexProvider();
+  final GetListBabyProvider _getListBabyProvider = GetListBabyProvider();
+  final GetBabyTestResultProvider _getBabyTestResultProvider = GetBabyTestResultProvider();
+
+  @override
+  void initState() {
+    super.initState();
+    _getListBabyProvider.listBaby();
+  }
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -94,7 +105,21 @@ class _ChildHeathState extends BaseState<ChildHeathScreen> {
                     ),
                   ],
                 ),
-                SelectChildDropDown()
+                Consumer<GetListBabyProvider>(
+                  builder: (BuildContext context, GetListBabyProvider value,
+                      Widget child) {
+                    if (value.babies == null || value.babies.isEmpty) {
+                      return SizedBox();
+                    }
+                    return SelectChildDropDown(
+                      babies: value.babies,
+                      controller: _dropdownController,
+                      onChangeChild: (selectedChild){
+                        _getBabyTestResultProvider.testResult(babyId: selectedChild['id'], type: _changeIndexProvider.index+1);
+                      },
+                    );
+                  },
+                )
               ],
             ),
             bottom: PreferredSize(
@@ -191,6 +216,8 @@ class _ChildHeathState extends BaseState<ChildHeathScreen> {
     return [
       ChangeNotifierProvider.value(value: _changeModeEnterHeathProvider),
       ChangeNotifierProvider.value(value: _changeIndexProvider),
+      ChangeNotifierProvider.value(value: _getListBabyProvider),
+      ChangeNotifierProvider.value(value: _getBabyTestResultProvider),
     ];
   }
 }
