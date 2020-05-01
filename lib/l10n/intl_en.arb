@@ -447,5 +447,21 @@
   "cancel_by": "Hủy bởi",
   "change_service_type": "Muốn thay đổi loại dịch vụ",
   "cancel_question": "Bạn có muốn thực sự muốn huỷ ?",
-  "attenion" : "Chú ý"
+  "attenion": "Chú ý",
+  "message_add_baby_test_success": "Nhập thông tin thành công!",
+  "enter_baby_height": "Nhập chiều cao của bé",
+  "enter_baby_weight": "Nhập cân nặng của bé",
+  "enter_baby_note": "Bố/mẹ viết lại những lưu bút tại thời điểm kiểm tra của bé tại đây nhé!",
+  "cm_unit": "(cm)",
+  "kg_unit": "(kg)",
+  "click_on_here": "Bấm vào đây",
+  "child_take_photo_desc": "Lưu trữ kỷ niệm bạn upload ảnh mới nhất của bé nhé",
+  "confirm_info": "Xác nhận thông tin",
+  "confirm_child_info_message": "Bố/mẹ kiểm tra lại thông tin chiều cao, can năng của bé vừa nhập đã nhập đã đúng chưa nhé:",
+  "height_is": "Chiều cao:",
+  "weight_is": "Cân nặng:",
+  "note_is": "Lưu bút:",
+  "image_is": "Ảnh của bé:",
+  "enter_again": "Nhập lại",
+  "sku_product": "Mã SKU"
 }

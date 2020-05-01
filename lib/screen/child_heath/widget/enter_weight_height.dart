@@ -1,29 +1,28 @@
+import 'dart:io';
+
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:nested/nested.dart';
+import 'package:image_picker/image_picker.dart';
 
-class EnterWeightHeight extends StatefulWidget {
-  final VoidCallback onDoneEnter;
+class EnterWeightHeight extends StatelessWidget {
+  final TextEditingController heightController;
+  final TextEditingController weightController;
+  final TextEditingController noteController;
+  final ValueNotifier<File> imageController;
 
-  const EnterWeightHeight({Key key, this.onDoneEnter}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() {
-    return _EnterWeightState();
-  }
-}
-
-class _EnterWeightState extends BaseState<EnterWeightHeight> {
-  final TextEditingController _heightController = TextEditingController();
-  final TextEditingController _weightController = TextEditingController();
-  final TextEditingController _noteController = TextEditingController();
+  const EnterWeightHeight(
+      {Key key,
+      this.heightController,
+      this.weightController,
+      this.noteController,
+      this.imageController})
+      : super(key: key);
 
   @override
-  Widget buildWidget(BuildContext context) {
+  Widget build(BuildContext context) {
     return ListView(
       padding: SizeUtil.defaultPadding,
       children: <Widget>[
@@ -37,13 +36,13 @@ class _EnterWeightState extends BaseState<EnterWeightHeight> {
           height: SizeUtil.defaultSpace,
         ),
         MyTextField(
-          textEditingController: _heightController,
-          // TODO-Nha: move to arb file
-          hint: "Nhập chiều cao của bé",
+          textEditingController: heightController,
+          hint: S.of(context).enter_baby_height,
+          inputType: TextInputType.number,
           suffix: Padding(
             padding: SizeUtil.smallPadding,
             child: Text(
-              "(cm)",
+              S.of(context).cm_unit,
               textAlign: TextAlign.center,
               style: TextStyle(color: ColorUtil.primaryColor),
             ),
@@ -56,14 +55,13 @@ class _EnterWeightState extends BaseState<EnterWeightHeight> {
           height: SizeUtil.defaultSpace,
         ),
         MyTextField(
-          textEditingController: _heightController,
-          // TODO-Nha: move to arb file
-          hint: "Nhập cân nặng của bé",
+          textEditingController: weightController,
+          hint: S.of(context).enter_baby_weight,
+          inputType: TextInputType.number,
           suffix: Padding(
             padding: SizeUtil.smallPadding,
             child: Text(
-              // TODO-Nha: move to arb file
-              "(kg)",
+              S.of(context).kg_unit,
               textAlign: TextAlign.center,
               style: TextStyle(color: ColorUtil.primaryColor),
             ),
@@ -76,11 +74,9 @@ class _EnterWeightState extends BaseState<EnterWeightHeight> {
           height: SizeUtil.defaultSpace,
         ),
         MyTextField(
-          textEditingController: _heightController,
+          textEditingController: noteController,
           maxLines: 5,
-          // TODO-Nha: move to arb file
-          hint:
-              "Bố/mẹ viết lại những lưu bút tại thời điểm kiểm tra của bé tại đây nhé!",
+          hint: S.of(context).enter_baby_note,
           borderRadius: 10,
           borderColor: ColorUtil.primaryColor,
           elevation: 2,
@@ -94,42 +90,73 @@ class _EnterWeightState extends BaseState<EnterWeightHeight> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 side: BorderSide(color: ColorUtil.primaryColor, width: 1)),
-            child: Padding(
-              padding: SizeUtil.smallPadding,
-              child: Column(
-                children: <Widget>[
-                  Icon(
-                    Icons.camera_alt,
-                    color: ColorUtil.primaryColor,
-                    size: 100,
-                  ),
-                  Text(
-                    // TODO-Nha: move to arb file
-                    "Bấm vào đây",
-                    style: TextStyle(
-                        color: ColorUtil.primaryColor,
-                        fontSize: SizeUtil.textSizeSmall),
-                  ),
-                  Text(
-                    // TODO-Nha: move to arb file
-                    "Lưu trữ kỷ niệm bạn upload ảnh mới nhất của bé nhé",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: ColorUtil.primaryColor),
-                  ),
-                ],
-              ),
-            ),
+            child: ValueListenableBuilder(
+                valueListenable: imageController,
+                builder: (context, value, child) {
+                  Color textColor = value == null
+                      ? ColorUtil.primaryColor
+                      : Colors.white.withOpacity(0.8);
+                  return Stack(
+                    children: <Widget>[
+                      value != null
+                          ? Image.file(value, width: double.infinity)
+                          : SizedBox(
+                              height: 200,
+                            ),
+                      Positioned(
+                        child: Container(
+                          padding: SizeUtil.smallPadding,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.camera_alt,
+                                color: textColor,
+                                size: 100,
+                              ),
+                              Text(
+                                S.of(context).click_on_here,
+                                style: TextStyle(
+                                    color: textColor,
+                                    fontSize: SizeUtil.textSizeSmall),
+                              ),
+                              Padding(
+                                padding: SizeUtil.smallPadding,
+                                child: Text(
+                                  S.of(context).child_take_photo_desc,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: textColor),
+                                ),
+                              ),
+                            ],
+                          ),
+                          color:
+                              Colors.black.withOpacity(value == null ? 0 : 0.1),
+                        ),
+                        top: 0,
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                      )
+                    ],
+                  );
+                }),
           ),
           onTap: () {
-//            //TODO
+            WidgetUtil.showPickImageDialog(context, onCameraClick: () async {
+              var pickedImage =
+                  await ImagePicker.pickImage(source: ImageSource.camera);
+              if (pickedImage != null) {
+                imageController.value = pickedImage;
+              }
+            }, onGalleryClick: () async {
+              var pickedImage =
+                  await ImagePicker.pickImage(source: ImageSource.gallery);
+              imageController.value = pickedImage;
+            });
           },
         )
       ],
     );
-  }
-
-  @override
-  List<SingleChildWidget> providers() {
-    return [];
   }
 }

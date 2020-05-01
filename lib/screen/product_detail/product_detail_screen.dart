@@ -165,7 +165,10 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
                             onPressed: () {
                               showDialog(
                                   context: context,
-                                  builder: (_) => ReportProductDialog( productId: productProvider.product['id'],));
+                                  builder: (_) => ReportProductDialog(
+                                        productId:
+                                            productProvider.product['id'],
+                                      ));
                             },
                           )
                         ],
@@ -234,10 +237,10 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
                 height: SizeUtil.smallSpace,
               ),
               Column(
-                children: _getProductDetailProvider.DETAIL_INFO
-                    .map((e) => infoRow(
-                        e, _getProductDetailProvider.DETAIL_INFO.indexOf(e)))
-                    .toList(),
+                children: List.generate(
+                    _getProductDetailProvider.DETAIL_INFO.length,
+                    (index) => infoRow(
+                        _getProductDetailProvider.DETAIL_INFO[index], index)),
               ),
               WidgetUtil.getLine(width: 2),
               paddingContainer(Text(
@@ -378,7 +381,7 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
         children: <Widget>[
           Expanded(
             child: MyText(
-              e['title'],
+              "${e['title']}",
               style: TextStyle(color: ColorUtil.textGray),
             ),
           ),

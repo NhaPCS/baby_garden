@@ -1,16 +1,16 @@
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 
-const List<dynamic> dummyChildren = [
-  {"name": "Âu Vũ Ngân Giang"},
-  {"name": "Âu Vũ Ngân Giang 1"},
-  {"name": "Âu Vũ Ngân Giang 2"},
-];
-
 class SelectChildDropDown extends StatefulWidget {
-  final ValueChanged<dynamic> onSelectChild;
+  final ValueNotifier<dynamic> controller;
+  final List<dynamic> babies;
+  final ValueChanged<dynamic> onChangeChild;
 
-  const SelectChildDropDown({Key key, @required this.onSelectChild})
+  const SelectChildDropDown(
+      {Key key,
+      @required this.controller,
+      @required this.babies,
+      this.onChangeChild})
       : super(key: key);
 
   @override
@@ -20,7 +20,16 @@ class SelectChildDropDown extends StatefulWidget {
 }
 
 class _SelectChildState extends State<SelectChildDropDown> {
-  dynamic _selectedChild = dummyChildren[0];
+  @override
+  void initState() {
+    if (widget.babies != null) {
+      widget.controller.value = widget.babies[0];
+      if (widget.onChangeChild != null) {
+        widget.onChangeChild(widget.controller.value);
+      }
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,38 +47,42 @@ class _SelectChildState extends State<SelectChildDropDown> {
               end: Alignment.bottomCenter),
           boxShadow: WidgetUtil.getShadow(),
           borderRadius: BorderRadius.all(Radius.circular(SizeUtil.bigRadius))),
-      child: PopupMenuButton<dynamic>(
-        onSelected: (child) {
-          print(child);
-          if (widget.onSelectChild != null) {
-            widget.onSelectChild(child);
-          }
-          setState(() {
-            _selectedChild = child;
-          });
-        },
-        itemBuilder: (BuildContext context) {
-          return dummyChildren.map((e) => menuItem(e)).toList();
-        },
-        shape: RoundedRectangleBorder(
-            side: BorderSide(color: ColorUtil.primaryColor, width: 2),
-            borderRadius:
-                BorderRadius.all(Radius.circular(SizeUtil.smallRadius))),
-        child: Wrap(
-          alignment: WrapAlignment.center,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: <Widget>[
-            Text(
-              _selectedChild['name'],
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      child: ValueListenableBuilder(
+        valueListenable: widget.controller,
+        builder: (context, value, child) {
+          return PopupMenuButton<dynamic>(
+            onSelected: (child) {
+              if (widget.onChangeChild != null &&
+                  value != null &&
+                  value['id'] != child['id']) {
+                widget.onChangeChild(value);
+              }
+              widget.controller.value = child;
+            },
+            itemBuilder: (BuildContext context) {
+              return widget.babies.map((e) => menuItem(e)).toList();
+            },
+            shape: RoundedRectangleBorder(
+                side: BorderSide(color: ColorUtil.primaryColor, width: 2),
+                borderRadius:
+                    BorderRadius.all(Radius.circular(SizeUtil.smallRadius))),
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: <Widget>[
+                Text(
+                  value['name'],
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+                Icon(
+                  Icons.keyboard_arrow_down,
+                  color: Colors.white,
+                )
+              ],
             ),
-            Icon(
-              Icons.keyboard_arrow_down,
-              color: Colors.white,
-            )
-          ],
-        ),
+          );
+        },
       ),
     );
   }
