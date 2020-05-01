@@ -479,6 +479,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "size" : MessageLookupByLibrary.simpleMessage("Kích thước"),
     "skip" : MessageLookupByLibrary.simpleMessage("Bỏ qua >>"),
     "sku_code" : m26,
+    "sku_product" : MessageLookupByLibrary.simpleMessage("Mã SKU"),
     "sold_count" : m27,
     "sub_district" : MessageLookupByLibrary.simpleMessage("Phường/ Xã"),
     "success" : MessageLookupByLibrary.simpleMessage("Thành công"),

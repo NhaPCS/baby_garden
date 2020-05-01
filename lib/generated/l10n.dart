@@ -4204,6 +4204,15 @@ class S {
       args: [],
     );
   }
+
+  String get sku_product {
+    return Intl.message(
+      'Mã SKU',
+      name: 'sku_product',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
