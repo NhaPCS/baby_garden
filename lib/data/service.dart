@@ -847,7 +847,7 @@ Response parseResponse(BuildContext context, String responseBody,
   return res;
 }
 
-Future<Response> getListRemindCalendar(BuildContext context) async {
+Future<dynamic> getListRemindCalendar(BuildContext context) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {"user_id": userId};
 
@@ -857,7 +857,7 @@ Future<Response> getListRemindCalendar(BuildContext context) async {
   return null;
 }
 
-Future<Response> deleteRemindCalendar(BuildContext context,
+Future<dynamic> deleteRemindCalendar(BuildContext context,
     {@required String calendarId}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {"user_id": userId, "calendar_id": calendarId};
@@ -871,7 +871,7 @@ Future<Response> deleteRemindCalendar(BuildContext context,
   return null;
 }
 
-Future<Response> addRemindCalendar(BuildContext context,
+Future<dynamic> addRemindCalendar(BuildContext context,
     {@required RemindCalendar calendar}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   var params = calendar.toJson();
@@ -886,5 +886,25 @@ Future<Response> addRemindCalendar(BuildContext context,
   Response response = await post(context,
       path: path, param: params, requireLogin: true, showLoading: true);
   if (response.isSuccess()) return response;
+  return null;
+}
+
+Future<dynamic> getListPoint(BuildContext context) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId};
+
+  Response response = await get(context, path: "managePoint", param: params);
+
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> getPointDetail(BuildContext context, String shopId) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId, "shop_id": shopId};
+
+  Response response = await get(context, path: "pointDetail", param: params);
+
+  if (response.isSuccess()) return response.data;
   return null;
 }

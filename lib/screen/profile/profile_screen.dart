@@ -129,7 +129,7 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
                   push(AccountManageScreen());
                   break;
                 case 1:
-                  push(PointManagement());
+                  push(PointManagementScreen());
                   break;
                 case 2:
                   push(RemindManagementScreen());
