@@ -1,33 +1,30 @@
+import 'package:baby_garden_flutter/data/model/remind_calendar.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/screen/remind_management/item/remind_card_item.dart';
+import 'package:baby_garden_flutter/screen/remind_management/provider/remind_calendar_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 import '../base_state.dart';
-import '../remind_management/item/remind_card_item.dart';
 
-// TODO-QAnh:screen đặt ở folder riêng, khong de chung trong 1 folder
 class RemindEditScreen extends StatefulWidget {
+  final RemindCalendar calendar;
+
+  const RemindEditScreen({Key key, this.calendar}) : super(key: key);
   @override
   _RemindEditScreen createState() => _RemindEditScreen();
 }
 
 class _RemindEditScreen extends BaseState<RemindEditScreen> {
-
-  final remind1 = RemindCardItem(
-    displayIcon: false,
-    image: "photo/sample_product.png",
-    description:
-        "Sữa bột Glico Nhật Bản số 0-1 dành cho trẻ từ sơ sinh đến 1 tuổi",
-    price: "900.000",
-    datetime: "12.01.2020 - 08:00",
-    remindType: RemindType.remindBuy,
-  );
-
   var chosenDate = DateTime.now();
   var chosenTime;
+
+  final RemindCalendarProvider _remindCalendarProvider =
+      RemindCalendarProvider();
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -36,7 +33,7 @@ class _RemindEditScreen extends BaseState<RemindEditScreen> {
           title: S.of(context).editReminder,
         ),
         body: Column(children: <Widget>[
-          Container(child: remind1),
+          Container(child: RemindCardItem(calendar: widget.calendar)),
           Container(
             padding: EdgeInsets.only(left: SizeUtil.smallSpace, top: 13.5),
             width: double.infinity,
@@ -148,8 +145,13 @@ class _RemindEditScreen extends BaseState<RemindEditScreen> {
               minWidth: double.infinity,
               child: RaisedButton(
                 onPressed: () {
+                  // edit remind calendar
+                  if (!validateInput()) return;
+
+                  _remindCalendarProvider.addNewCalendar(context,
+                      calendar: widget.calendar);
                   // RouteUtil.push(context, RemindManagementScreen());
-//                  showTimePicker(context: context, initialTime: TimeOfDay.now());
+                  //                  showTimePicker(context: context, initialTime: TimeOfDay.now());
                   Navigator.of(context).pop();
                 },
                 child: Text(
@@ -165,7 +167,7 @@ class _RemindEditScreen extends BaseState<RemindEditScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [];
+    return [ChangeNotifierProvider.value(value: _remindCalendarProvider)];
   }
 
   void selectDate() {
@@ -184,5 +186,10 @@ class _RemindEditScreen extends BaseState<RemindEditScreen> {
     setState(() {
       selectedDate.then((value) => this.chosenDate = value);
     });
+  }
+
+  bool validateInput() {
+    // add check validate input after
+    return false;
   }
 }

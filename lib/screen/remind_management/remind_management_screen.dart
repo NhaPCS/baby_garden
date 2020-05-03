@@ -1,36 +1,30 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/remind_add/remind_add_screen.dart';
+import 'package:baby_garden_flutter/screen/remind_management/item/remind_card_item.dart';
+import 'package:baby_garden_flutter/screen/remind_management/provider/remind_calendar_provider.dart';
+import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-import '../base_state.dart';
-import 'item/remind_card_item.dart';
-
-// TODO-QAnh:screen đặt ở folder riêng, khong de chung trong 1 folder
 class RemindManagementScreen extends StatefulWidget {
   @override
   _RemindManageState createState() => _RemindManageState();
 }
 
 class _RemindManageState extends BaseState<RemindManagementScreen> {
+  final RemindCalendarProvider _remindCalendarProvider =
+      RemindCalendarProvider();
 
-  final remind1 = RemindCardItem(
-    id: 1,
-    image: "photo/sample_product.png",
-    description:
-        "Sữa bột Glico Nhật Bản số 0-1 dành cho trẻ từ sơ sinh đến 1 tuổi",
-    price: "900.000",
-    datetime: "12.01.2020 - 08:00",
-    remindType: RemindType.remindBuy,
-  );
-
-  final remind2 = RemindCardItem(
-    image: "photo/sample_product.png",
-    description: "Sữa Alene dành cho bé thể tích 320ml...",
-    price: "900.000",
-    datetime: "12.01.2020 - 08:00",
-    remindType: RemindType.remindUse,
-  );
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if ((_remindCalendarProvider.remindList == null ||
+        _remindCalendarProvider.remindList.isEmpty)) {
+      _remindCalendarProvider.getListCalendar(context);
+    }
+  }
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -46,18 +40,25 @@ class _RemindManageState extends BaseState<RemindManagementScreen> {
           ],
           title: S.of(context).remindManage,
         ),
-        body: Column(children: <Widget>[
-          // TODO-QAnh column chỉ có 1 container? bỏ đi
-          Container(
-            child: Column(
-              children: <Widget>[remind1, remind2, remind1],
-            ),
-          ),
-        ]));
+        body: Consumer<RemindCalendarProvider>(
+          builder: (context, value, child) {
+            if (value.remindList == null || value.remindList.isEmpty)
+              return LoadingView(
+                isNoData: value.remindList != null,
+              );
+            return ListView.builder(
+                shrinkWrap: true,
+                itemCount: value.remindList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final _calendar = _remindCalendarProvider.getRemind(index);
+                  return RemindCardItem(calendar: _calendar);
+                });
+          },
+        ));
   }
 
   @override
   List<SingleChildWidget> providers() {
-    return [];
+    return [ChangeNotifierProvider.value(value: _remindCalendarProvider)];
   }
 }
