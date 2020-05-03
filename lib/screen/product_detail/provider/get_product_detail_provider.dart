@@ -13,13 +13,14 @@ class GetProductDetailProvider extends ChangeNotifier {
   Future<void> getProduct(BuildContext context, String productId) async {
     dynamic data = await service.productDetail(context, productId: productId);
     product = data;
-    if(product!=null) {
-      if(product['color'] == null){
-        DETAIL_INFO.removeWhere((element) => element['key']=='color');
+    if (product != null) {
+      if (product['color'] == null) {
+        DETAIL_INFO.removeWhere((element) => element['key'] == 'color');
       }
-      if(product['size'] == null){
-        DETAIL_INFO.removeWhere((element) => element['key']=='size');
+      if (product['size'] == null) {
+        DETAIL_INFO.removeWhere((element) => element['key'] == 'size');
       }
+      print("WWW ${DETAIL_INFO}");
     }
     notifyListeners();
   }
@@ -60,7 +61,7 @@ class GetProductDetailProvider extends ChangeNotifier {
         'valueColor': ColorUtil.blueLight
       },
       {
-        'title': S.of(context).sku_code,
+        'title': S.of(context).sku_product,
         'key': 'product_code',
       },
       {

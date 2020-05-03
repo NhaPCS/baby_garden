@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/image/circle_image.dart';
@@ -5,8 +8,19 @@ import 'package:flutter/material.dart';
 
 class CheckChildInfoDialog extends StatelessWidget {
   final VoidCallback onDonePress;
+  final String weight;
+  final String height;
+  final String note;
+  final File image;
 
-  const CheckChildInfoDialog({Key key, this.onDonePress}) : super(key: key);
+  const CheckChildInfoDialog(
+      {Key key,
+      this.onDonePress,
+      this.weight,
+      this.height,
+      this.note,
+      this.image})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +28,7 @@ class CheckChildInfoDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10))),
       title: Text(
-        // TODO-Nha: move to arb file
-        "Xác nhận thông tin",
+        S.of(context).confirm_info,
         textAlign: TextAlign.center,
         style: TextStyle(
             color: ColorUtil.blueLight,
@@ -26,22 +39,19 @@ class CheckChildInfoDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            // TODO-Nha: move to arb file
-              "Bố/mẹ kiểm tra lại thông tin chiều cao, can năng của bé vừa nhập đã nhập đã đúng chưa nhé:"),
+          Text(S.of(context).confirm_child_info_message),
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
           RichText(
               text: TextSpan(children: [
             TextSpan(
-              // TODO-Nha: move to arb file
-                text: "Chiều cao:",
+                text: S.of(context).height_is,
                 style: TextStyle(
                     color: ColorUtil.textGray,
                     fontSize: SizeUtil.textSizeDefault)),
             TextSpan(
-                text: " 85cm",
+                text: " ${height}cm",
                 style: TextStyle(
                     color: ColorUtil.primaryColor,
                     fontSize: SizeUtil.textSizeDefault))
@@ -52,13 +62,12 @@ class CheckChildInfoDialog extends StatelessWidget {
           RichText(
               text: TextSpan(children: [
             TextSpan(
-              // TODO-Nha: move to arb file
-                text: "Cân nặng:",
+                text: S.of(context).weight_is,
                 style: TextStyle(
                     color: ColorUtil.textGray,
                     fontSize: SizeUtil.textSizeDefault)),
             TextSpan(
-                text: " 85cm",
+                text: " ${weight}cm",
                 style: TextStyle(
                     color: ColorUtil.primaryColor,
                     fontSize: SizeUtil.textSizeDefault))
@@ -69,15 +78,12 @@ class CheckChildInfoDialog extends StatelessWidget {
           RichText(
               text: TextSpan(children: [
             TextSpan(
-              // TODO-Nha: move to arb file
-                text: "Lưu bút:",
+                text: S.of(context).note_is,
                 style: TextStyle(
                     color: ColorUtil.textGray,
                     fontSize: SizeUtil.textSizeDefault)),
             TextSpan(
-                text:
-                // TODO-Nha: move to arb file
-                    " Đây là tính năng sẽ có tại:\nVườn Của Bé NEW (Coming soon!)",
+                text: note,
                 style: TextStyle(
                     color: ColorUtil.primaryColor,
                     fontSize: SizeUtil.textSizeDefault))
@@ -85,8 +91,7 @@ class CheckChildInfoDialog extends StatelessWidget {
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
-          // TODO-Nha: move to arb file
-          Text("Ảnh của bé:",
+          Text(S.of(context).image_is,
               style: TextStyle(
                   color: ColorUtil.textGray,
                   fontSize: SizeUtil.textSizeDefault)),
@@ -94,12 +99,14 @@ class CheckChildInfoDialog extends StatelessWidget {
             height: SizeUtil.smallSpace,
           ),
           Center(
-            child: CircleImage(
-              width: 100,
-              height: 100,
-              imageUrl: StringUtil.dummyImage,
-              borderRadius: 10,
-            ),
+            child: image == null
+                ? SizedBox()
+                : CircleImage(
+                    width: 300,
+                    imageFile: image,
+                    borderRadius: 10,
+                    height: 150,
+                  ),
           ),
           SizedBox(
             height: SizeUtil.smallSpace,
@@ -112,8 +119,7 @@ class CheckChildInfoDialog extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                // TODO-Nha: move to arb file
-                text: "Nhập lại",
+                text: S.of(context).enter_again,
                 borderRadius: 30,
                 color: ColorUtil.primaryColor,
                 textStyle:
@@ -127,8 +133,7 @@ class CheckChildInfoDialog extends StatelessWidget {
                   Navigator.of(context).pop();
                   if (onDonePress != null) onDonePress();
                 },
-                // TODO-Nha: move to arb file
-                text: "Đồng ý",
+                text: S.of(context).agree,
                 color: ColorUtil.primaryColor,
                 textStyle:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),

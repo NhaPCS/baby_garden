@@ -703,6 +703,49 @@ Future<Response> deleteAddress(BuildContext context,
   return null;
 }
 
+Future<dynamic> listBaby(BuildContext context) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId};
+
+  Response response =
+      await get(context, path: 'listBaby', param: params, requireLogin: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> testResult({String babyId, int type}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "baby_id": babyId,
+    "type": type.toString()
+  };
+
+  Response response =
+      await get(null, path: 'testResult', param: params, requireLogin: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> addBabyTest(BuildContext context,
+    {String babyId,
+    String height,
+    String weight,
+    String note,
+    File img}) async {
+  dynamic params = {
+    "baby_id": babyId,
+    "height": height.toString(),
+    "weight": weight.toString(),
+    "note": note,
+  };
+  dynamic files = {"img": img};
+  Response response = await postMultiPart(context,
+      path: 'addTest', param: params, files: files, requireLogin: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
 Future<Response> post(BuildContext context,
     {String path,
     dynamic param,
