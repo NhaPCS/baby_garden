@@ -1,6 +1,8 @@
 import 'package:baby_garden_flutter/data/model/point.dart';
+import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/point_history/point_history_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -16,29 +18,23 @@ class PointCardItem extends StatelessWidget {
       margin: EdgeInsets.only(
           left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
       padding: EdgeInsets.all(SizeUtil.midSmallSpace),
-      // TODO-QAnh: không set height như này, set height cho image và để wrap content
       child: GestureDetector(
         onTap: () {
           RouteUtil.push(
               context,
-              PointHistory(
-                image: 'photo/voucherVCB.png',
-                name: 'VCB',
-                point: 200,
+              PointHistoryScreen(
+                pointInfo: pointInfo,
               ));
         },
-        child: Wrap(children: <Widget>[
+        child: Row(children: <Widget>[
           ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child:
-                // TODO-QAnh change to get image from network
-                Image.asset(
-              this.pointInfo.shopImage,
-              fit: BoxFit.cover,
-              width: SizeUtil.iconSizeLarge,
-              height: SizeUtil.iconSizeLarge,
-            ),
-          ),
+              borderRadius: BorderRadius.circular(12),
+              child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl: this.pointInfo.shopImage,
+                width: SizeUtil.iconSizeLarge,
+                height: SizeUtil.iconSizeLarge,
+              )),
           Expanded(
             child: Padding(
                 padding: EdgeInsets.all(SizeUtil.midSmallSpace),
@@ -54,8 +50,8 @@ class PointCardItem extends StatelessWidget {
                       Padding(
                           padding:
                               const EdgeInsets.only(top: SizeUtil.tinySpace),
-                          // TODO-QAnh: chuyển sang file arb
-                          child: Text(this.pointInfo.point.toString() + ' điểm',
+                          child: Text(
+                              S.of(context).numPoint(this.pointInfo.point),
                               style: TextStyle(
                                   color: ColorUtil.darkGray,
                                   fontSize: SizeUtil.textSizeBigger))),
