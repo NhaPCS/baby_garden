@@ -429,7 +429,7 @@ class _BookingScreenState
                                 margin: EdgeInsets.only(
                                   left: SizeUtil.notifyHintSpace,
                                 ),
-                                child: MySeparator(
+                                child: DotLineSeparator(
                                   color: ColorUtil.lineColor,
                                   paddingLeft: SizeUtil.largeSpace,
                                 ))

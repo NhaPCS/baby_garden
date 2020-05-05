@@ -4061,10 +4061,46 @@ class S {
     );
   }
 
-  String get attenion {
+  String get attention {
     return Intl.message(
       'Chú ý',
-      name: 'attenion',
+      name: 'attention',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_name {
+    return Intl.message(
+      'Mời nhập tên',
+      name: 'enter_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_code {
+    return Intl.message(
+      'Mời nhập mã OTP',
+      name: 'enter_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get name {
+    return Intl.message(
+      'tên',
+      name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get phone_format {
+    return Intl.message(
+      'Số điện thoại không tồn tại, mời nhập lại',
+      name: 'phone_format',
       desc: '',
       args: [],
     );

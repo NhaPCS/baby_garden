@@ -2,6 +2,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/rating_bar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,60 +27,45 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
         backColor: Colors.white,
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
                 left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
-            // TODO-Hung: bỏ được cái column này đi thì tốt, có thể dùng RichText
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 SizedBox(
                   height: SizeUtil.tinySpace,
                 ),
-                Container(
-                  // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    S.of(context).order_with_code("VCB19.12.25"),
-                    style: TextStyle(
-                        fontSize: SizeUtil.textSizeDefault,
-                        color: ColorUtil.textColor),
-                  ),
+                Text(
+                  S.of(context).order_with_code("VCB19.12.25"),
+                  style: TextStyle(
+                      fontSize: SizeUtil.textSizeDefault,
+                      color: ColorUtil.textColor),
                 ),
                 SizedBox(
                   height: SizeUtil.tinySpace,
                 ),
-                Container(
-                  // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    S.of(context).order_date("25/12/2019 12:25"),
-                    style: TextStyle(fontSize: SizeUtil.textSizeTiny),
-                    textAlign: TextAlign.start,
-                  ),
+                Text(
+                  S.of(context).order_date("25/12/2019 12:25"),
+                  style: TextStyle(fontSize: SizeUtil.textSizeTiny),
+                  textAlign: TextAlign.start,
                 ),
                 SizedBox(
                   height: SizeUtil.tinySpace,
                 ),
-                Container(
-                  // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    S.of(context).receiving_date("25/12/2019 12:25"),
-                    style: TextStyle(fontSize: SizeUtil.textSizeTiny),
-                    textAlign: TextAlign.start,
-                  ),
+                Text(
+                  S.of(context).receiving_date("25/12/2019 12:25"),
+                  style: TextStyle(fontSize: SizeUtil.textSizeTiny),
+                  textAlign: TextAlign.start,
                 ),
               ],
             ),
           ),
-          // TODO-Hung: dung WigetUtil.getLine
-          Container(
+          WidgetUtil.getLine(
             margin: EdgeInsets.only(
                 top: SizeUtil.smallSpace, bottom: SizeUtil.tinySpace),
-            height: SizeUtil.tinySpace,
-            color: ColorUtil.lineColor,
-            width: MediaQuery.of(context).size.width,
           ),
           Padding(
             padding: const EdgeInsets.only(
@@ -92,42 +78,30 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
                 Image.asset("photo/order_img.png",
                     width: MediaQuery.of(context).size.width / 6),
                 Expanded(
-                  // TODO-Hung: thay Container = Padding
-                  child: Container(
+                  child: Padding(
                     padding: EdgeInsets.only(left: SizeUtil.smallSpace),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            S.of(context).order_title,
-                            style: TextStyle(fontSize: SizeUtil.textSizeSmall),
-                            textAlign: TextAlign.start,
-                          ),
+                        Text(
+                          S.of(context).order_title,
+                          style: TextStyle(fontSize: SizeUtil.textSizeSmall),
+                          textAlign: TextAlign.start,
                         ),
                         SizedBox(
                           height: SizeUtil.tinySpace,
                         ),
-                        // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            S.of(context).supply_by_supplier("Vườn của bé"),
-                            style: TextStyle(fontSize: SizeUtil.textSizeSmall),
-                          ),
+                        Text(
+                          S.of(context).supply_by_supplier("Vườn của bé"),
+                          style: TextStyle(fontSize: SizeUtil.textSizeSmall),
                         ),
-                        // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
-                        Container(
-                          child: RatingBar(
-                            enable: false,
-                            iconColor: ColorUtil.primaryColor,
-                            showRateCount: false,
-                            isIcon: true,
-                            value: 3,
-                            alignment: MainAxisAlignment.start,
-                          ),
-                          alignment: Alignment.centerLeft,
+                        RatingBar(
+                          enable: false,
+                          iconColor: ColorUtil.primaryColor,
+                          showRateCount: false,
+                          isIcon: true,
+                          value: 3,
+                          alignment: MainAxisAlignment.start,
                         )
                       ],
                     ),
@@ -136,41 +110,24 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
               ],
             ),
           ),
-          // TODO-Hung: dung WidgetUtil.getLine
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 1,
-            color: ColorUtil.gray,
+          WidgetUtil.getLine(
             margin: EdgeInsets.all(SizeUtil.normalSpace),
+            color: ColorUtil.gray,
           ),
           Padding(
             padding: const EdgeInsets.only(left: SizeUtil.normalSpace),
             child: Text(
                 "Chất lượng sản phẩm tuyệt vời. Đóng gói sản phẩm \nrất đẹp và chắc chắn."),
           ),
-          Row(
-            children: <Widget>[
-              // TODO-Hung: Sao row nay lại chỉ có 1 widget? bỏ row đi
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.only(
-                      left: SizeUtil.normalSpace,
-                      right: SizeUtil.normalSpace,
-                      top: SizeUtil.smallSpace,
-                      bottom: SizeUtil.smallSpace),
-                  // TODO-Hung: k cho anh test vào photo, dùng StringUtil.dummyImage
-                  child: Image.asset("photo/rated_detail_img.png",
-                      width: MediaQuery.of(context).size.width / 6),
-                ),
-              )
-            ],
+          Padding(
+            padding: EdgeInsets.only(
+                left: SizeUtil.normalSpace,
+                right: SizeUtil.normalSpace,
+                top: SizeUtil.smallSpace,
+                bottom: SizeUtil.smallSpace),
+            child: CachedNetworkImage(imageUrl: StringUtil.dummyImage,width: MediaQuery.of(context).size.width / 2)
           ),
-          // TODO-Hung: Column set đc left mà, bỏ cái Container này đi
-          Container(
-            child: Text("10-01-2020 12:17"),
-            padding: EdgeInsets.only(left: SizeUtil.smallSpace),
-            alignment: Alignment.centerLeft,
-          )
+          Text("10-01-2020 12:17")
         ],
       ),
     );

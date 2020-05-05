@@ -2,7 +2,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/notify_control_provider.dart';
 import 'package:baby_garden_flutter/screen/notify/provider/search_notify_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/saling_detail/saling_detail_screen.dart';
+import 'package:baby_garden_flutter/screen/saling_detail/sailing_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/switchButton.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
@@ -185,7 +185,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: (){
-                                  push(SalingDetailScreen());
+                                  push(SailingDetailScreen());
                                 },
                                 child: NotifyItem(data: data[index],deleteNotify: (){
                                   Provider.of<NotifyProvider>(context,listen: false).deleteNotify(index);

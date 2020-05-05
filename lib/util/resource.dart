@@ -630,7 +630,16 @@ class WidgetUtil {
           }
           break;
         case CheckType.EMAIL_FORMAT: //  email format
-          if(p.value == null || p.value.isEmpty || RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(p.value)){
+          if(p.value == null || p.value.isEmpty || !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(p.value)){
+            if (showErrorDialog)
+              WidgetUtil.showErrorDialog(
+                  context, p.key);
+            return false;
+          }
+          break;
+        case CheckType.PHONE_FORMAT:
+          print(p.value);
+          if(p.value==null||p.value.isEmpty||!RegExp(r'(^(?:[+0]9)?[0-9]{10}$)').hasMatch(p.value)){
             if (showErrorDialog)
               WidgetUtil.showErrorDialog(
                   context, p.key);

@@ -300,7 +300,7 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
               onPressed: () {
                 WidgetUtil.showConfirmDialog(context,
                     message: S.of(context).cancel_question,
-                    title: S.of(context).attenion, positiveClicked: () {
+                    title: S.of(context).attention, positiveClicked: () {
                       Navigator.of(context).pop();
                     }, negativeClick: () {
                       Navigator.of(context).pop();

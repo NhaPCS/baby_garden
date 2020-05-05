@@ -1,7 +1,9 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/waiting_otp_provider.dart';
+import 'package:baby_garden_flutter/screen/register/widget/otp_alert.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/screen/register/view_model/register_view_model.dart';
+import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/input/my_password_textfield.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:baby_garden_flutter/widget/text/hobo_text.dart';
@@ -22,15 +24,14 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState
     extends BaseStateModel<RegisterScreen, RegisterViewModel> {
-  // TODO-Hung: tao widget rieng cho OTP
-  final WaittingOTPProvider _waittingOTPProvider = new WaittingOTPProvider();
-  final TextEditingController _nameControler = new TextEditingController();
-  final TextEditingController _phoneControler = new TextEditingController();
-  final TextEditingController _passControler = new TextEditingController();
-  final TextEditingController _repassControler = new TextEditingController();
-  final TextEditingController _invitePhoneControler =
+  final WaitingOTPProvider _waitingOTPProvider = new WaitingOTPProvider();
+  final TextEditingController _nameController = new TextEditingController();
+  final TextEditingController _phoneController = new TextEditingController();
+  final TextEditingController _passController = new TextEditingController();
+  final TextEditingController _reTypePassController = new TextEditingController();
+  final TextEditingController _invitePhoneController =
       new TextEditingController();
-  final TextEditingController _otpControler = new TextEditingController();
+  final TextEditingController _otpController = new TextEditingController();
   bool isShowOTP = false;
 
   @override
@@ -45,9 +46,7 @@ class _RegisterScreenState
           bgColor: Colors.white,
           titleColor: ColorUtil.primaryColor,
           backColor: ColorUtil.primaryColor),
-      // TODO-Hung: center lam gi? bo di
-      body: Center(
-          child: ListView(
+      body: ListView(
         padding: const EdgeInsets.only(
             left: SizeUtil.bigSpace, right: SizeUtil.bigSpace),
         children: <Widget>[
@@ -56,12 +55,14 @@ class _RegisterScreenState
             width: MediaQuery.of(context).size.width / 3,
             height: MediaQuery.of(context).size.width / 4,
           ),
-          HoboText(fontSize: 1,),
+          HoboText(
+            fontSize: 1,
+          ),
           SizedBox(
             height: SizeUtil.defaultSpace,
           ),
           MyTextField(
-            textEditingController: _nameControler,
+            textEditingController: _nameController,
             hint: S.of(context).your_full_name,
             borderColor: ColorUtil.colorAccent,
             elevation: SizeUtil.smallElevation,
@@ -72,7 +73,7 @@ class _RegisterScreenState
             height: SizeUtil.smallSpace,
           ),
           MyTextField(
-            textEditingController: _phoneControler,
+            textEditingController: _phoneController,
             hint: S.of(context).enter_phone_number,
             borderColor: ColorUtil.colorAccent,
             borderRadius: SizeUtil.tinyRadius,
@@ -84,38 +85,32 @@ class _RegisterScreenState
             height: SizeUtil.smallSpace,
           ),
           MyPasswordTextField(
-            controller: _passControler,
+            controller: _passController,
           ),
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
           MyPasswordTextField(
-            controller: _repassControler,
+            controller: _reTypePassController,
           ),
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
           MyTextField(
-            textEditingController: _invitePhoneControler,
+            textEditingController: _invitePhoneController,
             hint: S.of(context).enter_invite_phone_number,
             borderColor: ColorUtil.colorAccent,
             borderRadius: SizeUtil.tinyRadius,
             elevation: SizeUtil.smallElevation,
             contentPadding: SizeUtil.smallPadding,
             inputType: TextInputType.phone,
-            suffix: new GestureDetector(
-              onTap: () {
-                //todo open camera to capture the QAcode
-              },
-              child: Icon(Icons.card_giftcard),
-            ),
+            suffix: Icon(Icons.card_giftcard),
           ),
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
-          // TODO-Hung: chuyen sang tao Widget de nhap OTP
-          Consumer<WaittingOTPProvider>(
-            builder: (BuildContext context, WaittingOTPProvider value,
+          Consumer<WaitingOTPProvider>(
+            builder: (BuildContext context, WaitingOTPProvider value,
                 Widget child) {
               return value.isTimerStart
                   ? Stack(
@@ -127,7 +122,7 @@ class _RegisterScreenState
                           borderRadius: SizeUtil.tinyRadius,
                           elevation: SizeUtil.smallElevation,
                           contentPadding: SizeUtil.normalPadding,
-                          textEditingController: _otpControler,
+                          textEditingController: _otpController,
                           inputType: TextInputType.number,
                           autoFocus: true,
                         ),
@@ -149,158 +144,74 @@ class _RegisterScreenState
           SizedBox(
             height: SizeUtil.defaultSpace,
           ),
-          // TODO-Hung: dung MyRaisedButton
-          RaisedButton(
-            onPressed: () async {
-              // TODO-Hung: cho mat phan verify nay vào 1 hàm chung, k đẻ if else qúa nhiều, dung ham WidgetUtil.verifyParams
-              String check = checkRegisterCondition(isShowOTP);
-              if (check.trim().length == 0) {
-                if (isShowOTP) {//todo check show otp input
-                  if (_waittingOTPProvider.start > 0){ //todo OTP timer out
-                    if (_otpControler.text.trim().length > 0) {//todo check otp invalid
-                      //todo
-                      await getViewModel().onRegister(
-                          name: _nameControler.text.toString(),
-                          phone: _phoneControler.text.toString(),
-                          password: _passControler.text.toString(),
-                          refCode: _invitePhoneControler.text.toString(),
-                          code: _otpControler.text.toString().trim());
-                    } else {
-                      WidgetUtil.showErrorDialog(context, "Vui lòng nhập OTP");
-                    }
-                  }
-                } else {
-                  //todo send verify code and show otp input
-                  var code = await getViewModel().onGetVerifyCode(
-                      name: _nameControler.text.toString(),
-                      phone: _phoneControler.text.toString(),
-                      password: _passControler.text.toString(),
-                      refCode: _invitePhoneControler.text.toString());
-                  if (code != null) {
-                    print(code);
-                    isShowOTP = true;
-                    _waittingOTPProvider.startTimer();
-                  }
-                }
-                // todo get verify code
-
-              } else {
-                WidgetUtil.showMessageDialog(context,
-                    message: check, title: "Alert");
-              }
-            },
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-              Radius.circular(SizeUtil.tinyRadius),
-            )),
+          MyRaisedButton(
+            onPressed: register,
             color: ColorUtil.colorAccent,
-            child: Padding(
-              padding: const EdgeInsets.all(SizeUtil.smallSpace),
-              child: Text(
-                S.of(context).register,
-                style: TextStyle(
-                    fontSize: SizeUtil.textSizeBigger, color: Colors.white),
-              ),
-            ),
+            text: S.of(context).register,
+            textStyle: TextStyle(
+                fontSize: SizeUtil.textSizeBigger, color: Colors.white),
+            padding: EdgeInsets.all(SizeUtil.smallSpace),
+            borderRadius: SizeUtil.tinyRadius,
           ),
           SizedBox(
             height: SizeUtil.defaultSpace,
           ),
-          // TODO-Hung: chuyen sng tao Widget rieng cho nhap OTP
-          Consumer<WaittingOTPProvider>(
-            builder: (BuildContext context, WaittingOTPProvider value,
+          Consumer<WaitingOTPProvider>(
+            builder: (BuildContext context, WaitingOTPProvider value,
                 Widget child) {
-              return value.isTimerStart
-                  ? (value.start == 0
-                      ? RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                              text:
-                                  "Nếu bạn không đăng ký được, vui lòng gọi điện tới số  ",
-                              style: TextStyle(
-                                color: ColorUtil.textColor,
-                              ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                    text: "0912 277 022",
-                                    style: TextStyle(
-                                        color: ColorUtil.green,
-                                        decoration: TextDecoration.none)),
-                                TextSpan(
-                                    text: " để được hỗ trợ",
-                                    style: TextStyle(
-                                        color: ColorUtil.textColor,
-                                        decoration: TextDecoration.none)),
-                              ]),
-                        )
-                      : InkWell(
-                          onTap: () {
-                            //todo resend otp
-                          },
-                          child: Text(
-                            S.of(context).resend_otp,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: ColorUtil.primaryColor),
-                          ),
-                        ))
-                  : InkWell(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(
-                        S.of(context).return_login_if_had_account,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: ColorUtil.blueForgotPass),
-                      ),
-                    );
+              return OTPAlert(
+                isTimerStart: value.isTimerStart,
+                second: value.start,
+              );
             },
           ),
           SizedBox(
             height: SizeUtil.defaultSpace,
           )
         ],
-      )),
+      ),
     );
   }
 
-  String checkRegisterCondition(bool isShowOTP) {
-    // TODO-Hung: dung WidgetUtil.verifyParam
-    if (_nameControler.text.trim().length == 0) {
-      return "Please Enter name";
-    } else if (_phoneControler.text.trim().length == 0) {
-      return "Please Enter Phone number";
-    } else if (_passControler.text.trim().length == 0) {
-      return "Please Enter password";
-    } else if (_repassControler.text.trim().length == 0) {
-      return "Please Enter repassword";
-    } else if (_passControler.text.compareTo(_repassControler.text) < 0) {
-      return "Password and repassword must be the same";
-    } else if (_invitePhoneControler.text.trim().length == 0) {
-      return "Please Enter invite phone number";
+  void register() async {
+    if (isShowOTP) {
+      //todo check show otp input
+      if (_waitingOTPProvider.start > 0) {
+        //todo OTP timer out
+        await getViewModel().onRegister(
+            name: _nameController.text.toString(),
+            phone: _phoneController.text.toString(),
+            password: _passController.text.toString(),
+            rePass: _reTypePassController.text.toString(),
+            refCode: _invitePhoneController.text.toString(),
+            code: _otpController.text.toString().trim());
+      }
     } else {
-      if (isShowOTP) {
-        if (_otpControler.text.trim().length == 0) {
-          return "Please Enter code";
-        } else {
-          return "";
-        }
-      } else {
-        return "";
+      //todo send verify code and show otp input
+      var code = await getViewModel().onGetVerifyCode(
+          name: _nameController.text.toString(),
+          phone: _phoneController.text.toString(),
+          password: _passController.text.toString(),
+          rePass: _reTypePassController.text.toString(),
+          refCode: _invitePhoneController.text.toString());
+      if (code != null) {
+        print(code);
+        isShowOTP = true;
+        _waitingOTPProvider.startTimer();
       }
     }
   }
 
   @override
   void dispose() {
-    _waittingOTPProvider.stopTimer();
-    // TODO: implement dispose
+    _waitingOTPProvider.stopTimer();
     super.dispose();
   }
 
   @override
   List<SingleChildWidget> providers() {
     return [
-      ChangeNotifierProvider.value(value: _waittingOTPProvider),
+      ChangeNotifierProvider.value(value: _waitingOTPProvider),
     ];
   }
 

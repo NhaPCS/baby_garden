@@ -5,19 +5,20 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
 import 'package:baby_garden_flutter/widget/product/image_count.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-class SalingDetailScreen extends StatefulWidget {
+class SailingDetailScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _SalingDetailScreenState();
+    return _SailingDetailScreenState();
   }
 }
 
-class _SalingDetailScreenState extends BaseState<SalingDetailScreen> {
+class _SailingDetailScreenState extends BaseState<SailingDetailScreen> {
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
@@ -96,24 +97,15 @@ class _SalingDetailScreenState extends BaseState<SalingDetailScreen> {
                 SizedBox(
                   height: SizeUtil.superTinySpace,
                 ),
-                // TODO-Hung: k add anh test vao. dung dummyImage. xoá hết ảnh test đi
-                Image.asset(
-                  "photo/saling_detail_img.png.png",
-                  width: MediaQuery.of(context).size.width,
-                ),
+                CachedNetworkImage(imageUrl: StringUtil.dummyImage,width: MediaQuery.of(context).size.width,),
               ],
             ),
           ),
-          // TODO-Hung: dung WidgetUtil.getLine
-          Container(
-            color: ColorUtil.lineColor,
-            height: SizeUtil.smallSpace,
-            width: MediaQuery.of(context).size.width,
-          ),
+          WidgetUtil.getLine(margin: EdgeInsets.all(0),width: SizeUtil.smallSpace,),
           Container(
             decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
-                // BoxShape.circle or BoxShape.retangle
+                // BoxShape.circle or BoxShape.rectangle
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
@@ -148,12 +140,7 @@ class _SalingDetailScreenState extends BaseState<SalingDetailScreen> {
               ],
             ),
           ),
-          // TODO-Hung: dung WidgetUtil.getLine
-          Container(
-            color: ColorUtil.lineColor,
-            height: SizeUtil.smallSpace,
-            width: MediaQuery.of(context).size.width,
-          ),
+          WidgetUtil.getLine(margin: EdgeInsets.all(0),width: SizeUtil.smallSpace,),
           Container(
             height: MediaQuery.of(context).size.height*0.78,
             color: ColorUtil.lineColor,

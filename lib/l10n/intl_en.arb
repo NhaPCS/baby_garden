@@ -447,5 +447,10 @@
   "cancel_by": "Hủy bởi",
   "change_service_type": "Muốn thay đổi loại dịch vụ",
   "cancel_question": "Bạn có muốn thực sự muốn huỷ ?",
-  "attenion" : "Chú ý"
+  "attention": "Chú ý",
+  "enter_name": "Mời nhập tên",
+  "enter_code": "Mời nhập mã OTP",
+  "name": "tên",
+  "phone_format": "Số điện thoại không tồn tại, mời nhập lại"
+
 }

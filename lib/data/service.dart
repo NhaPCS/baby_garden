@@ -48,15 +48,21 @@ Future<dynamic> register(BuildContext context,
 }
 
 //TODO require VERIFY CODE
-Future<dynamic> verifyCode(BuildContext context,
-    {String phone, String name, String password, String refCode}) async {
+Future<dynamic> verifyCode(
+    {BuildContext context,
+    String phone,
+    String name,
+    String password,
+    String refCode}) async {
   Response response = await post(context, path: "verifyCode", param: {
     'phone': phone,
     'name': name,
     'password': password,
     'ref_code': refCode,
   });
-  if (response.isSuccess()) return response.data;
+  if (response.isSuccess()) {
+    return response.data;
+  }
   return null;
 }
 
@@ -66,8 +72,8 @@ Future<dynamic> forgetPassword(BuildContext context, {String phone}) async {
       await post(context, path: "forgetPassword", param: {'phone': phone});
   if (response.isSuccess()) {
     return response.data;
-  } else{
-    return response.message;
+  } else {
+    return null;
   }
 }
 
@@ -254,7 +260,7 @@ Future<dynamic> notification() async {
 }
 
 //todo notificationDetail
-Future<dynamic> notificationDetail({ String notifyID}) async {
+Future<dynamic> notificationDetail({String notifyID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
       path: "notificationDetail",
@@ -264,7 +270,7 @@ Future<dynamic> notificationDetail({ String notifyID}) async {
 }
 
 //todo deleteNoty
-Future<dynamic> deleteNoty({ String notifyID}) async {
+Future<dynamic> deleteNoty({String notifyID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await post(null,
       path: "deleteNoty", param: {'user_id': userId, 'noty_id': notifyID});
@@ -289,7 +295,7 @@ Future<dynamic> newsDetail({String newID}) async {
 }
 
 //todo bookingDetail
-Future<dynamic> bookingDetail({ var bookingID}) async {
+Future<dynamic> bookingDetail({var bookingID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
       path: "bookingDetail",
@@ -308,8 +314,8 @@ Future<dynamic> district({String id}) async {
 //todo listShiper
 Future<dynamic> listShiper() async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  Response response = await get(null,
-      path: "listShiper", param: {'user_id': userId});
+  Response response =
+      await get(null, path: "listShiper", param: {'user_id': userId});
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -323,7 +329,7 @@ Future<dynamic> city() async {
 
 //todo rateBooking
 Future<dynamic> rateBooking(
-    { int bookingID, double star, String content}) async {
+    {int bookingID, double star, String content}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await post(null, path: "rateBooking", param: {
     'user_id': userId,
@@ -336,7 +342,7 @@ Future<dynamic> rateBooking(
 }
 
 //todo listBookingService
-Future<dynamic> listBookingService({ int type}) async {
+Future<dynamic> listBookingService({int type}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
       path: "listBookingService",
@@ -346,7 +352,7 @@ Future<dynamic> listBookingService({ int type}) async {
 }
 
 //todo listBookingProduct
-Future<dynamic> listBookingProduct({ int type}) async {
+Future<dynamic> listBookingProduct({int type}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
       path: "listBookingProduct",
@@ -611,7 +617,8 @@ Future<dynamic> listAddress() async {
   return null;
 }
 
-Future<dynamic> listFavouriteShop({int index = START_PAGE, int numberPosts = PAGE_SIZE}) async {
+Future<dynamic> listFavouriteShop(
+    {int index = START_PAGE, int numberPosts = PAGE_SIZE}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {
     "user_id": userId,
@@ -633,7 +640,6 @@ Future<dynamic> listPromotion() async {
   if (response.isSuccess()) return response.data;
   return null;
 }
-
 
 Future<Response> addUserAddress(BuildContext context,
     {String address, int isMain}) async {
@@ -661,7 +667,10 @@ Future<Response> editUserAddress(BuildContext context,
   };
 
   Response response = await post(context,
-      path: "editAddress", param: params, requireLogin: true, showLoading: true);
+      path: "editAddress",
+      param: params,
+      requireLogin: true,
+      showLoading: true);
   if (response.isSuccess()) return response;
   return null;
 }
@@ -698,7 +707,6 @@ Future<Response> deleteAddress(BuildContext context,
   if (response.isSuccess()) return response;
   return null;
 }
-
 
 Future<Response> post(BuildContext context,
     {String path,
