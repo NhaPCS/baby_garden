@@ -20,9 +20,17 @@ import 'package:provider/provider.dart';
 import '../order_delivery_info/order_delivery_info_screen.dart';
 
 class OrderDetailScreen extends StatefulWidget {
+  final bool isShowPositiveButton;
+  final bool isShowNegativeButton;
+  final String title;
+  final int state;
   final String bookingId;
   const OrderDetailScreen(
       {Key key,
+      this.title,
+      this.isShowNegativeButton = false,
+      this.isShowPositiveButton = false,
+      this.state = 0,
       this.bookingId = "0"})
       : super(key: key);
 

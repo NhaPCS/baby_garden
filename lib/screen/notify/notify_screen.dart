@@ -2,6 +2,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/notify_control_provider.dart';
 import 'package:baby_garden_flutter/screen/notify/provider/search_notify_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/order_detail/order_detail_screen.dart';
 import 'package:baby_garden_flutter/screen/saling_detail/sailing_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/switchButton.dart';
@@ -22,9 +23,11 @@ class NotifyScreen extends StatefulWidget {
 }
 
 class _NotifyScreenState extends BaseState<NotifyScreen> {
-  final TextEditingController searchTextController = new TextEditingController();
+  final TextEditingController searchTextController =
+      new TextEditingController();
   final NotifySearchProvider _notifySearchProvider = new NotifySearchProvider();
-  final ValueNotifier<bool> _hideReadedNotifyController= new ValueNotifier(false);
+  final ValueNotifier<bool> _hideReadNotifyController =
+      new ValueNotifier(false);
   final FocusNode _focusNode = FocusNode();
 
   @override
@@ -53,15 +56,16 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Consumer<NotifyProvider>(
-              builder: (BuildContext context, NotifyProvider value,
-                  Widget child) {
+              builder:
+                  (BuildContext context, NotifyProvider value, Widget child) {
                 return CupertinoSegmentedControl(
                   children: {
                     0: Text(S.of(context).sale),
                     1: Text(S.of(context).personal)
                   },
                   onValueChanged: (value) {
-                    Provider.of<NotifyProvider>(context,listen: false).onSegmentChange(value);
+                    Provider.of<NotifyProvider>(context, listen: false)
+                        .onSegmentChange(value);
                   },
                   groupValue: value.currentValue,
                   selectedColor: ColorUtil.primaryColor,
@@ -86,7 +90,11 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                       children: <Widget>[
                         Expanded(
                             child: Padding(
-                          padding: const EdgeInsets.only(left: SizeUtil.midSmallSpace,bottom: SizeUtil.midSmallSpace,right: SizeUtil.midSmallSpace,top: SizeUtil.midSmallSpace),
+                          padding: const EdgeInsets.only(
+                              left: SizeUtil.midSmallSpace,
+                              bottom: SizeUtil.midSmallSpace,
+                              right: SizeUtil.midSmallSpace,
+                              top: SizeUtil.midSmallSpace),
                           child: Stack(
                             alignment: Alignment.centerLeft,
                             children: <Widget>[
@@ -109,9 +117,10 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                                 },
                                 onFocus: _focusNode,
                                 onChanged: (text) {
-                                  if (text.trim().length > 0)
+                                  Provider.of<NotifyProvider>(context,listen: false).onSearch(text);
+                                  if (text.trim().length > 0) {
                                     _notifySearchProvider.onChangeFocus(true);
-                                  else {
+                                  } else {
                                     _notifySearchProvider.onChangeFocus(false);
                                   }
                                 },
@@ -142,19 +151,24 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                                             S.of(context).hide_readed_notify,
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
-                                                fontSize: SizeUtil.textSizeSmall),
+                                                fontSize:
+                                                    SizeUtil.textSizeSmall),
                                           ),
-                                          onTap: (){
-                                            _hideReadedNotifyController.value = !_hideReadedNotifyController.value;
+                                          onTap: () {
+                                            _hideReadNotifyController.value =
+                                                !_hideReadNotifyController
+                                                    .value;
                                           },
                                         ),
                                         Transform.scale(
                                           scale: 1,
                                           child: SwitchButton(
-                                            valueChanged: (result){
-                                              _hideReadedNotifyController.value = result;
+                                            valueChanged: (result) {
+                                              _hideReadNotifyController.value =
+                                                  result;
                                             },
-                                            valueController: _hideReadedNotifyController,
+                                            valueController:
+                                                _hideReadNotifyController,
                                           ),
                                         )
                                       ],
@@ -167,33 +181,58 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                       ],
                     ),
                     //todo notify list
-                    Consumer<NotifyProvider>(builder: (BuildContext context, NotifyProvider value, Widget child) {
-                      List<dynamic> data = value.isPromote?value.promotions:value.private;
-                      if (data == null || data.isEmpty)
-                        return LoadingView(
-                          isNoData: data != null,
-                          onReload: (){
-                            Provider.of<NotifyProvider>(context,listen: false).getNotify();
-                          },
+                    Consumer<NotifyProvider>(
+                      builder: (BuildContext context, NotifyProvider value,
+                          Widget child) {
+                        List<dynamic> data =
+                            value.isPromote ? value.promotions : value.private;
+                        if(value.filter.isNotEmpty){
+                          data = data.where((i) => i['title'].toString().toLowerCase().contains(value.filter.toLowerCase())).toList();
+                        }
+                        print("data $data ${value.isPromote}");
+                        if (data == null || data.isEmpty)
+                          return LoadingView(
+                            isNoData: data != null,
+                            onReload: () {
+                              Provider.of<NotifyProvider>(context,
+                                      listen: false)
+                                  .getNotify();
+                            },
+                          );
+                        return Expanded(
+                          child: ListView.builder(
+                              itemCount: data.length,
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              padding: EdgeInsets.all(0),
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    push(value.isPromote
+                                        ? SailingDetailScreen(
+                                            notifyId: data[index]['id'],
+                                          )
+                                        : OrderDetailScreen(
+                                            bookingId: "3",
+                                            title: "notify",
+                                            state: 1,
+                                            isShowNegativeButton: true,
+                                            isShowPositiveButton: true,
+                                          ));
+                                  },
+                                  child: NotifyItem(
+                                    data: data[index],
+                                    deleteNotify: () {
+                                      Provider.of<NotifyProvider>(context,
+                                              listen: false)
+                                          .deleteNotify(index);
+                                    },
+                                  ),
+                                );
+                              }),
                         );
-                      return Expanded(
-                        child: ListView.builder(
-                            itemCount: data.length,
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            padding: EdgeInsets.all(0),
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: (){
-                                  push(SailingDetailScreen());
-                                },
-                                child: NotifyItem(data: data[index],deleteNotify: (){
-                                  Provider.of<NotifyProvider>(context,listen: false).deleteNotify(index);
-                                },),
-                              );
-                            }),
-                      );
-                    },)
+                      },
+                    )
                   ],
                 ),
                 color: ColorUtil.lineColor,

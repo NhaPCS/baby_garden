@@ -264,7 +264,7 @@ Future<dynamic> notificationDetail({String notifyID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
       path: "notificationDetail",
-      param: {'index': userId, 'noty_id': notifyID});
+      param: {'user_id': userId, 'noty_id': notifyID});
   if (response.isSuccess()) return response.data;
   return null;
 }

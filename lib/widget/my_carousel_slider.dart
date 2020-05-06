@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/product/image_count.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -20,6 +21,7 @@ class MyCarouselSlider extends StatefulWidget {
   final ValueChanged<int> onItemPressed;
   final ValueChanged<int> onItemSelected;
   final String imageAttrName;
+  final bool isShowImageCount;
 
   const MyCarouselSlider(
       {Key key,
@@ -37,7 +39,7 @@ class MyCarouselSlider extends StatefulWidget {
       this.hasShadow = false,
       this.onItemPressed,
       this.onItemSelected,
-      this.imageAttrName})
+      this.imageAttrName, this.isShowImageCount = false})
       : super(key: key);
 
   @override
@@ -94,6 +96,12 @@ class _MyCarouselState extends State<MyCarouselSlider> {
             );
           }).toList(),
         ),
+        widget.isShowImageCount?ImageCount(
+          backgroundColor: Colors.white,
+          borderColor: Colors.white,
+          textColor: ColorUtil.textColor,
+          text: "${selectedPosition + 1} / ${widget.images.length}",
+        ):SizedBox(),
         Positioned(
             bottom: SizeUtil.smallSpace,
             left: 0,

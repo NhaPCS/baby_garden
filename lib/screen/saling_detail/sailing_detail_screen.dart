@@ -1,17 +1,24 @@
+import 'package:baby_garden_flutter/data/model/section.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/product_item.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/list_product/list_product_screen.dart';
+import 'package:baby_garden_flutter/screen/notify/provider/discount_provider.dart';
+import 'package:baby_garden_flutter/screen/saling_detail/provider/sailing_detail_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
-import 'package:baby_garden_flutter/widget/product/image_count.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class SailingDetailScreen extends StatefulWidget {
+  final String notifyId;
+
+  const SailingDetailScreen({this.notifyId}) : super();
+
   @override
   State<StatefulWidget> createState() {
     return _SailingDetailScreenState();
@@ -19,159 +26,189 @@ class SailingDetailScreen extends StatefulWidget {
 }
 
 class _SailingDetailScreenState extends BaseState<SailingDetailScreen> {
+  final SailingDetailProvider _sailingDetailProvider = SailingDetailProvider();
+  final DiscountProvider _discountProvider = DiscountProvider();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _sailingDetailProvider.getNotifyDetail(notifyId: widget.notifyId);
+    _discountProvider.getData();
+    super.initState();
+  }
+
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
       appBar: getAppBar(
         title: S.of(context).saling_detail,
       ),
-      body: ListView(
-        children: <Widget>[
-          Stack(
-            children: <Widget>[
-              MyCarouselSlider(
-                height: Provider.of<AppProvider>(context).saleDetailSlideHeight,
-                borderRadius: 0,
-                margin: EdgeInsets.all(0),
-                images: [
-                  StringUtil.dummyImage,
-                  StringUtil.dummyImage,
-                  StringUtil.dummyImage,
-                  StringUtil.dummyImage
-                ],
-              ),
-              ImageCount(
-                backgroundColor: Colors.white,
-                borderColor: Colors.white,
-                textColor: ColorUtil.textColor,
-                text: "1/4",
-              ),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.all(SizeUtil.smallSpace),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  S.of(context).saling_detail_title(
-                      "Vườn của bé - Tưng bừng khuyến mãi"),
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: SizeUtil.textSizeDefault),
-                ),
-                SizedBox(
-                  height: SizeUtil.superTinySpace,
-                ),
-                Text(
-                  S.of(context).saling_detail_time("12.12.2019 đến 31.01.2020"),
-                  style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: SizeUtil.textSizeSmall),
-                ),
-                SizedBox(
-                  height: SizeUtil.superTinySpace,
-                ),
-                Text(
-                  "Khuyến mãi chương trình dịp khai trương shop cơ sở mới",
-                  style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: SizeUtil.textSizeExpressDetail),
-                ),
-                SizedBox(
-                  height: SizeUtil.superTinySpace,
-                ),
-                Text(
-                  "Khuyến mãi siêu hot dịp tết nguyễn đán 2019\ndành cho 100 khách hàng đầu tiên thanh toán bang\nthẻ tín dung nội địa Teckcombank đặt hàng online ngay",
-                  style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: SizeUtil.textSizeExpressDetail),
-                ),
-                SizedBox(
-                  height: SizeUtil.superTinySpace,
-                ),
-                Text(
-                  "Theo dõi Vườn Của Bé qua Website: http://vuoncuabe.com.vn",
-                  style: TextStyle(fontWeight: FontWeight.normal, fontSize: 12),
-                ),
-                SizedBox(
-                  height: SizeUtil.superTinySpace,
-                ),
-                CachedNetworkImage(imageUrl: StringUtil.dummyImage,width: MediaQuery.of(context).size.width,),
-              ],
-            ),
-          ),
-          WidgetUtil.getLine(margin: EdgeInsets.all(0),width: SizeUtil.smallSpace,),
-          Container(
-            decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                // BoxShape.circle or BoxShape.rectangle
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey,
-                    blurRadius: 5.0,
-                  ),
-                ]),
-            padding: EdgeInsets.all(SizeUtil.smallSpace),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  S.of(context).product_for_sale,
-                  style: TextStyle(
-                      fontSize: SizeUtil.textSizeDefault,
-                      color: ColorUtil.textColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                Expanded(
-                  child: SizedBox(),
-                ),
-                Text(
-                  S.of(context).see_more,
-                  style: TextStyle(
-                      color: ColorUtil.primaryColor,
-                      fontSize: SizeUtil.textSizeSmall),
-                ),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  color: ColorUtil.primaryColor,
-                  size: SizeUtil.iconSize,
-                )
-              ],
-            ),
-          ),
-          WidgetUtil.getLine(margin: EdgeInsets.all(0),width: SizeUtil.smallSpace,),
-          Container(
-            height: MediaQuery.of(context).size.height*0.78,
-            color: ColorUtil.lineColor,
-            child: GridView.builder(
-              scrollDirection: Axis.horizontal,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, childAspectRatio: 1.42),
-              padding: EdgeInsets.only(
-                  left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
-              itemBuilder: (context, index) {
-                return ProductItem(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  borderRadius: SizeUtil.tinyRadius,
-                  showSoldCount: false,
-                  nameStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
-                  showTime: false,
-                  padding: EdgeInsets.only(
-                      left: SizeUtil.smallSpace,
-                      right: SizeUtil.smallSpace,
-                      top: 0),
+      body: Consumer<SailingDetailProvider>(
+        builder:
+            (BuildContext context, SailingDetailProvider value, Widget child) {
+          return value.detail == null
+              ? Container()
+              : ListView(
+                  children: <Widget>[
+                    MyCarouselSlider(
+                      height: Provider.of<AppProvider>(context)
+                          .saleDetailSlideHeight,
+                      borderRadius: 0,
+                      margin: EdgeInsets.all(0),
+                      images: [
+                        StringUtil.dummyImage,
+                        StringUtil.dummyImage,
+                        StringUtil.dummyImage,
+                        StringUtil.dummyImage
+                      ],
+                      isShowImageCount: true,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(SizeUtil.smallSpace),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            S
+                                .of(context)
+                                .saling_detail_title(value.detail['title']),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: SizeUtil.textSizeDefault),
+                          ),
+                          SizedBox(
+                            height: SizeUtil.superTinySpace,
+                          ),
+                          Text(
+                            S
+                                .of(context)
+                                .saling_detail_time(value.detail["date"]),
+                            style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: SizeUtil.textSizeSmall),
+                          ),
+                          SizedBox(
+                            height: SizeUtil.superTinySpace,
+                          ),
+                          Text(
+                            value.detail["content"],
+                            style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: SizeUtil.textSizeExpressDetail),
+                          ),
+                          SizedBox(
+                            height: SizeUtil.superTinySpace,
+                          ),
+                        ],
+                      ),
+                    ),
+                    WidgetUtil.getLine(
+                      margin: EdgeInsets.all(0),
+                      width: SizeUtil.smallSpace,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        push(
+                          ListProductScreen(
+                              section: Section(
+                                  title: S.of(context).home_discount_products,
+                                  path: 'discountProduct')),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            // BoxShape.circle or BoxShape.rectangle
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 5.0,
+                              ),
+                            ]),
+                        padding: EdgeInsets.all(SizeUtil.smallSpace),
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              S.of(context).product_for_sale,
+                              style: TextStyle(
+                                  fontSize: SizeUtil.textSizeDefault,
+                                  color: ColorUtil.textColor,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Expanded(
+                              child: SizedBox(),
+                            ),
+                            Text(
+                              S.of(context).see_more,
+                              style: TextStyle(
+                                  color: ColorUtil.primaryColor,
+                                  fontSize: SizeUtil.textSizeSmall),
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color: ColorUtil.primaryColor,
+                              size: SizeUtil.iconSize,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    WidgetUtil.getLine(
+                      margin: EdgeInsets.all(0),
+                      width: SizeUtil.smallSpace,
+                    ),
+                    Consumer<DiscountProvider>(builder: (BuildContext context, DiscountProvider value, Widget child) {
+                      var products = value.products;
+                      if (products == null || products.isEmpty)
+                        return LoadingView(
+                          isNoData: products != null,
+                          onReload: () {
+                            _discountProvider.getData();
+                          },
+                        );
+                      return Container(
+                        height: MediaQuery.of(context).size.height * 0.78,
+                        color: ColorUtil.lineColor,
+                        child: GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          itemCount: products.length,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2, childAspectRatio: 0.78),
+                          padding: EdgeInsets.only(
+                              left: SizeUtil.tinySpace,
+                              right: SizeUtil.tinySpace),
+                          itemBuilder: (context, index) {
+                            return ProductItem(
+                              product: products[index],
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              borderRadius: SizeUtil.tinyRadius,
+                              showSoldCount: false,
+                              nameStyle:
+                              TextStyle(fontSize: SizeUtil.textSizeDefault),
+                              showTime: false,
+                              padding: EdgeInsets.only(
+                                  left: SizeUtil.smallSpace,
+                                  right: SizeUtil.smallSpace,
+                                  top: 0),
+                            );
+                          },
+                        ),
+                      );
+                    },)
+                  ],
                 );
-              },
-            ),
-          )
-        ],
+        },
       ),
     );
   }
 
   @override
   List<SingleChildWidget> providers() {
-    return null;
+    return [
+      ChangeNotifierProvider.value(value: _sailingDetailProvider),
+      ChangeNotifierProvider.value(value: _discountProvider),
+    ];
   }
 }
