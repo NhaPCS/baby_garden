@@ -33,39 +33,45 @@ class _PointHistoryScreenState extends BaseState<PointHistoryScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
+    var listView = List<Widget>();
+
+    listView.add(
+      WidgetUtil.getLine(
+          margin: EdgeInsets.all(0), width: 5, color: ColorUtil.lineLightGray),
+    );
+
+    listView.add(
+      Padding(
+        padding: EdgeInsets.only(
+            left: SizeUtil.midSmallSpace, top: SizeUtil.smallSpace),
+        child: Text(
+          S.of(context).pointHistoryHeadText,
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: SizeUtil.textSizeBigger,
+              color: Color.fromRGBO(46, 95, 109, 1)),
+        ),
+      ),
+    );
+
     return Scaffold(
         appBar: getAppBar(title: S.of(context).pointManage),
         body: Consumer<PointManageProvider>(builder: (context, value, child) {
           if (value.pointDetailList == null || value.pointDetailList.isEmpty)
             return LoadingView(isNoData: value.pointDetailList != null);
-          return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                WidgetUtil.getLine(
-                    margin: EdgeInsets.all(0),
-                    width: 5,
-                    color: ColorUtil.lineLightGray),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: SizeUtil.midSmallSpace, top: SizeUtil.smallSpace),
-                  child: Text(
-                    S.of(context).pointHistoryHeadText,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: SizeUtil.textSizeBigger,
-                        color: Color.fromRGBO(46, 95, 109, 1)),
-                  ),
-                ),
-                ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: value.pointList.length + 1,
-                    itemBuilder: (BuildContext context, int index) {
-                      final pointDetail =
-                          _pointManageProvider.getPointDetail(index);
-                      return PointHistoryCardItem(pointDetail: pointDetail);
-                    }),
-              ]);
+
+          value.pointDetailList.asMap().forEach((index, value) {
+            final pointDetail = _pointManageProvider.getPointDetail(index);
+            pointDetail.shopImage = widget.pointInfo.shopImage;
+            listView.add(PointHistoryCardItem(pointDetail: pointDetail));
+          });
+
+          return SingleChildScrollView(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: listView.map((e) => e).toList()),
+          );
         }));
   }
 

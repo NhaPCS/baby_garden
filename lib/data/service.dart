@@ -432,7 +432,6 @@ Future<dynamic> listProducts(BuildContext context, String path,
     int index = START_PAGE,
     int numberPosts = PAGE_SIZE}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
-
   dynamic params = {
     "user_id": userId,
     "index": index.toString(),
@@ -934,6 +933,7 @@ Future<dynamic> addRemindCalendar(BuildContext context,
 
 Future<dynamic> getListPoint(BuildContext context) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  // userId = '26';
   dynamic params = {"user_id": userId};
 
   Response response = await get(context, path: "managePoint", param: params);
@@ -944,6 +944,8 @@ Future<dynamic> getListPoint(BuildContext context) async {
 
 Future<dynamic> getPointDetail(BuildContext context, String shopId) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  // userId = '26';
+  // shopId = '1';
   dynamic params = {"user_id": userId, "shop_id": shopId};
 
   Response response = await get(context, path: "pointDetail", param: params);

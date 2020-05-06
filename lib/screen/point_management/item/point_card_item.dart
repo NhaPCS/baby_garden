@@ -13,19 +13,19 @@ class PointCardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: setBorder('bottom', Color(0xffC9C8C8), 1),
-      margin: EdgeInsets.only(
-          left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
-      padding: EdgeInsets.all(SizeUtil.midSmallSpace),
-      child: GestureDetector(
-        onTap: () {
-          RouteUtil.push(
-              context,
-              PointHistoryScreen(
-                pointInfo: pointInfo,
-              ));
-        },
+    return GestureDetector(
+      onTap: () {
+        RouteUtil.push(
+            context,
+            PointHistoryScreen(
+              pointInfo: pointInfo,
+            ));
+      },
+      child: Container(
+        decoration: setBorder('bottom', Color(0xffC9C8C8), 1),
+        margin: EdgeInsets.only(
+            left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
+        padding: EdgeInsets.all(SizeUtil.midSmallSpace),
         child: Row(children: <Widget>[
           ClipRRect(
               borderRadius: BorderRadius.circular(12),

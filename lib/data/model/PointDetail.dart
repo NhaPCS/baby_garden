@@ -2,9 +2,9 @@ class PointDetail {
   String shopImage;
   String history;
   String dateTime;
-  int currentPoint;
-  int type; // 1 add point, 2 substract point
-  int changePoint;
+  String currentPoint;
+  String type; // 1 add point, 2 substract point
+  String changePoint;
 
   PointDetail(
       {this.shopImage,
