@@ -190,7 +190,7 @@ class ChangeDeliveryTimeDialogue extends StatelessWidget {
                                         fontSize: SizeUtil.textSizeSmall),
                                   ),
                                   SizedBox(
-                                    height: SizeUtil.bigSpacehigher,
+                                    height: SizeUtil.bigSpaceHigher,
                                   ),
                                 ],
                               );

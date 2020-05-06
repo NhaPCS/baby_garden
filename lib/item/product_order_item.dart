@@ -51,7 +51,7 @@ class ProductOrderItem extends StatelessWidget{
               S.of(context).sku_code("123"),
               style: TextStyle(
                   height: 1.5,
-                  fontSize: SizeUtil.textSizeNotiTime),
+                  fontSize: SizeUtil.textSizeNoticeTime),
               textAlign: TextAlign.start,
             ):SizedBox(),
             RichTextForm(

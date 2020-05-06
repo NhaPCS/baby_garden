@@ -283,7 +283,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                               "Loại dịch vụ: SPA Thẩm mý, Khám thai",
                               style: TextStyle(
                                   height: 1.5,
-                                  fontSize: SizeUtil.textSizeNotiTime),
+                                  fontSize: SizeUtil.textSizeNoticeTime),
                               textAlign: TextAlign.start,
                             ),
                             SizedBox(

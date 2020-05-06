@@ -332,7 +332,7 @@ class SizeUtil {
   static const double tinySpace = 4;
   static const double superTinySpace = 2;
   static const double bigSpace = 30;
-  static const double bigSpacehigher = 32;
+  static const double bigSpaceHigher = 32;
   static const double hugSpace = 50;
   static const double largeSpace = 70;
   static const double biggerSpace = 40;
@@ -345,7 +345,7 @@ class SizeUtil {
   static const double textSizeExpressTitle = 14;
   static const double textSizeExpressDetail = 13;
   static const double textSizeSmall = 11;
-  static const double textSizeNotiTime = 10;
+  static const double textSizeNoticeTime = 10;
   static const double textSizeTiny = 8;
   static const double textSizeMini = 5;
   static const double textSizeHuge = 40;
@@ -370,7 +370,7 @@ class SizeUtil {
   static const double lineHeight = 5;
   static const double delivery_code_height = 36;
 
-  static const double tabbar_fix_height = 40;
+  static const double tab_bar_fix_height = 40;
 
   static const double textSpaceTiny = 1;
   static const double textSpaceSmall = 2;

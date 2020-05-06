@@ -106,7 +106,7 @@ class _BookingScreenState
                 )),
             content: Padding(
               padding: EdgeInsets.only(
-                  left: SizeUtil.bigSpacehigher,
+                  left: SizeUtil.bigSpaceHigher,
                   top: SizeUtil.tinySpace,
                   bottom: SizeUtil.tinySpace),
               child: Consumer<ReceiveAddressListProvider>(
@@ -391,11 +391,11 @@ class _BookingScreenState
                               subTitle: Text(
                                 e['note'],
                                 style: TextStyle(
-                                    fontSize: SizeUtil.textSizeNotiTime,
+                                    fontSize: SizeUtil.textSizeNoticeTime,
                                     color: ColorUtil.gray),
                               ),
                               padding: const EdgeInsets.only(
-                                  left: SizeUtil.bigSpacehigher,
+                                  left: SizeUtil.bigSpaceHigher,
                                   top: SizeUtil.smallSpace,
                                   bottom: SizeUtil.smallSpace,
                                   right: SizeUtil.normalSpace),
@@ -438,7 +438,7 @@ class _BookingScreenState
                     .toList()),
             Padding(
               padding: const EdgeInsets.only(
-                  left: SizeUtil.bigSpacehigher,
+                  left: SizeUtil.bigSpaceHigher,
                   bottom: SizeUtil.smallSpace,
                   right: SizeUtil.tinySpace),
               child: Column(
@@ -561,7 +561,7 @@ class _BookingScreenState
                 style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail),
               ),
               padding: const EdgeInsets.only(
-                  left: SizeUtil.bigSpacehigher,
+                  left: SizeUtil.bigSpaceHigher,
                   top: SizeUtil.smallSpace,
                   bottom: SizeUtil.smallSpace),
               value: 1,
@@ -576,7 +576,7 @@ class _BookingScreenState
                 style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail),
               ),
               padding: const EdgeInsets.only(
-                  left: SizeUtil.bigSpacehigher,
+                  left: SizeUtil.bigSpaceHigher,
                   top: SizeUtil.smallSpace,
                   right: SizeUtil.normalSpace),
               value: 2,
@@ -611,7 +611,7 @@ class _BookingScreenState
             ),
             Padding(
               padding: const EdgeInsets.only(
-                  left: SizeUtil.bigSpacehigher,
+                  left: SizeUtil.bigSpaceHigher,
                   bottom: SizeUtil.smallSpace,
                   right: SizeUtil.tinySpace),
               child: Row(
@@ -664,7 +664,7 @@ class _BookingScreenState
             CustomRadioButton(
               titleContent: Text(S.of(context).delivery_in_shop),
               padding: const EdgeInsets.only(
-                  left: SizeUtil.bigSpacehigher,
+                  left: SizeUtil.bigSpaceHigher,
                   top: SizeUtil.smallSpace,
                   bottom: SizeUtil.smallSpace),
               value: 1,
@@ -701,7 +701,7 @@ class _BookingScreenState
             CustomRadioButton(
               titleContent: Text(S.of(context).delivery_to_address),
               padding: const EdgeInsets.only(
-                  left: SizeUtil.bigSpacehigher,
+                  left: SizeUtil.bigSpaceHigher,
                   top: SizeUtil.smallSpace,
                   bottom: SizeUtil.smallSpace),
               value: 2,

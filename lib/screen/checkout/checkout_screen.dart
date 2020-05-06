@@ -212,7 +212,7 @@ class _CheckoutScreenState
                   S.of(context).press_to_upload,
                   style: TextStyle(
                       color: ColorUtil.black33,
-                      fontSize: SizeUtil.textSizeNotiTime),
+                      fontSize: SizeUtil.textSizeNoticeTime),
                 ),
                 SizedBox(
                   height: SizeUtil.defaultSpace,

@@ -91,7 +91,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
-    final productTabbarHei = SizeUtil.tabbar_fix_height + 76;
+    final productTabbarHei = SizeUtil.tab_bar_fix_height + 76;
     List<Tab> myTabs = <Tab>[
       Tab(text: S.of(context).book,),
       Tab(text: S.of(context).product,),
@@ -227,7 +227,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
                                         Column(children: <Widget>[
                                             Container(
                                               height:
-                                                  SizeUtil.tabbar_fix_height,
+                                                  SizeUtil.tab_bar_fix_height,
                                               child: ColoredTabBar(
                                                 ColorUtil.lineColor,
                                                 TabBar(
@@ -264,8 +264,8 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
                                                 : SizedBox()
                                           ],
                                         ),
-                                        value.isProduct ? productTabbarHei : SizeUtil.tabbar_fix_height,
-                                        value.isProduct ? productTabbarHei : SizeUtil.tabbar_fix_height),
+                                        value.isProduct ? productTabbarHei : SizeUtil.tab_bar_fix_height,
+                                        value.isProduct ? productTabbarHei : SizeUtil.tab_bar_fix_height),
                                   );
                                 },
                               )

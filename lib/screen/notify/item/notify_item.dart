@@ -76,7 +76,7 @@ class NotifyItem extends StatelessWidget {
                             child: Text(
                               data['date'],
                               style: TextStyle(
-                                  fontSize: SizeUtil.textSizeNotiTime,
+                                  fontSize: SizeUtil.textSizeNoticeTime,
                                   color: ColorUtil.textHint),
                             ),
                           ),
@@ -84,7 +84,7 @@ class NotifyItem extends StatelessWidget {
                             S.of(context).send_by(data['shop_name']),
                             style: TextStyle(
                                 color: ColorUtil.primaryColor,
-                                fontSize: SizeUtil.textSizeNotiTime),
+                                fontSize: SizeUtil.textSizeNoticeTime),
                           ),
                         ],
                       )

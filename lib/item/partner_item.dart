@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/screen/list_user_rated/list_user_rated_screen.dart';
 import 'package:baby_garden_flutter/screen/partner_book_schedule/widget/shop_icon_info.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/image/my_cached_image.dart';
@@ -131,6 +132,9 @@ class PartnerItem extends StatelessWidget {
                           iconSize: SizeUtil.iconSizeBigger,
                           textSize: SizeUtil.textSizeDefault,
                           textColor: Colors.white,
+                          onTap: (){
+                            RouteUtil.push(context, ListUserRatedScreen());
+                          },
                         ),
                       ],
                     )

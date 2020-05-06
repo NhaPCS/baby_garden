@@ -69,7 +69,7 @@ class _DatePickerState extends BaseState<DatePicker>
                             style: TextStyle(
                                 color: dates.indexOf(e) == value ? Colors.white : widget.unSelectedColor,
                                 fontWeight: FontWeight.bold,
-                                fontSize: SizeUtil.textSizeNotiTime),
+                                fontSize: SizeUtil.textSizeNoticeTime),
                           ),
                           Text(
                             e['date'],
