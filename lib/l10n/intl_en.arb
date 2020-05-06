@@ -464,5 +464,6 @@
     "image_is": "Ảnh của bé:",
     "enter_again": "Nhập lại",
     "sku_product": "Mã SKU",
-    "numPoint": "{point} điểm"
+    "numPoint": "{point} điểm",
+    "messageLogout": "Bạn có muốn đăng xuất không?"
 }

@@ -4220,6 +4220,15 @@ class S {
       args: [point],
     );
   }
+
+  String get messageLogout {
+    return Intl.message(
+      'Bạn có muốn đăng xuất không?',
+      name: 'messageLogout',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

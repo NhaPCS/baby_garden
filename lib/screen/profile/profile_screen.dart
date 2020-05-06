@@ -42,24 +42,14 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
       {'icon': 'profile_logout', 'title': S.of(context).logout}
     ];
 
-    return SingleChildScrollView(
-      child: Column(children: <Widget>[
-        getAppBar(title: S.of(context).myProfile, hasBack: false),
-        Consumer<UserProvider>(
-          builder: (BuildContext context, UserProvider value, Widget child) {
-            return Column(
-              children: <Widget>[
-                value.isLogin
-                    ? Container(
-                        // user information
-                        child: UserInfor())
-                    : HeaderWithoutLogin(),
-                entriesWidget(entries: entries, logined: value.isLogin),
-              ],
-            );
-          },
-        ),
-      ]),
+    return Scaffold(
+      appBar: getAppBar(title: S.of(context).myProfile, hasBack: false),
+      body: Consumer<UserProvider>(
+        builder: (BuildContext context, UserProvider value, Widget child) {
+          return SingleChildScrollView(
+              child: listView(entries: entries, logined: value.isLogin));
+        },
+      ),
     );
   }
 
@@ -68,107 +58,122 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
     return [];
   }
 
-  Widget entriesWidget(
-      {@required List<Map<String, String>> entries, bool logined}) {
-    return ListView.builder(
-        shrinkWrap: true,
-        itemCount: entries.length,
-        padding: EdgeInsets.all(0),
-        itemBuilder: (BuildContext context, int index) {
-          return GestureDetector(
-            child: Visibility(
-              visible: !(!logined && index == 9),
-              child: Container(
-                padding: const EdgeInsets.all(SizeUtil.tinySpace),
-                decoration: BoxDecoration(
-                    border: Border(
-                  bottom: BorderSide(
-                      width: 1,
-                      style: BorderStyle.solid,
-                      color: Color.fromRGBO(206, 206, 206, 1)),
-                )),
-                child: Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: <Widget>[
-                    SvgIcon(
-                      '${entries[index]['icon']}.svg',
-                      color: (index == 0 && logined)
-                          ? ColorUtil.primaryColor
-                          : ColorUtil.black33,
-                      width: SizeUtil.iconSizeBigger,
-                      height: SizeUtil.iconSizeBigger,
-                      padding: EdgeInsets.only(
-                          left: SizeUtil.midSpace,
-                          right: SizeUtil.normalSpace,
-                          top: SizeUtil.tinySpace,
-                          bottom: SizeUtil.tinySpace),
-                    ),
-                    Text(entries[index]['title'],
-                        style: TextStyle(
-                            color: (index == 0 && logined)
-                                ? ColorUtil.primaryColor
-                                : ColorUtil.black33)),
-                  ],
-                ),
-              ),
-            ),
-            onTap: () {
-              if (!logined) {
-                switch (index) {
-                  case 7:
-                    push(CustomerSupportScreen());
-                    break;
-                  default:
-                    WidgetUtil.showRequireLoginDialog(context);
-                }
+  Widget listView({@required List<Map<String, String>> entries, bool logined}) {
+    final listView = List<Widget>();
 
-                return;
-              }
-              switch (index) {
-                case 0:
-                  push(AccountManageScreen());
-                  break;
-                case 1:
-                  push(PointManagementScreen());
-                  break;
-                case 2:
-                  push(RemindManagementScreen());
-                  break;
-                case 3:
-                  push(VoucherManagement());
-                  break;
-                case 4:
-                  push(FavoriteProductScreen());
-                  break;
-                case 5:
-                  push(PartnerLikeScreen());
-                  break;
-                case 6:
-                  push(SeenProductScreen());
-                  break;
-                case 7:
-                  push(CustomerSupportScreen());
-                  break;
-                case 8:
-                  push(SettingScreen());
-                  break;
-                case 9:
-                  // TODO-Nha: check lai,
-                  WidgetUtil.showConfirmDialog(context,
-                      title: "Xác nhận",
-                      message: "Bạn có muốn đăng xuất không?",
-                      positive: "Có",
-                      negative: "Không", positiveClicked: () {
-                    ShareValueProvider.shareValueProvider.saveUserId(null);
-                    ShareValueProvider.shareValueProvider.saveUserInfo(null);
-                    Provider.of<UserProvider>(context, listen: false)
-                        .logout(false);
-                    pushReplacement(MainScreen());
-                  }, negativeClick: () {});
-                  break;
-              }
-            },
-          );
-        });
+    listView.add(logined
+        ? Container(
+            // user information
+            child: UserInfor())
+        : HeaderWithoutLogin());
+
+    entries.asMap().forEach((index, entry) {
+      listView.add(GestureDetector(
+        child: Visibility(
+          visible: !(!logined && index == 9),
+          child: Container(
+            padding: const EdgeInsets.all(SizeUtil.tinySpace),
+            decoration: BoxDecoration(
+                border: Border(
+              bottom: BorderSide(
+                  width: 1,
+                  style: BorderStyle.solid,
+                  color: Color.fromRGBO(206, 206, 206, 1)),
+            )),
+            child: Row(
+              children: <Widget>[
+                SvgIcon(
+                  '${entry['icon']}.svg',
+                  color: (index == 0 && logined)
+                      ? ColorUtil.primaryColor
+                      : ColorUtil.black33,
+                  width: SizeUtil.iconSizeBigger,
+                  height: SizeUtil.iconSizeBigger,
+                  padding: EdgeInsets.only(
+                      left: SizeUtil.midSpace,
+                      right: SizeUtil.normalSpace,
+                      top: SizeUtil.tinySpace,
+                      bottom: SizeUtil.tinySpace),
+                ),
+                Expanded(
+                  child: Text(entry['title'],
+                      style: TextStyle(
+                          color: (index == 0 && logined)
+                              ? ColorUtil.primaryColor
+                              : ColorUtil.black33)),
+                ),
+              ],
+            ),
+          ),
+        ),
+        onTap: () {
+          if (!logined) {
+            switch (index) {
+              case 7:
+                push(CustomerSupportScreen());
+                break;
+              default:
+                WidgetUtil.showRequireLoginDialog(context);
+            }
+
+            return;
+          }
+
+          pushToScreen(index);
+        },
+      ));
+    });
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: listView.map((e) => e).toList(),
+    );
+  }
+
+  void pushToScreen(int index) {
+    switch (index) {
+      case 0:
+        push(AccountManageScreen());
+        break;
+      case 1:
+        push(PointManagementScreen());
+        break;
+      case 2:
+        push(RemindManagementScreen());
+        break;
+      case 3:
+        push(VoucherManagement());
+        break;
+      case 4:
+        push(FavoriteProductScreen());
+        break;
+      case 5:
+        push(PartnerLikeScreen());
+        break;
+      case 6:
+        push(SeenProductScreen());
+        break;
+      case 7:
+        push(CustomerSupportScreen());
+        break;
+      case 8:
+        push(SettingScreen());
+        break;
+      case 9:
+        // TODO-Nha: check lai,
+        WidgetUtil.showConfirmDialog(context,
+            title: S.of(context).confirm,
+            message: S.of(context).messageLogout,
+            positive: S.of(context).yes,
+            negative: S.of(context).no, positiveClicked: () {
+          ShareValueProvider.shareValueProvider.saveUserId(null);
+          ShareValueProvider.shareValueProvider.saveUserInfo(null);
+          Provider.of<UserProvider>(context, listen: false).logout(false);
+          pushReplacement(MainScreen());
+        }, negativeClick: () {});
+        break;
+    }
+    ;
   }
 }
