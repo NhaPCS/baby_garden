@@ -164,6 +164,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                                           scale: 1,
                                           child: SwitchButton(
                                             valueChanged: (result) {
+                                              Provider.of<NotifyProvider>(context).onHideReadNotify(result);
                                               _hideReadNotifyController.value =
                                                   result;
                                             },
@@ -184,11 +185,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                     Consumer<NotifyProvider>(
                       builder: (BuildContext context, NotifyProvider value,
                           Widget child) {
-                        List<dynamic> data =
-                            value.isPromote ? value.promotions : value.private;
-                        if(value.filter.isNotEmpty){
-                          data = data.where((i) => i['title'].toString().toLowerCase().contains(value.filter.toLowerCase())).toList();
-                        }
+                        List<dynamic> data = value.getData();
                         print("data $data ${value.isPromote}");
                         if (data == null || data.isEmpty)
                           return LoadingView(

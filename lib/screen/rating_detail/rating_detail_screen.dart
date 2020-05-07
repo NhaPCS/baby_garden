@@ -1,16 +1,12 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/screen/rating_detail/item/rating_item.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/screen/rating_detail/view_model/rate_booking_view_model.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
-import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
-import 'package:baby_garden_flutter/widget/rating_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
-import 'package:provider/provider.dart';
 
 class RatingDetailScreen extends StatefulWidget {
   @override
@@ -75,7 +71,6 @@ class _RatingDetailScreenState
               children: List.generate(3, (index) => RatingItem()),
             ),
           ),
-          // TODO-Hung: Dung MyRaisedButton
           Container(
             padding: const EdgeInsets.only(left:
               SizeUtil.smallSpace,right: SizeUtil.smallSpace
