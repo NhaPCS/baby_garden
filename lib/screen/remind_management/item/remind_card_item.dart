@@ -1,8 +1,10 @@
 import 'package:baby_garden_flutter/data/model/remind_calendar.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/remind_edit/remind_edit_screen.dart';
+import 'package:baby_garden_flutter/screen/remind_management/Provider/remind_calendar_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_icon.dart';
+import 'package:baby_garden_flutter/widget/image/circle_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,20 +15,31 @@ class RemindCardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _remindCalendarProvider = RemindCalendarProvider();
     return Container(
+      padding: const EdgeInsets.all(
+        SizeUtil.midSmallSpace,
+      ),
       decoration: setBorder('bottom', ColorUtil.lineLightGray, 1),
       width: double.infinity,
       child: Row(children: <Widget>[
-        ClipRRect(
-          child: Image.asset(
-            calendar.image,
+        CircleImage(
+            borderRadius: SizeUtil.smallRadius,
             width: 76.0,
             height: 76.0,
-          ),
-        ),
+            imageUrl: calendar.image),
+        // ClipRRect(
+        //   child: Image.asset(
+        //     calendar.image,
+        //     width: 76.0,
+        //     height: 76.0,
+        //   ),
+        // ),
         Expanded(
           child: Padding(
-              padding: const EdgeInsets.all(SizeUtil.midSmallSpace),
+              padding: const EdgeInsets.all(
+                SizeUtil.midSmallSpace,
+              ),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -48,7 +61,7 @@ class RemindCardItem extends StatelessWidget {
                                       ? Colors.blue
                                       : Colors.orange)),
                           TextSpan(
-                              text: calendar.description,
+                              text: calendar.productName,
                               style: TextStyle(fontSize: 13))
                         ])),
                     Padding(
@@ -81,30 +94,30 @@ class RemindCardItem extends StatelessWidget {
                     )
                   ])),
         ),
-        Padding(
-          padding:
-              const EdgeInsets.only(top: 36, right: SizeUtil.midSmallSpace),
-          child: Column(
-            children: <Widget>[
-              ButtonIcon(
-                icon: Icon(Icons.delete,
-                    size: SizeUtil.iconMidSize, color: ColorUtil.darkGray),
-                onPressed: () {
-                  //remove reminder
-                },
+        Column(
+          children: <Widget>[
+            ButtonIcon(
+              icon: Icon(Icons.delete,
+                  size: SizeUtil.iconMidSize, color: ColorUtil.darkGray),
+              onPressed: () {
+                //remove reminder
+                _remindCalendarProvider.deleteCalendar(context, calendar.id);
+              },
+            ),
+            ButtonIcon(
+              icon: Icon(
+                Icons.edit,
+                size: SizeUtil.iconMidSize,
+                color: ColorUtil.darkGray,
               ),
-              ButtonIcon(
-                icon: Icon(
-                  Icons.edit,
-                  size: SizeUtil.iconMidSize,
-                  color: ColorUtil.darkGray,
-                ),
-                onPressed: () {
-                  RouteUtil.push(context, RemindEditScreen(calendar: calendar));
-                },
-              )
-            ],
-          ),
+              onPressed: () {
+                RouteUtil.push(context, RemindEditScreen(calendar: calendar));
+              },
+            )
+          ],
+        ),
+        SizedBox(
+          width: SizeUtil.midSmallSpace,
         )
       ]),
     );
