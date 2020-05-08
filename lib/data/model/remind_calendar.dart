@@ -66,7 +66,8 @@ class RemindCalendar {
     time4 = calendar['time_4'];
     datetime = calendar['date'];
     productId = calendar['product_id'] != null ? calendar['product_id'] : '';
-    productName = calendar['name'] != null ? calendar['name'] : '';
+    productName =
+        calendar['product_name'] != null ? calendar['product_name'] : '';
     price = calendar['price'] != null ? calendar['price'] : '';
     image = [null, []].contains(calendar['image'])
         ? calendar['image'][0]

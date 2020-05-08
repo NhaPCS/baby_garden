@@ -16,6 +16,8 @@ class RemindCardItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _remindCalendarProvider = RemindCalendarProvider();
+    bool _validURL = Uri.parse(calendar.image).isAbsolute;
+
     return Container(
       padding: const EdgeInsets.all(
         SizeUtil.midSmallSpace,
@@ -23,18 +25,21 @@ class RemindCardItem extends StatelessWidget {
       decoration: setBorder('bottom', ColorUtil.lineLightGray, 1),
       width: double.infinity,
       child: Row(children: <Widget>[
-        CircleImage(
-            borderRadius: SizeUtil.smallRadius,
-            width: 76.0,
-            height: 76.0,
-            imageUrl: calendar.image),
-        // ClipRRect(
-        //   child: Image.asset(
-        //     calendar.image,
-        //     width: 76.0,
-        //     height: 76.0,
-        //   ),
-        // ),
+        _validURL
+            ? CircleImage(
+                borderRadius: SizeUtil.smallRadius,
+                width: 76.0,
+                height: 76.0,
+                imageUrl: calendar.image)
+            :
+            // default image to test
+            ClipRRect(
+                child: Image.asset(
+                  calendar.image,
+                  width: 76.0,
+                  height: 76.0,
+                ),
+              ),
         Expanded(
           child: Padding(
               padding: const EdgeInsets.all(
@@ -46,7 +51,7 @@ class RemindCardItem extends StatelessWidget {
                     RichText(
                         text: TextSpan(
                             style: TextStyle(
-                                fontSize: SizeUtil.textSizeDefault,
+                                fontSize: SizeUtil.textSizeExpressDetail,
                                 color: Colors.black),
                             children: <TextSpan>[
                           TextSpan(
@@ -56,13 +61,10 @@ class RemindCardItem extends StatelessWidget {
                                   : "[${S.of(context).remindUse}] "
                                       .toUpperCase(),
                               style: TextStyle(
-                                  fontSize: 13,
                                   color: calendar.type == RemindType.remindBuy
                                       ? Colors.blue
                                       : Colors.orange)),
-                          TextSpan(
-                              text: calendar.productName,
-                              style: TextStyle(fontSize: 13))
+                          TextSpan(text: calendar.productName)
                         ])),
                     Padding(
                       padding: const EdgeInsets.only(top: SizeUtil.tinySpace),
