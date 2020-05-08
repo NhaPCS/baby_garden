@@ -41,7 +41,7 @@ class PointHistoryCardItem extends StatelessWidget {
                       fontSize: SizeUtil.textSizeSmall))
             ])),
         Column(children: <Widget>[
-          Text(this.pointDetail.currentPoint,
+          Text(this.pointDetail.lastPoint,
               style: TextStyle(
                   color: ColorUtil.textHint, fontSize: SizeUtil.textSizeSmall)),
           SizedBox(

@@ -54,8 +54,7 @@ class PointManageProvider extends ChangeNotifier {
         dateTime: detail['date'],
         changePoint: detail['point'],
         type: detail['type'],
-        currentPoint:
-            detail['current_point'] != null ? detail['current_point'] : '0');
+        lastPoint: detail['last_point'] != null ? detail['last_point'] : '0');
 
     return pointDetail;
   }
