@@ -4241,6 +4241,24 @@ class S {
     );
   }
 
+  String numPoint(dynamic point) {
+    return Intl.message(
+      '$point điểm',
+      name: 'numPoint',
+      desc: '',
+      args: [point],
+    );
+  }
+
+  String get messageLogout {
+    return Intl.message(
+      'Bạn có muốn đăng xuất không?',
+      name: 'messageLogout',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get mess_receive_notify_for_product {
     return Intl.message(
       'Bạn đã đăng ký nhận thông báo cho sản phẩm này thành công!',

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:baby_garden_flutter/data/model/remind_calendar.dart';
 import 'package:baby_garden_flutter/data/response.dart';
 import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
@@ -923,4 +924,66 @@ Response parseResponse(BuildContext context, String responseBody,
     }
   }
   return res;
+}
+
+Future<dynamic> getListRemindCalendar(BuildContext context) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId};
+
+  Response response = await get(context, path: "listCalendar", param: params);
+
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> deleteRemindCalendar(BuildContext context,
+    {@required String calendarId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId, "calendar_id": calendarId};
+
+  Response response = await post(context,
+      path: 'deleteCalendar',
+      param: params,
+      requireLogin: true,
+      showLoading: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
+Future<dynamic> addRemindCalendar(BuildContext context,
+    {@required RemindCalendar calendar}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  var params = calendar.toJson();
+  params['user_id'] = userId;
+  String path = 'addCalendar';
+
+  if (calendar.calendarId != null) {
+    params['calendar_id'] = calendar.calendarId;
+    path = 'editCalendar';
+  }
+
+  Response response = await post(context,
+      path: path, param: params, requireLogin: true, showLoading: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
+Future<dynamic> getListPoint(BuildContext context) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId};
+
+  Response response = await get(context, path: "managePoint", param: params);
+
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> getPointDetail(BuildContext context, String shopId) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId, "shop_id": shopId};
+
+  Response response = await get(context, path: "pointDetail", param: params);
+
+  if (response.isSuccess()) return response.data;
+  return null;
 }

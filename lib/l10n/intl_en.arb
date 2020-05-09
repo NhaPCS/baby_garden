@@ -467,5 +467,7 @@
   "image_is": "Ảnh của bé:",
   "enter_again": "Nhập lại",
   "sku_product": "Mã SKU",
+  "numPoint": "{point} điểm",
+  "messageLogout": "Bạn có muốn đăng xuất không?",
   "mess_receive_notify_for_product": "Bạn đã đăng ký nhận thông báo cho sản phẩm này thành công!"
 }

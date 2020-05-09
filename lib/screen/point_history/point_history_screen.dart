@@ -1,68 +1,76 @@
+import 'package:baby_garden_flutter/data/model/point.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/point_management/item/point_history_card_item.dart';
+import 'package:baby_garden_flutter/screen/point_management/provider/point_manage_provider.dart';
+import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
-// TODO-QAnh: them chu Screen o cuoi
-class PointHistory extends StatefulWidget {
-  final image;
-  final name;
-  final point;
+class PointHistoryScreen extends StatefulWidget {
+  final Point pointInfo;
 
-  PointHistory({Key key, this.image, this.name, this.point}) : super(key: key);
+  PointHistoryScreen({Key key, this.pointInfo}) : super(key: key);
 
   @override
-  _PointHistoryState createState() => _PointHistoryState();
+  _PointHistoryScreenState createState() => _PointHistoryScreenState();
 }
 
-class _PointHistoryState extends BaseState<PointHistory> {
+class _PointHistoryScreenState extends BaseState<PointHistoryScreen> {
+  final PointManageProvider _pointManageProvider = PointManageProvider();
 
-  // TODO-QAnh: k tạo widget trước như này, sau này ghép API vẫn phải move vào dưới
-  final pointCard = PointHistoryCardItem(
-    image: "photo/voucherVCB.png",
-    history: "Mua đơn hàng #AHQ123 thành...",
-    dateTime: "18/12/2019 - 14:46",
-    changedPoint: 200,
-    remainPoint: 200,
-  );
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_pointManageProvider.pointList == null ||
+        _pointManageProvider.pointList.isEmpty) {
+      _pointManageProvider.getPointDetailList(context, widget.pointInfo.shopId);
+    }
+  }
 
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
         appBar: getAppBar(title: S.of(context).pointManage),
-        body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              // TODO-QAnh: line thì dùng WidgetUtil.getLine
-              Container(
-                height: 5,
-                color: Color.fromRGBO(228, 228, 228, 1),
-              ),
-              // TODO-QAnh: thay Conatiner = Padding
-              Container(
-                padding: EdgeInsets.only(left: 8, top: 10),
-                child: Text(
-                  S.of(context).pointHistoryHeadText,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Color.fromRGBO(46, 95, 109, 1)),
+        body: Consumer<PointManageProvider>(builder: (context, value, child) {
+          if (value.pointDetailList == null || value.pointDetailList.isEmpty)
+            return LoadingView(isNoData: value.pointDetailList != null);
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                WidgetUtil.getLine(
+                    margin: EdgeInsets.all(0),
+                    width: 5,
+                    color: ColorUtil.lineLightGray),
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: SizeUtil.midSmallSpace, top: SizeUtil.smallSpace),
+                  child: Text(
+                    S.of(context).pointHistoryHeadText,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: SizeUtil.textSizeBigger,
+                        color: Color.fromRGBO(46, 95, 109, 1)),
+                  ),
                 ),
-              ),
-              // TODO-QAnh: Conatiner ở đây k có tác dụng gì, bỏ đi
-              Container(
-                child: Column(
-                  // TODO-QAnh: chỗ này phải dùng ListView mới đúng
-                  children: <Widget>[pointCard, pointCard, pointCard],
-                ),
-              ),
-            ]));
+                ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: value.pointList.length + 1,
+                    itemBuilder: (BuildContext context, int index) {
+                      final pointDetail =
+                          _pointManageProvider.getPointDetail(index);
+                      return PointHistoryCardItem(pointDetail: pointDetail);
+                    }),
+              ]);
+        }));
   }
 
   @override
   List<SingleChildWidget> providers() {
-    return [];
+    return [ChangeNotifierProvider.value(value: _pointManageProvider)];
   }
 }
