@@ -1,10 +1,13 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/child_heath/widget/list_suggest_for_child.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/chart/child_chart.dart';
+import 'package:baby_garden_flutter/screen/child_heath/widget/child_chart.dart';
 import 'package:flutter/material.dart';
 
 class ViewWeightHeight extends StatelessWidget {
+  final List<dynamic> testResults;
+
+  const ViewWeightHeight({Key key, this.testResults}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -18,7 +21,7 @@ class ViewWeightHeight extends StatelessWidget {
         SizedBox(
           height: SizeUtil.smallSpace,
         ),
-        ChildChart(),
+        ChildChart(testResults: testResults,),
         SizedBox(
           height: SizeUtil.smallSpace,
         ),

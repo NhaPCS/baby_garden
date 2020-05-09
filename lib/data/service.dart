@@ -575,6 +575,18 @@ Future<Response> reportProduct(BuildContext context,
   return null;
 }
 
+Future<Response> receiveNotify(BuildContext context, {String productId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "product_id": productId,
+  };
+  Response response = await post(context,
+      path: 'receiveNoty', param: params, requireLogin: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
 Future<Response> registerPartner(BuildContext context,
     {String shopName, String phone, String address, String job}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
@@ -743,6 +755,30 @@ Future<dynamic> addBabyTest(BuildContext context,
   Response response = await postMultiPart(context,
       path: 'addTest', param: params, files: files, requireLogin: true);
   if (response.isSuccess()) return response;
+  return null;
+}
+
+Future<dynamic> verifyCodeVoucher(BuildContext context,
+    {String voucherId, String code}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId, "voucher_id": voucherId, "code": code};
+
+  Response response = await get(null,
+      path: 'verifyCodeVoucher', param: params, requireLogin: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> useVoucher({String voucherId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "voucher_id": voucherId
+  };
+
+  Response response =
+      await get(null, path: 'useVoucher', param: params, requireLogin: true);
+  if (response.isSuccess()) return response.data;
   return null;
 }
 
