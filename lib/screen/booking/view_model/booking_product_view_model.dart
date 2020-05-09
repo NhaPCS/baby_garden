@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 class BookingProductViewModel extends BaseViewModel{
 
-
   Future<void> onBookingProduct(String shopID, String promoteCode, String isReceiveInShop,
       String paymentMethod, String note, String shipID, String address, String shipCode,String userName,
       String userPhone,String userAddress,String cityID,String districtID)
@@ -21,6 +20,7 @@ class BookingProductViewModel extends BaseViewModel{
 
     }
   }
+
   @override
   BuildContext context;
 

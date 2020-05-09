@@ -2,18 +2,17 @@ import 'package:baby_garden_flutter/screen/booking/dialog/change_delivery_addres
 import 'package:baby_garden_flutter/screen/booking/dialog/change_delivery_time_dialogue.dart';
 import 'package:baby_garden_flutter/screen/booking/dialog/credit_transfer_checkout_dialogue.dart';
 import 'package:baby_garden_flutter/screen/booking/dialog/point_checkout_dialogue.dart';
-import 'package:baby_garden_flutter/dialog/privacy_policy_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/added_promo_item.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/screen/booking/provider/change_delivery_time_provider.dart';
 import 'package:baby_garden_flutter/screen/booking/provider/checkout_method_provider.dart';
-import 'package:baby_garden_flutter/screen/booking/provider/delivery_method_provider.dart';
 import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
 import 'package:baby_garden_flutter/screen/booking/provider/shop_location_provider.dart';
 import 'package:baby_garden_flutter/screen/booking/provider/transfer_method_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
+import 'package:baby_garden_flutter/screen/booking/widget/delivery_method.dart';
 import 'package:baby_garden_flutter/screen/booking/widget/list_title_custom.dart';
 import 'package:baby_garden_flutter/screen/checkout/checkout_screen.dart';
 import 'package:baby_garden_flutter/widget/button/privacy_policy_button.dart';
@@ -26,7 +25,6 @@ import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:baby_garden_flutter/widget/line/dot_line_separator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +33,7 @@ class BookingScreen extends StatefulWidget {
   final String shopID;
   final String promoteCode;
 
-  const BookingScreen({this.shopID, this.promoteCode}) : super();
+  const BookingScreen({this.shopID = '1', this.promoteCode = '123'}) : super();
 
   @override
   State<StatefulWidget> createState() {
@@ -49,8 +47,9 @@ class _BookingScreenState
     with SingleTickerProviderStateMixin {
   final ChangeDeliveryTimeProvider _changeDeliveryTimeProvider =
       new ChangeDeliveryTimeProvider();
-  final DeliveryMethodProvider _deliveryMethodProvider =
-      new DeliveryMethodProvider();
+  ValueNotifier<int> deliveryMethod = new ValueNotifier(1);
+  ValueNotifier<String> receiveTime = new ValueNotifier("");
+  String inShopReceiveAddress = "";
   final ShopLocationProvider _shopLocationProvider = new ShopLocationProvider();
   final CheckoutMethodProvider _checkoutMethodProvider =
       new CheckoutMethodProvider();
@@ -59,13 +58,14 @@ class _BookingScreenState
   final TextEditingController _promoteShipCodeController =
       new TextEditingController();
   final TextEditingController _noteController = new TextEditingController();
-  final ValueNotifier<bool> _pointCheckoutValueController = ValueNotifier(false);
-  TabController _dayTabControler;
+  final ValueNotifier<bool> _pointCheckoutValueController =
+      ValueNotifier(false);
+  TabController _dayTabController;
 
   @override
   void initState() {
     // TODO: implement initState
-    _dayTabControler = TabController(vsync: this, length: 3);
+    _dayTabController = TabController(vsync: this, length: 7);
     _transferMethodProvider.getShips();
     super.initState();
   }
@@ -134,13 +134,20 @@ class _BookingScreenState
               height: SizeUtil.iconSizeDefault,
             ),
             title: S.of(context).type_of_delivery,
-            content: getDeliveryMethod(),
+            content: DeliveryMethod(
+              deliveryMethod: deliveryMethod,
+              shopId: widget.shopID,
+              inShopAddressValueChanged: (receiveAddress) {
+//                print("inShopAddressValueChanged $receiveAddress");
+                inShopReceiveAddress = receiveAddress;
+              },
+            ),
           ),
           //TODO receive time
-          Consumer<DeliveryMethodProvider>(
-            builder: (BuildContext context, DeliveryMethodProvider value,
-                Widget child) {
-              return value.deliveryMenthod == 1
+          ValueListenableBuilder<int>(
+            valueListenable: deliveryMethod,
+            builder: (BuildContext context, int value, Widget child) {
+              return value == 1
                   ? ListTitleCustom(
                       icon: SvgIcon(
                         'ic_transfer_info.svg',
@@ -157,31 +164,38 @@ class _BookingScreenState
                         child: Row(
                           children: <Widget>[
                             Expanded(
-                              child: RichText(
-                                text: TextSpan(children: <TextSpan>[
-                                  TextSpan(
-                                      text: S.of(context).receive_in,
-                                      style: TextStyle(
-                                          color: ColorUtil.textColor,
-                                          fontSize: SizeUtil.textSizeSmall)),
-                                  TextSpan(
-                                      text: "09:00 - 11:00 02/02/2020",
-                                      style: TextStyle(
-                                          color: Colors.red,
-                                          fontSize: SizeUtil.textSizeSmall))
-                                ]),
+                              child: ValueListenableBuilder<String>(
+                                valueListenable: receiveTime,
+                                builder: (BuildContext context, String value,
+                                    Widget child) {
+                                  return RichText(
+                                    text: TextSpan(children: <TextSpan>[
+                                      TextSpan(
+                                          text: S.of(context).receive_in,
+                                          style: TextStyle(
+                                              color: ColorUtil.textColor,
+                                              fontSize:
+                                                  SizeUtil.textSizeSmall)),
+                                      TextSpan(
+                                          text: value,
+                                          style: TextStyle(
+                                              color: Colors.red,
+                                              fontSize: SizeUtil.textSizeSmall))
+                                    ]),
+                                  );
+                                },
                               ),
                             ),
                             InkWell(
-                              onTap: () {
-                                showDialog(
+                              onTap: () async {
+                                var data = await showDialog(
                                     context: context,
                                     builder: (_) => ChangeDeliveryTimeDialogue(
-                                          dayTabControler: _dayTabControler,
-                                          changeDeliveryTimeProvider:
-                                              _changeDeliveryTimeProvider,
+                                          shopId: widget.shopID,
                                         ));
-//                            showChangeReceiveTimeDialogue(context, myTabs);
+                                if (data!=null) {
+                                  receiveTime.value = data;
+                                }
                               },
                               child: Text(
                                 S.of(context).change,
@@ -309,13 +323,12 @@ class _BookingScreenState
                 await getViewModel().onBookingProduct(
                     widget.shopID.toString(),
                     widget.promoteCode.toLowerCase(),
-                    _deliveryMethodProvider.deliveryMenthod.toString(),
+                    deliveryMethod.value.toString(),
                     _checkoutMethodProvider.checkoutMenthod.toString(),
                     _noteController.text.toString(),
                     _transferMethodProvider
-                        .ships[_transferMethodProvider.transferMenthod]
-                    ['id'],
-                    "address",
+                        .ships[_transferMethodProvider.transferMenthod]['id'],
+                    inShopReceiveAddress,
                     _promoteShipCodeController.text.trim(),
                     address['userName'],
                     address['phone'],
@@ -348,7 +361,6 @@ class _BookingScreenState
     // TODO: implement providers
     return [
       ChangeNotifierProvider.value(value: _changeDeliveryTimeProvider),
-      ChangeNotifierProvider.value(value: _deliveryMethodProvider),
       ChangeNotifierProvider.value(value: _shopLocationProvider),
       ChangeNotifierProvider.value(value: _checkoutMethodProvider),
       ChangeNotifierProvider.value(value: _transferMethodProvider),
@@ -620,7 +632,8 @@ class _BookingScreenState
                 children: <Widget>[
                   GestureDetector(
                     onTap: () {
-                      _pointCheckoutValueController.value = !_pointCheckoutValueController.value;
+                      _pointCheckoutValueController.value =
+                          !_pointCheckoutValueController.value;
                       if (_pointCheckoutValueController.value) {
                         showDialog(
                             context: context,
@@ -637,79 +650,18 @@ class _BookingScreenState
                   Spacer(),
                   SwitchButton(
                     valueController: _pointCheckoutValueController,
-                    valueChanged: (result){
-                    if (result) {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              PointCheckoutDialogue());
-                    }
-                  },),
+                    valueChanged: (result) {
+                      if (result) {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                PointCheckoutDialogue());
+                      }
+                    },
+                  ),
                 ],
               ),
             )
-          ],
-        );
-      },
-    );
-  }
-
-  Widget getDeliveryMethod() {
-    return Consumer<DeliveryMethodProvider>(
-      builder:
-          (BuildContext context, DeliveryMethodProvider value, Widget child) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            CustomRadioButton(
-              titleContent: Text(S.of(context).delivery_in_shop),
-              padding: const EdgeInsets.only(
-                  left: SizeUtil.bigSpaceHigher,
-                  top: SizeUtil.smallSpace,
-                  bottom: SizeUtil.smallSpace),
-              value: 1,
-              groupValue: value.deliveryMenthod,
-              onChanged: (val) {
-                _deliveryMethodProvider.onChange(val);
-              },
-            ),
-            //todo shop location
-            value.deliveryMenthod == 1
-                ? Consumer<ShopLocationProvider>(
-                    builder: (BuildContext context, ShopLocationProvider value,
-                        Widget child) {
-                      return Column(
-                        children: List.generate(4, (index) =>
-                            CustomRadioButton(
-                          titleContent:
-                          Text("38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội"),
-                          padding: const EdgeInsets.only(
-                              left: SizeUtil.hugSpace,
-                              bottom: SizeUtil.tinySpace),
-                          value: index,
-                          groupValue: value.shopLocation,
-                          iconSize: SizeUtil.iconSize,
-                          titleSize: SizeUtil.textSizeSmall,
-                          onChanged: (val) {
-                            _shopLocationProvider.onChange(val);
-                          },
-                        )),
-                      );
-                    },
-                  )
-                : SizedBox(),
-            CustomRadioButton(
-              titleContent: Text(S.of(context).delivery_to_address),
-              padding: const EdgeInsets.only(
-                  left: SizeUtil.bigSpaceHigher,
-                  top: SizeUtil.smallSpace,
-                  bottom: SizeUtil.smallSpace),
-              value: 2,
-              groupValue: value.deliveryMenthod,
-              onChanged: (val) {
-                _deliveryMethodProvider.onChange(val);
-              },
-            ),
           ],
         );
       },

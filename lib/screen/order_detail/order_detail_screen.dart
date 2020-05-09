@@ -59,11 +59,11 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
     bool isDelivering = state == 4;
     return Consumer<BookingDetailProvider>(builder:
         (BuildContext context, BookingDetailProvider value, Widget child) {
-      dynamic data = value.bookingDetialData;
+      dynamic data = value.bookingDetailData;
       if (data == null) {
         return Container();
       } else {
-        initView(int.parse(value.bookingDetialData['active']));
+        initView(int.parse(value.bookingDetailData['active']));
         return Scaffold(
             appBar: getAppBar(
               title: title != null

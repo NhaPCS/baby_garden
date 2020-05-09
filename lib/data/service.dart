@@ -131,18 +131,27 @@ Future<dynamic> bookingService(
   return null;
 }
 
-Future<dynamic> shopDetail({String shopID}) async {
+Future<dynamic> shopDetail({BuildContext context,String shopID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  Response response = await get(null,
+  Response response = await get(context,
       path: "shopDetail", param: {'user_id': userId, 'shop_id': shopID});
   if (response.isSuccess()) return response.data;
   return null;
 }
 
+Future<dynamic> shopReceiveTime({BuildContext context,String shopID}) async {
+
+  Response response = await get(context,
+      path: "getTime", param: { 'shop_id': shopID});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 //todo listProductShop
-Future<dynamic> listProductShop({String userID, String shopID}) async {
+Future<dynamic> listProductShop({ String shopID}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
-      path: "listProductShop", param: {'user_id': userID, 'shop_id': shopID});
+      path: "listProductShop", param: {'user_id': userId, 'shop_id': shopID});
   if (response.isSuccess()) return response.data;
   return null;
 }

@@ -1,5 +1,5 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/notify_control_provider.dart';
+import 'package:baby_garden_flutter/screen/notify/provider/notify_control_provider.dart';
 import 'package:baby_garden_flutter/screen/notify/provider/search_notify_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/order_detail/order_detail_screen.dart';

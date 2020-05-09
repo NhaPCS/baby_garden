@@ -43,6 +43,7 @@ class ColorUtil {
   static const Color textDark = Color(0xff444444);
   static const Color grayEC = Color(0xffececec);
   static const Color trackingTargetColor = Color(0xff6C6C6C);
+  static const Color unSelectBgColor = Color(0xffF2F2F2);
 
   static const List<Color> gradientColors = [
     Color(0xffFFA503),
@@ -66,6 +67,32 @@ class DateUtil {
   static String formatDDMMyyyy(String rawDate) {
     DateTime date = new DateFormat(serverFormatDate).parse(rawDate);
     return new DateFormat("dd/MM/yyyy").format(date);
+  }
+ /*
+ static const int monday = 2;
+      static const int tuesday = 3;
+      static const int wednesday = 4;
+      static const int thursday = 5;
+      static const int friday = 6;
+      static const int saturday = 7;
+      static const int sunday = 1;
+      static const int daysPerWeek = 7;
+  */
+  static List<dynamic> getDate() {
+    List<dynamic> dates = List();
+    final dowFormat = new DateFormat("EEEE", "vi");
+    final dateFormat = new DateFormat("dd/MM/yyyy");
+    var now = new DateTime.now();
+    for (int i = 0; i <= 6; i++) {
+      final date = now.add(new Duration(days: i));
+      dates.add({
+        'index': date.weekday==7?1:date.weekday+1,
+        'dow': dowFormat.format(date),
+        'date': dateFormat.format(date)
+      });
+    }
+    print("getDate $dates");
+    return dates;
   }
 }
 

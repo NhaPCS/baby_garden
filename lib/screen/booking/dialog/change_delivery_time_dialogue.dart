@@ -1,227 +1,189 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/booking/provider/change_delivery_time_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/checkbox/custom_radio_button.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/partner/date_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-class ChangeDeliveryTimeDialogue extends StatelessWidget {
-  final TabController dayTabControler;
-  final ChangeDeliveryTimeProvider changeDeliveryTimeProvider;
-
-  const ChangeDeliveryTimeDialogue(
-      {Key key, this.dayTabControler, this.changeDeliveryTimeProvider})
-      : super(key: key);
+class ChangeDeliveryTimeDialogue extends StatefulWidget {
+  final String shopId;
+  const ChangeDeliveryTimeDialogue({this.shopId}) : super();
 
   @override
-  Widget build(BuildContext context) {
-    final List<Tab> myTabs = <Tab>[
-      Tab(
-        child: Text(
-          "Thứ hai\n01/02/2020",
-          style: TextStyle(
-            fontSize: SizeUtil.textSizeSmall,
-          ),
-          textAlign: TextAlign.center,
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _ChangeDeliveryTimeDialogueState();
+  }
+}
+
+class _ChangeDeliveryTimeDialogueState
+    extends BaseState<ChangeDeliveryTimeDialogue>
+    with SingleTickerProviderStateMixin {
+  TabController _dayTabController;
+  final ChangeDeliveryTimeProvider _changeDeliveryTimeProvider =
+      new ChangeDeliveryTimeProvider();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _dayTabController = TabController(vsync: this, length: 7);
+    if (_changeDeliveryTimeProvider.schedules.length == 0) {
+      _changeDeliveryTimeProvider.getInShopReceiveTime(null, widget.shopId);
+    }
+    super.initState();
+  }
+
+  @override
+  Widget buildWidget(BuildContext context) {
+    final List<dynamic> dates = DateUtil.getDate();
+    String chooseTime = "";
+    String chooseDate = dates[0]['date'];
+    _changeDeliveryTimeProvider.receiveDate = dates[0]['index'];
+    // TODO: implement buildWidget
+    return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
         ),
-      ),
-      Tab(
-        child: Text(
-          "Thứ ba\n02/02/2020",
-          style: TextStyle(fontSize: SizeUtil.textSizeSmall),
-          textAlign: TextAlign.center,
-        ),
-      ),
-      Tab(
-        child: Text(
-          "Thứ tư\n03/02/2020",
-          style: TextStyle(fontSize: SizeUtil.textSizeSmall),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    ];
-    // TODO: implement build
-    return ChangeNotifierProvider.value(
-      value: changeDeliveryTimeProvider,
-      child: Dialog(
-          shape: RoundedRectangleBorder(
+        child: Container(
+          decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.0),
+            color: Colors.white,
+            border: Border.all(
+              color: ColorUtil.primaryColor,
+              width: 0.7,
+            ),
           ),
-          child: StatefulBuilder(
-            builder: (context, setState) {
-              return Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15.0),
-                  color: Colors.white,
-                  border: Border(
-                    left: BorderSide(
-                      color: ColorUtil.primaryColor,
-                      width: 0.7,
-                    ),
-                    right: BorderSide(
-                      color: ColorUtil.primaryColor,
-                      width: 0.7,
-                    ),
-                    top: BorderSide(
-                      color: ColorUtil.primaryColor,
-                      width: 0.7,
-                    ),
-                    bottom: BorderSide(
-                      color: ColorUtil.primaryColor,
-                      width: 0.7,
-                    ),
-                  ),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    TabBar(
-                      controller: dayTabControler,
-                      labelColor: ColorUtil.primaryColor,
-                      indicatorColor: ColorUtil.white,
-                      unselectedLabelColor: ColorUtil.textColor,
-                      tabs: myTabs,
-                      onTap: (val) {
-                        changeDeliveryTimeProvider.onChangeDate(val);
-                      },
-                    ),
-                    WidgetUtil.getLine(
-                        margin: EdgeInsets.only(bottom: SizeUtil.tinySpace),
-                        color: ColorUtil.lineColor),
-                    Consumer<ChangeDeliveryTimeProvider>(
-                      builder: (BuildContext context,
-                          ChangeDeliveryTimeProvider value, Widget child) {
-                        return changeDeliveryTimeProvider.receiveDate != 1
-                            ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  CustomRadioButton(
-                                    titleContent: Text(
-                                      "09:00 - 11:00",
-                                      style: TextStyle(
-                                          fontSize: SizeUtil.textSizeSmall,
-                                          color: Colors.black),
-                                    ),
-                                    padding: const EdgeInsets.only(
-                                        bottom: SizeUtil.tinySpace,
-                                        top: SizeUtil.tinySpace,
-                                        left: SizeUtil.smallSpace,
-                                        right: SizeUtil.smallSpace),
-                                    value: 0,
-                                    groupValue:
-                                        changeDeliveryTimeProvider.receiveTime,
-                                    iconSize: SizeUtil.iconSize,
-                                    titleSize: SizeUtil.textSizeSmall,
-                                    onChanged: (val) {
-                                      changeDeliveryTimeProvider
-                                          .onChangeTime(val);
-                                    },
-                                  ),
-                                  CustomRadioButton(
-                                    titleContent: Text(
-                                      "14:00 - 16:00",
-                                      style: TextStyle(
-                                          fontSize: SizeUtil.textSizeSmall,
-                                          color: Colors.black),
-                                    ),
-                                    padding: const EdgeInsets.only(
-                                        bottom: SizeUtil.tinySpace,
-                                        top: SizeUtil.tinySpace,
-                                        left: SizeUtil.smallSpace,
-                                        right: SizeUtil.smallSpace),
-                                    value: 1,
-                                    groupValue:
-                                        changeDeliveryTimeProvider.receiveTime,
-                                    iconSize: SizeUtil.iconSize,
-                                    titleSize: SizeUtil.textSizeSmall,
-                                    onChanged: (val) {
-                                      changeDeliveryTimeProvider
-                                          .onChangeTime(val);
-                                    },
-                                  ),
-                                  CustomRadioButton(
-                                    titleContent: Text(
-                                      "19:00 - 21:00",
-                                      style: TextStyle(
-                                          fontSize: SizeUtil.textSizeSmall,
-                                          color: Colors.black),
-                                    ),
-                                    padding: const EdgeInsets.only(
-                                        bottom: SizeUtil.tinySpace,
-                                        top: SizeUtil.tinySpace,
-                                        left: SizeUtil.smallSpace,
-                                        right: SizeUtil.smallSpace),
-                                    value: 2,
-                                    groupValue:
-                                        changeDeliveryTimeProvider.receiveTime,
-                                    iconSize: SizeUtil.iconSize,
-                                    titleSize: SizeUtil.textSizeSmall,
-                                    onChanged: (val) {
-                                      changeDeliveryTimeProvider
-                                          .onChangeTime(val);
-                                    },
-                                  ),
-                                ],
-                              )
-                            : Column(
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: SizeUtil.defaultSpace,
-                                  ),
-                                  SvgIcon("ic_startup.svg"),
-                                  SizedBox(
-                                    height: SizeUtil.smallSpace,
-                                  ),
-                                  Text(
-                                    "Không có thời gian nhận hàng",
-                                    style: TextStyle(
-                                        color: ColorUtil.primaryColor,
-                                        fontSize: SizeUtil.textSizeSmall),
-                                  ),
-                                  Text(
-                                    "Vui lòng chọn ngày khác",
-                                    style: TextStyle(
-                                        color: ColorUtil.textColor,
-                                        fontSize: SizeUtil.textSizeSmall),
-                                  ),
-                                  SizedBox(
-                                    height: SizeUtil.bigSpaceHigher,
-                                  ),
-                                ],
-                              );
-                      },
-                    ),
-                    SizedBox(
-                      height: SizeUtil.smallSpace,
-                    ),
-                    RaisedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                        Radius.circular(SizeUtil.smallRadius),
-                      )),
-                      color: ColorUtil.primaryColor,
-                      child: Text(
-                        S.of(context).confirm,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              TabBar(
+                isScrollable: true,
+                controller: _dayTabController,
+                labelColor: ColorUtil.primaryColor,
+                indicatorColor: ColorUtil.white,
+                unselectedLabelColor: ColorUtil.textColor,
+                tabs: dates
+                    .map((e) => Tab(
+                          child: Text(
+                            "${e['dow']}\n${e['date']}",
+                            style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ))
+                    .toList(),
+                onTap: (val) {
+                  chooseDate = dates[val]['date'];
+                  _changeDeliveryTimeProvider.onChangeDate(dates[val]['index']);
+                },
+              ),
+              WidgetUtil.getLine(
+                  margin: EdgeInsets.only(bottom: SizeUtil.tinySpace),
+                  color: ColorUtil.lineColor),
+              Consumer<ChangeDeliveryTimeProvider>(
+                builder: (BuildContext context,
+                    ChangeDeliveryTimeProvider value, Widget child) {
+                  List<dynamic> schedule = value.getDateSchedule();
+                  print(schedule);
+                  if (schedule == null || schedule.isEmpty) {
+                    return Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: SizeUtil.defaultSpace,
+                        ),
+                        SvgIcon("ic_startup.svg"),
+                        SizedBox(
+                          height: SizeUtil.smallSpace,
+                        ),
+                        Text(
+                          "Không có thời gian nhận hàng",
+                          style: TextStyle(
+                              color: ColorUtil.primaryColor,
+                              fontSize: SizeUtil.textSizeSmall),
+                        ),
+                        Text(
+                          "Vui lòng chọn ngày khác",
+                          style: TextStyle(
+                              color: ColorUtil.textColor,
+                              fontSize: SizeUtil.textSizeSmall),
+                        ),
+                        SizedBox(
+                          height: SizeUtil.bigSpaceHigher,
+                        ),
+                      ],
+                    );
+                  }
+                  if(chooseTime.isEmpty){
+                    chooseTime = "${schedule[0]['time_start']} - ${schedule[0]['time_end']}";
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: schedule.map((e) => CustomRadioButton(
+                      titleContent: Text(
+                        "${e['time_start']} - ${e['time_end']}",
                         style: TextStyle(
                             fontSize: SizeUtil.textSizeSmall,
-                            color: Colors.white,
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold),
+                            color: Colors.black),
                       ),
-                    )
-                  ],
+                      padding: const EdgeInsets.only(
+                          bottom: SizeUtil.tinySpace,
+                          top: SizeUtil.tinySpace,
+                          left: SizeUtil.smallSpace,
+                          right: SizeUtil.smallSpace),
+                      value: schedule.indexOf(e),
+                      groupValue: _changeDeliveryTimeProvider.receiveTime,
+                      iconSize: SizeUtil.iconSize,
+                      titleSize: SizeUtil.textSizeSmall,
+                      onChanged: (val) {
+                        chooseTime = "${e['time_start']} - ${e['time_end']}";
+                        _changeDeliveryTimeProvider.onChangeTime(val);
+                      },
+                    )).toList(),
+                  );
+                },
+              ),
+              SizedBox(
+                height: SizeUtil.smallSpace,
+              ),
+              RaisedButton(
+                onPressed: () {
+                  Navigator.of(context).pop(chooseTime +" " +  chooseDate);
+                },
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                  Radius.circular(SizeUtil.smallRadius),
+                )),
+                color: ColorUtil.primaryColor,
+                child: Text(
+                  S.of(context).confirm,
+                  style: TextStyle(
+                      fontSize: SizeUtil.textSizeSmall,
+                      color: Colors.white,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.bold),
                 ),
-              );
-            },
-          )),
-    );
+              )
+            ],
+          ),
+        ));
+  }
+
+  String getTimeFromDate(dynamic date){
+    return date['time_start'] + date['time_start'] + date['time_start'];
+  }
+
+  @override
+  List<SingleChildWidget> providers() {
+    // TODO: implement providers
+    return [ChangeNotifierProvider.value(value: _changeDeliveryTimeProvider)];
   }
 }
