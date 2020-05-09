@@ -3629,6 +3629,15 @@ class S {
     );
   }
 
+  String get weight_kg {
+    return Intl.message(
+      'Cân nặng (kg)',
+      name: 'weight_kg',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get age_month {
     return Intl.message(
       'Tháng tuối',
@@ -4137,6 +4146,15 @@ class S {
     return Intl.message(
       'Bấm vào đây',
       name: 'click_on_here',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get change_image {
+    return Intl.message(
+      'Đổi hình khác',
+      name: 'change_image',
       desc: '',
       args: [],
     );

@@ -45,7 +45,9 @@ class ChildChartState extends State<ChildChart> {
                 RotatedBox(
                   quarterTurns: 3,
                   child: Text(
-                    S.of(context).height_cm,
+                    isHeightTab()
+                        ? S.of(context).height_cm
+                        : S.of(context).weight_kg,
                     style: TextStyle(
                         fontSize: SizeUtil.textSizeSmall,
                         fontWeight: FontWeight.bold),
@@ -85,7 +87,7 @@ class ChildChartState extends State<ChildChart> {
                               }
                               return '${value.toInt()}';
                             },
-                            interval: 50,
+                            interval: isHeightTab() ? 50 : 5,
                             margin: 5,
                             reservedSize: 30,
                           ),
@@ -124,6 +126,12 @@ class ChildChartState extends State<ChildChart> {
         ),
       ),
     );
+  }
+
+  bool isHeightTab() {
+    return widget.testResults == null ||
+        widget.testResults.isEmpty ||
+        widget.testResults[0]['type'] == '1';
   }
 
   double getMaxValue() {

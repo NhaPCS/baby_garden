@@ -97,47 +97,63 @@ class EnterWeightHeight extends StatelessWidget {
                       ? ColorUtil.primaryColor
                       : Colors.white.withOpacity(0.8);
                   return Stack(
+                    alignment: Alignment.center,
                     children: <Widget>[
                       value != null
                           ? Image.file(value, width: double.infinity)
                           : SizedBox(
                               height: 200,
                             ),
-                      Positioned(
-                        child: Container(
-                          padding: SizeUtil.smallPadding,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                Icons.camera_alt,
-                                color: textColor,
-                                size: 100,
-                              ),
-                              Text(
-                                S.of(context).click_on_here,
-                                style: TextStyle(
-                                    color: textColor,
-                                    fontSize: SizeUtil.textSizeSmall),
-                              ),
-                              Padding(
-                                padding: SizeUtil.smallPadding,
-                                child: Text(
-                                  S.of(context).child_take_photo_desc,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(color: textColor),
-                                ),
-                              ),
-                            ],
+                    value != null?
+                    Container(
+                      padding: SizeUtil.smallPadding,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.camera_alt,
+                            color: ColorUtil.primaryColor,
+                            size: 50,
                           ),
-                          color:
-                              Colors.black.withOpacity(value == null ? 0 : 0.1),
-                        ),
-                        top: 0,
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                      )
+                          Text(
+                            S.of(context).change_image,
+                            style: TextStyle(
+                                color: textColor,
+                                fontSize: SizeUtil.textSizeSmall),
+                          ),
+                        ],
+                      ),
+                      color:
+                      Colors.black.withOpacity(value == null ? 0 : 0.1),
+                    ): Container(
+                      padding: SizeUtil.smallPadding,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.camera_alt,
+                            color: textColor,
+                            size: 100,
+                          ),
+                          Text(
+                            S.of(context).click_on_here,
+                            style: TextStyle(
+                                color: textColor,
+                                fontSize: SizeUtil.textSizeSmall),
+                          ),
+                          Padding(
+                            padding: SizeUtil.smallPadding,
+                            child: Text(
+                              S.of(context).child_take_photo_desc,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: textColor),
+                            ),
+                          ),
+                        ],
+                      ),
+                      color:
+                      Colors.black.withOpacity(value == null ? 0 : 0.1),
+                    )
                     ],
                   );
                 }),

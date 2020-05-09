@@ -65,6 +65,7 @@ class _BookingScreenState
   @override
   void initState() {
     // TODO: implement initState
+    print("booking ${widget.promoteCode}  == ${widget.shopID}");
     _dayTabControler = TabController(vsync: this, length: 3);
     _transferMethodProvider.getShips();
     super.initState();
