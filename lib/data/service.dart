@@ -574,6 +574,18 @@ Future<Response> reportProduct(BuildContext context,
   return null;
 }
 
+Future<Response> receiveNotify(BuildContext context, {String productId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "product_id": productId,
+  };
+  Response response = await post(context,
+      path: 'receiveNoty', param: params, requireLogin: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
 Future<Response> registerPartner(BuildContext context,
     {String shopName, String phone, String address, String job}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
@@ -726,7 +738,12 @@ Future<dynamic> testResult({String babyId, int type}) async {
   return null;
 }
 
-Future<dynamic> addBabyTest(BuildContext context, {String babyId, String height, String weight, String note, File img}) async {
+Future<dynamic> addBabyTest(BuildContext context,
+    {String babyId,
+    String height,
+    String weight,
+    String note,
+    File img}) async {
   dynamic params = {
     "baby_id": babyId,
     "height": height.toString(),

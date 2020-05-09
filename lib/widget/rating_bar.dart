@@ -74,7 +74,7 @@ class _RatingState extends State<RatingBar> {
               'ic_favorite.svg',
               width: widget.starSize,
               height: widget.starSize,
-              color: _value >= index ? null : ColorUtil.lightGray,
+              color: _value > index ? null : ColorUtil.lightGray,
             ),
       onTap: () {
         if (!widget.enable) return;

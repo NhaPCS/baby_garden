@@ -463,5 +463,6 @@
   "note_is": "Lưu bút:",
   "image_is": "Ảnh của bé:",
   "enter_again": "Nhập lại",
-  "sku_product": "Mã SKU"
+  "sku_product": "Mã SKU",
+  "mess_receive_notify_for_product": "Bạn đã đăng ký nhận thông báo cho sản phẩm này thành công!"
 }

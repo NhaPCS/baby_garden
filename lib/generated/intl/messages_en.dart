@@ -308,6 +308,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "login" : MessageLookupByLibrary.simpleMessage("Đăng nhập"),
     "logout" : MessageLookupByLibrary.simpleMessage("Đăng xuất"),
     "mess_get_code_voucher_success" : MessageLookupByLibrary.simpleMessage("Lấy mã code thành công!"),
+    "mess_receive_notify_for_product" : MessageLookupByLibrary.simpleMessage("Bạn đã đăng ký nhận thông báo cho sản phẩm này thành công!"),
     "message_add_baby_test_success" : MessageLookupByLibrary.simpleMessage("Nhập thông tin thành công!"),
     "message_confirm_delete_cart" : MessageLookupByLibrary.simpleMessage("Bạn có muốn xoá sản phẩm này khỏi giỏ hàng không?"),
     "message_empty" : m8,

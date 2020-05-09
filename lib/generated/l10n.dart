@@ -4213,6 +4213,15 @@ class S {
       args: [],
     );
   }
+
+  String get mess_receive_notify_for_product {
+    return Intl.message(
+      'Bạn đã đăng ký nhận thông báo cho sản phẩm này thành công!',
+      name: 'mess_receive_notify_for_product',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
