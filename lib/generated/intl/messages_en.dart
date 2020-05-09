@@ -134,6 +134,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "booking_schedule_verify" : MessageLookupByLibrary.simpleMessage("Xác Nhận Đặt Lịch"),
     "booking_submit" : MessageLookupByLibrary.simpleMessage("Hoàn tất đặt hàng"),
     "booking_success" : MessageLookupByLibrary.simpleMessage("Đặt Hàng Thành Công"),
+    "boy" : MessageLookupByLibrary.simpleMessage("Bé trai"),
     "brand" : MessageLookupByLibrary.simpleMessage("Thương hiệu"),
     "buy_guide" : MessageLookupByLibrary.simpleMessage("Hướng dẫn mua hàng"),
     "buy_now" : MessageLookupByLibrary.simpleMessage("Mua ngay"),

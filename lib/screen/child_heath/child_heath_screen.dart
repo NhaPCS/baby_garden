@@ -15,6 +15,7 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/image/circle_image.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
@@ -72,11 +73,14 @@ class _ChildHeathState
                     Column(
                       children: <Widget>[
                         SvgIcon(
-                          'girl.svg',
+                          isBoy() ? 'boy.svg' : 'girl.svg',
                           width: SizeUtil.iconSizeLarge,
                         ),
+                        SizedBox(
+                          height: SizeUtil.tinySpace,
+                        ),
                         Text(
-                          S.of(context).girl,
+                          isBoy() ? S.of(context).boy : S.of(context).girl,
                           style: TextStyle(color: Colors.white),
                         )
                       ],
@@ -89,7 +93,9 @@ class _ChildHeathState
                         child: CircleImage(
                           width: 100,
                           height: 100,
-                          imageUrl: StringUtil.dummyImage,
+                          imageUrl: _dropdownController.value == null
+                              ? null
+                              : _dropdownController.value['avatar'],
                           borderRadius: SizeUtil.smallRadius,
                         ),
                       ),
@@ -103,8 +109,13 @@ class _ChildHeathState
                           'birthday_cake.svg',
                           width: SizeUtil.iconSizeLarge,
                         ),
-                        Text(
-                          S.of(context).girl,
+                        SizedBox(
+                          height: SizeUtil.tinySpace,
+                        ),
+                        MyText(
+                          _dropdownController.value == null
+                              ? ''
+                              : _dropdownController.value['birthday'],
                           style: TextStyle(color: Colors.white),
                         )
                       ],
@@ -165,7 +176,14 @@ class _ChildHeathState
               imageController: _imageController,
             );
           }
-          return ViewWeightHeight();
+          return Consumer<GetBabyTestResultProvider>(
+            builder: (BuildContext context, GetBabyTestResultProvider value,
+                Widget child) {
+              return ViewWeightHeight(
+                testResults: value.results,
+              );
+            },
+          );
         },
       )),
       bottomNavigationBar: Padding(
@@ -193,14 +211,13 @@ class _ChildHeathState
                             _changeModeEnterHeathProvider.changeMode(false);
                         });
                   });
-            } else{
+            } else {
               _heightController.text = "";
               _weightController.text = "";
               _noteController.text = "";
               _imageController.value = null;
               _changeModeEnterHeathProvider.changeMode(true);
             }
-
           },
           color: ColorUtil.primaryColor,
           text: S.of(context).enter_weight_height.toUpperCase(),
@@ -241,6 +258,12 @@ class _ChildHeathState
         },
       ),
     ));
+  }
+
+  bool isBoy() {
+    print("child ${_dropdownController.value}");
+    return _dropdownController.value != null &&
+        _dropdownController.value['gender'] == '1';
   }
 
   @override

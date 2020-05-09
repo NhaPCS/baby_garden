@@ -3467,6 +3467,15 @@ class S {
     );
   }
 
+  String get boy {
+    return Intl.message(
+      'Bé trai',
+      name: 'boy',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get height {
     return Intl.message(
       'Chiều Cao',
