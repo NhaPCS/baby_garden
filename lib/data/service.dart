@@ -757,6 +757,30 @@ Future<dynamic> addBabyTest(BuildContext context,
   return null;
 }
 
+Future<dynamic> verifyCodeVoucher(BuildContext context,
+    {String voucherId, String code}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId, "voucher_id": voucherId, "code": code};
+
+  Response response = await get(null,
+      path: 'verifyCodeVoucher', param: params, requireLogin: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> useVoucher({String voucherId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "voucher_id": voucherId
+  };
+
+  Response response =
+      await get(null, path: 'useVoucher', param: params, requireLogin: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 Future<Response> post(BuildContext context,
     {String path,
     dynamic param,
