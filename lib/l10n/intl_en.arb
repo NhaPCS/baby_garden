@@ -469,5 +469,9 @@
   "sku_product": "Mã SKU",
   "numPoint": "{point} điểm",
   "messageLogout": "Bạn có muốn đăng xuất không?",
-  "mess_receive_notify_for_product": "Bạn đã đăng ký nhận thông báo cho sản phẩm này thành công!"
+  "mess_receive_notify_for_product": "Bạn đã đăng ký nhận thông báo cho sản phẩm này thành công!",
+  "child_test_results_evaluate": "Đánh giá kết quả: ",
+  "newest_test_time": "(Lần kiểm tra mới nhất: {time} tháng)",
+  "nutrition_consulting": "Tư vấn dinh dưỡng:",
+  "suggestion_products": "Sản phẩm gợi ý:"
 }

@@ -4267,6 +4267,42 @@ class S {
       args: [],
     );
   }
+
+  String get child_test_results_evaluate {
+    return Intl.message(
+      'Đánh giá kết quả: ',
+      name: 'child_test_results_evaluate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String newest_test_time(dynamic time) {
+    return Intl.message(
+      '(Lần kiểm tra mới nhất: $time tháng)',
+      name: 'newest_test_time',
+      desc: '',
+      args: [time],
+    );
+  }
+
+  String get nutrition_consulting {
+    return Intl.message(
+      'Tư vấn dinh dưỡng:',
+      name: 'nutrition_consulting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get suggestion_products {
+    return Intl.message(
+      'Sản phẩm gợi ý:',
+      name: 'suggestion_products',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
