@@ -3465,15 +3465,6 @@ class S {
     );
   }
 
-  String get boy {
-    return Intl.message(
-      'Bé trai',
-      name: 'boy',
-      desc: '',
-      args: [],
-    );
-  }
-
   String get height {
     return Intl.message(
       'Chiều Cao',
@@ -4086,96 +4077,6 @@ class S {
     );
   }
 
-  String get enter_name {
-    return Intl.message(
-      'Mời nhập tên',
-      name: 'enter_name',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get enter_code {
-    return Intl.message(
-      'Mời nhập mã OTP',
-      name: 'enter_code',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get name {
-    return Intl.message(
-      'tên',
-      name: 'name',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get phone_format {
-    return Intl.message(
-      'Số điện thoại không tồn tại, mời nhập lại',
-      name: 'phone_format',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get in_delivery {
-    return Intl.message(
-      'Đang vận chuyển',
-      name: 'in_delivery',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get waiting_checkout {
-    return Intl.message(
-      'Chờ thanh toán',
-      name: 'waiting_checkout',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get choose_shop_address {
-    return Intl.message(
-      'Vui lòng chọn shop nhận hàng',
-      name: 'choose_shop_address',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get choose_delivery_address {
-    return Intl.message(
-      'Vui lòng nhập địa chỉ nhận hàng ',
-      name: 'choose_delivery_address',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get choose_time_Schedule {
-    return Intl.message(
-      'Vui lòng thời gian nhận hàng ',
-      name: 'choose_time_Schedule',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get missing_information {
-    return Intl.message(
-      'Thiếu thông tin',
-      name: 'missing_information',
-      desc: '',
-      args: [],
-    );
-  }
-
   String get message_add_baby_test_success {
     return Intl.message(
       'Nhập thông tin thành công!',
@@ -4329,7 +4230,7 @@ class S {
     );
   }
 
-  String numPoint(dynamic point) {
+  String numPoint(Object point) {
     return Intl.message(
       '$point điểm',
       name: 'numPoint',
@@ -4351,6 +4252,105 @@ class S {
     return Intl.message(
       'Bạn đã đăng ký nhận thông báo cho sản phẩm này thành công!',
       name: 'mess_receive_notify_for_product',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_name {
+    return Intl.message(
+      'Mời nhập tên',
+      name: 'enter_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_code {
+    return Intl.message(
+      'Mời nhập mã OTP',
+      name: 'enter_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get name {
+    return Intl.message(
+      'tên',
+      name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get phone_format {
+    return Intl.message(
+      'Số điện thoại không tồn tại, mời nhập lại',
+      name: 'phone_format',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get in_delivery {
+    return Intl.message(
+      'Đang vận chuyển',
+      name: 'in_delivery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get waiting_checkout {
+    return Intl.message(
+      'Chờ thanh toán',
+      name: 'waiting_checkout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get choose_shop_address {
+    return Intl.message(
+      'Vui lòng chọn shop nhận hàng',
+      name: 'choose_shop_address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get choose_delivery_address {
+    return Intl.message(
+      'Vui lòng nhập địa chỉ nhận hàng ',
+      name: 'choose_delivery_address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get choose_time_Schedule {
+    return Intl.message(
+      'Vui lòng thời gian nhận hàng ',
+      name: 'choose_time_Schedule',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get missing_information {
+    return Intl.message(
+      'Thiếu thông tin',
+      name: 'missing_information',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boy {
+    return Intl.message(
+      'Bé trai',
+      name: 'boy',
       desc: '',
       args: [],
     );

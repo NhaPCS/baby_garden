@@ -448,7 +448,7 @@
   "cancel_by": "Hủy bởi",
   "change_service_type": "Muốn thay đổi loại dịch vụ",
   "cancel_question": "Bạn có muốn thực sự muốn huỷ ?",
-  "attenion": "Chú ý",
+  "attention": "Chú ý",
   "message_add_baby_test_success": "Nhập thông tin thành công!",
   "enter_baby_height": "Nhập chiều cao của bé",
   "enter_baby_weight": "Nhập cân nặng của bé",
@@ -478,6 +478,6 @@
   "choose_shop_address": "Vui lòng chọn shop nhận hàng",
   "choose_delivery_address": "Vui lòng nhập địa chỉ nhận hàng ",
   "choose_time_Schedule": "Vui lòng thời gian nhận hàng ",
-  "missing_information": "Thiếu thông tin"
-
+  "missing_information": "Thiếu thông tin",
+  "boy": "Bé trai"
 }
