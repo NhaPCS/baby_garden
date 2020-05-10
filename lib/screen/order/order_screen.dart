@@ -51,33 +51,33 @@ class _OrderState extends BaseState<OrderScreen> {
                         child: OrderOptionItem(option: e),
                         onTap: () {
                           if (Provider.of<UserProvider>(context,listen: false).isLogin){
-//                            Provider.of<OrderListProvider>(context,listen: false).getListData(ORDER_OPTIONS.indexOf(e)+1);
-                            switch(ORDER_OPTIONS.indexOf(e)){
-                              case 0:// todo chờ thanh toán
+                            print(e);
+                            switch(e['transportState']){
+                              case TransportState.WAITING_CHECKOUT:// todo chờ thanh toán
                                 push(OrderListScreen(
-                                  title: e['title'].replaceAll("\n", " "),isShowNegativeButton: true,isShowPositiveButton: true,state: 0,
+                                  title: e['title'].replaceAll("\n", " "),isShowNegativeButton: true,isShowPositiveButton: true,state: 8,
                                 ));
                                 break;
-                              case 1://todo chờ xác nhận
+                              case TransportState.WAITING_CONFIRM://todo chờ xác nhận
                                 push(OrderListScreen(
                                   title: e['title'].replaceAll("\n", " "),isShowNegativeButton: true,state: 1,
                                 ));
                                 break;
-                              case 2://todo nhận hàng tại shop
-                                push(OrderListScreen(title: S.of(context).receive_in_shop,state: 2,isShowPositiveButton: true,isShowNegativeButton: true,));
+                              case TransportState.RECEIVE_IN_SHOP://todo nhận hàng tại shop
+                                push(OrderListScreen(title: S.of(context).receive_in_shop,state: 7,isShowPositiveButton: true,isShowNegativeButton: true,));
                                 break;
-                              case 3://todo đang đóng gói
+                              case TransportState.PACKING://todo đang đóng gói
                                 push(OrderListScreen(
                                   title: e['title'].replaceAll("\n", " "),state: 3,
                                 ));
                                 break;
-                              case 4://todo đang vận chuyển
+                              case TransportState.IN_DELIVERY://todo đang vận chuyển
                                 push(OrderListScreen(state: 4,title: S.of(context).delivering,));
                                 break;
-                              case 5://todo đơn hàng thành công
-                                push(OrderListScreen(title: S.of(context).ordered,state: 5,isShowPositiveButton: true,childTitle: "Đơn hàng VCB19.12.25",));
+                              case TransportState.SUCCESS://todo đơn hàng thành công
+                                push(OrderListScreen(title: S.of(context).ordered,state: 3,isShowPositiveButton: true,childTitle: "Đơn hàng VCB19.12.25",));
                                 break;
-                              case 6://todo đơn hàng đã huỷ
+                              case TransportState.CANCEL://todo đơn hàng đã huỷ
                                 push(OrderListScreen(title: S.of(context).canceled_order,state: 6,isShowPositiveButton: true,childTitle: "Chi tiết huỷ đơn",));
                                 break;
                               default://todo đánh giá đơn hàng
@@ -180,42 +180,50 @@ class _OrderState extends BaseState<OrderScreen> {
       {
         'icon': 'order_wait_payment',
         'notify_count': 1,
-        'title': S.of(context).waiting_payment
+        'title': S.of(context).waiting_payment,
+        'transportState': TransportState.WAITING_CHECKOUT
       },
       {
         'icon': 'order_wait_confirm',
         'notify_count': 0,
-        'title': S.of(context).waiting_confirm
+        'title': S.of(context).waiting_confirm,
+        'transportState': TransportState.WAITING_CONFIRM
       },
       {
         'icon': 'order_get_at_shop',
         'notify_count': 3,
-        'title': S.of(context).get_at_shop
+        'title': S.of(context).get_at_shop,
+        'transportState': TransportState.RECEIVE_IN_SHOP
       },
       {
         'icon': 'order_packaging',
         'notify_count': 0,
-        'title': S.of(context).packing
+        'title': S.of(context).packing,
+        'transportState': TransportState.PACKING
       },
       {
         'icon': 'order_delivering',
         'notify_count': 1,
-        'title': S.of(context).transporting
+        'title': S.of(context).transporting,
+        'transportState': TransportState.IN_DELIVERY
       },
       {
         'icon': 'order_success',
         'notify_count': 1,
-        'title': S.of(context).success_order
+        'title': S.of(context).success_order,
+        'transportState': TransportState.SUCCESS
       },
       {
         'icon': 'order_cancelled',
         'notify_count': 1,
-        'title': S.of(context).cancelled_order
+        'title': S.of(context).cancelled_order,
+        'transportState': TransportState.CANCEL
       },
       {
         'icon': 'order_review',
         'notify_count': 1,
-        'title': S.of(context).rate_order
+        'title': S.of(context).rate_order,
+        'transportState': TransportState.NONE
       }
     ];
     FAQS = [

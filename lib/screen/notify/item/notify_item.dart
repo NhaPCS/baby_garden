@@ -9,14 +9,15 @@ import '../../../widget/image/svg_icon.dart';
 class NotifyItem extends StatelessWidget {
   final dynamic data;
   final Function deleteNotify;
-  const NotifyItem({this.data,this.deleteNotify}) : super();
+
+  const NotifyItem({this.data, this.deleteNotify}) : super();
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Card(
       elevation: SizeUtil.smallElevation,
-      margin: EdgeInsets.only(top: 2,bottom: 2,left: 2,right: 2),
+      margin: EdgeInsets.only(top: 2, bottom: 2, left: 2, right: 2),
       child: Stack(
         children: <Widget>[
           Container(
@@ -35,15 +36,17 @@ class NotifyItem extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Card(
-                  child:CachedNetworkImage(imageUrl: data['shop_img'],width: MediaQuery.of(context).size.width / 6,
-                    height: MediaQuery.of(context).size.width / 6,fit: BoxFit.cover,),
-                  color: ColorUtil.logoBgColor,
-                  shape: RoundedRectangleBorder(
-                    //TODO set radius
-                    borderRadius: BorderRadius.circular(15.0),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(SizeUtil.smallSpace),
+                  child: Container(
+                    child: CachedNetworkImage(
+                      imageUrl: data['shop_img'],
+                      width: MediaQuery.of(context).size.width / 6,
+                      height: MediaQuery.of(context).size.width / 6,
+                      fit: BoxFit.cover,
+                    ),
+                    color: ColorUtil.logoBgColor,
                   ),
-                  elevation: 3.0,
                 ),
                 Expanded(
                     child: Container(
@@ -76,7 +79,7 @@ class NotifyItem extends StatelessWidget {
                             child: Text(
                               data['date'],
                               style: TextStyle(
-                                  fontSize: SizeUtil.textSizeNotiTime,
+                                  fontSize: SizeUtil.textSizeNoticeTime,
                                   color: ColorUtil.textHint),
                             ),
                           ),
@@ -84,7 +87,7 @@ class NotifyItem extends StatelessWidget {
                             S.of(context).send_by(data['shop_name']),
                             style: TextStyle(
                                 color: ColorUtil.primaryColor,
-                                fontSize: SizeUtil.textSizeNotiTime),
+                                fontSize: SizeUtil.textSizeNoticeTime),
                           ),
                         ],
                       )

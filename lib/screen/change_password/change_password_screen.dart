@@ -19,9 +19,9 @@ class ChangePasswordScreen extends StatefulWidget {
 }
 
 class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,ChangePasswordViewModel> {
-  final TextEditingController _oldPasswordControler = new TextEditingController();
-  final TextEditingController _newPasswordControler = new TextEditingController();
-  final TextEditingController _reenterNewPasswordControler = new TextEditingController();
+  final TextEditingController _oldPasswordController = new TextEditingController();
+  final TextEditingController _newPasswordController = new TextEditingController();
+  final TextEditingController _reenterNewPasswordController = new TextEditingController();
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
@@ -46,7 +46,7 @@ class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,Cha
             hint: S
                 .of(context)
                 .enter_old_password,
-            textEditingController: _oldPasswordControler,
+            textEditingController: _oldPasswordController,
             borderColor: ColorUtil.colorAccent,
             elevation: SizeUtil.smallElevation,
             borderRadius: SizeUtil.tinyRadius,
@@ -55,28 +55,21 @@ class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,Cha
           ),
           SizedBox(height: SizeUtil.normalSpace,),
           MyPasswordTextField(
-            controller: _newPasswordControler,
+            controller: _newPasswordController,
             hint: S
                 .of(context)
                 .enter_new_password,
           ),
           SizedBox(height: SizeUtil.normalSpace,),
           MyPasswordTextField(
-            controller: _reenterNewPasswordControler,
+            controller: _reenterNewPasswordController,
             hint: S
                 .of(context)
                 .reenter_new_password,
           ),
           SizedBox(height: SizeUtil.normalSpace,),
           MyRaisedButton(
-            onPressed: () async{
-              final data = await getViewModel().onChangePassword(_oldPasswordControler.text.trim(),_newPasswordControler.text.trim(),_reenterNewPasswordControler.text.trim(),);
-              if (data==null){
-                WidgetUtil.showMessageDialog(context, message: S.of(context).alert_resert_pass_success, title: S.of(context).changePassword,onOkClick: (){
-                  Navigator.of(context).pop();
-                });
-              }
-            },
+            onPressed: onChange,
             color: ColorUtil.colorAccent,
             textStyle: TextStyle(fontSize: SizeUtil.textSizeDefault, color: Colors.white),
             text: S.of(context).change_password,
@@ -85,6 +78,15 @@ class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,Cha
         ],
       ),
     );
+  }
+
+  void onChange() async{
+    final data = await getViewModel().onChangePassword(_oldPasswordController.text.trim(),_newPasswordController.text.trim(),_reenterNewPasswordController.text.trim(),);
+    if (data==null){
+      WidgetUtil.showMessageDialog(context, message: S.of(context).alert_resert_pass_success, title: S.of(context).changePassword,onOkClick: (){
+        Navigator.of(context).pop();
+      });
+    }
   }
 
   @override

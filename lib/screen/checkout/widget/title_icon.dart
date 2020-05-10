@@ -93,7 +93,7 @@ class TitleIcon extends StatelessWidget {
                         trailingText,
                         style: TextStyle(
                             color: Colors.blue,
-                            fontSize: SizeUtil.textSizeNotiTime),
+                            fontSize: SizeUtil.textSizeNoticeTime),
                       )),
                 )
               : SizedBox(),

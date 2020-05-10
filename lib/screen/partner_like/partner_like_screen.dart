@@ -62,8 +62,9 @@ class _PartnerLikeScreen extends BaseState<PartnerLikeScreen> {
                     itemBuilder: (context, index) {
                       return new GestureDetector(
                         child: new PartnerItem(shop: value.shops[index]),
-                        onTap: () {
-                          push(PartnerBookScheduleScreen(shopID:"1"));
+                        onTap: () async{
+                          await push(PartnerBookScheduleScreen(shopID:value.shops[index]['id']));
+                            _getListPartnerProvider.getListFavouriteShop();
                         },
                       );
                     });

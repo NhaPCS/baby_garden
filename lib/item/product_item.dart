@@ -163,7 +163,7 @@ class ProductItem extends StatelessWidget {
   }
 
   Widget favoriteTag(BuildContext context) {
-    return '1' == product['is_favourite']
+    return product!=null&&'1' == product['is_favourite']
         ? Stack(
             alignment: Alignment.center,
             children: <Widget>[

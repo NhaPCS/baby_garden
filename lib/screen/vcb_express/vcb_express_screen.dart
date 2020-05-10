@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-// TODO-Hung: de trong folder rieng, k de chung voi screen khac
 class VCBExpressScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {

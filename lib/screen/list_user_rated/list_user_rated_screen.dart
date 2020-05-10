@@ -37,7 +37,7 @@ class _ListUserRatedScreenState extends BaseState<ListUserRatedScreen> {
                 (BuildContext context, FilterProvider value, Widget child) {
               return Padding(
                 padding: const EdgeInsets.only(
-                    top: 8.0,
+                    top: SizeUtil.midSmallSpace,
                     left: SizeUtil.midSpace,
                     right: SizeUtil.midSpace),
                 child: Row(
