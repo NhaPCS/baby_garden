@@ -6,9 +6,6 @@ class RemindCalendarProvider extends ChangeNotifier {
   List<dynamic> remindList = List();
   RemindCalendar newRemindCalendar = RemindCalendar();
 
-  int total;
-  int totalPage;
-
   void clearRemind() {
     remindList = null;
     notifyListeners();
@@ -21,37 +18,14 @@ class RemindCalendarProvider extends ChangeNotifier {
     dynamic data = await service.getListRemindCalendar(context);
 
     if (data != null && data.length != 0) {
-      remindList = data['list'];
-      total = data['total'];
-      totalPage = (data['total'] / numberPosts).toInt() + 1;
+      remindList = data;
       notifyListeners();
     }
   }
 
   RemindCalendar getRemind(int index) {
-    final calendar = remindList[index]['calendar'];
-    final product = remindList[index]['product'];
-
-    final remind = RemindCalendar(
-        calendarId: calendar['calendar_id'],
-        dateStart: calendar['date_start'],
-        timeStart: calendar['time_start'],
-        dateEnd: calendar['date_end'],
-        timeEnd: calendar['time_end'],
-        type:
-            calendar['type'] == 1 ? RemindType.remindBuy : RemindType.remindUse,
-        period: calendar['period'] == 1
-            ? RemindPeriod.everyday
-            : RemindPeriod.twiceDay,
-        time1: calendar['time_1'],
-        time2: calendar['time_2'],
-        time3: calendar['time_3'],
-        time4: calendar['time_4'],
-        // datetime: calendar['date_time']
-
-        productId: product['product_id'],
-        description: product['name'],
-        price: product['price']);
+    final calendar = remindList[index];
+    final remind = RemindCalendar().fromJson(calendar);
 
     return remind;
   }
@@ -62,6 +36,7 @@ class RemindCalendarProvider extends ChangeNotifier {
     final addSuccess =
         await service.addRemindCalendar(context, calendar: _calendar);
 
+    notifyListeners();
     return addSuccess != null;
   }
 
@@ -69,6 +44,7 @@ class RemindCalendarProvider extends ChangeNotifier {
     final deleteSuccess =
         await service.deleteRemindCalendar(context, calendarId: calendarId);
 
+    notifyListeners();
     return deleteSuccess != null;
   }
 }

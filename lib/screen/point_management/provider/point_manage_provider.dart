@@ -9,22 +9,19 @@ class PointManageProvider extends ChangeNotifier {
   List<dynamic> pointDetailList = List();
   RemindCalendar newRemindCalendar = RemindCalendar();
 
-  int total;
-  int totalPage;
-
   void clearPoint() {
     pointList = null;
     notifyListeners();
   }
 
-  Future<void> getPointList(BuildContext context,
-      {int index = 1, int numberPosts = service.PAGE_SIZE}) async {
+  Future<void> getPointList(
+    BuildContext context,
+  ) async {
     dynamic data = await service.getListPoint(context);
 
     if (data != null && data.length != 0) {
-      pointList = data['list'];
-      total = data['total'];
-      totalPage = (data['total'] / numberPosts).toInt() + 1;
+      print(data);
+      pointList = data;
       notifyListeners();
     }
   }
@@ -32,22 +29,19 @@ class PointManageProvider extends ChangeNotifier {
   Point getPoint(int index) {
     final point = Point(
       shopId: pointList[index]['shop_id'],
-      shopName: pointList[index]['shop'],
-      shopImage: pointList[index]['shop_image'],
+      shopName: pointList[index]['shop_name'],
+      shopImage: pointList[index]['img'],
       point: pointList[index]['point'],
     );
 
     return point;
   }
 
-  Future<void> getPointDetailList(BuildContext context, int shopId,
-      {int index = 1, int numberPosts = service.PAGE_SIZE}) async {
+  Future<void> getPointDetailList(BuildContext context, String shopId) async {
     dynamic data = await service.getPointDetail(context, shopId.toString());
 
     if (data != null && data.length != 0) {
-      pointDetailList = data['list'];
-      total = data['total'];
-      totalPage = (data['total'] / numberPosts).toInt() + 1;
+      pointDetailList = data;
       notifyListeners();
     }
   }
@@ -56,10 +50,11 @@ class PointManageProvider extends ChangeNotifier {
     final detail = pointDetailList[index];
     final pointDetail = PointDetail(
         shopImage: detail['shop_image'],
-        history: detail['detail'],
-        dateTime: detail['dateTime'],
-        changePoint: detail['change_point'],
-        currentPoint: detail['current_point']);
+        history: detail['content'],
+        dateTime: detail['date'],
+        changePoint: detail['point'],
+        type: detail['type'],
+        lastPoint: detail['last_point'] != null ? detail['last_point'] : '0');
 
     return pointDetail;
   }

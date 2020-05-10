@@ -432,7 +432,6 @@ Future<dynamic> listProducts(BuildContext context, String path,
     int index = START_PAGE,
     int numberPosts = PAGE_SIZE}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
-
   dynamic params = {
     "user_id": userId,
     "index": index.toString(),
@@ -957,8 +956,8 @@ Future<dynamic> addRemindCalendar(BuildContext context,
   params['user_id'] = userId;
   String path = 'addCalendar';
 
-  if (calendar.calendarId != null) {
-    params['calendar_id'] = calendar.calendarId;
+  if (calendar.id != null) {
+    params['calendar_id'] = calendar.id;
     path = 'editCalendar';
   }
 

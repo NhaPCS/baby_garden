@@ -12,7 +12,6 @@ class PointHistoryCardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(this.pointDetail.changePoint);
     return Container(
       decoration: setBorder('bottom', ColorUtil.lineLightGray, 1),
       margin: EdgeInsets.only(
@@ -42,7 +41,7 @@ class PointHistoryCardItem extends StatelessWidget {
                       fontSize: SizeUtil.textSizeSmall))
             ])),
         Column(children: <Widget>[
-          Text(this.pointDetail.currentPoint.toString(),
+          Text(this.pointDetail.lastPoint,
               style: TextStyle(
                   color: ColorUtil.textHint, fontSize: SizeUtil.textSizeSmall)),
           SizedBox(
@@ -51,12 +50,12 @@ class PointHistoryCardItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 6.0),
             child: Text(
-              this.pointDetail.type == 1
+              this.pointDetail.type == '1'
                   ? '+ ' + S.of(context).numPoint(this.pointDetail.changePoint)
-                  : '- ' + this.pointDetail.changePoint.abs().toString(),
+                  : '- ' + this.pointDetail.changePoint,
               style: TextStyle(
                   fontSize: SizeUtil.textSizeSmall,
-                  color: this.pointDetail.type == 1
+                  color: this.pointDetail.type == '1'
                       ? Color.fromRGBO(0, 119, 255, 1)
                       : Colors.red),
             ),

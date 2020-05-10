@@ -1,8 +1,8 @@
 class Point {
-  int shopId;
+  String shopId;
   String shopName;
   String shopImage;
-  int point;
+  String point;
 
   Point({this.shopId, this.shopName, this.point, this.shopImage});
 }
