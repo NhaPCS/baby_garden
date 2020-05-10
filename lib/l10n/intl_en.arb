@@ -451,6 +451,11 @@
   "enter_name": "Mời nhập tên",
   "enter_code": "Mời nhập mã OTP",
   "name": "tên",
-  "phone_format": "Số điện thoại không tồn tại, mời nhập lại"
-
+  "phone_format": "Số điện thoại không tồn tại, mời nhập lại",
+  "in_delivery": "Đang vận chuyển",
+  "waiting_checkout": "Chờ thanh toán",
+  "choose_shop_address": "Vui lòng chọn shop nhận hàng",
+  "choose_delivery_address": "Vui lòng nhập địa chỉ nhận hàng ",
+  "choose_time_Schedule": "Vui lòng thời gian nhận hàng ",
+  "missing_information": "Thiếu thông tin"
 }

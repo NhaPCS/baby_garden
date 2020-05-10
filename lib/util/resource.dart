@@ -402,6 +402,7 @@ class SizeUtil {
   static const double textSpaceSmall = 2;
   static const double textSpaceNormal = 3;
   static const double textSpaceBig = 4;
+
 }
 
 class FileUtil {
@@ -433,10 +434,30 @@ enum TransportState {
   OTHER,
   SUCCESS,
   CANCEL,
-  PAKING,
+  PACKING,
   IN_DELIVERY,
   RECEIVE_IN_SHOP,
   WAITING_CHECKOUT
+}
+
+enum BookingState {
+  NONE,
+  WAITING_CONFIRM,
+  CONFIRM,
+  SUCCESS,
+  CANCEL,
+  PACKING,
+  IN_DELIVERY,
+  RECEIVE_IN_SHOP,
+  WAITING_CHECKOUT
+}
+
+enum TransferStatus{
+  NONE,
+  WAITING_GET_PRODUCT,
+  GETTING_PRODUCT,
+  IN_STORAGE,
+  IN_DELIVERY
 }
 
 class WidgetUtil {

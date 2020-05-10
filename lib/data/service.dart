@@ -380,15 +380,15 @@ Future<dynamic> paymentInfo() async {
 //TODO PAYMENT
 Future<dynamic> payment(
     {String userID,
-    int bookingId,
+    String bookingId,
     double money,
     String content,
     String note}) async {
   Response response = await post(null, path: "payment", param: {
-    'user_id': userID.toString(),
-    'booking_id': bookingId.toString(),
+    'user_id': userID,
+    'booking_id': bookingId,
     'money': money.toString(),
-    'content': content.toString(),
+    'content': content,
     'note': note.toLowerCase(),
   });
   if (response.isSuccess()) return response.data;
@@ -724,6 +724,7 @@ Future<Response> post(BuildContext context,
     bool showErrorDialog = true,
     bool showLoading = true,
     bool requireLogin = false}) async {
+  print("asdasdasd $param");
   Response response = await execute(context,
       path: path,
       param: param,

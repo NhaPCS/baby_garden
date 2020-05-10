@@ -3,6 +3,7 @@ import 'package:baby_garden_flutter/screen/notify/provider/notify_control_provid
 import 'package:baby_garden_flutter/screen/notify/provider/search_notify_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/order_detail/order_detail_screen.dart';
+import 'package:baby_garden_flutter/screen/personal_notice_screen/PersonalNoticeScreen.dart';
 import 'package:baby_garden_flutter/screen/saling_detail/sailing_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/switchButton.dart';
@@ -209,12 +210,8 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                                         ? SailingDetailScreen(
                                             notifyId: data[index]['id'],
                                           )
-                                        : OrderDetailScreen(
-                                            bookingId: "3",
-                                            title: "notify",
-                                            state: 1,
-                                            isShowNegativeButton: true,
-                                            isShowPositiveButton: true,
+                                        : PersonalNoticeScreen(
+                                            notifyId: data[index]['id'],
                                           ));
                                   },
                                   child: NotifyItem(

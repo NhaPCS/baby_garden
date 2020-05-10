@@ -13,10 +13,18 @@ import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class CheckoutScreen extends StatefulWidget {
+  final int bookingId;
+  final int  totalPrice;
+  final String bookingCode;
+  final String phone;
+
+  const CheckoutScreen({this.bookingId, this.totalPrice, this.bookingCode, this.phone}):super();
+
   @override
   State<StatefulWidget> createState() {
     return _CheckoutScreenState();
@@ -99,7 +107,9 @@ class _CheckoutScreenState
                     title: S.of(context).bank_number,
                     content: listInfo != null ? listInfo['account'] : "",
                     isTrailing: true,
-                    onTrailingTap: () {},
+                    onTrailingTap: (){
+                      Clipboard.setData(ClipboardData(text: listInfo['account']));
+                    },
                   ),
                   TitleIcon(
                     iconPadding: const EdgeInsets.only(
@@ -133,13 +143,13 @@ class _CheckoutScreenState
                   children: <Widget>[
                     RichTextForm(
                       title: S.of(context).contract_code,
-                      content: "  VCB355125",
+                      content: "  ${widget.bookingCode}",
                       contentColor: ColorUtil.primaryColor,
                     ),
                     Spacer(),
                     RichTextForm(
                       title: S.of(context).amount,
-                      content: "  425.000",
+                      content: "  ${StringUtil.getPriceText(widget.totalPrice.toString())}",
                       contentColor: ColorUtil.primaryColor,
                     ),
                     Padding(
@@ -148,10 +158,15 @@ class _CheckoutScreenState
                           right: SizeUtil.smallSpace,
                           top: SizeUtil.tinySpace,
                           bottom: SizeUtil.tinySpace),
-                      child: SvgIcon(
-                        "ic_copy.svg",
-                        width: SizeUtil.iconSizeDefault,
-                        height: SizeUtil.iconSizeDefault,
+                      child: GestureDetector(
+                        onTap: (){
+                          Clipboard.setData(ClipboardData(text: widget.totalPrice.toString()));
+                        },
+                        child: SvgIcon(
+                          "ic_copy.svg",
+                          width: SizeUtil.iconSizeDefault,
+                          height: SizeUtil.iconSizeDefault,
+                        ),
                       ),
                     ),
                   ],
@@ -163,7 +178,7 @@ class _CheckoutScreenState
                   children: <Widget>[
                     RichTextForm(
                       title: S.of(context).transfer_content,
-                      content: "  0975441005 - VCB355125 - 425000",
+                      content: " ${widget.phone} - ${widget.bookingCode} - ${StringUtil.getPriceText(widget.totalPrice.toString())}",
                       contentColor: ColorUtil.primaryColor,
                     ),
                     Spacer(),
@@ -173,10 +188,15 @@ class _CheckoutScreenState
                           right: SizeUtil.smallSpace,
                           top: SizeUtil.tinySpace,
                           bottom: SizeUtil.tinySpace),
-                      child: SvgIcon(
-                        "ic_copy.svg",
-                        width: SizeUtil.iconSizeDefault,
-                        height: SizeUtil.iconSizeDefault,
+                      child: GestureDetector(
+                        onTap: (){
+                          Clipboard.setData(ClipboardData(text: " ${widget.phone} - ${widget.bookingCode} - ${StringUtil.getPriceText(widget.totalPrice.toString())}"));
+                        },
+                        child: SvgIcon(
+                          "ic_copy.svg",
+                          width: SizeUtil.iconSizeDefault,
+                          height: SizeUtil.iconSizeDefault,
+                        ),
                       ),
                     ),
                   ],
@@ -295,8 +315,8 @@ class _CheckoutScreenState
               getViewModel().onCheckout(
                   userID: Provider.of<UserProvider>(context, listen: false)
                       .userInfo['id'],
-                  bookingId: 1,
-                  money: 7182368123,
+                  bookingId: widget.bookingId.toString(),
+                  money: widget.totalPrice.toDouble(),
                   content: _noteController.text.trim(),
                   note: _noteController.text.trim());
               int index = await showDialog(

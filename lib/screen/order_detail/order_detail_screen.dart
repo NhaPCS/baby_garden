@@ -20,19 +20,9 @@ import 'package:provider/provider.dart';
 import '../order_delivery_info/order_delivery_info_screen.dart';
 
 class OrderDetailScreen extends StatefulWidget {
-  final bool isShowPositiveButton;
-  final bool isShowNegativeButton;
-  final String title;
-  final int state;
   final String bookingId;
-  const OrderDetailScreen(
-      {Key key,
-      this.title,
-      this.isShowNegativeButton = false,
-      this.isShowPositiveButton = false,
-      this.state = 0,
-      this.bookingId = "0"})
-      : super(key: key);
+
+  const OrderDetailScreen({Key key, this.bookingId = "0"}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -42,11 +32,13 @@ class OrderDetailScreen extends StatefulWidget {
 
 class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
   final BookingDetailProvider _bookingDetailProvider = BookingDetailProvider();
-   bool isShowPositiveButton;
-   bool isShowNegativeButton;
-  bool isDelivering;
-   String title;
-   int state;
+  bool isShowPositiveButton = false;
+  bool isShowNegativeButton = false;
+  bool isDelivering = false;
+  String title = "";
+  String positiveTitle = "";
+  BookingState state = BookingState.NONE;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -56,19 +48,17 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
-    bool isDelivering = state == 4;
     return Consumer<BookingDetailProvider>(builder:
         (BuildContext context, BookingDetailProvider value, Widget child) {
       dynamic data = value.bookingDetailData;
       if (data == null) {
         return Container();
       } else {
-        initView(int.parse(value.bookingDetailData['active']));
+        initView(int.parse(data['active']), data['is_receive'], data['status']);
+        print("sdaskjdn asd $title");
         return Scaffold(
             appBar: getAppBar(
-              title: title != null
-                  ? title
-                  : S.of(context).receive_in_shop,
+              title: title,
               centerTitle: true,
               bgColor: ColorUtil.primaryColor,
               titleColor: Colors.white,
@@ -238,7 +228,7 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                     color: Colors.red,
                     fontWeight: FontWeight.bold),
               ),
-              state == 6
+              state == BookingState.CANCEL
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -276,24 +266,12 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                   width: SizeUtil.tinySpace,
                   color: isDelivering ? ColorUtil.white : ColorUtil.lineColor,
                   margin: EdgeInsets.all(0)),
-              isShowPositiveButton
+              isShowNegativeButton
                   ? MyRaisedButton(
-                      onPressed: () {
-                        //TODO booking
-                        if (state == 0) {
-                          push(CheckoutScreen());
-                        } else if (state == 2) {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  ReceiveBarCodeDialogue());
-                        } else {
-                          push(RatingDetailScreen());
-                        }
-                      },
-                      text: state == 0
+                      onPressed: onNegativeClick,
+                      text: state == BookingState.WAITING_CHECKOUT
                           ? S.of(context).checkout.toUpperCase()
-                          : state == 2
+                          : state == BookingState.RECEIVE_IN_SHOP
                               ? S.of(context).receive.toUpperCase()
                               : S.of(context).rating_order,
                       color: ColorUtil.primaryColor,
@@ -334,27 +312,45 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
     });
   }
 
-  void initView(int type){
-    state = type;
-    isDelivering = type == 4;
-    switch(type){
-      case 1://đã đặt
+  void initView(int active, String receiveInShop, String status) {
+    state = BookingState.values[active];
+    if(status == "1"){
+      state = BookingState.WAITING_CHECKOUT;
+    }else if(receiveInShop == "1"){
+      state = BookingState.RECEIVE_IN_SHOP;
+    }
+    switch (state) {
+      case BookingState.WAITING_CONFIRM: //đã đặt
+        title = S.of(context).waiting_confirm;
+        isShowPositiveButton = true;
+        isShowNegativeButton = true;
+        break;
+      case BookingState.CONFIRM: //xác nhận
+        break;
+      case BookingState.SUCCESS: //hoàn thành
+        isShowPositiveButton = true;
         title = S.of(context).success_order;
         break;
-      case 2://xác nhận
-
+      case BookingState.CANCEL: //huỷ
+        isShowPositiveButton = true;
+        title = S.of(context).canceled_order;
         break;
-      case 3://hoàn thành
-
+      case BookingState.RECEIVE_IN_SHOP:
+        title = S.of(context).receive_in_shop;
+        isShowPositiveButton = true;
+        isShowNegativeButton = true;
         break;
-      case 4://huỷ
-
+      case BookingState.WAITING_CHECKOUT:
+        title = S.of(context).waiting_checkout;
+        isShowPositiveButton = true;
+        isShowNegativeButton = true;
         break;
-      case 5://đang đóng gói
-
+      case BookingState.PACKING: //đang đóng gói
+        title = S.of(context).packing;
         break;
-      case 6://đang vận chuyển
-
+      case BookingState.IN_DELIVERY: //đang vận chuyển
+        isDelivering = true;
+        title = S.of(context).in_delivery;
         break;
       default:
         break;
@@ -364,5 +360,18 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
   @override
   List<SingleChildWidget> providers() {
     return [ChangeNotifierProvider.value(value: _bookingDetailProvider)];
+  }
+
+  void onNegativeClick() {
+    //TODO booking
+    if (state == BookingState.WAITING_CHECKOUT) {
+      push(CheckoutScreen());
+    } else if (state == BookingState.RECEIVE_IN_SHOP) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) => ReceiveBarCodeDialogue());
+    } else {
+      push(RatingDetailScreen());
+    }
   }
 }

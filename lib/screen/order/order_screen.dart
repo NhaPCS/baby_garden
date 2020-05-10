@@ -66,7 +66,7 @@ class _OrderState extends BaseState<OrderScreen> {
                               case TransportState.RECEIVE_IN_SHOP://todo nhận hàng tại shop
                                 push(OrderListScreen(title: S.of(context).receive_in_shop,state: 7,isShowPositiveButton: true,isShowNegativeButton: true,));
                                 break;
-                              case TransportState.PAKING://todo đang đóng gói
+                              case TransportState.PACKING://todo đang đóng gói
                                 push(OrderListScreen(
                                   title: e['title'].replaceAll("\n", " "),state: 3,
                                 ));
@@ -199,7 +199,7 @@ class _OrderState extends BaseState<OrderScreen> {
         'icon': 'order_packaging',
         'notify_count': 0,
         'title': S.of(context).packing,
-        'transportState': TransportState.PAKING
+        'transportState': TransportState.PACKING
       },
       {
         'icon': 'order_delivering',
