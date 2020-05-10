@@ -7,6 +7,7 @@ import 'package:baby_garden_flutter/screen/login/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:flutter_picker/flutter_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -65,11 +66,16 @@ class ColorUtil {
 class DateUtil {
   static final String serverFormatDate = "yyyy-MM-dd HH:mm:ss";
 
+  static String formatBirthdayDate(DateTime date) {
+    return new DateFormat("dd/MM/yyyy").format(date);
+  }
+
   static String formatDDMMyyyy(String rawDate) {
     DateTime date = new DateFormat(serverFormatDate).parse(rawDate);
     return new DateFormat("dd/MM/yyyy").format(date);
   }
- /*
+
+  /*
  static const int monday = 2;
       static const int tuesday = 3;
       static const int wednesday = 4;
@@ -87,7 +93,7 @@ class DateUtil {
     for (int i = 0; i <= 6; i++) {
       final date = now.add(new Duration(days: i));
       dates.add({
-        'index': date.weekday==7?1:date.weekday+1,
+        'index': date.weekday == 7 ? 1 : date.weekday + 1,
         'dow': dowFormat.format(date),
         'date': dateFormat.format(date)
       });
@@ -452,7 +458,7 @@ enum BookingState {
   WAITING_CHECKOUT
 }
 
-enum TransferStatus{
+enum TransferStatus {
   NONE,
   WAITING_GET_PRODUCT,
   GETTING_PRODUCT,
@@ -461,6 +467,30 @@ enum TransferStatus{
 }
 
 class WidgetUtil {
+  static void showGenderSelectorDialog(BuildContext context, ValueChanged<int> selectedGender) {
+    new Picker(
+        adapter: PickerDataAdapter<String>(pickerdata: [
+          S.of(context).girl,
+          S.of(context).boy,
+        ]),
+        changeToFirst: true,
+        hideHeader: false,
+        onConfirm: (Picker picker, List value) {
+          print(value.toString());
+          print(picker.adapter.text);
+        }).showModal(context); //_scaffoldKey.currentState);
+  }
+
+  static Future<void> showBirthdaySelectorDialog(
+      BuildContext context, ValueChanged<String> selectedDate) async {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2015, 8),
+            lastDate: DateTime(2101))
+        .then((value) => {selectedDate(DateUtil.formatBirthdayDate(value))});
+  }
+
   static void showPickImageDialog(BuildContext context,
       {VoidCallback onCameraClick, VoidCallback onGalleryClick}) {
     showConfirmDialog(context,
@@ -671,8 +701,8 @@ class WidgetUtil {
       {List<Param> params, bool showErrorDialog = true}) {
     for (Param p in params) {
       print(p.checkType);
-      switch(p.checkType){
-        case CheckType.NULL_OR_EMPTY_VALUE : // null and empty value
+      switch (p.checkType) {
+        case CheckType.NULL_OR_EMPTY_VALUE: // null and empty value
           if (p.value == null || p.value.isEmpty) {
             if (showErrorDialog)
               WidgetUtil.showErrorDialog(
@@ -681,10 +711,8 @@ class WidgetUtil {
           }
           break;
         case CheckType.COMPARE_VALUE: //compare value
-          if (p.value != p.valueConpare){
-            if (showErrorDialog)
-              WidgetUtil.showErrorDialog(
-                  context, p.key);
+          if (p.value != p.valueConpare) {
+            if (showErrorDialog) WidgetUtil.showErrorDialog(context, p.key);
             return false;
           }
           break;
@@ -706,7 +734,7 @@ class WidgetUtil {
             return false;
           }
           break;
-        default :
+        default:
           return false;
       }
     }

@@ -473,8 +473,7 @@
   "child_test_results_evaluate": "Đánh giá kết quả: ",
   "newest_test_time": "(Lần kiểm tra mới nhất: {time} tháng)",
   "nutrition_consulting": "Tư vấn dinh dưỡng:",
-  "suggestion_products": "Sản phẩm gợi ý:"
-  "mess_receive_notify_for_product": "Bạn đã đăng ký nhận thông báo cho sản phẩm này thành công!",
+  "suggestion_products": "Sản phẩm gợi ý:",
   "enter_name": "Mời nhập tên",
   "enter_code": "Mời nhập mã OTP",
   "name": "tên",
@@ -484,6 +483,5 @@
   "choose_shop_address": "Vui lòng chọn shop nhận hàng",
   "choose_delivery_address": "Vui lòng nhập địa chỉ nhận hàng ",
   "choose_time_Schedule": "Vui lòng thời gian nhận hàng ",
-  "missing_information": "Thiếu thông tin",
-  "boy": "Bé trai"
+  "missing_information": "Thiếu thông tin"
 }
