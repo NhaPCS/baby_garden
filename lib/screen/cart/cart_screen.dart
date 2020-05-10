@@ -1,13 +1,13 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/item/added_promo_item.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
+import 'package:baby_garden_flutter/provider/change_index_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
 import 'package:baby_garden_flutter/screen/cart/provider/get_promotions_provider.dart';
 import 'package:baby_garden_flutter/screen/cart/widget/product_by_shop.dart';
+import 'package:baby_garden_flutter/screen/cart/widget/promotion_input.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
-import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
@@ -26,12 +26,14 @@ class CartScreen extends StatefulWidget {
 class _CartState extends BaseState<CartScreen> {
   final TextEditingController _promoCodeController = TextEditingController();
   final GetPromotionsProvider _getPromotionsProvider = GetPromotionsProvider();
+  final ChangeIndexProvider _changeIndexProvider = ChangeIndexProvider();
 
   @override
   void initState() {
     super.initState();
     _getPromotionsProvider.getPromotions();
   }
+
   @override
   Widget buildWidget(BuildContext context) {
     return Column(
@@ -57,103 +59,37 @@ class _CartState extends BaseState<CartScreen> {
                 ],
               );
             }
-            return ListView.builder(
-                padding: EdgeInsets.all(0),
-                itemCount: value.shops.length + 1,
-                itemBuilder: (context, index) {
-                  if (index == value.shops.length) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        WidgetUtil.paddingWidget(Text(
-                          S.of(context).type_promo_code,
-                          style: TextStyle(
-                              color: ColorUtil.primaryColor,
-                              fontWeight: FontWeight.bold),
-                        )),
-                        WidgetUtil.paddingWidget(Row(
-                          children: <Widget>[
-                            Expanded(
-                                child: MyTextField(
-                              textEditingController: _promoCodeController,
-                              borderColor: ColorUtil.textGray,
-                              borderRadius: SizeUtil.tinyRadius,
-                              hint: S.of(context).promo_code,
-                              hintStyle: TextStyle(color: ColorUtil.textHint),
-                            )),
-                            SizedBox(
-                              width: SizeUtil.defaultSpace,
-                            ),
-                            MyRaisedButton(
-                                onPressed: () {
-                                  //TODO
-                                },
-                                text: S.of(context).apply,
-                                color: ColorUtil.primaryColor,
-                                textStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                                borderRadius: SizeUtil.tinyRadius)
-                          ],
-                        )),
-                        Consumer<GetPromotionsProvider>(
-                          builder: (BuildContext context,
-                              GetPromotionsProvider value, Widget child) {
-                            if (value.promotions == null ||
-                                value.promotions.isEmpty) return SizedBox();
-                            return Column(
-                                children: value.promotions
-                                    .map((e) => AddedPromoItem(
-                                          promotion: e,
-                                        ))
-                                    .toList());
+            return Consumer<ChangeIndexProvider>(
+              builder: (BuildContext context,
+                  ChangeIndexProvider changeIndexProvider, Widget child) {
+                return ListView.builder(
+                    padding: EdgeInsets.all(0),
+                    itemCount: value.shops.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == value.shops.length) {
+                        return PromotionInput(
+                          promoCodeController: _promoCodeController,
+                          onApplyPress: () {
+                            if (_changeIndexProvider.index >= 0)
+                              push(BookingScreen(
+                                promoteCode: _promoCodeController.text,
+                                shopID: value.shops[_changeIndexProvider.index]
+                                    ['shop_id'],
+                              ));
                           },
-                        ),
-                        WidgetUtil.getLine(width: 2, margin: EdgeInsets.all(0)),
-                        WidgetUtil.paddingWidget(
-                            Row(
-                              children: <Widget>[
-                                Expanded(child: Text(S.of(context).pre_count)),
-                                Text(StringUtil.getPriceText(
-                                    value.price.toString()))
-                              ],
-                            ),
-                            padding: SizeUtil.smallPadding),
-                        WidgetUtil.getLine(margin: EdgeInsets.all(0)),
-                        WidgetUtil.paddingWidget(
-                            Row(
-                              children: <Widget>[
-                                Expanded(child: Text(S.of(context).promo_code)),
-                                Text(
-                                  "-640.000 đ",
-                                  style: TextStyle(color: ColorUtil.blueLight),
-                                )
-                              ],
-                            ),
-                            padding: SizeUtil.smallPadding),
-                        WidgetUtil.getLine(width: 5, margin: EdgeInsets.all(0)),
-                        Container(
-                          padding: SizeUtil.defaultPadding,
-                          width: double.infinity,
-                          child: MyRaisedButton(
-                            onPressed: () {
-                              push(BookingScreen());
-                            },
-                            text: S.of(context).take_order.toUpperCase(),
-                            textStyle: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                            color: ColorUtil.primaryColor,
-                            padding: SizeUtil.smallPadding,
-                          ),
-                        )
-                      ],
-                    );
-                  }
-                  return ProductByShop(
-                    shop: value.shops[index],
-                  );
-                });
+                          price: value.price.toString(),
+                        );
+                      }
+                      return ProductByShop(
+                        isSelected: _changeIndexProvider.index == index,
+                        shop: value.shops[index],
+                        onSelectShop: (s) {
+                          if (s) _changeIndexProvider.changeIndex(index);
+                        },
+                      );
+                    });
+              },
+            );
           },
         ))
       ],
@@ -162,6 +98,9 @@ class _CartState extends BaseState<CartScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _getPromotionsProvider)];
+    return [
+      ChangeNotifierProvider.value(value: _getPromotionsProvider),
+      ChangeNotifierProvider.value(value: _changeIndexProvider),
+    ];
   }
 }

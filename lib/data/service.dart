@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:baby_garden_flutter/data/model/remind_calendar.dart';
 import 'package:baby_garden_flutter/data/response.dart';
 import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
@@ -589,6 +590,18 @@ Future<Response> reportProduct(BuildContext context,
   return null;
 }
 
+Future<Response> receiveNotify(BuildContext context, {String productId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "product_id": productId,
+  };
+  Response response = await post(context,
+      path: 'receiveNoty', param: params, requireLogin: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
 Future<Response> registerPartner(BuildContext context,
     {String shopName, String phone, String address, String job}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
@@ -649,6 +662,7 @@ Future<dynamic> listPromotion() async {
   if (response.isSuccess()) return response.data;
   return null;
 }
+
 
 Future<Response> addUserAddress(BuildContext context,
     {String address, int isMain}) async {
@@ -717,6 +731,73 @@ Future<Response> deleteAddress(BuildContext context,
   return null;
 }
 
+Future<dynamic> listBaby(BuildContext context) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId};
+
+  Response response =
+      await get(context, path: 'listBaby', param: params, requireLogin: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> testResult({String babyId, int type}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "baby_id": babyId,
+    "type": type.toString()
+  };
+
+  Response response =
+      await get(null, path: 'testResult', param: params, requireLogin: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> addBabyTest(BuildContext context,
+    {String babyId,
+    String height,
+    String weight,
+    String note,
+    File img}) async {
+  dynamic params = {
+    "baby_id": babyId,
+    "height": height.toString(),
+    "weight": weight.toString(),
+    "note": note,
+  };
+  dynamic files = {"img": img};
+  Response response = await postMultiPart(context,
+      path: 'addTest', param: params, files: files, requireLogin: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
+Future<dynamic> verifyCodeVoucher(BuildContext context,
+    {String voucherId, String code}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId, "voucher_id": voucherId, "code": code};
+
+  Response response = await get(null,
+      path: 'verifyCodeVoucher', param: params, requireLogin: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> useVoucher({String voucherId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "voucher_id": voucherId
+  };
+
+  Response response =
+      await get(null, path: 'useVoucher', param: params, requireLogin: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 Future<Response> post(BuildContext context,
     {String path,
     dynamic param,
@@ -724,7 +805,6 @@ Future<Response> post(BuildContext context,
     bool showErrorDialog = true,
     bool showLoading = true,
     bool requireLogin = false}) async {
-  print("asdasdasd $param");
   Response response = await execute(context,
       path: path,
       param: param,
@@ -860,4 +940,66 @@ Response parseResponse(BuildContext context, String responseBody,
     }
   }
   return res;
+}
+
+Future<dynamic> getListRemindCalendar(BuildContext context) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId};
+
+  Response response = await get(context, path: "listCalendar", param: params);
+
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> deleteRemindCalendar(BuildContext context,
+    {@required String calendarId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId, "calendar_id": calendarId};
+
+  Response response = await post(context,
+      path: 'deleteCalendar',
+      param: params,
+      requireLogin: true,
+      showLoading: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
+Future<dynamic> addRemindCalendar(BuildContext context,
+    {@required RemindCalendar calendar}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  var params = calendar.toJson();
+  params['user_id'] = userId;
+  String path = 'addCalendar';
+
+  if (calendar.id != null) {
+    params['calendar_id'] = calendar.id;
+    path = 'editCalendar';
+  }
+
+  Response response = await post(context,
+      path: path, param: params, requireLogin: true, showLoading: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
+Future<dynamic> getListPoint(BuildContext context) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId};
+
+  Response response = await get(context, path: "managePoint", param: params);
+
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> getPointDetail(BuildContext context, String shopId) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId, "shop_id": shopId};
+
+  Response response = await get(context, path: "pointDetail", param: params);
+
+  if (response.isSuccess()) return response.data;
+  return null;
 }

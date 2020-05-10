@@ -49,6 +49,7 @@ class _CircleState extends State<CircleCheckbox> {
     if (startValue != widget.checked) {
       checked = widget.checked;
       startValue = checked;
+      print("VALUE ${checked}");
     }
     return InkWell(
       child: widget.text == null

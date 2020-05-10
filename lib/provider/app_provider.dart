@@ -41,7 +41,7 @@ class AppProvider {
     homeCategoryHeight = widthScreen * 0.23;
     homeCategoryWidth = widthScreen/5;
     homeCategoryIconHeight = homeCategoryWidth*0.65;
-    childHeightBar = heightScreen * 0.32;
+    childHeightBar = 200;
     ;
 //    }
   }

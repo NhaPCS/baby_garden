@@ -3465,6 +3465,15 @@ class S {
     );
   }
 
+  String get boy {
+    return Intl.message(
+      'Bé trai',
+      name: 'boy',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get height {
     return Intl.message(
       'Chiều Cao',
@@ -3613,6 +3622,15 @@ class S {
     return Intl.message(
       'Chiều cao (cm)',
       name: 'height_cm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get weight_kg {
+    return Intl.message(
+      'Cân nặng (kg)',
+      name: 'weight_kg',
       desc: '',
       args: [],
     );
@@ -4153,6 +4171,186 @@ class S {
     return Intl.message(
       'Thiếu thông tin',
       name: 'missing_information',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get message_add_baby_test_success {
+    return Intl.message(
+      'Nhập thông tin thành công!',
+      name: 'message_add_baby_test_success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_baby_height {
+    return Intl.message(
+      'Nhập chiều cao của bé',
+      name: 'enter_baby_height',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_baby_weight {
+    return Intl.message(
+      'Nhập cân nặng của bé',
+      name: 'enter_baby_weight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_baby_note {
+    return Intl.message(
+      'Bố/mẹ viết lại những lưu bút tại thời điểm kiểm tra của bé tại đây nhé!',
+      name: 'enter_baby_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cm_unit {
+    return Intl.message(
+      '(cm)',
+      name: 'cm_unit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get kg_unit {
+    return Intl.message(
+      '(kg)',
+      name: 'kg_unit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get click_on_here {
+    return Intl.message(
+      'Bấm vào đây',
+      name: 'click_on_here',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get change_image {
+    return Intl.message(
+      'Đổi hình khác',
+      name: 'change_image',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get child_take_photo_desc {
+    return Intl.message(
+      'Lưu trữ kỷ niệm bạn upload ảnh mới nhất của bé nhé',
+      name: 'child_take_photo_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get confirm_info {
+    return Intl.message(
+      'Xác nhận thông tin',
+      name: 'confirm_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get confirm_child_info_message {
+    return Intl.message(
+      'Bố/mẹ kiểm tra lại thông tin chiều cao, can năng của bé vừa nhập đã nhập đã đúng chưa nhé:',
+      name: 'confirm_child_info_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get height_is {
+    return Intl.message(
+      'Chiều cao:',
+      name: 'height_is',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get weight_is {
+    return Intl.message(
+      'Cân nặng:',
+      name: 'weight_is',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get note_is {
+    return Intl.message(
+      'Lưu bút:',
+      name: 'note_is',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get image_is {
+    return Intl.message(
+      'Ảnh của bé:',
+      name: 'image_is',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_again {
+    return Intl.message(
+      'Nhập lại',
+      name: 'enter_again',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get sku_product {
+    return Intl.message(
+      'Mã SKU',
+      name: 'sku_product',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String numPoint(dynamic point) {
+    return Intl.message(
+      '$point điểm',
+      name: 'numPoint',
+      desc: '',
+      args: [point],
+    );
+  }
+
+  String get messageLogout {
+    return Intl.message(
+      'Bạn có muốn đăng xuất không?',
+      name: 'messageLogout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mess_receive_notify_for_product {
+    return Intl.message(
+      'Bạn đã đăng ký nhận thông báo cho sản phẩm này thành công!',
+      name: 'mess_receive_notify_for_product',
       desc: '',
       args: [],
     );

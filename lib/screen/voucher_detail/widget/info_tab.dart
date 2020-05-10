@@ -127,7 +127,7 @@ class _InfoTabState extends BaseState<InfoTab> {
                         ));
                 break;
               case "2":
-                push(VoucherCodeScreen(context: context));
+                push(VoucherCodeScreen(context: context, voucher: widget.voucher,));
                 break;
             }
           },

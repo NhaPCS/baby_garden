@@ -21,16 +21,12 @@ class AccountManageScreen extends StatefulWidget {
 
 class _AccountManageScreenState extends BaseState<AccountManageScreen> {
   final childInformation = ChildInfor(
-    childName: 'Hùng gay',
+    childName: 'Nguyễn Lý Trần Lê Đỗ Hoàng Đinh Huỳnh Hồ Đẹp Trai',
     gender: 'Nam',
     lastDayCheck: '15/06/2011',
     birthday: '15/06/2011',
     healthIndex: 100,
   );
-
-  void sampleBtnTap(int index) {
-    print(index);
-  }
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -60,162 +56,152 @@ class _AccountManageScreenState extends BaseState<AccountManageScreen> {
 
     return Scaffold(
         appBar: getAppBar(title: S.of(context).accManage),
-        body: Column(children: <Widget>[
-          // user information
-          Container(
-              child: UserInfor(
-                  onSelectImage: (file) => updateAvatar(context, img: file)),
-              decoration:
-                  setBorder("bottom", Color.fromRGBO(206, 206, 206, 1), 1)),
-          // entries
-          Container(
-            child: entriesWidget(entries),
-          ),
-          // children
-          Container(
-              decoration: setBorder('top', Color.fromRGBO(223, 223, 223, 1), 3),
-              width: double.infinity,
-              child: childInfor(childInforFields))
-        ]));
+        body: SingleChildScrollView(
+          child: Column(children: <Widget>[
+            // user information
+            Container(
+                child: UserInfor(
+                    onSelectImage: (file) => updateAvatar(context, img: file)),
+                decoration: setBorder("bottom", ColorUtil.lineLightGray, 1)),
+            // entries
+            entriesWidget(entries),
+
+            // children
+            Container(
+                decoration:
+                    setBorder('top', Color.fromRGBO(223, 223, 223, 1), 3),
+                width: double.infinity,
+                child: childInfor(childInforFields))
+          ]),
+        ));
   }
 
   Widget entriesWidget(List<Map<String, String>> entries) {
-    return Container(
-      // TODO-QAnh: k fix cứng height, để wrap
-      height: 228,
-      // TODO-QAnh: cái ListView không nên để ở đây, để scroll cả màn thì hợp lý hơn, list con đang không scroll đc
-      child: ListView.builder(
-          itemCount: entries.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              padding: const EdgeInsets.only(left: 11.0, right: 11),
-              decoration:
-                  setBorder('bottom', Color.fromRGBO(206, 206, 206, 1), 1),
-              // TODO-QAnh: k fix height, để wrap
-              height: 38,
-              child: GestureDetector(
-                onTap: () {
-                  if (index == 5) {
-                    push(AddressSettingScreen());
-                  } else if (index == 4) {
-                    push(ChangePasswordScreen());
-                  }
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(entries[index]['title']),
-                    Expanded(
-                        child: Text(entries[index]['content'],
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                                color: (index == 4)
-                                    ? ColorUtil.primaryColor
-                                    : Colors.black))),
-                    SizedBox(
-                      width: SizeUtil.smallSpace,
-                    ),
-                    Image.asset(
-                      "photo/${entries[index]['icon']}",
-                      width: 11,
-                      height: 11,
-                    ),
-                  ],
-                ),
+    final listEntries = List<Widget>();
+
+    entries.asMap().forEach((index, entry) {
+      listEntries.add(Container(
+        padding: SizeUtil.smallPadding,
+        decoration: setBorder('bottom', ColorUtil.lineLightGray, 1),
+        child: GestureDetector(
+          onTap: () {
+            if (index == 5) {
+              push(AddressSettingScreen());
+            } else if (index == 4) {
+              push(ChangePasswordScreen());
+            }
+          },
+          child: Row(
+            children: <Widget>[
+              Text(entry['title']),
+              Spacer(),
+              Text(entry['content'],
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                      color: (index == 4)
+                          ? ColorUtil.primaryColor
+                          : Colors.black)),
+              SizedBox(
+                width: SizeUtil.smallSpace,
               ),
-            );
-          }),
-    );
+              Image.asset(
+                "photo/${entry['icon']}",
+                width: SizeUtil.iconSizeDefault,
+                height: SizeUtil.iconSizeDefault,
+              ),
+            ],
+          ),
+        ),
+      ));
+    });
+
+    return Column(children: listEntries.map((e) => e).toList());
   }
 
   Widget entriesChildInfor(List<Map<String, String>> entries) {
-    return GestureDetector(
-      child: Container(
-        // TODO-QAnh: k fix height, để wrap
-        height: 111,
-        child: ListView.builder(
-            itemCount: entries.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                padding: const EdgeInsets.only(left: 11.0, right: 11),
-                height: 20,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(entries[index]['title']),
-                    Expanded(
-                        child: Text(entries[index]['content'],
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                                color: (index == 3)
-                                    ? ColorUtil.primaryColor
-                                    : Colors.black))),
-                    SizedBox(
-                      width: SizeUtil.smallSpace,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        print("dep trai");
-                      },
-                      child: Image.asset(
-                        "photo/${entries[index]['icon']}",
-                        width: 11,
-                        height: 11,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }),
-      ),
-      onTap: () {
-        push(ChildHeathScreen());
-      },
-    );
+    final listEntries = List<Widget>();
+
+    entries.asMap().forEach((index, entry) {
+      listEntries.add(
+        Row(
+          children: <Widget>[
+            Text(entry['title']),
+            SizedBox(width: SizeUtil.smallSpace),
+            Expanded(
+                child: GestureDetector(
+              onTap: () {
+                if (index == 3) push(ChildHeathScreen());
+              },
+              child: Text(entry['content'],
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                      color: (index == 3)
+                          ? ColorUtil.primaryColor
+                          : Colors.black)),
+            )),
+            SizedBox(
+              width: SizeUtil.smallSpace,
+            ),
+            GestureDetector(
+              onTap: () {
+                if (index == 3) {
+                  push(ChildHeathScreen());
+                } else if (index == 0) {
+                  // edit child name
+                }
+              },
+              child: Image.asset(
+                "photo/${entry['icon']}",
+                width: SizeUtil.iconSizeDefault,
+                height: SizeUtil.iconSizeDefault,
+              ),
+            ),
+          ],
+        ),
+      );
+      listEntries.add(SizedBox(height: SizeUtil.tinySpace));
+    });
+
+    return Column(children: listEntries.map((e) => e).toList());
   }
 
-  // cái này đang lồng nhiều view quá
   Widget childInfor(List<Map<String, String>> childInforFields) {
     return Column(children: <Widget>[
       headerChildInfor(),
+      WidgetUtil.getLine(
+          color: ColorUtil.lineLightGray, margin: EdgeInsets.all(0)),
+
       // child information
-      // TODO-QAnh: thừa Column, bỏ đi, đang lồng tận 2 column
-      Column(children: <Widget>[
-        Container(
-          padding: EdgeInsets.all(10),
-          decoration: setBorder("bottom", Color.fromRGBO(206, 206, 206, 1), 1),
-          child: Row(children: <Widget>[
-            // avatar
-            Container(
-              margin: EdgeInsets.only(bottom: 13),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(5.0),
-                child: Image.asset(
-                  'photo/child_avatar.png',
-                  width: 92.0,
-                  height: 92.0,
-                  fit: BoxFit.fill,
-                ),
+      Container(
+        padding: SizeUtil.smallPadding,
+        decoration: setBorder("bottom", ColorUtil.lineLightGray, 1),
+        child: Row(children: <Widget>[
+          // avatar
+          Align(
+            alignment: Alignment.center,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(SizeUtil.tinyRadius),
+              child: Image.asset(
+                'photo/child_avatar.png',
+                width: 92.0,
+                height: 92.0,
+                fit: BoxFit.fill,
               ),
             ),
-            Expanded(
-              child: Container(
-                height: 111,
-                child: entriesChildInfor(childInforFields),
-              ),
-            ),
-          ]),
-        )
-      ]),
+          ),
+          SizedBox(width: SizeUtil.smallSpace),
+          Expanded(
+            child: entriesChildInfor(childInforFields),
+          ),
+          SizedBox(width: SizeUtil.smallSpace)
+        ]),
+      )
     ]);
   }
 
   Widget headerChildInfor() {
-    return Container(
-      padding: EdgeInsets.all(10),
-      // TODO-QAnh: k fix height, de wrap
-      height: 38,
-      decoration: setBorder("bottom", Color.fromRGBO(206, 206, 206, 1), 1),
+    return Padding(
+      padding: SizeUtil.smallPadding,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -224,7 +210,7 @@ class _AccountManageScreenState extends BaseState<AccountManageScreen> {
               style: TextStyle(
                   color: ColorUtil.primaryColor,
                   fontWeight: FontWeight.bold,
-                  fontSize: 16),
+                  fontSize: SizeUtil.textSizeBigger),
             ),
           ),
           GestureDetector(
@@ -240,8 +226,10 @@ class _AccountManageScreenState extends BaseState<AccountManageScreen> {
                 S.of(context).addChild,
                 style: TextStyle(color: ColorUtil.primaryColor),
               ),
-              SizedBox(width: 5),
-              Image.asset("photo/add_child.png", width: 22, height: 22)
+              SizedBox(width: SizeUtil.tinySpace),
+              Image.asset("photo/add_child.png",
+                  width: SizeUtil.iconSizeBigger,
+                  height: SizeUtil.iconSizeBigger)
             ]),
           )
         ],
