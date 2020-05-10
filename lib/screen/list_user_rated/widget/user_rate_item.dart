@@ -8,8 +8,7 @@ class UserRatedItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // TODO-Hung: k fix cung co dc k?
-      margin: EdgeInsets.only(left:8.0,right: 8.0,top: 2.0,bottom: 2.0),
+      margin: EdgeInsets.only(left:SizeUtil.midSmallSpace,right: SizeUtil.midSmallSpace,top: SizeUtil.superTinySpace,bottom: SizeUtil.superTinySpace),
       child: Card(
         elevation: 4,
         shape: RoundedRectangleBorder(
@@ -22,7 +21,7 @@ class UserRatedItem extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(SizeUtil.midSmallSpace),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

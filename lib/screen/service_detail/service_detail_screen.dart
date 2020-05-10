@@ -44,10 +44,10 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
           width: MediaQuery.of(context).size.width,
           child: Consumer<BookingDetailProvider>(builder: (BuildContext context, BookingDetailProvider value, Widget child) {
             // TODO-Hung: moi state tạo 1 widget riêng để phân biệt cho dễ nhìn, loạn lắm. khi nhin vao phai hien state 0 la gi, state 1 la gi
-            if(value.bookingDetialData==null)
+            if(value.bookingDetailData==null)
               return Container();
             int state = 0;
-            var bookingDetialData = value.bookingDetialData;
+            var bookingDetialData = value.bookingDetailData;
             switch (bookingDetialData['active']){
               case '1':
                 state = 0;
@@ -136,7 +136,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                     padding: EdgeInsets.only(
                         left: SizeUtil.notifyHintSpace, bottom: SizeUtil.tinySpace),
                     child: Text(
-                        value.bookingDetialData['address'],
+                        value.bookingDetailData['address'],
                         style: TextStyle(
                             fontSize: SizeUtil.textSizeSmall,
                             height: 1.3,
@@ -283,7 +283,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                               "Loại dịch vụ: SPA Thẩm mý, Khám thai",
                               style: TextStyle(
                                   height: 1.5,
-                                  fontSize: SizeUtil.textSizeNotiTime),
+                                  fontSize: SizeUtil.textSizeNoticeTime),
                               textAlign: TextAlign.start,
                             ),
                             SizedBox(
@@ -318,7 +318,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                               fontWeight: FontWeight.bold),
                           children: <TextSpan>[
                             TextSpan(
-                              text: value.bookingDetialData['total_money'],
+                              text: value.bookingDetailData['total_money'],
                               style: TextStyle(
                                 color: ColorUtil.red,
                                 fontSize: SizeUtil
@@ -369,7 +369,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                                 style: TextStyle(
                                     fontSize: SizeUtil.textSizeExpressDetail)),
                             Spacer(),
-                            Text(value.bookingDetialData['time_cancel'],
+                            Text(value.bookingDetailData['time_cancel'],
                                 style: TextStyle(
                                     fontSize: SizeUtil.textSizeExpressDetail))
                           ],
@@ -392,7 +392,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                                 style: TextStyle(
                                     fontSize: SizeUtil.textSizeExpressDetail)),
                             Spacer(),
-                            Text(value.bookingDetialData['reason_cancel'],
+                            Text(value.bookingDetailData['reason_cancel'],
                                 style: TextStyle(
                                     fontSize: SizeUtil.textSizeExpressDetail))
                           ],

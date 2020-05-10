@@ -22,7 +22,7 @@ class ReceiveBarCodeDialogue extends StatelessWidget{
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              SizedBox(height: SizeUtil.bigSpacehigher,),
+              SizedBox(height: SizeUtil.bigSpaceHigher,),
               SvgIcon('barcode-of-square-shape.svg'),
               SizedBox(height: SizeUtil.smallSpace,),
               Text("HD253628", style: TextStyle(color: ColorUtil.textColor,
@@ -32,7 +32,7 @@ class ReceiveBarCodeDialogue extends StatelessWidget{
               Text(S.of(context).barcode_note, style: TextStyle(color: ColorUtil.textColor,
                   fontWeight: FontWeight.normal,
                   fontSize: SizeUtil.textSizeExpressDetail),),
-              SizedBox(height: SizeUtil.bigSpacehigher,),
+              SizedBox(height: SizeUtil.bigSpaceHigher,),
             ],
           ),
         ));

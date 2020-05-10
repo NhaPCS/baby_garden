@@ -49,15 +49,21 @@ Future<dynamic> register(BuildContext context,
 }
 
 //TODO require VERIFY CODE
-Future<dynamic> verifyCode(BuildContext context,
-    {String phone, String name, String password, String refCode}) async {
+Future<dynamic> verifyCode(
+    {BuildContext context,
+    String phone,
+    String name,
+    String password,
+    String refCode}) async {
   Response response = await post(context, path: "verifyCode", param: {
     'phone': phone,
     'name': name,
     'password': password,
     'ref_code': refCode,
   });
-  if (response.isSuccess()) return response.data;
+  if (response.isSuccess()) {
+    return response.data;
+  }
   return null;
 }
 
@@ -68,7 +74,7 @@ Future<dynamic> forgetPassword(BuildContext context, {String phone}) async {
   if (response.isSuccess()) {
     return response.data;
   } else {
-    return response.message;
+    return null;
   }
 }
 
@@ -126,18 +132,27 @@ Future<dynamic> bookingService(
   return null;
 }
 
-Future<dynamic> shopDetail({String shopID}) async {
+Future<dynamic> shopDetail({BuildContext context,String shopID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  Response response = await get(null,
+  Response response = await get(context,
       path: "shopDetail", param: {'user_id': userId, 'shop_id': shopID});
   if (response.isSuccess()) return response.data;
   return null;
 }
 
+Future<dynamic> shopReceiveTime({BuildContext context,String shopID}) async {
+
+  Response response = await get(context,
+      path: "getTime", param: { 'shop_id': shopID});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 //todo listProductShop
-Future<dynamic> listProductShop({String userID, String shopID}) async {
+Future<dynamic> listProductShop({ String shopID}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
-      path: "listProductShop", param: {'user_id': userID, 'shop_id': shopID});
+      path: "listProductShop", param: {'user_id': userId, 'shop_id': shopID});
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -259,7 +274,7 @@ Future<dynamic> notificationDetail({String notifyID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
       path: "notificationDetail",
-      param: {'index': userId, 'noty_id': notifyID});
+      param: {'user_id': userId, 'noty_id': notifyID});
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -366,15 +381,15 @@ Future<dynamic> paymentInfo() async {
 //TODO PAYMENT
 Future<dynamic> payment(
     {String userID,
-    int bookingId,
+    String bookingId,
     double money,
     String content,
     String note}) async {
   Response response = await post(null, path: "payment", param: {
-    'user_id': userID.toString(),
-    'booking_id': bookingId.toString(),
+    'user_id': userID,
+    'booking_id': bookingId,
     'money': money.toString(),
-    'content': content.toString(),
+    'content': content,
     'note': note.toLowerCase(),
   });
   if (response.isSuccess()) return response.data;
@@ -647,6 +662,7 @@ Future<dynamic> listPromotion() async {
   if (response.isSuccess()) return response.data;
   return null;
 }
+
 
 Future<Response> addUserAddress(BuildContext context,
     {String address, int isMain}) async {
@@ -957,8 +973,8 @@ Future<dynamic> addRemindCalendar(BuildContext context,
   params['user_id'] = userId;
   String path = 'addCalendar';
 
-  if (calendar.calendarId != null) {
-    params['calendar_id'] = calendar.calendarId;
+  if (calendar.id != null) {
+    params['calendar_id'] = calendar.id;
     path = 'editCalendar';
   }
 

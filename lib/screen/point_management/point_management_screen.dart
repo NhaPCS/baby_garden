@@ -36,25 +36,31 @@ class _PointManagementScreen extends BaseState<PointManagementScreen> {
               return LoadingView(
                 isNoData: value.pointList != null,
               );
-            return Column(
-              children: [
-                WidgetUtil.getLine(
-                    margin: EdgeInsets.all(0),
-                    width: 5,
-                    color: ColorUtil.lineLightGray),
-                ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: value.pointList.length + 1,
-                    itemBuilder: (BuildContext context, int index) {
-                      final pointInfo = _pointManageProvider.getPoint(index);
-                      return PointCardItem(
-                        pointInfo: pointInfo,
-                      );
-                    }),
-              ],
+
+            return SingleChildScrollView(
+              child: Column(
+                  children:
+                      buildListView(value.pointList).map((e) => e).toList()),
             );
           },
         ));
+  }
+
+  List<Widget> buildListView(List<dynamic> values) {
+    var listView = List<Widget>();
+
+    listView.add(
+      WidgetUtil.getLine(
+          margin: EdgeInsets.all(0), width: 5, color: ColorUtil.lineLightGray),
+    );
+
+    values.asMap().forEach((index, value) {
+      final pointInfo = _pointManageProvider.getPoint(index);
+      listView.add(PointCardItem(
+        pointInfo: pointInfo,
+      ));
+    });
+    return listView;
   }
 
   @override

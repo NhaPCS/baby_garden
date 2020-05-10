@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
 class CheckoutMethodProvider extends ChangeNotifier{
-  int checkoutMenthod;
+  int checkoutMethod = 1;
 
   void onChange(val){
-    checkoutMenthod = val;
+    checkoutMethod = val;
     notifyListeners();
   }
 }

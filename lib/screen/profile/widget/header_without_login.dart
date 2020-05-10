@@ -21,7 +21,7 @@ class HeaderWithoutLogin extends StatelessWidget {
           bottom: BorderSide(
               width: 1,
               style: BorderStyle.solid,
-              color: Color.fromRGBO(206, 206, 206, 1)),
+              color: ColorUtil.lineLightGray),
         )),
         // user information
         child: Wrap(

@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 class BookingRateScreen extends StatefulWidget {
   final bool isService;
 
-  const BookingRateScreen({Key key, this.isService = false}) :super(key: key);
+  const BookingRateScreen({Key key, this.isService = false}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -24,16 +24,17 @@ class BookingRateScreen extends StatefulWidget {
 
 class _BookingRateScreenState extends BaseState<BookingRateScreen>
     with SingleTickerProviderStateMixin {
-  bool israted = false;
+  bool isRated = false;
   TabController _tabController;
-  final BookingRateTabbarProvider _bookingRateTabbarProvider = BookingRateTabbarProvider();
+  final BookingRateTabBarProvider _bookingRateTabBarProvider =
+      BookingRateTabBarProvider();
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
     _tabController.addListener(() {
-      _bookingRateTabbarProvider.onChange();
+      _bookingRateTabBarProvider.onChange();
     });
   }
 
@@ -50,12 +51,8 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
       child: Scaffold(
         appBar: getAppBar(
           title: widget.isService
-              ? S
-              .of(context)
-              .rating_service
-              : S
-              .of(context)
-              .rating_order,
+              ? S.of(context).rating_service
+              : S.of(context).rating_order,
           centerTitle: true,
           bgColor: ColorUtil.primaryColor,
           titleColor: Colors.white,
@@ -64,23 +61,18 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
               Colors.white,
               TabBar(
                 onTap: (val) {
-                  _bookingRateTabbarProvider.onChange();
+                  _bookingRateTabBarProvider.onChange();
                 },
                 controller: _tabController,
                 labelColor: ColorUtil.primaryColor,
                 unselectedLabelColor: ColorUtil.textColor,
                 tabs: <Tab>[
-                  Tab(text: S
-                      .of(context)
-                      .book),
-                  Tab(text: S
-                      .of(context)
-                      .rated),
+                  Tab(text: S.of(context).book),
+                  Tab(text: S.of(context).rated),
                 ],
               )),
         ),
-        body:
-        TabBarView(
+        body: TabBarView(
           controller: _tabController,
           children: <Widget>[
             ListView.builder(
@@ -118,6 +110,6 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
   @override
   List<SingleChildWidget> providers() {
     // TODO: implement providers
-    return [ChangeNotifierProvider.value(value: _bookingRateTabbarProvider)];
+    return [ChangeNotifierProvider.value(value: _bookingRateTabBarProvider)];
   }
 }

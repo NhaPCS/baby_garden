@@ -63,7 +63,6 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
 
   final ValueNotifier<int> _dateValueController = new ValueNotifier(0);
   final ValueNotifier<int> _timeValueController = new ValueNotifier(0);
-
   @override
   void initState() {
     // TODO: implement initState
@@ -84,14 +83,14 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     if (_bookingServiceDetailProvider.data == null)
-      _bookingServiceDetailProvider.getdata(widget.shopID);
+      _bookingServiceDetailProvider.getdata(context,widget.shopID);
     super.didChangeDependencies();
   }
 
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
-    final productTabbarHei = SizeUtil.tabbar_fix_height + 76;
+    final productTabbarHei = SizeUtil.tab_bar_fix_height + 76;
     List<Tab> myTabs = <Tab>[
       Tab(text: S.of(context).book,),
       Tab(text: S.of(context).product,),
@@ -227,7 +226,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
                                         Column(children: <Widget>[
                                             Container(
                                               height:
-                                                  SizeUtil.tabbar_fix_height,
+                                                  SizeUtil.tab_bar_fix_height,
                                               child: ColoredTabBar(
                                                 ColorUtil.lineColor,
                                                 TabBar(
@@ -264,8 +263,8 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
                                                 : SizedBox()
                                           ],
                                         ),
-                                        value.isProduct ? productTabbarHei : SizeUtil.tabbar_fix_height,
-                                        value.isProduct ? productTabbarHei : SizeUtil.tabbar_fix_height),
+                                        value.isProduct ? productTabbarHei : SizeUtil.tab_bar_fix_height,
+                                        value.isProduct ? productTabbarHei : SizeUtil.tab_bar_fix_height),
                                   );
                                 },
                               )
@@ -536,6 +535,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
     if (data == null) {
       return Container(height: 0);
     }
+    final ValueNotifier<bool> isFavorite = ValueNotifier(data['is_favourite']=="1");
     String content = data['introduce'];
     bool isShowSeeMore = content != null && content.length > 100;
     return Column(
@@ -551,7 +551,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
               width: SizeUtil.tinySpace,
             ),
             //todo like button
-            FavoriteShopButton(isFavorite: data['is_favourite']=="1",shopId: widget.shopID,)
+            FavoriteShopButton(isFavorite: isFavorite,shopId: widget.shopID,)
           ],
         )),
         paddingContainer(Row(
@@ -629,7 +629,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
       key: key,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        paddingContainer(FavoriteShopButton(isFavorite: true,shopId: "1",)),
+        paddingContainer(FavoriteShopButton(isFavorite: new ValueNotifier(false),shopId: "1",)),
         paddingContainer(ShopInfoForm(isExpanded: false,title: S.of(context).address_form,content: data['address'] != null &&
             data['address'].length > 0 ? data['address'][0]["address"] : "")),
         paddingContainer(ShopInfoForm(isExpanded: false,title: S.of(context).service_type,content: "",contentColor: ColorUtil.blueLight,)),
