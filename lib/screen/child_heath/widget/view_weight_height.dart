@@ -41,8 +41,7 @@ class ViewWeightHeight extends StatelessWidget {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-            // TODO-Nha: move to arb file
-              text: "Đánh giá kết quả: ",
+              text: S.of(context).child_test_results_evaluate,
               style: TextStyle(
                   fontWeight: FontWeight.bold, color: ColorUtil.blueLight)),
           TextSpan(
@@ -56,8 +55,7 @@ class ViewWeightHeight extends StatelessWidget {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-            // TODO-Nha: move to arb file
-              text: "Chiều cao: ",
+              text: S.of(context).height_is,
               style: TextStyle(color: ColorUtil.textColor)),
           TextSpan(
             // TODO-Nha: move to arb file
@@ -68,8 +66,7 @@ class ViewWeightHeight extends StatelessWidget {
           height: SizeUtil.smallSpace,
         ),
         Text(
-          // TODO-Nha: move to arb file
-          "Tư vấn dinh dưỡng:",
+          S.of(context).nutrition_consulting,
           style: TextStyle(
               color: ColorUtil.blueLight, fontWeight: FontWeight.bold),
         ),
@@ -83,8 +80,7 @@ class ViewWeightHeight extends StatelessWidget {
           height: SizeUtil.smallSpace,
         ),
         Text(
-          // TODO-Nha: move to arb file
-          "Sản phẩm gợi ý:",
+          S.of(context).suggestion_products,
           style: TextStyle(
               color: ColorUtil.blueLight, fontWeight: FontWeight.bold),
         ),

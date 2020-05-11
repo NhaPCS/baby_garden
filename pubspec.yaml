@@ -46,6 +46,9 @@ dependencies:
   flutter_image_compress: ^0.6.5+1
   google_maps_flutter: ^0.5.26
   barcode_scan: any
+  flutter_picker:
+    git: git://github.com/yangyxd/flutter_picker.git
+
 
 
 dev_dependencies:
