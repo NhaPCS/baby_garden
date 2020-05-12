@@ -19,11 +19,13 @@ import 'package:provider/provider.dart';
 
 class CheckoutScreen extends StatefulWidget {
   final int bookingId;
-  final int  totalPrice;
+  final int totalPrice;
   final String bookingCode;
   final String phone;
 
-  const CheckoutScreen({this.bookingId, this.totalPrice, this.bookingCode, this.phone}):super();
+  const CheckoutScreen(
+      {this.bookingId, this.totalPrice, this.bookingCode, this.phone})
+      : super();
 
   @override
   State<StatefulWidget> createState() {
@@ -107,8 +109,9 @@ class _CheckoutScreenState
                     title: S.of(context).bank_number,
                     content: listInfo != null ? listInfo['account'] : "",
                     isTrailing: true,
-                    onTrailingTap: (){
-                      Clipboard.setData(ClipboardData(text: listInfo['account']));
+                    onTrailingTap: () {
+                      Clipboard.setData(
+                          ClipboardData(text: listInfo['account']));
                     },
                   ),
                   TitleIcon(
@@ -149,7 +152,8 @@ class _CheckoutScreenState
                     Spacer(),
                     RichTextForm(
                       title: S.of(context).amount,
-                      content: "  ${StringUtil.getPriceText(widget.totalPrice.toString())}",
+                      content:
+                          "  ${StringUtil.getPriceText(widget.totalPrice.toString())}",
                       contentColor: ColorUtil.primaryColor,
                     ),
                     Padding(
@@ -159,8 +163,9 @@ class _CheckoutScreenState
                           top: SizeUtil.tinySpace,
                           bottom: SizeUtil.tinySpace),
                       child: GestureDetector(
-                        onTap: (){
-                          Clipboard.setData(ClipboardData(text: widget.totalPrice.toString()));
+                        onTap: () {
+                          Clipboard.setData(ClipboardData(
+                              text: widget.totalPrice.toString()));
                         },
                         child: SvgIcon(
                           "ic_copy.svg",
@@ -178,19 +183,21 @@ class _CheckoutScreenState
                   children: <Widget>[
                     RichTextForm(
                       title: S.of(context).transfer_content,
-                      content: " ${widget.phone} - ${widget.bookingCode} - ${StringUtil.getPriceText(widget.totalPrice.toString())}",
+                      content:
+                          " ${widget.phone} - ${widget.bookingCode} - ${StringUtil.getPriceText(widget.totalPrice.toString())}",
                       contentColor: ColorUtil.primaryColor,
                     ),
                     Spacer(),
                     Padding(
                       padding: const EdgeInsets.only(
-                          left: SizeUtil.defaultSpace,
                           right: SizeUtil.smallSpace,
                           top: SizeUtil.tinySpace,
                           bottom: SizeUtil.tinySpace),
                       child: GestureDetector(
-                        onTap: (){
-                          Clipboard.setData(ClipboardData(text: " ${widget.phone} - ${widget.bookingCode} - ${StringUtil.getPriceText(widget.totalPrice.toString())}"));
+                        onTap: () {
+                          Clipboard.setData(ClipboardData(
+                              text:
+                                  " ${widget.phone} - ${widget.bookingCode} - ${StringUtil.getPriceText(widget.totalPrice.toString())}"));
                         },
                         child: SvgIcon(
                           "ic_copy.svg",

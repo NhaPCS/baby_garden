@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 
 class RatingDetailScreen extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
     return _RatingDetailScreenState();
@@ -63,6 +64,9 @@ class _RatingDetailScreenState
                   style: TextStyle(fontSize: SizeUtil.textSizeTiny),
                   textAlign: TextAlign.start,
                 ),
+                SizedBox(
+                  height: SizeUtil.midSmallSpace,
+                ),
               ],
             ),
           ),
@@ -71,29 +75,24 @@ class _RatingDetailScreenState
               children: List.generate(3, (index) => RatingItem()),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.only(left:
-              SizeUtil.smallSpace,right: SizeUtil.smallSpace
-            ),
-            width: MediaQuery.of(context).size.width,
-            child: MyRaisedButton(
-              onPressed: () {
-                getViewModel().onRateBooking(
-                    bookingId: 1,
-                    star: 4,
-                    content: _noteController.text.trim());
-                Navigator.of(context).pop();
-              },
-              matchParent: true,
-              color: ColorUtil.primaryColor,
-              text: S.of(context).send_rating,
-              textStyle: TextStyle(
-                  fontSize: SizeUtil.textSizeSmall,
-                  color: Colors.white,
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.normal),
-            ),
-          ),
+          MyRaisedButton(
+            padding: EdgeInsets.only(top: SizeUtil.midSpace,bottom: SizeUtil.midSpace),
+            onPressed: () {
+              getViewModel().onRateBooking(
+                  bookingId: 1,
+                  star: 4,
+                  content: _noteController.text.trim());
+              Navigator.of(context).pop();
+            },
+            matchParent: true,
+            color: ColorUtil.primaryColor,
+            text: S.of(context).send_rating,
+            textStyle: TextStyle(
+                fontSize: SizeUtil.textSizeSmall,
+                color: Colors.white,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.normal),
+          )
         ],
       ),
     );

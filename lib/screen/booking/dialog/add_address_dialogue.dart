@@ -223,6 +223,7 @@ class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue> {
                       ),
                       RaisedButton(
                         onPressed: () {
+                          //todo add verify param
                           String error = "";
                           var provider =
                               Provider.of<CityProvider>(context, listen: false);

@@ -109,6 +109,7 @@ class _BookingScreenState
                                 value.addressList.length > value.val
                                     ? value.currentAddress
                                     : "";
+                            print(address);
                             return Text(
                               address,
                               style: TextStyle(
@@ -410,7 +411,7 @@ class _BookingScreenState
       }
     }
     if (checkoutMethod.value == 2) {
-      push(CheckoutScreen(
+      RouteUtil.pushReplacement(context, CheckoutScreen(
         bookingId: getViewModel().bookingData['booking_id'],
         bookingCode: getViewModel().bookingData['code'].toString(),
         totalPrice: Provider.of<CartProvider>(context,listen: false).price -

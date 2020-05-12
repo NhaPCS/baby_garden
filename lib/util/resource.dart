@@ -366,6 +366,7 @@ class SizeUtil {
   static const double midSmallSpace = 8.0;
   static const double tinySpace = 4;
   static const double superTinySpace = 2;
+  static const double zeroSpace = 0;
   static const double bigSpace = 30;
   static const double bigSpaceHigher = 32;
   static const double hugSpace = 50;
@@ -465,6 +466,7 @@ enum ServiceState{
   BOOKED_SCHEDULE,
   CONFIRM,
   USED_SERVICE,
+  CANCEL
 }
 
 enum TransferStatus {

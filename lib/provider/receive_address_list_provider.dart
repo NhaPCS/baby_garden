@@ -6,9 +6,9 @@ class ReceiveAddressListProvider extends ChangeNotifier{
   String currentAddress="";
   void onAddAddress(dynamic address,bool isDefault){
     addressList.add(address);
-    currentAddress = getFullAddress(val);
     if (isDefault)
       val = addressList.length - 1;
+    currentAddress = getFullAddress(val);
     notifyListeners();
   }
 

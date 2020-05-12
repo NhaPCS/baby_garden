@@ -67,9 +67,9 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
               WidgetUtil.getLine(
                   width: SizeUtil.smallSpace,
                   margin: EdgeInsets.all(0),
-                  color: Color(0xffDFDFDF)),
+                  color: ColorUtil.lineService),
               Container(
-                  color: Color(0xffFFEDDB),
+                  color: ColorUtil.bgService,
                   padding: const EdgeInsets.only(
                       left: SizeUtil.normalSpace,
                       right: SizeUtil.normalSpace,
@@ -190,7 +190,8 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                           data["list_product"].length,
                           (index) => ProductOrderItem(
                                 title: data["list_product"][index]['name'],
-                                skuTitle: "1231231241244",
+                                skuTitle: data["list_product"][index]
+                                    ['product_id'],
                                 price: data["list_product"][index]['price'],
                                 productCount: data["list_product"][index]
                                     ['number'],
@@ -313,9 +314,9 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
 
   void initView(int active, String receiveInShop, String status) {
     state = BookingState.values[active];
-    if(status == "1"){
+    if (status == "1") {
       state = BookingState.WAITING_CHECKOUT;
-    }else if(receiveInShop == "1"){
+    } else if (receiveInShop == "1") {
       state = BookingState.RECEIVE_IN_SHOP;
     }
     switch (state) {
