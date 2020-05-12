@@ -23,6 +23,7 @@ class ServiceDetailScreen extends StatefulWidget{
 
 class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
   final BookingDetailProvider _bookingDetailProvider = BookingDetailProvider();
+  ServiceState state = ServiceState.NONE;
   @override
   void initState() {
     // TODO: implement initState
@@ -43,33 +44,19 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
         body: Container(
           width: MediaQuery.of(context).size.width,
           child: Consumer<BookingDetailProvider>(builder: (BuildContext context, BookingDetailProvider value, Widget child) {
-            // TODO-Hung: moi state tạo 1 widget riêng để phân biệt cho dễ nhìn, loạn lắm. khi nhin vao phai hien state 0 la gi, state 1 la gi
             if(value.bookingDetailData==null)
               return Container();
-            int state = 0;
-            var bookingDetialData = value.bookingDetailData;
-            switch (bookingDetialData['active']){
-              case '1':
-                state = 0;
-                break;
-              case '3':
-                state = 1;
-                break;
-              default:
-                state = 2;
-                break;
-            }
-            print('BookingDetailProvider $state');
+            var bookingDetailData = value.bookingDetailData;
+            initView(int.parse(bookingDetailData['active']));
             return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  // TODO-Hung: mấy cái màu này để ở util đi
                   WidgetUtil.getLine(
                       width: SizeUtil.smallSpace,
                       margin: EdgeInsets.all(0),
-                      color: Color(0xffDFDFDF)),
+                      color: ColorUtil.lineService),
                   Container(
-                      color: Color(0xffFFEDDB),
+                      color: ColorUtil.bgService,
                       width: MediaQuery.of(context).size.width,
                       padding: const EdgeInsets.only(
                           left: SizeUtil.normalSpace,
@@ -80,21 +67,19 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            // TODO-Hung: cho vao file arb
-                            "Mã đặt lịch: ${bookingDetialData['value']}\nNgày đặt lịch: ${bookingDetialData['date_booking']} - ${bookingDetialData['time_booking']}",
+                            S.of(context).service_header(bookingDetailData['code'], bookingDetailData['date_booking'], bookingDetailData['time_booking']),
                             style: TextStyle(height: 1.5),
                           ),
                           RichText(
                             text: TextSpan(children: <TextSpan>[
                               TextSpan(
-                                // TODO-Hung: cho vao file arb
-                                  text: "Cung cấp bởi:",
+                                  text: S.of(context).supply_by,
                                   style: TextStyle(
                                       color: ColorUtil.textColor,
                                       fontWeight: FontWeight.normal,
                                       height: 1.5)),
                               TextSpan(
-                                  text: bookingDetialData['shop_name'],
+                                  text: bookingDetailData['shop_name'],
                                   style: TextStyle(
                                       color: ColorUtil.primaryColor,
                                       fontWeight: FontWeight.bold))
@@ -387,7 +372,6 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                             bottom: SizeUtil.midSmallSpace),
                         child: Row(
                           children: <Widget>[
-                            // TODO-Hung: cho vao file arb
                             Text(S.of(context).cancel_reason,
                                 style: TextStyle(
                                     fontSize: SizeUtil.textSizeExpressDetail)),
@@ -399,13 +383,13 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                         ),
                       ),
                     ],):Spacer(),
-                  state!=2?Column(children: <Widget>[
+                  state!=ServiceState.CONFIRM?Column(children: <Widget>[
                     Container(
                       width: MediaQuery.of(context).size.width,
                       child: RaisedButton(
                         onPressed: () {
                           //TODO booking
-                          if(state==0){
+                          if(state==ServiceState.BOOKED_SCHEDULE){
                             showDialog(context: context, builder: (BuildContext context) => ReceiveBarCodeDialogue());
                           }else {
                             push(RatingDetailScreen());
@@ -415,7 +399,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                         child: Container(
                           padding: EdgeInsets.all(SizeUtil.midSpace),
                           child: Text(
-                            state==0?S
+                            state==ServiceState.BOOKED_SCHEDULE?S
                                 .of(context)
                                 .use_service
                                 .toUpperCase():S
@@ -431,7 +415,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
                         ),
                       ),
                     ),
-                    state==0?Container(
+                    state==ServiceState.BOOKED_SCHEDULE?Container(
                       width: MediaQuery.of(context).size.width,
                       child: RaisedButton(
                         onPressed: () {
@@ -461,6 +445,18 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen>{
         ));
   }
 
+  void initView(int active) {
+    state = ServiceState.values[active];
+
+    switch (state) {
+      case ServiceState.BOOKED_SCHEDULE: //đã đặt
+        break;
+      case ServiceState.USED_SERVICE: //xác nhận
+        break;
+      default:
+        break;
+    }
+  }
   @override
   List<SingleChildWidget> providers() {
     // TODO: implement providers

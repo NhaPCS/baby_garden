@@ -13,18 +13,12 @@ import '../order_detail/order_detail_screen.dart';
 
 class OrderListScreen extends StatefulWidget {
   final String title;
-  final String childTitle;
   final int state;
-  final bool isShowPositiveButton;
-  final bool isShowNegativeButton;
 
   const OrderListScreen({
     Key key,
     @required this.title,
     this.state = 0,
-    this.childTitle,
-    this.isShowNegativeButton = false,
-    this.isShowPositiveButton = false,
   }) : super(key: key);
 
   @override

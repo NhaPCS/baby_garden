@@ -55,7 +55,6 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
         return Container();
       } else {
         initView(int.parse(data['active']), data['is_receive'], data['status']);
-        print("sdaskjdn asd $title");
         return Scaffold(
             appBar: getAppBar(
               title: title,

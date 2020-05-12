@@ -55,16 +55,16 @@ class _OrderState extends BaseState<OrderScreen> {
                             switch(e['transportState']){
                               case TransportState.WAITING_CHECKOUT:// todo chờ thanh toán
                                 push(OrderListScreen(
-                                  title: e['title'].replaceAll("\n", " "),isShowNegativeButton: true,isShowPositiveButton: true,state: 8,
+                                  title: e['title'].replaceAll("\n", " "),state: 8,
                                 ));
                                 break;
                               case TransportState.WAITING_CONFIRM://todo chờ xác nhận
                                 push(OrderListScreen(
-                                  title: e['title'].replaceAll("\n", " "),isShowNegativeButton: true,state: 1,
+                                  title: e['title'].replaceAll("\n", " "),state: 1,
                                 ));
                                 break;
                               case TransportState.RECEIVE_IN_SHOP://todo nhận hàng tại shop
-                                push(OrderListScreen(title: S.of(context).receive_in_shop,state: 7,isShowPositiveButton: true,isShowNegativeButton: true,));
+                                push(OrderListScreen(title: S.of(context).receive_in_shop,state: 7));
                                 break;
                               case TransportState.PACKING://todo đang đóng gói
                                 push(OrderListScreen(
@@ -75,10 +75,10 @@ class _OrderState extends BaseState<OrderScreen> {
                                 push(OrderListScreen(state: 4,title: S.of(context).delivering,));
                                 break;
                               case TransportState.SUCCESS://todo đơn hàng thành công
-                                push(OrderListScreen(title: S.of(context).ordered,state: 3,isShowPositiveButton: true,childTitle: "Đơn hàng VCB19.12.25",));
+                                push(OrderListScreen(title: S.of(context).ordered,state: 3));
                                 break;
                               case TransportState.CANCEL://todo đơn hàng đã huỷ
-                                push(OrderListScreen(title: S.of(context).canceled_order,state: 6,isShowPositiveButton: true,childTitle: "Chi tiết huỷ đơn",));
+                                push(OrderListScreen(title: S.of(context).canceled_order,state: 6));
                                 break;
                               default://todo đánh giá đơn hàng
                                 push(BookingRateScreen(isService:  false,));

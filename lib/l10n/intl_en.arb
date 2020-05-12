@@ -139,6 +139,7 @@
   "order_with_code": "Đơn hàng {code}",
   "supply_by": "Cung cấp bởi: ",
   "supply_by_supplier": "Cung cấp bởi: {supplier}",
+  "service_header": "Mã đặt lịch: {code}\nNgày đặt lịch: {date_booking} - {time_booking}",
   "booking_date": "Ngày đặt lịch: {time}",
   "order_date": "Ngày đặt hàng: {date}",
   "date_of_expiration_holding": "Ngày hết hạn giữ hàng: {date}",

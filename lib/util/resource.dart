@@ -46,6 +46,8 @@ class ColorUtil {
   static const Color trackingTargetColor = Color(0xff6C6C6C);
   static const Color unSelectBgColor = Color(0xffF2F2F2);
   static const Color lineLightGray = Color(0xffCECECE);
+  static const Color lineService = Color(0xffDFDFDF);
+  static const Color bgService = Color(0xffFFEDDB);
 
   static const List<Color> gradientColors = [
     Color(0xffFFA503),
@@ -456,6 +458,13 @@ enum BookingState {
   IN_DELIVERY,
   RECEIVE_IN_SHOP,
   WAITING_CHECKOUT
+}
+
+enum ServiceState{
+  NONE,
+  BOOKED_SCHEDULE,
+  CONFIRM,
+  USED_SERVICE,
 }
 
 enum TransferStatus {
