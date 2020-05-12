@@ -891,7 +891,6 @@ Response parseResponse(BuildContext context, String responseBody,
 
 Future<dynamic> getListRemindCalendar(BuildContext context) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  userId = '26';
   dynamic params = {"user_id": userId};
 
   Response response = await get(context, path: "listCalendar", param: params);
