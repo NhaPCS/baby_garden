@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 
 class ProductItem extends StatelessWidget {
   final Product product;
-  // TODO-QAnh: vì là sản phẩm yêu thích nên em nghĩ lúc nào favorite chả bằng true?
-  // cái này dùng chung cho sản phẩm yêu thích và sản phẩm đã xem nhé
   final Function onTap;
   ProductItem({Key key, this.onTap, @required this.product}) : super(key: key);
 

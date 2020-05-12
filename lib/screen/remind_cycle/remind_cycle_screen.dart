@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 
-// TODO-QAnh:screen đặt ở folder riêng, khong de chung trong 1 folder
 class RemindCycleScreen extends StatefulWidget {
   @override
   _RemindCycleScreenState createState() => _RemindCycleScreenState();
@@ -21,24 +20,22 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-                margin: EdgeInsets.only(top: 8),
-                width: double.infinity,
-                decoration: setBorder('top', Color(0xffE1D9D9), 1),
-                // TODO-QAnh: trong Container co padding roi, bo Padding nay di
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 15, top: 18, bottom: 18),
-                  child: Text(
-                    S.of(context).selectRemindCycle,
-                    style: TextStyle(
-                        color: ColorUtil.primaryColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                )),
+              margin: EdgeInsets.only(top: 8),
+              padding: const EdgeInsets.only(left: 15, top: 18, bottom: 18),
+              width: double.infinity,
+              decoration: setBorder('top', Color(0xffE1D9D9), 1),
+              child: Text(
+                S.of(context).selectRemindCycle,
+                style: TextStyle(
+                    color: ColorUtil.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+              ),
+            ),
             Expanded(
                 child: Container(
               decoration: setBorder('top', Color(0xffE4E4E4), 6),
-                  // TODO-QAnh: bỏ cái Column này đi, move lên Column trên, k để lồng nhau
+              // TODO-QAnh: bỏ cái Column này đi, move lên Column trên, k để lồng nhau
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
