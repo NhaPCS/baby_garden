@@ -3465,6 +3465,15 @@ class S {
     );
   }
 
+  String get boy {
+    return Intl.message(
+      'Bé trai',
+      name: 'boy',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get height {
     return Intl.message(
       'Chiều Cao',
@@ -3613,6 +3622,15 @@ class S {
     return Intl.message(
       'Chiều cao (cm)',
       name: 'height_cm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get weight_kg {
+    return Intl.message(
+      'Cân nặng (kg)',
+      name: 'weight_kg',
       desc: '',
       args: [],
     );
@@ -4059,10 +4077,10 @@ class S {
     );
   }
 
-  String get attenion {
+  String get attention {
     return Intl.message(
       'Chú ý',
-      name: 'attenion',
+      name: 'attention',
       desc: '',
       args: [],
     );
@@ -4126,6 +4144,15 @@ class S {
     return Intl.message(
       'Bấm vào đây',
       name: 'click_on_here',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get change_image {
+    return Intl.message(
+      'Đổi hình khác',
+      name: 'change_image',
       desc: '',
       args: [],
     );
@@ -4225,6 +4252,141 @@ class S {
     return Intl.message(
       'Bạn có muốn đăng xuất không?',
       name: 'messageLogout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mess_receive_notify_for_product {
+    return Intl.message(
+      'Bạn đã đăng ký nhận thông báo cho sản phẩm này thành công!',
+      name: 'mess_receive_notify_for_product',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get child_test_results_evaluate {
+    return Intl.message(
+      'Đánh giá kết quả: ',
+      name: 'child_test_results_evaluate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String newest_test_time(Object time) {
+    return Intl.message(
+      '(Lần kiểm tra mới nhất: $time tháng)',
+      name: 'newest_test_time',
+      desc: '',
+      args: [time],
+    );
+  }
+
+  String get nutrition_consulting {
+    return Intl.message(
+      'Tư vấn dinh dưỡng:',
+      name: 'nutrition_consulting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get suggestion_products {
+    return Intl.message(
+      'Sản phẩm gợi ý:',
+      name: 'suggestion_products',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_name {
+    return Intl.message(
+      'Mời nhập tên',
+      name: 'enter_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_code {
+    return Intl.message(
+      'Mời nhập mã OTP',
+      name: 'enter_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get name {
+    return Intl.message(
+      'tên',
+      name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get phone_format {
+    return Intl.message(
+      'Số điện thoại không tồn tại, mời nhập lại',
+      name: 'phone_format',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get in_delivery {
+    return Intl.message(
+      'Đang vận chuyển',
+      name: 'in_delivery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get waiting_checkout {
+    return Intl.message(
+      'Chờ thanh toán',
+      name: 'waiting_checkout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get choose_shop_address {
+    return Intl.message(
+      'Vui lòng chọn shop nhận hàng',
+      name: 'choose_shop_address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get choose_delivery_address {
+    return Intl.message(
+      'Vui lòng nhập địa chỉ nhận hàng ',
+      name: 'choose_delivery_address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get choose_time_Schedule {
+    return Intl.message(
+      'Vui lòng thời gian nhận hàng ',
+      name: 'choose_time_Schedule',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get missing_information {
+    return Intl.message(
+      'Thiếu thông tin',
+      name: 'missing_information',
       desc: '',
       args: [],
     );

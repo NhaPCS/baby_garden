@@ -15,8 +15,9 @@ class CustomRadioButton extends StatelessWidget {
       this.titleSize = SizeUtil.textSizeSmall,
       this.trailing,
       this.titleContent,
-        this.subTitle,
-      this.crossAxisAlignment = CrossAxisAlignment.center, this.checkedValue});
+      this.subTitle,
+      this.crossAxisAlignment = CrossAxisAlignment.center,
+      this.checkedValue});
 
   final String label;
   final EdgeInsets padding;
@@ -31,6 +32,7 @@ class CustomRadioButton extends StatelessWidget {
   final Widget titleContent;
   final Widget subTitle;
   final CrossAxisAlignment crossAxisAlignment;
+
   // TODO-Hung: chuyển widget này sang stateful và dùng ValueNotifier để lấy giá trị đã chọn, không phải phụ thuộc vào provider của class cha nữa
   // Tất cả các provider sẽ chuyển thành ValueNotifier (cách làm này giống controller của TextField)
   final ValueNotifier<int> checkedValue;
@@ -39,7 +41,7 @@ class CustomRadioButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        if (value != groupValue) onChanged(value);
+        if (value != groupValue && onChanged != null) onChanged(value);
       },
       child: Padding(
         padding: padding,
@@ -66,8 +68,10 @@ class CustomRadioButton extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: EdgeInsets.only(left: SizeUtil.iconSizeBigger,top: subTitle!=null?SizeUtil.tinySpace:0),
-              child: subTitle!=null?subTitle:SizedBox(),
+              padding: EdgeInsets.only(
+                  left: SizeUtil.iconSizeBigger,
+                  top: subTitle != null ? SizeUtil.tinySpace : 0),
+              child: subTitle != null ? subTitle : SizedBox(),
             )
           ],
         ),

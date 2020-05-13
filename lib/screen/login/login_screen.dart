@@ -88,7 +88,7 @@ class _LoginScreenState extends BaseStateModel<LoginScreen, LoginViewModel> {
               width: MediaQuery.of(context).size.width,
               child: RaisedButton(
                 onPressed: () async {
-                  getViewModel().onLogin(password: _passControler.text, phone: _phoneControler.text);
+                  getViewModel().onLogin(password: _passControler.text.trim(), phone: _phoneControler.text.trim());
                 },
                 color: ColorUtil.colorAccent,
                 shape: RoundedRectangleBorder(

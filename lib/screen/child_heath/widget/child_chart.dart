@@ -5,6 +5,10 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class ChildChart extends StatefulWidget {
+  final List<dynamic> testResults;
+
+  const ChildChart({Key key, this.testResults}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => ChildChartState();
 }
@@ -41,7 +45,9 @@ class ChildChartState extends State<ChildChart> {
                 RotatedBox(
                   quarterTurns: 3,
                   child: Text(
-                    S.of(context).height_cm,
+                    isHeightTab()
+                        ? S.of(context).height_cm
+                        : S.of(context).weight_kg,
                     style: TextStyle(
                         fontSize: SizeUtil.textSizeSmall,
                         fontWeight: FontWeight.bold),
@@ -55,7 +61,7 @@ class ChildChartState extends State<ChildChart> {
                         child: BarChart(
                       BarChartData(
                         alignment: BarChartAlignment.spaceEvenly,
-                        maxY: 100,
+                        maxY: getMaxValue(),
                         groupsSpace: 12,
                         barTouchData: BarTouchData(
                           enabled: false,
@@ -68,24 +74,7 @@ class ChildChartState extends State<ChildChart> {
                                 color: ColorUtil.textColor,
                                 fontSize: SizeUtil.textSizeSmall),
                             getTitles: (double value) {
-                              switch (value.toInt()) {
-                                case 0:
-                                  return '12';
-                                case 1:
-                                  return '15';
-                                case 2:
-                                  return '18';
-                                case 3:
-                                  return '24';
-                                case 4:
-                                  return '30';
-                                case 5:
-                                  return '36';
-                                case 6:
-                                  return '48';
-                                default:
-                                  return '';
-                              }
+                              return widget.testResults[value.toInt()]['month'];
                             },
                           ),
                           leftTitles: SideTitles(
@@ -98,20 +87,13 @@ class ChildChartState extends State<ChildChart> {
                               }
                               return '${value.toInt()}';
                             },
-                            interval: 20,
+                            interval: isHeightTab() ? 50 : 5,
                             margin: 5,
                             reservedSize: 30,
                           ),
                         ),
                         gridData: FlGridData(
-                          show: true,
-                          checkToShowHorizontalLine: (value) => value % 5 == 0,
-                          getDrawingHorizontalLine: (value) {
-                            return const FlLine(
-                              color: Colors.transparent,
-                              strokeWidth: 0.8,
-                            );
-                          },
+                          show: false,
                         ),
                         borderData: FlBorderData(
                             show: true,
@@ -120,23 +102,22 @@ class ChildChartState extends State<ChildChart> {
                                     width: 1, color: ColorUtil.lightGray),
                                 bottom: BorderSide(
                                     width: 1, color: ColorUtil.lightGray))),
-                        barGroups: [
-                          getColumnChart(0, 76.2, Color(0xffFF0000)),
-                          getColumnChart(1, 36.2, Color(0xffFFD500)),
-                          getColumnChart(2, 46.2, Color(0xffFF9100)),
-                          getColumnChart(3, 16.2, Color(0xff00BBFF)),
-                          getColumnChart(4, 96.2, Color(0xffFF0000)),
-                          getColumnChart(5, 56.2, Color(0xff00BBFF)),
-                          getColumnChart(6, 26.2, Color(0xffFFD500)),
-                        ],
+                        barGroups: widget.testResults == null
+                            ? []
+                            : widget.testResults
+                                .map((e) => getColumnChart(e['month'],
+                                    e['value'], getStatusColor(e['status'])))
+                                .toList(),
                       ),
                     )),
-                    Center(child: Text(
-                      S.of(context).age_month,
-                      style: TextStyle(
-                          fontSize: SizeUtil.textSizeSmall,
-                          fontWeight: FontWeight.bold),
-                    ),)
+                    Center(
+                      child: Text(
+                        S.of(context).age_month,
+                        style: TextStyle(
+                            fontSize: SizeUtil.textSizeSmall,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    )
                   ],
                 ))
               ],
@@ -147,12 +128,47 @@ class ChildChartState extends State<ChildChart> {
     );
   }
 
-  BarChartGroupData getColumnChart(int x, double y, Color color) {
+  bool isHeightTab() {
+    return widget.testResults == null ||
+        widget.testResults.isEmpty ||
+        widget.testResults[0]['type'] == '1';
+  }
+
+  double getMaxValue() {
+    if (widget.testResults == null || widget.testResults.isEmpty) return 100;
+    double maxValue = double.parse(widget.testResults[0]['value']);
+    widget.testResults.forEach((element) {
+      double value = double.parse(element['value']);
+      if (value > maxValue) {
+        maxValue = value;
+      }
+    });
+    return maxValue;
+  }
+
+  Color getStatusColor(var status) {
+    print("typeOf ${status.runtimeType}");
+    switch (status) {
+      case "1":
+        return Color(0xff00BBFF);
+      case "2":
+        return Color(0xffFFD500);
+      case "3":
+        return Color(0xffFF9100);
+      case "4":
+        return Color(0xffFF0000);
+      default:
+        return Color(0xff00BBFF);
+    }
+  }
+
+  BarChartGroupData getColumnChart(var month, var value, Color color) {
+    print("MONTH ${int.parse(month)}");
     return BarChartGroupData(
-      x: x,
+      x: int.parse(month),
       barRods: [
         BarChartRodData(
-            y: y,
+            y: double.parse(value),
             width: barWidth,
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20), topRight: Radius.circular(20)),

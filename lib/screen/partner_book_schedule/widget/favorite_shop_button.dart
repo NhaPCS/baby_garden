@@ -1,16 +1,16 @@
+import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/screen/partner_book_schedule/provider/like_shop_provider.dart';
-import 'package:baby_garden_flutter/screen/product_detail/provider/favorite_product_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
-import 'package:provider/provider.dart';
 
 class FavoriteShopButton extends StatefulWidget {
-  final bool isFavorite;
+  final ValueNotifier<bool> isFavorite;
   final String shopId;
-  const FavoriteShopButton({Key key, this.isFavorite, this.shopId}) : super(key: key);
+
+  const FavoriteShopButton({Key key, this.isFavorite, this.shopId})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -19,57 +19,66 @@ class FavoriteShopButton extends StatefulWidget {
 }
 
 class _State extends BaseState<FavoriteShopButton> {
-  final LikeShopProvider _favoriteShopProvider = LikeShopProvider();
 
   @override
   void initState() {
-    _favoriteShopProvider.isliked = widget.isFavorite;
     super.initState();
   }
 
   @override
   Widget buildWidget(BuildContext context) {
-    return InkWell(child: Container(
-      child: Consumer<LikeShopProvider>(
-        builder: (BuildContext context, LikeShopProvider value,
-            Widget child) {
-          return Wrap(
-            alignment: WrapAlignment.center,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            spacing: SizeUtil.tinySpace,
-            children: <Widget>[
-              value.isliked ? Icon(
-                Icons.done, color: Colors.white,
-                size: SizeUtil.iconSize,
-              ) : SizedBox(),
-              Text(
-                value.isliked
-                    ? S.of(context).favorited
-                    : S.of(context).favorite,
-                style: TextStyle(
-                    color: Colors.white, fontSize: SizeUtil.textSizeDefault),
-              )
-            ],
+    return InkWell(
+      child: ValueListenableBuilder<bool>(
+        valueListenable: widget.isFavorite,
+        builder: (BuildContext context, bool value, Widget child) {
+          return Container(
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: SizeUtil.tinySpace,
+              children: <Widget>[
+                value
+                    ? Icon(
+                        Icons.done,
+                        color: Colors.white,
+                        size: SizeUtil.iconSize,
+                      )
+                    : SizedBox(),
+                Text(
+                  value ? S.of(context).favorited : S.of(context).favorite,
+                  style: TextStyle(
+                      color: Colors.white, fontSize: SizeUtil.textSizeDefault),
+                )
+              ],
+            ),
+            padding: EdgeInsets.only(
+                left: SizeUtil.smallSpace,
+                right: SizeUtil.smallSpace,
+                top: SizeUtil.midSmallSpace,
+                bottom: SizeUtil.midSmallSpace),
+            decoration: BoxDecoration(
+                color: ColorUtil.primaryColor,
+                borderRadius: BorderRadius.circular(SizeUtil.tinyRadius)),
           );
         },
       ),
-      padding: EdgeInsets.only(
-          left: SizeUtil.smallSpace,
-          right: SizeUtil.smallSpace,
-          top: SizeUtil.midSmallSpace,
-          bottom: SizeUtil.midSmallSpace),
-      decoration: BoxDecoration(
-          color: ColorUtil.primaryColor,
-          borderRadius: BorderRadius.circular(SizeUtil.tinyRadius)),
-    ), onTap: () {
-      _favoriteShopProvider.changeFavorite(
-          context, isFavorite: !_favoriteShopProvider.isliked,
-          shopID: widget.shopId);
-    },);
+      onTap: () {
+        widget.isFavorite.value = !widget.isFavorite.value;
+        changeFavorite();
+      },
+    );
+  }
+
+  void changeFavorite() async {
+    if (widget.isFavorite.value) {
+      await favouriteShop(shopID: widget.shopId);
+    } else {
+      await unFavouriteShop(shopID: widget.shopId);
+    }
   }
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _favoriteShopProvider)];
+    return [];
   }
 }

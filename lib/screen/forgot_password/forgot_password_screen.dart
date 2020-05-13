@@ -21,12 +21,12 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,ForgotPasswordViewModel> {
-  final WaittingOTPProvider _waittingOTPProvider = new WaittingOTPProvider();
+  final WaitingOTPProvider _waitingOTPProvider = new WaitingOTPProvider();
   final EnterPhoneNumberProvider _enterPhoneNumberProvider = new EnterPhoneNumberProvider();
-  final TextEditingController _phoneControler = new TextEditingController();
-  final TextEditingController _newPasswordControler = new TextEditingController();
-  final TextEditingController _reenterNewPasswordControler = new TextEditingController();
-  final TextEditingController _otpControler = new TextEditingController();
+  final TextEditingController _phoneController = new TextEditingController();
+  final TextEditingController _newPasswordController = new TextEditingController();
+  final TextEditingController _reenterNewPasswordController = new TextEditingController();
+  final TextEditingController _otpController = new TextEditingController();
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -58,23 +58,23 @@ class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,For
               if (value.isEnterPhoneNumber) {
                 return Column(
                   children: <Widget>[
-                    MyPasswordTextField(controller: _newPasswordControler,
+                    MyPasswordTextField(controller: _newPasswordController,
                         hint: S
                             .of(context)
                             .enter_new_password),
                     SizedBox(
                       height: SizeUtil.defaultSpace,
                     ),
-                    MyPasswordTextField(controller: _reenterNewPasswordControler,
+                    MyPasswordTextField(controller: _reenterNewPasswordController,
                         hint: S
                             .of(context)
                             .reenter_new_password),
                     SizedBox(
                       height: SizeUtil.defaultSpace,
                     ),
-                    Consumer<WaittingOTPProvider>(
+                    Consumer<WaitingOTPProvider>(
                       builder: (BuildContext context,
-                          WaittingOTPProvider value, Widget child) {
+                          WaitingOTPProvider value, Widget child) {
                         if (value.start == 0) {
                           //todo: alert OTP invalid because timer out
                           Navigator.of(context).pop(S.of(context).alert_code_expire_time);
@@ -83,7 +83,7 @@ class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,For
                           alignment: Alignment.centerRight,
                           children: <Widget>[
                             MyTextField(
-                              textEditingController: _otpControler,
+                              textEditingController: _otpController,
                               hint: S.of(context).enter_otp,
                               borderColor: ColorUtil.colorAccent,
                               elevation: SizeUtil.smallElevation,
@@ -111,7 +111,7 @@ class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,For
                 );
               } else {
                 return MyTextField(
-                  textEditingController: _phoneControler,
+                  textEditingController: _phoneController,
                   hint: S.of(context).enter_phone_number,
                   elevation: SizeUtil.smallElevation,
                   borderColor: ColorUtil.colorAccent,
@@ -124,24 +124,7 @@ class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,For
           ),
           SizedBox(height: SizeUtil.defaultSpace,),
           MyRaisedButton(
-            onPressed: () async {
-              if(_enterPhoneNumberProvider.isEnterPhoneNumber){
-                final data = await getViewModel().onChangePassword(_phoneControler.text, _newPasswordControler.text,_reenterNewPasswordControler.text);
-                if(data==null){
-                  WidgetUtil.showMessageDialog(context, message: S.of(context).change_pass_success, title: S.of(context).success,onOkClick: (){
-                    Navigator.of(context).pop();
-                  });
-                }
-              }else{
-                var data = await getViewModel().onForgotPassword(_phoneControler.text);
-                if(data!=null&&data.lengh>0){
-                  WidgetUtil.showMessageDialog(context, message: data, title: S.of(context).notify);
-                }else {
-                  _waittingOTPProvider.startTimer();
-                  _enterPhoneNumberProvider.enterPhoneNumber(_phoneControler.text);
-                }
-              }
-            },
+            onPressed: doForgot,
             padding: const EdgeInsets.all(SizeUtil.midSpace),
             color: ColorUtil.colorAccent,
             text: S.of(context).confirm,
@@ -165,13 +148,26 @@ class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,For
     );
   }
 
-  String checkCondition(){
-
+  void doForgot() async {
+    if(_enterPhoneNumberProvider.isEnterPhoneNumber){
+      final data = await getViewModel().onChangePassword(_phoneController.text.trim(), _newPasswordController.text.trim(),_reenterNewPasswordController.text.trim());
+      if(data){
+        WidgetUtil.showMessageDialog(context, message: S.of(context).change_pass_success, title: S.of(context).success,onOkClick: (){
+          Navigator.of(context).pop();
+        });
+      }
+    }else{
+      var data = await getViewModel().onForgotPassword(_phoneController.text);
+      if(data){
+        _waitingOTPProvider.startTimer();
+        _enterPhoneNumberProvider.enterPhoneNumber(_phoneController.text);
+      }
+    }
   }
 
   @override
   void dispose() {
-    _waittingOTPProvider.stopTimer();
+    _waitingOTPProvider.stopTimer();
     super.dispose();
   }
 
@@ -179,7 +175,7 @@ class _ForgotPasswordScreenState extends BaseStateModel<ForgotPasswordScreen,For
   List<SingleChildWidget> providers() {
     return [
       ChangeNotifierProvider.value(value: _enterPhoneNumberProvider),
-      ChangeNotifierProvider.value(value: _waittingOTPProvider),
+      ChangeNotifierProvider.value(value: _waitingOTPProvider),
     ];
   }
 

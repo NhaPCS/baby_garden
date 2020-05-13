@@ -54,7 +54,7 @@ class ContactTab extends StatelessWidget {
                       ),
                       TextSpan(
                         text:
-                            ': Tập đoàn Vingroup số 7 Đường Bằng Lăng 1, Việt Hưng, Quận Long Biên, Hà Nội.',
+                            ': ${voucher['address']}',
                       )
                     ])),
                 Padding(
@@ -72,7 +72,7 @@ class ContactTab extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                         TextSpan(
-                          text: ': anhnq@deptrai.hust.vn',
+                          text: ': ${voucher['email']}',
                         )
                       ])),
                 ),
@@ -91,7 +91,7 @@ class ContactTab extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                         TextSpan(
-                          text: ': 19001789',
+                          text: ': ${voucher['phone']}',
                         )
                       ])),
                 ),

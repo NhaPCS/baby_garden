@@ -7,6 +7,7 @@ import 'package:baby_garden_flutter/screen/login/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:flutter_picker/flutter_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -43,6 +44,7 @@ class ColorUtil {
   static const Color textDark = Color(0xff444444);
   static const Color grayEC = Color(0xffececec);
   static const Color trackingTargetColor = Color(0xff6C6C6C);
+  static const Color unSelectBgColor = Color(0xffF2F2F2);
   static const Color lineLightGray = Color(0xffCECECE);
 
   static const List<Color> gradientColors = [
@@ -64,9 +66,40 @@ class ColorUtil {
 class DateUtil {
   static final String serverFormatDate = "yyyy-MM-dd HH:mm:ss";
 
+  static String formatBirthdayDate(DateTime date) {
+    return new DateFormat("dd/MM/yyyy").format(date);
+  }
+
   static String formatDDMMyyyy(String rawDate) {
     DateTime date = new DateFormat(serverFormatDate).parse(rawDate);
     return new DateFormat("dd/MM/yyyy").format(date);
+  }
+
+  /*
+ static const int monday = 2;
+      static const int tuesday = 3;
+      static const int wednesday = 4;
+      static const int thursday = 5;
+      static const int friday = 6;
+      static const int saturday = 7;
+      static const int sunday = 1;
+      static const int daysPerWeek = 7;
+  */
+  static List<dynamic> getDate() {
+    List<dynamic> dates = List();
+    final dowFormat = new DateFormat("EEEE", "vi");
+    final dateFormat = new DateFormat("dd/MM/yyyy");
+    var now = new DateTime.now();
+    for (int i = 0; i <= 6; i++) {
+      final date = now.add(new Duration(days: i));
+      dates.add({
+        'index': date.weekday == 7 ? 1 : date.weekday + 1,
+        'dow': dowFormat.format(date),
+        'date': dateFormat.format(date)
+      });
+    }
+    print("getDate $dates");
+    return dates;
   }
 }
 
@@ -332,7 +365,7 @@ class SizeUtil {
   static const double tinySpace = 4;
   static const double superTinySpace = 2;
   static const double bigSpace = 30;
-  static const double bigSpacehigher = 32;
+  static const double bigSpaceHigher = 32;
   static const double hugSpace = 50;
   static const double largeSpace = 70;
   static const double biggerSpace = 40;
@@ -346,7 +379,7 @@ class SizeUtil {
   static const double textSizeExpressTitle = 14;
   static const double textSizeExpressDetail = 13;
   static const double textSizeSmall = 11;
-  static const double textSizeNotiTime = 10;
+  static const double textSizeNoticeTime = 10;
   static const double textSizeTiny = 8;
   static const double textSizeMini = 5;
   static const double textSizeHuge = 40;
@@ -371,7 +404,7 @@ class SizeUtil {
   static const double lineHeight = 5;
   static const double delivery_code_height = 36;
 
-  static const double tabbar_fix_height = 40;
+  static const double tab_bar_fix_height = 40;
 
   static const double textSpaceTiny = 1;
   static const double textSpaceSmall = 2;
@@ -402,7 +435,63 @@ class FileUtil {
   }
 }
 
+enum TransportState {
+  NONE,
+  WAITING_CONFIRM,
+  OTHER,
+  SUCCESS,
+  CANCEL,
+  PACKING,
+  IN_DELIVERY,
+  RECEIVE_IN_SHOP,
+  WAITING_CHECKOUT
+}
+
+enum BookingState {
+  NONE,
+  WAITING_CONFIRM,
+  CONFIRM,
+  SUCCESS,
+  CANCEL,
+  PACKING,
+  IN_DELIVERY,
+  RECEIVE_IN_SHOP,
+  WAITING_CHECKOUT
+}
+
+enum TransferStatus {
+  NONE,
+  WAITING_GET_PRODUCT,
+  GETTING_PRODUCT,
+  IN_STORAGE,
+  IN_DELIVERY
+}
+
 class WidgetUtil {
+  static void showGenderSelectorDialog(BuildContext context, ValueChanged<int> selectedGender) {
+    new Picker(
+        adapter: PickerDataAdapter<String>(pickerdata: [
+          S.of(context).girl,
+          S.of(context).boy,
+        ]),
+        changeToFirst: true,
+        hideHeader: false,
+        onConfirm: (Picker picker, List value) {
+          print(value.toString());
+          print(picker.adapter.text);
+        }).showModal(context); //_scaffoldKey.currentState);
+  }
+
+  static Future<void> showBirthdaySelectorDialog(
+      BuildContext context, ValueChanged<String> selectedDate) async {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2015, 8),
+            lastDate: DateTime(2101))
+        .then((value) => {selectedDate(DateUtil.formatBirthdayDate(value))});
+  }
+
   static void showPickImageDialog(BuildContext context,
       {VoidCallback onCameraClick, VoidCallback onGalleryClick}) {
     showConfirmDialog(context,
@@ -631,8 +720,17 @@ class WidgetUtil {
         case CheckType.EMAIL_FORMAT: //  email format
           if (p.value == null ||
               p.value.isEmpty ||
-              RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+              !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                   .hasMatch(p.value)) {
+            if (showErrorDialog) WidgetUtil.showErrorDialog(context, p.key);
+            return false;
+          }
+          break;
+        case CheckType.PHONE_FORMAT:
+          print(p.value);
+          if (p.value == null ||
+              p.value.isEmpty ||
+              !RegExp(r'(^(?:[+0]9)?[0-9]{10}$)').hasMatch(p.value)) {
             if (showErrorDialog) WidgetUtil.showErrorDialog(context, p.key);
             return false;
           }

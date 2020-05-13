@@ -39,7 +39,7 @@ class _OrderListScreenState extends BaseState<OrderListScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    _orderListProvider.getListData(widget.state + 1);
+    _orderListProvider.getListData(widget.state);
     super.initState();
   }
 
@@ -72,7 +72,7 @@ class _OrderListScreenState extends BaseState<OrderListScreen> {
                       return LoadingView(
                         isNoData: data != null,
                         onReload: () {
-                          _orderListProvider.getListData(widget.state + 1);
+                          _orderListProvider.getListData(widget.state);
                         },
                       );
                     return ListView(
@@ -81,14 +81,6 @@ class _OrderListScreenState extends BaseState<OrderListScreen> {
                               onTap: () {
                                 push(OrderDetailScreen(
                                   bookingId: e['id'],
-                                  title: widget.childTitle != null
-                                      ? widget.childTitle
-                                      : widget.title,
-                                  state: widget.state,
-                                  isShowNegativeButton:
-                                      widget.isShowNegativeButton,
-                                  isShowPositiveButton:
-                                      widget.isShowPositiveButton,
                                 ));
                               },
                               child: OrderItem(

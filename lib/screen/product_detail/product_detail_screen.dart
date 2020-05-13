@@ -1,4 +1,6 @@
 import 'package:baby_garden_flutter/data/model/section.dart';
+import 'package:baby_garden_flutter/provider/get_list_product_provider.dart';
+import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/screen/product_detail/dialog/add_to_cart_bottom_dialog.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
@@ -10,6 +12,7 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/list_product/list_product_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/photo_view/photo_view_screen.dart';
+import 'package:baby_garden_flutter/screen/product_detail/view_model/product_detail_view_model.dart';
 import 'package:baby_garden_flutter/screen/product_detail/widget/content_view_moreable.dart';
 import 'package:baby_garden_flutter/screen/product_detail/widget/store_info.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -22,6 +25,7 @@ import 'package:baby_garden_flutter/screen/product_detail/widget/cart_icon.dart'
 import 'package:baby_garden_flutter/widget/product/discount_widget.dart';
 import 'package:baby_garden_flutter/screen/product_detail/widget/favorite_product_button.dart';
 import 'package:baby_garden_flutter/widget/product/image_count.dart';
+import 'package:baby_garden_flutter/widget/product/list_horizontal_product.dart';
 import 'package:baby_garden_flutter/widget/product/list_product_by_category.dart';
 import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
@@ -41,13 +45,16 @@ class ProductDetailScreen extends StatefulWidget {
   }
 }
 
-class _ProductScreenState extends BaseState<ProductDetailScreen> {
+class _ProductScreenState extends BaseStateModel<ProductDetailScreen, ProductDetailViewModel> {
   final ChangeIndexProvider _changeIndexProvider = ChangeIndexProvider();
+  final GetListProductProvider _getListProductProvider = GetListProductProvider();
   final GetProductDetailProvider _getProductDetailProvider =
       GetProductDetailProvider();
 
+
   @override
   void initState() {
+    _getListProductProvider.getData(context, "getProduct");
     super.initState();
   }
 
@@ -227,7 +234,7 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
                 ],
               )),
               WidgetUtil.getLine(width: 2),
-              StoreInfo(),
+              StoreInfo(shop: productProvider.product['shop'],),
               WidgetUtil.getLine(width: 2),
               paddingContainer(Text(
                 S.of(context).detail_info,
@@ -290,9 +297,11 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
                   )
                 ],
               ),
-              ListProductByCategory(
-                categoryId: productProvider.product['category_id'],
-              )
+              Consumer<GetListProductProvider>(builder: (BuildContext context, GetListProductProvider listProductProvider, Widget child) {
+                return ListHorizontalProduct(
+                  products: listProductProvider.products,
+                );
+              },)
             ],
           );
         },
@@ -341,12 +350,16 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
                       WidgetUtil.showRequireLoginDialog(context);
                       return;
                     }
-                    showModalBottomSheet(
-                        isScrollControlled: true,
-                        context: context,
-                        builder: (_) => AddToCartBottomDialog(
-                              product: productProvider.product,
-                            ));
+                    if (productProvider.isOutStock()) {
+                      getViewModel().receiveNotify(productId: productProvider.product['id']);
+                    } else {
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (_) => AddToCartBottomDialog(
+                                product: productProvider.product,
+                              ));
+                    }
                   },
                   text: productProvider.isOutStock()
                       ? S.of(context).get_notify_when_stocking
@@ -416,6 +429,12 @@ class _ProductScreenState extends BaseState<ProductDetailScreen> {
     return [
       ChangeNotifierProvider.value(value: _changeIndexProvider),
       ChangeNotifierProvider.value(value: _getProductDetailProvider),
+      ChangeNotifierProvider.value(value: _getListProductProvider),
     ];
+  }
+
+  @override
+  ProductDetailViewModel initViewModel() {
+    return ProductDetailViewModel(context);
   }
 }

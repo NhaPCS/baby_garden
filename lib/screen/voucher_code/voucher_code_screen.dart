@@ -1,26 +1,40 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/screen/base_state_model.dart';
+import 'package:baby_garden_flutter/screen/voucher_code/provider/use_voucher_provider.dart';
+import 'package:baby_garden_flutter/screen/voucher_code/view_model/voucher_code_view_model.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nested/nested.dart';
-
-import '../base_state.dart';
+import 'package:provider/provider.dart';
 
 class VoucherCodeScreen extends StatefulWidget {
   final BuildContext context;
+  final dynamic voucher;
 
-  const VoucherCodeScreen({Key key, this.context}) : super(key: key);
+  const VoucherCodeScreen({Key key, this.context, this.voucher})
+      : super(key: key);
+
   @override
   _VoucherCodeScreenState createState() => _VoucherCodeScreenState();
 }
 
-class _VoucherCodeScreenState extends BaseState<VoucherCodeScreen> {
+class _VoucherCodeScreenState
+    extends BaseStateModel<VoucherCodeScreen, VoucherCodeViewModel> {
+  final UserVoucherProvider _userVoucherProvider = UserVoucherProvider();
+  final TextEditingController _codeController = TextEditingController();
+
+  @override
+  void initState() {
+    _userVoucherProvider.useVoucher(widget.voucher['id']);
+    super.initState();
+  }
+
   @override
   Widget buildWidget(BuildContext context) {
-    String code = 'GHK 123456';
     return Scaffold(
       appBar: getAppBar(title: S.of(widget.context).voucherCode), //
       body: ListView(
@@ -53,36 +67,23 @@ class _VoucherCodeScreenState extends BaseState<VoucherCodeScreen> {
                     right: SizeUtil.smallSpace,
                     bottom: SizeUtil.defaultSpace),
                 width: double.infinity,
+                padding: const EdgeInsets.only(
+                    top: SizeUtil.normalSpace, bottom: SizeUtil.normalSpace),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(7),
                     border:
                         Border.all(color: ColorUtil.primaryColor, width: 1)),
-                padding: const EdgeInsets.only(
-                    top: SizeUtil.normalSpace, bottom: SizeUtil.normalSpace),
                 alignment: Alignment.center,
-                child: Text(code,
-                    style: TextStyle(
-                        fontSize: SizeUtil.textSizeHuge,
-                        color: ColorUtil.primaryColor)),
+                child: Consumer<UserVoucherProvider>(
+                  builder: (BuildContext context, UserVoucherProvider value,
+                      Widget child) {
+                    return MyText(value.code,
+                        style: TextStyle(
+                            fontSize: SizeUtil.textSizeHuge,
+                            color: ColorUtil.primaryColor));
+                  },
+                ),
               ),
-              Positioned(
-                  bottom: 22,
-                  right: 15,
-                  child: Column(children: <Widget>[
-                    SvgIcon(
-                      'copy.svg',
-                      color: Colors.black,
-                      height: SizeUtil.iconSize,
-                      width: SizeUtil.iconSize,
-                      onPressed: () {
-                        // copy to clipboard
-                        Clipboard.setData(ClipboardData(text: code));
-                      },
-                    ),
-                    Text('Copy',
-                        style:
-                            TextStyle(fontSize: 10, color: Color(0xff545353)))
-                  ]))
             ],
           ),
           Container(
@@ -106,7 +107,7 @@ class _VoucherCodeScreenState extends BaseState<VoucherCodeScreen> {
             child: MyTextField(
               borderRadius: 8,
               borderColor: ColorUtil.primaryColor,
-              textEditingController: null,
+              textEditingController: _codeController,
               hint: S.of(widget.context).fillAuthenCode,
               hintStyle: TextStyle(
                   color: Color(0xff8A8787),
@@ -117,11 +118,13 @@ class _VoucherCodeScreenState extends BaseState<VoucherCodeScreen> {
           // button send code
           GestureDetector(
             onTap: () {
-              // turn back to voucher detail infor tab and set state change button title to used
-              Navigator.of(context).pop("sent");
+              //TODO
+              getViewModel().verifyVoucherCode(
+                  voucherId: widget.voucher['id'],
+                  code: _userVoucherProvider.code);
             },
             child: Container(
-              padding: SizeUtil.smallPadding,
+              margin: SizeUtil.smallPadding,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   color: ColorUtil.primaryColor),
@@ -143,11 +146,12 @@ class _VoucherCodeScreenState extends BaseState<VoucherCodeScreen> {
 
           // button scan qr code
           GestureDetector(
-            onTap: () {
-              // TODO-QA scan qr code
+            onTap: () async {
+              var result = await BarcodeScanner.scan();
+              _codeController.text = result as String;
             },
             child: Container(
-              padding: SizeUtil.smallPadding,
+              margin: SizeUtil.smallPadding,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   color: Color(0xfff0CA0BE)),
@@ -179,6 +183,15 @@ class _VoucherCodeScreenState extends BaseState<VoucherCodeScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [];
+    return [
+      ChangeNotifierProvider.value(
+        value: _userVoucherProvider,
+      )
+    ];
+  }
+
+  @override
+  VoucherCodeViewModel initViewModel() {
+    return VoucherCodeViewModel(context);
   }
 }

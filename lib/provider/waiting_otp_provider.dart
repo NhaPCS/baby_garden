@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 
-class WaittingOTPProvider extends ChangeNotifier {
+class WaitingOTPProvider extends ChangeNotifier {
   Timer timer;
   int start = 60;
   bool isTimerStart = false;

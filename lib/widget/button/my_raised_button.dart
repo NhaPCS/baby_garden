@@ -47,6 +47,7 @@ class MyRaisedButton extends StatelessWidget {
                 style: textStyle,
               )
             : Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
                 spacing: SizeUtil.smallSpace,
                 children: <Widget>[
                   icon,

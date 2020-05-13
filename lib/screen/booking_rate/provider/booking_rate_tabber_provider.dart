@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class BookingRateTabbarProvider extends ChangeNotifier{
+class BookingRateTabBarProvider extends ChangeNotifier{
   bool isRated = false;
 
   void onChange(){

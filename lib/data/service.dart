@@ -49,15 +49,21 @@ Future<dynamic> register(BuildContext context,
 }
 
 //TODO require VERIFY CODE
-Future<dynamic> verifyCode(BuildContext context,
-    {String phone, String name, String password, String refCode}) async {
+Future<dynamic> verifyCode(
+    {BuildContext context,
+    String phone,
+    String name,
+    String password,
+    String refCode}) async {
   Response response = await post(context, path: "verifyCode", param: {
     'phone': phone,
     'name': name,
     'password': password,
     'ref_code': refCode,
   });
-  if (response.isSuccess()) return response.data;
+  if (response.isSuccess()) {
+    return response.data;
+  }
   return null;
 }
 
@@ -68,7 +74,7 @@ Future<dynamic> forgetPassword(BuildContext context, {String phone}) async {
   if (response.isSuccess()) {
     return response.data;
   } else {
-    return response.message;
+    return null;
   }
 }
 
@@ -126,18 +132,26 @@ Future<dynamic> bookingService(
   return null;
 }
 
-Future<dynamic> shopDetail({String shopID}) async {
+Future<dynamic> shopDetail({BuildContext context, String shopID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  Response response = await get(null,
+  Response response = await get(context,
       path: "shopDetail", param: {'user_id': userId, 'shop_id': shopID});
   if (response.isSuccess()) return response.data;
   return null;
 }
 
+Future<dynamic> shopReceiveTime({BuildContext context, String shopID}) async {
+  Response response =
+      await get(context, path: "getTime", param: {'shop_id': shopID});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 //todo listProductShop
-Future<dynamic> listProductShop({String userID, String shopID}) async {
+Future<dynamic> listProductShop({String shopID}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
-      path: "listProductShop", param: {'user_id': userID, 'shop_id': shopID});
+      path: "listProductShop", param: {'user_id': userId, 'shop_id': shopID});
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -259,7 +273,7 @@ Future<dynamic> notificationDetail({String notifyID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
       path: "notificationDetail",
-      param: {'index': userId, 'noty_id': notifyID});
+      param: {'user_id': userId, 'noty_id': notifyID});
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -366,15 +380,15 @@ Future<dynamic> paymentInfo() async {
 //TODO PAYMENT
 Future<dynamic> payment(
     {String userID,
-    int bookingId,
+    String bookingId,
     double money,
     String content,
     String note}) async {
   Response response = await post(null, path: "payment", param: {
-    'user_id': userID.toString(),
-    'booking_id': bookingId.toString(),
+    'user_id': userID,
+    'booking_id': bookingId,
     'money': money.toString(),
-    'content': content.toString(),
+    'content': content,
     'note': note.toLowerCase(),
   });
   if (response.isSuccess()) return response.data;
@@ -432,6 +446,7 @@ Future<dynamic> listProducts(BuildContext context, String path,
     int index = START_PAGE,
     int numberPosts = PAGE_SIZE}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
+
   dynamic params = {
     "user_id": userId,
     "index": index.toString(),
@@ -570,6 +585,18 @@ Future<Response> reportProduct(BuildContext context,
   dynamic files = {"img": img};
   Response response = await postMultiPart(context,
       path: 'reportProduct', param: params, files: files, requireLogin: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
+Future<Response> receiveNotify(BuildContext context, {String productId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "product_id": productId,
+  };
+  Response response = await post(context,
+      path: 'receiveNoty', param: params, requireLogin: true);
   if (response.isSuccess()) return response;
   return null;
 }
@@ -742,6 +769,43 @@ Future<dynamic> addBabyTest(BuildContext context,
   Response response = await postMultiPart(context,
       path: 'addTest', param: params, files: files, requireLogin: true);
   if (response.isSuccess()) return response;
+  return null;
+}
+
+Future<dynamic> addBaby(BuildContext context,
+    {String name, int gender, String birthday, File img}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "name": name,
+    "gender": gender.toString(),
+    "birthday": birthday,
+  };
+  dynamic files = {"img": img};
+  Response response = await postMultiPart(context,
+      path: 'addBaby', param: params, files: files, requireLogin: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
+Future<dynamic> verifyCodeVoucher(BuildContext context,
+    {String voucherId, String code}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId, "voucher_id": voucherId, "code": code};
+
+  Response response = await get(null,
+      path: 'verifyCodeVoucher', param: params, requireLogin: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> useVoucher({String voucherId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId, "voucher_id": voucherId};
+
+  Response response =
+      await get(null, path: 'useVoucher', param: params, requireLogin: true);
+  if (response.isSuccess()) return response.data;
   return null;
 }
 
@@ -948,22 +1012,5 @@ Future<dynamic> getPointDetail(BuildContext context, String shopId) async {
   Response response = await get(context, path: "pointDetail", param: params);
 
   if (response.isSuccess()) return response.data;
-  return null;
-}
-
-Future<dynamic> addBaby(BuildContext context,
-    {String name, String gender, String birthday, File img}) async {
-  String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  dynamic params = {
-    "user_id": userId,
-    "name": name,
-    "gender": gender,
-    "birthday": birthday,
-    "img": img
-  };
-  dynamic files = {"img": img};
-  Response response = await postMultiPart(context,
-      path: 'addBaby', param: params, files: files, requireLogin: true);
-  if (response.isSuccess()) return response;
   return null;
 }

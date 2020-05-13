@@ -5,15 +5,20 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/image/circle_image.dart';
 import 'package:baby_garden_flutter/widget/rating_bar.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 
 class StoreInfo extends StatelessWidget {
+  final dynamic shop;
+
+  const StoreInfo({Key key, this.shop}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
         CircleImage(
-          imageUrl: StringUtil.dummyImage,
+          imageUrl: shop['img'],
           borderRadius: SizeUtil.smallRadius,
           width: SizeUtil.iconSizeLarge,
           height: SizeUtil.iconSizeLarge,
@@ -26,12 +31,12 @@ class StoreInfo extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text(
-              "Vườn của bé",
+            MyText(
+             shop['name'],
               style: TextStyle(
                   color: ColorUtil.primaryColor, fontWeight: FontWeight.bold),
             ),
-            RatingBar()
+            RatingBar(value: int.parse(shop['star']),)
           ],
         ),
         Expanded(child: SizedBox()),
@@ -47,7 +52,7 @@ class StoreInfo extends StatelessWidget {
             } else {
               RouteUtil.push(
                   context,
-                  PartnerBookScheduleScreen(shopID: "1"));
+                  PartnerBookScheduleScreen(shopID: shop['id']));
             }
           },
           borderColor: ColorUtil.primaryColor,
