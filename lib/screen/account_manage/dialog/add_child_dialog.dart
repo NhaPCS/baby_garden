@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
@@ -22,6 +23,7 @@ class _ShowAddAddressDialogState extends State<AddChildDialog> {
       ),
       title: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
+        centerTitle: true,
         title: Text(
           S.of(context).addChild,
           style: TextStyle(color: Colors.white),
@@ -66,9 +68,14 @@ class _ShowAddAddressDialogState extends State<AddChildDialog> {
               borderRadius: SizeUtil.tinyRadius,
               borderWidth: 0.5,
               elevation: 3,
-              labelText: S.of(context).nameOfChild,
-              labelStyle: TextStyle(
+              contentPadding: EdgeInsets.symmetric(
+                  horizontal: SizeUtil.midSpace, vertical: SizeUtil.smallSpace),
+              hint: S.of(context).nameOfChild,
+              hintStyle: TextStyle(
                   color: ColorUtil.black33, fontSize: SizeUtil.textSizeSmall),
+              textStyle: TextStyle(
+                  color: ColorUtil.black33,
+                  fontSize: SizeUtil.textSizeExpressTitle),
               textEditingController: _nameController,
             ),
           ),
@@ -132,6 +139,7 @@ class _ShowAddAddressDialogState extends State<AddChildDialog> {
               minWidth: double.infinity,
             ),
           ),
+          SizedBox(height: SizeUtil.defaultSpace),
           dialogBtn(context)
         ],
       ),
@@ -140,22 +148,20 @@ class _ShowAddAddressDialogState extends State<AddChildDialog> {
 }
 
 Widget dialogBtn(context) {
-  return Padding(
-    padding: const EdgeInsets.only(
-        left: SizeUtil.defaultSpace,
-        right: SizeUtil.defaultSpace,
-        top: SizeUtil.defaultSpace,
-        bottom: SizeUtil.biggerSpace),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: <Widget>[
-        MyRaisedButton(
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: <Widget>[
+      SizedBox(
+        width: SizeUtil.smallSpace,
+      ),
+      Flexible(
+        child: MyRaisedButton(
+            matchParent: true,
             padding: EdgeInsets.only(
-                top: SizeUtil.normalSpace,
-                bottom: SizeUtil.normalSpace,
-                left: SizeUtil.normalBigSpace,
-                right: SizeUtil.normalBigSpace),
+              top: SizeUtil.midSpace,
+              bottom: SizeUtil.midSpace,
+            ),
             text: S.of(context).addChild.toUpperCase(),
             textStyle: TextStyle(
                 fontSize: SizeUtil.textSizeSmall, color: Colors.white),
@@ -166,15 +172,17 @@ Widget dialogBtn(context) {
               // http://chap.com.vn/vcb/api/addBaby
               Navigator.of(context).pop();
             }),
-        SizedBox(
-          width: SizeUtil.hugSpace,
-        ),
-        MyRaisedButton(
+      ),
+      SizedBox(
+        width: SizeUtil.midSmallSpace,
+      ),
+      Flexible(
+        child: MyRaisedButton(
+            matchParent: true,
             padding: EdgeInsets.only(
-                top: SizeUtil.normalSpace,
-                bottom: SizeUtil.normalSpace,
-                left: SizeUtil.normalBigSpace,
-                right: SizeUtil.normalBigSpace),
+              top: SizeUtil.midSpace,
+              bottom: SizeUtil.midSpace,
+            ),
             text: S.of(context).comeBack.toUpperCase(),
             textStyle: TextStyle(
                 fontSize: SizeUtil.textSizeSmall, color: Colors.white),
@@ -183,7 +191,10 @@ Widget dialogBtn(context) {
             onPressed: () {
               Navigator.of(context).pop();
             }),
-      ],
-    ),
+      ),
+      SizedBox(
+        width: SizeUtil.smallSpace,
+      ),
+    ],
   );
 }

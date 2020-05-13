@@ -4436,6 +4436,24 @@ class S {
       args: [],
     );
   }
+
+  String get male {
+    return Intl.message(
+      'Nam',
+      name: 'male',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get female {
+    return Intl.message(
+      'Nữ',
+      name: 'female',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

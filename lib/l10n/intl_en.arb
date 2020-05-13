@@ -488,5 +488,7 @@
     "remindCycle2": "02 ( 2 ngày nhắc / 1 chu kỳ )",
     "remindCycle3": "02 ( 2 ngày nhắc / 1 chu kỳ )",
     "remindOtherOption": "Tùy chọn khác",
-    "remindOtherOptionHint": "Nhập số ngày nhắc mong muốn/ 1 lần =/1 kỳ"
+    "remindOtherOptionHint": "Nhập số ngày nhắc mong muốn/ 1 lần =/1 kỳ",
+    "male": "Nam",
+    "female": "Nữ"
 }

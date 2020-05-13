@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/remind_management/Provider/remind_calendar_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/checkbox/circle_checkbox.dart';
@@ -7,6 +8,7 @@ import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 class RemindCycleScreen extends StatefulWidget {
   @override
@@ -14,6 +16,9 @@ class RemindCycleScreen extends StatefulWidget {
 }
 
 class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
+  final RemindCalendarProvider _remindCalendarProvider =
+      RemindCalendarProvider();
+
   bool check1 = false;
   bool check2 = false;
   bool check3 = false;
@@ -22,11 +27,10 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
   Widget buildWidget(BuildContext context) {
     return Scaffold(
         appBar: getAppBar(title: S.of(context).selectRemindTime),
-        body: Stack(
-          children: <Widget>[
-            SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        body: Column(
+          children: [
+            Expanded(
+              child: ListView(
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(top: SizeUtil.midSmallSpace),
@@ -57,6 +61,7 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
                   Padding(
                     padding: SizeUtil.normalPadding,
                     child: MyTextField(
+                      inputType: TextInputType.number,
                       padding: SizeUtil.normalPadding,
                       hint: S.of(context).remindOtherOptionHint,
                       hintStyle: TextStyle(
@@ -70,26 +75,23 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: SizeUtil.normalPadding,
-                child: MyRaisedButton(
-                    padding: SizeUtil.smallPadding,
-                    text: S.of(context).confirm,
-                    textStyle: TextStyle(
-                        fontSize: SizeUtil.textSizeBigger,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                    color: ColorUtil.primaryColor,
-                    borderRadius: SizeUtil.tinyRadius,
-                    matchParent: true,
-                    onPressed: () {
-                      // TODO-QA set cycle
-                      Navigator.of(context).pop();
-                    }),
-              ),
-            )
+            Padding(
+              padding: SizeUtil.normalPadding,
+              child: MyRaisedButton(
+                  padding: SizeUtil.smallPadding,
+                  text: S.of(context).confirm,
+                  textStyle: TextStyle(
+                      fontSize: SizeUtil.textSizeBigger,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                  color: ColorUtil.primaryColor,
+                  borderRadius: SizeUtil.tinyRadius,
+                  matchParent: true,
+                  onPressed: () {
+                    // TODO-QA set cycle
+                    Navigator.of(context).pop();
+                  }),
+            ),
           ],
         ));
   }
@@ -111,6 +113,6 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [];
+    return [ChangeNotifierProvider.value(value: _remindCalendarProvider)];
   }
 }

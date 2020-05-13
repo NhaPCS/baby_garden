@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:baby_garden_flutter/data/model/baby.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
@@ -23,6 +24,10 @@ import 'package:provider/provider.dart';
 import 'dialog/check_child_info_dialog.dart';
 
 class ChildHeathScreen extends StatefulWidget {
+  final Baby baby;
+
+  const ChildHeathScreen({Key key, this.baby}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _ChildHeathState();
@@ -37,11 +42,11 @@ class _ChildHeathState
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   final ChangeModeEnterHeathProvider _changeModeEnterHeathProvider =
-  ChangeModeEnterHeathProvider();
+      ChangeModeEnterHeathProvider();
   final ChangeIndexProvider _changeIndexProvider = ChangeIndexProvider();
   final GetListBabyProvider _getListBabyProvider = GetListBabyProvider();
   final GetBabyTestResultProvider _getBabyTestResultProvider =
-  GetBabyTestResultProvider();
+      GetBabyTestResultProvider();
 
   @override
   void initState() {
@@ -52,9 +57,7 @@ class _ChildHeathState
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
-      appBar: getAppBar(title: S
-          .of(context)
-          .weight_height),
+      appBar: getAppBar(title: S.of(context).weight_height),
       body: NestedScrollView(headerSliverBuilder: (context, isScrollInner) {
         return [
           SliverAppBar(
@@ -64,9 +67,7 @@ class _ChildHeathState
             leading: SizedBox(
               width: 0,
             ),
-            expandedHeight: Provider
-                .of<AppProvider>(context)
-                .childHeightBar,
+            expandedHeight: Provider.of<AppProvider>(context).childHeightBar,
             flexibleSpace: Column(
               children: <Widget>[
                 Row(
@@ -84,11 +85,7 @@ class _ChildHeathState
                           height: SizeUtil.tinySpace,
                         ),
                         Text(
-                          isBoy() ? S
-                              .of(context)
-                              .boy : S
-                              .of(context)
-                              .girl,
+                          isBoy() ? S.of(context).boy : S.of(context).girl,
                           style: TextStyle(color: Colors.white),
                         )
                       ],
@@ -161,12 +158,8 @@ class _ChildHeathState
                         _loadTestResults();
                         return Row(
                           children: <Widget>[
-                            getTab(text: S
-                                .of(context)
-                                .height, index: 0),
-                            getTab(text: S
-                                .of(context)
-                                .weight, index: 1)
+                            getTab(text: S.of(context).height, index: 0),
+                            getTab(text: S.of(context).weight, index: 1)
                           ],
                         );
                       },
@@ -231,12 +224,9 @@ class _ChildHeathState
             }
           },
           color: ColorUtil.primaryColor,
-          text: S
-              .of(context)
-              .enter_weight_height
-              .toUpperCase(),
+          text: S.of(context).enter_weight_height.toUpperCase(),
           textStyle:
-          TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           padding: SizeUtil.smallPadding,
         ),
       ),
@@ -246,33 +236,32 @@ class _ChildHeathState
   Widget getTab({String text, int index}) {
     return Expanded(
         child: InkWell(
-          child: InkWell(
-            child: Container(
-              margin: EdgeInsets.only(
-                  left: SizeUtil.defaultSpace, right: SizeUtil.defaultSpace),
-              alignment: Alignment.center,
-              padding: SizeUtil.smallPadding,
-              decoration: BoxDecoration(
-                  color: _changeIndexProvider.index == index
-                      ? Colors.white
-                      : Colors.white.withOpacity(0.5),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30))),
-              child: Text(
-                text,
-                style: TextStyle(
-                    color: _changeIndexProvider.index == index
-                        ? ColorUtil.blueLight
-                        : Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            onTap: () {
-              _changeIndexProvider.changeIndex(index);
-            },
+      child: InkWell(
+        child: Container(
+          margin: EdgeInsets.only(
+              left: SizeUtil.defaultSpace, right: SizeUtil.defaultSpace),
+          alignment: Alignment.center,
+          padding: SizeUtil.smallPadding,
+          decoration: BoxDecoration(
+              color: _changeIndexProvider.index == index
+                  ? Colors.white
+                  : Colors.white.withOpacity(0.5),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+          child: Text(
+            text,
+            style: TextStyle(
+                color: _changeIndexProvider.index == index
+                    ? ColorUtil.blueLight
+                    : Colors.white,
+                fontWeight: FontWeight.bold),
           ),
-        ));
+        ),
+        onTap: () {
+          _changeIndexProvider.changeIndex(index);
+        },
+      ),
+    ));
   }
 
   void _loadTestResults() {
