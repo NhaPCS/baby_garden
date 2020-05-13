@@ -25,48 +25,40 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
         appBar: getAppBar(
           title: S.of(context).remindManage,
         ),
-        body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                decoration: setBorder('bottom', ColorUtil.darkGray, 1),
-                padding: const EdgeInsets.all(SizeUtil.smallSpace),
-                height: SizeUtil.hugSpace,
-                child: Row(
+        body: Stack(
+          children: <Widget>[
+            SingleChildScrollView(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Icon(Icons.add,
-                        color: ColorUtil.primaryColor,
-                        size: SizeUtil.iconSizeBig),
-                    SizedBox(width: SizeUtil.smallSpace),
-                    Text(S.of(context).selectRemindProduct,
-                        style: TextStyle(
-                            color: ColorUtil.darkGray,
-                            fontWeight: FontWeight.bold)),
-                  ],
-                ),
-              ),
-              // TODO-QAnh:xem lai doan nay dang bi thieu Pixel
-              Expanded(
-                child: ReminderLayout(),
-              ),
-              Padding(
+                    Container(
+                      decoration: setBorder('bottom', ColorUtil.darkGray, 1),
+                      padding: const EdgeInsets.all(SizeUtil.smallSpace),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(Icons.add,
+                              color: ColorUtil.primaryColor,
+                              size: SizeUtil.iconSizeBig),
+                          SizedBox(width: SizeUtil.smallSpace),
+                          Text(S.of(context).selectRemindProduct,
+                              style: TextStyle(
+                                  color: ColorUtil.darkGray,
+                                  fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
+                    ReminderLayout(),
+                  ]),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
                   padding: SizeUtil.normalPadding,
                   child: MyRaisedButton(
                     padding: SizeUtil.normalPadding,
                     borderRadius: SizeUtil.tinyRadius,
                     matchParent: true,
                     onPressed: () {
-                      // TODO-QA: wait response from api team and complete
-
-                      // test post
-                      // remindCalenderProvider.newRemindCalendar = RemindCalendar(
-                      // productId: 19,
-                      // price: '300000',
-                      // image:
-                      //     'http:\/\/chap.com.vn\/vcb\/uploads\/product\/1.jpg","http:\/\/chap.com.vn\/vcb\/uploads\/product\/2.jpeg',
-                      // description: 'Giày thời trang trẻ em',
-                      // type: RemindType.remindBuy);
-
                       if (!validateInput()) return;
                       print('add new calendar');
 
@@ -76,8 +68,10 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
                     text: S.of(context).addReminder,
                     textStyle: TextStyle(
                         fontSize: SizeUtil.textSizeBigger, color: Colors.white),
-                  ))
-            ]));
+                  )),
+            )
+          ],
+        ));
   }
 
   @override

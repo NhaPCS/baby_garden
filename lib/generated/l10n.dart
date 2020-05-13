@@ -15,8 +15,8 @@ class S {
     AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final String name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
-    final String localeName = Intl.canonicalizedLocale(name);
+    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
+    final localeName = Intl.canonicalizedLocale(name); 
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
       return S();
@@ -4229,6 +4229,51 @@ class S {
       args: [],
     );
   }
+
+  String get remindCycle1 {
+    return Intl.message(
+      '01 ( 1 ngày nhắc / 1 chu kỳ )',
+      name: 'remindCycle1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindCycle2 {
+    return Intl.message(
+      '02 ( 2 ngày nhắc / 1 chu kỳ )',
+      name: 'remindCycle2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindCycle3 {
+    return Intl.message(
+      '02 ( 2 ngày nhắc / 1 chu kỳ )',
+      name: 'remindCycle3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindOtherOption {
+    return Intl.message(
+      'Tùy chọn khác',
+      name: 'remindOtherOption',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindOtherOptionHint {
+    return Intl.message(
+      'Nhập số ngày nhắc mong muốn/ 1 lần =/1 kỳ',
+      name: 'remindOtherOptionHint',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
@@ -4249,7 +4294,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
 
   bool _isSupported(Locale locale) {
     if (locale != null) {
-      for (Locale supportedLocale in supportedLocales) {
+      for (var supportedLocale in supportedLocales) {
         if (supportedLocale.languageCode == locale.languageCode) {
           return true;
         }

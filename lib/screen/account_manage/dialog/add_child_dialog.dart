@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,56 +20,57 @@ class _ShowAddAddressDialogState extends State<AddChildDialog> {
       {'title': S.of(context).dateOfBirth}
     ];
 
-    // TODO-QAnh: Dialog phải bọc ngoài cùng. dialog này đang k nằm giữa màn hình
-    return SingleChildScrollView(
+    return Center(
       child: Dialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(SizeUtil.bigRadius),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            // title
-            Container(
-              height: SizeUtil.biggerSpace,
-              decoration:
-                  setBorder("bottom", Color.fromRGBO(204, 204, 204, 1), 0.5),
-              child: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              // title
+              Container(
+                height: SizeUtil.biggerSpace,
+                decoration:
+                    setBorder("bottom", Color.fromRGBO(204, 204, 204, 1), 0.5),
+                child: Center(
+                  child: Text(
+                    S.of(context).addChild,
+                    style: TextStyle(
+                        color: ColorUtil.primaryColor,
+                        fontSize: SizeUtil.textSizeBigger,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: SizeUtil.midSpace),
+                child: Center(
+                  child: Image.asset(
+                    "photo/child_avatar.png",
+                    width: 80,
+                    height: 80,
+                  ),
+                ),
+              ),
+              Center(
+                  child: Icon(
+                Icons.photo_camera,
+                color: ColorUtil.colorAccent,
+              )),
+              Center(
                 child: Text(
-                  S.of(context).addChild,
-                  style: TextStyle(
-                      color: ColorUtil.primaryColor,
-                      fontSize: SizeUtil.textSizeBigger,
-                      fontWeight: FontWeight.bold),
+                  S.of(context).uploadChildAvatar,
+                  style: TextStyle(color: ColorUtil.colorAccent),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: SizeUtil.midSpace),
-              child: Center(
-                child: Image.asset(
-                  "photo/child_avatar.png",
-                  width: 80,
-                  height: 80,
-                ),
-              ),
-            ),
-            Center(
-                child: Icon(
-              Icons.photo_camera,
-              color: ColorUtil.colorAccent,
-            )),
-            Center(
-              child: Text(
-                S.of(context).uploadChildAvatar,
-                style: TextStyle(color: ColorUtil.colorAccent),
-              ),
-            ),
 
-            listInputView(listInput),
-            dialogBtn(context)
-          ],
+              listInputView(listInput),
+              dialogBtn(context)
+            ],
+          ),
         ),
       ),
     );
@@ -114,47 +116,39 @@ Widget dialogBtn(context) {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
-        // TODO-QAnh: dung MyRaisedButton
-        ButtonTheme(
-          minWidth: 90,
-          height: SizeUtil.biggerSpace,
-          child: RaisedButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(SizeUtil.tinyRadius),
-            ),
+        MyRaisedButton(
+            padding: EdgeInsets.only(
+                top: SizeUtil.normalSpace,
+                bottom: SizeUtil.normalSpace,
+                left: SizeUtil.normalBigSpace,
+                right: SizeUtil.normalBigSpace),
+            text: S.of(context).addChild.toUpperCase(),
+            textStyle: TextStyle(
+                fontSize: SizeUtil.textSizeSmall, color: Colors.white),
             color: ColorUtil.colorAccent,
+            borderRadius: SizeUtil.tinyRadius,
             onPressed: () {
+              // TODO add api add child
+              // http://chap.com.vn/vcb/api/addBaby
               Navigator.of(context).pop();
-            },
-            child: Text(
-              S.of(context).addChild.toUpperCase(),
-              style: TextStyle(
-                  fontSize: SizeUtil.textSizeSmall, color: Colors.white),
-            ),
-          ),
-        ),
+            }),
         SizedBox(
           width: SizeUtil.hugSpace,
         ),
-        // TODO-QAnh: dung MyRaisedButton
-        ButtonTheme(
-          minWidth: 90,
-          height: SizeUtil.biggerSpace,
-          child: RaisedButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(SizeUtil.tinyRadius),
-            ),
+        MyRaisedButton(
+            padding: EdgeInsets.only(
+                top: SizeUtil.normalSpace,
+                bottom: SizeUtil.normalSpace,
+                left: SizeUtil.normalBigSpace,
+                right: SizeUtil.normalBigSpace),
+            text: S.of(context).comeBack.toUpperCase(),
+            textStyle: TextStyle(
+                fontSize: SizeUtil.textSizeSmall, color: Colors.white),
             color: Color.fromRGBO(10, 133, 158, 1),
+            borderRadius: SizeUtil.tinyRadius,
             onPressed: () {
               Navigator.of(context).pop();
-            },
-            child: Text(
-              S.of(context).comeBack.toUpperCase(),
-              style: TextStyle(
-                  fontSize: SizeUtil.textSizeSmall, color: Colors.white),
-            ),
-          ),
-        )
+            }),
       ],
     ),
   );

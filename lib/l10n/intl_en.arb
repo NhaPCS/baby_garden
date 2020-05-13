@@ -465,5 +465,10 @@
     "enter_again": "Nhập lại",
     "sku_product": "Mã SKU",
     "numPoint": "{point} điểm",
-    "messageLogout": "Bạn có muốn đăng xuất không?"
+    "messageLogout": "Bạn có muốn đăng xuất không?",
+    "remindCycle1": "01 ( 1 ngày nhắc / 1 chu kỳ )",
+    "remindCycle2": "02 ( 2 ngày nhắc / 1 chu kỳ )",
+    "remindCycle3": "02 ( 2 ngày nhắc / 1 chu kỳ )",
+    "remindOtherOption": "Tùy chọn khác",
+    "remindOtherOptionHint": "Nhập số ngày nhắc mong muốn/ 1 lần =/1 kỳ"
 }

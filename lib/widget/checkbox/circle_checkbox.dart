@@ -51,6 +51,7 @@ class _CircleState extends State<CircleCheckbox> {
       startValue = checked;
     }
     return InkWell(
+      splashColor: Colors.transparent,
       child: widget.text == null
           ? _icon()
           : Wrap(

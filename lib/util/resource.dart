@@ -337,6 +337,7 @@ class SizeUtil {
   static const double largeSpace = 70;
   static const double biggerSpace = 40;
   static const double notifyHintSpace = 36;
+  static const double normalBigSpace = 25;
 
   static const double textSizeBig = 24;
   static const double textSizeItemPost = 30;

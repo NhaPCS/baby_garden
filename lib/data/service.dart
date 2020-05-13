@@ -950,3 +950,20 @@ Future<dynamic> getPointDetail(BuildContext context, String shopId) async {
   if (response.isSuccess()) return response.data;
   return null;
 }
+
+Future<dynamic> addBaby(BuildContext context,
+    {String name, String gender, String birthday, File img}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "name": name,
+    "gender": gender,
+    "birthday": birthday,
+    "img": img
+  };
+  dynamic files = {"img": img};
+  Response response = await postMultiPart(context,
+      path: 'addBaby', param: params, files: files, requireLogin: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
