@@ -1,14 +1,19 @@
+import 'package:baby_garden_flutter/data/model/baby.dart';
 import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/account_manage/dialog/add_child_dialog.dart';
-import 'package:baby_garden_flutter/screen/account_manage/widget/child_infor.dart';
+import 'package:baby_garden_flutter/screen/account_manage/item/baby_item.dart';
 import 'package:baby_garden_flutter/screen/address_setting/address_setting_screen.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/change_password/change_password_screen.dart';
 import 'package:baby_garden_flutter/screen/child_heath/child_heath_screen.dart';
+import 'package:baby_garden_flutter/screen/child_heath/provider/get_list_baby_provider.dart';
+import 'package:baby_garden_flutter/screen/point_management/provider/point_manage_provider.dart';
 import 'package:baby_garden_flutter/screen/profile/widget/user_infor.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -20,13 +25,16 @@ class AccountManageScreen extends StatefulWidget {
 }
 
 class _AccountManageScreenState extends BaseState<AccountManageScreen> {
-  final childInformation = ChildInfor(
-    childName: 'Nguyễn Lý Trần Lê Đỗ Hoàng Đinh Huỳnh Hồ Đẹp Trai',
-    gender: 'Nam',
-    lastDayCheck: '15/06/2011',
-    birthday: '15/06/2011',
-    healthIndex: 100,
-  );
+  GetListBabyProvider _getListBabyProvider = GetListBabyProvider();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_getListBabyProvider.babies == null ||
+        _getListBabyProvider.babies.isEmpty) {
+      _getListBabyProvider.listBaby();
+    }
+  }
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -40,18 +48,14 @@ class _AccountManageScreenState extends BaseState<AccountManageScreen> {
           'pencil.png'),
       entry(S.of(context).mobilePhone, user == null ? "" : user['phone'], ''),
       entry(S.of(context).birthday, user == null ? "" : user['birthday'], ''),
-      entry(S.of(context).gender,
-          user == null ? "" : user['gender'] == 1 ? "Nam" : "Nữ", ''),
+      entry(
+          S.of(context).gender,
+          user == null
+              ? ""
+              : user['gender'] == 1 ? S.of(context).male : S.of(context).female,
+          ''),
       entry(S.of(context).password, S.of(context).changePassword, 'right.png'),
       entry(S.of(context).address, '', 'right.png'),
-    ];
-
-    final List<Map<String, String>> childInforFields = <Map<String, String>>[
-      entry(S.of(context).childName, childInformation.childName, 'pencil.png'),
-      entry(S.of(context).gender, childInformation.gender, ''),
-      entry(S.of(context).birthday, childInformation.birthday, ''),
-      entry(S.of(context).healthIndex, S.of(context).moreDetail, 'right.png'),
-      entry(S.of(context).lastDayCheck, childInformation.lastDayCheck, ''),
     ];
 
     return Scaffold(
@@ -67,11 +71,11 @@ class _AccountManageScreenState extends BaseState<AccountManageScreen> {
             entriesWidget(entries),
 
             // children
-            Container(
-                decoration:
-                    setBorder('top', Color.fromRGBO(223, 223, 223, 1), 3),
-                width: double.infinity,
-                child: childInfor(childInforFields))
+            WidgetUtil.getLine(
+                margin: EdgeInsets.all(0),
+                color: Color.fromRGBO(223, 223, 223, 1),
+                width: 3),
+            childInfor()
           ]),
         ));
   }
@@ -118,84 +122,30 @@ class _AccountManageScreenState extends BaseState<AccountManageScreen> {
     return Column(children: listEntries.map((e) => e).toList());
   }
 
-  Widget entriesChildInfor(List<Map<String, String>> entries) {
-    final listEntries = List<Widget>();
-
-    entries.asMap().forEach((index, entry) {
-      listEntries.add(
-        Row(
-          children: <Widget>[
-            Text(entry['title']),
-            SizedBox(width: SizeUtil.smallSpace),
-            Expanded(
-                child: GestureDetector(
-              onTap: () {
-                if (index == 3) push(ChildHeathScreen());
-              },
-              child: Text(entry['content'],
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                      color: (index == 3)
-                          ? ColorUtil.primaryColor
-                          : Colors.black)),
-            )),
-            SizedBox(
-              width: SizeUtil.smallSpace,
-            ),
-            GestureDetector(
-              onTap: () {
-                if (index == 3) {
-                  push(ChildHeathScreen());
-                } else if (index == 0) {
-                  // edit child name
-                }
-              },
-              child: Image.asset(
-                "photo/${entry['icon']}",
-                width: SizeUtil.iconSizeDefault,
-                height: SizeUtil.iconSizeDefault,
-              ),
-            ),
-          ],
-        ),
-      );
-      listEntries.add(SizedBox(height: SizeUtil.tinySpace));
-    });
-
-    return Column(children: listEntries.map((e) => e).toList());
-  }
-
-  Widget childInfor(List<Map<String, String>> childInforFields) {
+  Widget childInfor() {
+    print(_getListBabyProvider.babies);
     return Column(children: <Widget>[
       headerChildInfor(),
       WidgetUtil.getLine(
           color: ColorUtil.lineLightGray, margin: EdgeInsets.all(0)),
 
-      // child information
-      Container(
-        padding: SizeUtil.smallPadding,
-        decoration: setBorder("bottom", ColorUtil.lineLightGray, 1),
-        child: Row(children: <Widget>[
-          // avatar
-          Align(
-            alignment: Alignment.center,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(SizeUtil.tinyRadius),
-              child: Image.asset(
-                'photo/child_avatar.png',
-                width: 92.0,
-                height: 92.0,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-          SizedBox(width: SizeUtil.smallSpace),
-          Expanded(
-            child: entriesChildInfor(childInforFields),
-          ),
-          SizedBox(width: SizeUtil.smallSpace)
-        ]),
+      // BabyItem(baby: exampleBaby),
+      Consumer<GetListBabyProvider>(
+        builder: (context, value, child) {
+          if (value.babies == null || value.babies.isEmpty)
+            return LoadingView(
+              isNoData: value.babies != null,
+            );
+
+          return SingleChildScrollView(
+            child: Column(
+                children: value.babies
+                    .map((baby) => BabyItem(baby: Baby.fromJson(baby)))
+                    .toList()),
+          );
+        },
       )
+      // Consumer(builder: null)
     ]);
   }
 
@@ -227,9 +177,10 @@ class _AccountManageScreenState extends BaseState<AccountManageScreen> {
                 style: TextStyle(color: ColorUtil.primaryColor),
               ),
               SizedBox(width: SizeUtil.tinySpace),
-              Image.asset("photo/add_child.png",
+              SvgIcon('add_baby.svg',
+                  color: ColorUtil.primaryColor,
                   width: SizeUtil.iconSizeBigger,
-                  height: SizeUtil.iconSizeBigger)
+                  height: SizeUtil.iconSizeBigger),
             ]),
           )
         ],
@@ -239,6 +190,6 @@ class _AccountManageScreenState extends BaseState<AccountManageScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return null;
+    return [ChangeNotifierProvider.value(value: _getListBabyProvider)];
   }
 }
