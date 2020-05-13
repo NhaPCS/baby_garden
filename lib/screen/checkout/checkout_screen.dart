@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/checkout/dialogue/confirm_dialogue.dart';
 import 'package:baby_garden_flutter/screen/checkout/provider/payment_info_provider.dart';
@@ -10,6 +12,7 @@ import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/screen/checkout/view_model/checkout_view_model.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
+import 'package:baby_garden_flutter/widget/image/circle_image.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +40,8 @@ class _CheckoutScreenState
     extends BaseStateModel<CheckoutScreen, CheckoutViewModel> {
   final PaymentInfoProvider _paymentInfoProvider = new PaymentInfoProvider();
   final TextEditingController _noteController = new TextEditingController();
+  final ValueNotifier<File> uploadImageController =
+      new ValueNotifier(new File(""));
 
   @override
   void initState() {
@@ -46,6 +51,8 @@ class _CheckoutScreenState
 
   @override
   Widget buildWidget(BuildContext context) {
+    String transferContent =
+        " ${widget.phone} - ${widget.bookingCode} - ${StringUtil.getPriceText(widget.totalPrice.toString())}";
     return Scaffold(
       appBar: getAppBar(
           title: S.of(context).checkout.toUpperCase(),
@@ -183,8 +190,7 @@ class _CheckoutScreenState
                   children: <Widget>[
                     RichTextForm(
                       title: S.of(context).transfer_content,
-                      content:
-                          " ${widget.phone} - ${widget.bookingCode} - ${StringUtil.getPriceText(widget.totalPrice.toString())}",
+                      content: transferContent,
                       contentColor: ColorUtil.primaryColor,
                     ),
                     Spacer(),
@@ -195,9 +201,8 @@ class _CheckoutScreenState
                           bottom: SizeUtil.tinySpace),
                       child: GestureDetector(
                         onTap: () {
-                          Clipboard.setData(ClipboardData(
-                              text:
-                                  " ${widget.phone} - ${widget.bookingCode} - ${StringUtil.getPriceText(widget.totalPrice.toString())}"));
+                          Clipboard.setData(
+                              ClipboardData(text: transferContent));
                         },
                         child: SvgIcon(
                           "ic_copy.svg",
@@ -215,36 +220,60 @@ class _CheckoutScreenState
               margin: EdgeInsets.only(
                   top: SizeUtil.tinySpace, bottom: SizeUtil.smallSpace),
               color: ColorUtil.lineColor),
-          Container(
-            margin: EdgeInsets.only(
-                left: SizeUtil.largeSpace, right: SizeUtil.largeSpace),
-            decoration: BoxDecoration(
-              borderRadius:
-                  BorderRadius.all(Radius.circular(SizeUtil.smallRadius)),
-              border: Border.all(
-                color: ColorUtil.textColor,
-                width: 1,
+          GestureDetector(
+            onTap: () {
+              ImageUtil.uploadImage(context, (value) {
+                setState(() {
+//                  _pickedImage = value;
+//                  widget.onSelectImage(value);
+                  uploadImageController.value = value;
+                });
+              });
+            },
+            child: Container(
+              margin: EdgeInsets.only(
+                  left: SizeUtil.largeSpace, right: SizeUtil.largeSpace),
+              decoration: BoxDecoration(
+                borderRadius:
+                    BorderRadius.all(Radius.circular(SizeUtil.smallRadius)),
+                border: Border.all(
+                  color: ColorUtil.textColor,
+                  width: 1,
+                ),
               ),
-            ),
-            padding: EdgeInsets.only(
-                left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: SizeUtil.defaultSpace,
-                ),
-                SvgIcon("photo-camera.svg",
-                    width: MediaQuery.of(context).size.width / 5),
-                Text(
-                  S.of(context).press_to_upload,
-                  style: TextStyle(
-                      color: ColorUtil.black33,
-                      fontSize: SizeUtil.textSizeNoticeTime),
-                ),
-                SizedBox(
-                  height: SizeUtil.defaultSpace,
-                )
-              ],
+              padding: EdgeInsets.only(
+                  left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: SizeUtil.defaultSpace,
+                  ),
+                  ValueListenableBuilder<File>(
+                    valueListenable: uploadImageController,
+                    builder: (BuildContext context, File value, Widget child) {
+                      print(value);
+                      return value.path == ""
+                          ? SvgIcon("photo-camera.svg",
+                              width: MediaQuery.of(context).size.width / 5)
+                          : CircleImage(
+                              borderRadius: SizeUtil.zeroSpace,
+                              imageFile: value,
+                              imageUrl: null,
+                              width: MediaQuery.of(context).size.width / 5,
+                              height: MediaQuery.of(context).size.width / 5);
+                    },
+                  ),
+                  Text(
+                    S.of(context).press_to_upload,
+                    style: TextStyle(
+                        color: ColorUtil.black33,
+                        fontSize: SizeUtil.textSizeNoticeTime),
+                  ),
+                  SizedBox(
+                    height: SizeUtil.defaultSpace,
+                  )
+                ],
+              ),
             ),
           ),
           SizedBox(
@@ -324,8 +353,9 @@ class _CheckoutScreenState
                       .userInfo['id'],
                   bookingId: widget.bookingId.toString(),
                   money: widget.totalPrice.toDouble(),
-                  content: _noteController.text.trim(),
-                  note: _noteController.text.trim());
+                  content: transferContent,
+                  note: _noteController.text.trim(),
+                  file: uploadImageController.value);
               int index = await showDialog(
                   context: context,
                   builder: (BuildContext context) => ConfirmDialogue());

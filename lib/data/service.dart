@@ -378,19 +378,29 @@ Future<dynamic> paymentInfo() async {
 }
 
 //TODO PAYMENT
-Future<dynamic> payment(
+Future<dynamic> payment(BuildContext context,
     {String userID,
     String bookingId,
     double money,
     String content,
-    String note}) async {
-  Response response = await post(null, path: "payment", param: {
+    String note,
+    File img}) async {
+  dynamic files = {"img": img};
+  dynamic param = {
     'user_id': userID,
     'booking_id': bookingId,
     'money': money.toString(),
     'content': content,
     'note': note.toLowerCase(),
-  });
+  };
+  Response response;
+  if (img.path == "") {
+    response =
+        await post(context, path: "payment", param: param, requireLogin: true);
+  } else {
+    response = await postMultiPart(context,
+        path: "payment", param: param, files: files, requireLogin: true);
+  }
   if (response.isSuccess()) return response.data;
   return null;
 }

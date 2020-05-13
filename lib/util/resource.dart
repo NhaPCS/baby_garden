@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -102,6 +103,21 @@ class DateUtil {
     }
     print("getDate $dates");
     return dates;
+  }
+}
+
+class ImageUtil{
+  static void uploadImage(BuildContext context,ValueChanged<File> onSelectImage) {
+    if (onSelectImage == null) return;
+    WidgetUtil.showPickImageDialog(context, onCameraClick: () async {
+      var pickedImage =
+      await ImagePicker.pickImage(source: ImageSource.camera);
+      onSelectImage(pickedImage);
+    }, onGalleryClick: () async {
+      var pickedImage =
+      await ImagePicker.pickImage(source: ImageSource.gallery);
+      onSelectImage(pickedImage);
+    });
   }
 }
 

@@ -21,22 +21,10 @@ class _ChangeAvatar extends State<ChangeAvatar> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (widget.onSelectImage == null) return;
-
-        WidgetUtil.showPickImageDialog(context, onCameraClick: () async {
-          var pickedImage =
-              await ImagePicker.pickImage(source: ImageSource.camera);
+        ImageUtil.uploadImage(context, (value) {
           setState(() {
-            _pickedImage = pickedImage;
-
-            widget.onSelectImage(pickedImage);
-          });
-        }, onGalleryClick: () async {
-          var pickedImage =
-              await ImagePicker.pickImage(source: ImageSource.gallery);
-          setState(() {
-            _pickedImage = pickedImage;
-            widget.onSelectImage(pickedImage);
+            _pickedImage = value;
+            widget.onSelectImage(value);
           });
         });
       },

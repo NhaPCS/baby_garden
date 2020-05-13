@@ -2205,6 +2205,15 @@ class S {
     );
   }
 
+  String delivery_service_header(Object delivery_unit) {
+    return Intl.message(
+      'Đơn vị vận chuyển: $delivery_unit',
+      name: 'delivery_service_header',
+      desc: '',
+      args: [delivery_unit],
+    );
+  }
+
   String get enter_delivery_code {
     return Intl.message(
       'Nhập mã giảm giá vận chuyển',
@@ -4396,6 +4405,15 @@ class S {
     return Intl.message(
       'Thiếu thông tin',
       name: 'missing_information',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get view_delivery {
+    return Intl.message(
+      'Xem lộ trình',
+      name: 'view_delivery',
       desc: '',
       args: [],
     );
