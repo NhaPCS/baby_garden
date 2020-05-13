@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -79,9 +80,7 @@ class _ShowAddAddressDialogState extends State<AddChildDialog> {
             child: ButtonTheme(
               child: RaisedButton(
                 onPressed: () {
-                  WidgetUtil.showGenderSelectorDialog(context, (gender){
-
-                  });
+                  WidgetUtil.showGenderSelectorDialog(context, (gender) {});
                 },
                 elevation: 3,
                 child: SizedBox(
@@ -111,9 +110,7 @@ class _ShowAddAddressDialogState extends State<AddChildDialog> {
             child: ButtonTheme(
               child: RaisedButton(
                 onPressed: () {
-                  WidgetUtil.showBirthdaySelectorDialog(context, (birthday){
-
-                  });
+                  WidgetUtil.showBirthdaySelectorDialog(context, (birthday) {});
                 },
                 elevation: 3,
                 child: SizedBox(
@@ -153,47 +150,39 @@ Widget dialogBtn(context) {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
-        // TODO-QAnh: dung MyRaisedButton
-        ButtonTheme(
-          minWidth: 90,
-          height: SizeUtil.biggerSpace,
-          child: RaisedButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(SizeUtil.tinyRadius),
-            ),
+        MyRaisedButton(
+            padding: EdgeInsets.only(
+                top: SizeUtil.normalSpace,
+                bottom: SizeUtil.normalSpace,
+                left: SizeUtil.normalBigSpace,
+                right: SizeUtil.normalBigSpace),
+            text: S.of(context).addChild.toUpperCase(),
+            textStyle: TextStyle(
+                fontSize: SizeUtil.textSizeSmall, color: Colors.white),
             color: ColorUtil.colorAccent,
+            borderRadius: SizeUtil.tinyRadius,
             onPressed: () {
+              // TODO add api add child
+              // http://chap.com.vn/vcb/api/addBaby
               Navigator.of(context).pop();
-            },
-            child: Text(
-              S.of(context).addChild.toUpperCase(),
-              style: TextStyle(
-                  fontSize: SizeUtil.textSizeSmall, color: Colors.white),
-            ),
-          ),
-        ),
+            }),
         SizedBox(
           width: SizeUtil.hugSpace,
         ),
-        // TODO-QAnh: dung MyRaisedButton
-        ButtonTheme(
-          minWidth: 90,
-          height: SizeUtil.biggerSpace,
-          child: RaisedButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(SizeUtil.tinyRadius),
-            ),
+        MyRaisedButton(
+            padding: EdgeInsets.only(
+                top: SizeUtil.normalSpace,
+                bottom: SizeUtil.normalSpace,
+                left: SizeUtil.normalBigSpace,
+                right: SizeUtil.normalBigSpace),
+            text: S.of(context).comeBack.toUpperCase(),
+            textStyle: TextStyle(
+                fontSize: SizeUtil.textSizeSmall, color: Colors.white),
             color: Color.fromRGBO(10, 133, 158, 1),
+            borderRadius: SizeUtil.tinyRadius,
             onPressed: () {
               Navigator.of(context).pop();
-            },
-            child: Text(
-              S.of(context).comeBack.toUpperCase(),
-              style: TextStyle(
-                  fontSize: SizeUtil.textSizeSmall, color: Colors.white),
-            ),
-          ),
-        )
+            }),
       ],
     ),
   );

@@ -4,6 +4,7 @@ import 'package:baby_garden_flutter/screen/remind_cycle/remind_cycle_screen.dart
 import 'package:baby_garden_flutter/screen/remind_set_date/remind_set_date_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_set_time/remind_set_time_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/checkbox/circle_checkbox.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:baby_garden_flutter/widget/line/dashed_line.dart';
 import 'package:flutter/material.dart';
@@ -34,57 +35,57 @@ class _ReminderState extends BaseState<ReminderLayout> {
     push(RemindSetDateScreen());
   }
 
-  listViewRemindTime() {
+  Widget listViewRemindTime() {
     List<int> order = [1, 2, 3, 4];
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: List.generate(order.length, (index) {
-        // TODO-QAnh: để ra 1 widget riêng cho dễ nhìn
-        return Padding(
-          padding: const EdgeInsets.only(top: SizeUtil.normalSpace),
-          child: Row(children: <Widget>[
-            Text(
-              S.of(context).reminderTimeAt(order[index].toString() + ':'),
-              style: TextStyle(fontSize: SizeUtil.textSizeSmall),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: SizeUtil.tinySpace),
-              child: GestureDetector(
-                onTap: () {
-                  chooseCalendar();
-                },
-                child: Text(
-                  S.of(context).select,
-                  style: TextStyle(
-                      fontSize: SizeUtil.textSizeSmall, color: Colors.orange),
-                ),
-              ),
-            ),
-          ]),
-        );
+        return _chooseRemindTime(
+            S.of(context).reminderTimeAt(order[index].toString() + ':'));
       }),
     );
   }
 
-  rowCheckBox(String title, {bool isRemindUse = false}) {
+  Widget _chooseRemindTime(String label) {
+    return Padding(
+      padding: const EdgeInsets.only(top: SizeUtil.normalSpace),
+      child: Row(children: <Widget>[
+        Text(
+          label,
+          style: TextStyle(fontSize: SizeUtil.textSizeSmall),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: SizeUtil.tinySpace),
+          child: GestureDetector(
+            onTap: () {
+              chooseCalendar();
+            },
+            child: Text(
+              S.of(context).select,
+              style: TextStyle(
+                  fontSize: SizeUtil.textSizeSmall, color: Colors.orange),
+            ),
+          ),
+        ),
+      ]),
+    );
+  }
+
+  Widget rowCheckBox(String title, {bool isRemindUse = false}) {
     return Row(
       children: <Widget>[
-        Theme(
-          data: ThemeData(unselectedWidgetColor: Colors.orange),
-          // TODO-QAnh: chuyen sang dung CircleCheckBox
-          child: Checkbox(
-              value: isRemindUse ? this.remindUsed : this.remindBuy,
-              onChanged: (bool value) {
-                // TODO-QAnh: k dung setState
-                setState(() {
-                  if (isRemindUse) {
-                    this.remindUsed = !this.remindUsed;
-                  } else {
-                    this.remindBuy = !this.remindBuy;
-                  }
-                });
-              }),
-        ),
+        CircleCheckbox(
+            color: ColorUtil.primaryColor,
+            uncheckBg: Icons.check_box_outline_blank,
+            checkBg: Icons.check_box,
+            checked: isRemindUse ? this.remindUsed : this.remindBuy,
+            onChanged: (bool val) {
+              if (isRemindUse) {
+                this.remindUsed = !this.remindUsed;
+              } else {
+                this.remindBuy = !this.remindBuy;
+              }
+            }),
         Text(
           title,
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
@@ -99,16 +100,13 @@ class _ReminderState extends BaseState<ReminderLayout> {
       children: <Widget>[
         widget.showDesc
             ? Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: SizeUtil.normalPadding,
                 child: Text(S.of(context).selectRemindBuyTime,
                     style: TextStyle(
                         fontSize: SizeUtil.textSizeBigger,
                         fontWeight: FontWeight.bold,
                         color: ColorUtil.darkGray)))
-            : SizedBox(
-                height: 0,
-                width: 0,
-              ),
+            : SizedBox(),
         rowCheckBox(S.of(context).remindBuyProduct),
         GestureDetector(
           onTap: () {
@@ -194,6 +192,7 @@ class _ReminderState extends BaseState<ReminderLayout> {
           'timetable.svg',
           color: Colors.orange,
           width: SizeUtil.iconSize,
+          height: SizeUtil.iconSize,
         ),
       ],
     );
@@ -211,10 +210,7 @@ class _ReminderState extends BaseState<ReminderLayout> {
                   width: MediaQuery.of(context).size.width * 0.75),
             ),
           )
-        : SizedBox(
-            height: 0,
-            width: 0,
-          );
+        : SizedBox();
   }
 
   @override
