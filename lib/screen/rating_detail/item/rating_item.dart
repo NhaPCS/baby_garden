@@ -1,13 +1,18 @@
+import 'dart:io';
+
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
+import 'package:baby_garden_flutter/widget/image/circle_image.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:baby_garden_flutter/widget/rating_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RatingItem extends StatelessWidget {
-  RatingItem();
+  final ValueNotifier<File> uploadImageController;
+
+  const RatingItem({@required this.uploadImageController}) : super();
 
   @override
   Widget build(BuildContext context) {
@@ -77,25 +82,38 @@ class RatingItem extends StatelessWidget {
             borderColor: ColorUtil.textColor,
           ),
         ),
-        Container(
-          padding: const EdgeInsets.only(
-              left: SizeUtil.smallSpace,
-              right: SizeUtil.smallSpace,
-              top: SizeUtil.tinySpace),
-          width: MediaQuery.of(context).size.width,
-          child: MyRaisedButton(
-            color: ColorUtil.blueForgotPass,
-            icon: Icon(
-              Icons.camera_alt,
-              color: Colors.white,
-            ),
-            text: S.of(context).add_image,
-            textStyle: TextStyle(
-                fontSize: SizeUtil.textSizeSmall,
-                color: Colors.white,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.normal),
-          ),
+        ValueListenableBuilder<File>(
+          valueListenable: uploadImageController,
+          builder: (BuildContext context, File value, Widget child) {
+            print(value);
+            return value.path == ""
+                ? Container(
+                    padding: const EdgeInsets.only(
+                        left: SizeUtil.smallSpace,
+                        right: SizeUtil.smallSpace,
+                        top: SizeUtil.tinySpace),
+                    width: MediaQuery.of(context).size.width,
+                    child: MyRaisedButton(
+                      color: ColorUtil.blueForgotPass,
+                      icon: Icon(
+                        Icons.camera_alt,
+                        color: Colors.white,
+                      ),
+                      text: S.of(context).add_image,
+                      textStyle: TextStyle(
+                          fontSize: SizeUtil.textSizeSmall,
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.normal),
+                    ),
+                  )
+                : CircleImage(
+                    borderRadius: SizeUtil.zeroSpace,
+                    imageFile: value,
+                    imageUrl: null,
+                    width: MediaQuery.of(context).size.width / 5,
+                    height: MediaQuery.of(context).size.width / 5);
+          },
         ),
       ],
     );

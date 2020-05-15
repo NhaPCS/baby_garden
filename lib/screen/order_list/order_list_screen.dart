@@ -1,6 +1,4 @@
-import 'package:baby_garden_flutter/provider/booking_detail_provider.dart';
 import 'package:baby_garden_flutter/provider/order_list_provider.dart';
-import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/item/order_item.dart';

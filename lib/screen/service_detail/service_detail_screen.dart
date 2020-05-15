@@ -105,7 +105,7 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen> {
                   OrderInfo(
                     svgIcon: 'ic_payment_method.svg',
                     title: S.of(context).date_using,
-                    content: "12/04/2020 10:00",
+                    content: bookingDetailData['time_finish '],
                   ),
                   OrderInfo(
                     svgIcon: 'order_info.svg',
@@ -114,15 +114,13 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen> {
                       padding: EdgeInsets.only(
                           left: SizeUtil.normalSpace,
                           bottom: SizeUtil.tinySpace),
-                      child: Column(
-                          children: List.generate(
-                              1,
-                              (index) => ProductOrderItem(
-                                    title:
-                                        "Chăm sóc da mặt từ cơ bản đến nâng cao",
-                                    subTitle:
-                                        "Loại dịch vụ: SPA Thẩm mý, Khám thai",
-                                  ))),
+                      child: ProductOrderItem(
+                        imageUrl: bookingDetailData['shop_img '],
+                        title:
+                        "Chăm sóc da mặt từ cơ bản đến nâng cao",
+                        subTitle:
+                        "Loại dịch vụ: SPA Thẩm mý, Khám thai",
+                      ),
                     ),
                   ),
                   Padding(

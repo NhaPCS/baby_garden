@@ -106,16 +106,16 @@ class DateUtil {
   }
 }
 
-class ImageUtil{
-  static void uploadImage(BuildContext context,ValueChanged<File> onSelectImage) {
+class ImageUtil {
+  static void uploadImage(
+      BuildContext context, ValueChanged<File> onSelectImage) {
     if (onSelectImage == null) return;
     WidgetUtil.showPickImageDialog(context, onCameraClick: () async {
-      var pickedImage =
-      await ImagePicker.pickImage(source: ImageSource.camera);
+      var pickedImage = await ImagePicker.pickImage(source: ImageSource.camera);
       onSelectImage(pickedImage);
     }, onGalleryClick: () async {
       var pickedImage =
-      await ImagePicker.pickImage(source: ImageSource.gallery);
+          await ImagePicker.pickImage(source: ImageSource.gallery);
       onSelectImage(pickedImage);
     });
   }
@@ -453,6 +453,8 @@ class FileUtil {
   }
 }
 
+enum BookingType { NONE, BOOKINGPRODUCT, BOOKINGSERVICE }
+
 enum TransportState {
   NONE,
   WAITING_CONFIRM,
@@ -477,13 +479,7 @@ enum BookingState {
   WAITING_CHECKOUT
 }
 
-enum ServiceState{
-  NONE,
-  BOOKED_SCHEDULE,
-  CONFIRM,
-  USED_SERVICE,
-  CANCEL
-}
+enum ServiceState { NONE, BOOKED_SCHEDULE, CONFIRM, USED_SERVICE, CANCEL }
 
 enum TransferStatus {
   NONE,
@@ -494,7 +490,8 @@ enum TransferStatus {
 }
 
 class WidgetUtil {
-  static void showGenderSelectorDialog(BuildContext context, ValueChanged<int> selectedGender) {
+  static void showGenderSelectorDialog(
+      BuildContext context, ValueChanged<int> selectedGender) {
     new Picker(
         adapter: PickerDataAdapter<String>(pickerdata: [
           S.of(context).girl,
