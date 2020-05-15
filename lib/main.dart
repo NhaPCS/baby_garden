@@ -76,7 +76,8 @@ class _MyAppState extends State<MyApp> {
       Provider.of<CartProvider>(context).getMyCart();
 
     //todo get notify
-    if (Provider.of<NotifyProvider>(context).promotions == null)
+    if (Provider.of<UserProvider>(context).isLogin &&
+        Provider.of<NotifyProvider>(context).promotions == null)
       Provider.of<NotifyProvider>(context).getNotify();
   }
 

@@ -6,6 +6,7 @@ import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
+import 'package:baby_garden_flutter/screen/notify/provider/notify_control_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/view_model/base_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,6 +24,7 @@ class LoginViewModel extends BaseViewModel{
     if (data != null) {
       ShareValueProvider.shareValueProvider.saveUserInfo(jsonEncode(data));
       Provider.of<UserProvider>(context,listen: false).getUserInfo();
+      Provider.of<NotifyProvider>(context,listen: false).getNotify();
       RouteUtil.pushAndReplaceAll(context,MainScreen(index: 4,),"/main");
     }
   }

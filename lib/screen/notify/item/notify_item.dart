@@ -16,13 +16,14 @@ class NotifyItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Card(
+      color:  data['is_read']=="0"?ColorUtil.unSelectBgColor:Colors.white,
       elevation: SizeUtil.smallElevation,
       margin: EdgeInsets.only(top: 2, bottom: 2, left: 2, right: 2),
       child: Stack(
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
-                color: Colors.white,
+                color:ColorUtil.white,
                 borderRadius: BorderRadius.all(Radius.circular(5))),
             margin: EdgeInsets.only(
                 top: SizeUtil.tinySpace,
