@@ -79,7 +79,8 @@ class BabyItem extends StatelessWidget {
                 child: GestureDetector(
               onTap: () {
                 if (index == 3)
-                  RouteUtil.push(context, ChildHeathScreen(baby: this.baby));
+                  RouteUtil.push(
+                      context, ChildHeathScreen(selectedChildId: this.baby.id));
               },
               child: Text(entry['content'],
                   textAlign: TextAlign.right,
@@ -94,7 +95,8 @@ class BabyItem extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 if (index == 3) {
-                  RouteUtil.push(context, ChildHeathScreen(baby: this.baby));
+                  RouteUtil.push(
+                      context, ChildHeathScreen(selectedChildId: this.baby.id));
                 } else if (index == 0) {
                   // edit child name
                 }

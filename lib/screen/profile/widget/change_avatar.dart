@@ -38,7 +38,7 @@ class _ChangeAvatar extends State<ChangeAvatar> {
           var pickedImage =
               await ImagePicker.pickImage(source: ImageSource.camera);
           setState(() {
-            if (_pickedImage == null) return;
+            if (pickedImage == null) return;
             _pickedImage = pickedImage;
 
             widget.onSelectImage(pickedImage);
@@ -47,7 +47,7 @@ class _ChangeAvatar extends State<ChangeAvatar> {
           var pickedImage =
               await ImagePicker.pickImage(source: ImageSource.gallery);
           setState(() {
-            if (_pickedImage == null) return;
+            if (pickedImage == null) return;
             _pickedImage = pickedImage;
             widget.onSelectImage(pickedImage);
           });
