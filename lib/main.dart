@@ -4,10 +4,10 @@ import 'package:baby_garden_flutter/provider/city_provider.dart';
 import 'package:baby_garden_flutter/provider/get_banners_provider.dart';
 import 'package:baby_garden_flutter/provider/get_product_category_provider.dart';
 import 'package:baby_garden_flutter/provider/get_service_category_provider.dart';
+import 'package:baby_garden_flutter/provider/orders_provider.dart';
 import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
-import 'package:baby_garden_flutter/screen/notify/provider/notify_control_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
-import 'package:baby_garden_flutter/screen/main/main_screen.dart';
+import 'package:baby_garden_flutter/screen/notify/provider/notify_control_provider.dart';
 import 'package:baby_garden_flutter/screen/welcome/welcome_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +28,7 @@ void main() {
           ChangeNotifierProvider(create: (_) => ReceiveAddressListProvider()),
           ChangeNotifierProvider(create: (_) => CartProvider()),
           ChangeNotifierProvider(create: (_) => NotifyProvider()),
+          ChangeNotifierProvider(create: (_) => OrdersProvider()),
         ],
         child: MyApp(),
       )));
@@ -78,6 +79,9 @@ class _MyAppState extends State<MyApp> {
     //todo get notify
     if (Provider.of<NotifyProvider>(context).promotions == null)
       Provider.of<NotifyProvider>(context).getNotify();
+
+    if (Provider.of<OrdersProvider>(context).SERVICE_OPTIONS.isEmpty)
+      Provider.of<OrdersProvider>(context).init();
   }
 
   @override
