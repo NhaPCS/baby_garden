@@ -3,7 +3,7 @@ import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
-import 'package:baby_garden_flutter/screen/cart/provider/get_promotions_provider.dart';
+import 'package:baby_garden_flutter/screen/cart/provider/get_promotion_detail_provider.dart';
 import 'package:baby_garden_flutter/screen/cart/widget/product_by_shop.dart';
 import 'package:baby_garden_flutter/screen/cart/widget/promotion_input.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -25,13 +25,13 @@ class CartScreen extends StatefulWidget {
 
 class _CartState extends BaseState<CartScreen> {
   final TextEditingController _promoCodeController = TextEditingController();
-  final GetPromotionsProvider _getPromotionsProvider = GetPromotionsProvider();
+  final GetPromotionDetailProvider _getPromotionDetailProvider =
+      GetPromotionDetailProvider();
   final ChangeIndexProvider _changeIndexProvider = ChangeIndexProvider();
 
   @override
   void initState() {
     super.initState();
-    _getPromotionsProvider.getPromotions();
   }
 
   @override
@@ -69,10 +69,23 @@ class _CartState extends BaseState<CartScreen> {
                       if (index == value.shops.length) {
                         return PromotionInput(
                           promoCodeController: _promoCodeController,
-                          onApplyPress: () {
+                          onApplyCodePress: () {
+                            if (_promoCodeController.text.isNotEmpty)
+                              _getPromotionDetailProvider.getPromotionDetail(
+                                  _promoCodeController.text);
+                          },
+                          onRemoveCodePress: () {
+                            _getPromotionDetailProvider.clearPromotion();
+                          },
+                          onGoBookingPress: () {
                             if (_changeIndexProvider.index >= 0)
                               push(BookingScreen(
-                                promoteCode: _promoCodeController.text,
+                                promoteCode:
+                                    _getPromotionDetailProvider.promotion ==
+                                            null
+                                        ? null
+                                        : _getPromotionDetailProvider
+                                            .promotion['code'],
                                 shopID: value.shops[_changeIndexProvider.index]
                                     ['shop_id'],
                               ));
@@ -99,8 +112,8 @@ class _CartState extends BaseState<CartScreen> {
   @override
   List<SingleChildWidget> providers() {
     return [
-      ChangeNotifierProvider.value(value: _getPromotionsProvider),
       ChangeNotifierProvider.value(value: _changeIndexProvider),
+      ChangeNotifierProvider.value(value: _getPromotionDetailProvider),
     ];
   }
 }

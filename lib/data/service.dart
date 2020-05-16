@@ -804,7 +804,16 @@ Future<dynamic> useVoucher({String voucherId}) async {
   dynamic params = {"user_id": userId, "voucher_id": voucherId};
 
   Response response =
-      await get(null, path: 'useVoucher', param: params, requireLogin: true);
+      await post(null, path: 'useVoucher', param: params, requireLogin: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> promotionDetail({String code}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId, "code": code};
+  Response response =
+  await get(null, path: 'promotionDetail', param: params, requireLogin: true);
   if (response.isSuccess()) return response.data;
   return null;
 }
