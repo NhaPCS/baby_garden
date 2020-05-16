@@ -522,11 +522,11 @@ Future<void> addProductCart({List<dynamic> products}) async {
   return null;
 }
 
-Future<void> editProductCart({dynamic product, int number}) async {
+Future<void> editProductCart({String productId, int number}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {
     "user_id": userId,
-    "product_id": product['id'],
+    "product_id": productId,
     "number": number.toString(),
   };
   Response response = await post(null,
@@ -538,11 +538,11 @@ Future<void> editProductCart({dynamic product, int number}) async {
   return null;
 }
 
-Future<void> deleteProductCart(dynamic product) async {
+Future<void> deleteProductCart(String productId) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {
     "user_id": userId,
-    "product_id": product['id'],
+    "product_id": productId,
   };
   Response response = await post(null,
       path: 'deleteProduct',
@@ -891,6 +891,7 @@ Future<Response> execute(BuildContext context,
     return res;
   } on Exception catch (e) {
     print(e);
+    if (context != null && showLoading) Navigator.of(context).pop();
   }
   return Response();
 }
@@ -937,6 +938,7 @@ Future<Response> postMultiPart(BuildContext context,
     return responseData;
   } on Exception catch (e) {
     print(e);
+    if (context != null && showLoading) Navigator.pop(context);
   }
   return Response();
 }

@@ -197,6 +197,7 @@ class _ChildHeathState
                 Widget child) {
               return ViewWeightHeight(
                 testResults: value.results,
+                baby: _dropdownController.value,
               );
             },
           );

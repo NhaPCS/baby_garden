@@ -1,9 +1,15 @@
+import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/remind_management/widget/reminder_layout.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 
 class SetScheduleForProductDialog extends StatelessWidget {
+  final dynamic product;
+
+  const SetScheduleForProductDialog({Key key, this.product}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -18,19 +24,20 @@ class SetScheduleForProductDialog extends StatelessWidget {
                 topLeft: Radius.circular(10), topRight: Radius.circular(10))),
         padding: SizeUtil.smallPadding,
         child: Text(
-          "Set lịch nhắc sản phẩm",
+          S.of(context).set_schedule_alarm_product,
           textAlign: TextAlign.center,
           style: TextStyle(
               color: Colors.white, fontSize: SizeUtil.textSizeDefault),
         ),
       ),
-      content: ListView(
-        shrinkWrap: true,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Padding(
             padding: SizeUtil.smallPadding,
-            child: Text(
-              "Sữa bột Glico Nhật Bản số 0-1 dành cho trẻ từ sơ sinh đến 1 tuổi",
+            child: MyText(
+              product['product_name'],
+              textAlign: TextAlign.left,
               style: TextStyle(color: ColorUtil.blue, fontSize: SizeUtil.textSizeDefault),
             ),
           ),
@@ -46,11 +53,11 @@ class SetScheduleForProductDialog extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                text: "Nhập lại",
+                text: S.of(context).enter_again,
                 borderRadius: 30,
                 color: ColorUtil.primaryColor,
                 textStyle:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 width: SizeUtil.defaultSpace,
@@ -59,10 +66,10 @@ class SetScheduleForProductDialog extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                text: "Đồng ý",
+                text: S.of(context).agree,
                 color: ColorUtil.primaryColor,
                 textStyle:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                 borderRadius: 30,
               )
             ],

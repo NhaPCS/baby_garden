@@ -56,6 +56,7 @@ class ProductCartItem extends StatelessWidget {
                   WidgetUtil.paddingWidget(
                       MyText(
                         product['name'],
+                        textAlign: TextAlign.left,
                       ),
                       padding: EdgeInsets.only(right: SizeUtil.smallSpace)),
                   ButtonIcon(
@@ -85,8 +86,8 @@ class ProductCartItem extends StatelessWidget {
                     },
                   ),
                   WidgetUtil.paddingWidget(
-                      Text(
-                        "Sản phẩm KM mua kèm: Sữa bột Morinaga Nhật số 0-1",
+                      MyText(
+                        product['product_name'],
                         style: TextStyle(
                             color: ColorUtil.primaryColor,
                             fontSize: SizeUtil.textSizeSmall),
@@ -125,7 +126,7 @@ class ProductCartItem extends StatelessWidget {
                             right: SizeUtil.smallSpace),
                         quantityChanged: (value) {
                           Provider.of<CartProvider>(context, listen: false)
-                              .editProductCart(product, value);
+                              .editProductCart(product['product_id'], value);
                         },
                       ),
                       Expanded(
@@ -136,7 +137,7 @@ class ProductCartItem extends StatelessWidget {
                               showDialog(
                                   context: context,
                                   builder: (context) {
-                                    return SetScheduleForProductDialog();
+                                    return SetScheduleForProductDialog(product: product);
                                   });
                             },
                           ),
@@ -158,7 +159,7 @@ class ProductCartItem extends StatelessWidget {
                 message: S.of(context).message_confirm_delete_cart,
                 positive: S.of(context).yes, positiveClicked: () {
               Provider.of<CartProvider>(context, listen: false)
-                  .deleteProduct(product);
+                  .deleteProduct(product['product_id']);
             }, negative: S.of(context).no);
           },
         ),
