@@ -146,12 +146,13 @@ class _AccountManageScreenState
               showDialog(
                   context: context,
                   builder: (BuildContext context) => AddChildDialog(
-                        addChildCallBack: (name, gender, birthday) {
-                          getViewModel().addChild(
+                        addChildCallBack: (name, gender, birthday) async {
+                          await getViewModel().addChild(
                               name: name,
                               gender: gender,
                               birthday: birthday,
                               img: _avatarFile);
+                          _avatarFile = null;
                         },
                         onSelectImage: (file) {
                           _avatarFile = file;
