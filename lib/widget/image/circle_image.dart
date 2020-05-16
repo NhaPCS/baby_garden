@@ -34,11 +34,11 @@ class CircleImage extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
               Radius.circular(borderRadius == null ? width : borderRadius)),
-          image: DecorationImage(
-              image: imageUrl != null
-                  ? CachedNetworkImageProvider(imageUrl)
-                  : imageFile != null ? FileImage(imageFile) : null,
-              fit: BoxFit.cover),
+          image:  DecorationImage(
+                  image: imageUrl != null
+                      ? CachedNetworkImageProvider(imageUrl)
+                      : imageFile != null ? FileImage(imageFile) : AssetImage("photo/child_avatar.png"),
+                  fit: BoxFit.cover),
         ),
       ),
     );

@@ -43,7 +43,7 @@ dependencies:
   fl_chart: ^0.8.6
   table_calendar: ^2.2.3
   path_provider: ^1.6.0
-  flutter_image_compress: ^0.6.5+1
+  flutter_image_compress: ^0.6.7
   google_maps_flutter: ^0.5.26
   barcode_scan: any
   flutter_picker:
