@@ -5,12 +5,14 @@ class SelectChildDropDown extends StatefulWidget {
   final ValueNotifier<dynamic> controller;
   final List<dynamic> babies;
   final ValueChanged<dynamic> onChangeChild;
+  final String selectedId;
 
   const SelectChildDropDown(
       {Key key,
       @required this.controller,
       @required this.babies,
-      this.onChangeChild})
+      this.onChangeChild,
+      this.selectedId})
       : super(key: key);
 
   @override
@@ -24,6 +26,10 @@ class _SelectChildState extends State<SelectChildDropDown> {
   void initState() {
     if (widget.babies != null) {
       widget.controller.value = widget.babies[0];
+      if (widget.selectedId != null) {
+        widget.controller.value = widget.babies
+            .firstWhere((element) => element['id'] == widget.selectedId);
+      }
       if (widget.onChangeChild != null) {
         widget.onChangeChild(widget.controller.value);
       }

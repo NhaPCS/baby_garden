@@ -467,7 +467,8 @@ enum TransferStatus {
 }
 
 class WidgetUtil {
-  static void showGenderSelectorDialog(BuildContext context, ValueChanged<int> selectedGender) {
+  static void showGenderSelectorDialog(
+      BuildContext context, ValueChanged<int> selectedGender) {
     new Picker(
         adapter: PickerDataAdapter<String>(pickerdata: [
           S.of(context).girl,
@@ -476,19 +477,18 @@ class WidgetUtil {
         changeToFirst: true,
         hideHeader: false,
         onConfirm: (Picker picker, List value) {
-          print(value.toString());
-          print(picker.adapter.text);
+          selectedGender(value[0]);
         }).showModal(context); //_scaffoldKey.currentState);
   }
 
   static Future<void> showBirthdaySelectorDialog(
-      BuildContext context, ValueChanged<String> selectedDate) async {
+      BuildContext context, ValueChanged<DateTime> selectedDate) async {
     showDatePicker(
             context: context,
             initialDate: DateTime.now(),
             firstDate: DateTime(2015, 8),
             lastDate: DateTime(2101))
-        .then((value) => {selectedDate(DateUtil.formatBirthdayDate(value))});
+        .then((value) => {selectedDate(value)});
   }
 
   static void showPickImageDialog(BuildContext context,
@@ -703,7 +703,9 @@ class WidgetUtil {
       print(p.checkType);
       switch (p.checkType) {
         case CheckType.NULL_OR_EMPTY_VALUE: // null and empty value
-          if (p.value == null || p.value.isEmpty) {
+          print(p.value.runtimeType);
+          if (p.value == null ||
+              (p.value.runtimeType == String && p.value.isEmpty)) {
             if (showErrorDialog)
               WidgetUtil.showErrorDialog(
                   context, S.of(context).message_empty(p.key));
