@@ -32,13 +32,13 @@ class CartProvider extends ChangeNotifier {
     getMyCart();
   }
 
-  Future<void> deleteProduct(dynamic product) async {
-    if (product != null) await service.deleteProductCart(product);
+  Future<void> deleteProduct(String productId) async {
+    if (productId != null) await service.deleteProductCart(productId);
     getMyCart();
   }
 
-  Future<void> editProductCart(dynamic product, int number) async {
-    await service.editProductCart(product: product, number: number);
+  Future<void> editProductCart(String productId, int number) async {
+    await service.editProductCart(productId: productId, number: number);
     getMyCart();
   }
 }

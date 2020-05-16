@@ -490,5 +490,11 @@
     "remindOtherOption": "Tùy chọn khác",
     "remindOtherOptionHint": "Nhập số ngày nhắc mong muốn/ 1 lần =/1 kỳ",
     "male": "Nam",
-    "female": "Nữ"
+    "female": "Nữ",
+    "set_schedule_alarm_product": "Set lịch nhắc sản phẩm",
+    "check_result": "Kết quả kiểm tra",
+    "baby": "Bé:",
+    "birthday_is": "Ngày sinh:",
+    "check_date_is": "Ngày kiểm tra:",
+    "test_result_is": "Đánh giá kết quả:"
 }

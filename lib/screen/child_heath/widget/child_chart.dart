@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 
 class ChildChart extends StatefulWidget {
   final List<dynamic> testResults;
+  final dynamic baby;
 
-  const ChildChart({Key key, this.testResults}) : super(key: key);
+  const ChildChart({Key key, this.testResults, this.baby}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => ChildChartState();
@@ -23,105 +24,109 @@ class ChildChartState extends State<ChildChart> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return ChartClickedInfoDialog();
-            });
-      },
-      child: AspectRatio(
-        aspectRatio: 1.5,
-        child: Card(
-          elevation: 4,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          color: Colors.white,
-          child: Padding(
-            padding: SizeUtil.smallPadding,
-            child: Row(
-              children: <Widget>[
-                RotatedBox(
-                  quarterTurns: 3,
-                  child: Text(
-                    isHeightTab()
-                        ? S.of(context).height_cm
-                        : S.of(context).weight_kg,
-                    style: TextStyle(
-                        fontSize: SizeUtil.textSizeSmall,
-                        fontWeight: FontWeight.bold),
-                  ),
+    return AspectRatio(
+      aspectRatio: 1.5,
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        color: Colors.white,
+        child: Padding(
+          padding: SizeUtil.smallPadding,
+          child: Row(
+            children: <Widget>[
+              RotatedBox(
+                quarterTurns: 3,
+                child: Text(
+                  isHeightTab()
+                      ? S.of(context).height_cm
+                      : S.of(context).weight_kg,
+                  style: TextStyle(
+                      fontSize: SizeUtil.textSizeSmall,
+                      fontWeight: FontWeight.bold),
                 ),
-                Expanded(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(
-                        child: BarChart(
-                      BarChartData(
-                        alignment: BarChartAlignment.spaceEvenly,
-                        maxY: getMaxValue(),
-                        groupsSpace: 12,
-                        barTouchData: BarTouchData(
-                          enabled: false,
+              ),
+              Expanded(
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                      child: BarChart(
+                    BarChartData(
+                      alignment: BarChartAlignment.spaceEvenly,
+                      maxY: getMaxValue(),
+                      groupsSpace: 12,
+                      barTouchData: BarTouchData(
+//                        touchTooltipData: BarTouchTooltipData(),
+                          enabled: true,
+                          touchCallback: (barRes) {
+                            if (barRes != null && barRes.spot != null) {
+                              print("AA ${barRes.spot.touchedRodDataIndex}");
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return ChartClickedInfoDialog(
+                                      testResult: widget.testResults[
+                                          barRes.spot.touchedBarGroupIndex],
+                                      baby: widget.baby,
+                                    );
+                                  });
+                            }
+                          }),
+                      titlesData: FlTitlesData(
+                        show: true,
+                        bottomTitles: SideTitles(
+                          showTitles: true,
+                          textStyle: const TextStyle(
+                              color: ColorUtil.textColor,
+                              fontSize: SizeUtil.textSizeSmall),
+                          getTitles: (double value) {
+                            return widget.testResults[value.toInt()]['month'];
+                          },
                         ),
-                        titlesData: FlTitlesData(
+                        leftTitles: SideTitles(
+                          showTitles: true,
+                          textStyle: const TextStyle(
+                              color: ColorUtil.textColor, fontSize: 10),
+                          getTitles: (double value) {
+                            if (value == 0) {
+                              return '';
+                            }
+                            return '${value.toInt()}';
+                          },
+                          interval: isHeightTab() ? 50 : 5,
+                          margin: 5,
+                          reservedSize: 30,
+                        ),
+                      ),
+                      gridData: FlGridData(
+                        show: false,
+                      ),
+                      borderData: FlBorderData(
                           show: true,
-                          bottomTitles: SideTitles(
-                            showTitles: true,
-                            textStyle: const TextStyle(
-                                color: ColorUtil.textColor,
-                                fontSize: SizeUtil.textSizeSmall),
-                            getTitles: (double value) {
-                              return widget.testResults[value.toInt()]['month'];
-                            },
-                          ),
-                          leftTitles: SideTitles(
-                            showTitles: true,
-                            textStyle: const TextStyle(
-                                color: ColorUtil.textColor, fontSize: 10),
-                            getTitles: (double value) {
-                              if (value == 0) {
-                                return '';
-                              }
-                              return '${value.toInt()}';
-                            },
-                            interval: isHeightTab() ? 50 : 5,
-                            margin: 5,
-                            reservedSize: 30,
-                          ),
-                        ),
-                        gridData: FlGridData(
-                          show: false,
-                        ),
-                        borderData: FlBorderData(
-                            show: true,
-                            border: Border(
-                                left: BorderSide(
-                                    width: 1, color: ColorUtil.lightGray),
-                                bottom: BorderSide(
-                                    width: 1, color: ColorUtil.lightGray))),
-                        barGroups: widget.testResults == null
-                            ? []
-                            : widget.testResults
-                                .map((e) => getColumnChart(e['month'],
-                                    e['value'], getStatusColor(e['status'])))
-                                .toList(),
-                      ),
-                    )),
-                    Center(
-                      child: Text(
-                        S.of(context).age_month,
-                        style: TextStyle(
-                            fontSize: SizeUtil.textSizeSmall,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    )
-                  ],
-                ))
-              ],
-            ),
+                          border: Border(
+                              left: BorderSide(
+                                  width: 1, color: ColorUtil.lightGray),
+                              bottom: BorderSide(
+                                  width: 1, color: ColorUtil.lightGray))),
+                      barGroups: widget.testResults == null
+                          ? []
+                          : widget.testResults
+                              .map((e) => getColumnChart(e['month'], e['value'],
+                                  getStatusColor(e['status'])))
+                              .toList(),
+                    ),
+                  )),
+                  Center(
+                    child: Text(
+                      S.of(context).age_month,
+                      style: TextStyle(
+                          fontSize: SizeUtil.textSizeSmall,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              ))
+            ],
           ),
         ),
       ),

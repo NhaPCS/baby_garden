@@ -4454,6 +4454,60 @@ class S {
       args: [],
     );
   }
+
+  String get set_schedule_alarm_product {
+    return Intl.message(
+      'Set lịch nhắc sản phẩm',
+      name: 'set_schedule_alarm_product',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get check_result {
+    return Intl.message(
+      'Kết quả kiểm tra',
+      name: 'check_result',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get baby {
+    return Intl.message(
+      'Bé:',
+      name: 'baby',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get birthday_is {
+    return Intl.message(
+      'Ngày sinh:',
+      name: 'birthday_is',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get check_date_is {
+    return Intl.message(
+      'Ngày kiểm tra:',
+      name: 'check_date_is',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get test_result_is {
+    return Intl.message(
+      'Đánh giá kết quả:',
+      name: 'test_result_is',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
