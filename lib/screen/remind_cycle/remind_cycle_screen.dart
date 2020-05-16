@@ -1,137 +1,118 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/remind_management/Provider/remind_calendar_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
+import 'package:baby_garden_flutter/widget/checkbox/circle_checkbox.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
-// TODO-QAnh:screen đặt ở folder riêng, khong de chung trong 1 folder
 class RemindCycleScreen extends StatefulWidget {
   @override
   _RemindCycleScreenState createState() => _RemindCycleScreenState();
 }
 
 class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
+  final RemindCalendarProvider _remindCalendarProvider =
+      RemindCalendarProvider();
+
+  bool check1 = false;
+  bool check2 = false;
+  bool check3 = false;
+
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
         appBar: getAppBar(title: S.of(context).selectRemindTime),
         body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-                margin: EdgeInsets.only(top: 8),
-                width: double.infinity,
-                decoration: setBorder('top', Color(0xffE1D9D9), 1),
-                // TODO-QAnh: trong Container co padding roi, bo Padding nay di
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 15, top: 18, bottom: 18),
-                  child: Text(
-                    S.of(context).selectRemindCycle,
-                    style: TextStyle(
-                        color: ColorUtil.primaryColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                )),
+          children: [
             Expanded(
-                child: Container(
-              decoration: setBorder('top', Color(0xffE4E4E4), 6),
-                  // TODO-QAnh: bỏ cái Column này đi, move lên Column trên, k để lồng nhau
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: ListView(
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      // TODO-QAnh: dung CircleCheckBox
-                      Checkbox(
-                          value: true,
-                          onChanged: (bool value) {
-                            setState(() {
-                              // this.checkDefaultAdd = !this.checkDefaultAdd;
-                            });
-                          }),
-                      Text('01 ( 1 ngày nhắc / 1 chu kỳ )')
-                    ],
+                  Container(
+                    margin: EdgeInsets.only(top: SizeUtil.midSmallSpace),
+                    padding: SizeUtil.normalPadding,
+                    width: double.infinity,
+                    decoration: setBorder('top', Color(0xffE1D9D9), 1),
+                    child: Text(
+                      S.of(context).selectRemindCycle,
+                      style: TextStyle(
+                          color: ColorUtil.primaryColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: SizeUtil.textSizeBigger),
+                    ),
                   ),
-                  Row(
-                    children: <Widget>[
-                      // TODO-QAnh: dung CircleCheckBox
-                      Checkbox(
-                          value: false,
-                          onChanged: (bool value) {
-                            setState(() {
-                              // this.checkDefaultAdd = !this.checkDefaultAdd;
-                            });
-                          }),
-                      Text('02 ( 2 ngày nhắc / 1 chu kỳ )')
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      // TODO-QAnh: dung CircleCheckBox
-                      Checkbox(
-                          value: false,
-                          onChanged: (bool value) {
-                            setState(() {
-                              // this.checkDefaultAdd = !this.checkDefaultAdd;
-                            });
-                          }),
-                      Text('03 ( 3 ngày nhắc / 1 chu kỳ )')
-                    ],
-                  ),
+                  WidgetUtil.getLine(color: Color(0xffE4E4E4), width: 6),
+                  _remindCycle(S.of(context).remindCycle1, check1),
+                  _remindCycle(S.of(context).remindCycle2, check2),
+                  _remindCycle(S.of(context).remindCycle3, check3),
                   Padding(
                     padding: SizeUtil.normalPadding,
                     child: Text(
-                      'Tùy chọn khác',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      S.of(context).remindOtherOption,
+                      style: TextStyle(
+                          fontSize: SizeUtil.textSizeBigger,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                   Padding(
                     padding: SizeUtil.normalPadding,
                     child: MyTextField(
-                      hint: 'Nhập số ngày nhắc mong muốn/ 1 lần =/1 kỳ',
-                      hintStyle:
-                          TextStyle(fontSize: 14, color: ColorUtil.darkGray),
+                      inputType: TextInputType.number,
+                      padding: SizeUtil.normalPadding,
+                      hint: S.of(context).remindOtherOptionHint,
+                      hintStyle: TextStyle(
+                          fontSize: SizeUtil.textSizeDefault,
+                          color: ColorUtil.darkGray),
                       textEditingController: null,
                       borderColor: ColorUtil.darkGray,
                       borderRadius: 8,
                     ),
-                  )
+                  ),
                 ],
               ),
-            )),
-            // TODO-QAnh: button thi dung MyRaisedButton
-            GestureDetector(
-              child: Container(
-                margin: SizeUtil.normalPadding,
-                width: double.infinity,
-                height: 40,
-                decoration: BoxDecoration(
-                    color: ColorUtil.primaryColor,
-                    borderRadius: BorderRadius.circular(SizeUtil.tinyRadius)),
-                child: Center(
-                  child: Text(
-                    S.of(context).confirm,
-                    style: TextStyle(
-                        fontSize: SizeUtil.textSizeBigger,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-            )
+            ),
+            Padding(
+              padding: SizeUtil.normalPadding,
+              child: MyRaisedButton(
+                  padding: SizeUtil.smallPadding,
+                  text: S.of(context).confirm,
+                  textStyle: TextStyle(
+                      fontSize: SizeUtil.textSizeBigger,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                  color: ColorUtil.primaryColor,
+                  borderRadius: SizeUtil.tinyRadius,
+                  matchParent: true,
+                  onPressed: () {
+                    // TODO-QA set cycle
+                    Navigator.of(context).pop();
+                  }),
+            ),
           ],
         ));
   }
 
+  Widget _remindCycle(String label, bool value) {
+    return Row(
+      children: <Widget>[
+        CircleCheckbox(
+            color: ColorUtil.primaryColor,
+            uncheckBg: Icons.radio_button_unchecked,
+            checked: value,
+            onChanged: (bool val) {
+              value = val;
+            }),
+        Expanded(child: Text(label))
+      ],
+    );
+  }
+
   @override
   List<SingleChildWidget> providers() {
-    return [];
+    return [ChangeNotifierProvider.value(value: _remindCalendarProvider)];
   }
 }

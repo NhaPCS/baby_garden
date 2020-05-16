@@ -2,7 +2,7 @@
 
 import 'package:baby_garden_flutter/data/model/address.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/screen/address_setting/item/item_address.dart';
+import 'package:baby_garden_flutter/screen/address_setting/item/address_item.dart';
 import 'package:baby_garden_flutter/screen/address_setting/provider/get_list_address_provider.dart';
 import 'package:baby_garden_flutter/screen/address_setting/view_model/address_setting_view_model.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
@@ -20,12 +20,13 @@ class AddressSettingScreen extends StatefulWidget {
   _AddressSettingScreenState createState() => _AddressSettingScreenState();
 }
 
-class _AddressSettingScreenState extends BaseStateModel<AddressSettingScreen, AddressSettingViewModel> {
+class _AddressSettingScreenState
+    extends BaseStateModel<AddressSettingScreen, AddressSettingViewModel> {
   final GetListAddressProvider _getListAddressProvider =
       GetListAddressProvider();
   final _defaultPadding = const EdgeInsets.only(
       top: SizeUtil.normalSpace, left: SizeUtil.midSmallSpace);
-  final List<ItemAddress> addressList = [];
+  final List<AddressItem> addressList = [];
 
   final mainAddressCtrl = TextEditingController();
 
@@ -43,7 +44,7 @@ class _AddressSettingScreenState extends BaseStateModel<AddressSettingScreen, Ad
         appBar: getAppBar(title: S.of(context).addressAccount),
         body:
             Consumer<GetListAddressProvider>(builder: (context, value, child) {
-          final List<ItemAddress> addressList = [];
+          final List<AddressItem> addressList = [];
 
           if (value.address != null)
             for (var _address in value.address) {
@@ -52,10 +53,11 @@ class _AddressSettingScreenState extends BaseStateModel<AddressSettingScreen, Ad
                   date: _address['date'],
                   active: _address['active'] == '1' ? true : false,
                   address: _address['address']);
-              addressList.add(ItemAddress(
+              addressList.add(AddressItem(
                 address: ValueNotifier(address),
-                onEditAddress: (address, addressId){
-                  getViewModel().editAddress(address: address, addressId: addressId);
+                onEditAddress: (address, addressId) {
+                  getViewModel()
+                      .editAddress(address: address, addressId: addressId);
                 },
                 onDeleteAddress: (id) {
                   getViewModel().deleteAddress(addressId: id);
@@ -159,7 +161,7 @@ class _AddressSettingScreenState extends BaseStateModel<AddressSettingScreen, Ad
     );
   }
 
-  Widget myAddress(List<ItemAddress> addressList) {
+  Widget myAddress(List<AddressItem> addressList) {
     return Expanded(
       child: ListView(
         children: <Widget>[
@@ -182,12 +184,13 @@ class _AddressSettingScreenState extends BaseStateModel<AddressSettingScreen, Ad
       child: GestureDetector(
         onTap: () {
           // show dialog
-          final addAddress = AddAddressDialog( addAddressCallBack: (address, isMain){
-            getViewModel().addAddress(address: address, isMain: isMain);
-          },);
+          final addAddress = AddAddressDialog(
+            addAddressCallBack: (address, isMain) {
+              getViewModel().addAddress(address: address, isMain: isMain);
+            },
+          );
           showDialog(
-              context: context,
-              builder: (BuildContext context) => addAddress);
+              context: context, builder: (BuildContext context) => addAddress);
         },
         child: Row(children: <Widget>[
           Icon(

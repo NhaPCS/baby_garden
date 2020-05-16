@@ -1,6 +1,7 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -8,7 +9,6 @@ import 'package:intl/intl.dart';
 import 'package:nested/nested.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-// TODO-QAnh:screen đặt ở folder riêng, khong de chung trong 1 folder
 class RemindSetDateScreen extends StatefulWidget {
   @override
   _RemindSetDateScreenState createState() => _RemindSetDateScreenState();
@@ -16,8 +16,6 @@ class RemindSetDateScreen extends StatefulWidget {
 
 class _RemindSetDateScreenState extends BaseState<RemindSetDateScreen> {
   CalendarController _calenderController;
-
-  // TODO-QAnh: k dung bo di
   final locale = 'vi';
 
   @override
@@ -32,75 +30,66 @@ class _RemindSetDateScreenState extends BaseState<RemindSetDateScreen> {
     initializeDateFormatting('en', null);
     return Scaffold(
         appBar: getAppBar(title: S.of(context).selectRemindTime),
-        body: Column(
+        body: Stack(
           children: <Widget>[
-            Container(
-                margin: EdgeInsets.only(top: 8),
-                width: double.infinity,
-                decoration: setBorder('top', Color(0xffE1D9D9), 1),
-                // TODO-QAnh: trong container co padding roi, khong can Padding nay nua
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 15, top: 18, bottom: 18),
-                  child: Text(
-                    S.of(context).selectRemindDate,
-                    style: TextStyle(
-                        color: ColorUtil.primaryColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+            SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(top: 8),
+                    width: double.infinity,
+                    decoration: setBorder('top', Color(0xffE1D9D9), 1),
+                    padding:
+                        const EdgeInsets.only(left: 15, top: 18, bottom: 18),
+                    child: Text(
+                      S.of(context).selectRemindDate,
+                      style: TextStyle(
+                          color: ColorUtil.primaryColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
+                    ),
                   ),
-                )),
-            Container(
-                decoration: setBorder('top', Color(0xffE4E4E4), 6),
-                padding: EdgeInsets.only(top: 20),
-                // TODO-QAnh: Column chỉ có 1 widget? bỏ Column đi
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  // calender table
-                  children: <Widget>[
-                    // TODO-QAnh: xem lai cai Calender nay đang bị thiếu pixel
-                    TableCalendar(
-                      locale: this.locale,
-                      calendarController: _calenderController,
-                      calendarStyle: CalendarStyle(
-                        todayColor: Color.fromRGBO(255, 137, 24, 0.7),
-                        selectedColor: ColorUtil.primaryColor,
-                      ),
-                      headerStyle: HeaderStyle(
-                          formatButtonVisible: false,
-                          centerHeaderTitle: true,
-                          titleTextStyle: TextStyle(fontSize: 23),
-                          titleTextBuilder: (date, locale) =>
-                              '${S.of(context).month} ' +
-                              DateFormat.M(locale).format(date)),
-                    )
-                  ],
-                )),
-            Expanded(
-                child: Container(
-              decoration: setBorder('top', Color(0xffE4E4E4), 6),
-            )),
-            // TODO-QAnh: button dung MyRaisedButton
-            GestureDetector(
-              child: Container(
-                margin: SizeUtil.normalPadding,
-                width: double.infinity,
-                height: 40,
-                decoration: BoxDecoration(
-                    color: ColorUtil.primaryColor,
-                    borderRadius: BorderRadius.circular(SizeUtil.tinyRadius)),
-                child: Center(
-                  child: Text(
-                    buttonTitle,
-                    style: TextStyle(
+                  Container(
+                      decoration: setBorder('top', Color(0xffE4E4E4), 6),
+                      padding: EdgeInsets.only(top: 20),
+                      child: TableCalendar(
+                        locale: this.locale,
+                        calendarController: _calenderController,
+                        calendarStyle: CalendarStyle(
+                          todayColor: Color.fromRGBO(255, 137, 24, 0.7),
+                          selectedColor: ColorUtil.primaryColor,
+                        ),
+                        headerStyle: HeaderStyle(
+                            formatButtonVisible: false,
+                            centerHeaderTitle: true,
+                            titleTextStyle: TextStyle(fontSize: 23),
+                            titleTextBuilder: (date, locale) =>
+                                '${S.of(context).month} ' +
+                                DateFormat.M(locale).format(date)),
+                      )),
+                  WidgetUtil.getLine(color: Color(0xffE4E4E4), width: 6),
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: SizeUtil.normalPadding,
+                child: MyRaisedButton(
+                    padding: SizeUtil.smallPadding,
+                    text: buttonTitle,
+                    textStyle: TextStyle(
                         fontSize: SizeUtil.textSizeBigger,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
-                  ),
-                ),
+                    color: ColorUtil.primaryColor,
+                    borderRadius: SizeUtil.tinyRadius,
+                    matchParent: true,
+                    onPressed: () {
+                      // TODO-QA set date
+                      Navigator.of(context).pop();
+                    }),
               ),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
             )
           ],
         ));

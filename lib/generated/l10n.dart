@@ -4391,6 +4391,69 @@ class S {
       args: [],
     );
   }
+
+  String get remindCycle1 {
+    return Intl.message(
+      '01 ( 1 ngày nhắc / 1 chu kỳ )',
+      name: 'remindCycle1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindCycle2 {
+    return Intl.message(
+      '02 ( 2 ngày nhắc / 1 chu kỳ )',
+      name: 'remindCycle2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindCycle3 {
+    return Intl.message(
+      '02 ( 2 ngày nhắc / 1 chu kỳ )',
+      name: 'remindCycle3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindOtherOption {
+    return Intl.message(
+      'Tùy chọn khác',
+      name: 'remindOtherOption',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindOtherOptionHint {
+    return Intl.message(
+      'Nhập số ngày nhắc mong muốn/ 1 lần =/1 kỳ',
+      name: 'remindOtherOptionHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get male {
+    return Intl.message(
+      'Nam',
+      name: 'male',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get female {
+    return Intl.message(
+      'Nữ',
+      name: 'female',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

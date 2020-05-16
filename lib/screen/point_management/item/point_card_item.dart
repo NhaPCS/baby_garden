@@ -28,7 +28,7 @@ class PointCardItem extends StatelessWidget {
         padding: EdgeInsets.all(SizeUtil.midSmallSpace),
         child: Row(children: <Widget>[
           ClipRRect(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(SizeUtil.smallRadius),
               child: CachedNetworkImage(
                 fit: BoxFit.cover,
                 imageUrl: this.pointInfo.shopImage,
