@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:baby_garden_flutter/data/model/baby.dart';
 import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/account_manage/dialog/add_child_dialog.dart';
+import 'package:baby_garden_flutter/screen/account_manage/item/baby_item.dart';
 import 'package:baby_garden_flutter/screen/account_manage/item/child_item.dart';
 import 'package:baby_garden_flutter/screen/account_manage/view_model/account_manage_view_model.dart';
 import 'package:baby_garden_flutter/screen/address_setting/address_setting_screen.dart';
@@ -76,8 +78,8 @@ class _AccountManageScreenState
                   if (value.babies == null) return SizedBox();
                   return Column(
                     children: value.babies
-                        .map((e) => ChildItem(
-                              entry: e,
+                        .map((e) => BabyItem(
+                              baby: Baby.fromJson(e),
                             ))
                         .toList(),
                   );
@@ -144,9 +146,13 @@ class _AccountManageScreenState
               showDialog(
                   context: context,
                   builder: (BuildContext context) => AddChildDialog(
-                        addChildCallBack: (name, gender, birthday) {
-                          getViewModel().addChild(
-                              name: name, gender: gender, birthday: birthday, img: _avatarFile);
+                        addChildCallBack: (name, gender, birthday) async {
+                          await getViewModel().addChild(
+                              name: name,
+                              gender: gender,
+                              birthday: birthday,
+                              img: _avatarFile);
+                          _avatarFile = null;
                         },
                         onSelectImage: (file) {
                           _avatarFile = file;
