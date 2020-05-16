@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
+import 'package:baby_garden_flutter/provider/orders_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/cart/cart_screen.dart';
 import 'package:baby_garden_flutter/screen/home/home_screen.dart';
@@ -73,7 +74,7 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
             bottomNavigationBar: Consumer<ChangeIndexProvider>(
               builder: (BuildContext context, ChangeIndexProvider value,
                   Widget child) {
-                return Consumer<CartProvider>(builder: (BuildContext context, CartProvider cartProvider, Widget child) {
+                return Consumer2(builder: (BuildContext context, CartProvider cartProvider, OrdersProvider ordersCountProvider, Widget child) {
                   return BottomNavigationBar(
                       selectedItemColor: ColorUtil.primaryColor,
                       unselectedItemColor: ColorUtil.textColor,
@@ -103,7 +104,7 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
                             title: S.of(context).order,
                             iconName: 'shipped.svg',
                             index: 3,
-                            count: 10),
+                            count: ordersCountProvider.totalCount),
                         getTabItem(
                             title: S.of(context).account,
                             iconName: 'user.svg',
