@@ -788,6 +788,23 @@ Future<dynamic> addBaby(BuildContext context,
   return null;
 }
 
+Future<dynamic> editBaby(BuildContext context,
+    {String babyId, String name, int gender, String birthday, File img}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "baby_id": babyId,
+    "name": name,
+    "gender": gender.toString(),
+    "birthday": birthday,
+  };
+  dynamic files = {"img": img};
+  Response response = await postMultiPart(context,
+      path: 'editBaby', param: params, files: files, requireLogin: true);
+  if (response.isSuccess()) return response;
+  return null;
+}
+
 Future<dynamic> verifyCodeVoucher(BuildContext context,
     {String voucherId, String code}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
