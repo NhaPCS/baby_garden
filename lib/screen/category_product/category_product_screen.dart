@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/product_item.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
@@ -8,6 +9,7 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/delegate/sliver_category_delegate.dart';
 import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
+import 'package:baby_garden_flutter/widget/loadmore/loadmore_gridview.dart';
 import 'package:baby_garden_flutter/widget/loadmore/loadmore_nested_scrollview.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:baby_garden_flutter/widget/product/list_parent_category.dart';
@@ -53,12 +55,15 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
             return LoadingView(
               isNoData: value.products != null,
             );
-          return GridView.builder(
-              itemCount: value.products.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.7,
-              ),
+          return LoadMoreGridView(
+              itemsCount: value.products.length,
+              childAspectRatio: 0.7,
+              crossAxisCount: 2,
+              totalElement: value.total,
+              reloadCallback: (page) {
+                _getListProductProvider.getData(context, 'listProduct',
+                    index: page * PAGE_SIZE);
+              },
               itemBuilder: (context, index) {
                 return ProductItem(
                   index: index,

@@ -1,13 +1,12 @@
 import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/item/partner_item.dart';
 import 'package:baby_garden_flutter/provider/get_list_partner_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/partner_book_schedule/partner_book_schedule_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
-import 'package:baby_garden_flutter/item/partner_item.dart';
 import 'package:baby_garden_flutter/widget/loadmore/loadmore_listview.dart';
-import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -55,9 +54,11 @@ class _PartnerLikeScreen extends BaseState<PartnerLikeScreen> {
                   );
                 return LoadMoreListView(
                     itemsCount: value.shops.length,
+                    totalElement: value.totalElements,
                     padding: EdgeInsets.only(
                         left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
                     reloadCallback: (page) {
+                      print("PAGE $page");
                       _getListPartnerProvider.getListFavouriteShop(
                           index: page * PAGE_SIZE);
                     },

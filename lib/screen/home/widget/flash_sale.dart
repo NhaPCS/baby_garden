@@ -39,8 +39,7 @@ class _FlashSaleState extends BaseState<FlashSale> {
 
   void _loadData() {
     _getListProductProvider.getData(context,
-        _changeFlashSaleModeProvider.isPending ? "flashSalesPending" : "flashSales",
-        numberPosts: 10, index: 1);
+        _changeFlashSaleModeProvider.isPending ? "flashSalesPending" : "flashSales");
   }
 
   @override

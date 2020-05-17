@@ -1,9 +1,11 @@
+import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_product_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/favorite_product/item/product_favorite_seen_item.dart';
 import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
 import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
+import 'package:baby_garden_flutter/widget/loadmore/loadmore_listview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -37,9 +39,14 @@ class _FavoriteProductScreen extends BaseState<FavoriteProductScreen> {
               return LoadingView(
                 isNoData: value.products != null,
               );
-            return ListView.builder(
-                shrinkWrap: true,
-                itemCount: value.products.length,
+            return LoadMoreListView(
+                itemsCount: value.products.length,
+                totalElement: value.total,
+                reloadCallback: (page) {
+                  _getListProductProvider.getData(
+                      context, 'listFavouriteProduct',
+                      index: page * PAGE_SIZE);
+                },
                 itemBuilder: (BuildContext context, int index) {
                   final _product = _getListProductProvider.getProduct(index);
                   return ProductItem(
