@@ -27,10 +27,11 @@ class Baby {
         name: data['name'],
         gender: data['gender'] == "1" ? Gender.male : Gender.female,
         birthday: data['birthday'],
-        lastDayCheck: formatDate(data['date']));
+        lastDayCheck: formatDate(data['date_test']));
   }
 
   static String formatDate(String date) {
+    if (date == null) return '';
     DateTime inputDate = DateTime.parse(date);
     String formattedDate = DateFormat.yMd('vi').format(inputDate);
     return formattedDate;
