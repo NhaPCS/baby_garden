@@ -297,6 +297,7 @@ class _ProductScreenState
                   )
                 ],
               ),
+              // Sp tuong tu
               Consumer<GetListProductProvider>(
                 builder: (BuildContext context,
                     GetListProductProvider listProductProvider, Widget child) {

@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/data/model/section.dart';
+import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/item/product_item.dart';
 import 'package:baby_garden_flutter/provider/get_list_product_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
@@ -24,6 +25,7 @@ class ListProductScreen extends StatefulWidget {
 class _ListProductState extends BaseState<ListProductScreen> {
   final GetListProductProvider _getListProductProvider =
       GetListProductProvider();
+  String _selectedCategoryId;
 
   @override
   void didChangeDependencies() {
@@ -44,8 +46,9 @@ class _ListProductState extends BaseState<ListProductScreen> {
         children: <Widget>[
           ListCategory(
             onChangedCategory: (category) {
+              _selectedCategoryId = category==null?null:category['id'];
               _getListProductProvider.getData(context, widget.section.path,
-                  categoryId: category == null ? null : category['id']);
+                  categoryId: _selectedCategoryId);
             },
           ),
           Expanded(child: Consumer<GetListProductProvider>(
@@ -62,10 +65,10 @@ class _ListProductState extends BaseState<ListProductScreen> {
                 padding: EdgeInsets.only(
                     left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
                 reloadCallback: (int page) {
-                  _getListProductProvider.getData(context, widget.section.path,
-                      index: page);
+                  _getListProductProvider.getData(context, widget.section.path, categoryId: _selectedCategoryId,
+                      index: page * PAGE_SIZE);
                 },
-                totalPage: value.total,
+                totalElement: value.total,
                 itemBuilder: (context, index) {
                   return ProductItem(
                     product: value.products[index],
