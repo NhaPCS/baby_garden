@@ -13,10 +13,14 @@ class GetListProductProvider extends ChangeNotifier {
 
   Future<void> getData(BuildContext context, String path,
       {String categoryId,
+      String productId,
       int index = 0,
       int numberPosts = service.PAGE_SIZE}) async {
     dynamic data = await service.listProducts(context, path,
-        categoryId: categoryId, index: index, numberPosts: numberPosts);
+        categoryId: categoryId,
+        productId: productId,
+        index: index,
+        numberPosts: numberPosts);
     // add check case data as emty array like list product view
     if (data != null && data.length != 0) {
       products = data['list'];

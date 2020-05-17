@@ -71,7 +71,6 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
                   borderRadius: SizeUtil.tinyRadius,
                   showSoldCount: true,
                   nameStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
-                  showTime: true,
                   padding: EdgeInsets.only(
                       left: SizeUtil.smallSpace,
                       right: SizeUtil.smallSpace,

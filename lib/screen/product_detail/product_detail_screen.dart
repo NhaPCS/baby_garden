@@ -53,7 +53,8 @@ class _ProductScreenState
 
   @override
   void initState() {
-    _getListProductProvider.getData(context, "getProduct");
+    _getListProductProvider.getData(null, "getProduct",
+        productId: widget.productId);
     super.initState();
   }
 
@@ -301,6 +302,14 @@ class _ProductScreenState
               Consumer<GetListProductProvider>(
                 builder: (BuildContext context,
                     GetListProductProvider listProductProvider, Widget child) {
+                  if (listProductProvider.products == null ||
+                      listProductProvider.products.isEmpty)
+                    return SizedBox(
+                      height: 100,
+                      child: LoadingView(
+                        isNoData: listProductProvider.products != null,
+                      ),
+                    );
                   return ListHorizontalProduct(
                     products: listProductProvider.products,
                   );
@@ -354,17 +363,18 @@ class _ProductScreenState
                       WidgetUtil.showRequireLoginDialog(context);
                       return;
                     }
-                    if (productProvider.isOutStock()) {
-                      getViewModel().receiveNotify(
-                          productId: productProvider.product['id']);
-                    } else {
+                    //TODO need to revert when api is available
+//                    if (productProvider.isOutStock()) {
+//                      getViewModel().receiveNotify(
+//                          productId: productProvider.product['id']);
+//                    } else {
                       showModalBottomSheet(
                           isScrollControlled: true,
                           context: context,
                           builder: (_) => AddToCartBottomDialog(
                                 product: productProvider.product,
                               ));
-                    }
+//                    }
                   },
                   text: productProvider.isOutStock()
                       ? S.of(context).get_notify_when_stocking

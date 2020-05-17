@@ -38,8 +38,11 @@ class _FlashSaleState extends BaseState<FlashSale> {
   }
 
   void _loadData() {
-    _getListProductProvider.getData(context,
-        _changeFlashSaleModeProvider.isPending ? "flashSalesPending" : "flashSales");
+    _getListProductProvider.getData(
+        context,
+        _changeFlashSaleModeProvider.isPending
+            ? "flashSalesPending"
+            : "flashSales");
   }
 
   @override
@@ -146,7 +149,13 @@ class _FlashSaleState extends BaseState<FlashSale> {
         RouteUtil.push(
             context,
             ListProductScreen(
-              section: Section(title: S.of(context).happening),
+              section: Section(
+                  title: _changeFlashSaleModeProvider.isPending
+                      ? S.of(context).pending
+                      : S.of(context).happening,
+                  path: _changeFlashSaleModeProvider.isPending
+                      ? "flashSalesPending"
+                      : "flashSales"),
             ));
       },
     );

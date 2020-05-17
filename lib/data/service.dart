@@ -443,6 +443,7 @@ Future<dynamic> listShop(BuildContext context,
 
 Future<dynamic> listProducts(BuildContext context, String path,
     {String categoryId,
+    String productId,
     int index = START_PAGE,
     int numberPosts = PAGE_SIZE}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
@@ -454,6 +455,9 @@ Future<dynamic> listProducts(BuildContext context, String path,
   };
   if (categoryId != null && categoryId.isNotEmpty) {
     params['category_id'] = categoryId;
+  }
+  if (productId != null && productId.isNotEmpty) {
+    params['product_id'] = productId;
   }
   Response response =
       await get(null, path: path, param: params, showLoading: false);
@@ -829,8 +833,8 @@ Future<dynamic> useVoucher({String voucherId}) async {
 Future<dynamic> promotionDetail({String code}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {"user_id": userId, "code": code};
-  Response response =
-  await get(null, path: 'promotionDetail', param: params, requireLogin: true);
+  Response response = await get(null,
+      path: 'promotionDetail', param: params, requireLogin: true);
   if (response.isSuccess()) return response.data;
   return null;
 }

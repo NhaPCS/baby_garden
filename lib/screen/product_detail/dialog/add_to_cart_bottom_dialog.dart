@@ -16,6 +16,7 @@ class AddToCartBottomDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<dynamic> attachedProducts = product['list_product'];
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -24,6 +25,17 @@ class AddToCartBottomDialog extends StatelessWidget {
           product: product,
           quantityController: quantityController,
         ),
+        attachedProducts != null && attachedProducts.isNotEmpty
+            ? Column(
+                children: attachedProducts
+                    .map((e) => ProductHorizontalItem(
+                          product: e,
+                          isAttach: true,
+                          quantityController: quantityController,
+                        ))
+                    .toList(),
+              )
+            : SizedBox(),
         Container(
           width: double.infinity,
           margin: EdgeInsets.only(
@@ -31,7 +43,15 @@ class AddToCartBottomDialog extends StatelessWidget {
           child: MyRaisedButton(
             padding: SizeUtil.smallPadding,
             onPressed: () {
-              Provider.of<CartProvider>(context, listen: false).addProduct(product);
+              Provider.of<CartProvider>(context, listen: false)
+                  .addProduct(product);
+              if (attachedProducts != null) {
+                attachedProducts.forEach((element) {
+                  if (element['checked'] != null && element['checked'])
+                    Provider.of<CartProvider>(context, listen: false)
+                        .addProduct(element);
+                });
+              }
               Navigator.of(context).pop();
             },
             icon: SvgIcon(
