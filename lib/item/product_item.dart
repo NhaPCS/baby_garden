@@ -20,7 +20,6 @@ class ProductItem extends StatelessWidget {
   final double width;
   final bool showSoldCount;
   final TextStyle nameStyle;
-  final bool showTime;
   final int index;
   final dynamic product;
 
@@ -39,7 +38,6 @@ class ProductItem extends StatelessWidget {
       this.showSoldCount = false,
       this.nameStyle = const TextStyle(
           fontSize: SizeUtil.textSizeSmall, fontWeight: FontWeight.bold),
-      this.showTime = false,
       this.index = 0,
       this.product})
       : super(key: key);
@@ -63,10 +61,13 @@ class ProductItem extends StatelessWidget {
               child: getMainContainer(context),
             ),
             Positioned(
-              child: !showTime
+              child: product['is_favourite'] == '1'
                   ? favoriteTag(context)
-                  : CountDownTime(startTime: product['time_start'],endTime: product['time_end'],),
-              left: 0,
+                  : CountDownTime(
+                      startTime: product['time_start'],
+                      endTime: product['time_end'],
+                    ),
+              left: product['is_favourite'] == '1' ? 0 : 5,
               top: 0,
             ),
             Positioned(
@@ -80,7 +81,11 @@ class ProductItem extends StatelessWidget {
         ),
       ),
       onTap: () {
-        RouteUtil.push(context, ProductDetailScreen(productId: product['id'],));
+        RouteUtil.push(
+            context,
+            ProductDetailScreen(
+              productId: product['id'],
+            ));
       },
     );
   }
@@ -163,7 +168,7 @@ class ProductItem extends StatelessWidget {
   }
 
   Widget favoriteTag(BuildContext context) {
-    return product!=null&&'1' == product['is_favourite']
+    return product != null && '1' == product['is_favourite']
         ? Stack(
             alignment: Alignment.center,
             children: <Widget>[

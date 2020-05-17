@@ -1,19 +1,27 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/added_promo_item.dart';
-import 'package:baby_garden_flutter/screen/cart/provider/get_promotions_provider.dart';
+import 'package:baby_garden_flutter/screen/cart/provider/get_promotion_detail_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PromotionInput extends StatelessWidget {
   final TextEditingController promoCodeController;
   final String price;
-  final VoidCallback onApplyPress;
+  final VoidCallback onGoBookingPress;
+  final VoidCallback onApplyCodePress;
+  final VoidCallback onRemoveCodePress;
 
   const PromotionInput(
-      {Key key, this.promoCodeController, this.price, this.onApplyPress})
+      {Key key,
+      this.promoCodeController,
+      this.price,
+      this.onGoBookingPress,
+      this.onApplyCodePress,
+      this.onRemoveCodePress})
       : super(key: key);
 
   @override
@@ -41,7 +49,7 @@ class PromotionInput extends StatelessWidget {
             ),
             MyRaisedButton(
                 onPressed: () {
-                  //TODO
+                  onApplyCodePress();
                 },
                 text: S.of(context).apply,
                 color: ColorUtil.primaryColor,
@@ -50,20 +58,16 @@ class PromotionInput extends StatelessWidget {
                 borderRadius: SizeUtil.tinyRadius)
           ],
         )),
-        Consumer<GetPromotionsProvider>(
-          builder: (BuildContext context, GetPromotionsProvider value,
+        Consumer<GetPromotionDetailProvider>(
+          builder: (BuildContext context, GetPromotionDetailProvider value,
               Widget child) {
-            if (value.promotions == null || value.promotions.isEmpty)
-              return SizedBox();
-            return Column(
-                children: value.promotions
-                    .map((e) => AddedPromoItem(
-                          promotion: e,
-                          onPress: () {
-                            promoCodeController.text = e['code'];
-                          },
-                        ))
-                    .toList());
+            if (value.promotion == null) return SizedBox();
+            return AddedPromoItem(
+              promotion: value.promotion,
+              onRemoved: () {
+                onRemoveCodePress();
+              },
+            );
           },
         ),
         WidgetUtil.getLine(width: 2, margin: EdgeInsets.all(0)),
@@ -80,9 +84,16 @@ class PromotionInput extends StatelessWidget {
             Row(
               children: <Widget>[
                 Expanded(child: Text(S.of(context).promo_code)),
-                Text(
-                  "-640.000 đ",
-                  style: TextStyle(color: ColorUtil.blueLight),
+                Consumer<GetPromotionDetailProvider>(
+                  builder: (BuildContext context,
+                      GetPromotionDetailProvider value, Widget child) {
+                    return MyText(
+                      value.promotion == null
+                          ? ''
+                          : "-${StringUtil.getPriceText(value.promotion['value'])}",
+                      style: TextStyle(color: ColorUtil.blueLight),
+                    );
+                  },
                 )
               ],
             ),
@@ -93,7 +104,7 @@ class PromotionInput extends StatelessWidget {
           width: double.infinity,
           child: MyRaisedButton(
             onPressed: () {
-              onApplyPress();
+              onGoBookingPress();
             },
             text: S.of(context).take_order.toUpperCase(),
             textStyle:

@@ -1,11 +1,12 @@
+import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/item/partner_item.dart';
 import 'package:baby_garden_flutter/provider/get_list_partner_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/partner_book_schedule/partner_book_schedule_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
-import 'package:baby_garden_flutter/item/partner_item.dart';
-import 'package:baby_garden_flutter/widget/product/list_category.dart';
+import 'package:baby_garden_flutter/widget/loadmore/loadmore_listview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -29,7 +30,6 @@ class _PartnerLikeScreen extends BaseState<PartnerLikeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     _getListPartnerProvider.getListFavouriteShop();
     super.initState();
   }
@@ -44,7 +44,6 @@ class _PartnerLikeScreen extends BaseState<PartnerLikeScreen> {
           SizedBox(
             height: SizeUtil.tinySpace,
           ),
-          ListCategory(),
           Expanded(
             child: Consumer<GetListPartnerProvider>(
               builder: (BuildContext context, GetListPartnerProvider value,
@@ -53,18 +52,23 @@ class _PartnerLikeScreen extends BaseState<PartnerLikeScreen> {
                   return LoadingView(
                     isNoData: value.shops != null,
                   );
-                return ListView.builder(
-                    itemCount: value.shops.length,
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
+                return LoadMoreListView(
+                    itemsCount: value.shops.length,
+                    totalElement: value.totalElements,
                     padding: EdgeInsets.only(
                         left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
+                    reloadCallback: (page) {
+                      print("PAGE $page");
+                      _getListPartnerProvider.getListFavouriteShop(
+                          index: page * PAGE_SIZE);
+                    },
                     itemBuilder: (context, index) {
                       return new GestureDetector(
                         child: new PartnerItem(shop: value.shops[index]),
-                        onTap: () async{
-                          await push(PartnerBookScheduleScreen(shopID:value.shops[index]['id']));
-                            _getListPartnerProvider.getListFavouriteShop();
+                        onTap: () async {
+                          await push(PartnerBookScheduleScreen(
+                              shopID: value.shops[index]['id']));
+                          _getListPartnerProvider.getListFavouriteShop();
                         },
                       );
                     });

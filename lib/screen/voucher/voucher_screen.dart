@@ -67,7 +67,7 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
                 );
               return LoadMoreListView(
                 itemsCount: value.vouchers.length,
-                totalPage: value.totalPage,
+                totalElement: value.totalElements,
                 reloadCallback: (page){
                   _currentPage = page;
                   _loadData();

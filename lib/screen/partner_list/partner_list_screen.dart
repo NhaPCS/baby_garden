@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/get_list_partner_provider.dart';
@@ -5,6 +6,7 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/partner_book_schedule/partner_book_schedule_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
+import 'package:baby_garden_flutter/widget/loadmore/loadmore_listview.dart';
 import 'package:baby_garden_flutter/widget/partner/list_service_category.dart';
 import 'package:baby_garden_flutter/item/partner_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,7 +36,6 @@ class _PartnerListScreenState extends BaseState<PartnerListScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
-    String categoryName="";
     return Scaffold(
       backgroundColor: ColorUtil.lineColor,
       appBar: getAppBar(title: S.of(context).partner.toUpperCase()),
@@ -43,7 +44,6 @@ class _PartnerListScreenState extends BaseState<PartnerListScreen> {
           ListServiceCategory(
             onChangedCategory: (category) {
               _selectedCategoryId = category == null ? null : category['id'];
-              categoryName = category == null ?"Tất cả":category['name'];
               _getListPartnerProvider.getListShops(context,
                   categoryId: _selectedCategoryId);
             },
@@ -59,9 +59,13 @@ class _PartnerListScreenState extends BaseState<PartnerListScreen> {
                       _getListPartnerProvider.getListShops(context, categoryId: _selectedCategoryId);
                     },
                   );
-                return ListView.builder(
-                    itemCount: value.shops.length,
+                return LoadMoreListView(
+                    itemsCount: value.shops.length,
+                    totalElement: value.totalElements,
                     padding: EdgeInsets.all(0),
+                    reloadCallback: (page){
+                      _getListPartnerProvider.getListShops(context, categoryId: _selectedCategoryId, index: page * PAGE_SIZE);
+                    },
                     itemBuilder: (context, index) {
                       return new GestureDetector(
                         child: new PartnerItem(

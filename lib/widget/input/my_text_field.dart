@@ -23,6 +23,7 @@ class MyTextField extends StatelessWidget {
   final double elevation;
   final bool enable;
   final Function ontap;
+  final Function onEditingComplete;
   final FocusNode onFocus;
   final String labelText;
   final TextStyle labelStyle;
@@ -72,6 +73,7 @@ class MyTextField extends StatelessWidget {
       this.onFocus,
       this.maxLines = 1,
       this.ontap,
+      this.onEditingComplete,
       this.enable = true,
       InputDecoration decoration,
       this.labelText,
@@ -165,6 +167,7 @@ class MyTextField extends StatelessWidget {
             enabled: enable,
             keyboardType: inputType,
             onTap: ontap,
+            onEditingComplete: onEditingComplete,
             focusNode: onFocus,
             decoration: InputDecoration(
                 labelText: labelText,

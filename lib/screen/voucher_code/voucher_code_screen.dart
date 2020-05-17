@@ -3,17 +3,13 @@ import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/screen/voucher_code/provider/use_voucher_provider.dart';
 import 'package:baby_garden_flutter/screen/voucher_code/view_model/voucher_code_view_model.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
-
-import '../base_state.dart';
 
 class VoucherCodeScreen extends StatefulWidget {
   final BuildContext context;

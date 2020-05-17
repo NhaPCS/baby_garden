@@ -49,6 +49,7 @@ class ColorUtil {
   static const Color lineLightGray = Color(0xffCECECE);
   static const Color lineService = Color(0xffDFDFDF);
   static const Color bgService = Color(0xffFFEDDB);
+  static const Color orderBadge = Color(0xffFF5700);
 
   static const List<Color> gradientColors = [
     Color(0xffFFA503),
@@ -70,7 +71,13 @@ class DateUtil {
   static final String serverFormatDate = "yyyy-MM-dd HH:mm:ss";
 
   static String formatBirthdayDate(DateTime date) {
-    return new DateFormat("dd/MM/yyyy").format(date);
+    return date == null ? '' : new DateFormat("dd/MM/yyyy").format(date);
+  }
+
+  static DateTime parseBirthdayDate(String date) {
+    return date == null || date.isEmpty
+        ? null
+        : new DateFormat("dd/MM/yyyy").parse(date);
   }
 
   static String formatDDMMyyyy(String rawDate) {
@@ -389,6 +396,7 @@ class SizeUtil {
   static const double largeSpace = 70;
   static const double biggerSpace = 40;
   static const double notifyHintSpace = 36;
+  static const double normalBigSpace = 25;
 
   static const double textSizeBig = 24;
   static const double textSizeItemPost = 30;
@@ -510,28 +518,30 @@ enum TransferStatus {
 
 class WidgetUtil {
   static void showGenderSelectorDialog(
-      BuildContext context, ValueChanged<int> selectedGender) {
+      BuildContext context, ValueChanged<int> selectedGender,
+      {int initGender}) {
     new Picker(
         adapter: PickerDataAdapter<String>(pickerdata: [
-          S.of(context).girl,
           S.of(context).boy,
+          S.of(context).girl,
         ]),
         changeToFirst: true,
         hideHeader: false,
+        selecteds: initGender == null ? null : [initGender-1],
         onConfirm: (Picker picker, List value) {
-          print(value.toString());
-          print(picker.adapter.text);
+          selectedGender(value[0] + 1);
         }).showModal(context); //_scaffoldKey.currentState);
   }
 
   static Future<void> showBirthdaySelectorDialog(
-      BuildContext context, ValueChanged<String> selectedDate) async {
+      BuildContext context, ValueChanged<DateTime> selectedDate,
+      {DateTime initDate}) async {
     showDatePicker(
             context: context,
-            initialDate: DateTime.now(),
+            initialDate: initDate == null ? DateTime.now() : initDate,
             firstDate: DateTime(2015, 8),
             lastDate: DateTime(2101))
-        .then((value) => {selectedDate(DateUtil.formatBirthdayDate(value))});
+        .then((value) => {selectedDate(value)});
   }
 
   static void showPickImageDialog(BuildContext context,
@@ -746,7 +756,9 @@ class WidgetUtil {
       print(p.checkType);
       switch (p.checkType) {
         case CheckType.NULL_OR_EMPTY_VALUE: // null and empty value
-          if (p.value == null || p.value.isEmpty) {
+          print(p.value.runtimeType);
+          if (p.value == null ||
+              (p.value.runtimeType == String && p.value.isEmpty)) {
             if (showErrorDialog)
               WidgetUtil.showErrorDialog(
                   context, S.of(context).message_empty(p.key));

@@ -15,8 +15,8 @@ class S {
     AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final String name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
-    final String localeName = Intl.canonicalizedLocale(name);
+    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
+    final localeName = Intl.canonicalizedLocale(name); 
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
       return S();
@@ -1287,15 +1287,6 @@ class S {
     );
   }
 
-  String service_header(Object code, Object date_booking, Object time_booking) {
-    return Intl.message(
-      'Mã đặt lịch: $code\nNgày đặt lịch: $date_booking - $time_booking',
-      name: 'service_header',
-      desc: '',
-      args: [code, date_booking, time_booking],
-    );
-  }
-
   String booking_date(Object time) {
     return Intl.message(
       'Ngày đặt lịch: $time',
@@ -2205,15 +2196,6 @@ class S {
     );
   }
 
-  String delivery_service_header(Object delivery_unit) {
-    return Intl.message(
-      'Đơn vị vận chuyển: $delivery_unit',
-      name: 'delivery_service_header',
-      desc: '',
-      args: [delivery_unit],
-    );
-  }
-
   String get enter_delivery_code {
     return Intl.message(
       'Nhập mã giảm giá vận chuyển',
@@ -2637,15 +2619,6 @@ class S {
     );
   }
 
-  String get checkout_notice {
-    return Intl.message(
-      'Bạn có thực sự muốn dừng thanh toán?',
-      name: 'checkout_notice',
-      desc: '',
-      args: [],
-    );
-  }
-
   String get delivery_policy {
     return Intl.message(
       '- Khi nhận hàng bạn không cần thanh toán tiền mặt\nnữa\n- Nếu khách hàng ở tỉnh lẻ, thanh toán chuyển khoản\ntrước sẽ giảm được chi phí vận chuyển COD.',
@@ -2927,7 +2900,7 @@ class S {
 
   String get receive_in_shop {
     return Intl.message(
-      'Nhận hàng tại shop ',
+      'Nhận hàng tại shop',
       name: 'receive_in_shop',
       desc: '',
       args: [],
@@ -2945,7 +2918,7 @@ class S {
 
   String get delivering {
     return Intl.message(
-      'Đang vận chuyển ',
+      'Đang vận chuyển',
       name: 'delivering',
       desc: '',
       args: [],
@@ -2954,7 +2927,7 @@ class S {
 
   String get delivery_info {
     return Intl.message(
-      'Thông tin vận chuyển ',
+      'Thông tin vận chuyển',
       name: 'delivery_info',
       desc: '',
       args: [],
@@ -4419,19 +4392,118 @@ class S {
     );
   }
 
-  String get view_delivery {
+  String get remindCycle1 {
     return Intl.message(
-      'Xem lộ trình',
-      name: 'view_delivery',
+      '01 ( 1 ngày nhắc / 1 chu kỳ )',
+      name: 'remindCycle1',
       desc: '',
       args: [],
     );
   }
 
-  String get point_checkout_alert {
+  String get remindCycle2 {
     return Intl.message(
-      'Số điểm bạn nhập vượt quá số điểm hiện có',
-      name: 'point_checkout_alert',
+      '02 ( 2 ngày nhắc / 1 chu kỳ )',
+      name: 'remindCycle2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindCycle3 {
+    return Intl.message(
+      '02 ( 2 ngày nhắc / 1 chu kỳ )',
+      name: 'remindCycle3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindOtherOption {
+    return Intl.message(
+      'Tùy chọn khác',
+      name: 'remindOtherOption',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get remindOtherOptionHint {
+    return Intl.message(
+      'Nhập số ngày nhắc mong muốn/ 1 lần =/1 kỳ',
+      name: 'remindOtherOptionHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get male {
+    return Intl.message(
+      'Nam',
+      name: 'male',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get female {
+    return Intl.message(
+      'Nữ',
+      name: 'female',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get set_schedule_alarm_product {
+    return Intl.message(
+      'Set lịch nhắc sản phẩm',
+      name: 'set_schedule_alarm_product',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get check_result {
+    return Intl.message(
+      'Kết quả kiểm tra',
+      name: 'check_result',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get baby {
+    return Intl.message(
+      'Bé:',
+      name: 'baby',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get birthday_is {
+    return Intl.message(
+      'Ngày sinh:',
+      name: 'birthday_is',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get check_date_is {
+    return Intl.message(
+      'Ngày kiểm tra:',
+      name: 'check_date_is',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get test_result_is {
+    return Intl.message(
+      'Đánh giá kết quả:',
+      name: 'test_result_is',
       desc: '',
       args: [],
     );
@@ -4456,7 +4528,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
 
   bool _isSupported(Locale locale) {
     if (locale != null) {
-      for (Locale supportedLocale in supportedLocales) {
+      for (var supportedLocale in supportedLocales) {
         if (supportedLocale.languageCode == locale.languageCode) {
           return true;
         }

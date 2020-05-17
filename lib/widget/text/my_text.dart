@@ -5,8 +5,9 @@ class MyText extends StatelessWidget {
   final TextStyle style;
   final int maxLines;
   final TextOverflow overflow;
+  final TextAlign textAlign;
 
-  MyText(this.data, {this.style, this.maxLines, this.overflow});
+  MyText(this.data, {this.style, this.maxLines, this.overflow, this.textAlign});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +16,7 @@ class MyText extends StatelessWidget {
       style: style,
       maxLines: maxLines,
       overflow: overflow,
+      textAlign: textAlign,
     );
   }
 }

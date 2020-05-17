@@ -37,15 +37,14 @@ class _LoadMoreListViewState extends State<LoadMoreListView> {
   @override
   void initState() {
     super.initState();
-    print("TOTAL PAGE ${widget.totalPage}");
+    print("TOTAL PAGE ${widget.totalElement}  ${page}");
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         if (!isPerformingRequest &&
             (widget.totalPage <= 0 || page < widget.totalPage) &&
             (widget.totalElement <= 0 ||
-                page * widget.pageSize < widget.totalElement)) {
-          print("TOTAL ${widget.totalPage}  $page");
+                (page + 1) * widget.pageSize < widget.totalElement)) {
           isPerformingRequest = true;
           page++;
           widget.reloadCallback(page);
@@ -59,6 +58,7 @@ class _LoadMoreListViewState extends State<LoadMoreListView> {
     isPerformingRequest = false;
     return RefreshIndicator(
         child: ListView.builder(
+          physics: AlwaysScrollableScrollPhysics(),
           controller: _scrollController,
           itemBuilder: widget.itemBuilder,
           padding: widget.padding,

@@ -23,6 +23,10 @@ import 'package:provider/provider.dart';
 import 'dialog/check_child_info_dialog.dart';
 
 class ChildHeathScreen extends StatefulWidget {
+  final String selectedChildId;
+
+  const ChildHeathScreen({Key key, this.selectedChildId}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _ChildHeathState();
@@ -142,6 +146,7 @@ class _ChildHeathState
                     return SelectChildDropDown(
                       babies: value.babies,
                       controller: _dropdownController,
+                      selectedId: widget.selectedChildId,
                       onChangeChild: (selectedChild) {
                         _loadTestResults();
                       },
@@ -192,6 +197,7 @@ class _ChildHeathState
                 Widget child) {
               return ViewWeightHeight(
                 testResults: value.results,
+                baby: _dropdownController.value,
               );
             },
           );

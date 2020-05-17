@@ -33,6 +33,9 @@ class ProductHorizontalItem extends StatelessWidget {
                     color: ColorUtil.textGray,
                     checkBg: Icons.check_box,
                     uncheckBg: Icons.crop_square,
+                    onChanged: (change) {
+                      product['checked'] = change;
+                    },
                   )
                 : SizedBox(
                     width: SizeUtil.smallSpace,
@@ -86,7 +89,7 @@ class ProductHorizontalItem extends StatelessWidget {
                       height: 28,
                       textColor: ColorUtil.primaryColor,
                       quantityChanged: (value) {
-                      product['quantity'] = value;
+                        product['quantity'] = value;
                       },
                     )
                   ],

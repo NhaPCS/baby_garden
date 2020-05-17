@@ -1,19 +1,20 @@
 import 'package:baby_garden_flutter/data/model/section.dart';
-import 'package:baby_garden_flutter/provider/get_list_product_provider.dart';
-import 'package:baby_garden_flutter/screen/base_state_model.dart';
-import 'package:baby_garden_flutter/screen/product_detail/dialog/add_to_cart_bottom_dialog.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
-import 'package:baby_garden_flutter/screen/product_detail/provider/get_product_detail_provider.dart';
+import 'package:baby_garden_flutter/provider/get_list_product_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
-import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/screen/list_product/list_product_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/photo_view/photo_view_screen.dart';
+import 'package:baby_garden_flutter/screen/product_detail/dialog/add_to_cart_bottom_dialog.dart';
+import 'package:baby_garden_flutter/screen/product_detail/provider/get_product_detail_provider.dart';
 import 'package:baby_garden_flutter/screen/product_detail/view_model/product_detail_view_model.dart';
+import 'package:baby_garden_flutter/screen/product_detail/widget/cart_icon.dart';
 import 'package:baby_garden_flutter/screen/product_detail/widget/content_view_moreable.dart';
+import 'package:baby_garden_flutter/screen/product_detail/widget/favorite_product_button.dart';
 import 'package:baby_garden_flutter/screen/product_detail/widget/store_info.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_icon.dart';
@@ -21,12 +22,9 @@ import 'package:baby_garden_flutter/widget/button/my_flat_button.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
-import 'package:baby_garden_flutter/screen/product_detail/widget/cart_icon.dart';
 import 'package:baby_garden_flutter/widget/product/discount_widget.dart';
-import 'package:baby_garden_flutter/screen/product_detail/widget/favorite_product_button.dart';
 import 'package:baby_garden_flutter/widget/product/image_count.dart';
 import 'package:baby_garden_flutter/widget/product/list_horizontal_product.dart';
-import 'package:baby_garden_flutter/widget/product/list_product_by_category.dart';
 import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -45,16 +43,18 @@ class ProductDetailScreen extends StatefulWidget {
   }
 }
 
-class _ProductScreenState extends BaseStateModel<ProductDetailScreen, ProductDetailViewModel> {
+class _ProductScreenState
+    extends BaseStateModel<ProductDetailScreen, ProductDetailViewModel> {
   final ChangeIndexProvider _changeIndexProvider = ChangeIndexProvider();
-  final GetListProductProvider _getListProductProvider = GetListProductProvider();
+  final GetListProductProvider _getListProductProvider =
+      GetListProductProvider();
   final GetProductDetailProvider _getProductDetailProvider =
       GetProductDetailProvider();
 
-
   @override
   void initState() {
-    _getListProductProvider.getData(context, "getProduct");
+    _getListProductProvider.getData(null, "getProduct",
+        productId: widget.productId);
     super.initState();
   }
 
@@ -137,8 +137,8 @@ class _ProductScreenState extends BaseStateModel<ProductDetailScreen, ProductDet
                                   color: ColorUtil.red,
                                   size: SizeUtil.iconSize,
                                 ),
-                                Text(
-                                  "112", // TODO chua co field tren api
+                                MyText(
+                                  productProvider.product['total_rate'],
                                   style:
                                       TextStyle(color: ColorUtil.primaryColor),
                                 )
@@ -158,7 +158,7 @@ class _ProductScreenState extends BaseStateModel<ProductDetailScreen, ProductDet
                             ),
                             borderRadius: SizeUtil.iconSize,
                             onPressed: () {
-                              //TODO
+                              //TODO share st
                             },
                           ),
                           ButtonIcon(
@@ -198,9 +198,8 @@ class _ProductScreenState extends BaseStateModel<ProductDetailScreen, ProductDet
                   ))
                 ],
               )),
-              //TODO chua co field tren API
-              paddingContainer(Text(
-                "Nhập mã VCB2020 để được giảm thêm 5% khi mua sản phẩm",
+              paddingContainer(MyText(
+                productProvider.product['promotion_info'],
                 style: TextStyle(color: ColorUtil.textGray),
               )),
               paddingContainer(Row(
@@ -234,7 +233,9 @@ class _ProductScreenState extends BaseStateModel<ProductDetailScreen, ProductDet
                 ],
               )),
               WidgetUtil.getLine(width: 2),
-              StoreInfo(shop: productProvider.product['shop'],),
+              StoreInfo(
+                shop: productProvider.product['shop'],
+              ),
               WidgetUtil.getLine(width: 2),
               paddingContainer(Text(
                 S.of(context).detail_info,
@@ -297,11 +298,23 @@ class _ProductScreenState extends BaseStateModel<ProductDetailScreen, ProductDet
                   )
                 ],
               ),
-              Consumer<GetListProductProvider>(builder: (BuildContext context, GetListProductProvider listProductProvider, Widget child) {
-                return ListHorizontalProduct(
-                  products: listProductProvider.products,
-                );
-              },)
+              // Sp tuong tu
+              Consumer<GetListProductProvider>(
+                builder: (BuildContext context,
+                    GetListProductProvider listProductProvider, Widget child) {
+                  if (listProductProvider.products == null ||
+                      listProductProvider.products.isEmpty)
+                    return SizedBox(
+                      height: 100,
+                      child: LoadingView(
+                        isNoData: listProductProvider.products != null,
+                      ),
+                    );
+                  return ListHorizontalProduct(
+                    products: listProductProvider.products,
+                  );
+                },
+              )
             ],
           );
         },
@@ -351,7 +364,8 @@ class _ProductScreenState extends BaseStateModel<ProductDetailScreen, ProductDet
                       return;
                     }
                     if (productProvider.isOutStock()) {
-                      getViewModel().receiveNotify(productId: productProvider.product['id']);
+                      getViewModel().receiveNotify(
+                          productId: productProvider.product['id']);
                     } else {
                       showModalBottomSheet(
                           isScrollControlled: true,
