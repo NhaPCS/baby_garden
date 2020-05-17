@@ -1,15 +1,22 @@
+import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/image/circle_image.dart';
 import 'package:flutter/material.dart';
 
 class ChartClickedInfoDialog extends StatelessWidget {
+  final dynamic testResult;
+  final dynamic baby;
+
+  const ChartClickedInfoDialog({Key key, this.testResult, this.baby})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10))),
       title: Text(
-        // TODO-Nha: move to arb file
-        "Kết quả kiểm tra",
+        S.of(context).check_result,
         textAlign: TextAlign.center,
         style: TextStyle(
             color: ColorUtil.blueLight,
@@ -26,7 +33,7 @@ class ChartClickedInfoDialog extends StatelessWidget {
                 width: 100,
                 height: 100,
                 borderRadius: 10,
-                imageUrl: StringUtil.dummyImage,
+                imageUrl: baby['img'],
               ),
               SizedBox(
                 width: SizeUtil.smallSpace,
@@ -38,13 +45,12 @@ class ChartClickedInfoDialog extends StatelessWidget {
                   RichText(
                       text: TextSpan(children: [
                     TextSpan(
-                      // TODO-Nha: move to arb file
-                        text: "Bé:",
+                        text: S.of(context).baby,
                         style: TextStyle(
                             color: ColorUtil.textGray,
                             fontSize: SizeUtil.textSizeDefault)),
                     TextSpan(
-                        text: " 85cm",
+                        text: " ${baby['name']}",
                         style: TextStyle(
                             color: ColorUtil.primaryColor,
                             fontSize: SizeUtil.textSizeDefault))
@@ -52,13 +58,12 @@ class ChartClickedInfoDialog extends StatelessWidget {
                   RichText(
                       text: TextSpan(children: [
                     TextSpan(
-                      // TODO-Nha: move to arb file
-                        text: "Ngày sinh:",
+                        text: S.of(context).birthday_is,
                         style: TextStyle(
                             color: ColorUtil.textGray,
                             fontSize: SizeUtil.textSizeDefault)),
                     TextSpan(
-                        text: " 85cm",
+                        text: " ${baby['birthday']}",
                         style: TextStyle(
                             color: ColorUtil.primaryColor,
                             fontSize: SizeUtil.textSizeDefault))
@@ -66,13 +71,12 @@ class ChartClickedInfoDialog extends StatelessWidget {
                   RichText(
                       text: TextSpan(children: [
                     TextSpan(
-                      // TODO-Nha: move to arb file
-                        text: "Ngày kiểm tra:",
+                        text: S.of(context).check_date_is,
                         style: TextStyle(
                             color: ColorUtil.textGray,
                             fontSize: SizeUtil.textSizeDefault)),
                     TextSpan(
-                        text: " 85cm",
+                        text: " ${DateUtil.formatDDMMyyyy(testResult['date'])}",
                         style: TextStyle(
                             color: ColorUtil.primaryColor,
                             fontSize: SizeUtil.textSizeDefault))
@@ -84,33 +88,39 @@ class ChartClickedInfoDialog extends StatelessWidget {
           RichText(
               text: TextSpan(children: [
             TextSpan(
-              // TODO-Nha: move to arb file
-                text: "Cân nặng:",
+                text: S.of(context).weight_is,
                 style: TextStyle(
                     color: ColorUtil.textGray,
                     fontSize: SizeUtil.textSizeDefault)),
             TextSpan(
-                text: " 85cm",
+                text: getValueText(),
                 style: TextStyle(
                     color: ColorUtil.primaryColor,
                     fontSize: SizeUtil.textSizeDefault))
           ])),
           RichText(
               text: TextSpan(children: [
-                TextSpan(
-                  // TODO-Nha: move to arb file
-                    text: "Đánh giá kết quả:",
-                    style: TextStyle(
-                        color: ColorUtil.textGray,
-                        fontSize: SizeUtil.textSizeDefault)),
-                TextSpan(
-                    text: " 85cm",
-                    style: TextStyle(
-                        color: ColorUtil.primaryColor,
-                        fontSize: SizeUtil.textSizeDefault))
-              ])),
+            TextSpan(
+                text: S.of(context).test_result_is,
+                style: TextStyle(
+                    color: ColorUtil.textGray,
+                    fontSize: SizeUtil.textSizeDefault)),
+            TextSpan(
+                text: " ${testResult['result']}",
+                style: TextStyle(
+                    color: ColorUtil.primaryColor,
+                    fontSize: SizeUtil.textSizeDefault))
+          ])),
         ],
       ),
     );
+  }
+
+  String getValueText() {
+    if (testResult['type'] == 1) {
+      return " ${testResult['value']}cm";
+    } else {
+      return " ${testResult['value']}kg";
+    }
   }
 }

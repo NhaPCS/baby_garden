@@ -59,6 +59,7 @@ class _LoadMoreListViewState extends State<LoadMoreListView> {
     isPerformingRequest = false;
     return RefreshIndicator(
         child: ListView.builder(
+          physics: AlwaysScrollableScrollPhysics(),
           controller: _scrollController,
           itemBuilder: widget.itemBuilder,
           padding: widget.padding,

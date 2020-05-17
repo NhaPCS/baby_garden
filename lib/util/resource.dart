@@ -46,6 +46,7 @@ class ColorUtil {
   static const Color trackingTargetColor = Color(0xff6C6C6C);
   static const Color unSelectBgColor = Color(0xffF2F2F2);
   static const Color lineLightGray = Color(0xffCECECE);
+  static const Color orderBadge = Color(0xffFF5700);
 
   static const List<Color> gradientColors = [
     Color(0xffFFA503),
