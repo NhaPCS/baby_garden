@@ -21,8 +21,9 @@ class AccountManageViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> editProfile({String name, int gender, String birthday}) async {
+  Future<void> editProfile({@required dynamic user}) async {
+    print(user);
     await service.updateProfile(context,
-        name: name, gender: gender, birthday: birthday);
+        name: user['name'], gender: user['gender'], birthday: user['birthday']);
   }
 }

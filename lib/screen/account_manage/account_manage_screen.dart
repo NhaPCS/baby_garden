@@ -7,7 +7,6 @@ import 'package:baby_garden_flutter/provider/select_date_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/account_manage/dialog/add_child_dialog.dart';
 import 'package:baby_garden_flutter/screen/account_manage/item/baby_item.dart';
-import 'package:baby_garden_flutter/screen/account_manage/item/child_item.dart';
 import 'package:baby_garden_flutter/screen/account_manage/view_model/account_manage_view_model.dart';
 import 'package:baby_garden_flutter/screen/address_setting/address_setting_screen.dart';
 import 'package:baby_garden_flutter/screen/change_password/change_password_screen.dart';
@@ -15,7 +14,6 @@ import 'package:baby_garden_flutter/screen/child_heath/provider/get_list_baby_pr
 import 'package:baby_garden_flutter/screen/profile/widget/user_infor.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
-import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -32,9 +30,7 @@ class _AccountManageScreenState
     extends BaseStateModel<AccountManageScreen, AccountManageViewModel> {
   final GetListBabyProvider _getListBabyProvider = GetListBabyProvider();
   final TextEditingController _nameController = TextEditingController();
-  final SelectDateProvider _selectDateProvider = SelectDateProvider();
-  final UserProvider _userProvider = UserProvider();
-  dynamic user;
+  UserProvider _userProvider;
 
   File _avatarFile;
 
@@ -46,6 +42,8 @@ class _AccountManageScreenState
 
   @override
   Widget buildWidget(BuildContext context) {
+    _userProvider = Provider.of<UserProvider>(context, listen: false);
+
     return Scaffold(
         appBar: getAppBar(title: S.of(context).accManage),
         body: Column(
@@ -93,14 +91,17 @@ class _AccountManageScreenState
   }
 
   Widget userInfoRow(int key, dynamic entry) {
+    if (key == 0) _nameController.text = entry['content'];
+
     return GestureDetector(
       onTap: () async {
         switch (key) {
-          case 0:
-            _nameController.text = entry['content'];
-            break;
           case 2:
-            // set birthday
+            showBirthdaySelectorDialog(context, (birthday) async {
+              _userProvider.updateUserInfo(
+                  birthday: DateUtil.formatBirthdayDate(birthday));
+              await getViewModel().editProfile(user: _userProvider.userInfo);
+            });
             break;
           case 3:
             _chooseGender();
@@ -130,8 +131,10 @@ class _AccountManageScreenState
                           FocusScope.of(context).requestFocus(FocusNode());
                           Provider.of<UserProvider>(context, listen: false)
                               .updateUserInfo(name: _nameController.text);
-                          await getViewModel()
-                              .editProfile(name: _nameController.text);
+                          await getViewModel().editProfile(
+                              user: Provider.of<UserProvider>(context,
+                                      listen: false)
+                                  .userInfo);
                         },
                         contentPadding: EdgeInsets.all(0),
                         isBorder: false,
@@ -228,7 +231,8 @@ class _AccountManageScreenState
                       Navigator.of(context).pop();
                       Provider.of<UserProvider>(context, listen: false)
                           .updateUserInfo(gender: 1);
-                      await getViewModel().editProfile(gender: 1);
+                      await getViewModel()
+                          .editProfile(user: _userProvider.userInfo);
                     },
                     child: Text(S.of(context).male)),
                 CupertinoActionSheetAction(
@@ -237,7 +241,8 @@ class _AccountManageScreenState
                       Navigator.of(context).pop();
                       Provider.of<UserProvider>(context, listen: false)
                           .updateUserInfo(gender: 2);
-                      await getViewModel().editProfile(gender: 2);
+                      await getViewModel()
+                          .editProfile(user: _userProvider.userInfo);
                     },
                     child: Text(S.of(context).female))
               ],
@@ -246,5 +251,15 @@ class _AccountManageScreenState
                   isDefaultAction: true,
                   child: Text(S.of(context).cancel)),
             ));
+  }
+
+  Future<void> showBirthdaySelectorDialog(
+      BuildContext context, ValueChanged<DateTime> selectedDate) async {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1920, 1),
+            lastDate: DateTime.now())
+        .then((value) => {selectedDate(value)});
   }
 }

@@ -1016,13 +1016,13 @@ Future<dynamic> getPointDetail(BuildContext context, String shopId) async {
 }
 
 Future<dynamic> updateProfile(BuildContext context,
-    {String name, int gender, String birthday}) async {
+    {String name, String gender, String birthday}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Map<String, dynamic> params = {
     'user_id': userId,
     'name': name,
     'birthday': birthday,
-    'gender': gender.toString(),
+    'gender': gender,
   };
 
   String path = 'updateProfile';
@@ -1030,6 +1030,7 @@ Future<dynamic> updateProfile(BuildContext context,
   Response response = await post(context,
           path: path, param: params, requireLogin: true, showLoading: true)
       .then((value) {
+    print(value);
     if (value.isSuccess()) return value;
     return null;
   }).catchError((onError) {
