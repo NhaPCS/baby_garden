@@ -181,6 +181,7 @@ Future<dynamic> bookingProduct(
     String bookingTime,
     String promoteCode,
     String isReceiveInShop,
+    String timeReceive,
     String paymentMethod,
     String note,
     String shipID,
@@ -190,14 +191,17 @@ Future<dynamic> bookingProduct(
     String userPhone,
     String userAddress,
     String cityID,
+      String point,
     String districtID}) async {
   Response response = await post(null, path: "bookingProduct", param: {
-    'user_id': userID.toString(),
-    'shop_id': shopID.toString(),
+    'point':point,
+    'user_id': userID,
+    'shop_id': shopID,
     'date_booking': bookingDate,
     'time_booking': bookingTime,
     'promotion_code': promoteCode,
     'is_receive': isReceiveInShop,
+    'time_ship': timeReceive,
     'payment': paymentMethod,
     'note': note,
     'ship_id': shipID,
@@ -212,6 +216,7 @@ Future<dynamic> bookingProduct(
   return null;
 }
 
+
 Future<dynamic> listVoucher({int index, String categoryId}) async {
   dynamic param = {
     'index': index.toString(),
@@ -221,6 +226,17 @@ Future<dynamic> listVoucher({int index, String categoryId}) async {
     param['category_id'] = categoryId;
   }
   Response response = await get(null, path: "listVoucher", param: param);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> cancelBooking(BuildContext context,{int index, String bookingId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic param = {
+    'user_id': userId,
+    'booking_id': bookingId,
+  };
+  Response response = await post(null, path: "cancelBooking", param: param);
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -337,15 +353,60 @@ Future<dynamic> city() async {
 }
 
 //todo rateBooking
-Future<dynamic> rateBooking(
-    {int bookingID, double star, String content}) async {
+Future<dynamic> rateBooking(BuildContext context,
+    {String bookingID, String star, String content,File img}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  Response response = await post(null, path: "rateBooking", param: {
+  dynamic files = {"img": img};
+  dynamic param = {
     'user_id': userId,
+    'booking_id': bookingID,
+    'star': star.toString(),
+    'content': content.toLowerCase()
+  };
+  Response response;
+  if (img.path == "") {
+    response =
+    await post(context, path: "rateBooking", param: param, requireLogin: true);
+  } else {
+    response = await postMultiPart(context,
+        path: "rateBooking", param: param, files: files, requireLogin: true);
+  }
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> configureUserNotify(BuildContext context,{String isNoti,String type}) async{
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic param = {
+    'user_id': userId,
+    'is_noti': isNoti,
+    'type': type,
+  };
+  Response response = await post(context, path: "configNoti", param: param, requireLogin: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+//todo rateBooking
+Future<dynamic> rateProduct(BuildContext context,
+    {String productId,String bookingID, String star, String content,File img}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic files = {"img": img};
+  dynamic param = {
+    'user_id': userId,
+    'product_id': productId,
     'booking_id': bookingID.toString(),
     'star': star.toString(),
     'content': content.toLowerCase()
-  });
+  };
+  Response response;
+  if (img.path == "") {
+    response =
+    await post(context, path: "rateProduct", param: param, requireLogin: true);
+  } else {
+    response = await postMultiPart(context,
+        path: "rateProduct", param: param, files: files, requireLogin: true);
+  }
   if (response.isSuccess()) return response.data;
   return null;
 }

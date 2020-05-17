@@ -2637,6 +2637,15 @@ class S {
     );
   }
 
+  String get checkout_notice {
+    return Intl.message(
+      'Bạn có thực sự muốn dừng thanh toán?',
+      name: 'checkout_notice',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get delivery_policy {
     return Intl.message(
       '- Khi nhận hàng bạn không cần thanh toán tiền mặt\nnữa\n- Nếu khách hàng ở tỉnh lẻ, thanh toán chuyển khoản\ntrước sẽ giảm được chi phí vận chuyển COD.',
@@ -2918,7 +2927,7 @@ class S {
 
   String get receive_in_shop {
     return Intl.message(
-      'Nhận hàng tại shop',
+      'Nhận hàng tại shop ',
       name: 'receive_in_shop',
       desc: '',
       args: [],
@@ -2936,7 +2945,7 @@ class S {
 
   String get delivering {
     return Intl.message(
-      'Đang vận chuyển',
+      'Đang vận chuyển ',
       name: 'delivering',
       desc: '',
       args: [],
@@ -2945,7 +2954,7 @@ class S {
 
   String get delivery_info {
     return Intl.message(
-      'Thông tin vận chuyển',
+      'Thông tin vận chuyển ',
       name: 'delivery_info',
       desc: '',
       args: [],
@@ -4414,6 +4423,15 @@ class S {
     return Intl.message(
       'Xem lộ trình',
       name: 'view_delivery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get point_checkout_alert {
+    return Intl.message(
+      'Số điểm bạn nhập vượt quá số điểm hiện có',
+      name: 'point_checkout_alert',
       desc: '',
       args: [],
     );

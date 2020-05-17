@@ -49,6 +49,7 @@ class _BookingScreenState
   final TextEditingController _noteController = new TextEditingController();
   final ValueNotifier<bool> _pointCheckoutValueController =
       ValueNotifier(false);
+  int checkoutPoint = 0;
 
   @override
   void initState() {
@@ -215,7 +216,10 @@ class _BookingScreenState
               height: SizeUtil.iconSizeDefault,
             ),
             title: S.of(context).type_of_checkout,
-            content: CheckoutMethod(
+            content: CheckoutMethodWG(
+              onChangePoint: (pointVal){
+                checkoutPoint = pointVal;
+              },
               checkoutMethod: checkoutMethod,
               pointCheckoutValueController: _pointCheckoutValueController,
             ),
@@ -361,7 +365,7 @@ class _BookingScreenState
     }
     //note nếu là nhận hàng tại shop thì không cần check đại chỉ nhận hàng, đơn vị giao hàng
     //todo check thêm thời gian nhận hàng
-    if (deliveryMethod.value == 1) {
+    if (deliveryMethod.value == DeliveryMethodState.RECEIVE_IN_SHOP.index) {
       if (inShopReceiveAddress == "") {
         WidgetUtil.showMessageDialog(context,
             message: S.of(context).choose_shop_address,
@@ -372,9 +376,11 @@ class _BookingScreenState
             title: S.of(context).missing_information);
       } else {
         await getViewModel().onBookingProduct(
+          checkoutPoint.toString(),
             widget.shopID.toString(),
             widget.promoteCode.toLowerCase(),
             deliveryMethod.value.toString(),
+            receiveTime.value.trim(),
             checkoutMethod.value.toString(),
             _noteController.text.toString(),
             "",
@@ -385,6 +391,22 @@ class _BookingScreenState
             "",
             "",
             "");
+        if (checkoutMethod.value == CheckoutMethod.CREDIT_TRANSFER.index) {
+          print(getViewModel().bookingData['booking_id']);
+          RouteUtil.pushReplacement(
+              context,
+              CheckoutScreen(
+                bookingId: getViewModel().bookingData['booking_id'],
+                bookingCode: getViewModel().bookingData['code'].toString(),
+                totalPrice:
+                    Provider.of<CartProvider>(context, listen: false).price -
+                        _transferMethodProvider.price,
+                phone: address != null ? address['phone'] : "",
+              ));
+        } else {
+          RouteUtil.pushAndReplaceAll(context, MainScreen(index: 1), "/main");
+        }
+        Provider.of<CartProvider>(context, listen: false).getMyCart();
       }
     } else {
       //note
@@ -394,9 +416,11 @@ class _BookingScreenState
             title: S.of(context).missing_information);
       } else {
         await getViewModel().onBookingProduct(
+            checkoutPoint.toString(),
             widget.shopID.toString(),
             widget.promoteCode.toLowerCase(),
             deliveryMethod.value.toString(),
+            receiveTime.value.trim(),
             checkoutMethod.value.toString(),
             _noteController.text.toString(),
             _transferMethodProvider
@@ -408,18 +432,23 @@ class _BookingScreenState
             address['address'],
             address['cityID'],
             address['districtID']);
+        if (checkoutMethod.value == CheckoutMethod.CREDIT_TRANSFER.index) {
+          print(getViewModel().bookingData['booking_id']);
+          RouteUtil.pushReplacement(
+              context,
+              CheckoutScreen(
+                bookingId: getViewModel().bookingData['booking_id'],
+                bookingCode: getViewModel().bookingData['code'].toString(),
+                totalPrice:
+                    Provider.of<CartProvider>(context, listen: false).price -
+                        _transferMethodProvider.price,
+                phone: address != null ? address['phone'] : "",
+              ));
+        } else {
+          RouteUtil.pushAndReplaceAll(context, MainScreen(index: 1), "/main");
+        }
+        Provider.of<CartProvider>(context, listen: false).getMyCart();
       }
-    }
-    if (checkoutMethod.value == 2) {
-      RouteUtil.pushReplacement(context, CheckoutScreen(
-        bookingId: getViewModel().bookingData['booking_id'],
-        bookingCode: getViewModel().bookingData['code'].toString(),
-        totalPrice: Provider.of<CartProvider>(context,listen: false).price -
-            _transferMethodProvider.price,
-        phone: address!=null?address['phone']:"",
-      ));
-    } else {
-      RouteUtil.pushAndReplaceAll(context, MainScreen(index: 1), "/main");
     }
   }
 }

@@ -50,45 +50,23 @@ class _OrderState extends BaseState<OrderScreen> {
                   .map((e) => InkWell(
                         child: OrderOptionItem(option: e),
                         onTap: () {
-                          if (Provider.of<UserProvider>(context,listen: false).isLogin){
-                            print(e);
-                            switch(e['transportState']){
-                              case TransportState.WAITING_CHECKOUT:// todo chờ thanh toán
-                                push(OrderListScreen(
-                                  title: e['title'].replaceAll("\n", " "),state: 8,
-                                ));
-                                break;
-                              case TransportState.WAITING_CONFIRM://todo chờ xác nhận
-                                push(OrderListScreen(
-                                  title: e['title'].replaceAll("\n", " "),state: 1,
-                                ));
-                                break;
-                              case TransportState.RECEIVE_IN_SHOP://todo nhận hàng tại shop
-                                push(OrderListScreen(title: S.of(context).receive_in_shop,state: 7));
-                                break;
-                              case TransportState.PACKING://todo đang đóng gói
-                                push(OrderListScreen(
-                                  title: e['title'].replaceAll("\n", " "),state: 3,
-                                ));
-                                break;
-                              case TransportState.IN_DELIVERY://todo đang vận chuyển
-                                push(OrderListScreen(state: 4,title: S.of(context).delivering,));
-                                break;
-                              case TransportState.SUCCESS://todo đơn hàng thành công
-                                push(OrderListScreen(title: S.of(context).ordered,state: 3));
-                                break;
-                              case TransportState.CANCEL://todo đơn hàng đã huỷ
-                                push(OrderListScreen(title: S.of(context).canceled_order,state: 6));
-                                break;
-                              default://todo đánh giá đơn hàng
-                                push(BookingRateScreen(isService:  false,));
-                                break;
+                          if (Provider.of<UserProvider>(context, listen: false)
+                              .isLogin) {
+                            print("asdjhbaskdas ${e['transportState']}");
+                            if (e['transportState'] ==
+                                TransportState.NONE.index) {
+                              push(BookingRateScreen(
+                                isService: false,
+                              ));
+                            } else {
+                              push(OrderListScreen(
+                                title: e['title'].replaceAll("\n", " "),
+                                state: e['transportState'],
+                              ));
                             }
-                          }else{
+                          } else {
                             WidgetUtil.showRequireLoginDialog(context);
                           }
-
-
                         },
                       ))
                   .toList(),
@@ -107,30 +85,44 @@ class _OrderState extends BaseState<OrderScreen> {
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
               children: SERVICE_OPTIONS
                   .map((e) => InkWell(
-                  onTap: (){
-                    var provider = Provider.of<UserProvider>(context,listen: false);
-                    if (provider.isLogin){
+                      onTap: () {
+                        var provider =
+                            Provider.of<UserProvider>(context, listen: false);
+                        if (provider.isLogin) {
 //                      Provider.of<ServiceListProvider>(context,listen: false).getServiceList( SERVICE_OPTIONS.indexOf(e)+1);
-                      switch(SERVICE_OPTIONS.indexOf(e)){
-                        case 0 ://todo đã đặt lịch
-                          push(ServiceListScreen(title: S.of(context).service_booked,state: 0,childTitle: "Đơn hàng VCB19.12.25",));
-                          break;
-                        case 1 ://todo đã sử dụng
-                          push(ServiceListScreen(title: S.of(context).used_service,state: 1,childTitle:"Đơn hàng VCB19.12.25" ,));
-                          break;
-                        case 2 :// todo đã huỷ đặt lịch
-                          push(ServiceListScreen(title: S.of(context).canceled_service,state: 2,childTitle: "Chi tiết huỷ đơn",));
-                          break;
-                        default://todo đánh giá dịch vụ
-                          push(BookingRateScreen(isService: true,));
-                          break;
-                      }
-                    }else{
-                      WidgetUtil.showRequireLoginDialog(context);
-                    }
-
-                  },
-                  child: OrderOptionItem(option: e)))
+                          switch (SERVICE_OPTIONS.indexOf(e)) {
+                            case 0: //todo đã đặt lịch
+                              push(ServiceListScreen(
+                                title: S.of(context).service_booked,
+                                state: 0,
+                                childTitle: "Đơn hàng VCB19.12.25",
+                              ));
+                              break;
+                            case 1: //todo đã sử dụng
+                              push(ServiceListScreen(
+                                title: S.of(context).used_service,
+                                state: 1,
+                                childTitle: "Đơn hàng VCB19.12.25",
+                              ));
+                              break;
+                            case 2: // todo đã huỷ đặt lịch
+                              push(ServiceListScreen(
+                                title: S.of(context).canceled_service,
+                                state: 2,
+                                childTitle: "Chi tiết huỷ đơn",
+                              ));
+                              break;
+                            default: //todo đánh giá dịch vụ
+                              push(BookingRateScreen(
+                                isService: true,
+                              ));
+                              break;
+                          }
+                        } else {
+                          WidgetUtil.showRequireLoginDialog(context);
+                        }
+                      },
+                      child: OrderOptionItem(option: e)))
                   .toList(),
             ),
             Text(
@@ -181,49 +173,49 @@ class _OrderState extends BaseState<OrderScreen> {
         'icon': 'order_wait_payment',
         'notify_count': 1,
         'title': S.of(context).waiting_payment,
-        'transportState': TransportState.WAITING_CHECKOUT
+        'transportState': TransportState.WAITING_CHECKOUT.index
       },
       {
         'icon': 'order_wait_confirm',
         'notify_count': 0,
         'title': S.of(context).waiting_confirm,
-        'transportState': TransportState.WAITING_CONFIRM
+        'transportState': TransportState.WAITING_CONFIRM.index
       },
       {
         'icon': 'order_get_at_shop',
         'notify_count': 3,
         'title': S.of(context).get_at_shop,
-        'transportState': TransportState.RECEIVE_IN_SHOP
+        'transportState': TransportState.RECEIVE_IN_SHOP.index
       },
       {
         'icon': 'order_packaging',
         'notify_count': 0,
         'title': S.of(context).packing,
-        'transportState': TransportState.PACKING
+        'transportState': TransportState.PACKING.index
       },
       {
         'icon': 'order_delivering',
         'notify_count': 1,
         'title': S.of(context).transporting,
-        'transportState': TransportState.IN_DELIVERY
+        'transportState': TransportState.IN_DELIVERY.index
       },
       {
         'icon': 'order_success',
         'notify_count': 1,
         'title': S.of(context).success_order,
-        'transportState': TransportState.SUCCESS
+        'transportState': TransportState.SUCCESS.index
       },
       {
         'icon': 'order_cancelled',
         'notify_count': 1,
         'title': S.of(context).cancelled_order,
-        'transportState': TransportState.CANCEL
+        'transportState': TransportState.CANCEL.index
       },
       {
         'icon': 'order_review',
         'notify_count': 1,
         'title': S.of(context).rate_order,
-        'transportState': TransportState.NONE
+        'transportState': TransportState.NONE.index
       }
     ];
     FAQS = [

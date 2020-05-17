@@ -41,4 +41,11 @@ class CartProvider extends ChangeNotifier {
     await service.editProductCart(product: product, number: number);
     getMyCart();
   }
+
+  void clearCart(){
+     shops.clear();
+     badge = 0;
+     price = 0;
+     isRun = false;
+  }
 }

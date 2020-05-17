@@ -38,24 +38,8 @@ class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
                 color: Colors.white,
-                border: Border(
-                  left: BorderSide(
-                    color: ColorUtil.primaryColor,
-                    width: 0.7,
-                  ),
-                  right: BorderSide(
-                    color: ColorUtil.primaryColor,
-                    width: 0.7,
-                  ),
-                  top: BorderSide(
-                    color: ColorUtil.primaryColor,
-                    width: 0.7,
-                  ),
-                  bottom: BorderSide(
-                    color: ColorUtil.primaryColor,
-                    width: 0.7,
-                  ),
-                ),
+                border: Border.all(color: ColorUtil.primaryColor,
+                  width: 0.7,),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -223,7 +207,7 @@ class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue> {
                       ),
                       RaisedButton(
                         onPressed: () {
-                          //todo add verify param
+                          //todo-hung add verify param
                           String error = "";
                           var provider =
                               Provider.of<CityProvider>(context, listen: false);

@@ -109,6 +109,7 @@ class _ChangeDeliveryTimeDialogueState
                               color: ColorUtil.primaryColor,
                               fontSize: SizeUtil.textSizeSmall),
                         ),
+                        //todo-hung refactor string
                         Text(
                           "Vui lòng chọn ngày khác",
                           style: TextStyle(

@@ -26,12 +26,16 @@ class RatingDetailScreen extends StatefulWidget {
 class _RatingDetailScreenState
     extends BaseStateModel<RatingDetailScreen, RateBookingViewModel> {
   final TextEditingController _noteController = new TextEditingController();
+  final List<TextEditingController> _noteProductController = new List();
   final BookingDetailProvider _bookingDetailProvider =
       new BookingDetailProvider();
   final ValueNotifier<File> uploadImageController =
       new ValueNotifier(new File(""));
-
+  final List<ValueNotifier<File>> uploadImageProductController = new List();
+  final List<ValueNotifier<int>> rates = new List();
   BookingType _bookingType = BookingType.NONE;
+  ValueNotifier<int> rate = new ValueNotifier<int>(0);
+  int productCount = 0;
 
   @override
   void initState() {
@@ -40,11 +44,19 @@ class _RatingDetailScreenState
     super.initState();
   }
 
+  void initImageController(val) {
+    for (int i = 0; i <= val; i++) {
+      uploadImageProductController.add(new ValueNotifier(new File("")));
+      _noteProductController.add(new TextEditingController());
+      rates.add(new ValueNotifier<int>(0));
+    }
+  }
+
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
       appBar: getAppBar(
-        title: S.of(context).order_rating("vcb19.12.15"),
+        title: S.of(context).order_rating(""),
         centerTitle: true,
         bgColor: ColorUtil.primaryColor,
         titleColor: Colors.white,
@@ -52,8 +64,14 @@ class _RatingDetailScreenState
       ),
       body: Consumer<BookingDetailProvider>(builder:
           (BuildContext context, BookingDetailProvider value, Widget child) {
-        _bookingType =
-            BookingType.values[int.parse(value.bookingDetailData['type'])];
+        var bookingDetailData = value.bookingDetailData;
+        if (bookingDetailData == null) {
+          return Container();
+        }
+        productCount = bookingDetailData["list_product"].length;
+        getViewModel().setRateProductNumber(productCount);
+        initImageController(productCount);
+        _bookingType = BookingType.values[int.parse(bookingDetailData['type'])];
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -67,7 +85,7 @@ class _RatingDetailScreenState
                     height: SizeUtil.tinySpace,
                   ),
                   Text(
-                    S.of(context).order_with_code("VCB19.12.25"),
+                    S.of(context).order_with_code(bookingDetailData["code"]),
                     style: TextStyle(
                         fontSize: SizeUtil.textSizeDefault,
                         color: ColorUtil.textColor),
@@ -76,7 +94,7 @@ class _RatingDetailScreenState
                     height: SizeUtil.tinySpace,
                   ),
                   Text(
-                    S.of(context).order_date("25/12/2019 12:25"),
+                    S.of(context).order_date(bookingDetailData["date_booking"]),
                     style: TextStyle(fontSize: SizeUtil.textSizeTiny),
                     textAlign: TextAlign.start,
                   ),
@@ -84,7 +102,13 @@ class _RatingDetailScreenState
                     height: SizeUtil.tinySpace,
                   ),
                   Text(
-                    S.of(context).receiving_date("25/12/2019 12:25"),
+                    bookingDetailData["active"] == "4"
+                        ? (S.of(context).cancel_time +
+                            " " +
+                            bookingDetailData["time_cancel"])
+                        : S
+                            .of(context)
+                            .receiving_date(bookingDetailData["date_booking"]),
                     style: TextStyle(fontSize: SizeUtil.textSizeTiny),
                     textAlign: TextAlign.start,
                   ),
@@ -95,27 +119,46 @@ class _RatingDetailScreenState
               ),
             ),
             Expanded(
-              child: _bookingType == BookingType.BOOKINGSERVICE
+              child: _bookingType == BookingType.BOOKING_SERVICE
                   ? RatingItem(
+                      rate: rate,
+                      controller: _noteController,
                       uploadImageController: uploadImageController,
                     )
                   : ListView(
-                      //todo- hung: add lis image controller
-                      children: List.generate(3, (index) => RatingItem()),
+                      children: List.generate(
+                          productCount,
+                          (index) => RatingItem(
+                              rate: rates[index],
+                              controller: _noteProductController[index],
+                              title: bookingDetailData["list_product"][index]
+                                  ["name"],
+                              shopName: bookingDetailData["shop_name"],
+                              uploadImageController:
+                                  uploadImageProductController[index])),
                     ),
             ),
             MyRaisedButton(
               padding: EdgeInsets.only(
                   top: SizeUtil.midSpace, bottom: SizeUtil.midSpace),
-              onPressed: () {
-                if (_bookingType == BookingType.BOOKINGSERVICE) {
-                  getViewModel().onRateBooking(
-                      bookingId: 1,
-                      star: 4,
+              onPressed: () async {
+                if (_bookingType == BookingType.BOOKING_SERVICE) {
+                  await getViewModel().onRateBooking(
+                      bookingId: widget.bookingId,
+                      star: rate.value.toString(),
                       content: _noteController.text.trim(),
                       img: uploadImageController.value);
-                } else {}
-                Navigator.of(context).pop();
+                } else {
+                  for (int i = 0; i < productCount; i++) {
+                    String id = bookingDetailData["list_product"][i]['id'];
+                    getViewModel().onRateProduct(
+                        productId: id,
+                        bookingId: widget.bookingId,
+                        star: rates[i].value.toString(),
+                        content: _noteProductController[i].text.trim(),
+                        img: uploadImageProductController[i].value);
+                  }
+                }
               },
               matchParent: true,
               color: ColorUtil.primaryColor,

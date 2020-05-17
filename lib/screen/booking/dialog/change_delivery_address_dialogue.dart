@@ -23,24 +23,8 @@ class ChangeDeliveryAddressDialogue extends StatelessWidget{
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
                 color: Colors.white,
-                border: Border(
-                  left: BorderSide(
-                    color: ColorUtil.primaryColor,
-                    width: 0.7,
-                  ),
-                  right: BorderSide(
-                    color: ColorUtil.primaryColor,
-                    width: 0.7,
-                  ),
-                  top: BorderSide(
-                    color: ColorUtil.primaryColor,
-                    width: 0.7,
-                  ),
-                  bottom: BorderSide(
-                    color: ColorUtil.primaryColor,
-                    width: 0.7,
-                  ),
-                ),
+                border: Border.all(color: ColorUtil.primaryColor,
+                  width: 0.7,),
               ),
               child:
               Consumer<ReceiveAddressListProvider>(builder: (BuildContext context, ReceiveAddressListProvider value, Widget child) {

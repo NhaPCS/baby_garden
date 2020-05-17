@@ -11,6 +11,7 @@ class RatingBar extends StatefulWidget {
   final bool isIcon;
   final bool showRateCount;
   final Color iconColor;
+  final Function onChange;
   final MainAxisAlignment alignment;
 
   const RatingBar({
@@ -22,7 +23,7 @@ class RatingBar extends StatefulWidget {
     this.isIcon = false,
     this.showRateCount = true,
     this.iconColor = ColorUtil.primaryColor,
-    this.alignment = MainAxisAlignment.center
+    this.alignment = MainAxisAlignment.center, this.onChange
   }) : super(key: key);
 
   @override
@@ -80,6 +81,9 @@ class _RatingState extends State<RatingBar> {
         if (!widget.enable) return;
         setState(() {
           _value = index + 1;
+          if(widget.onChange!=null){
+            widget.onChange(_value);
+          }
         });
       },
     );

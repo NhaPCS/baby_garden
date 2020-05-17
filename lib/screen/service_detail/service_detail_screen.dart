@@ -3,9 +3,11 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/product_order_item.dart';
 import 'package:baby_garden_flutter/provider/booking_detail_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/screen/checkout/widget/rich_text_form.dart';
 import 'package:baby_garden_flutter/screen/order_detail/widget/order_info.dart';
 import 'package:baby_garden_flutter/screen/rating_detail/rating_detail_screen.dart';
+import 'package:baby_garden_flutter/screen/service_detail/view_model/service_detail_view_model.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,7 +27,7 @@ class ServiceDetailScreen extends StatefulWidget {
   }
 }
 
-class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen> {
+class _ServiceDetailScreenState extends BaseStateModel<ServiceDetailScreen,ServiceDetailViewModel> {
   final BookingDetailProvider _bookingDetailProvider = BookingDetailProvider();
   ServiceState state = ServiceState.NONE;
 
@@ -263,8 +265,13 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen> {
                                   top: SizeUtil.midSpace,
                                   bottom: SizeUtil.midSpace),
                               onPressed: () {
-                                //TODO cancel service schedule
-                                Navigator.of(context).pop();
+                                WidgetUtil.showConfirmDialog(context,
+                                  message: S.of(context).cancel_question,
+                                  title: S.of(context).attention,
+                                  positiveClicked: () async{
+                                    await getViewModel().onCancelBooking(context,bookingId: widget.bookingId);
+                                    Navigator.of(context).pop();
+                                  }, );
                               },
                               text:  S.of(context).cancel_schedule.toUpperCase(),
                             ): SizedBox()
@@ -292,5 +299,11 @@ class _ServiceDetailScreenState extends BaseState<ServiceDetailScreen> {
   List<SingleChildWidget> providers() {
     // TODO: implement providers
     return [ChangeNotifierProvider.value(value: _bookingDetailProvider)];
+  }
+
+  @override
+  ServiceDetailViewModel initViewModel() {
+    // TODO: implement initViewModel
+    return new ServiceDetailViewModel(context);
   }
 }

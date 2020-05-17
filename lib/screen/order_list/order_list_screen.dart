@@ -70,10 +70,11 @@ class _OrderListScreenState extends BaseState<OrderListScreen> {
                     return ListView(
                       children: data
                           .map((e) => GestureDetector(
-                              onTap: () {
-                                push(OrderDetailScreen(
+                              onTap: () async {
+                                await push(OrderDetailScreen(
                                   bookingId: e['id'],
                                 ));
+                                _orderListProvider.getListData(widget.state);
                               },
                               child: OrderItem(
                                 isRated: false,

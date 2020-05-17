@@ -452,8 +452,9 @@ class FileUtil {
     return file;
   }
 }
+enum SettingNotify{ NONE, PRODUCT, LIKE_PRODUCT_CHANGE, SERVICE, VCB_EXPRESS }
 
-enum BookingType { NONE, BOOKINGPRODUCT, BOOKINGSERVICE }
+enum BookingType { NONE, BOOKING_PRODUCT, BOOKING_SERVICE }
 
 enum TransportState {
   NONE,
@@ -465,6 +466,24 @@ enum TransportState {
   IN_DELIVERY,
   RECEIVE_IN_SHOP,
   WAITING_CHECKOUT
+}
+
+enum CheckoutStatus{
+  NONE,
+  UN_PAY,
+  ALREADY_PAY,
+}
+
+enum CheckoutMethod{
+  NONE,
+  CAST,
+  CREDIT_TRANSFER
+}
+
+enum DeliveryMethodState{
+  DELIVERY,
+  RECEIVE_IN_SHOP,
+  NONE,
 }
 
 enum BookingState {

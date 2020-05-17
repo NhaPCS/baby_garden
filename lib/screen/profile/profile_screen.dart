@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/account_manage/account_manage_screen.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
@@ -162,7 +163,6 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
         push(SettingScreen());
         break;
       case 9:
-        // TODO-Nha: check lai,
         WidgetUtil.showConfirmDialog(context,
             title: S.of(context).confirm,
             message: S.of(context).messageLogout,
@@ -170,8 +170,10 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
             negative: S.of(context).no, positiveClicked: () {
           ShareValueProvider.shareValueProvider.saveUserId(null);
           ShareValueProvider.shareValueProvider.saveUserInfo(null);
+          ShareValueProvider.shareValueProvider.savePoint(null);
           Provider.of<UserProvider>(context, listen: false).logout(false);
           Provider.of<NotifyProvider>(context,listen: false).clearData();
+          Provider.of<CartProvider>(context,listen: false).clearCart();
           pushReplacement(MainScreen());
         }, negativeClick: () {});
         break;
