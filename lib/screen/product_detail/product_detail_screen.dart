@@ -363,18 +363,17 @@ class _ProductScreenState
                       WidgetUtil.showRequireLoginDialog(context);
                       return;
                     }
-                    //TODO need to revert when api is available
-//                    if (productProvider.isOutStock()) {
-//                      getViewModel().receiveNotify(
-//                          productId: productProvider.product['id']);
-//                    } else {
+                    if (productProvider.isOutStock()) {
+                      getViewModel().receiveNotify(
+                          productId: productProvider.product['id']);
+                    } else {
                       showModalBottomSheet(
                           isScrollControlled: true,
                           context: context,
                           builder: (_) => AddToCartBottomDialog(
                                 product: productProvider.product,
                               ));
-//                    }
+                    }
                   },
                   text: productProvider.isOutStock()
                       ? S.of(context).get_notify_when_stocking
