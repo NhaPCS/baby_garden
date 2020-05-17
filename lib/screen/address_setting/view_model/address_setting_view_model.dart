@@ -29,7 +29,6 @@ class AddressSettingViewModel extends BaseViewModel {
   }
 
   void deleteAddress({String addressId}) async {
-    print("AAAA $addressId");
     Response response =
         await service.deleteAddress(context, addressId: addressId);
     if (response != null) {

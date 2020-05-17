@@ -7,12 +7,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-typedef EditAddressCallBack = void Function(String address, String addressId);
-
 class BabyItem extends StatelessWidget {
   final Baby baby;
+  final VoidCallback onEditBabyPress;
 
-  const BabyItem({Key key, this.baby}) : super(key: key);
+  const BabyItem({Key key, this.baby, this.onEditBabyPress}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,35 +32,40 @@ class BabyItem extends StatelessWidget {
       entry(S.of(context).lastDayCheck, baby.lastDayCheck, ''),
     ];
 
-    return Container(
-      padding: SizeUtil.smallPadding,
-      decoration: setBorder("bottom", ColorUtil.lineLightGray, 1),
-      child: Row(children: <Widget>[
-        // avatar
-        Align(
-          alignment: Alignment.center,
-          child: ClipRRect(
-              borderRadius: BorderRadius.circular(SizeUtil.tinyRadius),
-              child: baby.avatar.isEmpty
-                  ? Image.asset(
-                      'photo/child_avatar.png',
-                      width: 95.0,
-                      height: 95.0,
-                      fit: BoxFit.fill,
-                    )
-                  : CachedNetworkImage(
-                      fit: BoxFit.cover,
-                      imageUrl: baby.avatar,
-                      width: 95.0,
-                      height: 95.0,
-                    )),
-        ),
-        SizedBox(width: SizeUtil.smallSpace),
-        Expanded(
-          child: entriesChildInfor(context, childInforFields),
-        ),
-        SizedBox(width: SizeUtil.smallSpace)
-      ]),
+    return InkWell(
+      onTap: () {
+        onEditBabyPress();
+      },
+      child: Container(
+        padding: SizeUtil.smallPadding,
+        decoration: setBorder("bottom", ColorUtil.lineLightGray, 1),
+        child: Row(children: <Widget>[
+          // avatar
+          Align(
+            alignment: Alignment.center,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(SizeUtil.tinyRadius),
+                child: baby.avatar.isEmpty
+                    ? Image.asset(
+                        'photo/child_avatar.png',
+                        width: 95.0,
+                        height: 95.0,
+                        fit: BoxFit.fill,
+                      )
+                    : CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        imageUrl: baby.avatar,
+                        width: 95.0,
+                        height: 95.0,
+                      )),
+          ),
+          SizedBox(width: SizeUtil.smallSpace),
+          Expanded(
+            child: entriesChildInfor(context, childInforFields),
+          ),
+          SizedBox(width: SizeUtil.smallSpace)
+        ]),
+      ),
     );
   }
 
@@ -87,7 +91,7 @@ class BabyItem extends StatelessWidget {
                   style: TextStyle(
                       color: (index == 3)
                           ? ColorUtil.primaryColor
-                          : Colors.black)),
+                          : (index == 4) ? ColorUtil.blueLight : Colors.black)),
             )),
             SizedBox(
               width: SizeUtil.smallSpace,

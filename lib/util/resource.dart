@@ -68,7 +68,13 @@ class DateUtil {
   static final String serverFormatDate = "yyyy-MM-dd HH:mm:ss";
 
   static String formatBirthdayDate(DateTime date) {
-    return new DateFormat("dd/MM/yyyy").format(date);
+    return date == null ? '' : new DateFormat("dd/MM/yyyy").format(date);
+  }
+
+  static DateTime parseBirthdayDate(String date) {
+    return date == null || date.isEmpty
+        ? null
+        : new DateFormat("dd/MM/yyyy").parse(date);
   }
 
   static String formatDDMMyyyy(String rawDate) {
@@ -470,24 +476,27 @@ enum TransferStatus {
 
 class WidgetUtil {
   static void showGenderSelectorDialog(
-      BuildContext context, ValueChanged<int> selectedGender) {
+      BuildContext context, ValueChanged<int> selectedGender,
+      {int initGender}) {
     new Picker(
         adapter: PickerDataAdapter<String>(pickerdata: [
-          S.of(context).girl,
           S.of(context).boy,
+          S.of(context).girl,
         ]),
         changeToFirst: true,
         hideHeader: false,
+        selecteds: initGender == null ? null : [initGender-1],
         onConfirm: (Picker picker, List value) {
-          selectedGender(value[0]);
+          selectedGender(value[0] + 1);
         }).showModal(context); //_scaffoldKey.currentState);
   }
 
   static Future<void> showBirthdaySelectorDialog(
-      BuildContext context, ValueChanged<DateTime> selectedDate) async {
+      BuildContext context, ValueChanged<DateTime> selectedDate,
+      {DateTime initDate}) async {
     showDatePicker(
             context: context,
-            initialDate: DateTime.now(),
+            initialDate: initDate == null ? DateTime.now() : initDate,
             firstDate: DateTime(2015, 8),
             lastDate: DateTime(2101))
         .then((value) => {selectedDate(value)});

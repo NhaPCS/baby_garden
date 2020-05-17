@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:baby_garden_flutter/data/model/baby.dart';
 import 'package:baby_garden_flutter/data/model/param.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/select_date_provider.dart';
@@ -20,8 +21,10 @@ typedef AddChildCallBack = void Function(
 class AddChildDialog extends StatefulWidget {
   final AddChildCallBack addChildCallBack;
   final ValueChanged<File> onSelectImage;
+  final Baby baby;
 
-  const AddChildDialog({Key key, this.addChildCallBack, this.onSelectImage})
+  const AddChildDialog(
+      {Key key, this.addChildCallBack, this.onSelectImage, this.baby})
       : super(key: key);
 
   @override
@@ -33,6 +36,17 @@ class _ShowAddAddressDialogState extends BaseState<AddChildDialog> {
   final SelectGenderProvider _selectGenderProvider = SelectGenderProvider();
   final SelectDateProvider _selectDateProvider = SelectDateProvider();
   var checkDefaultAdd = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.baby != null) {
+      _nameController.text = widget.baby.name;
+      _selectGenderProvider.updateGender(widget.baby.gender.index+1);
+      _selectDateProvider
+          .updateDate(DateUtil.parseBirthdayDate(widget.baby.birthday));
+    }
+  }
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -59,6 +73,7 @@ class _ShowAddAddressDialogState extends BaseState<AddChildDialog> {
             padding: const EdgeInsets.only(top: SizeUtil.midSpace),
             child: Center(
               child: ChangeAvatar(
+                avatarUrl: widget.baby == null ? null : widget.baby.avatar,
                 borderRadius: SizeUtil.tinyRadius,
                 width: 92,
                 height: 92,
@@ -105,7 +120,7 @@ class _ShowAddAddressDialogState extends BaseState<AddChildDialog> {
                 onPressed: () {
                   WidgetUtil.showGenderSelectorDialog(context, (gender) {
                     _selectGenderProvider.updateGender(gender);
-                  });
+                  }, initGender: _selectGenderProvider.gender);
                 },
                 elevation: 3,
                 child: SizedBox(
@@ -207,8 +222,21 @@ class _ShowAddAddressDialogState extends BaseState<AddChildDialog> {
               color: ColorUtil.colorAccent,
               borderRadius: SizeUtil.tinyRadius,
               onPressed: () {
-                // TODO add api add child
-                // http://chap.com.vn/vcb/api/addBaby
+                // add child
+                if (!WidgetUtil.verifyParams(context, params: [
+                  Param(
+                      key: S.of(context).nameOfChild,
+                      value: _nameController.text),
+                  Param(
+                      key: S.of(context).gender,
+                      value: _selectGenderProvider.gender),
+                  Param(
+                      key: S.of(context).date, value: _selectDateProvider.date)
+                ])) return;
+                widget.addChildCallBack(
+                    _nameController.text,
+                    _selectGenderProvider.gender,
+                    DateUtil.formatBirthdayDate(_selectDateProvider.date));
                 Navigator.of(context).pop();
               }),
         ),

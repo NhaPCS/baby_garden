@@ -53,7 +53,8 @@ class _ProductScreenState
 
   @override
   void initState() {
-    _getListProductProvider.getData(context, "getProduct");
+    _getListProductProvider.getData(null, "getProduct",
+        productId: widget.productId);
     super.initState();
   }
 
@@ -301,6 +302,14 @@ class _ProductScreenState
               Consumer<GetListProductProvider>(
                 builder: (BuildContext context,
                     GetListProductProvider listProductProvider, Widget child) {
+                  if (listProductProvider.products == null ||
+                      listProductProvider.products.isEmpty)
+                    return SizedBox(
+                      height: 100,
+                      child: LoadingView(
+                        isNoData: listProductProvider.products != null,
+                      ),
+                    );
                   return ListHorizontalProduct(
                     products: listProductProvider.products,
                   );

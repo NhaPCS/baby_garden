@@ -13,9 +13,23 @@ class AccountManageViewModel extends BaseViewModel {
   AccountManageViewModel(this.context, this.getListBabyProvider);
 
   Future<void> addChild(
-      {String name, int gender, String birthday, File img}) async {
-    var data = await service.addBaby(context,
-        name: name, gender: gender, birthday: birthday, img: img);
+      {String babyId,
+      String name,
+      int gender,
+      String birthday,
+      File img}) async {
+    var data;
+    if (babyId == null) {
+      data = await service.addBaby(context,
+          name: name, gender: gender, birthday: birthday, img: img);
+    } else {
+      data = await service.editBaby(context,
+          name: name,
+          gender: gender,
+          birthday: birthday,
+          img: img,
+          babyId: babyId);
+    }
     if (data != null) {
       getListBabyProvider.listBaby();
     }

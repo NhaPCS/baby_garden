@@ -187,7 +187,6 @@ class _SailingDetailScreenState extends BaseState<SailingDetailScreen> {
                               showSoldCount: false,
                               nameStyle:
                               TextStyle(fontSize: SizeUtil.textSizeDefault),
-                              showTime: false,
                               padding: EdgeInsets.only(
                                   left: SizeUtil.smallSpace,
                                   right: SizeUtil.smallSpace,

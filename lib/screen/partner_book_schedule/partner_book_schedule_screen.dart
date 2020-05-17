@@ -518,7 +518,6 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
                 borderRadius: SizeUtil.tinyRadius,
                 showSoldCount: false,
                 nameStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
-                showTime: false,
                 padding: EdgeInsets.only(
                     left: SizeUtil.smallSpace,
                     right: SizeUtil.smallSpace,
