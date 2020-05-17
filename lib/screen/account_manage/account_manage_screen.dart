@@ -3,16 +3,17 @@ import 'dart:io';
 import 'package:baby_garden_flutter/data/model/baby.dart';
 import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/select_date_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/account_manage/dialog/add_child_dialog.dart';
 import 'package:baby_garden_flutter/screen/account_manage/item/baby_item.dart';
-import 'package:baby_garden_flutter/screen/account_manage/item/child_item.dart';
 import 'package:baby_garden_flutter/screen/account_manage/view_model/account_manage_view_model.dart';
 import 'package:baby_garden_flutter/screen/address_setting/address_setting_screen.dart';
 import 'package:baby_garden_flutter/screen/change_password/change_password_screen.dart';
 import 'package:baby_garden_flutter/screen/child_heath/provider/get_list_baby_provider.dart';
 import 'package:baby_garden_flutter/screen/profile/widget/user_infor.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -28,6 +29,9 @@ class AccountManageScreen extends StatefulWidget {
 class _AccountManageScreenState
     extends BaseStateModel<AccountManageScreen, AccountManageViewModel> {
   final GetListBabyProvider _getListBabyProvider = GetListBabyProvider();
+  final TextEditingController _nameController = TextEditingController();
+  UserProvider _userProvider;
+
   File _avatarFile;
 
   @override
@@ -38,21 +42,7 @@ class _AccountManageScreenState
 
   @override
   Widget buildWidget(BuildContext context) {
-    Map<String, String> entry(String title, String content, String icon) {
-      return {'title': title, 'content': content, "icon": icon};
-    }
-
-    dynamic user = Provider.of<UserProvider>(context).userInfo;
-    final List<Map<String, String>> entries = <Map<String, String>>[
-      entry(S.of(context).fullname, user == null ? "" : user['name'],
-          'pencil.png'),
-      entry(S.of(context).mobilePhone, user == null ? "" : user['phone'], ''),
-      entry(S.of(context).birthday, user == null ? "" : user['birthday'], ''),
-      entry(S.of(context).gender,
-          user == null ? "" : user['gender'] == 1 ? "Nam" : "Nữ", ''),
-      entry(S.of(context).password, S.of(context).changePassword, 'right.png'),
-      entry(S.of(context).address, '', 'right.png'),
-    ];
+    _userProvider = Provider.of<UserProvider>(context, listen: false);
 
     return Scaffold(
         appBar: getAppBar(title: S.of(context).accManage),
@@ -65,10 +55,20 @@ class _AccountManageScreenState
             Expanded(
                 child: ListView(children: <Widget>[
               // user information
-              // entries
-              Column(
-                children: entries.map((e) => userInfoRow(e)).toList(),
+              Consumer<UserProvider>(
+                builder:
+                    (BuildContext context, UserProvider value, Widget child) {
+                  var entries = value.getEntries(context);
+
+                  final listEntryUser = List<Widget>();
+                  entries.asMap().forEach((key, value) {
+                    listEntryUser.add(userInfoRow(key, value));
+                  });
+
+                  return Column(children: listEntryUser);
+                },
               ),
+
               headerChildInfor(),
               WidgetUtil.getLine(
                   color: ColorUtil.lineLightGray, margin: EdgeInsets.all(0)),
@@ -90,28 +90,63 @@ class _AccountManageScreenState
         ));
   }
 
-  Widget userInfoRow(dynamic entry) {
-    return Container(
-      padding: SizeUtil.smallPadding,
-      decoration: setBorder('bottom', ColorUtil.lineLightGray, 1),
-      child: GestureDetector(
-        onTap: () {
-          if (entry['title'] == S.of(context).address) {
-            push(AddressSettingScreen());
-          } else if (entry['title'] == S.of(context).changePassword) {
+  Widget userInfoRow(int key, dynamic entry) {
+    if (key == 0) _nameController.text = entry['content'];
+
+    return GestureDetector(
+      onTap: () async {
+        switch (key) {
+          case 2:
+            showBirthdaySelectorDialog(context, (birthday) async {
+              _userProvider.updateUserInfo(
+                  birthday: DateUtil.formatBirthdayDate(birthday));
+              await getViewModel().editProfile(user: _userProvider.userInfo);
+            });
+            break;
+          case 3:
+            _chooseGender();
+            break;
+          case 4:
             push(ChangePasswordScreen());
-          }
-        },
+            break;
+          case 5:
+            push(AddressSettingScreen());
+            break;
+        }
+      },
+      child: Container(
+        padding: SizeUtil.smallPadding,
+        decoration: setBorder('bottom', ColorUtil.lineLightGray, 1),
         child: Row(
           children: <Widget>[
             Text(entry['title']),
-            Spacer(),
-            Text(entry['content'],
-                textAlign: TextAlign.right,
-                style: TextStyle(
-                    color: (entry['title'] == S.of(context).changePassword)
-                        ? ColorUtil.primaryColor
-                        : Colors.black)),
+            key == 0 ? SizedBox() : Spacer(),
+            key == 0
+                ? Expanded(
+                    child: Container(
+                      child: MyTextField(
+                        maxLines: null,
+                        textAlign: TextAlign.end,
+                        onEditingComplete: () async {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          Provider.of<UserProvider>(context, listen: false)
+                              .updateUserInfo(name: _nameController.text);
+                          await getViewModel().editProfile(
+                              user: Provider.of<UserProvider>(context,
+                                      listen: false)
+                                  .userInfo);
+                        },
+                        contentPadding: EdgeInsets.all(0),
+                        isBorder: false,
+                        textEditingController: _nameController,
+                      ),
+                    ),
+                  )
+                : Text(entry['content'],
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                        color:
+                            key == 4 ? ColorUtil.primaryColor : Colors.black)),
             SizedBox(
               width: SizeUtil.smallSpace,
             ),
@@ -183,5 +218,48 @@ class _AccountManageScreenState
   @override
   AccountManageViewModel initViewModel() {
     return AccountManageViewModel(context, _getListBabyProvider);
+  }
+
+  void _chooseGender() {
+    showCupertinoModalPopup(
+        context: context,
+        builder: (BuildContext context) => CupertinoActionSheet(
+              message: Text(S.of(context).gender),
+              actions: [
+                CupertinoActionSheetAction(
+                    onPressed: () async {
+                      Navigator.of(context).pop();
+                      Provider.of<UserProvider>(context, listen: false)
+                          .updateUserInfo(gender: 1);
+                      await getViewModel()
+                          .editProfile(user: _userProvider.userInfo);
+                    },
+                    child: Text(S.of(context).male)),
+                CupertinoActionSheetAction(
+                    isDefaultAction: true,
+                    onPressed: () async {
+                      Navigator.of(context).pop();
+                      Provider.of<UserProvider>(context, listen: false)
+                          .updateUserInfo(gender: 2);
+                      await getViewModel()
+                          .editProfile(user: _userProvider.userInfo);
+                    },
+                    child: Text(S.of(context).female))
+              ],
+              cancelButton: CupertinoActionSheetAction(
+                  onPressed: () => Navigator.of(context).pop(),
+                  isDefaultAction: true,
+                  child: Text(S.of(context).cancel)),
+            ));
+  }
+
+  Future<void> showBirthdaySelectorDialog(
+      BuildContext context, ValueChanged<DateTime> selectedDate) async {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1920, 1),
+            lastDate: DateTime.now())
+        .then((value) => {selectedDate(value)});
   }
 }
