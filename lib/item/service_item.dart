@@ -6,12 +6,27 @@ import 'package:flutter/material.dart';
 
 class ServiceItem extends StatelessWidget {
   final bool isShowBookingDate;
- final dynamic itemData;
-  const ServiceItem({Key key, this.isShowBookingDate = true,@required this.itemData}) : super(key: key);
+  dynamic itemData;
+
+  ServiceItem(
+      {Key key, this.isShowBookingDate = true, @required this.itemData})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    if (itemData == null) {
+      itemData = {
+        'code': "0",
+        'shop_name': "",
+        'date_booking': "",
+        'time_booking': '',
+        "shop_img": "",
+        'total_money': '',
+        'list_product': '',
+        "service_name":""
+      };
+    }
     return Column(
       children: <Widget>[
         Container(
@@ -79,7 +94,7 @@ class ServiceItem extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: SizeUtil.midSmallSpace),
                     child: CachedNetworkImage(
-                      imageUrl: itemData['shop_img'],
+                      imageUrl: itemData['shop_img']==""?StringUtil.dummyImage:itemData['shop_img'],
                       width: MediaQuery.of(context).size.width / 6,
                     ),
                   ),
@@ -95,8 +110,9 @@ class ServiceItem extends StatelessWidget {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               itemData['service_name'],
-                              style:
-                                  TextStyle(fontSize: SizeUtil.textSizeExpressDetail,color: ColorUtil.textColor),
+                              style: TextStyle(
+                                  fontSize: SizeUtil.textSizeExpressDetail,
+                                  color: ColorUtil.textColor),
                               textAlign: TextAlign.start,
                             ),
                           ),

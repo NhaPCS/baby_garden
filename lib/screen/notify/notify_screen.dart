@@ -165,7 +165,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                                           scale: 1,
                                           child: SwitchButton(
                                             valueChanged: (result) {
-                                              Provider.of<NotifyProvider>(context).onHideReadNotify(result);
+                                              Provider.of<NotifyProvider>(context,listen: false).onHideReadNotify(result);
                                               _hideReadNotifyController.value =
                                                   result;
                                             },
@@ -205,14 +205,15 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                               padding: EdgeInsets.all(0),
                               itemBuilder: (context, index) {
                                 return GestureDetector(
-                                  onTap: () {
-                                    push(value.isPromote
+                                  onTap: () async{
+                                    await push(value.isPromote
                                         ? SailingDetailScreen(
                                             notifyId: data[index]['id'],
                                           )
                                         : PersonalNoticeScreen(
                                             notifyId: data[index]['id'],
                                           ));
+                                    Provider.of<NotifyProvider>(context,listen: false).getNotify();
                                   },
                                   child: NotifyItem(
                                     data: data[index],
@@ -229,7 +230,7 @@ class _NotifyScreenState extends BaseState<NotifyScreen> {
                     )
                   ],
                 ),
-                color: ColorUtil.lineColor,
+                color: ColorUtil.white,
               ),
             )
           ],

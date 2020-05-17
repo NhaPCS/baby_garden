@@ -46,16 +46,29 @@ class NotifyProvider extends ChangeNotifier{
 
   void onHideReadNotify(val){
     this.isHideReadNotify = val;
+    notifyListeners();
   }
 
   List<dynamic> getData(){
+    //todo filter with hide readed notify
     List<dynamic> data = isPromote ? promotions:private;
     if(filter.isNotEmpty){
       data = data.where((i) => i['title'].toString().toLowerCase().contains(filter.toLowerCase())).toList();
     }
     if(isHideReadNotify){
       //todo add data filter here
+      data = data.where((i) => i['is_read'].toString().toLowerCase()=="0").toList();
     }
     return data;
+  }
+
+  void clearData(){
+    currentValue = 0;
+    isPromote = true;
+    isHideReadNotify = false;
+    filter = "";
+    promotions.clear();
+    private.clear();
+    notifyCount = 0;
   }
 }

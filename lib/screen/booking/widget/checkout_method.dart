@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
@@ -11,28 +12,43 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-class CheckoutMethod extends StatefulWidget{
+class CheckoutMethodWG extends StatefulWidget {
   final ValueNotifier<int> checkoutMethod;
   final ValueNotifier<bool> pointCheckoutValueController;
+  final Function onChangePoint;
 
-  const CheckoutMethod({this.checkoutMethod, this.pointCheckoutValueController}):super();
+  const CheckoutMethodWG(
+      {this.checkoutMethod,
+      this.pointCheckoutValueController,
+      this.onChangePoint})
+      : super();
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _CheckoutMethodState();
+    return _CheckoutMethodWGState();
   }
-
 }
 
-class _CheckoutMethodState extends BaseState<CheckoutMethod>{
+class _CheckoutMethodWGState extends BaseState<CheckoutMethodWG> {
+  int currentPoint = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    ShareValueProvider.shareValueProvider
+        .getPoint()
+        .then((value) => currentPoint = value == null ? 0 : value);
+    super.initState();
+  }
+
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
     return ValueListenableBuilder<int>(
       valueListenable: widget.checkoutMethod,
       builder: (BuildContext context, int value, Widget child) {
-        return  Column(
+        return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             CustomRadioButton(
@@ -99,14 +115,19 @@ class _CheckoutMethodState extends BaseState<CheckoutMethod>{
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       widget.pointCheckoutValueController.value =
-                      !widget.pointCheckoutValueController.value;
+                          !widget.pointCheckoutValueController.value;
                       if (widget.pointCheckoutValueController.value) {
-                        showDialog(
+                        var point = await showDialog(
                             context: context,
                             builder: (BuildContext context) =>
-                                PointCheckoutDialogue());
+                                PointCheckoutDialogue(
+                                  point: currentPoint,
+                                ));
+                        if (widget.onChangePoint != null && point != null) {
+                          widget.onChangePoint(point);
+                        }
                       }
                     },
                     child: Text(
@@ -123,7 +144,9 @@ class _CheckoutMethodState extends BaseState<CheckoutMethod>{
                         showDialog(
                             context: context,
                             builder: (BuildContext context) =>
-                                PointCheckoutDialogue());
+                                PointCheckoutDialogue(
+                                  point: currentPoint,
+                                ));
                       }
                     },
                   ),
@@ -132,7 +155,8 @@ class _CheckoutMethodState extends BaseState<CheckoutMethod>{
             )
           ],
         );
-      },);
+      },
+    );
   }
 
   @override
@@ -140,5 +164,4 @@ class _CheckoutMethodState extends BaseState<CheckoutMethod>{
     // TODO: implement providers
     return [];
   }
-
 }

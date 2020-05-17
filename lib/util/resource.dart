@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -46,6 +47,8 @@ class ColorUtil {
   static const Color trackingTargetColor = Color(0xff6C6C6C);
   static const Color unSelectBgColor = Color(0xffF2F2F2);
   static const Color lineLightGray = Color(0xffCECECE);
+  static const Color lineService = Color(0xffDFDFDF);
+  static const Color bgService = Color(0xffFFEDDB);
   static const Color orderBadge = Color(0xffFF5700);
 
   static const List<Color> gradientColors = [
@@ -107,6 +110,21 @@ class DateUtil {
     }
     print("getDate $dates");
     return dates;
+  }
+}
+
+class ImageUtil {
+  static void uploadImage(
+      BuildContext context, ValueChanged<File> onSelectImage) {
+    if (onSelectImage == null) return;
+    WidgetUtil.showPickImageDialog(context, onCameraClick: () async {
+      var pickedImage = await ImagePicker.pickImage(source: ImageSource.camera);
+      onSelectImage(pickedImage);
+    }, onGalleryClick: () async {
+      var pickedImage =
+          await ImagePicker.pickImage(source: ImageSource.gallery);
+      onSelectImage(pickedImage);
+    });
   }
 }
 
@@ -371,6 +389,7 @@ class SizeUtil {
   static const double midSmallSpace = 8.0;
   static const double tinySpace = 4;
   static const double superTinySpace = 2;
+  static const double zeroSpace = 0;
   static const double bigSpace = 30;
   static const double bigSpaceHigher = 32;
   static const double hugSpace = 50;
@@ -441,6 +460,9 @@ class FileUtil {
     return file;
   }
 }
+enum SettingNotify{ NONE, PRODUCT, LIKE_PRODUCT_CHANGE, SERVICE, VCB_EXPRESS }
+
+enum BookingType { NONE, BOOKING_PRODUCT, BOOKING_SERVICE }
 
 enum TransportState {
   NONE,
@@ -454,6 +476,24 @@ enum TransportState {
   WAITING_CHECKOUT
 }
 
+enum CheckoutStatus{
+  NONE,
+  UN_PAY,
+  ALREADY_PAY,
+}
+
+enum CheckoutMethod{
+  NONE,
+  CAST,
+  CREDIT_TRANSFER
+}
+
+enum DeliveryMethodState{
+  DELIVERY,
+  RECEIVE_IN_SHOP,
+  NONE,
+}
+
 enum BookingState {
   NONE,
   WAITING_CONFIRM,
@@ -465,6 +505,8 @@ enum BookingState {
   RECEIVE_IN_SHOP,
   WAITING_CHECKOUT
 }
+
+enum ServiceState { NONE, BOOKED_SCHEDULE, CONFIRM, USED_SERVICE, CANCEL }
 
 enum TransferStatus {
   NONE,

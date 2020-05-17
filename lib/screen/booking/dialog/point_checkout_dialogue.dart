@@ -3,9 +3,14 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class PointCheckoutDialogue extends StatelessWidget{
+class PointCheckoutDialogue extends StatelessWidget {
+  final int point;
+
+  const PointCheckoutDialogue({this.point}) : super();
+
   @override
   Widget build(BuildContext context) {
+    int pointCheckout = 0;
     // TODO: implement build
     return Dialog(
         shape: RoundedRectangleBorder(
@@ -18,23 +23,9 @@ class PointCheckoutDialogue extends StatelessWidget{
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
                 color: Colors.white,
-                border: Border(
-                  left: BorderSide(
-                    color: ColorUtil.primaryColor,
-                    width: 0.7,
-                  ),
-                  right: BorderSide(
-                    color: ColorUtil.primaryColor,
-                    width: 0.7,
-                  ),
-                  top: BorderSide(
-                    color: ColorUtil.primaryColor,
-                    width: 0.7,
-                  ),
-                  bottom: BorderSide(
-                    color: ColorUtil.primaryColor,
-                    width: 0.7,
-                  ),
+                border: Border.all(
+                  color: ColorUtil.primaryColor,
+                  width: 0.7,
                 ),
               ),
               child: Column(
@@ -71,7 +62,7 @@ class PointCheckoutDialogue extends StatelessWidget{
                                     color: ColorUtil.textColor,
                                     fontWeight: FontWeight.normal)),
                             TextSpan(
-                                text: " 200 điểm",
+                                text: S.of(context).numPoint(point),
                                 style: TextStyle(
                                     fontSize: SizeUtil.textSizeSmall,
                                     color: ColorUtil.primaryColor,
@@ -101,12 +92,12 @@ class PointCheckoutDialogue extends StatelessWidget{
                           width: 45,
                           height: 20,
                           child: TextField(
-                            onChanged: (string) {
-//                              setState(() => {
-//                                isUpdatePointCheckout == false
-//                                    ? isUpdatePointCheckout = true
-//                                    : print("nothing")
-//                              });
+                            onChanged: (val) {
+                              if(val.length>0){
+                                pointCheckout = int.parse(val);
+                              }else{
+                                pointCheckout = 0;
+                              }
                             },
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -118,15 +109,11 @@ class PointCheckoutDialogue extends StatelessWidget{
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
+                                      BorderRadius.all(Radius.circular(5)),
                                 ),
-                                hintText: "100",
-                                hintStyle: TextStyle(
-                                    fontSize: SizeUtil.textSizeSmall,
-                                    color: ColorUtil.primaryColor,
-                                    fontWeight: FontWeight.bold),
-                                contentPadding: EdgeInsets.only(
-                                    left: 2, right: 2, top: 2, bottom: 2)),
+                                hintText: "0",
+                                contentPadding:
+                                    EdgeInsets.all(SizeUtil.superTinySpace)),
                           ),
                         ),
                       ],
@@ -144,29 +131,6 @@ class PointCheckoutDialogue extends StatelessWidget{
                   SizedBox(
                     height: SizeUtil.tinySpace,
                   ),
-//                  isUpdatePointCheckout
-//                      ?
-//                  Center(
-//                    child: RaisedButton(
-//                      onPressed: () {
-////                        setState(() => {isUpdatePointCheckout = false});
-//                      },
-//                      shape: RoundedRectangleBorder(
-//                          borderRadius: BorderRadius.all(
-//                            Radius.circular(SizeUtil.smallRadius),
-//                          )),
-//                      color: ColorUtil.primaryColor,
-//                      child: Text(
-//                        S.of(context).update,
-//                        style: TextStyle(
-//                            fontSize: SizeUtil.textSizeSmall,
-//                            color: Colors.white,
-//                            fontStyle: FontStyle.normal,
-//                            fontWeight: FontWeight.bold),
-//                      ),
-//                    ),
-//                  )
-//                      :
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -176,8 +140,8 @@ class PointCheckoutDialogue extends StatelessWidget{
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
-                              Radius.circular(SizeUtil.smallRadius),
-                            )),
+                          Radius.circular(SizeUtil.smallRadius),
+                        )),
                         color: ColorUtil.primaryColor,
                         child: Text(
                           S.of(context).cancel,
@@ -193,13 +157,17 @@ class PointCheckoutDialogue extends StatelessWidget{
                       ),
                       RaisedButton(
                         onPressed: () {
-                          Navigator.of(context).pop();
-//                      showBookingScheduleSuccess(context);
+                          print(" show dialogue $pointCheckout $point");
+                          if(pointCheckout>point){
+                            WidgetUtil.showMessageDialog(context, message: S.of(context).point_checkout_alert, title: S.of(context).notify);
+                          }else{
+                            Navigator.of(context).pop(pointCheckout);
+                          }
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
-                              Radius.circular(SizeUtil.smallRadius),
-                            )),
+                          Radius.circular(SizeUtil.smallRadius),
+                        )),
                         color: ColorUtil.primaryColor,
                         child: Text(
                           S.of(context).confirm,
@@ -218,5 +186,4 @@ class PointCheckoutDialogue extends StatelessWidget{
           },
         ));
   }
-
 }

@@ -1,6 +1,4 @@
-import 'package:baby_garden_flutter/provider/booking_detail_provider.dart';
 import 'package:baby_garden_flutter/provider/order_list_provider.dart';
-import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/item/order_item.dart';
@@ -13,18 +11,12 @@ import '../order_detail/order_detail_screen.dart';
 
 class OrderListScreen extends StatefulWidget {
   final String title;
-  final String childTitle;
   final int state;
-  final bool isShowPositiveButton;
-  final bool isShowNegativeButton;
 
   const OrderListScreen({
     Key key,
     @required this.title,
     this.state = 0,
-    this.childTitle,
-    this.isShowNegativeButton = false,
-    this.isShowPositiveButton = false,
   }) : super(key: key);
 
   @override
@@ -78,10 +70,11 @@ class _OrderListScreenState extends BaseState<OrderListScreen> {
                     return ListView(
                       children: data
                           .map((e) => GestureDetector(
-                              onTap: () {
-                                push(OrderDetailScreen(
+                              onTap: () async {
+                                await push(OrderDetailScreen(
                                   bookingId: e['id'],
                                 ));
+                                _orderListProvider.getListData(widget.state);
                               },
                               child: OrderItem(
                                 isRated: false,

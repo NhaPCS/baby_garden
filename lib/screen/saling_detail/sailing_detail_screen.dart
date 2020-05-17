@@ -55,12 +55,14 @@ class _SailingDetailScreenState extends BaseState<SailingDetailScreen> {
                           .saleDetailSlideHeight,
                       borderRadius: 0,
                       margin: EdgeInsets.all(0),
-                      images: [
-                        StringUtil.dummyImage,
-                        StringUtil.dummyImage,
-                        StringUtil.dummyImage,
-                        StringUtil.dummyImage
-                      ],
+                      images: value.detail['image'] != null
+                          ? value.detail['image']
+                          : [
+                              StringUtil.dummyImage,
+                              StringUtil.dummyImage,
+                              StringUtil.dummyImage,
+                              StringUtil.dummyImage
+                            ],
                       isShowImageCount: true,
                     ),
                     Padding(
@@ -158,44 +160,49 @@ class _SailingDetailScreenState extends BaseState<SailingDetailScreen> {
                       margin: EdgeInsets.all(0),
                       width: SizeUtil.smallSpace,
                     ),
-                    Consumer<DiscountProvider>(builder: (BuildContext context, DiscountProvider value, Widget child) {
-                      var products = value.products;
-                      if (products == null || products.isEmpty)
-                        return LoadingView(
-                          isNoData: products != null,
-                          onReload: () {
-                            _discountProvider.getData();
-                          },
+                    Consumer<DiscountProvider>(
+                      builder: (BuildContext context, DiscountProvider value,
+                          Widget child) {
+                        var products = value.products;
+                        if (products == null || products.isEmpty)
+                          return LoadingView(
+                            isNoData: products != null,
+                            onReload: () {
+                              _discountProvider.getData();
+                            },
+                          );
+                        return Container(
+                          height: MediaQuery.of(context).size.height * 0.78,
+                          color: ColorUtil.lineColor,
+                          child: GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            itemCount: products.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2, childAspectRatio: 0.78),
+                            padding: EdgeInsets.only(
+                                left: SizeUtil.tinySpace,
+                                right: SizeUtil.tinySpace),
+                            itemBuilder: (context, index) {
+                              return ProductItem(
+                                product: products[index],
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                borderRadius: SizeUtil.tinyRadius,
+                                showSoldCount: false,
+                                nameStyle: TextStyle(
+                                    fontSize: SizeUtil.textSizeDefault),
+                                showTime: false,
+                                padding: EdgeInsets.only(
+                                    left: SizeUtil.smallSpace,
+                                    right: SizeUtil.smallSpace,
+                                    top: 0),
+                              );
+                            },
+                          ),
                         );
-                      return Container(
-                        height: MediaQuery.of(context).size.height * 0.78,
-                        color: ColorUtil.lineColor,
-                        child: GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          itemCount: products.length,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2, childAspectRatio: 0.78),
-                          padding: EdgeInsets.only(
-                              left: SizeUtil.tinySpace,
-                              right: SizeUtil.tinySpace),
-                          itemBuilder: (context, index) {
-                            return ProductItem(
-                              product: products[index],
-                              width: MediaQuery.of(context).size.width * 0.5,
-                              borderRadius: SizeUtil.tinyRadius,
-                              showSoldCount: false,
-                              nameStyle:
-                              TextStyle(fontSize: SizeUtil.textSizeDefault),
-                              padding: EdgeInsets.only(
-                                  left: SizeUtil.smallSpace,
-                                  right: SizeUtil.smallSpace,
-                                  top: 0),
-                            );
-                          },
-                        ),
-                      );
-                    },)
+                      },
+                    )
                   ],
                 );
         },
