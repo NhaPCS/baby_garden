@@ -153,6 +153,6 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return null;
+    return [ChangeNotifierProvider.value(value: _bookingDetailProvider)];
   }
 }

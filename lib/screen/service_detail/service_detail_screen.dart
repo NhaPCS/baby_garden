@@ -54,8 +54,7 @@ class _ServiceDetailScreenState extends BaseStateModel<ServiceDetailScreen,Servi
             var bookingDetailData = value.bookingDetailData;
             if (bookingDetailData == null) return Container();
             initView(int.parse(bookingDetailData['active']));
-            return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            return ListView(
                 children: <Widget>[
                   WidgetUtil.getLine(
                       width: SizeUtil.smallSpace,
@@ -107,7 +106,7 @@ class _ServiceDetailScreenState extends BaseStateModel<ServiceDetailScreen,Servi
                   OrderInfo(
                     svgIcon: 'ic_payment_method.svg',
                     title: S.of(context).date_using,
-                    content: bookingDetailData['time_finish '],
+                    content: bookingDetailData['time_finish'],
                   ),
                   OrderInfo(
                     svgIcon: 'order_info.svg',
@@ -117,11 +116,11 @@ class _ServiceDetailScreenState extends BaseStateModel<ServiceDetailScreen,Servi
                           left: SizeUtil.normalSpace,
                           bottom: SizeUtil.tinySpace),
                       child: ProductOrderItem(
-                        imageUrl: bookingDetailData['shop_img '],
+                        imageUrl: bookingDetailData['shop_img'],
                         title:
-                        "Chăm sóc da mặt từ cơ bản đến nâng cao",
+                        bookingDetailData['service_name'],
                         subTitle:
-                        "Loại dịch vụ: SPA Thẩm mý, Khám thai",
+                        bookingDetailData['service_content'],
                       ),
                     ),
                   ),

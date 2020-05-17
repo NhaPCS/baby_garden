@@ -116,9 +116,7 @@ class _OrderDetailScreenState
                 content: state == BookingState.RECEIVE_IN_SHOP
                     ? S.of(context).receive_in_shop
                     : S.of(context).delivery_in_place,
-                contentNote: state == BookingState.RECEIVE_IN_SHOP
-                    ? data['time_ship']
-                    : " (Thời gian: 09:00-12:00 22/12/2019)",
+                contentNote:  data['time_ship']
               ),
               OrderInfo(
                 svgIcon: 'ic_payment_method.svg',

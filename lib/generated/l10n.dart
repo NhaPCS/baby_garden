@@ -15,8 +15,8 @@ class S {
     AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
-    final localeName = Intl.canonicalizedLocale(name); 
+    final String name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
+    final String localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
       return S();
@@ -1296,6 +1296,15 @@ class S {
     );
   }
 
+  String service_header(Object code, Object date_booking, Object time_booking) {
+    return Intl.message(
+      'Mã đặt lịch: $code\nNgày đặt lịch: $date_booking - $time_booking',
+      name: 'service_header',
+      desc: '',
+      args: [code, date_booking, time_booking],
+    );
+  }
+
   String order_date(Object date) {
     return Intl.message(
       'Ngày đặt hàng: $date',
@@ -2196,6 +2205,15 @@ class S {
     );
   }
 
+  String delivery_service_header(Object delivery_unit) {
+    return Intl.message(
+      'Đơn vị vận chuyển: $delivery_unit',
+      name: 'delivery_service_header',
+      desc: '',
+      args: [delivery_unit],
+    );
+  }
+
   String get enter_delivery_code {
     return Intl.message(
       'Nhập mã giảm giá vận chuyển',
@@ -2614,6 +2632,15 @@ class S {
     return Intl.message(
       'Giao hàng tận nơi:',
       name: 'delivery_in_place',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get checkout_notice {
+    return Intl.message(
+      'Bạn có thực sự muốn dừng thanh toán?',
+      name: 'checkout_notice',
       desc: '',
       args: [],
     );
@@ -4392,6 +4419,24 @@ class S {
     );
   }
 
+  String get view_delivery {
+    return Intl.message(
+      'Xem lộ trình',
+      name: 'view_delivery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get point_checkout_alert {
+    return Intl.message(
+      'Số điểm bạn nhập vượt quá số điểm hiện có',
+      name: 'point_checkout_alert',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get remindCycle1 {
     return Intl.message(
       '01 ( 1 ngày nhắc / 1 chu kỳ )',
@@ -4528,7 +4573,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
 
   bool _isSupported(Locale locale) {
     if (locale != null) {
-      for (var supportedLocale in supportedLocales) {
+      for (Locale supportedLocale in supportedLocales) {
         if (supportedLocale.languageCode == locale.languageCode) {
           return true;
         }

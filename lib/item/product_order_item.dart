@@ -41,65 +41,69 @@ class ProductOrderItem extends StatelessWidget {
         SizedBox(
           width: SizeUtil.tinySpace,
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(
-              height: SizeUtil.smallSpace,
+        Expanded(
+          child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  height: SizeUtil.smallSpace,
+                ),
+                Text(
+                  title,
+                  style: TextStyle(
+                      fontSize: subTitle != null
+                          ? SizeUtil.textSizeExpressDetail
+                          : SizeUtil.textSizeSmall,
+                      fontWeight:
+                          subTitle != null ? FontWeight.bold : FontWeight.normal),
+                  textAlign: TextAlign.start,
+                ),
+                subTitle != null
+                    ? Text(
+                        subTitle,
+                        style: TextStyle(
+                            height: 1.5, fontSize: SizeUtil.textSizeNoticeTime),
+                        textAlign: TextAlign.start,
+                      )
+                    : SizedBox(
+                        height: SizeUtil.tinySpace,
+                      ),
+                skuTitle != null
+                    ? Text(
+                        S.of(context).sku_code("123"),
+                        style: TextStyle(
+                            height: 1.5, fontSize: SizeUtil.textSizeNoticeTime),
+                        textAlign: TextAlign.start,
+                      )
+                    : SizedBox(),
+                subTitle != null
+                    ? SizedBox()
+                    : RichTextForm(
+                        title: StringUtil.getPriceText(price) + " X ",
+                        titleStyle: TextStyle(
+                            height: 1.5,
+                            fontSize: SizeUtil.textSizeSmall,
+                            color: ColorUtil.textColor,
+                            fontWeight: FontWeight.bold),
+                        content: productCount,
+                        contentStyle: TextStyle(
+                          color: ColorUtil.textColor,
+                          fontSize: SizeUtil.textSizeSmall,
+                        ),
+                      ),
+                SizedBox(
+                  height: SizeUtil.tinySpace,
+                ),
+                star != null
+                    ? Container(
+                        alignment: Alignment.centerLeft,
+                        child: StarDisplay(value: star),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            Text(
-              title,
-              style: TextStyle(
-                  fontSize: subTitle != null
-                      ? SizeUtil.textSizeExpressDetail
-                      : SizeUtil.textSizeSmall,
-                  fontWeight:
-                      subTitle != null ? FontWeight.bold : FontWeight.normal),
-              textAlign: TextAlign.start,
-            ),
-            subTitle != null
-                ? Text(
-                    subTitle,
-                    style: TextStyle(
-                        height: 1.5, fontSize: SizeUtil.textSizeNoticeTime),
-                    textAlign: TextAlign.start,
-                  )
-                : SizedBox(
-                    height: SizeUtil.tinySpace,
-                  ),
-            skuTitle != null
-                ? Text(
-                    S.of(context).sku_code("123"),
-                    style: TextStyle(
-                        height: 1.5, fontSize: SizeUtil.textSizeNoticeTime),
-                    textAlign: TextAlign.start,
-                  )
-                : SizedBox(),
-            subTitle != null
-                ? SizedBox()
-                : RichTextForm(
-                    title: StringUtil.getPriceText(price) + " X ",
-                    titleStyle: TextStyle(
-                        height: 1.5,
-                        fontSize: SizeUtil.textSizeSmall,
-                        color: ColorUtil.textColor,
-                        fontWeight: FontWeight.bold),
-                    content: productCount,
-                    contentStyle: TextStyle(
-                      color: ColorUtil.textColor,
-                      fontSize: SizeUtil.textSizeSmall,
-                    ),
-                  ),
-            SizedBox(
-              height: SizeUtil.tinySpace,
-            ),
-            star != null
-                ? Container(
-                    alignment: Alignment.centerLeft,
-                    child: StarDisplay(value: star),
-                  )
-                : SizedBox(),
-          ],
+          ),
         )
       ],
     );
