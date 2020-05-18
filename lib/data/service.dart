@@ -812,8 +812,8 @@ Future<dynamic> useVoucher({String voucherId}) async {
 Future<dynamic> promotionDetail({String code}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {"user_id": userId, "code": code};
-  Response response =
-  await get(null, path: 'promotionDetail', param: params, requireLogin: true);
+  Response response = await get(null,
+      path: 'promotionDetail', param: params, requireLogin: true);
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -1003,6 +1003,21 @@ Future<dynamic> addRemindCalendar(BuildContext context,
   Response response = await post(context,
       path: path, param: params, requireLogin: true, showLoading: true);
   if (response.isSuccess()) return response;
+  return null;
+}
+
+Future<dynamic> listRemindProducts(BuildContext context, int type) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+
+  dynamic params = {
+    "user_id": userId,
+    "type": type.toString(),
+  };
+
+  // todo- QA fix path
+  Response response =
+      await get(null, path: 'path', param: params, showLoading: false);
+  if (response.isSuccess()) return response.data;
   return null;
 }
 

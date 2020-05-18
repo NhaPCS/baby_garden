@@ -44,7 +44,9 @@ class _FavoriteProductScreen extends BaseState<FavoriteProductScreen> {
                   final _product = _getListProductProvider.getProduct(index);
                   return ProductItem(
                     onTap: () {
-                      push(ProductDetailScreen());
+                      push(ProductDetailScreen(
+                        productId: _product.id,
+                      ));
                     },
                     product: _product,
                   );

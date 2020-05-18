@@ -1,14 +1,16 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/remind_add/provider/remind_add_provider.dart';
 import 'package:baby_garden_flutter/screen/remind_cycle/remind_cycle_screen.dart';
+import 'package:baby_garden_flutter/screen/remind_management/provider/remind_calendar_provider.dart';
 import 'package:baby_garden_flutter/screen/remind_set_date/remind_set_date_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_set_time/remind_set_time_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/checkbox/circle_checkbox.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:baby_garden_flutter/widget/line/dashed_line.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 class ReminderLayout extends StatefulWidget {
   final bool showDesc;
@@ -38,6 +40,7 @@ class _ReminderState extends BaseState<ReminderLayout> {
   Widget listViewRemindTime() {
     List<int> order = [1, 2, 3, 4];
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: List.generate(order.length, (index) {
         return _chooseRemindTime(
@@ -71,32 +74,32 @@ class _ReminderState extends BaseState<ReminderLayout> {
     );
   }
 
-  Widget rowCheckBox(String title, {bool isRemindUse = false}) {
-    return Row(
-      children: <Widget>[
-        CircleCheckbox(
-            color: ColorUtil.primaryColor,
-            uncheckBg: Icons.check_box_outline_blank,
-            checkBg: Icons.check_box,
-            checked: isRemindUse ? this.remindUsed : this.remindBuy,
-            onChanged: (bool val) {
-              if (isRemindUse) {
-                this.remindUsed = !this.remindUsed;
-              } else {
-                this.remindBuy = !this.remindBuy;
-              }
-            }),
-        Text(
-          title,
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-      ],
-    );
+  Widget rowSelectRemindType(String title, {bool isRemindUse = false}) {
+    return Consumer<RemindAddProvider>(
+        builder: (BuildContext context, RemindAddProvider value, Widget child) {
+      return Row(
+        children: <Widget>[
+          Radio(
+            onChanged: (val) {
+              value.setSelectedRadio(val);
+            },
+            groupValue: value.selectedRadio,
+            value: isRemindUse ? 2 : 1,
+            activeColor: ColorUtil.primaryColor,
+          ),
+          Text(
+            title,
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+        ],
+      );
+    });
   }
 
   @override
   Widget buildWidget(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         widget.showDesc
             ? Padding(
@@ -107,7 +110,7 @@ class _ReminderState extends BaseState<ReminderLayout> {
                         fontWeight: FontWeight.bold,
                         color: ColorUtil.darkGray)))
             : SizedBox(),
-        rowCheckBox(S.of(context).remindBuyProduct),
+        rowSelectRemindType(S.of(context).remindBuyProduct),
         GestureDetector(
           onTap: () {
             push(RemindSetTimeScreen());
@@ -115,7 +118,7 @@ class _ReminderState extends BaseState<ReminderLayout> {
           child: rowTimeTable(S.of(context).remindTime),
         ),
         getDivider(),
-        rowCheckBox(S.of(context).remindUseProduct, isRemindUse: true),
+        rowSelectRemindType(S.of(context).remindUseProduct, isRemindUse: true),
         GestureDetector(
           onTap: () {
             chooseDate();
@@ -215,6 +218,6 @@ class _ReminderState extends BaseState<ReminderLayout> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [];
+    return [ChangeNotifierProvider.value(value: RemindAddProvider())];
   }
 }

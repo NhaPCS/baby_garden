@@ -484,7 +484,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "selectRemindBuyTime" : MessageLookupByLibrary.simpleMessage("Chọn thời gian nhắc lịch mua sản phẩm"),
     "selectRemindCycle" : MessageLookupByLibrary.simpleMessage("chọn chu kì nhắc"),
     "selectRemindDate" : MessageLookupByLibrary.simpleMessage("Chọn ngày nhắc"),
-    "selectRemindProduct" : MessageLookupByLibrary.simpleMessage("Chọn sản phẩm nhắc mua"),
+    "selectRemindProduct" : MessageLookupByLibrary.simpleMessage("Chọn sản phẩm nhắc"),
     "selectRemindTime" : MessageLookupByLibrary.simpleMessage("Chọn thời gian nhắc"),
     "send" : MessageLookupByLibrary.simpleMessage("Gửi"),
     "sendCode" : MessageLookupByLibrary.simpleMessage("Gửi mã"),
