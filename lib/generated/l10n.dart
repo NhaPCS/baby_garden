@@ -4230,6 +4230,15 @@ class S {
     );
   }
 
+  String get rank_is {
+    return Intl.message(
+      '       Xếp hạng: ',
+      name: 'rank_is',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get note_is {
     return Intl.message(
       'Lưu bút:',
