@@ -48,26 +48,21 @@ class _PartnerLikeScreen extends BaseState<PartnerLikeScreen> {
             child: Consumer<GetListPartnerProvider>(
               builder: (BuildContext context, GetListPartnerProvider value,
                   Widget child) {
-                if (value.shops == null || value.shops.isEmpty)
-                  return LoadingView(
-                    isNoData: value.shops != null,
-                  );
                 return LoadMoreListView(
-                    itemsCount: value.shops.length,
+                    data: value.shops,
                     totalElement: value.totalElements,
                     padding: EdgeInsets.only(
                         left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
                     reloadCallback: (page) {
-                      print("PAGE $page");
                       _getListPartnerProvider.getListFavouriteShop(
                           index: page * PAGE_SIZE);
                     },
-                    itemBuilder: (context, index) {
+                    itemBuilder: (context, partner, index) {
                       return new GestureDetector(
-                        child: new PartnerItem(shop: value.shops[index]),
+                        child: new PartnerItem(shop: partner),
                         onTap: () async {
                           await push(PartnerBookScheduleScreen(
-                              shopID: value.shops[index]['id']));
+                              shopID: partner['id']));
                           _getListPartnerProvider.getListFavouriteShop();
                         },
                       );

@@ -21,6 +21,7 @@ class VCBExpressScreen extends StatefulWidget {
 
 class _VCBExpressScreenState extends BaseState<VCBExpressScreen> {
   final VCBExpressProvider _vcbExpressProvider = VCBExpressProvider();
+  final ValueNotifier<int> _pageController = ValueNotifier(0);
 
   @override
   void initState() {
@@ -37,6 +38,7 @@ class _VCBExpressScreenState extends BaseState<VCBExpressScreen> {
         children: <Widget>[
           ListServiceCategory(
             onChangedCategory: (category) {
+              _pageController.value = 0;
               //TODO add category filter
             },
           ),
@@ -45,22 +47,21 @@ class _VCBExpressScreenState extends BaseState<VCBExpressScreen> {
               builder: (BuildContext context, VCBExpressProvider value,
                   Widget child) {
                 return LoadMoreListView(
-                    itemsCount:
-                        value.newList != null ? value.newList.length : 0,
+                    pageController: _pageController,
+                    data: value.newList,
                     padding: EdgeInsets.all(0),
                     totalElement: value.total,
                     reloadCallback: (page) {
                       _vcbExpressProvider.getVCBExpress(
                           index: page * PAGE_SIZE);
                     },
-                    itemBuilder: (context, index) {
+                    itemBuilder: (context, news, index) {
                       return new GestureDetector(
                         child: new ExpressItem(
-                          data: value.newList[index],
+                          data: news,
                         ),
                         onTap: () {
-                          push(VCBExpressDetailScreen(
-                              value.newList[index]['id']));
+                          push(VCBExpressDetailScreen(news['id']));
                         },
                       );
                     });

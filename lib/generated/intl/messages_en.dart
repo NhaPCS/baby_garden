@@ -432,6 +432,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "providerInfo" : MessageLookupByLibrary.simpleMessage("Thông tin đơn vị cung cấp"),
     "provider_info" : MessageLookupByLibrary.simpleMessage("Thông tin nhà cung cấp"),
     "province" : MessageLookupByLibrary.simpleMessage("Tỉnh/ Thành Phố"),
+    "rank_is" : MessageLookupByLibrary.simpleMessage("       Xếp hạng: "),
     "rate_order" : MessageLookupByLibrary.simpleMessage("Đánh giá\nđơn hàng"),
     "rate_service" : MessageLookupByLibrary.simpleMessage("Đánh giá\ndịch vụ"),
     "rated" : MessageLookupByLibrary.simpleMessage("Đã đánh giá"),
