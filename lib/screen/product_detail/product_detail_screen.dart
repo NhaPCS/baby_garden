@@ -292,7 +292,10 @@ class _ProductScreenState
                     ),
                     onPressed: () {
                       push(ListProductScreen(
-                        section: Section(title: S.of(context).same_product),
+                        section: Section(
+                            title: S.of(context).same_product,
+                            path: "getProduct"),
+                        productId: productProvider.product['id'],
                       ));
                     },
                   )

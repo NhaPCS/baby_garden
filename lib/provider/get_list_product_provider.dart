@@ -22,7 +22,7 @@ class GetListProductProvider extends ChangeNotifier {
         index: index,
         numberPosts: numberPosts);
     // add check case data as emty array like list product view
-    if (data != null && data.length != 0) {
+    if (data != null) {
       products = data['list'];
       total = data['total'];
       notifyListeners();
