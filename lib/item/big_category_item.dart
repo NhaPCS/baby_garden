@@ -1,12 +1,18 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/image/circle_image.dart';
+import 'package:baby_garden_flutter/widget/image/my_cached_image.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class BigCategoryItem extends StatelessWidget {
   final bool isSelected;
+  final dynamic category;
 
-  const BigCategoryItem({Key key, this.isSelected = false}) : super(key: key);
+  const BigCategoryItem({Key key, this.isSelected = false, this.category})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,33 +23,30 @@ class BigCategoryItem extends StatelessWidget {
           top: SizeUtil.smallSpace, bottom: SizeUtil.smallSpace),
       child: Column(
         children: <Widget>[
-          Expanded(
-              child: AspectRatio(
-            child: Container(
-              height: double.infinity,
-              padding: SizeUtil.smallPadding,
-              child: Image.asset('photo/ic_toy.png'),
-              decoration: BoxDecoration(
-                  color: ColorUtil.lightGray,
-                  borderRadius: BorderRadius.circular(100),
-                  border: Border.all(
-                      color: isSelected
-                          ? ColorUtil.primaryColor
-                          : ColorUtil.lightGray,
-                      width: isSelected ? 2 : 0)),
+          Container(
+            child: CircleImage(
+              imageUrl: category['img'],
+              width: 50,
+              height: 50,
             ),
-            aspectRatio: 1,
-          )),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(50)),
+              color: isSelected ? ColorUtil.primaryColor : ColorUtil.lightGray,
+            ),
+          ),
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
-          Padding(
+          Expanded(child: Padding(
             padding: EdgeInsets.only(
               left: SizeUtil.smallSpace,
               right: SizeUtil.smallSpace,
             ),
-            child: Text(
-              "Thời trang nam",
+            child: AutoSizeText(
+              category['name'],
+              minFontSize: SizeUtil.textSizeMini,
+              maxFontSize: SizeUtil.textSizeSmall,
+              maxLines: 2,
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: SizeUtil.textSizeSmall,
@@ -51,7 +54,7 @@ class BigCategoryItem extends StatelessWidget {
                       ? ColorUtil.primaryColor
                       : ColorUtil.textColor),
             ),
-          )
+          ))
         ],
       ),
     );

@@ -33,7 +33,7 @@ class ChartClickedInfoDialog extends StatelessWidget {
                 width: 100,
                 height: 100,
                 borderRadius: 10,
-                imageUrl: baby['img'],
+                imageUrl: testResult['img'],
               ),
               SizedBox(
                 width: SizeUtil.smallSpace,
