@@ -1000,6 +1000,16 @@ Future<dynamic> search(String key) async {
   return null;
 }
 
+Future<Response> deleteSearch(BuildContext context) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId};
+
+  Response response = await post(context, path: "deleteSearch", param: params);
+
+  if (response.isSuccess()) return response;
+  return null;
+}
+
 Future<dynamic> updateProfile(BuildContext context,
     {String name, String gender, String birthday}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();

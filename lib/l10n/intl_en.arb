@@ -502,5 +502,7 @@
     "baby": "Bé:",
     "birthday_is": "Ngày sinh:",
     "check_date_is": "Ngày kiểm tra:",
-    "test_result_is": "Đánh giá kết quả:"
+    "test_result_is": "Đánh giá kết quả:",
+    "mess_delete_search_history": "Bạn có muốn xoá lịch sử tìm kiếm không?",
+    "no_search_history": "Bạn chưa có lịch sử tìm kiếm"
 }

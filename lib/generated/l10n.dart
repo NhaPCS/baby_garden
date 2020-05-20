@@ -4562,6 +4562,24 @@ class S {
       args: [],
     );
   }
+
+  String get mess_delete_search_history {
+    return Intl.message(
+      'Bạn có muốn xoá lịch sử tìm kiếm không?',
+      name: 'mess_delete_search_history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get no_search_history {
+    return Intl.message(
+      'Bạn chưa có lịch sử tìm kiếm',
+      name: 'no_search_history',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

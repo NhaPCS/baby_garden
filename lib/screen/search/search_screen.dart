@@ -3,6 +3,7 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/search/provider/get_hot_keys_provider.dart';
 import 'package:baby_garden_flutter/screen/search/provider/get_search_history_provider.dart';
 import 'package:baby_garden_flutter/screen/search/provider/searching_provider.dart';
+import 'package:baby_garden_flutter/screen/search/widget/hot_keys.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_icon.dart';
 import 'package:baby_garden_flutter/widget/chip_tag.dart';
@@ -57,6 +58,7 @@ class _SearchState extends BaseState<SearchScreen> {
           onSearchTextChanged: (s) {
             if (_searchTextController.text.trim().isEmpty) {
               _searchingProvider.clear();
+              _getSearchHistoryProvider.searchHistory();
             }
           },
         ),
@@ -75,57 +77,16 @@ class _SearchState extends BaseState<SearchScreen> {
                       : historyProvider.histories.length,
                   itemBuilder: (BuildContext context, int index) {
                     if (index == 0) {
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          WidgetUtil.paddingWidget(Text(
-                            S.of(context).hot_key,
-                            style: TextStyle(color: ColorUtil.primaryColor),
-                          )),
-                          WidgetUtil.paddingWidget(Consumer<GetHotKeysProvider>(
-                            builder: (BuildContext context,
-                                GetHotKeysProvider value, Widget child) {
-                              return Wrap(
-                                children: List.generate(
-                                    value.keys == null ? 0 : value.keys.length,
-                                    (index) => ChipTag(
-                                          text: value.keys[index]['title'],
-                                          borderColor: ColorUtil.lightGray,
-                                          fillColor: ColorUtil.lightGray,
-                                          onItemPressed: (s) {
-                                            _searchTextController.text = s;
-                                            _searchingProvider.search(
-                                                context, s);
-                                          },
-                                        )),
-                              );
-                            },
-                          )),
-                          WidgetUtil.getLine(),
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                  child: WidgetUtil.paddingWidget(
-                                      Text(
-                                        S.of(context).search_key_history,
-                                        style: TextStyle(
-                                            color: ColorUtil.primaryColor),
-                                      ),
-                                      padding: SizeUtil.smallPadding)),
-                              ButtonIcon(
-                                icon: Text(
-                                  S.of(context).delete,
-                                  style: TextStyle(color: ColorUtil.blue),
-                                ),
-                                padding: SizeUtil.smallPadding,
-                                onPressed: () {
-                                  //TODO
-                                },
-                              )
-                            ],
-                          )
-                        ],
+                      return HotKeys(
+                        onHotKeyPress: (s) {
+                          _searchTextController.text = s;
+                          _searchingProvider.search(context, s);
+                        },
+                        onDeleteHistory: () {
+                          _getSearchHistoryProvider
+                              .deleteSearchHistory(context);
+                        },
+                        histories: historyProvider.histories,
                       );
                     }
                     return SearchHistoryItem(
@@ -137,9 +98,10 @@ class _SearchState extends BaseState<SearchScreen> {
                 );
               },
             );
-          } if(searchProvider.searchResult.isEmpty){
+          }
+          if (searchProvider.searchResult.isEmpty) {
             return LoadingView(isNoData: true);
-          }else
+          } else
             return ListView.builder(
               itemCount: searchProvider.searchResult == null
                   ? 0
