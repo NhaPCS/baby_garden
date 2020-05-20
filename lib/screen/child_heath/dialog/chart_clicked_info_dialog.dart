@@ -55,6 +55,9 @@ class ChartClickedInfoDialog extends StatelessWidget {
                             color: ColorUtil.primaryColor,
                             fontSize: SizeUtil.textSizeDefault))
                   ])),
+                  SizedBox(
+                    height: SizeUtil.smallSpace,
+                  ),
                   RichText(
                       text: TextSpan(children: [
                     TextSpan(
@@ -68,6 +71,9 @@ class ChartClickedInfoDialog extends StatelessWidget {
                             color: ColorUtil.primaryColor,
                             fontSize: SizeUtil.textSizeDefault))
                   ])),
+                  SizedBox(
+                    height: SizeUtil.smallSpace,
+                  ),
                   RichText(
                       text: TextSpan(children: [
                     TextSpan(
@@ -85,6 +91,9 @@ class ChartClickedInfoDialog extends StatelessWidget {
               )),
             ],
           ),
+          SizedBox(
+            height: SizeUtil.smallSpace,
+          ),
           RichText(
               text: TextSpan(children: [
             TextSpan(
@@ -96,8 +105,21 @@ class ChartClickedInfoDialog extends StatelessWidget {
                 text: getValueText(),
                 style: TextStyle(
                     color: ColorUtil.primaryColor,
+                    fontSize: SizeUtil.textSizeDefault)),
+            TextSpan(
+                text: S.of(context).rank_is,
+                style: TextStyle(
+                    color: ColorUtil.textGray,
+                    fontSize: SizeUtil.textSizeDefault)),
+            TextSpan(
+                text: testResult==null?'':testResult['rank'],
+                style: TextStyle(
+                    color: ColorUtil.primaryColor,
                     fontSize: SizeUtil.textSizeDefault))
           ])),
+          SizedBox(
+            height: SizeUtil.smallSpace,
+          ),
           RichText(
               text: TextSpan(children: [
             TextSpan(

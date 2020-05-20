@@ -35,25 +35,20 @@ class _FavoriteProductScreen extends BaseState<FavoriteProductScreen> {
         appBar: getAppBar(title: S.of(context).favoriteProduct),
         body: Consumer<GetListProductProvider>(
           builder: (context, value, child) {
-            if (value.products == null || value.products.isEmpty)
-              return LoadingView(
-                isNoData: value.products != null,
-              );
             return LoadMoreListView(
-                itemsCount: value.products.length,
+                data: value.products,
                 totalElement: value.total,
                 reloadCallback: (page) {
                   _getListProductProvider.getData(
                       context, 'listFavouriteProduct',
                       index: page * PAGE_SIZE);
                 },
-                itemBuilder: (BuildContext context, int index) {
-                  final _product = _getListProductProvider.getProduct(index);
+                itemBuilder: (BuildContext context, product, int index) {
                   return ProductItem(
                     onTap: () {
                       push(ProductDetailScreen());
                     },
-                    product: _product,
+                    product: product,
                   );
                 });
           },

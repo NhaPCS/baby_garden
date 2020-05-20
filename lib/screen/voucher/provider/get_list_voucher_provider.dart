@@ -5,7 +5,7 @@ class GetListVoucherProvider extends ChangeNotifier {
   List<dynamic> vouchers;
   int totalElements = 0;
 
-  Future<void> getListVoucher({int index = 1, String categoryID}) async {
+  Future<void> getListVoucher({int index = 0, String categoryID}) async {
     dynamic data =
         await service.listVoucher(index: index, categoryId: categoryID);
     if (data != null) {

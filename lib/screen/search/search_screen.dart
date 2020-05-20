@@ -1,16 +1,19 @@
-import 'dart:math';
-
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/screen/search/provider/searching_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
+import 'package:baby_garden_flutter/screen/search/provider/get_hot_keys_provider.dart';
+import 'package:baby_garden_flutter/screen/search/provider/get_search_history_provider.dart';
+import 'package:baby_garden_flutter/screen/search/provider/searching_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_icon.dart';
 import 'package:baby_garden_flutter/widget/chip_tag.dart';
 import 'package:baby_garden_flutter/widget/input/search_bar.dart';
+import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
+
+import 'item/search_history_item.dart';
+import 'item/search_product_item.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -22,6 +25,16 @@ class SearchScreen extends StatefulWidget {
 class _SearchState extends BaseState<SearchScreen> {
   final TextEditingController _searchTextController = TextEditingController();
   final SearchingProvider _searchingProvider = SearchingProvider();
+  final GetHotKeysProvider _getHotKeysProvider = GetHotKeysProvider();
+  final GetSearchHistoryProvider _getSearchHistoryProvider =
+      GetSearchHistoryProvider();
+
+  @override
+  void initState() {
+    super.initState();
+    _getHotKeysProvider.hotKeys();
+    _getSearchHistoryProvider.searchHistory();
+  }
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -34,104 +47,111 @@ class _SearchState extends BaseState<SearchScreen> {
           hasBack: true,
           enable: true,
           searchTextController: _searchTextController,
+          onSubmit: () {
+            if (_searchTextController.text.trim().isEmpty) {
+              _searchingProvider.clear();
+            } else
+              _searchingProvider.search(
+                  context, _searchTextController.text.trim());
+          },
           onSearchTextChanged: (s) {
-            if (s.trim().isEmpty)
-              _searchingProvider.clearData();
-            else
-              _searchingProvider.searching(context);
+            if (_searchTextController.text.trim().isEmpty) {
+              _searchingProvider.clear();
+            }
           },
         ),
       ),
       body: Consumer<SearchingProvider>(
-        builder: (BuildContext context, SearchingProvider value, Widget child) {
-          return ListView.builder(
-            itemCount: value.data == null || value.data.isEmpty
-                ? 20
-                : value.data.length,
-            itemBuilder: (BuildContext context, int index) {
-              if (value.data == null || value.data.isEmpty) {
-                if (index == 0) {
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      WidgetUtil.paddingWidget(Text(
-                        S.of(context).hot_key,
-                        style: TextStyle(color: ColorUtil.primaryColor),
-                      )),
-                      WidgetUtil.paddingWidget(Wrap(
-                        children: List.generate(
-                            5,
-                            (index) => ChipTag(
-                                  text: "Đồ em bé",
-                                  borderColor: ColorUtil.lightGray,
-                                  fillColor: ColorUtil.lightGray,
-                                  onItemPressed: (s) {
-                                    _searchTextController.text = s;
-                                    _searchingProvider.searching(context);
-                                  },
-                                )),
-                      )),
-                      WidgetUtil.getLine(),
-                      Row(
+        builder: (BuildContext context, SearchingProvider searchProvider,
+            Widget child) {
+          if (searchProvider.searchResult == null) {
+            return Consumer2<GetHotKeysProvider, GetSearchHistoryProvider>(
+              builder: (BuildContext context, GetHotKeysProvider hotKeyProvider,
+                  GetSearchHistoryProvider historyProvider, Widget child) {
+                return ListView.builder(
+                  itemCount: historyProvider.histories == null ||
+                          historyProvider.histories.isEmpty
+                      ? 1
+                      : historyProvider.histories.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index == 0) {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Expanded(
-                              child: WidgetUtil.paddingWidget(
-                                  Text(
-                                    S.of(context).search_key_history,
-                                    style: TextStyle(
-                                        color: ColorUtil.primaryColor),
-                                  ),
-                                  padding: SizeUtil.smallPadding)),
-                          ButtonIcon(
-                            icon: Text(
-                              S.of(context).delete,
-                              style: TextStyle(color: ColorUtil.blue),
-                            ),
-                            padding: SizeUtil.smallPadding,
-                            onPressed: () {
-                              //TODO
+                          WidgetUtil.paddingWidget(Text(
+                            S.of(context).hot_key,
+                            style: TextStyle(color: ColorUtil.primaryColor),
+                          )),
+                          WidgetUtil.paddingWidget(Consumer<GetHotKeysProvider>(
+                            builder: (BuildContext context,
+                                GetHotKeysProvider value, Widget child) {
+                              return Wrap(
+                                children: List.generate(
+                                    value.keys == null ? 0 : value.keys.length,
+                                    (index) => ChipTag(
+                                          text: value.keys[index]['title'],
+                                          borderColor: ColorUtil.lightGray,
+                                          fillColor: ColorUtil.lightGray,
+                                          onItemPressed: (s) {
+                                            _searchTextController.text = s;
+                                            _searchingProvider.search(
+                                                context, s);
+                                          },
+                                        )),
+                              );
                             },
+                          )),
+                          WidgetUtil.getLine(),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                  child: WidgetUtil.paddingWidget(
+                                      Text(
+                                        S.of(context).search_key_history,
+                                        style: TextStyle(
+                                            color: ColorUtil.primaryColor),
+                                      ),
+                                      padding: SizeUtil.smallPadding)),
+                              ButtonIcon(
+                                icon: Text(
+                                  S.of(context).delete,
+                                  style: TextStyle(color: ColorUtil.blue),
+                                ),
+                                padding: SizeUtil.smallPadding,
+                                onPressed: () {
+                                  //TODO
+                                },
+                              )
+                            ],
                           )
                         ],
-                      )
-                    ],
-                  );
-                }
-                return GestureDetector(
-                  child: Container(
-                    padding: SizeUtil.smallPadding,
-                    decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(color: ColorUtil.lightGray))),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Text("Sữa bột"),
-                        ),
-                        Transform.rotate(
-                          angle: -180 * pi / 360,
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Icons.call_made,
-                            color: ColorUtil.gray,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  onTap: () {
-                    _searchTextController.text = "Sữa bột";
+                      );
+                    }
+                    return SearchHistoryItem(
+                        onSearchItemPress: (t) {
+                          _searchingProvider.search(context, t);
+                        },
+                        history: historyProvider.histories[index - 1]);
                   },
                 );
-              } else {
-                if (value.data[index].runtimeType == String) {
+              },
+            );
+          } if(searchProvider.searchResult.isEmpty){
+            return LoadingView(isNoData: true);
+          }else
+            return ListView.builder(
+              itemCount: searchProvider.searchResult == null
+                  ? 0
+                  : searchProvider.searchResult.length,
+              itemBuilder: (BuildContext context, int index) {
+                if (searchProvider.searchResult[index].runtimeType == String) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       WidgetUtil.paddingWidget(
                           Text(
-                            value.data[index],
+                            searchProvider.searchResult[index],
                             style: TextStyle(
                                 color: ColorUtil.primaryColor,
                                 fontSize: SizeUtil.textSizeDefault),
@@ -144,52 +164,10 @@ class _SearchState extends BaseState<SearchScreen> {
                     ],
                   );
                 } else
-                  return Column(
-                    children: <Widget>[
-                      ListTile(
-                        title: Row(
-                          children: <Widget>[
-                            Expanded(
-                                child: Text(
-                              value.data[index]['product_name'],
-                            )),
-                            Text(
-                              value.data[index]['price'],
-                              style: TextStyle(color: ColorUtil.red),
-                            )
-                          ],
-                        ),
-                        trailing: Transform.rotate(
-                          angle: -180 * pi / 360,
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Icons.call_made,
-                            color: ColorUtil.gray,
-                          ),
-                        ),
-                        subtitle: RichText(
-                            text: TextSpan(children: [
-                          TextSpan(
-                              text: S.of(context).distributor_name,
-                              style: TextStyle(color: ColorUtil.textGray)),
-                          TextSpan(
-                              text: value.data[index]['distributor'],
-                              style: TextStyle(color: ColorUtil.blue)),
-                        ])),
-                        onTap: () {
-                          //TODO
-                          push(ProductDetailScreen());
-                        },
-                      ),
-                      WidgetUtil.getLine(
-                          margin: EdgeInsets.only(
-                              left: SizeUtil.defaultSpace,
-                              right: SizeUtil.defaultSpace))
-                    ],
-                  );
-              }
-            },
-          );
+                  return SearchProductItem(
+                      product: searchProvider.searchResult[index]);
+              },
+            );
         },
       ),
     );
@@ -197,6 +175,10 @@ class _SearchState extends BaseState<SearchScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _searchingProvider)];
+    return [
+      ChangeNotifierProvider.value(value: _searchingProvider),
+      ChangeNotifierProvider.value(value: _getHotKeysProvider),
+      ChangeNotifierProvider.value(value: _getSearchHistoryProvider),
+    ];
   }
 }
