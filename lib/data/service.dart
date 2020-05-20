@@ -1008,15 +1008,15 @@ Future<dynamic> addRemindCalendar(BuildContext context,
 
 Future<dynamic> listRemindProducts(BuildContext context, int type) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  userId = "26";
 
   dynamic params = {
     "user_id": userId,
     "type": type.toString(),
   };
 
-  // todo- QA fix path
-  Response response =
-      await get(null, path: 'path', param: params, showLoading: false);
+  Response response = await get(null,
+      path: 'productCalendar', param: params, showLoading: false);
   if (response.isSuccess()) return response.data;
   return null;
 }

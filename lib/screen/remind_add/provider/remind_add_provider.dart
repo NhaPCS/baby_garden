@@ -5,6 +5,7 @@ import 'package:baby_garden_flutter/data/service.dart' as service;
 class RemindAddProvider extends ChangeNotifier {
   List<dynamic> products = List();
   int selectedRadio = 1; // 1 remind buy, 2: remind use
+  int selectedProduct = 0;
 
   void clearProduct() {
     products = null;
@@ -17,13 +18,18 @@ class RemindAddProvider extends ChangeNotifier {
 
     // add check case data as emty array like list product view
     if (data != null && data.length != 0) {
-      products = data['list'];
+      products = data;
       notifyListeners();
     }
   }
 
   void setSelectedRadio(int val) {
     this.selectedRadio = val;
+    notifyListeners();
+  }
+
+  void setSelectedProduct(int val) {
+    this.selectedProduct = val;
     notifyListeners();
   }
 

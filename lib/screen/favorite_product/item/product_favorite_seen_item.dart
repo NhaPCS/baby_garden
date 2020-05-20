@@ -28,7 +28,7 @@ class ProductItem extends StatelessWidget {
             child: ClipRRect(
               child: Image.network(
                 product.image[0],
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
                 width: 94.0,
                 height: 94.0,
               ),
