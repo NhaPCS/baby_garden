@@ -360,6 +360,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "no_delivery_time_2" : MessageLookupByLibrary.simpleMessage("Vui lòng chọn ngày khác"),
     "no_image" : MessageLookupByLibrary.simpleMessage("No image"),
     "no_product_in_cart" : MessageLookupByLibrary.simpleMessage("Bạn chưa có sản phẩm nào trong giỏ.\nShopping ngay nào!"),
+    "no_receive_time" : MessageLookupByLibrary.simpleMessage("Không có thời gian nhận hàng\nVui lòng chọn ngày khác"),
     "normal_height" : MessageLookupByLibrary.simpleMessage("Chiều cao bình thường"),
     "note_for_product_promo" : MessageLookupByLibrary.simpleMessage("Ghi chú khuyến mại của sản phẩm"),
     "note_is" : MessageLookupByLibrary.simpleMessage("Lưu bút:"),

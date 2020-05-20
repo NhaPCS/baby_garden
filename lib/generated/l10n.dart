@@ -4562,6 +4562,15 @@ class S {
       args: [],
     );
   }
+
+  String get no_receive_time {
+    return Intl.message(
+      'Không có thời gian nhận hàng\nVui lòng chọn ngày khác',
+      name: 'no_receive_time',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
