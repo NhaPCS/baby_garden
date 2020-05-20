@@ -42,7 +42,7 @@ class _ShowAddAddressDialogState extends BaseState<AddChildDialog> {
     super.initState();
     if (widget.baby != null) {
       _nameController.text = widget.baby.name;
-      _selectGenderProvider.updateGender(widget.baby.gender.index+1);
+      _selectGenderProvider.updateGender(widget.baby.gender.index + 1);
       _selectDateProvider
           .updateDate(DateUtil.parseBirthdayDate(widget.baby.birthday));
     }
@@ -64,139 +64,151 @@ class _ShowAddAddressDialogState extends BaseState<AddChildDialog> {
         ),
         backgroundColor: ColorUtil.primaryColor,
       ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          // title
-          Padding(
-            padding: const EdgeInsets.only(top: SizeUtil.midSpace),
-            child: Center(
-              child: ChangeAvatar(
-                avatarUrl: widget.baby == null ? null : widget.baby.avatar,
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            // title
+            Padding(
+              padding: const EdgeInsets.only(top: SizeUtil.midSpace),
+              child: Center(
+                child: ChangeAvatar(
+                  avatarUrl: widget.baby == null ? null : widget.baby.avatar,
+                  borderRadius: SizeUtil.tinyRadius,
+                  width: 92,
+                  height: 92,
+                  onSelectImage: widget.onSelectImage,
+                ),
+              ),
+            ),
+            Center(
+                child: Icon(
+              Icons.photo_camera,
+              color: ColorUtil.colorAccent,
+            )),
+            Center(
+              child: Text(
+                S.of(context).uploadChildAvatar,
+                style: TextStyle(
+                    color: ColorUtil.colorAccent,
+                    fontSize: SizeUtil.textSizeSmall),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: SizeUtil.midSpace,
+                  left: SizeUtil.midSpace,
+                  right: SizeUtil.midSpace),
+              child: MyTextField(
+                borderColor: ColorUtil.colorAccent,
                 borderRadius: SizeUtil.tinyRadius,
-                width: 92,
-                height: 92,
-                onSelectImage: widget.onSelectImage,
-              ),
-            ),
-          ),
-          Center(
-              child: Icon(
-            Icons.photo_camera,
-            color: ColorUtil.colorAccent,
-          )),
-          Center(
-            child: Text(
-              S.of(context).uploadChildAvatar,
-              style: TextStyle(
-                  color: ColorUtil.colorAccent,
-                  fontSize: SizeUtil.textSizeSmall),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                top: SizeUtil.midSpace,
-                left: SizeUtil.midSpace,
-                right: SizeUtil.midSpace),
-            child: MyTextField(
-              borderColor: ColorUtil.colorAccent,
-              borderRadius: SizeUtil.tinyRadius,
-              borderWidth: 0.5,
-              elevation: 3,
-              labelText: S.of(context).nameOfChild,
-              labelStyle: TextStyle(
-                  color: ColorUtil.black33, fontSize: SizeUtil.textSizeSmall),
-              textEditingController: _nameController,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                top: SizeUtil.midSpace,
-                left: SizeUtil.midSpace,
-                right: SizeUtil.midSpace),
-            child: ButtonTheme(
-              child: RaisedButton(
-                onPressed: () {
-                  WidgetUtil.showGenderSelectorDialog(context, (gender) {
-                    _selectGenderProvider.updateGender(gender);
-                  }, initGender: _selectGenderProvider.gender);
-                },
+                borderWidth: 0.5,
                 elevation: 3,
-                child: SizedBox(
-                  child: Consumer<SelectGenderProvider>(
-                    builder: (BuildContext context, SelectGenderProvider value,
-                        Widget child) {
-                      String gender = S.of(context).gender;
-                      if (value.gender != null) {
-                        gender = value.gender == 1
-                            ? S.of(context).boy
-                            : S.of(context).girl;
-                      }
-                      return Text(
-                        gender,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: SizeUtil.textSizeSmall,
-                            color: ColorUtil.black33),
-                      );
-                    },
-                  ),
-                  width: double.infinity,
-                ),
-                shape: RoundedRectangleBorder(
-                    side: BorderSide(color: ColorUtil.primaryColor, width: 0.5),
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(SizeUtil.tinyRadius))),
-                color: Colors.white,
+                contentPadding: EdgeInsets.fromLTRB(SizeUtil.normalSpace,
+                    SizeUtil.smallSpace, 0, SizeUtil.smallSpace),
+                hint: S.of(context).nameOfChild,
+                hintStyle: TextStyle(
+                    color: ColorUtil.black33,
+                    fontSize: SizeUtil.textSizeSmall,
+                    fontWeight: FontWeight.w500),
+                labelStyle: TextStyle(
+                    color: ColorUtil.black33,
+                    fontSize: SizeUtil.textSizeSmall,
+                    fontWeight: FontWeight.w500),
+                textEditingController: _nameController,
               ),
-              minWidth: double.infinity,
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                top: SizeUtil.midSpace,
-                left: SizeUtil.midSpace,
-                right: SizeUtil.midSpace),
-            child: ButtonTheme(
-              child: RaisedButton(
-                onPressed: () {
-                  WidgetUtil.showBirthdaySelectorDialog(context, (birthday) {
-                    _selectDateProvider.updateDate(birthday);
-                  });
-                },
-                elevation: 3,
-                child: SizedBox(
-                  child: Consumer<SelectDateProvider>(
-                    builder: (BuildContext context, SelectDateProvider value,
-                        Widget child) {
-                      String dob = S.of(context).dateOfBirth;
-                      if (value.date != null) {
-                        dob = DateUtil.formatBirthdayDate(value.date);
-                      }
-                      return Text(
-                        dob,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: SizeUtil.textSizeSmall,
-                            color: ColorUtil.black33),
-                      );
-                    },
+            Padding(
+              padding: EdgeInsets.only(
+                  top: SizeUtil.midSpace,
+                  left: SizeUtil.midSpace,
+                  right: SizeUtil.midSpace),
+              child: ButtonTheme(
+                child: RaisedButton(
+                  onPressed: () {
+                    WidgetUtil.showGenderSelectorDialog(context, (gender) {
+                      _selectGenderProvider.updateGender(gender);
+                    }, initGender: _selectGenderProvider.gender);
+                  },
+                  elevation: 3,
+                  child: SizedBox(
+                    child: Consumer<SelectGenderProvider>(
+                      builder: (BuildContext context,
+                          SelectGenderProvider value, Widget child) {
+                        String gender = S.of(context).gender;
+                        if (value.gender != null) {
+                          gender = value.gender == 1
+                              ? S.of(context).boy
+                              : S.of(context).girl;
+                        }
+                        return Text(
+                          gender,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                              color: ColorUtil.black33),
+                        );
+                      },
+                    ),
+                    width: double.infinity,
                   ),
-                  width: double.infinity,
+                  shape: RoundedRectangleBorder(
+                      side:
+                          BorderSide(color: ColorUtil.primaryColor, width: 0.5),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(SizeUtil.tinyRadius))),
+                  color: Colors.white,
                 ),
-                shape: RoundedRectangleBorder(
-                    side: BorderSide(color: ColorUtil.primaryColor, width: 0.5),
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(SizeUtil.tinyRadius))),
-                color: Colors.white,
+                minWidth: double.infinity,
               ),
-              minWidth: double.infinity,
             ),
-          ),
-          SizedBox(height: SizeUtil.defaultSpace),
-          dialogBtn(context)
-        ],
+            Padding(
+              padding: EdgeInsets.only(
+                  top: SizeUtil.midSpace,
+                  left: SizeUtil.midSpace,
+                  right: SizeUtil.midSpace),
+              child: ButtonTheme(
+                child: RaisedButton(
+                  onPressed: () {
+                    WidgetUtil.showBirthdaySelectorDialog(context, (birthday) {
+                      _selectDateProvider.updateDate(birthday);
+                    });
+                  },
+                  elevation: 3,
+                  child: SizedBox(
+                    child: Consumer<SelectDateProvider>(
+                      builder: (BuildContext context, SelectDateProvider value,
+                          Widget child) {
+                        String dob = S.of(context).dateOfBirth;
+                        if (value.date != null) {
+                          dob = DateUtil.formatBirthdayDate(value.date);
+                        }
+                        return Text(
+                          dob,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: SizeUtil.textSizeSmall,
+                              color: ColorUtil.black33),
+                        );
+                      },
+                    ),
+                    width: double.infinity,
+                  ),
+                  shape: RoundedRectangleBorder(
+                      side:
+                          BorderSide(color: ColorUtil.primaryColor, width: 0.5),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(SizeUtil.tinyRadius))),
+                  color: Colors.white,
+                ),
+                minWidth: double.infinity,
+              ),
+            ),
+            SizedBox(height: SizeUtil.defaultSpace),
+            dialogBtn(context)
+          ],
+        ),
       ),
     );
   }

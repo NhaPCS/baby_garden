@@ -210,7 +210,6 @@ class _AccountManageScreenState
   }
 
   void showChildDialog({Baby baby}) {
-    print("BABAY ${baby.gender}");
     showDialog(
         context: context,
         builder: (BuildContext context) => AddChildDialog(

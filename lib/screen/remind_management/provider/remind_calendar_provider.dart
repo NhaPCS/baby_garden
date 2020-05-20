@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class RemindCalendarProvider extends ChangeNotifier {
   List<dynamic> remindList = List();
   RemindCalendar newRemindCalendar = RemindCalendar();
+  int selectedRadio = 1;
 
   void clearRemind() {
     remindList = null;
@@ -46,5 +47,11 @@ class RemindCalendarProvider extends ChangeNotifier {
 
     notifyListeners();
     return deleteSuccess != null;
+  }
+
+  void setSelectedRadio(int val, {bool selectRemind}) {
+    print(val);
+    this.selectedRadio = val;
+    notifyListeners();
   }
 }

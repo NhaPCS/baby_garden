@@ -954,6 +954,21 @@ Future<dynamic> addRemindCalendar(BuildContext context,
   return null;
 }
 
+Future<dynamic> listRemindProducts(BuildContext context, int type) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  userId = "26";
+
+  dynamic params = {
+    "user_id": userId,
+    "type": type.toString(),
+  };
+
+  Response response = await get(null,
+      path: 'productCalendar', param: params, showLoading: false);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 Future<dynamic> getListPoint(BuildContext context) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {"user_id": userId};

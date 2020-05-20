@@ -1,5 +1,7 @@
 import 'package:baby_garden_flutter/data/model/remind_calendar.dart';
+import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/screen/remind_add/dialog/remind_add_dialog.dart';
 import 'package:baby_garden_flutter/screen/remind_management/provider/remind_calendar_provider.dart';
 import 'package:baby_garden_flutter/screen/remind_management/widget/reminder_layout.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -34,17 +36,24 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
                     Container(
                       decoration: setBorder('bottom', ColorUtil.darkGray, 1),
                       padding: const EdgeInsets.all(SizeUtil.smallSpace),
-                      child: Row(
-                        children: <Widget>[
-                          Icon(Icons.add,
-                              color: ColorUtil.primaryColor,
-                              size: SizeUtil.iconSizeBig),
-                          SizedBox(width: SizeUtil.smallSpace),
-                          Text(S.of(context).selectRemindProduct,
-                              style: TextStyle(
-                                  color: ColorUtil.darkGray,
-                                  fontWeight: FontWeight.bold)),
-                        ],
+                      child: GestureDetector(
+                        onTap: () {
+                          showPopupChooseProduct(context);
+                        },
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.add,
+                                color: ColorUtil.primaryColor,
+                                size: SizeUtil.iconSizeBig),
+                            SizedBox(width: SizeUtil.smallSpace),
+                            Expanded(
+                              child: Text(S.of(context).selectRemindProduct,
+                                  style: TextStyle(
+                                      color: ColorUtil.darkGray,
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     ReminderLayout(),
@@ -82,5 +91,11 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
   bool validateInput() {
     // add more condition after
     return remindCalenderProvider.newRemindCalendar.productId != null;
+  }
+
+  void showPopupChooseProduct(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => AddRemindDialogScreen());
   }
 }

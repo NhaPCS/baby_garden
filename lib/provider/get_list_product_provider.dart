@@ -29,16 +29,20 @@ class GetListProductProvider extends ChangeNotifier {
     }
   }
 
-  Product getProduct(int index) {
+  Product fromJson(dynamic _product, {bool isFavorite = false}) {
+    assert(_product['product_id'] != null || _product['id'] != null);
+
     final product = Product(
-        id: products[index]['id'],
-        shopId: products[index]['shop_id'],
-        categoryId: products[index]['category_id'],
-        name: products[index]['name'],
-        price: products[index]['price'],
-        date: products[index]['date'],
-        isFavorite: products[index]['is_favourite'] == '1' ? true : false,
-        image: products[index]['image']);
+        id: _product['product_id'] == null
+            ? _product['id']
+            : _product['product_id'],
+        name: _product['name'] == null ? '' : _product['name'],
+        price: _product['price'] == null ? '' : _product['price'],
+        date: _product['date'] == null ? '' : _product['date'],
+        priceDiscount: _product['price_discount'],
+        active: _product['active'] == '1' ? true : false,
+        image: _product['image'] == null ? '' : _product['image'],
+        isFavorite: isFavorite);
 
     return product;
   }

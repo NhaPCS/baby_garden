@@ -713,7 +713,7 @@ class S {
 
   String get selectRemindProduct {
     return Intl.message(
-      'Chọn sản phẩm nhắc mua',
+      'Chọn sản phẩm nhắc',
       name: 'selectRemindProduct',
       desc: '',
       args: [],
