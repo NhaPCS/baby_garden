@@ -34,8 +34,9 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
-    _bookingRateTabBarProvider.getBookingData(null,
-        isService: widget.isService);
+    if (_bookingRateTabBarProvider.ratedData.isEmpty)
+      _bookingRateTabBarProvider.getBookingData(null,
+          isService: widget.isService);
     _tabController.addListener(() {
       _bookingRateTabBarProvider.onChange();
     });
@@ -94,12 +95,21 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
                         padding: EdgeInsets.all(0),
                         itemBuilder: (context, index) {
                           return new GestureDetector(
-                            onTap: () {
-                              push(RatingDetailScreen());
+                            onTap: () async {
+                              await push(RatingDetailScreen(
+                                bookingId: value.ratingData[index]['id'],
+                                isService: widget.isService,
+                              ));
+                              _bookingRateTabBarProvider.getBookingData(null,
+                                  isService: widget.isService);
                             },
                             child: widget.isService
-                                ? new ServiceItem(itemData: value.ratingData[index])
-                                : OrderItem(isRated: false,itemData: value.ratingData[index],),
+                                ? new ServiceItem(
+                                    itemData: value.ratingData[index])
+                                : OrderItem(
+                                    isRated: false,
+                                    itemData: value.ratingData[index],
+                                  ),
                           );
                         }),
                 value.ratedData.isEmpty
@@ -119,8 +129,13 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
                               push(RatedDetailScreen());
                             },
                             child: widget.isService
-                                ? new ServiceItem(itemData: value.ratedData[index],)
-                                : OrderItem(isRated: true,itemData: value.ratedData[index],),
+                                ? new ServiceItem(
+                                    itemData: value.ratedData[index],
+                                  )
+                                : OrderItem(
+                                    isRated: true,
+                                    itemData: value.ratedData[index],
+                                  ),
                           );
                         }),
               ],

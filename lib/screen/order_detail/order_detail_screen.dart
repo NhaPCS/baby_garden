@@ -413,14 +413,15 @@ class _OrderDetailScreenState
     return [ChangeNotifierProvider.value(value: _bookingDetailProvider)];
   }
 
-  void onPositiveClick(bookingId) {
+  void onPositiveClick(bookingId) async{
     //TODO booking
     if (state == BookingState.RECEIVE_IN_SHOP) {
       showDialog(
           context: context,
           builder: (BuildContext context) => ReceiveBarCodeDialogue());
     } else {
-      push(RatingDetailScreen(bookingId: bookingId,));
+      await push(RatingDetailScreen(bookingId: bookingId,));
+      _bookingDetailProvider.getBookingDetail(widget.bookingId);
     }
   }
 

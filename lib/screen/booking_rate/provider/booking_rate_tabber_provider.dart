@@ -7,9 +7,19 @@ class BookingRateTabBarProvider extends ChangeNotifier {
   List<dynamic> ratingData = List();
 
   Future<void> getBookingData(BuildContext context, {bool isService}) async {
-    ratedData = await listBookingProduct(type: isService ? 4 : 9, isRate: "1");
-
-    ratingData = await listBookingProduct(type: isService ? 4 : 9, isRate: "0");
+    var data = isService
+        ? await listBookingService(
+            type: 4,
+          )
+        : await listBookingProduct(
+            type: 9,
+          );
+    ratedData = data
+        .where((i) => i['is_rate'].toString().toLowerCase().contains("1"))
+        .toList();
+    ratingData = data
+        .where((i) => i['is_rate'].toString().toLowerCase().contains("0"))
+        .toList();
     notifyListeners();
   }
 

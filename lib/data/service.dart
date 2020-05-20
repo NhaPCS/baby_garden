@@ -419,11 +419,11 @@ Future<dynamic> listBookingService({int type}) async {
 }
 
 //todo listBookingProduct
-Future<dynamic> listBookingProduct({int type,String isRate = "0"}) async {
+Future<dynamic> listBookingProduct({int type}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
       path: "listBookingProduct",
-      param: {'user_id': userId, 'type': type.toString(),"is_rate":isRate});
+      param: {'user_id': userId, 'type': type.toString()});
   if (response.isSuccess()) return response.data;
   return null;
 }
