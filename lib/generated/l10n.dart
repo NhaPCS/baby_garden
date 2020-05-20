@@ -4554,6 +4554,15 @@ class S {
     );
   }
 
+  String get no_receive_time {
+    return Intl.message(
+      'Không có thời gian nhận hàng\nVui lòng chọn ngày khác',
+      name: 'no_receive_time',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get test_result_is {
     return Intl.message(
       'Đánh giá kết quả:',

@@ -13,7 +13,7 @@ class ChangeDeliveryTimeProvider extends ChangeNotifier {
 
   List<dynamic> getDateSchedule() {
     return schedules
-        .where((i) => i['id'].toString().toLowerCase().contains(receiveDate.toString().toLowerCase()))//condition
+        .where((i) => i['number'].toString().toLowerCase().contains(receiveDate.toString().toLowerCase()))//condition
         .toList();
   }
 
