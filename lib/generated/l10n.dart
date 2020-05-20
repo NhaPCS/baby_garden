@@ -4554,6 +4554,15 @@ class S {
     );
   }
 
+  String get no_receive_time {
+    return Intl.message(
+      'Không có thời gian nhận hàng\nVui lòng chọn ngày khác',
+      name: 'no_receive_time',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get test_result_is {
     return Intl.message(
       'Đánh giá kết quả:',
@@ -4563,10 +4572,19 @@ class S {
     );
   }
 
-  String get no_receive_time {
+  String get mess_delete_search_history {
     return Intl.message(
-      'Không có thời gian nhận hàng\nVui lòng chọn ngày khác',
-      name: 'no_receive_time',
+      'Bạn có muốn xoá lịch sử tìm kiếm không?',
+      name: 'mess_delete_search_history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get no_search_history {
+    return Intl.message(
+      'Bạn chưa có lịch sử tìm kiếm',
+      name: 'no_search_history',
       desc: '',
       args: [],
     );

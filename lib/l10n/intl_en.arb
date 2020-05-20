@@ -502,7 +502,8 @@
     "baby": "Bé:",
     "birthday_is": "Ngày sinh:",
     "check_date_is": "Ngày kiểm tra:",
+    "no_receive_time": "Không có thời gian nhận hàng\nVui lòng chọn ngày khác",
     "test_result_is": "Đánh giá kết quả:",
-    "no_receive_time": "Không có thời gian nhận hàng\nVui lòng chọn ngày khác"
-
+    "mess_delete_search_history": "Bạn có muốn xoá lịch sử tìm kiếm không?",
+    "no_search_history": "Bạn chưa có lịch sử tìm kiếm"
 }

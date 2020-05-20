@@ -301,9 +301,9 @@ Future<dynamic> deleteNoty({String notifyID}) async {
 }
 
 //todo news
-Future<dynamic> news({String index, String numberPost}) async {
+Future<dynamic> news({String index, String numberPost, String categoryId}) async {
   Response response = await get(null,
-      path: "news", param: {'index': index, 'number_post': numberPost});
+      path: "news", param: {'index': index, 'number_post': numberPost, 'categoryId': categoryId});
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -463,8 +463,13 @@ Future<dynamic> payment(BuildContext context,
   return null;
 }
 
-Future<dynamic> productCategory() async {
-  Response response = await get(null, path: "category", showLoading: false);
+Future<dynamic> productCategory({String parentId}) async {
+  dynamic params;
+  if (parentId != null) {
+    params = {'parent_id': parentId};
+  }
+  Response response =
+      await get(null, path: "category", showLoading: false, param: params);
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -992,6 +997,23 @@ Future<dynamic> search(String key) async {
   Response response = await get(null, path: "search", param: params);
 
   if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> mainCategory() async {
+  Response response = await get(null, path: "mainCategory");
+
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<Response> deleteSearch(BuildContext context) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId};
+
+  Response response = await post(context, path: "deleteSearch", param: params);
+
+  if (response.isSuccess()) return response;
   return null;
 }
 

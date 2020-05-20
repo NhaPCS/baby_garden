@@ -16,6 +16,7 @@ class VoucherItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(voucher == null) return SizedBox();
     return InkWell(
       child: Card(
         margin: EdgeInsets.only(
