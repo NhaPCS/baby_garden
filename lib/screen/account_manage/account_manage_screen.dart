@@ -80,6 +80,9 @@ class _AccountManageScreenState
                     children: value.babies
                         .map((e) => BabyItem(
                               baby: Baby.fromJson(e),
+                              onEditBabyPress: () {
+                                showChildDialog(baby: Baby.fromJson(e));
+                              },
                             ))
                         .toList(),
                   );
@@ -178,21 +181,7 @@ class _AccountManageScreenState
           GestureDetector(
             onTap: () {
               // show dialog
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) => AddChildDialog(
-                        addChildCallBack: (name, gender, birthday) async {
-                          await getViewModel().addChild(
-                              name: name,
-                              gender: gender,
-                              birthday: birthday,
-                              img: _avatarFile);
-                          _avatarFile = null;
-                        },
-                        onSelectImage: (file) {
-                          _avatarFile = file;
-                        },
-                      ));
+              showChildDialog();
             },
             child: Row(children: <Widget>[
               Text(
@@ -218,6 +207,26 @@ class _AccountManageScreenState
   @override
   AccountManageViewModel initViewModel() {
     return AccountManageViewModel(context, _getListBabyProvider);
+  }
+
+  void showChildDialog({Baby baby}) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => AddChildDialog(
+              baby: baby,
+              addChildCallBack: (name, gender, birthday) async {
+                await getViewModel().addChild(
+                    babyId: baby == null ? null : baby.id,
+                    name: name,
+                    gender: gender,
+                    birthday: birthday,
+                    img: _avatarFile);
+                _avatarFile = null;
+              },
+              onSelectImage: (file) {
+                _avatarFile = file;
+              },
+            ));
   }
 
   void _chooseGender() {

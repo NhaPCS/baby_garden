@@ -33,59 +33,63 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m6(day) => "Dự kiến giao khoảng ${day}";
 
-  static m7(date) => "Ngày sử dung: ${date}";
+  static m7(delivery_unit) => "Đơn vị vận chuyển: ${delivery_unit}";
 
-  static m8(key) => "Vui lòng nhập ${key} để tiếp tục";
+  static m8(date) => "Ngày sử dung: ${date}";
 
-  static m9(time) => "(Lần kiểm tra mới nhất: ${time} tháng)";
+  static m9(key) => "Vui lòng nhập ${key} để tiếp tục";
 
-  static m10(time) => "Thời gian: ${time}";
+  static m10(time) => "(Lần kiểm tra mới nhất: ${time} tháng)";
 
-  static m11(point) => "${point} điểm";
+  static m11(time) => "Thời gian: ${time}";
 
-  static m12(code) => "Mã đơn ${code}";
+  static m12(point) => "${point} điểm";
 
-  static m13(count) => "Tổng ${count} sản phẩm";
+  static m13(code) => "Mã đơn ${code}";
 
-  static m14(date) => "Ngày đặt hàng: ${date}";
+  static m14(count) => "Tổng ${count} sản phẩm";
 
-  static m15(price, count) => "${price} x ${count}";
+  static m15(date) => "Ngày đặt hàng: ${date}";
 
-  static m16(orderCode, orderDate) => "Mã đơn hàng: ${orderCode}\nNgày đặt hàng: ${orderDate}";
+  static m16(price, count) => "${price} x ${count}";
 
-  static m17(code) => "Đánh giá đơn ${code}";
+  static m17(orderCode, orderDate) => "Mã đơn hàng: ${orderCode}\nNgày đặt hàng: ${orderDate}";
 
-  static m18(code) => "Đơn hàng ${code}";
+  static m18(code) => "Đánh giá đơn ${code}";
 
-  static m19(minute) => "Thời gian thực hiện: ${minute} phút";
+  static m19(code) => "Đơn hàng ${code}";
 
-  static m20(point) => "Thanh toán điểm hiện có [${point}]";
+  static m20(minute) => "Thời gian thực hiện: ${minute} phút";
 
-  static m21(date) => "Ngày nhận hàng: ${date}";
+  static m21(point) => "Thanh toán điểm hiện có [${point}]";
 
-  static m22(order) => "Thời gian nhắc lần ${order}";
+  static m22(date) => "Ngày nhận hàng: ${date}";
 
-  static m23(time) => "Thời gian áp dung: ${time}";
+  static m23(order) => "Thời gian nhắc lần ${order}";
 
-  static m24(title) => "[BIG SAle] ${title}";
+  static m24(time) => "Thời gian áp dung: ${time}";
 
-  static m25(author) => "Gửi bởi: ${author}";
+  static m25(title) => "[BIG SAle] ${title}";
 
-  static m26(minute) => "${minute}\nPhút";
+  static m26(author) => "Gửi bởi: ${author}";
 
-  static m27(shop) => "Shop ${shop}";
+  static m27(code, date_booking, time_booking) => "Mã đặt lịch: ${code}\nNgày đặt lịch: ${date_booking} - ${time_booking}";
 
-  static m28(code) => "Mã SKU: ${code}";
+  static m28(minute) => "${minute}\nPhút";
 
-  static m29(sold, total) => "Đã bán ${sold}/${total}";
+  static m29(shop) => "Shop ${shop}";
 
-  static m30(supplier) => "Cung cấp bởi: ${supplier}";
+  static m30(code) => "Mã SKU: ${code}";
 
-  static m31(date, time) => "Dùng đến: ${date} - ${time}";
+  static m31(sold, total) => "Đã bán ${sold}/${total}";
 
-  static m32(date) => "Ngày sử dung: ${date}";
+  static m32(supplier) => "Cung cấp bởi: ${supplier}";
 
-  static m33(time) => "Thời trang cho bé | ${time}";
+  static m33(date, time) => "Dùng đến: ${date} - ${time}";
+
+  static m34(date) => "Ngày sử dung: ${date}";
+
+  static m35(time) => "Thời trang cho bé | ${time}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -174,6 +178,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "check_result" : MessageLookupByLibrary.simpleMessage("Kết quả kiểm tra"),
     "checkout" : MessageLookupByLibrary.simpleMessage("Thanh toán"),
     "checkout_note" : MessageLookupByLibrary.simpleMessage("Ghi chú thanh toán Quý khách muốn gửi tới Shop"),
+    "checkout_notice" : MessageLookupByLibrary.simpleMessage("Bạn có thực sự muốn dừng thanh toán?"),
     "checkout_policy" : MessageLookupByLibrary.simpleMessage("- Khi thanh toán chuyển khoản trước, khách hàng sẽ\nđược giữ hàng lâu hơn 3 ngày.\n"),
     "checkout_policy_overal" : MessageLookupByLibrary.simpleMessage("Khi bạn chọn hình thức thanh toán chuyển khoản, để\nhoàn tất đơn hàng bạn cần thanh toán chuyển khoản\nđể xác nhận đơn hàng"),
     "childInfor" : MessageLookupByLibrary.simpleMessage("Thông tin con"),
@@ -228,6 +233,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "delivery_plan" : m6,
     "delivery_policy" : MessageLookupByLibrary.simpleMessage("- Khi nhận hàng bạn không cần thanh toán tiền mặt\nnữa\n- Nếu khách hàng ở tỉnh lẻ, thanh toán chuyển khoản\ntrước sẽ giảm được chi phí vận chuyển COD."),
     "delivery_service" : MessageLookupByLibrary.simpleMessage("Đơn vị vận chuyển"),
+    "delivery_service_header" : m7,
     "delivery_time_1" : MessageLookupByLibrary.simpleMessage("09:00 - 11:00"),
     "delivery_time_2" : MessageLookupByLibrary.simpleMessage("14:00 - 16:00"),
     "delivery_time_3" : MessageLookupByLibrary.simpleMessage("19:00 - 21:00"),
@@ -265,7 +271,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "expect_to_buy" : MessageLookupByLibrary.simpleMessage("Dự kiến mua"),
     "expireVoucher" : MessageLookupByLibrary.simpleMessage("Sắp hết hạn"),
     "expiredVoucher" : MessageLookupByLibrary.simpleMessage("Đã hết hạn"),
-    "expiry_date" : m7,
+    "expiry_date" : m8,
     "express_descrip" : MessageLookupByLibrary.simpleMessage("Thời trang cho bé"),
     "express_short_content" : MessageLookupByLibrary.simpleMessage("MFGM là một màng cầu dinh dưỡng bao quanh giọt chất béo trong sữa tự nhiên, đóng vai trò quan trọng trong việc cải thiện chức năng nhận thức, khả năng miễn dịch và sức khỏe đường ruột của trẻ, là tinh chất rất A +."),
     "express_time" : MessageLookupByLibrary.simpleMessage("12/09/2019 - 14:00"),
@@ -331,7 +337,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "messageLogout" : MessageLookupByLibrary.simpleMessage("Bạn có muốn đăng xuất không?"),
     "message_add_baby_test_success" : MessageLookupByLibrary.simpleMessage("Nhập thông tin thành công!"),
     "message_confirm_delete_cart" : MessageLookupByLibrary.simpleMessage("Bạn có muốn xoá sản phẩm này khỏi giỏ hàng không?"),
-    "message_empty" : m8,
+    "message_empty" : m9,
     "message_require_login" : MessageLookupByLibrary.simpleMessage("Bạn vui lòng đăng nhập để sử dụng chức năng này!"),
     "message_select_pick_image" : MessageLookupByLibrary.simpleMessage("Bạn muốn chụp ảnh từ camera hay lấy ảnh từ thư viên?"),
     "missing_information" : MessageLookupByLibrary.simpleMessage("Thiếu thông tin"),
@@ -347,7 +353,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "name" : MessageLookupByLibrary.simpleMessage("tên"),
     "nameOfChild" : MessageLookupByLibrary.simpleMessage("Tên của bé"),
     "new_password" : MessageLookupByLibrary.simpleMessage("Mật khẩu mới"),
-    "newest_test_time" : m9,
+    "newest_test_time" : m10,
     "no" : MessageLookupByLibrary.simpleMessage("Không"),
     "no_data" : MessageLookupByLibrary.simpleMessage("Chưa có dữ liệu"),
     "no_delivery_time_1" : MessageLookupByLibrary.simpleMessage("Không có giờ giao hàng"),
@@ -357,31 +363,31 @@ class MessageLookup extends MessageLookupByLibrary {
     "normal_height" : MessageLookupByLibrary.simpleMessage("Chiều cao bình thường"),
     "note_for_product_promo" : MessageLookupByLibrary.simpleMessage("Ghi chú khuyến mại của sản phẩm"),
     "note_is" : MessageLookupByLibrary.simpleMessage("Lưu bút:"),
-    "notice_time" : m10,
+    "notice_time" : m11,
     "notify" : MessageLookupByLibrary.simpleMessage("Thông báo"),
     "notify_booking_success" : MessageLookupByLibrary.simpleMessage("Chúc mừng quý khách đã đặt hàng thành công "),
     "notify_hint_search" : MessageLookupByLibrary.simpleMessage("Nhập từ khóa tìm kiếm thông báo"),
     "notify_title" : MessageLookupByLibrary.simpleMessage("Trả lời đánh giá đơn "),
-    "numPoint" : m11,
+    "numPoint" : m12,
     "numberOfVoucher" : MessageLookupByLibrary.simpleMessage("Số Voucher"),
     "nutrition_consulting" : MessageLookupByLibrary.simpleMessage("Tư vấn dinh dưỡng:"),
     "old_password" : MessageLookupByLibrary.simpleMessage("Mật khẩu cũ"),
     "or" : MessageLookupByLibrary.simpleMessage("Hoặc"),
     "order" : MessageLookupByLibrary.simpleMessage("Đơn hàng"),
-    "order_code" : m12,
+    "order_code" : m13,
     "order_code_title" : MessageLookupByLibrary.simpleMessage("Mã đơn hàng:"),
-    "order_count_summary" : m13,
-    "order_date" : m14,
-    "order_detail" : m15,
-    "order_header" : m16,
+    "order_count_summary" : m14,
+    "order_date" : m15,
+    "order_detail" : m16,
+    "order_header" : m17,
     "order_info" : MessageLookupByLibrary.simpleMessage("Thông tin đơn hàng"),
-    "order_rating" : m17,
+    "order_rating" : m18,
     "order_title" : MessageLookupByLibrary.simpleMessage("Áo giữ nhiệt Trẻ em màu 11 Pink size 100 vạch hồng\ncổ cao"),
-    "order_with_code" : m18,
+    "order_with_code" : m19,
     "ordered" : MessageLookupByLibrary.simpleMessage("Đơn hàng đã đặt"),
     "origin" : MessageLookupByLibrary.simpleMessage("Xuất xứ"),
     "otp_timer_out" : MessageLookupByLibrary.simpleMessage("Nếu bạn không đăng ký được, vui lòng gọi\nđiện tới số  0912 277 022 để được hỗ trợ"),
-    "overall_time" : m19,
+    "overall_time" : m20,
     "overral_policy" : MessageLookupByLibrary.simpleMessage("Chính sách chung:"),
     "owner_name" : MessageLookupByLibrary.simpleMessage("Chủ tài khoản:"),
     "packing" : MessageLookupByLibrary.simpleMessage("Đang\nđóng gói"),
@@ -398,8 +404,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "place_of_delivery" : MessageLookupByLibrary.simpleMessage("Địa chỉ nhận hàng"),
     "pointHistoryHeadText" : MessageLookupByLibrary.simpleMessage("Lịch sử tích điểm và sử dụng điểm"),
     "pointManage" : MessageLookupByLibrary.simpleMessage("Quản lý điểm"),
+    "point_checkout_alert" : MessageLookupByLibrary.simpleMessage("Số điểm bạn nhập vượt quá số điểm hiện có"),
     "point_for_booking" : MessageLookupByLibrary.simpleMessage("Số điểm thanh toán: "),
-    "point_payment" : m20,
+    "point_payment" : m21,
     "point_payment_policy" : MessageLookupByLibrary.simpleMessage("* Tỷ lệ quy đổi tích điểm: 100.000 vnđ = 1 điểm\n* Mỗi 1 điểm đổi tương ứng với 1.000 vnđ\n* Số điểm có thể đổi phải chia hết cho 20.\nLưu ý: hóa đơn thanh toán bằng điểm sẽ không được\ntích điểm."),
     "point_payment_title" : MessageLookupByLibrary.simpleMessage("Thanh toán điểm"),
     "point_payment_update" : MessageLookupByLibrary.simpleMessage("Cập Nhật Thanh toán điểm"),
@@ -425,6 +432,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "providerInfo" : MessageLookupByLibrary.simpleMessage("Thông tin đơn vị cung cấp"),
     "provider_info" : MessageLookupByLibrary.simpleMessage("Thông tin nhà cung cấp"),
     "province" : MessageLookupByLibrary.simpleMessage("Tỉnh/ Thành Phố"),
+    "rank_is" : MessageLookupByLibrary.simpleMessage("       Xếp hạng: "),
     "rate_order" : MessageLookupByLibrary.simpleMessage("Đánh giá\nđơn hàng"),
     "rate_service" : MessageLookupByLibrary.simpleMessage("Đánh giá\ndịch vụ"),
     "rated" : MessageLookupByLibrary.simpleMessage("Đã đánh giá"),
@@ -435,7 +443,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "receive_in" : MessageLookupByLibrary.simpleMessage("Nhận hàng vào lúc: "),
     "receive_in_shop" : MessageLookupByLibrary.simpleMessage("Nhận hàng tại shop"),
     "receive_time" : MessageLookupByLibrary.simpleMessage("Thời gian nhận hàng"),
-    "receiving_date" : m21,
+    "receiving_date" : m22,
     "reenter_new_password" : MessageLookupByLibrary.simpleMessage("Nhập lại mật khẩu mới"),
     "reenter_password" : MessageLookupByLibrary.simpleMessage("Nhập lại mật khẩu"),
     "register" : MessageLookupByLibrary.simpleMessage(" Đăng ký "),
@@ -457,7 +465,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "remindUseProduct" : MessageLookupByLibrary.simpleMessage("Nhắc lịch sử dụng sản phẩm"),
     "reminderCycle" : MessageLookupByLibrary.simpleMessage("Chu kỳ nhắc (ngày):"),
     "reminderCycleHint" : MessageLookupByLibrary.simpleMessage(" Chọn 1 là nhắc lịch hàng ngày, 2 là 2 ngày sẽ nhắc 1 lần..."),
-    "reminderTimeAt" : m22,
+    "reminderTimeAt" : m23,
     "renew_password" : MessageLookupByLibrary.simpleMessage("Xác nhận mật khẩu mới"),
     "report_content_hint" : MessageLookupByLibrary.simpleMessage("Viết nội dung báo cáo/ góp ý của bạn"),
     "report_desc" : MessageLookupByLibrary.simpleMessage("Báo cáo hay góp ý với chúng rôi về hình ảnh hay thông tin về sản phẩm nhé!"),
@@ -468,8 +476,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "return_login_if_had_account" : MessageLookupByLibrary.simpleMessage("Quay lại đăng nhập nếu đã có tài khoản"),
     "sale" : MessageLookupByLibrary.simpleMessage("Khuyến mãi"),
     "saling_detail" : MessageLookupByLibrary.simpleMessage("Chi tiết khuyến mãi"),
-    "saling_detail_time" : m23,
-    "saling_detail_title" : m24,
+    "saling_detail_time" : m24,
+    "saling_detail_title" : m25,
     "same_product" : MessageLookupByLibrary.simpleMessage("Sản phẩm tương tự"),
     "saveChange" : MessageLookupByLibrary.simpleMessage("Lưu thay đổi"),
     "scanQRCode" : MessageLookupByLibrary.simpleMessage("Quét mã QR Code"),
@@ -488,13 +496,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "selectRemindTime" : MessageLookupByLibrary.simpleMessage("Chọn thời gian nhắc"),
     "send" : MessageLookupByLibrary.simpleMessage("Gửi"),
     "sendCode" : MessageLookupByLibrary.simpleMessage("Gửi mã"),
-    "send_by" : m25,
+    "send_by" : m26,
     "send_rating" : MessageLookupByLibrary.simpleMessage("GỬI ĐÁNH GIÁ"),
     "send_report" : MessageLookupByLibrary.simpleMessage("Gửi thông báo"),
     "service_booked" : MessageLookupByLibrary.simpleMessage("Dịch vụ đã đặt lịch"),
     "service_detail" : MessageLookupByLibrary.simpleMessage("Chi tiết dịch vụ"),
+    "service_header" : m27,
     "service_info" : MessageLookupByLibrary.simpleMessage("Thông tin dịch vụ"),
-    "service_time_range" : m26,
+    "service_time_range" : m28,
     "service_title" : MessageLookupByLibrary.simpleMessage("Chăm sóc da mặt từ cơ bản đến nâng cao"),
     "service_type" : MessageLookupByLibrary.simpleMessage("Loại dịch vụ: "),
     "service_using_address" : MessageLookupByLibrary.simpleMessage("Địa chỉ sử dung dịch vụ"),
@@ -505,21 +514,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "setting_2" : MessageLookupByLibrary.simpleMessage("Nhận thông báo thay đổi giá của sản phẩm yêu thích"),
     "setting_3" : MessageLookupByLibrary.simpleMessage("Nhận thông báo lịch mua và lịch sử dung sản phẩm"),
     "setting_4" : MessageLookupByLibrary.simpleMessage("Nhận thông báo từ VCB Express"),
-    "shop" : m27,
+    "shop" : m29,
     "shopName" : MessageLookupByLibrary.simpleMessage("Tên Shop"),
     "shopPlaceholder" : MessageLookupByLibrary.simpleMessage("Nhập tên shop của bạn"),
     "shopping" : MessageLookupByLibrary.simpleMessage("Shopping"),
     "size" : MessageLookupByLibrary.simpleMessage("Kích thước"),
     "skip" : MessageLookupByLibrary.simpleMessage("Bỏ qua >>"),
-    "sku_code" : m28,
+    "sku_code" : m30,
     "sku_product" : MessageLookupByLibrary.simpleMessage("Mã SKU"),
-    "sold_count" : m29,
+    "sold_count" : m31,
     "sub_district" : MessageLookupByLibrary.simpleMessage("Phường/ Xã"),
     "success" : MessageLookupByLibrary.simpleMessage("Thành công"),
     "success_order" : MessageLookupByLibrary.simpleMessage("Đơn hàng\nthành công"),
     "suggestion_products" : MessageLookupByLibrary.simpleMessage("Sản phẩm gợi ý:"),
     "supply_by" : MessageLookupByLibrary.simpleMessage("Cung cấp bởi: "),
-    "supply_by_supplier" : m30,
+    "supply_by_supplier" : m32,
     "suy_dinh_duong_normal" : MessageLookupByLibrary.simpleMessage("Trẻ suy dinh dưỡng thể thấp còi, mức độ vừa"),
     "take_order" : MessageLookupByLibrary.simpleMessage("Tiến hành đặt hàng"),
     "telePhone" : MessageLookupByLibrary.simpleMessage("Điện thoại"),
@@ -545,22 +554,23 @@ class MessageLookup extends MessageLookupByLibrary {
     "upload_notice" : MessageLookupByLibrary.simpleMessage("(Upload hình ảnh thanh toán chuyển khoản thành công)"),
     "useCode" : MessageLookupByLibrary.simpleMessage("Sử dụng mã"),
     "use_service" : MessageLookupByLibrary.simpleMessage("Sử dụng dịch vụ"),
-    "use_to_time" : m31,
+    "use_to_time" : m33,
     "used" : MessageLookupByLibrary.simpleMessage("Đã\nsử dụng"),
     "usedVoucher" : MessageLookupByLibrary.simpleMessage("Đã sử dụng"),
     "used_service" : MessageLookupByLibrary.simpleMessage("Dịch vụ đã sử dụng"),
-    "using_date" : m32,
+    "using_date" : m34,
     "vcb_contact" : MessageLookupByLibrary.simpleMessage("Thông tin liên hệ với VCB"),
     "vcb_ex_detail_ctm_hint" : MessageLookupByLibrary.simpleMessage("Viết bình luận của bạn"),
     "vcb_ex_detail_first_content" : MessageLookupByLibrary.simpleMessage("Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn."),
     "vcb_ex_detail_full_title" : MessageLookupByLibrary.simpleMessage("Thời trang dành cho bé năm 2019 phong cách xuân hè."),
-    "vcb_ex_detail_post_time" : m33,
+    "vcb_ex_detail_post_time" : m35,
     "vcb_ex_detail_second_content" : MessageLookupByLibrary.simpleMessage("Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn."),
     "vcb_ex_detail_short_title" : MessageLookupByLibrary.simpleMessage("Vườn của bé: Thời trang dành cho bé\n năm 2019"),
     "vcb_express" : MessageLookupByLibrary.simpleMessage("VCB Express"),
     "vcb_present" : MessageLookupByLibrary.simpleMessage("Giới thiệu về VCB"),
     "vcb_register_partner" : MessageLookupByLibrary.simpleMessage("Đăng ký làm đối tác với VCB"),
     "view_all" : MessageLookupByLibrary.simpleMessage("Xem tất cả"),
+    "view_delivery" : MessageLookupByLibrary.simpleMessage("Xem lộ trình"),
     "view_more" : MessageLookupByLibrary.simpleMessage("Xem thêm"),
     "view_order" : MessageLookupByLibrary.simpleMessage("Xem đơn hàng"),
     "view_shop" : MessageLookupByLibrary.simpleMessage("Xem Shop"),

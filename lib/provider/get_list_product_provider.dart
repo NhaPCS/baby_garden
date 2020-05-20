@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class GetListProductProvider extends ChangeNotifier {
   List<dynamic> products = List();
   int total;
-  int totalPage;
 
   void clearProduct() {
     products = null;
@@ -14,29 +13,36 @@ class GetListProductProvider extends ChangeNotifier {
 
   Future<void> getData(BuildContext context, String path,
       {String categoryId,
-      int index = 1,
+      String productId,
+      int index = 0,
       int numberPosts = service.PAGE_SIZE}) async {
     dynamic data = await service.listProducts(context, path,
-        categoryId: categoryId, index: index, numberPosts: numberPosts);
+        categoryId: categoryId,
+        productId: productId,
+        index: index,
+        numberPosts: numberPosts);
     // add check case data as emty array like list product view
-    if (data != null && data.length != 0) {
+    if (data != null) {
       products = data['list'];
       total = data['total'];
-      totalPage = (data['total'] / numberPosts).toInt() + 1;
       notifyListeners();
     }
   }
 
-  Product getProduct(int index) {
+  Product fromJson(dynamic _product, {bool isFavorite = false}) {
+    assert(_product['product_id'] != null || _product['id'] != null);
+
     final product = Product(
-        id: products[index]['id'],
-        shopId: products[index]['shop_id'],
-        categoryId: products[index]['category_id'],
-        name: products[index]['name'],
-        price: products[index]['price'],
-        date: products[index]['date'],
-        isFavorite: products[index]['is_favourite'] == '1' ? true : false,
-        image: products[index]['image']);
+        id: _product['product_id'] == null
+            ? _product['id']
+            : _product['product_id'],
+        name: _product['name'] == null ? '' : _product['name'],
+        price: _product['price'] == null ? '' : _product['price'],
+        date: _product['date'] == null ? '' : _product['date'],
+        priceDiscount: _product['price_discount'],
+        active: _product['active'] == '1' ? true : false,
+        image: _product['image'] == null ? '' : _product['image'],
+        isFavorite: isFavorite);
 
     return product;
   }

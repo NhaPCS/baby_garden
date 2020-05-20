@@ -54,69 +54,17 @@ class _OrderState extends BaseState<OrderScreen> {
                       onTap: () {
                         if (Provider.of<UserProvider>(context, listen: false)
                             .isLogin) {
-                          print(e);
-                          switch (e['transportState']) {
-                            case TransportState
-                                .WAITING_CHECKOUT: // todo chờ thanh toán
-                              push(OrderListScreen(
-                                title: e['title'].replaceAll("\n", " "),
-                                isShowNegativeButton: true,
-                                isShowPositiveButton: true,
-                                state: 8,
-                              ));
-                              break;
-                            case TransportState
-                                .WAITING_CONFIRM: //todo chờ xác nhận
-                              push(OrderListScreen(
-                                title: e['title'].replaceAll("\n", " "),
-                                isShowNegativeButton: true,
-                                state: 1,
-                              ));
-                              break;
-                            case TransportState
-                                .RECEIVE_IN_SHOP: //todo nhận hàng tại shop
-                              push(OrderListScreen(
-                                title: S.of(context).receive_in_shop,
-                                state: 7,
-                                isShowPositiveButton: true,
-                                isShowNegativeButton: true,
-                              ));
-                              break;
-                            case TransportState.PACKING: //todo đang đóng gói
-                              push(OrderListScreen(
-                                title: e['title'].replaceAll("\n", " "),
-                                state: 3,
-                              ));
-                              break;
-                            case TransportState
-                                .IN_DELIVERY: //todo đang vận chuyển
-                              push(OrderListScreen(
-                                state: 4,
-                                title: S.of(context).delivering,
-                              ));
-                              break;
-                            case TransportState
-                                .SUCCESS: //todo đơn hàng thành công
-                              push(OrderListScreen(
-                                title: S.of(context).ordered,
-                                state: 3,
-                                isShowPositiveButton: true,
-                                childTitle: "Đơn hàng VCB19.12.25",
-                              ));
-                              break;
-                            case TransportState.CANCEL: //todo đơn hàng đã huỷ
-                              push(OrderListScreen(
-                                title: S.of(context).canceled_order,
-                                state: 6,
-                                isShowPositiveButton: true,
-                                childTitle: "Chi tiết huỷ đơn",
-                              ));
-                              break;
-                            default: //todo đánh giá đơn hàng
-                              push(BookingRateScreen(
-                                isService: false,
-                              ));
-                              break;
+                          print("asdjhbaskdas ${e['transportState']}");
+                          if (e['transportState'] ==
+                              TransportState.NONE.index) {
+                            push(BookingRateScreen(
+                              isService: false,
+                            ));
+                          } else {
+                            push(OrderListScreen(
+                              title: e['title'].replaceAll("\n", " "),
+                              state: e['transportState'],
+                            ));
                           }
                         } else {
                           WidgetUtil.showRequireLoginDialog(context);
@@ -148,19 +96,19 @@ class _OrderState extends BaseState<OrderScreen> {
                           Provider.of<UserProvider>(context, listen: false);
                           if (provider.isLogin) {
                             switch (e['type']) {
-                              case '1': //todo đã đặt lịch
+                              case 1: //todo đã đặt lịch
                                 push(ServiceListScreen(
                                   title: S.of(context).service_booked,
                                   state: 0,
                                 ));
                                 break;
-                              case '2': //todo đã sử dụng
+                              case 2: //todo đã sử dụng
                                 push(ServiceListScreen(
                                   title: S.of(context).used_service,
                                   state: 1,
                                 ));
                                 break;
-                              case '3': // todo đã huỷ đặt lịch
+                              case 3: // todo đã huỷ đặt lịch
                                 push(ServiceListScreen(
                                   title: S.of(context).canceled_service,
                                   state: 2,

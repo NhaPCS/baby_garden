@@ -1,47 +1,28 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:baby_garden_flutter/data/service.dart' as service;
 
 class SearchingProvider extends ChangeNotifier {
-  List<dynamic> data = List();
+  List<dynamic> searchResult;
 
-  void searching(BuildContext context) {
-    data.add(S.of(context).search_by_name);
-    data.add({
-      'product_name': "Sữa tăng cân Nutren 800gr",
-      'price': '800.000đ',
-      'distributor': "Vườn của bé",
-    });
-    data.add({
-      'product_name': "Sữa tăng cân Nutren 800gr",
-      'price': '800.000đ',
-      'distributor': "Vườn của bé",
-    });
-    data.add({
-      'product_name': "Sữa tăng cân Nutren 800gr",
-      'price': '800.000đ',
-      'distributor': "Vườn của bé",
-    });
-    data.add(S.of(context).search_by_content);
-    data.add({
-      'product_name': "Sữa tăng cân Nutren 800gr",
-      'price': '800.000đ',
-      'distributor': "Vườn của bé",
-    });
-    data.add({
-      'product_name': "Sữa tăng cân Nutren 800gr",
-      'price': '800.000đ',
-      'distributor': "Vườn của bé",
-    });
-    data.add({
-      'product_name': "Sữa tăng cân Nutren 800gr",
-      'price': '800.000đ',
-      'distributor': "Vườn của bé",
-    });
+  Future<void> search(BuildContext context, String key) async {
+    dynamic data = await service.search(key);
+    if (data != null) {
+      searchResult = new List();
+      if (data['title'] != null && data['title'].isNotEmpty) {
+        searchResult.add(S.of(context).search_by_name);
+        searchResult.addAll(data['title']);
+      }
+      if (data['content'] != null  && data['content'].isNotEmpty) {
+        searchResult.add(S.of(context).search_by_content);
+        searchResult.addAll(data['content']);
+      }
+    }
     notifyListeners();
   }
 
-  void clearData() {
-    data.clear();
+  void clear(){
+    searchResult = null;
     notifyListeners();
   }
 }

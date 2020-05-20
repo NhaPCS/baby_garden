@@ -51,6 +51,9 @@ class _ServiceListScreenState extends BaseState<ServiceListScreen> {
               padding: EdgeInsets.only(bottom: SizeUtil.smallSpace),
               color: ColorUtil.lineColor,
               child:Consumer<ServiceListProvider>(builder: (BuildContext context, ServiceListProvider value, Widget child) {
+                if(value.listService.isEmpty){
+                  return Container();
+                }
                 return ListView.builder(
                     itemCount: value.listService.length,
                     scrollDirection: Axis.vertical,

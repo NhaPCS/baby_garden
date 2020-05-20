@@ -19,50 +19,50 @@ class OrdersProvider extends ChangeNotifier {
       {
         'icon': 'order_wait_payment',
         'notify_count': 0,
-        'transportState': TransportState.WAITING_CHECKOUT,
+        'transportState': TransportState.WAITING_CHECKOUT.index,
         'type': 8,
       },
       {
         'icon': 'order_wait_confirm',
         'notify_count': 0,
-        'transportState': TransportState.WAITING_CONFIRM,
+        'transportState': TransportState.WAITING_CONFIRM.index,
         'type': 1
       },
       {
         'icon': 'order_get_at_shop',
         'notify_count': 0,
-        'transportState': TransportState.RECEIVE_IN_SHOP,
+        'transportState': TransportState.RECEIVE_IN_SHOP.index,
         'type': 7
       },
       {
         'icon': 'order_packaging',
         'notify_count': 0,
-        'transportState': TransportState.PACKING,
+        'transportState': TransportState.PACKING.index,
         'type': 5
       },
       {
         'icon': 'order_delivering',
         'notify_count': 0,
-        'transportState': TransportState.IN_DELIVERY,
+        'transportState': TransportState.IN_DELIVERY.index,
         'type': 6
       },
       {
         'icon': 'order_success',
         'notify_count': 0,
-        'transportState': TransportState.SUCCESS,
+        'transportState': TransportState.SUCCESS.index,
         'type': 3
       },
       {
         'icon': 'order_cancelled',
         'notify_count': 0,
-        'transportState': TransportState.CANCEL,
+        'transportState': TransportState.CANCEL.index,
         'type': 4
       },
       {
         'icon': 'order_review',
         'notify_count': 0,
-        'transportState': TransportState.NONE,
-        'type': 9
+        'transportState': TransportState.NONE.index,
+        'type': 0
       }
     ];
     getOrdersCount();

@@ -1,13 +1,13 @@
+import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/product_item.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_parent_category_provider.dart';
-import 'package:baby_garden_flutter/provider/get_list_partner_provider.dart';
 import 'package:baby_garden_flutter/provider/get_list_product_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/delegate/sliver_category_delegate.dart';
-import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
+import 'package:baby_garden_flutter/widget/loadmore/loadmore_gridview.dart';
 import 'package:baby_garden_flutter/widget/loadmore/loadmore_nested_scrollview.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:baby_garden_flutter/widget/product/list_parent_category.dart';
@@ -44,72 +44,70 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
-    return SafeArea(
-        child: Material(
-      child: LoadMoreNestedScrollView(body: Consumer<GetListProductProvider>(
-        builder:
-            (BuildContext context, GetListProductProvider value, Widget child) {
-          if (value.products == null || value.products.isEmpty)
-            return LoadingView(
-              isNoData: value.products != null,
+    return Scaffold(
+      body: LoadMoreNestedScrollView(body: Consumer<GetListProductProvider>(
+    builder:
+        (BuildContext context, GetListProductProvider value, Widget child) {
+      return LoadMoreGridView(
+          childAspectRatio: 0.7,
+          crossAxisCount: 2,
+          totalElement: value.total,
+          data: value.products,
+          reloadCallback: (page) {
+            _getListProductProvider.getData(context, 'listProduct',
+                index: page * PAGE_SIZE);
+          },
+          itemBuilder: (context, item, index) {
+            return ProductItem(
+              product: item,
+              index: index,
+              width: MediaQuery.of(context).size.width * 0.5,
+              borderRadius: SizeUtil.tinyRadius,
+              showSoldCount: true,
+              nameStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+              padding: EdgeInsets.only(
+                  left: SizeUtil.smallSpace,
+                  right: SizeUtil.smallSpace,
+                  top: 0),
             );
-          return GridView.builder(
-              itemCount: value.products.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.7,
-              ),
-              itemBuilder: (context, index) {
-                return ProductItem(
-                  index: index,
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  borderRadius: SizeUtil.tinyRadius,
-                  showSoldCount: true,
-                  nameStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
-                  showTime: true,
-                  padding: EdgeInsets.only(
-                      left: SizeUtil.smallSpace,
-                      right: SizeUtil.smallSpace,
-                      top: 0),
-                );
-              });
-        },
+          });
+    },
       ), headerSliverBuilder: (context, isScrollInner) {
-        return [
-          new SliverAppBar(
-            title: new Text(
-              S.of(context).category_product.toUpperCase(),
-              style: TextStyle(color: Colors.white),
+    return [
+      new SliverAppBar(
+        title: new Text(
+          S.of(context).category_product.toUpperCase(),
+          style: TextStyle(color: Colors.white),
+        ),
+        leading: BaseState.getLeading(context),
+        centerTitle: true,
+        pinned: true,
+        floating: true,
+        forceElevated: isScrollInner,
+      ),
+      SliverPersistentHeader(
+        pinned: false,
+        floating: false,
+        delegate: SliverCategoryDelegate(
+            ListParentCategory(
+              changeCategoryProvider: _changeParentCategoryProvider,
             ),
-            leading: BaseState.getLeading(context),
-            centerTitle: true,
-            pinned: true,
-            floating: true,
-            forceElevated: isScrollInner,
-          ),
-          SliverPersistentHeader(
-            pinned: false,
-            floating: false,
-            delegate: SliverCategoryDelegate(
-                ListParentCategory(
-                  changeCategoryProvider: _changeParentCategoryProvider,
-                ),
-                Provider.of<AppProvider>(context).bigCategoryHeight,
-                Provider.of<AppProvider>(context).bigCategoryHeight),
-          ),
-          SliverPersistentHeader(
-            pinned: true,
-            floating: false,
-            delegate: SliverCategoryDelegate(
-                ListCategory(),
-                Provider.of<AppProvider>(context).categoryHeight,
-                Provider.of<AppProvider>(context).categoryHeight),
-          )
-        ];
+            Provider.of<AppProvider>(context).bigCategoryHeight,
+            Provider.of<AppProvider>(context).bigCategoryHeight),
+      ),
+      SliverPersistentHeader(
+        pinned: true,
+        floating: false,
+        delegate: SliverCategoryDelegate(
+            ListCategory(),
+            Provider.of<AppProvider>(context).categoryHeight,
+            Provider.of<AppProvider>(context).categoryHeight),
+      )
+    ];
       }, onLoadMore: () {
-        //TODO
+    //TODO
       }),
-    ));
+    );
   }
 
   @override

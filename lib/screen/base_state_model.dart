@@ -14,9 +14,9 @@ abstract class BaseStateModel<S extends StatefulWidget, V extends BaseViewModel>
 
   List<SingleChildWidget> providers();
 
- V initViewModel();
+  V initViewModel();
 
- V  getViewModel() {
+  V getViewModel() {
     return this._baseViewModel;
   }
 
@@ -24,7 +24,7 @@ abstract class BaseStateModel<S extends StatefulWidget, V extends BaseViewModel>
 
   @override
   void initState() {
-   this._baseViewModel= initViewModel();
+    this._baseViewModel = initViewModel();
     super.initState();
 //    _circularSplashController = CircularTransitionController(
 //      color: ColorUtil.primaryColor,
@@ -78,6 +78,12 @@ abstract class BaseStateModel<S extends StatefulWidget, V extends BaseViewModel>
       Color titleColor = Colors.white,
       Color backColor = Colors.white,
       Widget widget = null,
+      Function handlePositive,
+      Function handleNegative,
+      bool isShowConfirmDialogue = false,
+      String content = "",
+      String alertTitle = "",
+
       List<Widget> actions}) {
     return AppBar(
       elevation: elevation,
@@ -90,21 +96,48 @@ abstract class BaseStateModel<S extends StatefulWidget, V extends BaseViewModel>
             )
           : null,
       centerTitle: centerTitle,
-      leading: hasBack ? getLeading(context, backColor: backColor) : null,
+      leading: hasBack
+          ? getLeading(context,
+              backColor: backColor,
+              showConfirmDialogue: isShowConfirmDialogue,
+              handleNegative: handleNegative,
+              handlePositive: handlePositive,
+              content: content,
+      title: alertTitle)
+          : null,
       actions: actions,
       bottom: widget,
     );
   }
 
   static Widget getLeading(BuildContext context,
-      {Color backColor = Colors.white}) {
+      {Color backColor = Colors.white,
+      bool showConfirmDialogue = false,
+      String content = "",
+      String title = "",
+      Function handlePositive,
+      Function handleNegative}) {
     return InkWell(
       child: Icon(
         CupertinoIcons.back,
         color: backColor,
       ),
       onTap: () {
-        Navigator.of(context).pop();
+        if (showConfirmDialogue) {
+          WidgetUtil.showConfirmDialog(context,title: title, message: content,
+              positiveClicked: () {
+            if (handlePositive != null) {
+              handlePositive();
+            }
+            Navigator.of(context).pop();
+          }, negativeClick: () {
+            if (handleNegative != null) {
+              handleNegative();
+            }
+          });
+        } else {
+          Navigator.of(context).pop();
+        }
       },
     );
   }
@@ -112,9 +145,9 @@ abstract class BaseStateModel<S extends StatefulWidget, V extends BaseViewModel>
   @override
   bool get wantKeepAlive => true;
 
- @override
+  @override
   void didChangeDependencies() {
-   _baseViewModel?.onDidChangeDependencies();
+    _baseViewModel?.onDidChangeDependencies();
     super.didChangeDependencies();
   }
 }

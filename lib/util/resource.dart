@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -46,6 +47,8 @@ class ColorUtil {
   static const Color trackingTargetColor = Color(0xff6C6C6C);
   static const Color unSelectBgColor = Color(0xffF2F2F2);
   static const Color lineLightGray = Color(0xffCECECE);
+  static const Color lineService = Color(0xffDFDFDF);
+  static const Color bgService = Color(0xffFFEDDB);
   static const Color orderBadge = Color(0xffFF5700);
 
   static const List<Color> gradientColors = [
@@ -68,7 +71,13 @@ class DateUtil {
   static final String serverFormatDate = "yyyy-MM-dd HH:mm:ss";
 
   static String formatBirthdayDate(DateTime date) {
-    return new DateFormat("dd/MM/yyyy").format(date);
+    return date == null ? '' : new DateFormat("dd/MM/yyyy").format(date);
+  }
+
+  static DateTime parseBirthdayDate(String date) {
+    return date == null || date.isEmpty
+        ? null
+        : new DateFormat("dd/MM/yyyy").parse(date);
   }
 
   static String formatDDMMyyyy(String rawDate) {
@@ -101,6 +110,21 @@ class DateUtil {
     }
     print("getDate $dates");
     return dates;
+  }
+}
+
+class ImageUtil {
+  static void uploadImage(
+      BuildContext context, ValueChanged<File> onSelectImage) {
+    if (onSelectImage == null) return;
+    WidgetUtil.showPickImageDialog(context, onCameraClick: () async {
+      var pickedImage = await ImagePicker.pickImage(source: ImageSource.camera);
+      onSelectImage(pickedImage);
+    }, onGalleryClick: () async {
+      var pickedImage =
+          await ImagePicker.pickImage(source: ImageSource.gallery);
+      onSelectImage(pickedImage);
+    });
   }
 }
 
@@ -365,6 +389,7 @@ class SizeUtil {
   static const double midSmallSpace = 8.0;
   static const double tinySpace = 4;
   static const double superTinySpace = 2;
+  static const double zeroSpace = 0;
   static const double bigSpace = 30;
   static const double bigSpaceHigher = 32;
   static const double hugSpace = 50;
@@ -435,6 +460,9 @@ class FileUtil {
     return file;
   }
 }
+enum SettingNotify{ NONE, PRODUCT, LIKE_PRODUCT_CHANGE, SERVICE, VCB_EXPRESS }
+
+enum BookingType { NONE, BOOKING_PRODUCT, BOOKING_SERVICE }
 
 enum TransportState {
   NONE,
@@ -446,6 +474,24 @@ enum TransportState {
   IN_DELIVERY,
   RECEIVE_IN_SHOP,
   WAITING_CHECKOUT
+}
+
+enum CheckoutStatus{
+  NONE,
+  UN_PAY,
+  ALREADY_PAY,
+}
+
+enum CheckoutMethod{
+  NONE,
+  CAST,
+  CREDIT_TRANSFER
+}
+
+enum DeliveryMethodState{
+  DELIVERY,
+  RECEIVE_IN_SHOP,
+  NONE,
 }
 
 enum BookingState {
@@ -460,6 +506,8 @@ enum BookingState {
   WAITING_CHECKOUT
 }
 
+enum ServiceState { NONE, BOOKED_SCHEDULE, CONFIRM, USED_SERVICE, CANCEL }
+
 enum TransferStatus {
   NONE,
   WAITING_GET_PRODUCT,
@@ -470,24 +518,27 @@ enum TransferStatus {
 
 class WidgetUtil {
   static void showGenderSelectorDialog(
-      BuildContext context, ValueChanged<int> selectedGender) {
+      BuildContext context, ValueChanged<int> selectedGender,
+      {int initGender}) {
     new Picker(
         adapter: PickerDataAdapter<String>(pickerdata: [
-          S.of(context).girl,
           S.of(context).boy,
+          S.of(context).girl,
         ]),
         changeToFirst: true,
         hideHeader: false,
+        selecteds: initGender == null ? null : [initGender-1],
         onConfirm: (Picker picker, List value) {
-          selectedGender(value[0]);
+          selectedGender(value[0] + 1);
         }).showModal(context); //_scaffoldKey.currentState);
   }
 
   static Future<void> showBirthdaySelectorDialog(
-      BuildContext context, ValueChanged<DateTime> selectedDate) async {
+      BuildContext context, ValueChanged<DateTime> selectedDate,
+      {DateTime initDate}) async {
     showDatePicker(
             context: context,
-            initialDate: DateTime.now(),
+            initialDate: initDate == null ? DateTime.now() : initDate,
             firstDate: DateTime(2015, 8),
             lastDate: DateTime(2101))
         .then((value) => {selectedDate(value)});

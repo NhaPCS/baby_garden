@@ -1,14 +1,17 @@
 import 'package:baby_garden_flutter/data/service.dart' as service;
+import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 typedef ReloadCallback = void Function(int page);
+typedef LoadMoreItemWidgetBuilder = Widget Function(
+    BuildContext context, dynamic item, int index);
 
 class LoadMoreGridView extends StatefulWidget {
-  final int itemsCount;
-  final IndexedWidgetBuilder itemBuilder;
+  final LoadMoreItemWidgetBuilder itemBuilder;
   final ReloadCallback reloadCallback;
   final EdgeInsetsGeometry padding;
+  final List<dynamic> data;
   final int totalPage;
   final totalElement;
   final bool hasRefresh;
@@ -16,20 +19,22 @@ class LoadMoreGridView extends StatefulWidget {
   final int crossAxisCount;
   final double childAspectRatio;
   final Axis scrollDirection;
+  final ValueNotifier<int> pageController;
 
   const LoadMoreGridView(
       {Key key,
-      this.itemsCount,
-      this.itemBuilder,
-      this.reloadCallback,
+      @required this.itemBuilder,
+      @required this.reloadCallback,
       this.padding,
       this.totalPage = 0,
       this.crossAxisCount = 2,
       this.totalElement = 0,
       this.pageSize = service.PAGE_SIZE,
       this.hasRefresh = true,
-        this.scrollDirection = Axis.vertical,
-      this.childAspectRatio = 1.0})
+      this.scrollDirection = Axis.vertical,
+      this.childAspectRatio = 1.0,
+      this.data,
+      this.pageController})
       : super(key: key);
 
   @override
@@ -39,12 +44,20 @@ class LoadMoreGridView extends StatefulWidget {
 }
 
 class _LoadMoreGridViewState extends State<LoadMoreGridView> {
-  int page = 1;
+  int page = 0;
   ScrollController _scrollController = new ScrollController();
   bool isPerformingRequest = false;
+  List<dynamic> listData;
+  int savedPage;
 
   @override
   void initState() {
+    if (widget.pageController != null) {
+      widget.pageController.addListener(() {
+        if (widget.pageController.value != null)
+          this.page = widget.pageController.value;
+      });
+    }
     super.initState();
     print("TOTAL PAGE ${widget.totalPage}");
     _scrollController.addListener(() {
@@ -63,39 +76,57 @@ class _LoadMoreGridViewState extends State<LoadMoreGridView> {
     });
   }
 
+  void generateList() {
+    print("page $page ");
+    if (page == 0) {
+      listData = widget.data;
+    } else {
+      if (listData == null) {
+        listData = new List();
+      }
+      listData.addAll(widget.data);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     isPerformingRequest = false;
+    generateList();
+    if (listData == null || listData.isEmpty) {
+      return LoadingView(
+        isNoData: listData != null,
+        onReload: () {
+          page = 0;
+          if (widget.reloadCallback != null) widget.reloadCallback(page);
+        },
+      );
+    }
     if (widget.hasRefresh)
       return RefreshIndicator(
-          child: GridView.builder(
-            scrollDirection: widget.scrollDirection,
-            controller: _scrollController,
-            itemBuilder: widget.itemBuilder,
-            padding: widget.padding,
-            shrinkWrap: true,
-            physics: ScrollPhysics(),
-            itemCount: widget.itemsCount,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: widget.crossAxisCount,
-                childAspectRatio: widget.childAspectRatio),
-          ),
+          child: getGridView(),
           onRefresh: () {
-            page = 1;
+            page = 0;
             if (widget.reloadCallback != null) widget.reloadCallback(page);
             return Future.delayed(Duration(milliseconds: 1000));
           });
     else
-      return GridView.builder(
-        scrollDirection: widget.scrollDirection,
-        controller: _scrollController,
-        itemBuilder: widget.itemBuilder,
-        physics: ScrollPhysics(),
-        shrinkWrap: true,
-        padding: widget.padding,
-        itemCount: widget.itemsCount,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: widget.crossAxisCount),
-      );
+      return getGridView();
+  }
+
+  Widget getGridView() {
+    return GridView.builder(
+      scrollDirection: widget.scrollDirection,
+      controller: _scrollController,
+      itemBuilder: (context, index) {
+        return widget.itemBuilder(context, listData[index], index);
+      },
+      padding: widget.padding,
+      shrinkWrap: true,
+      physics: ScrollPhysics(),
+      itemCount: listData == null ? 0 : listData.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: widget.crossAxisCount,
+          childAspectRatio: widget.childAspectRatio),
+    );
   }
 }

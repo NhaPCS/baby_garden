@@ -4,9 +4,11 @@ class Product {
   String categoryId;
   String name;
   String price;
+  String priceDiscount;
   String date;
   bool isFavorite;
   List<dynamic> image;
+  bool active;
 
   Product(
       {this.id,
@@ -16,5 +18,7 @@ class Product {
       this.price,
       this.date,
       this.isFavorite,
-      this.image});
+      this.image,
+      this.active,
+      this.priceDiscount});
 }

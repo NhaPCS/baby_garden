@@ -2,21 +2,19 @@ import 'package:baby_garden_flutter/dialog/receive_barcode_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/product_order_item.dart';
 import 'package:baby_garden_flutter/provider/booking_detail_provider.dart';
-import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/screen/checkout/checkout_screen.dart';
 import 'package:baby_garden_flutter/screen/checkout/widget/rich_text_form.dart';
-import 'package:baby_garden_flutter/screen/checkout/widget/title_icon.dart';
+import 'package:baby_garden_flutter/screen/order_detail/view_model/order_detail_view_model.dart';
 import 'package:baby_garden_flutter/screen/order_detail/widget/order_form.dart';
 import 'package:baby_garden_flutter/screen/order_detail/widget/order_info.dart';
 import 'package:baby_garden_flutter/screen/rating_detail/rating_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
-import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
-
 import '../order_delivery_info/order_delivery_info_screen.dart';
 
 class OrderDetailScreen extends StatefulWidget {
@@ -30,14 +28,17 @@ class OrderDetailScreen extends StatefulWidget {
   }
 }
 
-class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
+class _OrderDetailScreenState
+    extends BaseStateModel<OrderDetailScreen, OrderDetailViewModel> {
   final BookingDetailProvider _bookingDetailProvider = BookingDetailProvider();
   bool isShowPositiveButton = false;
   bool isShowNegativeButton = false;
   bool isDelivering = false;
+  bool isShowCheckout = false;
   String title = "";
   String positiveTitle = "";
   BookingState state = BookingState.NONE;
+  int costMoney = 0;
 
   @override
   void initState() {
@@ -54,8 +55,12 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
       if (data == null) {
         return Container();
       } else {
-        initView(int.parse(data['active']), data['is_receive'], data['status']);
-        print("sdaskjdn asd $title");
+        costMoney = int.parse(data['total_money']) +
+            int.parse(data['ship_money']) -
+            int.parse(data['promotion_value']) -
+            int.parse(data['promotion_ship']);
+        initView(int.parse(data['active']), data['is_receive'], data['status'],
+            data['payment'],data['is_rate']);
         return Scaffold(
             appBar: getAppBar(
               title: title,
@@ -68,9 +73,9 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
               WidgetUtil.getLine(
                   width: SizeUtil.smallSpace,
                   margin: EdgeInsets.all(0),
-                  color: Color(0xffDFDFDF)),
+                  color: ColorUtil.lineService),
               Container(
-                  color: Color(0xffFFEDDB),
+                  color: ColorUtil.bgService,
                   padding: const EdgeInsets.only(
                       left: SizeUtil.normalSpace,
                       right: SizeUtil.normalSpace,
@@ -98,34 +103,38 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                   )),
               //TODO delivery address
               WidgetUtil.getLine(width: 1, margin: EdgeInsets.all(0)),
-              OrderInfo(
-                svgIcon: "ic_receive_location.svg",
-                title: S.of(context).delivery_address,
-                content: data['user_address'],
-              ),
+              data['is_receive'] =="1"
+                  ? SizedBox()
+                  : OrderInfo(
+                      svgIcon: "ic_receive_location.svg",
+                      title: S.of(context).delivery_address,
+                      content: data['user_address'],
+                    ),
               OrderInfo(
                 svgIcon: 'ic_receive_method.svg',
                 title: S.of(context).type_of_delivery,
-                content: "Giao hàng tận nơi.",
-                contentNote: isDelivering
-                    ? null
-                    : " (Thời gian: 09:00-12:00 22/12/2019)",
+                content: state == BookingState.RECEIVE_IN_SHOP
+                    ? S.of(context).receive_in_shop
+                    : S.of(context).delivery_in_place,
+                contentNote:  data['time_ship']
               ),
               OrderInfo(
                 svgIcon: 'ic_payment_method.svg',
                 title: S.of(context).type_of_checkout,
-                content: "Chuyển khoản qua tài khoản ngân hàng",
+                content: data['payment'] == 1
+                    ? S.of(context).cash_payment
+                    : S.of(context).credit_transfer_payment,
               ),
               isDelivering
                   ? OrderInfo(
                       svgIcon: 'order_delivering.svg',
                       title: S.of(context).delivery_info,
-                      content:
-                          "Đơn vị vận chuyển: Giao hàng nhanh (dự kiến giao hàng\ntrước 27/12/2019)",
+                      content: S.of(context).delivery_service_header(
+                          "Giao hàng nhanh (dự kiến giao hàng\ntrước 27/12/2019)"),
                       isShowSeparateLine: false,
                       iconSize: SizeUtil.iconSizeSmall,
                       isTrailing: true,
-                      trailingText: "Xem lộ trình",
+                      trailingText: S.of(context).view_delivery,
                       onTrailingTap: () {
                         push(OrderDeliveryInfoScreen());
                       },
@@ -191,7 +200,8 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                           data["list_product"].length,
                           (index) => ProductOrderItem(
                                 title: data["list_product"][index]['name'],
-                                skuTitle: "1231231241244",
+                                skuTitle: data["list_product"][index]
+                                    ['product_id'],
                                 price: data["list_product"][index]['price'],
                                 productCount: data["list_product"][index]
                                     ['number'],
@@ -204,7 +214,10 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                   color: Color(0xffDFDFDF)),
               OrderForm(
                 title: S.of(context).cost,
-                content: StringUtil.getPriceText("520000"),
+                content: StringUtil.getPriceText(
+                    (int.parse(data['total_money']) -
+                            int.parse(data['promotion_value']))
+                        .toString()),
               ),
               WidgetUtil.getLine(
                   width: 1,
@@ -212,7 +225,10 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                   margin: EdgeInsets.all(0)),
               OrderForm(
                 title: S.of(context).delivery_fee,
-                content: StringUtil.getPriceText("5000"),
+                content: StringUtil.getPriceText(
+                    (int.parse(data['ship_money']) -
+                            int.parse(data['promotion_ship']))
+                        .toString()),
               ),
               WidgetUtil.getLine(
                   width: 1,
@@ -222,7 +238,7 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                 title: S.of(context).total,
                 titleStyle: TextStyle(
                     fontSize: SizeUtil.textSizeDefault, color: Colors.black),
-                content: StringUtil.getPriceText("525000"),
+                content: StringUtil.getPriceText(costMoney.toString()),
                 contentStyle: TextStyle(
                     fontSize: SizeUtil.textSizeDefault,
                     color: Colors.red,
@@ -249,7 +265,7 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                             margin: EdgeInsets.all(0)),
                         OrderForm(
                           title: S.of(context).cancel_time,
-                          content: "12/01/2020 13:40",
+                          content: data['time_cancel'],
                         ),
                         WidgetUtil.getLine(
                             width: 1,
@@ -257,7 +273,7 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                             margin: EdgeInsets.all(0)),
                         OrderForm(
                           title: S.of(context).cancel_reason,
-                          content: S.of(context).change_service_type,
+                          content: data["reason_cancel"],
                         ),
                       ],
                     )
@@ -266,14 +282,39 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                   width: SizeUtil.tinySpace,
                   color: isDelivering ? ColorUtil.white : ColorUtil.lineColor,
                   margin: EdgeInsets.all(0)),
-              isShowNegativeButton
+              isShowCheckout
                   ? MyRaisedButton(
-                      onPressed: onNegativeClick,
-                      text: state == BookingState.WAITING_CHECKOUT
-                          ? S.of(context).checkout.toUpperCase()
-                          : state == BookingState.RECEIVE_IN_SHOP
-                              ? S.of(context).receive.toUpperCase()
-                              : S.of(context).rating_order,
+                      padding: EdgeInsets.only(
+                          top: SizeUtil.smallSpace,
+                          bottom: SizeUtil.smallSpace),
+                      onPressed: () {
+                        push(CheckoutScreen(
+                          bookingId: int.parse(widget.bookingId),
+                          bookingCode: data['code'].toString(),
+                          totalPrice: costMoney,
+                          phone: data['user_phone'],
+                        ));
+                      },
+                      text: S.of(context).checkout.toUpperCase(),
+                      color: ColorUtil.primaryColor,
+                      textStyle: TextStyle(
+                          fontSize: SizeUtil.textSizeDefault,
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold),
+                    )
+                  : SizedBox(),
+              isShowPositiveButton
+                  ? MyRaisedButton(
+                      padding: EdgeInsets.only(
+                          top: SizeUtil.smallSpace,
+                          bottom: SizeUtil.smallSpace),
+                      onPressed: () {
+                        onPositiveClick(data['id']);
+                      },
+                      text: state == BookingState.RECEIVE_IN_SHOP
+                          ? S.of(context).receive.toUpperCase()
+                          : S.of(context).rating_order,
                       color: ColorUtil.primaryColor,
                       textStyle: TextStyle(
                           fontSize: SizeUtil.textSizeDefault,
@@ -286,15 +327,20 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
                     ),
               isShowNegativeButton
                   ? MyRaisedButton(
+                      padding: EdgeInsets.only(
+                          top: SizeUtil.smallSpace,
+                          bottom: SizeUtil.smallSpace),
                       onPressed: () {
-                        WidgetUtil.showConfirmDialog(context,
-                            message: S.of(context).cancel_question,
-                            title: S.of(context).attention,
-                            positiveClicked: () {
-                          Navigator.of(context).pop();
-                        }, negativeClick: () {
-                          Navigator.of(context).pop();
-                        });
+                        WidgetUtil.showConfirmDialog(
+                          context,
+                          message: S.of(context).cancel_question,
+                          title: S.of(context).attention,
+                          positiveClicked: () async {
+                            await getViewModel().onCancelBooking(context,
+                                bookingId: widget.bookingId);
+                            Navigator.of(context).pop();
+                          },
+                        );
                       },
                       textStyle: TextStyle(
                           fontSize: SizeUtil.textSizeDefault,
@@ -312,13 +358,19 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
     });
   }
 
-  void initView(int active, String receiveInShop, String status) {
+  void initView(
+      int active, String receiveInShop, String status, String payment,String isRate) {
     state = BookingState.values[active];
-    if(status == "1"){
-      state = BookingState.WAITING_CHECKOUT;
-    }else if(receiveInShop == "1"){
-      state = BookingState.RECEIVE_IN_SHOP;
+    if (state != BookingState.CANCEL) {
+      isShowCheckout = status == CheckoutStatus.UN_PAY.index.toString() &&
+          payment == CheckoutMethod.CREDIT_TRANSFER.index.toString();
+      if (receiveInShop == "1") {
+        state = BookingState.RECEIVE_IN_SHOP;
+      } else if (status == "1") {
+        state = BookingState.WAITING_CHECKOUT;
+      }
     }
+
     switch (state) {
       case BookingState.WAITING_CONFIRM: //đã đặt
         title = S.of(context).waiting_confirm;
@@ -328,11 +380,11 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
       case BookingState.CONFIRM: //xác nhận
         break;
       case BookingState.SUCCESS: //hoàn thành
-        isShowPositiveButton = true;
+        isShowPositiveButton = isRate != "1";
         title = S.of(context).success_order;
         break;
       case BookingState.CANCEL: //huỷ
-        isShowPositiveButton = true;
+        isShowPositiveButton = isRate != "1";
         title = S.of(context).canceled_order;
         break;
       case BookingState.RECEIVE_IN_SHOP:
@@ -342,7 +394,6 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
         break;
       case BookingState.WAITING_CHECKOUT:
         title = S.of(context).waiting_checkout;
-        isShowPositiveButton = true;
         isShowNegativeButton = true;
         break;
       case BookingState.PACKING: //đang đóng gói
@@ -362,16 +413,20 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> {
     return [ChangeNotifierProvider.value(value: _bookingDetailProvider)];
   }
 
-  void onNegativeClick() {
+  void onPositiveClick(bookingId) {
     //TODO booking
-    if (state == BookingState.WAITING_CHECKOUT) {
-      push(CheckoutScreen());
-    } else if (state == BookingState.RECEIVE_IN_SHOP) {
+    if (state == BookingState.RECEIVE_IN_SHOP) {
       showDialog(
           context: context,
           builder: (BuildContext context) => ReceiveBarCodeDialogue());
     } else {
-      push(RatingDetailScreen());
+      push(RatingDetailScreen(bookingId: bookingId,));
     }
+  }
+
+  @override
+  OrderDetailViewModel initViewModel() {
+    // TODO: implement initViewModel
+    return new OrderDetailViewModel(context);
   }
 }
