@@ -6,6 +6,7 @@ import 'package:baby_garden_flutter/screen/rating_detail/rating_detail_screen.da
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/item/order_item.dart';
 import 'package:baby_garden_flutter/item/service_item.dart';
+import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -33,6 +34,8 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
+    _bookingRateTabBarProvider.getBookingData(null,
+        isService: widget.isService);
     _tabController.addListener(() {
       _bookingRateTabBarProvider.onChange();
     });
@@ -72,36 +75,57 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
                 ],
               )),
         ),
-        body: TabBarView(
-          controller: _tabController,
-          children: <Widget>[
-            ListView.builder(
-                itemCount: 10,
-                padding: EdgeInsets.all(0),
-                itemBuilder: (context, index) {
-                  return new GestureDetector(
-                    onTap: () {
-                      push(RatingDetailScreen());
-                    },
-                    child: widget.isService
-                        ? new ServiceItem()
-                        : OrderItem(isRated: false),
-                  );
-                }),
-            ListView.builder(
-                itemCount: 10,
-                padding: EdgeInsets.all(0),
-                itemBuilder: (context, index) {
-                  return new GestureDetector(
-                    onTap: () {
-                      push(RatedDetailScreen());
-                    },
-                    child: widget.isService
-                        ? new ServiceItem()
-                        : OrderItem(isRated: true),
-                  );
-                })
-          ],
+        body: Consumer<BookingRateTabBarProvider>(
+          builder: (BuildContext context, BookingRateTabBarProvider value,
+              Widget child) {
+            return TabBarView(
+              controller: _tabController,
+              children: <Widget>[
+                value.ratingData.isEmpty
+                    ? LoadingView(
+                        isNoData: value.ratingData != null,
+                        onReload: () {
+                          _bookingRateTabBarProvider.getBookingData(null,
+                              isService: widget.isService);
+                        },
+                      )
+                    : ListView.builder(
+                        itemCount: value.ratingData.length,
+                        padding: EdgeInsets.all(0),
+                        itemBuilder: (context, index) {
+                          return new GestureDetector(
+                            onTap: () {
+                              push(RatingDetailScreen());
+                            },
+                            child: widget.isService
+                                ? new ServiceItem(itemData: value.ratingData[index])
+                                : OrderItem(isRated: false,itemData: value.ratingData[index],),
+                          );
+                        }),
+                value.ratedData.isEmpty
+                    ? LoadingView(
+                        isNoData: value.ratedData != null,
+                        onReload: () {
+                          _bookingRateTabBarProvider.getBookingData(null,
+                              isService: widget.isService);
+                        },
+                      )
+                    : ListView.builder(
+                        itemCount: value.ratedData.length,
+                        padding: EdgeInsets.all(0),
+                        itemBuilder: (context, index) {
+                          return new GestureDetector(
+                            onTap: () {
+                              push(RatedDetailScreen());
+                            },
+                            child: widget.isService
+                                ? new ServiceItem(itemData: value.ratedData[index],)
+                                : OrderItem(isRated: true,itemData: value.ratedData[index],),
+                          );
+                        }),
+              ],
+            );
+          },
         ),
       ),
     );

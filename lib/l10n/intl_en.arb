@@ -501,5 +501,7 @@
     "baby": "Bé:",
     "birthday_is": "Ngày sinh:",
     "check_date_is": "Ngày kiểm tra:",
-    "test_result_is": "Đánh giá kết quả:"
+    "test_result_is": "Đánh giá kết quả:",
+    "no_receive_time": "Không có thời gian nhận hàng\nVui lòng chọn ngày khác"
+
 }

@@ -40,7 +40,7 @@ class _BookingScreenState
     with SingleTickerProviderStateMixin {
   ValueNotifier<int> deliveryMethod = new ValueNotifier(2);
   ValueNotifier<int> checkoutMethod = new ValueNotifier(1);
-  ValueNotifier<String> receiveTime = new ValueNotifier("");
+  ValueNotifier<dynamic> receiveTime = new ValueNotifier({"data":"","id":"0"});
   String inShopReceiveAddress = "";
   final TransferMethodProvider _transferMethodProvider =
       new TransferMethodProvider();
@@ -161,10 +161,11 @@ class _BookingScreenState
                         child: Row(
                           children: <Widget>[
                             Expanded(
-                              child: ValueListenableBuilder<String>(
+                              child: ValueListenableBuilder<dynamic>(
                                 valueListenable: receiveTime,
-                                builder: (BuildContext context, String value,
+                                builder: (BuildContext context, dynamic value,
                                     Widget child) {
+                                  print(value);
                                   return RichText(
                                     text: TextSpan(children: <TextSpan>[
                                       TextSpan(
@@ -174,7 +175,7 @@ class _BookingScreenState
                                               fontSize:
                                                   SizeUtil.textSizeSmall)),
                                       TextSpan(
-                                          text: value,
+                                          text: value["data"],
                                           style: TextStyle(
                                               color: Colors.red,
                                               fontSize: SizeUtil.textSizeSmall))
@@ -191,6 +192,7 @@ class _BookingScreenState
                                           shopId: widget.shopID,
                                         ));
                                 if (data != null) {
+//                                  print("$data");
                                   receiveTime.value = data;
                                 }
                               },
@@ -217,7 +219,7 @@ class _BookingScreenState
             ),
             title: S.of(context).type_of_checkout,
             content: CheckoutMethodWG(
-              onChangePoint: (pointVal){
+              onChangePoint: (pointVal) {
                 checkoutPoint = pointVal;
               },
               checkoutMethod: checkoutMethod,
@@ -370,17 +372,18 @@ class _BookingScreenState
         WidgetUtil.showMessageDialog(context,
             message: S.of(context).choose_shop_address,
             title: S.of(context).missing_information);
-      } else if (receiveTime.value == "") {
+      } else if (receiveTime.value["data"] == "") {
         WidgetUtil.showMessageDialog(context,
             message: S.of(context).choose_time_Schedule,
             title: S.of(context).missing_information);
       } else {
         await getViewModel().onBookingProduct(
-          checkoutPoint.toString(),
+            receiveTime.value['id'].trim(),
+            checkoutPoint.toString(),
             widget.shopID.toString(),
             widget.promoteCode.toLowerCase(),
             deliveryMethod.value.toString(),
-            receiveTime.value.trim(),
+            receiveTime.value['data'].trim(),
             checkoutMethod.value.toString(),
             _noteController.text.toString(),
             "",
@@ -416,11 +419,12 @@ class _BookingScreenState
             title: S.of(context).missing_information);
       } else {
         await getViewModel().onBookingProduct(
+            receiveTime.value['id'].trim(),
             checkoutPoint.toString(),
             widget.shopID.toString(),
             widget.promoteCode.toLowerCase(),
             deliveryMethod.value.toString(),
-            receiveTime.value.trim(),
+            receiveTime.value['data'].trim(),
             checkoutMethod.value.toString(),
             _noteController.text.toString(),
             _transferMethodProvider

@@ -175,7 +175,8 @@ city_id: id thành phố
 district_id: id quận huyện
 */
 Future<dynamic> bookingProduct(
-    {String userID,
+    {String inShopReceiveTimeId,
+      String userID,
     String shopID,
     String bookingDate,
     String bookingTime,
@@ -194,6 +195,7 @@ Future<dynamic> bookingProduct(
       String point,
     String districtID}) async {
   Response response = await post(null, path: "bookingProduct", param: {
+    'time_id':inShopReceiveTimeId,
     'point':point,
     'user_id': userID,
     'shop_id': shopID,
@@ -422,11 +424,11 @@ Future<dynamic> listBookingService({int type}) async {
 }
 
 //todo listBookingProduct
-Future<dynamic> listBookingProduct({int type}) async {
+Future<dynamic> listBookingProduct({int type,String isRate = "0"}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await get(null,
       path: "listBookingProduct",
-      param: {'user_id': userId, 'type': type.toString()});
+      param: {'user_id': userId, 'type': type.toString(),"is_rate":isRate});
   if (response.isSuccess()) return response.data;
   return null;
 }
