@@ -3,6 +3,7 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/favorite_product/item/product_favorite_seen_item.dart';
 import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_add/provider/remind_add_provider.dart';
+import 'package:baby_garden_flutter/screen/remind_management/provider/remind_calendar_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
@@ -18,6 +19,8 @@ class AddRemindDialogScreen extends StatefulWidget {
 
 class _AddRemindDialogScreenState extends BaseState<AddRemindDialogScreen> {
   final RemindAddProvider _remindAddProvider = RemindAddProvider();
+  final RemindCalendarProvider _remindCalendarProvider =
+      RemindCalendarProvider();
 
   @override
   void didChangeDependencies() {
@@ -101,8 +104,20 @@ class _AddRemindDialogScreenState extends BaseState<AddRemindDialogScreen> {
                   color: ColorUtil.primaryColor,
                   // matchParent: true,
                   text: S.of(context).confirm,
-                  textStyle: TextStyle(color: Colors.white, fontSize: 13),
-                  onPressed: () {},
+                  borderRadius: SizeUtil.tinyRadius,
+                  textStyle: TextStyle(
+                      color: Colors.white, fontSize: SizeUtil.textSizeDefault),
+                  onPressed: () {
+                    final _product = _remindAddProvider
+                        .getProduct(_remindAddProvider.selectedProduct);
+
+                    _remindCalendarProvider.setNewRemindCalendar(
+                        productId: _product.id,
+                        image: _product.image[0],
+                        price: _product.price);
+
+                    Navigator.of(context).pop();
+                  },
                 ),
               ],
             ),
@@ -116,6 +131,7 @@ class _AddRemindDialogScreenState extends BaseState<AddRemindDialogScreen> {
   List<SingleChildWidget> providers() {
     return [
       ChangeNotifierProvider.value(value: _remindAddProvider),
+      ChangeNotifierProvider.value(value: _remindCalendarProvider)
     ];
   }
 }

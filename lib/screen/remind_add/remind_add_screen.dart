@@ -1,7 +1,8 @@
 import 'package:baby_garden_flutter/data/model/remind_calendar.dart';
-import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/remind_add/dialog/remind_add_dialog.dart';
+import 'package:baby_garden_flutter/screen/remind_add/provider/remind_add_provider.dart';
+import 'package:baby_garden_flutter/screen/remind_management/item/remind_card_item.dart';
 import 'package:baby_garden_flutter/screen/remind_management/provider/remind_calendar_provider.dart';
 import 'package:baby_garden_flutter/screen/remind_management/widget/reminder_layout.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -19,7 +20,10 @@ class RemindAddScreen extends StatefulWidget {
 class _RemindAddScreen extends BaseState<RemindAddScreen> {
   var remindBuy = false;
   var remindUsed = false;
-  RemindCalendarProvider remindCalenderProvider = RemindCalendarProvider();
+  RemindCalendarProvider _remindCalenderProvider = RemindCalendarProvider();
+  RemindAddProvider _remindAddProvider = RemindAddProvider();
+
+  bool visible = false;
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -56,6 +60,20 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
                         ),
                       ),
                     ),
+                    Consumer<RemindCalendarProvider>(
+                      builder: (BuildContext context,
+                          RemindCalendarProvider value, Widget child) {
+                        print(
+                          " why??? ${_remindCalenderProvider.newRemindCalendar.productId.isNotEmpty}",
+                        );
+                        print(_remindCalenderProvider
+                            .newRemindCalendar.productId);
+                        return Visibility(
+                            visible:
+                                value.newRemindCalendar.productId.isNotEmpty,
+                            child: RemindCardItem(calendar: RemindCalendar()));
+                      },
+                    ),
                     ReminderLayout(),
                   ]),
             ),
@@ -71,7 +89,7 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
                       if (!validateInput()) return;
                       print('add new calendar');
 
-                      remindCalenderProvider.addNewCalendar(context);
+                      _remindCalenderProvider.addNewCalendar(context);
                     },
                     color: ColorUtil.primaryColor,
                     text: S.of(context).addReminder,
@@ -83,19 +101,27 @@ class _RemindAddScreen extends BaseState<RemindAddScreen> {
         ));
   }
 
-  @override
-  List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: remindCalenderProvider)];
-  }
-
   bool validateInput() {
     // add more condition after
-    return remindCalenderProvider.newRemindCalendar.productId != null;
+    return _remindCalenderProvider.newRemindCalendar.productId != null;
   }
 
   void showPopupChooseProduct(BuildContext context) {
     showDialog(
-        context: context,
-        builder: (BuildContext context) => AddRemindDialogScreen());
+            context: context,
+            builder: (BuildContext context) => AddRemindDialogScreen())
+        .then((value) {
+      // setState(() {
+      //   visible = true;
+      // });
+    });
+  }
+
+  @override
+  List<SingleChildWidget> providers() {
+    return [
+      ChangeNotifierProvider.value(value: _remindCalenderProvider),
+      ChangeNotifierProvider.value(value: _remindAddProvider)
+    ];
   }
 }
