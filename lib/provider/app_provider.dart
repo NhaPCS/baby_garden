@@ -26,7 +26,7 @@ class AppProvider {
     categoryHeight = categoryWidth * 1.2;
     productWidth = widthScreen * 0.35;
     productHeight = productWidth * 1.4;
-    bigCategoryWidth = categoryHeight * 1.2;
+    bigCategoryWidth = 100;
     bigCategoryHeight = bigCategoryWidth * 1.4;
     bgHeaderHeight = heightScreen * 0.23;
     saleDetailSlideHeight = heightScreen * 0.27;

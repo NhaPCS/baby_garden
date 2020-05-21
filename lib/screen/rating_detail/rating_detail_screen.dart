@@ -14,8 +14,10 @@ import 'package:provider/provider.dart';
 
 class RatingDetailScreen extends StatefulWidget {
   final String bookingId;
+  final bool isService;
 
-  const RatingDetailScreen({this.bookingId = "1"}) : super();
+  const RatingDetailScreen({this.bookingId = "1", this.isService = false})
+      : super();
 
   @override
   State<StatefulWidget> createState() {
@@ -94,7 +96,9 @@ class _RatingDetailScreenState
                     height: SizeUtil.tinySpace,
                   ),
                   Text(
-                    S.of(context).order_date(bookingDetailData["date_booking"]),
+                    S.of(context).order_date(bookingDetailData["date_booking"] +
+                        " " +
+                        bookingDetailData["time_booking"]),
                     style: TextStyle(fontSize: SizeUtil.textSizeTiny),
                     textAlign: TextAlign.start,
                   ),
@@ -106,9 +110,12 @@ class _RatingDetailScreenState
                         ? (S.of(context).cancel_time +
                             " " +
                             bookingDetailData["time_cancel"])
-                        : S
-                            .of(context)
-                            .receiving_date(bookingDetailData["date_booking"]),
+                        : (widget.isService
+                            ? S
+                                .of(context)
+                                .using_date(bookingDetailData["time_finish"])
+                            : S.of(context).receiving_date(
+                                bookingDetailData["time_finish"])),
                     style: TextStyle(fontSize: SizeUtil.textSizeTiny),
                     textAlign: TextAlign.start,
                   ),
@@ -124,6 +131,9 @@ class _RatingDetailScreenState
                       rate: rate,
                       controller: _noteController,
                       uploadImageController: uploadImageController,
+                      title: bookingDetailData['service_name'],
+                      shopName: bookingDetailData["shop_name"],
+                imgLink: bookingDetailData['shop_img'],
                     )
                   : ListView(
                       children: List.generate(

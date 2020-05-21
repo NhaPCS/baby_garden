@@ -9,6 +9,7 @@ class BookingProductViewModel extends BaseViewModel {
   dynamic bookingData="";
 
   Future<void> onBookingProduct(
+      String inShopReceiveTime,
       String point,
       String shopID,
       String promoteCode,
@@ -32,6 +33,7 @@ class BookingProductViewModel extends BaseViewModel {
     var bookingDate = dateFormat.format(now),
         bookingTime = timeFormat.format(now);
     dynamic data = await bookingProduct(
+      inShopReceiveTimeId: inShopReceiveTime,
       point: point,
         userID: userID,
         shopID: shopID,

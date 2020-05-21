@@ -10,6 +10,7 @@ class CircleImage extends StatelessWidget {
   final double width;
   final double height;
   final EdgeInsets margin;
+  final double elevation;
 
   const CircleImage(
       {Key key,
@@ -18,13 +19,15 @@ class CircleImage extends StatelessWidget {
       this.borderRadius,
       @required this.width,
       @required this.height,
-      this.imageFile})
+      this.imageFile,
+      this.elevation})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: margin,
+      elevation: elevation,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
               borderRadius == null ? width : borderRadius)),
@@ -34,11 +37,13 @@ class CircleImage extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
               Radius.circular(borderRadius == null ? width : borderRadius)),
-          image:  DecorationImage(
-                  image: imageUrl != null
-                      ? CachedNetworkImageProvider(imageUrl)
-                      : imageFile != null ? FileImage(imageFile) : AssetImage("photo/child_avatar.png"),
-                  fit: BoxFit.cover),
+          image: DecorationImage(
+              image: imageUrl != null
+                  ? CachedNetworkImageProvider(imageUrl)
+                  : imageFile != null
+                      ? FileImage(imageFile)
+                      : AssetImage("photo/child_avatar.png"),
+              fit: BoxFit.cover),
         ),
       ),
     );

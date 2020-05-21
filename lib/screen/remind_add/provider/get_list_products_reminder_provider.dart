@@ -1,42 +1,22 @@
 import 'package:baby_garden_flutter/data/model/product.dart';
-import 'package:flutter/material.dart';
 import 'package:baby_garden_flutter/data/service.dart' as service;
+import 'package:flutter/material.dart';
 
-class RemindAddProvider extends ChangeNotifier {
+class GetListProductsReminderProvider extends ChangeNotifier {
   List<dynamic> products = List();
-  int selectedRadio = 1; // 1 remind buy, 2: remind use
-  int selectedProduct = 0;
-  int selectedCycle = 1;
 
   void clearProduct() {
     products = null;
     notifyListeners();
   }
 
-  Future<void> getListRemindProducts(BuildContext context) async {
+  Future<void> getListRemindProducts(String type) async {
     dynamic data =
-        await service.listRemindProducts(context, this.selectedRadio);
-
-    // add check case data as emty array like list product view
+        await service.listRemindProducts(type);
     if (data != null && data.length != 0) {
       products = data;
       notifyListeners();
     }
-  }
-
-  void setSelectedRadio(int val) {
-    this.selectedRadio = val;
-    notifyListeners();
-  }
-
-  void setSelectedProduct(int val) {
-    this.selectedProduct = val;
-    notifyListeners();
-  }
-
-  void setSelectedCycle(int val) {
-    this.selectedProduct = val;
-    notifyListeners();
   }
 
   Product getProduct(int index) {

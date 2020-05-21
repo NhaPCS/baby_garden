@@ -4,7 +4,6 @@ import 'package:baby_garden_flutter/screen/booking/provider/change_delivery_time
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/checkbox/custom_radio_button.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
-import 'package:baby_garden_flutter/widget/partner/date_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -43,6 +42,7 @@ class _ChangeDeliveryTimeDialogueState
     final List<dynamic> dates = DateUtil.getDate();
     String chooseTime = "";
     String chooseDate = dates[0]['date'];
+    String timeId = "";
     _changeDeliveryTimeProvider.receiveDate = dates[0]['index'];
     // TODO: implement buildWidget
     return Dialog(
@@ -92,6 +92,8 @@ class _ChangeDeliveryTimeDialogueState
                 builder: (BuildContext context,
                     ChangeDeliveryTimeProvider value, Widget child) {
                   List<dynamic> schedule = value.getDateSchedule();
+
+                  timeId = schedule.isNotEmpty?schedule[0]['id']:"0";
                   print(schedule);
                   if (schedule == null || schedule.isEmpty) {
                     return Column(
@@ -104,7 +106,7 @@ class _ChangeDeliveryTimeDialogueState
                           height: SizeUtil.smallSpace,
                         ),
                         Text(
-                          "Không có thời gian nhận hàng",
+                          S.of(context).no_receive_time,
                           style: TextStyle(
                               color: ColorUtil.primaryColor,
                               fontSize: SizeUtil.textSizeSmall),
@@ -146,6 +148,7 @@ class _ChangeDeliveryTimeDialogueState
                       titleSize: SizeUtil.textSizeSmall,
                       onChanged: (val) {
                         chooseTime = "${e['time_start']} - ${e['time_end']}";
+                        timeId = e['id'];
                         _changeDeliveryTimeProvider.onChangeTime(val);
                       },
                     )).toList(),
@@ -157,7 +160,7 @@ class _ChangeDeliveryTimeDialogueState
               ),
               RaisedButton(
                 onPressed: () {
-                  Navigator.of(context).pop(chooseTime +" " +  chooseDate);
+                  Navigator.of(context).pop({"data":chooseTime +" " +  chooseDate,"id":timeId});
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(
@@ -176,10 +179,6 @@ class _ChangeDeliveryTimeDialogueState
             ],
           ),
         ));
-  }
-
-  String getTimeFromDate(dynamic date){
-    return date['time_start'] + date['time_start'] + date['time_start'];
   }
 
   @override

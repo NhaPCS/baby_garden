@@ -64,7 +64,7 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
                 },
                 itemBuilder: (context, voucher, index) {
                   return VoucherItem(
-                    voucher: voucher[index],
+                    voucher: voucher,
                   );
                 },
               );

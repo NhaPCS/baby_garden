@@ -9,4 +9,12 @@ class GetSearchHistoryProvider extends ChangeNotifier {
     histories = data;
     notifyListeners();
   }
+
+  Future<void> deleteSearchHistory(BuildContext context) async {
+    dynamic res = await service.deleteSearch(context);
+    if (res != null) {
+      histories.clear();
+      notifyListeners();
+    }
+  }
 }

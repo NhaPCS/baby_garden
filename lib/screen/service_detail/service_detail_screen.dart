@@ -27,7 +27,8 @@ class ServiceDetailScreen extends StatefulWidget {
   }
 }
 
-class _ServiceDetailScreenState extends BaseStateModel<ServiceDetailScreen,ServiceDetailViewModel> {
+class _ServiceDetailScreenState
+    extends BaseStateModel<ServiceDetailScreen, ServiceDetailViewModel> {
   final BookingDetailProvider _bookingDetailProvider = BookingDetailProvider();
   ServiceState state = ServiceState.NONE;
 
@@ -54,230 +55,235 @@ class _ServiceDetailScreenState extends BaseStateModel<ServiceDetailScreen,Servi
             var bookingDetailData = value.bookingDetailData;
             if (bookingDetailData == null) return Container();
             initView(int.parse(bookingDetailData['active']));
-            return ListView(
-                children: <Widget>[
-                  WidgetUtil.getLine(
-                      width: SizeUtil.smallSpace,
-                      margin: EdgeInsets.all(0),
-                      color: ColorUtil.lineService),
-                  Container(
-                      color: ColorUtil.bgService,
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.only(
-                          left: SizeUtil.normalSpace,
-                          right: SizeUtil.normalSpace,
-                          top: SizeUtil.midSmallSpace,
-                          bottom: SizeUtil.midSmallSpace),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            S.of(context).service_header(
-                                bookingDetailData['code'],
-                                bookingDetailData['date_booking'],
-                                bookingDetailData['time_booking']),
-                            style: TextStyle(height: 1.5),
-                          ),
-                          RichTextForm(
-                              title: S.of(context).supply_by,
-                              titleStyle: TextStyle(
-                                  color: ColorUtil.textColor,
-                                  fontWeight: FontWeight.normal,
-                                  height: 1.5),
-                              content: bookingDetailData['shop_name'],
-                              contentStyle: TextStyle(
-                                  color: ColorUtil.primaryColor,
-                                  fontWeight: FontWeight.bold)),
-                        ],
-                      )),
-                  WidgetUtil.getLine(width: 1, margin: EdgeInsets.all(0)),
-                  OrderInfo(
-                    svgIcon: "ic_receive_location.svg",
-                    title: S.of(context).service_using_address,
-                    content: bookingDetailData['address'],
-                  ),
-                  //todo missing time using
-                  OrderInfo(
-                    svgIcon: 'ic_receive_method.svg',
-                    title: S.of(context).time_using,
-                    content: "120 phút",
-                  ),
-                  //todo missing using date
-                  OrderInfo(
-                    svgIcon: 'ic_payment_method.svg',
-                    title: S.of(context).date_using,
-                    content: bookingDetailData['time_finish'],
-                  ),
-                  OrderInfo(
-                    svgIcon: 'order_info.svg',
-                    title: S.of(context).order_info,
-                    contentWidget: Padding(
-                      padding: EdgeInsets.only(
-                          left: SizeUtil.normalSpace,
-                          bottom: SizeUtil.tinySpace),
-                      child: ProductOrderItem(
-                        imageUrl: bookingDetailData['shop_img'],
-                        title:
-                        bookingDetailData['service_name'],
-                        subTitle:
-                        bookingDetailData['service_content'],
+            return ListView(children: <Widget>[
+              WidgetUtil.getLine(
+                  width: SizeUtil.smallSpace,
+                  margin: EdgeInsets.all(0),
+                  color: ColorUtil.lineService),
+              Container(
+                  color: ColorUtil.bgService,
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.only(
+                      left: SizeUtil.normalSpace,
+                      right: SizeUtil.normalSpace,
+                      top: SizeUtil.midSmallSpace,
+                      bottom: SizeUtil.midSmallSpace),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        S.of(context).service_header(
+                            bookingDetailData['code'],
+                            bookingDetailData['date_booking'],
+                            bookingDetailData['time_booking']),
+                        style: TextStyle(height: 1.5),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: SizeUtil.normalSpace,
-                        right: SizeUtil.normalSpace,
-                        bottom: SizeUtil.midSmallSpace),
-                    child: RichTextForm(
-                        title: S.of(context).total_order_price,
-                        titleStyle: TextStyle(
-                            color: ColorUtil.textColor,
-                            fontWeight: FontWeight.bold,
-                            height: 1.5),
-                        content: StringUtil.getPriceText(
-                            bookingDetailData['total_money']),
-                        contentStyle: TextStyle(
-                            color: ColorUtil.red, fontWeight: FontWeight.bold)),
-                  ),
-                  state == ServiceState.CANCEL
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            WidgetUtil.getLine(
-                                width: 1,
-                                color: ColorUtil.lineColor,
-                                margin: EdgeInsets.all(0)),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: SizeUtil.normalSpace,
-                                  right: SizeUtil.normalSpace,
-                                  top: SizeUtil.midSmallSpace,
-                                  bottom: SizeUtil.midSmallSpace),
-                              child: Row(
-                                children: <Widget>[
-                                  Text(S.of(context).cancel_by,
-                                      style: TextStyle(
-                                          fontSize:
-                                              SizeUtil.textSizeExpressDetail)),
-                                  Spacer(),
-                                  Text("người đặt",
-                                      style: TextStyle(
-                                          fontSize:
-                                              SizeUtil.textSizeExpressDetail,
-                                          color: ColorUtil.primaryColor))
-                                ],
-                              ),
-                            ),
-                            WidgetUtil.getLine(
-                                width: 1,
-                                color: ColorUtil.lineColor,
-                                margin: EdgeInsets.all(0)),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: SizeUtil.normalSpace,
-                                  right: SizeUtil.normalSpace,
-                                  top: SizeUtil.midSmallSpace,
-                                  bottom: SizeUtil.midSmallSpace),
-                              child: Row(
-                                children: <Widget>[
-                                  Text(S.of(context).cancel_time,
-                                      style: TextStyle(
-                                          fontSize:
-                                              SizeUtil.textSizeExpressDetail)),
-                                  Spacer(),
-                                  Text(bookingDetailData['time_cancel'],
-                                      style: TextStyle(
-                                          fontSize:
-                                              SizeUtil.textSizeExpressDetail))
-                                ],
-                              ),
-                            ),
-                            WidgetUtil.getLine(
-                                width: 1,
-                                color: ColorUtil.lineColor,
-                                margin: EdgeInsets.all(0)),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: SizeUtil.normalSpace,
-                                  right: SizeUtil.normalSpace,
-                                  top: SizeUtil.midSmallSpace,
-                                  bottom: SizeUtil.midSmallSpace),
-                              child: Row(
-                                children: <Widget>[
-                                  Text(S.of(context).cancel_reason,
-                                      style: TextStyle(
-                                          fontSize:
-                                              SizeUtil.textSizeExpressDetail)),
-                                  Spacer(),
-                                  Text(bookingDetailData['reason_cancel'],
-                                      style: TextStyle(
-                                          fontSize:
-                                              SizeUtil.textSizeExpressDetail))
-                                ],
-                              ),
-                            ),
-                          ],
-                        )
-                      : Spacer(),
-                  state != ServiceState.CANCEL
-                      ? Column(
-                          children: <Widget>[
-                            MyRaisedButton(
-                              matchParent: true,
+                      RichTextForm(
+                          title: S.of(context).supply_by,
+                          titleStyle: TextStyle(
+                              color: ColorUtil.textColor,
+                              fontWeight: FontWeight.normal,
+                              height: 1.5),
+                          content: bookingDetailData['shop_name'],
+                          contentStyle: TextStyle(
                               color: ColorUtil.primaryColor,
-                              borderRadius: SizeUtil.zeroSpace,
-                              textStyle: TextStyle(
-                                  fontSize: SizeUtil.textSizeDefault,
-                                  color: Colors.white,
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.bold),
-                              padding: EdgeInsets.only(
-                                  top: SizeUtil.midSpace,
-                                  bottom: SizeUtil.midSpace),
-                              onPressed: () {
-                                //TODO booking
-                                if (state == ServiceState.BOOKED_SCHEDULE) {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          ReceiveBarCodeDialogue());
-                                } else {
-                                  push(RatingDetailScreen());
-                                }
-                              },
-                              text: state == ServiceState.BOOKED_SCHEDULE
-                                  ? S.of(context).use_service.toUpperCase()
-                                  : S.of(context).rating_service.toUpperCase(),
-                            ),
-                            state == ServiceState.BOOKED_SCHEDULE
-                                ? MyRaisedButton(
-                              matchParent: true,
-                              color: ColorUtil.primaryColor,
-                              borderRadius: SizeUtil.zeroSpace,
-                              textStyle: TextStyle(
-                                  fontSize: SizeUtil.textSizeDefault,
-                                  color: Colors.white,
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.bold),
-                              padding: EdgeInsets.only(
-                                  top: SizeUtil.midSpace,
-                                  bottom: SizeUtil.midSpace),
-                              onPressed: () {
-                                WidgetUtil.showConfirmDialog(context,
-                                  message: S.of(context).cancel_question,
-                                  title: S.of(context).attention,
-                                  positiveClicked: () async{
-                                    await getViewModel().onCancelBooking(context,bookingId: widget.bookingId);
-                                    Navigator.of(context).pop();
-                                  }, );
-                              },
-                              text:  S.of(context).cancel_schedule.toUpperCase(),
-                            ): SizedBox()
-                          ],
-                        )
-                      : SizedBox()
-                ]);
+                              fontWeight: FontWeight.bold)),
+                    ],
+                  )),
+              WidgetUtil.getLine(width: 1, margin: EdgeInsets.all(0)),
+              OrderInfo(
+                svgIcon: "ic_receive_location.svg",
+                title: S.of(context).service_using_address,
+                content: bookingDetailData['address'],
+              ),
+              //todo missing time using
+              OrderInfo(
+                svgIcon: 'ic_receive_method.svg',
+                title: S.of(context).time_using,
+                content: "120 phút",
+              ),
+              //todo missing using date
+              OrderInfo(
+                svgIcon: 'ic_payment_method.svg',
+                title: S.of(context).date_using,
+                content: bookingDetailData['time_finish'],
+              ),
+              OrderInfo(
+                svgIcon: 'order_info.svg',
+                title: S.of(context).order_info,
+                contentWidget: Padding(
+                  padding: EdgeInsets.only(
+                      left: SizeUtil.normalSpace, bottom: SizeUtil.tinySpace),
+                  child: ProductOrderItem(
+                    imageUrl: bookingDetailData['shop_img'],
+                    title: bookingDetailData['service_name'],
+                    subTitle: bookingDetailData['service_content'],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: SizeUtil.normalSpace,
+                    right: SizeUtil.normalSpace,
+                    bottom: SizeUtil.midSmallSpace),
+                child: RichTextForm(
+                    title: S.of(context).total_order_price,
+                    titleStyle: TextStyle(
+                        color: ColorUtil.textColor,
+                        fontWeight: FontWeight.bold,
+                        height: 1.5),
+                    content: StringUtil.getPriceText(
+                        bookingDetailData['total_money']),
+                    contentStyle: TextStyle(
+                        color: ColorUtil.red, fontWeight: FontWeight.bold)),
+              ),
+              state == ServiceState.CANCEL
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        WidgetUtil.getLine(
+                            width: 1,
+                            color: ColorUtil.lineColor,
+                            margin: EdgeInsets.all(0)),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: SizeUtil.normalSpace,
+                              right: SizeUtil.normalSpace,
+                              top: SizeUtil.midSmallSpace,
+                              bottom: SizeUtil.midSmallSpace),
+                          child: Row(
+                            children: <Widget>[
+                              Text(S.of(context).cancel_by,
+                                  style: TextStyle(
+                                      fontSize:
+                                          SizeUtil.textSizeExpressDetail)),
+                              Spacer(),
+                              Text("người đặt",
+                                  style: TextStyle(
+                                      fontSize: SizeUtil.textSizeExpressDetail,
+                                      color: ColorUtil.primaryColor))
+                            ],
+                          ),
+                        ),
+                        WidgetUtil.getLine(
+                            width: 1,
+                            color: ColorUtil.lineColor,
+                            margin: EdgeInsets.all(0)),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: SizeUtil.normalSpace,
+                              right: SizeUtil.normalSpace,
+                              top: SizeUtil.midSmallSpace,
+                              bottom: SizeUtil.midSmallSpace),
+                          child: Row(
+                            children: <Widget>[
+                              Text(S.of(context).cancel_time,
+                                  style: TextStyle(
+                                      fontSize:
+                                          SizeUtil.textSizeExpressDetail)),
+                              Spacer(),
+                              Text(bookingDetailData['time_cancel'],
+                                  style: TextStyle(
+                                      fontSize: SizeUtil.textSizeExpressDetail))
+                            ],
+                          ),
+                        ),
+                        WidgetUtil.getLine(
+                            width: 1,
+                            color: ColorUtil.lineColor,
+                            margin: EdgeInsets.all(0)),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: SizeUtil.normalSpace,
+                              right: SizeUtil.normalSpace,
+                              top: SizeUtil.midSmallSpace,
+                              bottom: SizeUtil.midSmallSpace),
+                          child: Row(
+                            children: <Widget>[
+                              Text(S.of(context).cancel_reason,
+                                  style: TextStyle(
+                                      fontSize:
+                                          SizeUtil.textSizeExpressDetail)),
+                              Spacer(),
+                              Text(bookingDetailData['reason_cancel'],
+                                  style: TextStyle(
+                                      fontSize: SizeUtil.textSizeExpressDetail))
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  : Spacer(),
+              state != ServiceState.CANCEL
+                  ? Column(
+                      children: <Widget>[
+
+              bookingDetailData['is_rate'] == "0"?
+                        MyRaisedButton(
+                          matchParent: true,
+                          color: ColorUtil.primaryColor,
+                          borderRadius: SizeUtil.zeroSpace,
+                          textStyle: TextStyle(
+                              fontSize: SizeUtil.textSizeDefault,
+                              color: Colors.white,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold),
+                          padding: EdgeInsets.only(
+                              top: SizeUtil.midSpace,
+                              bottom: SizeUtil.midSpace),
+                          onPressed: () async {
+                            //TODO booking
+                            if (state == ServiceState.BOOKED_SCHEDULE) {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      ReceiveBarCodeDialogue());
+                            } else {
+                              await push(RatingDetailScreen(
+                                bookingId: bookingDetailData['id'],
+                                isService: true,
+                              ));
+                              _bookingDetailProvider.getBookingDetail(widget.bookingId);
+                            }
+                          },
+                          text: state == ServiceState.BOOKED_SCHEDULE
+                              ? S.of(context).use_service.toUpperCase()
+                              : S.of(context).rating_service.toUpperCase(),
+                        ):SizedBox(),
+                        state == ServiceState.BOOKED_SCHEDULE
+                            ? MyRaisedButton(
+                                matchParent: true,
+                                color: ColorUtil.primaryColor,
+                                borderRadius: SizeUtil.zeroSpace,
+                                textStyle: TextStyle(
+                                    fontSize: SizeUtil.textSizeDefault,
+                                    color: Colors.white,
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.bold),
+                                padding: EdgeInsets.only(
+                                    top: SizeUtil.midSpace,
+                                    bottom: SizeUtil.midSpace),
+                                onPressed: () {
+                                  WidgetUtil.showConfirmDialog(
+                                    context,
+                                    message: S.of(context).cancel_question,
+                                    title: S.of(context).attention,
+                                    positiveClicked: () async {
+                                      await getViewModel().onCancelBooking(
+                                          context,
+                                          bookingId: widget.bookingId);
+                                      Navigator.of(context).pop();
+                                    },
+                                  );
+                                },
+                                text:
+                                    S.of(context).cancel_schedule.toUpperCase(),
+                              )
+                            : SizedBox()
+                      ],
+                    )
+                  : SizedBox()
+            ]);
           },
         ));
   }
