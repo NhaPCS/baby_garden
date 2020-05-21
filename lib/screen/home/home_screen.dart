@@ -32,13 +32,6 @@ class _HomeState extends BaseStateModel<HomeScreen, HomeViewModel> {
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     super.initState();
-    Future.delayed(Duration(seconds: 2), () {
-      //TODO fake dialog
-      showDialog(
-          context: context,
-          builder: (_) => PromotionDialog(context),
-          barrierDismissible: false);
-    });
   }
 
   @override
