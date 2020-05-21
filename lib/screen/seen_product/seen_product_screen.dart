@@ -45,14 +45,16 @@ class _SeenProductScreen extends BaseState<SeenProductScreen> {
                   print(product);
                   final _product = _getListProductProvider.fromJson(product);
 
-                  return ProductItem(
-                    onTap: () {
-                      push(ProductDetailScreen(
-                        productId: _product.id,
-                      ));
-                    },
-                    product: _product,
-                  );
+                  return _product != null
+                      ? ProductItem(
+                          onTap: () {
+                            push(ProductDetailScreen(
+                              productId: _product.id,
+                            ));
+                          },
+                          product: _product,
+                        )
+                      : SizedBox();
                 });
           },
         ));

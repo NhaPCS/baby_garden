@@ -30,12 +30,10 @@ class GetListProductProvider extends ChangeNotifier {
   }
 
   Product fromJson(dynamic _product, {bool isFavorite = false}) {
-    assert(_product['product_id'] != null || _product['id'] != null);
+    if (_product['id'] == null) return null;
 
     final product = Product(
-        id: _product['product_id'] == null
-            ? _product['id']
-            : _product['product_id'],
+        id: _product['id'],
         name: _product['name'] == null ? '' : _product['name'],
         price: _product['price'] == null ? '' : _product['price'],
         date: _product['date'] == null ? '' : _product['date'],
