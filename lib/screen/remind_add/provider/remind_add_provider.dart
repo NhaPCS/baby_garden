@@ -6,6 +6,7 @@ class RemindAddProvider extends ChangeNotifier {
   List<dynamic> products = List();
   int selectedRadio = 1; // 1 remind buy, 2: remind use
   int selectedProduct = 0;
+  int selectedCycle = 1;
 
   void clearProduct() {
     products = null;
@@ -29,6 +30,11 @@ class RemindAddProvider extends ChangeNotifier {
   }
 
   void setSelectedProduct(int val) {
+    this.selectedProduct = val;
+    notifyListeners();
+  }
+
+  void setSelectedCycle(int val) {
     this.selectedProduct = val;
     notifyListeners();
   }

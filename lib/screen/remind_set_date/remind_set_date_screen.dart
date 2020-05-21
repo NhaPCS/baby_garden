@@ -28,6 +28,7 @@ class _RemindSetDateScreenState extends BaseState<RemindSetDateScreen> {
   Widget buildWidget(BuildContext context) {
     String buttonTitle = S.of(context).confirm;
     initializeDateFormatting('en', null);
+
     return Scaffold(
         appBar: getAppBar(title: S.of(context).selectRemindTime),
         body: Stack(
@@ -36,11 +37,13 @@ class _RemindSetDateScreenState extends BaseState<RemindSetDateScreen> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(top: 8),
+                    margin: EdgeInsets.only(top: SizeUtil.midSmallSpace),
                     width: double.infinity,
                     decoration: setBorder('top', Color(0xffE1D9D9), 1),
-                    padding:
-                        const EdgeInsets.only(left: 15, top: 18, bottom: 18),
+                    padding: const EdgeInsets.only(
+                        left: SizeUtil.normalSpace,
+                        top: SizeUtil.defaultSpace,
+                        bottom: SizeUtil.defaultSpace),
                     child: Text(
                       S.of(context).selectRemindDate,
                       style: TextStyle(
@@ -51,7 +54,7 @@ class _RemindSetDateScreenState extends BaseState<RemindSetDateScreen> {
                   ),
                   Container(
                       decoration: setBorder('top', Color(0xffE4E4E4), 6),
-                      padding: EdgeInsets.only(top: 20),
+                      padding: EdgeInsets.only(top: SizeUtil.defaultSpace),
                       child: TableCalendar(
                         locale: this.locale,
                         calendarController: _calenderController,
@@ -62,7 +65,8 @@ class _RemindSetDateScreenState extends BaseState<RemindSetDateScreen> {
                         headerStyle: HeaderStyle(
                             formatButtonVisible: false,
                             centerHeaderTitle: true,
-                            titleTextStyle: TextStyle(fontSize: 23),
+                            titleTextStyle:
+                                TextStyle(fontSize: SizeUtil.textSizeBig),
                             titleTextBuilder: (date, locale) =>
                                 '${S.of(context).month} ' +
                                 DateFormat.M(locale).format(date)),
@@ -86,8 +90,8 @@ class _RemindSetDateScreenState extends BaseState<RemindSetDateScreen> {
                     borderRadius: SizeUtil.tinyRadius,
                     matchParent: true,
                     onPressed: () {
-                      // TODO-QA set date
-                      Navigator.of(context).pop();
+                      Navigator.of(context)
+                          .pop(_calenderController.selectedDay);
                     }),
               ),
             )

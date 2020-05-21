@@ -28,13 +28,17 @@ class ReminderLayout extends StatefulWidget {
 class _ReminderState extends BaseState<ReminderLayout> {
   var remindBuy = false;
   var remindUsed = false;
+  final RemindCalendarProvider _remindCalenderProvider =
+      RemindCalendarProvider();
 
   chooseCalendar() {
-    push(RemindSetTimeScreen());
+    push(RemindSetTimeScreen()).then((value) =>
+        _remindCalenderProvider.setNewRemindCalendar(timeStart: value));
   }
 
   chooseDate() {
-    push(RemindSetDateScreen());
+    push(RemindSetDateScreen()).then((value) =>
+        _remindCalenderProvider.setNewRemindCalendar(dateStart: value));
   }
 
   Widget listViewRemindTime() {
@@ -44,12 +48,12 @@ class _ReminderState extends BaseState<ReminderLayout> {
       mainAxisSize: MainAxisSize.min,
       children: List.generate(order.length, (index) {
         return _chooseRemindTime(
-            S.of(context).reminderTimeAt(order[index].toString() + ':'));
+            S.of(context).reminderTimeAt(order[index].toString() + ':'), index);
       }),
     );
   }
 
-  Widget _chooseRemindTime(String label) {
+  Widget _chooseRemindTime(String label, int index) {
     return Padding(
       padding: const EdgeInsets.only(top: SizeUtil.normalSpace),
       child: Row(children: <Widget>[
@@ -61,6 +65,14 @@ class _ReminderState extends BaseState<ReminderLayout> {
           padding: const EdgeInsets.only(left: SizeUtil.tinySpace),
           child: GestureDetector(
             onTap: () {
+              switch (index) {
+                case 1:
+                  break;
+                case 2:
+                case 3:
+
+                case 4:
+              }
               chooseCalendar();
             },
             child: Text(
@@ -218,6 +230,6 @@ class _ReminderState extends BaseState<ReminderLayout> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: RemindAddProvider())];
+    return [ChangeNotifierProvider.value(value: _remindCalenderProvider)];
   }
 }
