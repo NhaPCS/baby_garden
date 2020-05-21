@@ -60,7 +60,7 @@ class _OrderDetailScreenState
             int.parse(data['promotion_value']) -
             int.parse(data['promotion_ship']);
         initView(int.parse(data['active']), data['is_receive'], data['status'],
-            data['payment'],data['is_rate']);
+            data['payment'], data['is_rate']);
         return Scaffold(
             appBar: getAppBar(
               title: title,
@@ -103,7 +103,7 @@ class _OrderDetailScreenState
                   )),
               //TODO delivery address
               WidgetUtil.getLine(width: 1, margin: EdgeInsets.all(0)),
-              data['is_receive'] =="1"
+              data['is_receive'] == "1"
                   ? SizedBox()
                   : OrderInfo(
                       svgIcon: "ic_receive_location.svg",
@@ -111,13 +111,12 @@ class _OrderDetailScreenState
                       content: data['user_address'],
                     ),
               OrderInfo(
-                svgIcon: 'ic_receive_method.svg',
-                title: S.of(context).type_of_delivery,
-                content: state == BookingState.RECEIVE_IN_SHOP
-                    ? S.of(context).receive_in_shop
-                    : S.of(context).delivery_in_place,
-                contentNote:  data['time_ship']
-              ),
+                  svgIcon: 'ic_receive_method.svg',
+                  title: S.of(context).type_of_delivery,
+                  content: state == BookingState.RECEIVE_IN_SHOP
+                      ? S.of(context).receive_in_shop
+                      : S.of(context).delivery_in_place,
+                  contentNote: data['time_ship']),
               OrderInfo(
                 svgIcon: 'ic_payment_method.svg',
                 title: S.of(context).type_of_checkout,
@@ -254,7 +253,9 @@ class _OrderDetailScreenState
                             margin: EdgeInsets.all(0)),
                         OrderForm(
                           title: S.of(context).cancel_by,
-                          content: "người đặt",
+                          content: data['cancel_by'] == "1"
+                              ? S.of(context).cancel_by_owner
+                              : S.of(context).cancel_by_shop,
                           contentStyle: TextStyle(
                               fontSize: SizeUtil.textSizeExpressDetail,
                               color: ColorUtil.primaryColor),
@@ -358,8 +359,8 @@ class _OrderDetailScreenState
     });
   }
 
-  void initView(
-      int active, String receiveInShop, String status, String payment,String isRate) {
+  void initView(int active, String receiveInShop, String status, String payment,
+      String isRate) {
     state = BookingState.values[active];
     if (state != BookingState.CANCEL) {
       isShowCheckout = status == CheckoutStatus.UN_PAY.index.toString() &&
@@ -413,14 +414,16 @@ class _OrderDetailScreenState
     return [ChangeNotifierProvider.value(value: _bookingDetailProvider)];
   }
 
-  void onPositiveClick(bookingId) async{
+  void onPositiveClick(bookingId) async {
     //TODO booking
     if (state == BookingState.RECEIVE_IN_SHOP) {
       showDialog(
           context: context,
           builder: (BuildContext context) => ReceiveBarCodeDialogue());
     } else {
-      await push(RatingDetailScreen(bookingId: bookingId,));
+      await push(RatingDetailScreen(
+        bookingId: bookingId,
+      ));
       _bookingDetailProvider.getBookingDetail(widget.bookingId);
     }
   }

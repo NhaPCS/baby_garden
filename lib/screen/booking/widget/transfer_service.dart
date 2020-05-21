@@ -11,27 +11,28 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-class TransferService extends StatefulWidget{
+class TransferService extends StatefulWidget {
   final TransferMethodProvider transferMethodProvider;
   final TextEditingController promoteShipCodeController;
 
-  const TransferService({this.transferMethodProvider, this.promoteShipCodeController}):super();
+  const TransferService(
+      {this.transferMethodProvider, this.promoteShipCodeController})
+      : super();
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _TransferServiceState();
   }
-
 }
 
-class _TransferServiceState extends BaseState<TransferService>{
-
+class _TransferServiceState extends BaseState<TransferService> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget
@@ -45,75 +46,85 @@ class _TransferServiceState extends BaseState<TransferService>{
             Column(
                 children: value.ships
                     .map((e) => Column(
-                  children: <Widget>[
-                    CustomRadioButton(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      titleContent: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          CachedNetworkImage(
-                            imageUrl: e['img'],
-                            width: 40,
-                            height: 16,
-                          ),
-                          SizedBox(
-                            width: SizeUtil.tinySpace,
-                          ),
-                          Text(
-                            e['name'],
-                            style: TextStyle(
-                                fontSize:
-                                SizeUtil.textSizeExpressDetail),
-                          ),
-                        ],
-                      ),
-                      subTitle: Text(
-                        e['note'],
-                        style: TextStyle(
-                            fontSize: SizeUtil.textSizeNoticeTime,
-                            color: ColorUtil.gray),
-                      ),
-                      padding: const EdgeInsets.only(
-                          left: SizeUtil.bigSpaceHigher,
-                          top: SizeUtil.smallSpace,
-                          bottom: SizeUtil.smallSpace,
-                          right: SizeUtil.normalSpace),
-                      value: value.ships.indexOf(e),
-                      groupValue: value.transferMethod,
-                      onChanged: (val) {
-                        widget.transferMethodProvider.onChange(val);
-                      },
-                      trailing: Row(
-                        children: <Widget>[
-                          Text(
-                            e['price'],
-                            style: TextStyle(
-                              fontSize: SizeUtil.textSizeTiny,
-                              decoration: TextDecoration.lineThrough,
+                          children: <Widget>[
+                            CustomRadioButton(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              titleContent: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  CachedNetworkImage(
+                                    imageUrl: e['img'],
+                                    width: 40,
+                                    height: 16,
+                                  ),
+                                  SizedBox(
+                                    width: SizeUtil.tinySpace,
+                                  ),
+                                  Text(
+                                    e['name'],
+                                    style: TextStyle(
+                                        fontSize:
+                                            SizeUtil.textSizeExpressDetail),
+                                  ),
+                                ],
+                              ),
+                              subTitle: Text(
+                                e['note'],
+                                style: TextStyle(
+                                    fontSize: SizeUtil.textSizeNoticeTime,
+                                    color: ColorUtil.gray),
+                              ),
+                              padding: const EdgeInsets.only(
+                                  left: SizeUtil.bigSpaceHigher,
+                                  top: SizeUtil.smallSpace,
+                                  bottom: SizeUtil.smallSpace,
+                                  right: SizeUtil.normalSpace),
+                              value: value.ships.indexOf(e),
+                              groupValue: value.transferMethod,
+                              onChanged: (val) {
+                                widget.transferMethodProvider.onChange(val);
+                              },
+                              trailing: (value.isActiveCode &&
+                                      value.transferMethod ==
+                                          value.ships.indexOf(e))
+                                  ? Row(
+                                      children: <Widget>[
+                                        Text(
+                                          e['price'],
+                                          style: TextStyle(
+                                            fontSize: SizeUtil.textSizeTiny,
+                                            decoration:
+                                                TextDecoration.lineThrough,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: SizeUtil.tinySpace,
+                                        ),
+                                        Text(
+                                          e['price_discount'],
+                                          style: TextStyle(
+                                            fontSize: SizeUtil.textSizeSmall,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Text(
+                                      e['price'],
+                                      style: TextStyle(
+                                        fontSize: SizeUtil.textSizeSmall,
+                                      ),
+                                    ),
                             ),
-                          ),
-                          SizedBox(
-                            width: SizeUtil.tinySpace,
-                          ),
-                          Text(
-                            e['price_discount'],
-                            style: TextStyle(
-                              fontSize: SizeUtil.textSizeSmall,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                        margin: EdgeInsets.only(
-                          left: SizeUtil.notifyHintSpace,
-                        ),
-                        child: DotLineSeparator(
-                          color: ColorUtil.lineColor,
-                          paddingLeft: SizeUtil.largeSpace,
+                            Container(
+                                margin: EdgeInsets.only(
+                                  left: SizeUtil.notifyHintSpace,
+                                ),
+                                child: DotLineSeparator(
+                                  color: ColorUtil.lineColor,
+                                  paddingLeft: SizeUtil.largeSpace,
+                                ))
+                          ],
                         ))
-                  ],
-                ))
                     .toList()),
             Padding(
               padding: const EdgeInsets.only(
@@ -145,13 +156,13 @@ class _TransferServiceState extends BaseState<TransferService>{
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(0)),
+                                      BorderRadius.all(Radius.circular(0)),
                                 ),
                                 hintText: S.of(context).delivery_code,
                                 hintStyle:
-                                TextStyle(fontSize: SizeUtil.textSizeSmall),
+                                    TextStyle(fontSize: SizeUtil.textSizeSmall),
                                 contentPadding:
-                                EdgeInsets.only(left: 8, right: 4)),
+                                    EdgeInsets.only(left: 8, right: 4)),
                           ),
                         ),
                         SizedBox(
@@ -159,6 +170,24 @@ class _TransferServiceState extends BaseState<TransferService>{
                         ),
                         RaisedButton(
                           onPressed: () {
+                            if (widget.promoteShipCodeController.text
+                                    .toString()
+                                    .trim()
+                                    .length >
+                                0) {
+                              var correct = widget.transferMethodProvider
+                                  .checkPromoteCode(
+                                      widget.promoteShipCodeController.text);
+                              WidgetUtil.showMessageDialog(context,
+                                  message: correct
+                                      ? S.of(context).correct_code
+                                      : S.of(context).incorrect_code,
+                                  title: S.of(context).notify);
+                              if (correct) {
+                                widget.transferMethodProvider.setIsActive();
+                              }
+                            }
+
                             //TODO booking
                           },
                           color: ColorUtil.primaryColor,
@@ -181,10 +210,19 @@ class _TransferServiceState extends BaseState<TransferService>{
                       ],
                     ),
                   ),
-                  AddedPromoItem(
-                    padding:
-                    EdgeInsets.only(top: SizeUtil.tinySpace, bottom: 0),
-                  ),
+                  value.isActiveCode
+                      ? AddedPromoItem(
+                          onRemoved: () {
+                            widget.transferMethodProvider.removePromote();
+                          },
+                          promotion: {
+                            'code': value.promoteCode,
+                            "title": "Giảm giá"
+                          },
+                          padding: EdgeInsets.only(
+                              top: SizeUtil.tinySpace, bottom: 0),
+                        )
+                      : SizedBox(),
                 ],
               ),
             ),
@@ -199,5 +237,4 @@ class _TransferServiceState extends BaseState<TransferService>{
     // TODO: implement providers
     return [];
   }
-
 }
