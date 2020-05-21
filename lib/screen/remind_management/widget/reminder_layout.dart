@@ -31,16 +31,6 @@ class _ReminderState extends BaseState<ReminderLayout> {
   final RemindCalendarProvider _remindCalenderProvider =
       RemindCalendarProvider();
 
-  chooseCalendar() {
-    push(RemindSetTimeScreen()).then((value) =>
-        _remindCalenderProvider.setNewRemindCalendar(timeStart: value));
-  }
-
-  chooseDate() {
-    push(RemindSetDateScreen()).then((value) =>
-        _remindCalenderProvider.setNewRemindCalendar(dateStart: value));
-  }
-
   Widget listViewRemindTime() {
     List<int> order = [1, 2, 3, 4];
     return Column(
@@ -65,15 +55,7 @@ class _ReminderState extends BaseState<ReminderLayout> {
           padding: const EdgeInsets.only(left: SizeUtil.tinySpace),
           child: GestureDetector(
             onTap: () {
-              switch (index) {
-                case 1:
-                  break;
-                case 2:
-                case 3:
-
-                case 4:
-              }
-              chooseCalendar();
+              chooseTime(index);
             },
             child: Text(
               S.of(context).select,
@@ -84,6 +66,27 @@ class _ReminderState extends BaseState<ReminderLayout> {
         ),
       ]),
     );
+  }
+
+  chooseTime(index) {
+    push(RemindSetTimeScreen()).then((value) {
+      if (value == null) return;
+
+      switch (index) {
+        case 1:
+          _remindCalenderProvider.setNewRemindCalendar(time1: value);
+          break;
+        case 2:
+          _remindCalenderProvider.setNewRemindCalendar(time2: value);
+          break;
+        case 3:
+          _remindCalenderProvider.setNewRemindCalendar(time3: value);
+          break;
+        case 4:
+          _remindCalenderProvider.setNewRemindCalendar(time4: value);
+          break;
+      }
+    });
   }
 
   Widget rowSelectRemindType(String title, {bool isRemindUse = false}) {
@@ -133,7 +136,7 @@ class _ReminderState extends BaseState<ReminderLayout> {
         rowSelectRemindType(S.of(context).remindUseProduct, isRemindUse: true),
         GestureDetector(
           onTap: () {
-            chooseDate();
+            chooseEndDate();
           },
           child: rowTimeTable(S.of(context).endDateOfReminder),
         ),
@@ -142,53 +145,62 @@ class _ReminderState extends BaseState<ReminderLayout> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: SizeUtil.midSpace, bottom: SizeUtil.tinySpace),
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        S.of(context).reminderCycle,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: SizeUtil.textSizeSmall),
-                      ),
-                      Text('*', style: TextStyle(color: Colors.red)),
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(left: SizeUtil.tinySpace),
-                        child: GestureDetector(
-                          onTap: () {
-                            push(RemindCycleScreen());
-                          },
-                          child: Text(
-                            S.of(context).select,
-                            style: TextStyle(
-                                fontSize: SizeUtil.textSizeSmall,
-                                color: Colors.orange),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                RichText(
-                    text: TextSpan(
-                  children: [
-                    TextSpan(text: '*', style: TextStyle(color: Colors.red)),
-                    TextSpan(
-                      text: S.of(context).reminderCycleHint,
-                    )
-                  ],
-                  style: TextStyle(
-                      fontSize: SizeUtil.textSizeSmall,
-                      color: ColorUtil.textHint),
-                )),
+                SizedBox(height: SizeUtil.midSpace),
+                _remindCycleRow(),
+                SizedBox(height: SizeUtil.tinySpace),
+                _remindCycleHint(),
                 listViewRemindTime(),
               ],
             )),
       ],
     );
+  }
+
+  Widget _remindCycleRow() {
+    return Row(
+      children: <Widget>[
+        Text(
+          S.of(context).reminderCycle,
+          style:
+              TextStyle(color: Colors.black, fontSize: SizeUtil.textSizeSmall),
+        ),
+        Text('*', style: TextStyle(color: Colors.red)),
+        Padding(
+          padding: const EdgeInsets.only(left: SizeUtil.tinySpace),
+          child: GestureDetector(
+            onTap: () {
+              push(RemindCycleScreen()).then((value) => null);
+            },
+            child: Text(
+              S.of(context).select,
+              style: TextStyle(
+                  fontSize: SizeUtil.textSizeSmall, color: Colors.orange),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _remindCycleHint() {
+    return RichText(
+        text: TextSpan(
+      children: [
+        TextSpan(text: '*', style: TextStyle(color: Colors.red)),
+        TextSpan(
+          text: S.of(context).reminderCycleHint,
+        )
+      ],
+      style: TextStyle(
+          fontSize: SizeUtil.textSizeSmall, color: ColorUtil.textHint),
+    ));
+  }
+
+  chooseEndDate() {
+    push(RemindSetDateScreen()).then((value) {
+      if (value == null) return;
+      _remindCalenderProvider.setNewRemindCalendar(dateEnd: value);
+    });
   }
 
   rowTimeTable(String title) {

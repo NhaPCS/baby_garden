@@ -77,6 +77,9 @@ class RemindCalendarProvider extends ChangeNotifier {
     if (price != null) this.newRemindCalendar.price = price;
     if (datetime != null) this.newRemindCalendar.datetime = datetime;
     if (period != null) this.newRemindCalendar.period = period;
+
+    this.newRemindCalendar.dateStart = DateTime.now().toString();
+
     notifyListeners();
 
     print('update productId  $productId');
