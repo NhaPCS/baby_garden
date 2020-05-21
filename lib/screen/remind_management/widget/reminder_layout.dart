@@ -182,7 +182,6 @@ class _ReminderState extends BaseState<ReminderLayout> {
             valueListenable: _buyDateController,
           ),
         ),
-        getDivider(),
         rowSelectRemindType(S.of(context).remindUseProduct, 2),
         InkWell(
           onTap: () async {
@@ -203,68 +202,68 @@ class _ReminderState extends BaseState<ReminderLayout> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: SizeUtil.midSpace, bottom: SizeUtil.tinySpace),
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        S.of(context).reminderCycle,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: SizeUtil.textSizeSmall),
-                      ),
-                      Text('*', style: TextStyle(color: Colors.red)),
-                      ValueListenableBuilder<int>(
-                        valueListenable: _periodDateController,
-                        builder:
-                            (BuildContext context, int value, Widget child) {
-                          return value == null
-                              ? SizedBox()
-                              : Text(
-                                  "  ${value.toString()} ngày ",
-                                  style:
-                                      TextStyle(color: ColorUtil.primaryColor),
-                                );
-                        },
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(left: SizeUtil.tinySpace),
-                        child: InkWell(
-                          onTap: () async {
-                            int period = await push(RemindCycleScreen());
-                            _periodDateController.value = period;
-                            updateCallBack();
-                          },
-                          child: Text(
-                            S.of(context).select,
-                            style: TextStyle(
-                                fontSize: SizeUtil.textSizeSmall,
-                                color: Colors.orange),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                RichText(
-                    text: TextSpan(
-                  children: [
-                    TextSpan(text: '*', style: TextStyle(color: Colors.red)),
-                    TextSpan(
-                      text: S.of(context).reminderCycleHint,
-                    )
-                  ],
-                  style: TextStyle(
-                      fontSize: SizeUtil.textSizeSmall,
-                      color: ColorUtil.textHint),
-                )),
+                SizedBox(height: SizeUtil.midSpace),
+                _cycleRow(),
+                SizedBox(height: SizeUtil.tinySpace),
+                _cycleHint(),
                 listViewRemindTime(),
               ],
             )),
       ],
     );
+  }
+
+  Widget _cycleRow() {
+    return Row(
+      children: <Widget>[
+        Text(
+          S.of(context).reminderCycle,
+          style:
+              TextStyle(color: Colors.black, fontSize: SizeUtil.textSizeSmall),
+        ),
+        Text('*', style: TextStyle(color: Colors.red)),
+        ValueListenableBuilder<int>(
+          valueListenable: _periodDateController,
+          builder: (BuildContext context, int value, Widget child) {
+            return value == null
+                ? SizedBox()
+                : Text(
+                    "  ${value.toString()} ngày ",
+                    style: TextStyle(color: ColorUtil.primaryColor),
+                  );
+          },
+        ),
+        SizedBox(
+          width: SizeUtil.tinySpace,
+        ),
+        InkWell(
+          onTap: () async {
+            int period = await push(RemindCycleScreen());
+            _periodDateController.value = period;
+            updateCallBack();
+          },
+          child: Text(
+            S.of(context).select,
+            style: TextStyle(
+                fontSize: SizeUtil.textSizeSmall, color: Colors.orange),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _cycleHint() {
+    return RichText(
+        text: TextSpan(
+      children: [
+        TextSpan(text: '*', style: TextStyle(color: Colors.red)),
+        TextSpan(
+          text: S.of(context).reminderCycleHint,
+        )
+      ],
+      style: TextStyle(
+          fontSize: SizeUtil.textSizeSmall, color: ColorUtil.textHint),
+    ));
   }
 
   rowTimeTable(String title, String time) {
@@ -279,7 +278,7 @@ class _ReminderState extends BaseState<ReminderLayout> {
                 color: Colors.black, fontSize: SizeUtil.textSizeSmall),
           ),
         ),
-        time == null
+        time.isEmpty
             ? SizedBox()
             : Text(
                 "$time   ",

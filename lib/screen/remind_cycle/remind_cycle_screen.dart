@@ -1,13 +1,11 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/remind_add/provider/get_list_products_reminder_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
-import 'package:provider/provider.dart';
 
 class RemindCycleScreen extends StatefulWidget {
   @override
@@ -67,7 +65,11 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
                           fontSize: SizeUtil.textSizeDefault,
                           color: ColorUtil.darkGray),
                       textEditingController: _cycleTextFieldCtrl,
-                      onEditingComplete: () => _periodProvider.value = 0,
+                      onEditingComplete: () {
+                        _periodProvider.value =
+                            int.parse(_cycleTextFieldCtrl.text);
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      },
                       borderColor: ColorUtil.darkGray,
                       borderRadius: 8,
                     ),

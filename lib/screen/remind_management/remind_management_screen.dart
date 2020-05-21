@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/data/model/remind_calendar.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/remind_add/remind_add_screen.dart';
@@ -50,7 +51,8 @@ class _RemindManageState extends BaseState<RemindManagementScreen> {
                 shrinkWrap: true,
                 itemCount: value.remindList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final _calendar = _remindCalendarProvider.getRemind(index);
+                  final _calendar =
+                      RemindCalendar().fromJson(value.remindList[index]);
                   return RemindCardItem(calendar: _calendar);
                 });
           },

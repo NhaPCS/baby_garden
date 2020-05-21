@@ -16,7 +16,8 @@ class RemindCardItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _remindCalendarProvider = RemindCalendarProvider();
-    bool _validURL = Uri.parse(calendar.image).isAbsolute;
+    bool _validURL =
+        calendar.image != null ? Uri.parse(calendar.image).isAbsolute : false;
 
     return Container(
       padding: const EdgeInsets.all(
@@ -27,18 +28,13 @@ class RemindCardItem extends StatelessWidget {
       child: Row(children: <Widget>[
         _validURL
             ? CircleImage(
-                borderRadius: SizeUtil.smallRadius,
+                elevation: 0,
                 width: 76.0,
                 height: 76.0,
                 imageUrl: calendar.image)
-            :
-            // default image to test
-            ClipRRect(
-                child: Image.asset(
-                  calendar.image,
-                  width: 76.0,
-                  height: 76.0,
-                ),
+            : SizedBox(
+                width: 76.0,
+                height: 76.0,
               ),
         Expanded(
           child: Padding(

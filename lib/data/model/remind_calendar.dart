@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class RemindCalendar {
   String id;
   String productId;
@@ -52,6 +54,10 @@ class RemindCalendar {
   }
 
   RemindCalendar fromJson(Map<String, dynamic> calendar) {
+    print('olala');
+    final images = calendar['image'] as List<dynamic>;
+    print(images.length);
+
     id = calendar['id'];
     dateStart = calendar['date_start'];
     timeStart = calendar['time_start'];
@@ -69,9 +75,7 @@ class RemindCalendar {
     productName =
         calendar['product_name'] != null ? calendar['product_name'] : '';
     price = calendar['price'] != null ? calendar['price'] : '';
-    image = [null, []].contains(calendar['image'])
-        ? calendar['image'][0]
-        : "photo/sample_product.png";
+    image = images.length > 0 ? images.first : '';
 
     return this;
   }

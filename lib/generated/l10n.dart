@@ -4475,7 +4475,7 @@ class S {
 
   String get remindCycle3 {
     return Intl.message(
-      '02 ( 2 ngày nhắc / 1 chu kỳ )',
+      '03 ( 3 ngày nhắc / 1 chu kỳ )',
       name: 'remindCycle3',
       desc: '',
       args: [],

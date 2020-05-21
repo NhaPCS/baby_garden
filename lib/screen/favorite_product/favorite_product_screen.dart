@@ -47,14 +47,17 @@ class _FavoriteProductScreen extends BaseState<FavoriteProductScreen> {
                     (BuildContext context, dynamic product, int index) {
                   final _product = _getListProductProvider.fromJson(product,
                       isFavorite: true);
-                  return ProductItem(
-                    onTap: () {
-                      push(ProductDetailScreen(
-                        productId: _product.id,
-                      ));
-                    },
-                    product: _product,
-                  );
+
+                  return _product != null
+                      ? ProductItem(
+                          onTap: () {
+                            push(ProductDetailScreen(
+                              productId: _product.id,
+                            ));
+                          },
+                          product: _product,
+                        )
+                      : SizedBox();
                 });
           },
         ));
