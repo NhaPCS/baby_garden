@@ -456,7 +456,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "remindBuyProduct" : MessageLookupByLibrary.simpleMessage("Nhắc lịch mua sản phẩm"),
     "remindCycle1" : MessageLookupByLibrary.simpleMessage("01 ( 1 ngày nhắc / 1 chu kỳ )"),
     "remindCycle2" : MessageLookupByLibrary.simpleMessage("02 ( 2 ngày nhắc / 1 chu kỳ )"),
-    "remindCycle3" : MessageLookupByLibrary.simpleMessage("02 ( 2 ngày nhắc / 1 chu kỳ )"),
+    "remindCycle3" : MessageLookupByLibrary.simpleMessage("03 ( 3 ngày nhắc / 1 chu kỳ )"),
     "remindManage" : MessageLookupByLibrary.simpleMessage("Quản lý lịch nhắc"),
     "remindOtherOption" : MessageLookupByLibrary.simpleMessage("Tùy chọn khác"),
     "remindOtherOptionHint" : MessageLookupByLibrary.simpleMessage("Nhập số ngày nhắc mong muốn/ 1 lần =/1 kỳ"),

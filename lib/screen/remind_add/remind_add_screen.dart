@@ -20,8 +20,9 @@ class RemindAddScreen extends StatefulWidget {
 class _RemindAddScreen extends BaseState<RemindAddScreen> {
   var remindBuy = false;
   var remindUsed = false;
-  RemindCalendarProvider _remindCalenderProvider = RemindCalendarProvider();
-  RemindAddProvider _remindAddProvider = RemindAddProvider();
+  final RemindCalendarProvider _remindCalenderProvider =
+      RemindCalendarProvider();
+  final RemindAddProvider _remindAddProvider = RemindAddProvider();
 
   bool visible = false;
 

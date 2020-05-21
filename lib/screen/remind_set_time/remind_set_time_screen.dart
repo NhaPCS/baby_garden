@@ -12,6 +12,8 @@ class RemindSetTimeScreen extends StatefulWidget {
 }
 
 class _RemindSetTimeScreenState extends BaseState<RemindSetTimeScreen> {
+  var _selectedTime = DateTime.now();
+
   @override
   Widget buildWidget(BuildContext context) {
     String buttonTitle = S.of(context).confirm;
@@ -37,8 +39,8 @@ class _RemindSetTimeScreenState extends BaseState<RemindSetTimeScreen> {
                   ),
                   Container(
                     decoration: setBorder('top', Color(0xffE4E4E4), 6),
-                    padding: EdgeInsets.only(top: 20),
-                    height: 300,
+                    padding: EdgeInsets.only(top: SizeUtil.defaultSpace),
+                    height: MediaQuery.of(context).size.height / 2,
                     child: Theme(
                       data: ThemeData(
                           cupertinoOverrideTheme: CupertinoThemeData(
@@ -51,14 +53,17 @@ class _RemindSetTimeScreenState extends BaseState<RemindSetTimeScreen> {
                                 navActionTextStyle:
                                     TextStyle(color: Colors.orange),
                                 dateTimePickerTextStyle: TextStyle(
-                                  fontSize: 30,
+                                  fontSize: SizeUtil.textSizeItemPost,
                                   color: Colors.orange,
                                 ),
                               ))),
                       child: CupertinoDatePicker(
                         mode: CupertinoDatePickerMode.time,
+                        initialDateTime: _selectedTime,
                         use24hFormat: true,
-                        onDateTimeChanged: (chosenTime) {},
+                        onDateTimeChanged: (chosenTime) {
+                          this._selectedTime = chosenTime;
+                        },
                       ),
                     ),
                   ),
@@ -81,8 +86,7 @@ class _RemindSetTimeScreenState extends BaseState<RemindSetTimeScreen> {
                     borderRadius: SizeUtil.tinyRadius,
                     matchParent: true,
                     onPressed: () {
-                      // TODO-QA set time
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pop(_selectedTime);
                     }),
               ),
             )
