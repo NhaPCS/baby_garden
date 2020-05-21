@@ -1,22 +1,35 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/remind_add/provider/remind_add_provider.dart';
 import 'package:baby_garden_flutter/screen/remind_cycle/remind_cycle_screen.dart';
-import 'package:baby_garden_flutter/screen/remind_management/provider/remind_calendar_provider.dart';
 import 'package:baby_garden_flutter/screen/remind_set_date/remind_set_date_screen.dart';
+import 'package:baby_garden_flutter/screen/remind_set_date_time/remind_set_date_time_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_set_time/remind_set_time_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:baby_garden_flutter/widget/line/dashed_line.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
-import 'package:provider/provider.dart';
+
+typedef ReminderSelectCallBack = void Function(
+    int type,
+    DateTime buyTime,
+    DateTime endTime,
+    int period,
+    DateTime time1,
+    DateTime time2,
+    DateTime time3,
+    DateTime time4);
 
 class ReminderLayout extends StatefulWidget {
   final bool showDesc;
   final bool hasDivider;
+  final ReminderSelectCallBack reminderSelectCallBack;
 
-  const ReminderLayout({Key key, this.showDesc = true, this.hasDivider = false})
+  const ReminderLayout(
+      {Key key,
+      this.showDesc = true,
+      this.hasDivider = false,
+      this.reminderSelectCallBack})
       : super(key: key);
 
   @override
@@ -28,32 +41,42 @@ class ReminderLayout extends StatefulWidget {
 class _ReminderState extends BaseState<ReminderLayout> {
   var remindBuy = false;
   var remindUsed = false;
-  final RemindCalendarProvider _remindCalenderProvider =
-      RemindCalendarProvider();
-
-  chooseCalendar() {
-    push(RemindSetTimeScreen()).then((value) =>
-        _remindCalenderProvider.setNewRemindCalendar(timeStart: value));
-  }
-
-  chooseDate() {
-    push(RemindSetDateScreen()).then((value) =>
-        _remindCalenderProvider.setNewRemindCalendar(dateStart: value));
-  }
+  final ValueNotifier<int> _typeController = ValueNotifier(1);
+  final ValueNotifier<DateTime> _buyDateController = ValueNotifier(null);
+  final ValueNotifier<DateTime> _endDateController = ValueNotifier(null);
+  final ValueNotifier<int> _periodDateController = ValueNotifier(null);
+  final ValueNotifier<DateTime> _time1Controller = ValueNotifier(null);
+  final ValueNotifier<DateTime> _time2Controller = ValueNotifier(null);
+  final ValueNotifier<DateTime> _time3Controller = ValueNotifier(null);
+  final ValueNotifier<DateTime> _time4Controller = ValueNotifier(null);
 
   Widget listViewRemindTime() {
-    List<int> order = [1, 2, 3, 4];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
-      children: List.generate(order.length, (index) {
+      children: List.generate(4, (index) {
         return _chooseRemindTime(
-            S.of(context).reminderTimeAt(order[index].toString() + ':'), index);
+            S.of(context).reminderTimeAt((index + 1).toString() + ':'), index);
       }),
     );
   }
 
   Widget _chooseRemindTime(String label, int index) {
+    ValueNotifier<DateTime> notifier;
+    switch (index) {
+      case 0:
+        notifier = _time1Controller;
+        break;
+      case 1:
+        notifier = _time2Controller;
+        break;
+      case 2:
+        notifier = _time3Controller;
+        break;
+      case 3:
+        notifier = _time4Controller;
+        break;
+    }
     return Padding(
       padding: const EdgeInsets.only(top: SizeUtil.normalSpace),
       child: Row(children: <Widget>[
@@ -61,19 +84,37 @@ class _ReminderState extends BaseState<ReminderLayout> {
           label,
           style: TextStyle(fontSize: SizeUtil.textSizeSmall),
         ),
+        ValueListenableBuilder<DateTime>(
+          valueListenable: notifier,
+          builder: (BuildContext context, DateTime value, Widget child) {
+            return value == null
+                ? SizedBox()
+                : Text(
+                    "   ${DateUtil.formatTime(value)}   ",
+                    style: TextStyle(color: ColorUtil.primaryColor),
+                  );
+          },
+        ),
         Padding(
           padding: const EdgeInsets.only(left: SizeUtil.tinySpace),
           child: GestureDetector(
-            onTap: () {
+            onTap: () async {
+              DateTime time = await push(RemindSetTimeScreen());
               switch (index) {
+                case 0:
+                  _time1Controller.value = time;
+                  break;
                 case 1:
+                  _time2Controller.value = time;
                   break;
                 case 2:
+                  _time3Controller.value = time;
+                  break;
                 case 3:
-
-                case 4:
+                  _time4Controller.value = time;
+                  break;
               }
-              chooseCalendar();
+              updateCallBack();
             },
             child: Text(
               S.of(context).select,
@@ -86,26 +127,30 @@ class _ReminderState extends BaseState<ReminderLayout> {
     );
   }
 
-  Widget rowSelectRemindType(String title, {bool isRemindUse = false}) {
-    return Consumer<RemindAddProvider>(
-        builder: (BuildContext context, RemindAddProvider value, Widget child) {
-      return Row(
-        children: <Widget>[
-          Radio(
-            onChanged: (val) {
-              value.setSelectedRadio(val);
-            },
-            groupValue: value.selectedRadio,
-            value: isRemindUse ? 2 : 1,
-            activeColor: ColorUtil.primaryColor,
-          ),
-          Text(
-            title,
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-        ],
-      );
-    });
+  Widget rowSelectRemindType(String title, int type) {
+    return ValueListenableBuilder<int>(
+      builder: (BuildContext context, int selectedType, Widget child) {
+        return Row(
+          children: <Widget>[
+            Radio(
+              onChanged: (val) {
+                _typeController.value = val;
+                updateCallBack();
+              },
+              value: type,
+              activeColor: ColorUtil.primaryColor,
+              groupValue: selectedType,
+            ),
+            Text(
+              title,
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            ),
+          ],
+        );
+      },
+      valueListenable: _typeController,
+    );
   }
 
   @override
@@ -122,20 +167,36 @@ class _ReminderState extends BaseState<ReminderLayout> {
                         fontWeight: FontWeight.bold,
                         color: ColorUtil.darkGray)))
             : SizedBox(),
-        rowSelectRemindType(S.of(context).remindBuyProduct),
-        GestureDetector(
-          onTap: () {
-            push(RemindSetTimeScreen());
+        rowSelectRemindType(S.of(context).remindBuyProduct, 1),
+        InkWell(
+          onTap: () async {
+            DateTime date = await push(RemindSetDateTimeScreen());
+            _buyDateController.value = date;
+            updateCallBack();
           },
-          child: rowTimeTable(S.of(context).remindTime),
+          child: ValueListenableBuilder<DateTime>(
+            builder: (BuildContext context, DateTime value, Widget child) {
+              return rowTimeTable(S.of(context).remindTime,
+                  DateUtil.formatNormalDateTime(value));
+            },
+            valueListenable: _buyDateController,
+          ),
         ),
         getDivider(),
-        rowSelectRemindType(S.of(context).remindUseProduct, isRemindUse: true),
-        GestureDetector(
-          onTap: () {
-            chooseDate();
+        rowSelectRemindType(S.of(context).remindUseProduct, 2),
+        InkWell(
+          onTap: () async {
+            DateTime date = await push(RemindSetDateScreen());
+            _endDateController.value = date;
+            updateCallBack();
           },
-          child: rowTimeTable(S.of(context).endDateOfReminder),
+          child: ValueListenableBuilder<DateTime>(
+            builder: (BuildContext context, DateTime value, Widget child) {
+              return rowTimeTable(S.of(context).endDateOfReminder,
+                  DateUtil.formatNormalDate(value));
+            },
+            valueListenable: _endDateController,
+          ),
         ),
         Padding(
             padding: const EdgeInsets.only(left: SizeUtil.hugSpace),
@@ -154,12 +215,27 @@ class _ReminderState extends BaseState<ReminderLayout> {
                             fontSize: SizeUtil.textSizeSmall),
                       ),
                       Text('*', style: TextStyle(color: Colors.red)),
+                      ValueListenableBuilder<int>(
+                        valueListenable: _periodDateController,
+                        builder:
+                            (BuildContext context, int value, Widget child) {
+                          return value == null
+                              ? SizedBox()
+                              : Text(
+                                  "  ${value.toString()} ngày ",
+                                  style:
+                                      TextStyle(color: ColorUtil.primaryColor),
+                                );
+                        },
+                      ),
                       Padding(
                         padding:
                             const EdgeInsets.only(left: SizeUtil.tinySpace),
-                        child: GestureDetector(
-                          onTap: () {
-                            push(RemindCycleScreen());
+                        child: InkWell(
+                          onTap: () async {
+                            int period = await push(RemindCycleScreen());
+                            _periodDateController.value = period;
+                            updateCallBack();
                           },
                           child: Text(
                             S.of(context).select,
@@ -191,7 +267,7 @@ class _ReminderState extends BaseState<ReminderLayout> {
     );
   }
 
-  rowTimeTable(String title) {
+  rowTimeTable(String title, String time) {
     return Row(
       children: <Widget>[
         Padding(
@@ -203,6 +279,12 @@ class _ReminderState extends BaseState<ReminderLayout> {
                 color: Colors.black, fontSize: SizeUtil.textSizeSmall),
           ),
         ),
+        time == null
+            ? SizedBox()
+            : Text(
+                "$time   ",
+                style: TextStyle(color: ColorUtil.primaryColor),
+              ),
         SvgIcon(
           'timetable.svg',
           color: Colors.orange,
@@ -228,8 +310,20 @@ class _ReminderState extends BaseState<ReminderLayout> {
         : SizedBox();
   }
 
+  void updateCallBack() {
+    widget.reminderSelectCallBack(
+        _typeController.value,
+        _buyDateController.value,
+        _endDateController.value,
+        _periodDateController.value,
+        _time1Controller.value,
+        _time2Controller.value,
+        _time3Controller.value,
+        _time4Controller.value);
+  }
+
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _remindCalenderProvider)];
+    return [];
   }
 }

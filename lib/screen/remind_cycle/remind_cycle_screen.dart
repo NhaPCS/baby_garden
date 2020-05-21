@@ -1,6 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/remind_add/provider/remind_add_provider.dart';
+import 'package:baby_garden_flutter/screen/remind_add/provider/get_list_products_reminder_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
@@ -15,8 +15,8 @@ class RemindCycleScreen extends StatefulWidget {
 }
 
 class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
-  final RemindAddProvider _remindAddProvider = RemindAddProvider();
   final TextEditingController _cycleTextFieldCtrl = TextEditingController();
+  final ValueNotifier<int> _periodProvider = ValueNotifier(1);
 
   bool check1 = false;
   bool check2 = false;
@@ -67,8 +67,7 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
                           fontSize: SizeUtil.textSizeDefault,
                           color: ColorUtil.darkGray),
                       textEditingController: _cycleTextFieldCtrl,
-                      onEditingComplete: () =>
-                          _remindAddProvider.setSelectedCycle(0),
+                      onEditingComplete: () => _periodProvider.value = 0,
                       borderColor: ColorUtil.darkGray,
                       borderRadius: 8,
                     ),
@@ -89,10 +88,7 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
                   borderRadius: SizeUtil.tinyRadius,
                   matchParent: true,
                   onPressed: () {
-                    final cycle = _remindAddProvider.selectedCycle != 0
-                        ? _remindAddProvider.selectedCycle.toString()
-                        : _cycleTextFieldCtrl.text;
-                    Navigator.of(context).pop(cycle);
+                    Navigator.of(context).pop(_periodProvider.value);
                   }),
             ),
           ],
@@ -100,28 +96,30 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
   }
 
   Widget _remindCycle(String label, int cycle) {
-    return Consumer<RemindAddProvider>(
-        builder: (BuildContext context, RemindAddProvider value, Widget child) {
-      return Row(
-        children: <Widget>[
-          Radio(
-            onChanged: (val) {
-              value.setSelectedCycle(val);
-            },
-            groupValue: value.selectedCycle,
-            value: cycle,
-            activeColor: ColorUtil.primaryColor,
-          ),
-          Text(
-            label,
-          ),
-        ],
-      );
-    });
+    return ValueListenableBuilder<int>(
+      valueListenable: _periodProvider,
+      builder: (BuildContext context, int value, Widget child) {
+        return Row(
+          children: <Widget>[
+            Radio(
+              onChanged: (val) {
+                _periodProvider.value = val;
+              },
+              groupValue: value,
+              value: cycle,
+              activeColor: ColorUtil.primaryColor,
+            ),
+            Text(
+              label,
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _remindAddProvider)];
+    return null;
   }
 }

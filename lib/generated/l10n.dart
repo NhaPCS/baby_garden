@@ -4562,6 +4562,15 @@ class S {
       args: [],
     );
   }
+
+  String get choose_product {
+    return Intl.message(
+      'Hãy chọn một sản phẩm',
+      name: 'choose_product',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

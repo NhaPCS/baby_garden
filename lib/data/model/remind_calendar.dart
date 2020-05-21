@@ -41,7 +41,7 @@ class RemindCalendar {
       'time_start': this.timeStart,
       'date_end': this.dateEnd,
       'time_end': this.timeEnd,
-      'type': this.type == RemindType.remindBuy ? 1 : 2,
+      'type': this.type == RemindType.remindBuy ? "1" : "2",
       'period': this.period,
       'time1': this.time1,
       'time2': this.time2,

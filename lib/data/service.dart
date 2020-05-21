@@ -954,13 +954,11 @@ Future<dynamic> addRemindCalendar(BuildContext context,
   return null;
 }
 
-Future<dynamic> listRemindProducts(BuildContext context, int type) async {
+Future<dynamic> listRemindProducts(String type) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  userId = "26";
-
   dynamic params = {
     "user_id": userId,
-    "type": type.toString(),
+    "type": type,
   };
 
   Response response = await get(null,
