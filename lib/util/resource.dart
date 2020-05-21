@@ -74,6 +74,18 @@ class DateUtil {
     return date == null ? '' : new DateFormat("dd/MM/yyyy").format(date);
   }
 
+  static String formatNormalDate(DateTime date) {
+    return date == null ? '' : new DateFormat("dd/MM/yyyy").format(date);
+  }
+
+  static String formatNormalDateTime(DateTime date) {
+    return date == null ? '' : new DateFormat("dd/MM/yyyy HH:mm").format(date);
+  }
+
+  static String formatTime(DateTime date) {
+    return date == null ? '' : new DateFormat("HH:mm").format(date);
+  }
+
   static DateTime parseBirthdayDate(String date) {
     return date == null || date.isEmpty
         ? null
@@ -623,7 +635,7 @@ class WidgetUtil {
   static showLoading(BuildContext context) {
     showDialog(
         context: context,
-        barrierDismissible: false,
+        barrierDismissible: true,
         builder: (context) {
           return Center(
             child: CircularProgressIndicator(

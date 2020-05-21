@@ -1,114 +1,67 @@
+import 'package:baby_garden_flutter/data/model/product.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/favorite_product/item/product_favorite_seen_item.dart';
-import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
-import 'package:baby_garden_flutter/screen/remind_add/provider/remind_add_provider.dart';
-import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
+import 'package:baby_garden_flutter/screen/remind_add/provider/get_list_products_reminder_provider.dart';
 import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
-
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class AddRemindDialogScreen extends StatefulWidget {
+  final ValueNotifier<Product> productController;
+  final String type;
+
+  const AddRemindDialogScreen({Key key, this.productController, this.type})
+      : super(key: key);
+
   @override
   _AddRemindDialogScreenState createState() => _AddRemindDialogScreenState();
 }
 
 class _AddRemindDialogScreenState extends BaseState<AddRemindDialogScreen> {
-  final RemindAddProvider _remindAddProvider = RemindAddProvider();
+  final GetListProductsReminderProvider _remindAddProvider =
+      GetListProductsReminderProvider();
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if ((_remindAddProvider.products == null ||
-        _remindAddProvider.products.isEmpty)) {
-      _remindAddProvider.clearProduct();
-      _remindAddProvider.getListRemindProducts(context);
-    }
+  void initState() {
+    super.initState();
+    _remindAddProvider.getListRemindProducts(widget.type);
   }
 
   @override
   Widget buildWidget(BuildContext context) {
-    return AlertDialog(
-      titlePadding: EdgeInsets.all(0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(SizeUtil.bigRadius),
-      ),
-      title: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
-        centerTitle: true,
-        title: Text(
-          S.of(context).selectRemindProduct,
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: ColorUtil.primaryColor,
-      ),
-      content: Consumer<RemindAddProvider>(
-        builder: (context, value, child) {
-          if (value.products == null || value.products.isEmpty)
-            return LoadingView(
-              isNoData: value.products != null,
-            );
-          return SizedBox(
-            width: double.maxFinite,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: value.products.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final _product = _remindAddProvider.getProduct(index);
-
-                      return Row(
-                        children: [
-                          SizedBox(
-                            width: SizeUtil.iconSizeDefault,
-                            child: Radio(
-                              onChanged: (val) {
-                                value.setSelectedProduct(val);
-                              },
-                              groupValue: value.selectedProduct,
-                              value: index,
-                              activeColor: ColorUtil.primaryColor,
-                            ),
-                          ),
-                          SizedBox(width: SizeUtil.midSpace),
-                          Expanded(
-                            child: ProductItem(
-                              onTap: () {
-                                push(ProductDetailScreen(
-                                  productId: _product.id,
-                                ));
-                              },
-                              product: _product,
-                            ),
-                          ),
-                        ],
-                      );
-                    }),
-                SizedBox(
-                  height: 20,
-                ),
-                MyRaisedButton(
-                  padding: EdgeInsets.fromLTRB(
-                      SizeUtil.bigSpace,
-                      SizeUtil.normalSpace,
-                      SizeUtil.bigSpace,
-                      SizeUtil.normalSpace),
-                  color: ColorUtil.primaryColor,
-                  // matchParent: true,
-                  text: S.of(context).confirm,
-                  textStyle: TextStyle(color: Colors.white, fontSize: 13),
-                  onPressed: () {},
-                ),
-              ],
-            ),
+    return Consumer<GetListProductsReminderProvider>(
+      builder: (context, value, child) {
+        if (value.products == null || value.products.isEmpty)
+          return LoadingView(
+            isNoData: value.products != null,
           );
-        },
-      ),
+        return ListView.builder(
+            shrinkWrap: true,
+            itemCount: value.products.length + 1,
+            itemBuilder: (BuildContext context, int index) {
+              if(index==0) {
+                return  AppBar(
+                  title: Text(S.of(context).choose_product,style: TextStyle(color: Colors.white),),
+                  centerTitle: true,
+                  leading: Container(),
+                  actions: [IconButton(icon: Icon(Icons.close, color: Colors.white,), onPressed: (){
+                    Navigator.of(context).pop();
+                  })],
+                );
+              }
+              final _product = _remindAddProvider.getProduct(index-1);
+
+              return ProductItem(
+                onTap: () {
+                  widget.productController.value = _product;
+                  Navigator.of(context).pop();
+                },
+                product: _product,
+              );
+            });
+      },
     );
   }
 

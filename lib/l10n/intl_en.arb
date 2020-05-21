@@ -510,5 +510,7 @@
     "correct_code": "Nhập mã thành công" ,
     "incorrect_code": "Mã không đúng",
     "cancel_by_owner": "Người đặt",
-    "cancel_by_shop": "Chủ Shop"
+    "cancel_by_shop": "Chủ Shop",
+  "choose_product": "Hãy chọn một sản phẩm"
+
 }

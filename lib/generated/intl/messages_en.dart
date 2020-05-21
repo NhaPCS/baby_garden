@@ -194,6 +194,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "choose_delivery_address" : MessageLookupByLibrary.simpleMessage("Vui lòng nhập địa chỉ nhận hàng "),
     "choose_district" : MessageLookupByLibrary.simpleMessage("Chọn Quận/ Huyện"),
     "choose_other" : MessageLookupByLibrary.simpleMessage("Chọn khác"),
+    "choose_product" : MessageLookupByLibrary.simpleMessage("Hãy chọn một sản phẩm"),
     "choose_province" : MessageLookupByLibrary.simpleMessage("Chọn Tỉnh/ Thành phố"),
     "choose_service" : m3,
     "choose_shop_address" : MessageLookupByLibrary.simpleMessage("Vui lòng chọn shop nhận hàng"),

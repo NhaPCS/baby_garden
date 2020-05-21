@@ -1,9 +1,12 @@
 import 'dart:math';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_close_dialog.dart';
+import 'package:baby_garden_flutter/widget/image/my_cached_image.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,8 +20,9 @@ const List<Color> RAN_COLORS = [
 class PromotionDialog extends AlertDialog {
   final BuildContext context;
   final Random random = Random();
+  final dynamic promotion;
 
-  PromotionDialog(this.context);
+  PromotionDialog(this.context, this.promotion);
 
   @override
   ShapeBorder get shape => RoundedRectangleBorder(
@@ -42,38 +46,14 @@ class PromotionDialog extends AlertDialog {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(
-                    height: Provider.of<AppProvider>(context).width03,
-                  ),
+                  GiftBoxAnimation(imgUrl: promotion['img'],),
                   Text(
-                    "Sale up to",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: ColorUtil.textColor,
-                      fontSize: SizeUtil.textSizeBig,
-                    ),
-                  ),
-                  SizedBox(
-                    height: SizeUtil.bigSpace,
-                  ),
-                  Text(
-                    "30%",
+                    promotion == null ? '' : promotion['title'],
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: ColorUtil.red,
                       fontWeight: FontWeight.bold,
-                      fontSize: 70,
-                    ),
-                  ),
-                  SizedBox(
-                    height: SizeUtil.bigSpace,
-                  ),
-                  Text(
-                    "off in your next order",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: ColorUtil.textColor,
-                      fontSize: SizeUtil.textSizeBigger,
+                      fontSize: 50,
                     ),
                   ),
                   SizedBox(
@@ -94,7 +74,6 @@ class PromotionDialog extends AlertDialog {
                       centerWidth: 8,
                     )),
           ),
-          GiftBoxAnimation(),
           Positioned(
             child: ButtonCloseDialog(),
             top: SizeUtil.hugSpace,
@@ -167,6 +146,9 @@ class _GiftState extends State<GiftAnimation> with TickerProviderStateMixin {
 }
 
 class GiftBoxAnimation extends StatefulWidget {
+  final String imgUrl;
+
+  const GiftBoxAnimation({Key key, this.imgUrl}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _GiftBoxState();
@@ -196,10 +178,7 @@ class _GiftBoxState extends State<GiftBoxAnimation>
     return SlideTransition(
       position: Tween<Offset>(begin: Offset(0, -3), end: Offset(0, 0)).animate(
           CurvedAnimation(parent: controller, curve: Curves.elasticInOut)),
-      child: SvgIcon(
-        'ic_gift.svg',
-        width: Provider.of<AppProvider>(context).width03,
-      ),
+      child: MyCachedImage(url: widget.imgUrl,width: 200,height: 200,boxFit: BoxFit.contain,),
     );
   }
 }

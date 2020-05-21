@@ -1,9 +1,8 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/remind_management/Provider/remind_calendar_provider.dart';
+import 'package:baby_garden_flutter/screen/remind_add/provider/get_list_products_reminder_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
-import 'package:baby_garden_flutter/widget/checkbox/circle_checkbox.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +15,8 @@ class RemindCycleScreen extends StatefulWidget {
 }
 
 class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
-  final RemindCalendarProvider _remindCalendarProvider =
-      RemindCalendarProvider();
+  final TextEditingController _cycleTextFieldCtrl = TextEditingController();
+  final ValueNotifier<int> _periodProvider = ValueNotifier(1);
 
   bool check1 = false;
   bool check2 = false;
@@ -46,9 +45,9 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
                     ),
                   ),
                   WidgetUtil.getLine(color: Color(0xffE4E4E4), width: 6),
-                  _remindCycle(S.of(context).remindCycle1, check1),
-                  _remindCycle(S.of(context).remindCycle2, check2),
-                  _remindCycle(S.of(context).remindCycle3, check3),
+                  _remindCycle(S.of(context).remindCycle1, 1),
+                  _remindCycle(S.of(context).remindCycle2, 2),
+                  _remindCycle(S.of(context).remindCycle3, 3),
                   Padding(
                     padding: SizeUtil.normalPadding,
                     child: Text(
@@ -67,7 +66,8 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
                       hintStyle: TextStyle(
                           fontSize: SizeUtil.textSizeDefault,
                           color: ColorUtil.darkGray),
-                      textEditingController: null,
+                      textEditingController: _cycleTextFieldCtrl,
+                      onEditingComplete: () => _periodProvider.value = 0,
                       borderColor: ColorUtil.darkGray,
                       borderRadius: 8,
                     ),
@@ -88,31 +88,38 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
                   borderRadius: SizeUtil.tinyRadius,
                   matchParent: true,
                   onPressed: () {
-                    // TODO-QA set cycle
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pop(_periodProvider.value);
                   }),
             ),
           ],
         ));
   }
 
-  Widget _remindCycle(String label, bool value) {
-    return Row(
-      children: <Widget>[
-        CircleCheckbox(
-            color: ColorUtil.primaryColor,
-            uncheckBg: Icons.radio_button_unchecked,
-            checked: value,
-            onChanged: (bool val) {
-              value = val;
-            }),
-        Expanded(child: Text(label))
-      ],
+  Widget _remindCycle(String label, int cycle) {
+    return ValueListenableBuilder<int>(
+      valueListenable: _periodProvider,
+      builder: (BuildContext context, int value, Widget child) {
+        return Row(
+          children: <Widget>[
+            Radio(
+              onChanged: (val) {
+                _periodProvider.value = val;
+              },
+              groupValue: value,
+              value: cycle,
+              activeColor: ColorUtil.primaryColor,
+            ),
+            Text(
+              label,
+            ),
+          ],
+        );
+      },
     );
   }
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _remindCalendarProvider)];
+    return null;
   }
 }
