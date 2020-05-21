@@ -1,14 +1,16 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/big_category_item.dart';
 import 'package:baby_garden_flutter/provider/change_parent_category_provider.dart';
+import 'package:baby_garden_flutter/provider/get_main_category_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ListParentCategory extends StatelessWidget {
   final ChangeParentCategoryProvider changeCategoryProvider;
+  final ValueChanged<dynamic> onParentCategoryChanged;
 
-  const ListParentCategory({Key key, @required this.changeCategoryProvider})
+  const ListParentCategory({Key key, @required this.changeCategoryProvider, this.onParentCategoryChanged})
       : super(key: key);
 
   @override
@@ -29,22 +31,27 @@ class ListParentCategory extends StatelessWidget {
                   fontSize: SizeUtil.textSizeBigger),
             ),
           ),
-          Expanded(child: Consumer<ChangeParentCategoryProvider>(
+          Expanded(child:
+              Consumer2<ChangeParentCategoryProvider, GetMainCategoryProvider>(
             builder: (BuildContext context, ChangeParentCategoryProvider value,
-                Widget child) {
-              return ListView(
-                children: List.generate(5, (index) {
-                  return GestureDetector(
-                    child: BigCategoryItem(
-                      isSelected: changeCategoryProvider.index == index,
-                    ),
-                    onTap: () {
-                      changeCategoryProvider.selectCategory(index);
-                    },
-                  );
-                }),
+                GetMainCategoryProvider mainCategoryProvider, Widget child) {
+              return ListView.builder(
                 scrollDirection: Axis.horizontal,
-              );
+                  itemCount: mainCategoryProvider.categories == null
+                      ? 0
+                      : mainCategoryProvider.categories.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      child: BigCategoryItem(
+                        category: mainCategoryProvider.categories[index],
+                        isSelected: changeCategoryProvider.index == index,
+                      ),
+                      onTap: () {
+                        changeCategoryProvider.selectCategory(index);
+                        onParentCategoryChanged(mainCategoryProvider.categories[index]);
+                      },
+                    );
+                  });
             },
           ))
         ],

@@ -60,7 +60,7 @@ class OrderItem extends StatelessWidget {
                   ),
                   RichTextForm(
                     title: S.of(context).supply_by,
-                    titleStyle:  TextStyle(
+                    titleStyle: TextStyle(
                         fontSize: SizeUtil.textSizeSmall,
                         color: ColorUtil.textColor),
                     content: itemData['shop_name'],
@@ -81,7 +81,9 @@ class OrderItem extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: SizeUtil.tinySpace),
                 child: Text(
-                  S.of(context).date_of_expiration_holding("28/12/2019 12:25"),
+                  S
+                      .of(context)
+                      .date_of_expiration_holding(itemData['time_expired']),
                   style: TextStyle(fontSize: SizeUtil.textSizeTiny),
                   textAlign: TextAlign.start,
                 ),
@@ -99,10 +101,12 @@ class OrderItem extends StatelessWidget {
                     ? S.of(context).order_title
                     : orderItem['name'],
                 price: StringUtil.getPriceText(
-                        orderItem == null ? "340000" : orderItem['price']) +
+                        orderItem == null ? "3000" : orderItem['price']) +
                     " X ",
-                productCount: orderItem == null ? " 2" : orderItem['number'],
-                star: isRated ? 3 : null,
+                productCount: orderItem == null ? "3" : orderItem['number'],
+                star: isRated
+                    ? int.parse(itemData['star'])
+                    : null, // todo- hung  thiếu rating
               ),
               isRated
                   ? SizedBox()

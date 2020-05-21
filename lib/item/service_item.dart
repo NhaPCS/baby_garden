@@ -6,27 +6,15 @@ import 'package:flutter/material.dart';
 
 class ServiceItem extends StatelessWidget {
   final bool isShowBookingDate;
-  dynamic itemData;
+  final dynamic itemData;
 
   ServiceItem(
-      {Key key, this.isShowBookingDate = true, @required this.itemData})
+      {Key key, this.isShowBookingDate = true,this.itemData})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    if (itemData == null) {
-      itemData = {
-        'code': "0",
-        'shop_name': "",
-        'date_booking': "",
-        'time_booking': '',
-        "shop_img": "",
-        'total_money': '',
-        'list_product': '',
-        "service_name":""
-      };
-    }
     return Column(
       children: <Widget>[
         Container(
@@ -109,7 +97,7 @@ class ServiceItem extends StatelessWidget {
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              itemData['service_name'],
+                              itemData['service_name']==null?"":itemData['service_name'],
                               style: TextStyle(
                                   fontSize: SizeUtil.textSizeExpressDetail,
                                   color: ColorUtil.textColor),
@@ -122,7 +110,7 @@ class ServiceItem extends StatelessWidget {
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              S.of(context).overall_time("120"),
+                              S.of(context).overall_time(itemData['time_service']),
                               style:
                                   TextStyle(fontSize: SizeUtil.textSizeSmall),
                               textAlign: TextAlign.start,
@@ -134,7 +122,7 @@ class ServiceItem extends StatelessWidget {
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              S.of(context).using_date("14.02.2019 - 10:00"),
+                              S.of(context).using_date(itemData["time_finish"]),
                               style:
                                   TextStyle(fontSize: SizeUtil.textSizeSmall),
                               textAlign: TextAlign.start,
@@ -157,7 +145,7 @@ class ServiceItem extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                         children: <TextSpan>[
                           TextSpan(
-                            text: "700 000 đ",
+                            text: itemData["total_money"],
                             style: TextStyle(
                               color: ColorUtil.red,
                               fontSize: SizeUtil.textSizeSmall,

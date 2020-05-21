@@ -5,9 +5,9 @@ class VCBExpressProvider extends ChangeNotifier {
   List<dynamic> newList = List();
   int total = -1;
 
-  Future<void> getVCBExpress({int index = 0, int numberPost=service.PAGE_SIZE}) async {
+  Future<void> getVCBExpress({int index = 0, int numberPost=service.PAGE_SIZE, String categoryId}) async {
     dynamic data = await service.news(
-        index: index.toString(), numberPost: numberPost.toString());
+        index: index.toString(), numberPost: numberPost.toString(), categoryId: categoryId);
     if (data != null) {
       newList = data['list'];
       total = data['total'];
