@@ -126,7 +126,7 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
                         itemBuilder: (context, index) {
                           return new GestureDetector(
                             onTap: () {
-                              push(RatedDetailScreen());
+                              push(RatedDetailScreen(bookingId: value.ratedData[index]['id'],isService: widget.isService,));
                             },
                             child: widget.isService
                                 ? new ServiceItem(
