@@ -172,7 +172,7 @@ district_id: id quận huyện
 */
 Future<dynamic> bookingProduct(
     {String inShopReceiveTimeId,
-      String userID,
+    String userID,
     String shopID,
     String bookingDate,
     String bookingTime,
@@ -191,7 +191,7 @@ Future<dynamic> bookingProduct(
     String point,
     String districtID}) async {
   Response response = await post(null, path: "bookingProduct", param: {
-    'point':point,
+    'point': point,
     'user_id': userID,
     'shop_id': shopID,
     'date_booking': bookingDate,
@@ -213,7 +213,6 @@ Future<dynamic> bookingProduct(
   return null;
 }
 
-
 Future<dynamic> listVoucher({int index, String categoryId}) async {
   dynamic param = {
     'index': index.toString(),
@@ -227,7 +226,8 @@ Future<dynamic> listVoucher({int index, String categoryId}) async {
   return null;
 }
 
-Future<dynamic> cancelBooking(BuildContext context,{int index, String bookingId}) async {
+Future<dynamic> cancelBooking(BuildContext context,
+    {int index, String bookingId}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic param = {
     'user_id': userId,
@@ -301,9 +301,13 @@ Future<dynamic> deleteNoty({String notifyID}) async {
 }
 
 //todo news
-Future<dynamic> news({String index, String numberPost, String categoryId}) async {
-  Response response = await get(null,
-      path: "news", param: {'index': index, 'number_post': numberPost, 'categoryId': categoryId});
+Future<dynamic> news(
+    {String index, String numberPost, String categoryId}) async {
+  Response response = await get(null, path: "news", param: {
+    'index': index,
+    'number_post': numberPost,
+    'categoryId': categoryId
+  });
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -351,7 +355,7 @@ Future<dynamic> city() async {
 
 //todo rateBooking
 Future<dynamic> rateBooking(BuildContext context,
-    {String bookingID, String star, String content,File img}) async {
+    {String bookingID, String star, String content, File img}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic files = {"img": img};
   dynamic param = {
@@ -362,8 +366,8 @@ Future<dynamic> rateBooking(BuildContext context,
   };
   Response response;
   if (img.path == "") {
-    response =
-    await post(context, path: "rateBooking", param: param, requireLogin: true);
+    response = await post(context,
+        path: "rateBooking", param: param, requireLogin: true);
   } else {
     response = await postMultiPart(context,
         path: "rateBooking", param: param, files: files, requireLogin: true);
@@ -372,21 +376,27 @@ Future<dynamic> rateBooking(BuildContext context,
   return null;
 }
 
-Future<dynamic> configureUserNotify(BuildContext context,{String isNoti,String type}) async{
+Future<dynamic> configureUserNotify(BuildContext context,
+    {String isNoti, String type}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic param = {
     'user_id': userId,
     'is_noti': isNoti,
     'type': type,
   };
-  Response response = await post(context, path: "configNoti", param: param, requireLogin: true);
+  Response response =
+      await post(context, path: "configNoti", param: param, requireLogin: true);
   if (response.isSuccess()) return response.data;
   return null;
 }
 
 //todo rateBooking
 Future<dynamic> rateProduct(BuildContext context,
-    {String productId,String bookingID, String star, String content,File img}) async {
+    {String productId,
+    String bookingID,
+    String star,
+    String content,
+    File img}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic files = {"img": img};
   dynamic param = {
@@ -398,8 +408,8 @@ Future<dynamic> rateProduct(BuildContext context,
   };
   Response response;
   if (img.path == "") {
-    response =
-    await post(context, path: "rateProduct", param: param, requireLogin: true);
+    response = await post(context,
+        path: "rateProduct", param: param, requireLogin: true);
   } else {
     response = await postMultiPart(context,
         path: "rateProduct", param: param, files: files, requireLogin: true);
@@ -1008,6 +1018,13 @@ Future<dynamic> search(String key) async {
   dynamic params = {"user_id": userId, "key": key};
 
   Response response = await get(null, path: "search", param: params);
+
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> promotion() async {
+  Response response = await get(null, path: "popup");
 
   if (response.isSuccess()) return response.data;
   return null;

@@ -116,18 +116,18 @@ class _CheckoutMethodWGState extends BaseState<CheckoutMethodWG> {
                 children: <Widget>[
                   GestureDetector(
                     onTap: () async {
-                      widget.pointCheckoutValueController.value =
-                          !widget.pointCheckoutValueController.value;
-                      if (widget.pointCheckoutValueController.value) {
-                        var point = await showDialog(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                PointCheckoutDialogue(
-                                  point: currentPoint,
-                                ));
-                        if (widget.onChangePoint != null && point != null) {
-                          widget.onChangePoint(point);
-                        }
+                      var point = await showDialog(
+                          context: context,
+                          builder: (BuildContext context) =>
+                              PointCheckoutDialogue(
+                                point: currentPoint,
+                              ));
+                      if (widget.onChangePoint != null &&
+                          point != null &&
+                          point > 0) {
+                        widget.onChangePoint(point);
+                        widget.pointCheckoutValueController.value =
+                            !widget.pointCheckoutValueController.value;
                       }
                     },
                     child: Text(
@@ -139,14 +139,22 @@ class _CheckoutMethodWGState extends BaseState<CheckoutMethodWG> {
                   Spacer(),
                   SwitchButton(
                     valueController: widget.pointCheckoutValueController,
-                    valueChanged: (result) {
+                    valueChanged: (result) async{
                       if (result) {
-                        showDialog(
+                        var point = await showDialog(
                             context: context,
                             builder: (BuildContext context) =>
                                 PointCheckoutDialogue(
                                   point: currentPoint,
                                 ));
+                        if (widget.onChangePoint != null &&
+                            point != null &&
+                            point > 0) {
+                          widget.onChangePoint(point);
+                        }else{
+                          widget.pointCheckoutValueController.value =
+                          !widget.pointCheckoutValueController.value;
+                        }
                       }
                     },
                   ),

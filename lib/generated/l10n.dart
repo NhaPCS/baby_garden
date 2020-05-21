@@ -4077,6 +4077,15 @@ class S {
     );
   }
 
+  String cancel_time_inset(Object time) {
+    return Intl.message(
+      'Hủy vào lúc: $time',
+      name: 'cancel_time_inset',
+      desc: '',
+      args: [time],
+    );
+  }
+
   String get cancel_by {
     return Intl.message(
       'Hủy bởi',
@@ -4585,6 +4594,42 @@ class S {
     return Intl.message(
       'Bạn chưa có lịch sử tìm kiếm',
       name: 'no_search_history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get correct_code {
+    return Intl.message(
+      'Nhập mã thành công',
+      name: 'correct_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get incorrect_code {
+    return Intl.message(
+      'Mã không đúng',
+      name: 'incorrect_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cancel_by_owner {
+    return Intl.message(
+      'Người đặt',
+      name: 'cancel_by_owner',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get cancel_by_shop {
+    return Intl.message(
+      'Chủ Shop',
+      name: 'cancel_by_shop',
       desc: '',
       args: [],
     );

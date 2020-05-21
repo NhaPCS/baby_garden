@@ -100,7 +100,7 @@ class _ServiceDetailScreenState
               OrderInfo(
                 svgIcon: 'ic_receive_method.svg',
                 title: S.of(context).time_using,
-                content: "120 phút",
+                content: bookingDetailData['time_service'],
               ),
               //todo missing using date
               OrderInfo(
@@ -158,7 +158,9 @@ class _ServiceDetailScreenState
                                       fontSize:
                                           SizeUtil.textSizeExpressDetail)),
                               Spacer(),
-                              Text("người đặt",
+                              Text(bookingDetailData['cancel_by'] == "1"
+                                  ? S.of(context).cancel_by_owner
+                                  : S.of(context).cancel_by_shop,
                                   style: TextStyle(
                                       fontSize: SizeUtil.textSizeExpressDetail,
                                       color: ColorUtil.primaryColor))

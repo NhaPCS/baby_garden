@@ -449,6 +449,7 @@
     "old_password": "Mật khẩu cũ",
     "cancel_reason": "Lý do hủy",
     "cancel_time": "Hủy vào lúc",
+    "cancel_time_inset": "Hủy vào lúc: {time}",
     "cancel_by": "Hủy bởi",
     "change_service_type": "Muốn thay đổi loại dịch vụ",
     "cancel_question": "Bạn có muốn thực sự muốn huỷ ?",
@@ -506,5 +507,9 @@
     "test_result_is": "Đánh giá kết quả:",
     "mess_delete_search_history": "Bạn có muốn xoá lịch sử tìm kiếm không?",
     "no_search_history": "Bạn chưa có lịch sử tìm kiếm",
+    "correct_code": "Nhập mã thành công",
+    "incorrect_code": "Mã không đúng",
+    "cancel_by_owner": "Người đặt",
+    "cancel_by_shop": "Chủ Shop",
     "choose_product": "Hãy chọn một sản phẩm"
 }
