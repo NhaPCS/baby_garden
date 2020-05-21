@@ -505,5 +505,6 @@
     "no_receive_time": "Không có thời gian nhận hàng\nVui lòng chọn ngày khác",
     "test_result_is": "Đánh giá kết quả:",
     "mess_delete_search_history": "Bạn có muốn xoá lịch sử tìm kiếm không?",
-    "no_search_history": "Bạn chưa có lịch sử tìm kiếm"
+    "no_search_history": "Bạn chưa có lịch sử tìm kiếm",
+    "choose_product": "Hãy chọn một sản phẩm"
 }

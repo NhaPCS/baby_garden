@@ -18,21 +18,21 @@ class RemindCalendar {
 
   RemindCalendar(
       {this.id,
-      this.productId,
-      this.dateStart,
-      this.dateEnd,
-      this.timeStart,
-      this.timeEnd,
-      this.type,
-      this.period,
-      this.time1,
-      this.time2,
-      this.time3,
-      this.time4,
-      this.image,
-      this.productName,
-      this.price,
-      this.datetime});
+      this.productId = '',
+      this.dateStart = '',
+      this.dateEnd = '',
+      this.timeStart = '',
+      this.timeEnd = '',
+      this.type = RemindType.remindBuy,
+      this.period = '',
+      this.time1 = '',
+      this.time2 = '',
+      this.time3 = '',
+      this.time4 = '',
+      this.image = '',
+      this.productName = '',
+      this.price = '',
+      this.datetime = ''});
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> params = {
@@ -41,7 +41,7 @@ class RemindCalendar {
       'time_start': this.timeStart,
       'date_end': this.dateEnd,
       'time_end': this.timeEnd,
-      'type': this.type == RemindType.remindBuy ? 1 : 2,
+      'type': this.type == RemindType.remindBuy ? "1" : "2",
       'period': this.period,
       'time1': this.time1,
       'time2': this.time2,
