@@ -1,4 +1,3 @@
-import 'package:baby_garden_flutter/data/model/product.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/favorite_product/item/product_favorite_seen_item.dart';
@@ -9,10 +8,9 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class AddRemindDialogScreen extends StatefulWidget {
-  final ValueNotifier<Product> productController;
   final String type;
 
-  const AddRemindDialogScreen({Key key, this.productController, this.type})
+  const AddRemindDialogScreen({Key key, this.type})
       : super(key: key);
 
   @override
@@ -55,8 +53,7 @@ class _AddRemindDialogScreenState extends BaseState<AddRemindDialogScreen> {
 
               return ProductItem(
                 onTap: () {
-                  widget.productController.value = _product;
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(_product);
                 },
                 product: _product,
               );
