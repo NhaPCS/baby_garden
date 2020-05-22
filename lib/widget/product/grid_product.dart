@@ -44,7 +44,8 @@ class _GridProductState extends BaseState<GridProduct> {
             _getListProductProvider.products.isEmpty) &&
         widget.section != null) {
       _getListProductProvider.getData(context, widget.section.path,
-          categoryId: widget.categoryId,
+          categoryId: null,
+          parentId: widget.categoryId,
           numberPosts:
               widget.totalCount == null ? TOTAL_ITEMS : widget.totalCount);
     }
@@ -93,7 +94,11 @@ class _GridProductState extends BaseState<GridProduct> {
           ListCategory(
             onChangedCategory: (category) {
               _getListProductProvider.getData(context, widget.section.path,
-                  categoryId: category['id'], numberPosts: TOTAL_ITEMS);
+                  categoryId: category == null
+                      ? (widget.categoryId == null ? null : '0')
+                      : category['id'],
+                  parentId: widget.categoryId,
+                  numberPosts: TOTAL_ITEMS);
             },
           ),
           Consumer<GetListProductProvider>(

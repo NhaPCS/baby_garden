@@ -158,7 +158,7 @@ class _ProductScreenState
                             ),
                             borderRadius: SizeUtil.iconSize,
                             onPressed: () {
-                              //TODO share st
+                              WidgetUtil.shareApp(context);
                             },
                           ),
                           ButtonIcon(

@@ -4644,21 +4644,21 @@ class S {
     );
   }
 
-  String get share_content {
+  String get verify_voucher_success {
     return Intl.message(
-      'Tải app vườn của bé \n Mua hàng ko giới hạn',
-      name: 'share_content',
+      'Xác thực thành công',
+      name: 'verify_voucher_success',
       desc: '',
       args: [],
     );
   }
 
-  String get hide_pass {
+  String share_format(Object link) {
     return Intl.message(
-      '******',
-      name: 'hide_pass',
+      'Tải app Vườn của bé $link.\n Mua hàng không giới hạn.',
+      name: 'share_format',
       desc: '',
-      args: [],
+      args: [link],
     );
   }
 }

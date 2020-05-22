@@ -512,6 +512,8 @@
     "cancel_by_owner": "Người đặt",
     "cancel_by_shop": "Chủ Shop",
     "choose_product": "Hãy chọn một sản phẩm",
-    "share_content": "Tải app vườn của bé \n Mua hàng ko giới hạn",
-    "hide_pass": "******"
+  "share_content": "Tải app vườn của bé \n Mua hàng ko giới hạn",
+  "verify_voucher_success": "Xác thực thành công",
+  "share_format": "Tải app Vườn của bé {link}.\n Mua hàng không giới hạn."
+
 }

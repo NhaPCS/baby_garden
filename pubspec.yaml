@@ -49,6 +49,8 @@ dependencies:
   barcode_scan: any
   flutter_picker:
     git: git://github.com/yangyxd/flutter_picker.git
+  share: ^0.6.4+3
+  package_info: ^0.4.0+18
 
 dev_dependencies:
   flutter_test:
