@@ -61,7 +61,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m20(code) => "Đơn hàng ${code}";
 
-  static m21(minute) => "Thời gian thực hiện: ${minute} phút";
+  static m21(minute) => "Thời gian thực hiện: ${minute} ";
 
   static m22(point) => "Thanh toán điểm hiện có [${point}]";
 

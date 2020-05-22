@@ -22,7 +22,7 @@ class RatedItem extends StatelessWidget{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(
@@ -44,7 +44,7 @@ class RatedItem extends StatelessWidget{
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        itemTitle,
+                        itemTitle==null?"":itemTitle,
                         style: TextStyle(fontSize: SizeUtil.textSizeSmall),
                         textAlign: TextAlign.start,
                       ),
@@ -90,7 +90,10 @@ class RatedItem extends StatelessWidget{
                     ? rateImg
                     : StringUtil.dummyImage,
                 width: MediaQuery.of(context).size.width / 2)),
-        Text(rateTime)
+        Padding(
+          padding: const EdgeInsets.all(SizeUtil.smallSpace),
+          child: Text(rateTime),
+        )
       ],
     );
   }

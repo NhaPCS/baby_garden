@@ -145,7 +145,7 @@
     "date_of_expiration_holding": "Ngày hết hạn giữ hàng: {date}",
     "service_title": "Chăm sóc da mặt từ cơ bản đến nâng cao",
     "order_title": "Áo giữ nhiệt Trẻ em màu 11 Pink size 100 vạch hồng\ncổ cao",
-    "overall_time": "Thời gian thực hiện: {minute} phút",
+    "overall_time": "Thời gian thực hiện: {minute} ",
     "order_detail": "{price} x {count}",
     "order_count_summary": "Tổng {count} sản phẩm",
     "expiry_date": "Ngày sử dung: {date}",
