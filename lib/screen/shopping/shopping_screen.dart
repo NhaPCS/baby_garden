@@ -100,18 +100,16 @@ class _ShoppingState extends BaseState<ShoppingScreen> {
             Expanded(child: Consumer<GetProductCategoryProvider>(
               builder: (BuildContext context, GetProductCategoryProvider value,
                   Widget child) {
-                return ListView.builder(
-                    itemCount: value.categories.length,
-                    padding: EdgeInsets.all(0),
-                    itemBuilder: (context, index) {
-                      return GridProduct(
-                        categoryId: value.categories[index]['id'],
-                        totalCount: 10,
-                        section: new Section(
-                            title: value.categories[index]['name'],
-                            path: 'listProduct'),
-                      );
-                    });
+                return ListView(
+                  children: value.categories
+                      .map((e) => GridProduct(
+                            categoryId: e['id'].toString(),
+                            totalCount: 10,
+                            section: new Section(
+                                title: e['name'], path: 'listProduct'),
+                          ))
+                      .toList(),
+                );
               },
             ))
           ],
