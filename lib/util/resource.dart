@@ -109,6 +109,19 @@ class DateUtil {
     return new DateFormat("dd/MM/yyyy").format(date);
   }
 
+  static DateTime getServerDate(String rawDate, String rawTime) {
+    if (rawDate == null || rawDate.isEmpty || rawDate.contains('0000'))
+      return null;
+    String merge = "${rawDate} ${rawTime == null ? '' : rawTime}";
+    return new DateFormat(serverFormatDate).parse(merge);
+  }
+
+  static DateTime getServerTime(String rawTime) {
+    return rawTime == null || rawTime.isEmpty
+        ? null
+        : new DateFormat('HH:mm:ss').parse(rawTime);
+  }
+
   /*
  static const int monday = 2;
       static const int tuesday = 3;
@@ -786,7 +799,6 @@ class WidgetUtil {
   static verifyParams(BuildContext context,
       {List<Param> params, bool showErrorDialog = true}) {
     for (Param p in params) {
-      print(p.checkType);
       switch (p.checkType) {
         case CheckType.NULL_OR_EMPTY_VALUE: // null and empty value
           print(p.value.runtimeType);

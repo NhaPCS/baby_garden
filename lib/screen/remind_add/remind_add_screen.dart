@@ -12,6 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/single_child_widget.dart';
 
 class RemindAddScreen extends StatefulWidget {
+  final RemindCalendar remindCalendar;
+
+  const RemindAddScreen({Key key, this.remindCalendar}) : super(key: key);
+
   @override
   _RemindAddScreen createState() => _RemindAddScreen();
 }
@@ -26,6 +30,20 @@ class _RemindAddScreen
   bool visible = false;
 
   @override
+  void initState() {
+    if (widget.remindCalendar != null) {
+      _remindCalendar = widget.remindCalendar;
+      _productController.value = Product();
+      _productController.value.id = widget.remindCalendar.productId;
+      _productController.value.name = widget.remindCalendar.productName;
+      _productController.value.image = [widget.remindCalendar.image];
+      _productController.value.priceDiscount = widget.remindCalendar.price;
+      _productController.value.price = widget.remindCalendar.price;
+    }
+    super.initState();
+  }
+
+  @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
         appBar: getAppBar(
@@ -34,29 +52,31 @@ class _RemindAddScreen
         body: Stack(
           children: <Widget>[
             ListView(children: <Widget>[
-              Container(
-                decoration: setBorder('bottom', ColorUtil.darkGray, 1),
-                padding: const EdgeInsets.all(SizeUtil.smallSpace),
-                child: InkWell(
-                  onTap: () {
-                    showPopupChooseProduct(context);
-                  },
-                  child: Row(
-                    children: <Widget>[
-                      Icon(Icons.add,
-                          color: ColorUtil.primaryColor,
-                          size: SizeUtil.iconSizeBig),
-                      SizedBox(width: SizeUtil.smallSpace),
-                      Expanded(
-                        child: Text(S.of(context).selectRemindProduct,
-                            style: TextStyle(
-                                color: ColorUtil.darkGray,
-                                fontWeight: FontWeight.bold)),
+              widget.remindCalendar != null
+                  ? SizedBox()
+                  : Container(
+                      decoration: setBorder('bottom', ColorUtil.darkGray, 1),
+                      padding: const EdgeInsets.all(SizeUtil.smallSpace),
+                      child: InkWell(
+                        onTap: () {
+                          showPopupChooseProduct(context);
+                        },
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.add,
+                                color: ColorUtil.primaryColor,
+                                size: SizeUtil.iconSizeBig),
+                            SizedBox(width: SizeUtil.smallSpace),
+                            Expanded(
+                              child: Text(S.of(context).selectRemindProduct,
+                                  style: TextStyle(
+                                      color: ColorUtil.darkGray,
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
+                    ),
               ValueListenableBuilder<Product>(
                 valueListenable: _productController,
                 builder: (BuildContext context, Product product, Widget child) {
@@ -67,6 +87,7 @@ class _RemindAddScreen
                 },
               ),
               ReminderLayout(
+                remindCalendar: widget.remindCalendar,
                 reminderSelectCallBack: (type, buyDate, endDate, period, time1,
                     time2, time3, time4) {
                   _remindCalendar.type =
@@ -103,7 +124,9 @@ class _RemindAddScreen
                           .addNewCalendar(context, calendar: _remindCalendar);
                     },
                     color: ColorUtil.primaryColor,
-                    text: S.of(context).addReminder,
+                    text: widget.remindCalendar == null
+                        ? S.of(context).addReminder
+                        : S.of(context).editReminder,
                     textStyle: TextStyle(
                         fontSize: SizeUtil.textSizeBigger, color: Colors.white),
                   )),

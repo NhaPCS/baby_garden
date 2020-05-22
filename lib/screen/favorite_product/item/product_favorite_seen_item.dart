@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class ProductItem extends StatelessWidget {
   final Product product;
   final Function onTap;
+
   ProductItem({Key key, this.onTap, @required this.product}) : super(key: key);
 
   @override
@@ -57,7 +58,10 @@ class ProductItem extends StatelessWidget {
                       SizedBox(height: SizeUtil.tinySpace),
                       Row(
                         children: <Widget>[
-                          Text(DateUtil.formatDDMMyyyy(product.date),
+                          Text(
+                              product.date == null
+                                  ? ''
+                                  : DateUtil.formatDDMMyyyy(product.date),
                               style: TextStyle(
                                   color: Color.fromRGBO(10, 133, 158, 1),
                                   fontSize: SizeUtil.textSizeSmall)),

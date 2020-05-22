@@ -18,7 +18,7 @@ class ReminderAddViewModel extends BaseViewModel {
     dynamic data = await service.addRemindCalendar(context, calendar: calendar);
 
     if (data != null) {
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(true);
     }
   }
 }

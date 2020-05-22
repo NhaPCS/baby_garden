@@ -948,7 +948,7 @@ Future<dynamic> deleteRemindCalendar(BuildContext context,
       path: 'deleteCalendar',
       param: params,
       requireLogin: true,
-      showLoading: true);
+      showLoading: false);
   if (response.isSuccess()) return response;
   return null;
 }

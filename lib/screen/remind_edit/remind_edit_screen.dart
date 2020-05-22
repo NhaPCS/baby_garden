@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/data/model/remind_calendar.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/screen/remind_add/view_model/reminder_add_view_model.dart';
 import 'package:baby_garden_flutter/screen/remind_management/item/remind_card_item.dart';
 import 'package:baby_garden_flutter/screen/remind_management/provider/remind_calendar_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -10,21 +11,20 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 import '../base_state.dart';
+import '../base_state_model.dart';
 
 class RemindEditScreen extends StatefulWidget {
   final RemindCalendar calendar;
 
   const RemindEditScreen({Key key, this.calendar}) : super(key: key);
+
   @override
   _RemindEditScreen createState() => _RemindEditScreen();
 }
 
-class _RemindEditScreen extends BaseState<RemindEditScreen> {
+class _RemindEditScreen extends BaseStateModel<RemindEditScreen, ReminderAddViewModel> {
   var chosenDate = DateTime.now();
   var chosenTime;
-
-  final RemindCalendarProvider _remindCalendarProvider =
-      RemindCalendarProvider();
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -145,11 +145,7 @@ class _RemindEditScreen extends BaseState<RemindEditScreen> {
             child: RaisedButton(
               onPressed: () {
                 // edit remind calendar
-                if (!validateInput()) return;
-
-                _remindCalendarProvider.addNewCalendar(context,
-                    isEdit: true, calendar: widget.calendar);
-                Navigator.of(context).pop();
+                getViewModel().addNewCalendar(context, calendar: widget.calendar);
               },
               child: Text(
                 S.of(context).saveChange,
@@ -165,7 +161,7 @@ class _RemindEditScreen extends BaseState<RemindEditScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _remindCalendarProvider)];
+    return null;
   }
 
   void selectDate() {
@@ -186,8 +182,8 @@ class _RemindEditScreen extends BaseState<RemindEditScreen> {
     });
   }
 
-  bool validateInput() {
-    // add check validate input after
-    return false;
+  @override
+  ReminderAddViewModel initViewModel() {
+    return ReminderAddViewModel(context);
   }
 }
