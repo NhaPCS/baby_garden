@@ -31,6 +31,8 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
   final GetProductCategoryByParentProvider _getProductCategoryByParentProvider =
       GetProductCategoryByParentProvider();
   String _selectedCategoryId;
+  final ValueNotifier<int> _selectSubCategoryController = ValueNotifier(0);
+  String _selectedParentId;
 
   @override
   void initState() {
@@ -55,6 +57,8 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
               data: value.products,
               reloadCallback: (page) {
                 _getListProductProvider.getData(context, 'listProduct',
+                    parentId: _selectedParentId,
+                    categoryId: _selectedCategoryId,
                     index: page * PAGE_SIZE);
               },
               itemBuilder: (context, item, index) {
@@ -92,10 +96,13 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
                 ListParentCategory(
                   changeCategoryProvider: _changeParentCategoryProvider,
                   onParentCategoryChanged: (parentCategory) {
-                    if (parentCategory != null)
+                    if (parentCategory != null) {
+                      _selectedParentId = parentCategory['id'];
                       _getProductCategoryByParentProvider
                           .getProductCategories(parentCategory['id']);
-                    else {
+                      _selectedCategoryId = null;
+                      _selectSubCategoryController.value = 0;
+                    } else {
                       _getProductCategoryByParentProvider
                           .getProductCategories(null);
                     }
@@ -112,14 +119,17 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
               builder: (BuildContext context,
                   GetProductCategoryByParentProvider value, Widget child) {
                 return ListCategory(
+                  selectedController: _selectSubCategoryController,
                   categories: value.categories,
                   onChangedCategory: (category) {
                     _selectedCategoryId =
-                        category == null ? null : category['id'];
-                    if (category != null) {
-                      _getListProductProvider.getData(context, 'listProduct',
-                          categoryId: _selectedCategoryId);
-                    }
+                        category == null ? '0' : category['id'];
+                    _getListProductProvider.getData(
+                      context,
+                      'listProduct',
+                      parentId: _selectedParentId,
+                      categoryId: _selectedCategoryId,
+                    );
                   },
                 );
               },

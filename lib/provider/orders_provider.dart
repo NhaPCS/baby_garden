@@ -68,24 +68,65 @@ class OrdersProvider extends ChangeNotifier {
     getOrdersCount();
   }
 
-  void getOrdersCount() {
+  Future<void> getOrdersCount() async {
     totalCount = 0;
-    ORDER_OPTIONS.forEach((element) async {
-      dynamic data = await service.listBookingProduct(type: element['type']);
-      if (data != null) {
-        element['notify_count'] = data.length;
-        notifyListeners();
-        totalCount += element['notify_count'];
-      }
-    });
+    dynamic data = await service.numberBooking();
+    if (data != null) {
+      ORDER_OPTIONS.forEach((element) {
+        switch (element['type']) {
+          case 8:
+            element['notify_count'] = getCount(data, 'chothanhtoan');
+            break;
+          case 1:
+            element['notify_count'] = getCount(data, 'choxacnhan');
+            break;
+          case 7:
+            element['notify_count'] = getCount(data, 'nhanhangtaishop');
+            break;
+          case 5:
+            element['notify_count'] = getCount(data, 'dangdonggoi');
+            break;
+          case 6:
+            element['notify_count'] = getCount(data, 'dangvanchuyen');
+            break;
+          case 3:
+            element['notify_count'] = getCount(data, 'thanhcong');
+            break;
+          case 4:
+            element['notify_count'] = getCount(data, 'huydonhang');
+            break;
+          case 0:
+            element['notify_count'] = getCount(data, 'danhgiadonhang');
+            break;
+        }
+      });
+      SERVICE_OPTIONS.forEach((element) {
+        switch (element['type']) {
+          case 1:
+            element['notify_count'] = getCount(data, 'dadatlich');
+            break;
+          case 2:
+            element['notify_count'] = getCount(data, 'dasudung');
+            break;
+          case 3:
+            //TODO missing field
+            element['notify_count'] = getCount(data, 'danhgiadichvu');
+            break;
+          case 0:
+            element['notify_count'] = getCount(data, 'danhgiadichvu');
+            break;
+        }
+      });
+      notifyListeners();
+    }
+  }
 
-    SERVICE_OPTIONS.forEach((element) async {
-      dynamic data = await service.listBookingService(type: element['type']);
-      if (data != null) {
-        element['notify_count'] = data.length;
-        notifyListeners();
-        totalCount += element['notify_count'];
-      }
-    });
+  int getCount(dynamic data, String key) {
+    if (data != null && data[key] != null) {
+      int count = data[key];
+      totalCount += count;
+      return count;
+    }
+    return 0;
   }
 }

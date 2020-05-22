@@ -93,7 +93,7 @@ class _GridProductState extends BaseState<GridProduct> {
           ListCategory(
             onChangedCategory: (category) {
               _getListProductProvider.getData(context, widget.section.path,
-                  categoryId: category['id'], numberPosts: TOTAL_ITEMS);
+                  categoryId: category==null?null: category['id'], numberPosts: TOTAL_ITEMS);
             },
           ),
           Consumer<GetListProductProvider>(

@@ -303,11 +303,14 @@ Future<dynamic> deleteNoty({String notifyID}) async {
 //todo news
 Future<dynamic> news(
     {String index, String numberPost, String categoryId}) async {
-  Response response = await get(null, path: "news", param: {
+  dynamic params = {
     'index': index,
     'number_post': numberPost,
-    'categoryId': categoryId
-  });
+  };
+  if (categoryId != null && categoryId.isNotEmpty) {
+    params['category_id'] = categoryId;
+  }
+  Response response = await get(null, path: "news", param: params);
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -526,6 +529,7 @@ Future<dynamic> listShop(BuildContext context,
 
 Future<dynamic> listProducts(BuildContext context, String path,
     {String categoryId,
+    String parentId,
     String productId,
     int index = START_PAGE,
     int numberPosts = PAGE_SIZE}) async {
@@ -538,6 +542,9 @@ Future<dynamic> listProducts(BuildContext context, String path,
   };
   if (categoryId != null && categoryId.isNotEmpty) {
     params['category_id'] = categoryId;
+  }
+  if (parentId != null && parentId.isNotEmpty) {
+    params['parent_id'] = parentId;
   }
   if (productId != null && productId.isNotEmpty) {
     params['product_id'] = productId;
@@ -1030,12 +1037,11 @@ Future<dynamic> popup() async {
   return null;
 }
 
-
 Future<dynamic> numberBooking() async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {"user_id": userId};
 
-  Response response = await get(null, path: "popup", param: params);
+  Response response = await get(null, path: "numberBooking", param: params);
 
   if (response.isSuccess()) return response.data;
   return null;
