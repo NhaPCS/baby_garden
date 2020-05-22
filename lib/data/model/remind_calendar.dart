@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:baby_garden_flutter/util/resource.dart';
+
 class RemindCalendar {
   String id;
   String productId;
@@ -39,16 +41,16 @@ class RemindCalendar {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> params = {
       'product_id': this.productId,
-      'date_start': this.dateStart,
+      'date_start': DateUtil.convertNormalToServerDate(this.dateStart),
       'time_start': this.timeStart,
-      'date_end': this.dateEnd,
+      'date_end': DateUtil.convertNormalToServerDate(this.dateEnd),
       'time_end': this.timeEnd,
       'type': this.type == RemindType.remindBuy ? "1" : "2",
       'period': this.period,
-      'time1': this.time1,
-      'time2': this.time2,
-      'time3': this.time3,
-      'time4': this.time4
+      'time_1': this.time1,
+      'time_2': this.time2,
+      'time_3': this.time3,
+      'time_4': this.time4
     };
     return params;
   }

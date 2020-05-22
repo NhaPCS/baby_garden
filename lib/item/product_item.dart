@@ -152,8 +152,8 @@ class ProductItem extends StatelessWidget {
                     ? Provider.of<AppProvider>(context).productWidth
                     : width,
                 height: 18,
-                value: 0.4,
-                label: S.of(context).sold_count("100", "200"),
+                value: StringUtil.getSalesPercent(product['number_sales'], product['number']),
+                label: "${product['number_sales']}/${product['number']}",
               ),
         SizedBox(
           height: !showSoldCount ? 0 : SizeUtil.tinySpace,

@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/data/model/remind_calendar.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/screen/remind_add/remind_add_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_edit/remind_edit_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_management/provider/remind_calendar_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -10,8 +11,9 @@ import 'package:flutter/material.dart';
 
 class RemindCardItem extends StatelessWidget {
   final RemindCalendar calendar;
+  final VoidCallback onEdit;
 
-  RemindCardItem({Key key, this.calendar}) : super(key: key);
+  RemindCardItem({Key key, this.calendar, this.onEdit}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +111,7 @@ class RemindCardItem extends StatelessWidget {
                 color: ColorUtil.darkGray,
               ),
               onPressed: () {
-                RouteUtil.push(context, RemindEditScreen(calendar: calendar));
+                onEdit();
               },
             )
           ],

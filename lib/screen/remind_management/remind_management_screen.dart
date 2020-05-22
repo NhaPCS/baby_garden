@@ -34,8 +34,11 @@ class _RemindManageState extends BaseState<RemindManagementScreen> {
           actions: [
             IconButton(
               icon: Icon(Icons.add_circle, size: 24, color: Colors.white),
-              onPressed: () {
-                push(RemindAddScreen());
+              onPressed: () async {
+                bool added = await push(RemindAddScreen());
+                if (added != null && added) {
+                  _remindCalendarProvider.getListCalendar(context);
+                }
               },
             ),
           ],
@@ -53,7 +56,15 @@ class _RemindManageState extends BaseState<RemindManagementScreen> {
                 itemBuilder: (BuildContext context, int index) {
                   final _calendar =
                       RemindCalendar().fromJson(value.remindList[index]);
-                  return RemindCardItem(calendar: _calendar);
+                  return RemindCardItem(
+                    calendar: _calendar,
+                    onEdit: () async {
+                      bool added = await push(RemindAddScreen(remindCalendar: _calendar,));
+                      if (added != null && added) {
+                        _remindCalendarProvider.getListCalendar(context);
+                      }
+                    },
+                  );
                 });
           },
         ));

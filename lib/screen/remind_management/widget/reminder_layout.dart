@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/data/model/remind_calendar.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/remind_cycle/remind_cycle_screen.dart';
@@ -24,12 +25,14 @@ class ReminderLayout extends StatefulWidget {
   final bool showDesc;
   final bool hasDivider;
   final ReminderSelectCallBack reminderSelectCallBack;
+  final RemindCalendar remindCalendar;
 
   const ReminderLayout(
       {Key key,
       this.showDesc = true,
       this.hasDivider = false,
-      this.reminderSelectCallBack})
+      this.reminderSelectCallBack,
+      this.remindCalendar})
       : super(key: key);
 
   @override
@@ -49,6 +52,28 @@ class _ReminderState extends BaseState<ReminderLayout> {
   final ValueNotifier<DateTime> _time2Controller = ValueNotifier(null);
   final ValueNotifier<DateTime> _time3Controller = ValueNotifier(null);
   final ValueNotifier<DateTime> _time4Controller = ValueNotifier(null);
+
+  @override
+  void initState() {
+    if (widget.remindCalendar != null) {
+      //TODO need to check
+      _typeController.value = widget.remindCalendar.type.index + 1;
+      _buyDateController.value = DateUtil.getServerDate(
+          widget.remindCalendar.dateStart, widget.remindCalendar.timeStart);
+      _endDateController.value = DateUtil.getServerDate(
+          widget.remindCalendar.dateEnd, widget.remindCalendar.timeEnd);
+      _periodDateController.value = int.parse(widget.remindCalendar.period);
+      _time1Controller.value =
+          DateUtil.getServerTime(widget.remindCalendar.time1);
+      _time2Controller.value =
+          DateUtil.getServerTime(widget.remindCalendar.time2);
+      _time3Controller.value =
+          DateUtil.getServerTime(widget.remindCalendar.time3);
+      _time4Controller.value =
+          DateUtil.getServerTime(widget.remindCalendar.time4);
+    }
+    super.initState();
+  }
 
   Widget listViewRemindTime() {
     return Column(
@@ -134,6 +159,7 @@ class _ReminderState extends BaseState<ReminderLayout> {
           children: <Widget>[
             Radio(
               onChanged: (val) {
+                if (widget.remindCalendar != null) return;
                 _typeController.value = val;
                 updateCallBack();
               },
