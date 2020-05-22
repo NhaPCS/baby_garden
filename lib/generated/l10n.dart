@@ -4643,6 +4643,24 @@ class S {
       args: [],
     );
   }
+
+  String get share_content {
+    return Intl.message(
+      'Tải app vườn của bé \n Mua hàng ko giới hạn',
+      name: 'share_content',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get hide_pass {
+    return Intl.message(
+      '******',
+      name: 'hide_pass',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

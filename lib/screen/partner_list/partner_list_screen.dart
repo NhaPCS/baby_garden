@@ -79,8 +79,9 @@ class _PartnerListScreenState extends BaseState<PartnerListScreen> {
                             }
                             return null;
                           } else {
-                            push(PartnerBookScheduleScreen(
+                            await  push(PartnerBookScheduleScreen(
                                 shopID: partner['id']));
+                            _getListPartnerProvider.getListShops(context);
                           }
                         },
                       );

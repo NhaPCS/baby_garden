@@ -30,6 +30,7 @@ class LoginViewModel extends BaseViewModel{
       Provider.of<CartProvider>(context,listen: false).getMyCart();
       RouteUtil.pushAndReplaceAll(context,MainScreen(index: 4,),"/main");
     }
+    return "1";
   }
 
   @override

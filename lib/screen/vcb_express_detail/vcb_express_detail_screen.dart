@@ -1,7 +1,10 @@
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/screen/base_state_model.dart';
+import 'package:baby_garden_flutter/screen/vcb_express_detail/dialogue/comment_bottom_sheet_dialogue.dart';
 import 'package:baby_garden_flutter/screen/vcb_express_detail/provider/news_detail_provider.dart';
-import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/vcb_express_detail/view_model/vcb_express_detail_view_model.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
 import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
@@ -11,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 
 class VCBExpressDetailScreen extends StatefulWidget {
   final String newsID;
@@ -23,8 +27,8 @@ class VCBExpressDetailScreen extends StatefulWidget {
   }
 }
 
-class _VCBExpressDetailScreenState extends BaseState<VCBExpressDetailScreen> {
-  final TextEditingController _commentControler = TextEditingController();
+class _VCBExpressDetailScreenState extends BaseStateModel<VCBExpressDetailScreen,VCBExpressDetailViewModel> {
+  final TextEditingController _commentController = TextEditingController();
   final NewsDetailProvider _newsDetailProvider = NewsDetailProvider();
   @override
   void initState() {
@@ -121,7 +125,7 @@ class _VCBExpressDetailScreenState extends BaseState<VCBExpressDetailScreen> {
                     textStyle:
                     TextStyle(fontSize: SizeUtil.textSizeExpressTitle),
                     elevation: SizeUtil.defaultElevation,
-                    textEditingController: _commentControler,
+                    textEditingController: _commentController,
                     maxLines: 1,
                     borderRadius: SizeUtil.bigRadius,
                     hint: S.of(context).vcb_ex_detail_ctm_hint,
@@ -139,6 +143,9 @@ class _VCBExpressDetailScreenState extends BaseState<VCBExpressDetailScreen> {
                   width: SizeUtil.tinySpace,
                 ),
                 GestureDetector(
+                  onTap: (){
+                    getViewModel().sendComment(_commentController.text, value.currentDetail['id']);
+                  },
                   child: Icon(
                     Icons.send,
                     color: ColorUtil.colorAccent,
@@ -149,6 +156,11 @@ class _VCBExpressDetailScreenState extends BaseState<VCBExpressDetailScreen> {
                   width: SizeUtil.tinySpace,
                 ),
                 GestureDetector(
+                  onTap: (){
+                    showModalBottomSheet(context: context, builder: (context){
+                      return CommentBottomSheetDialogue();
+                    });
+                  },
                   child: Stack(
                     children: <Widget>[
                       Container(
@@ -187,6 +199,9 @@ class _VCBExpressDetailScreenState extends BaseState<VCBExpressDetailScreen> {
                   width: SizeUtil.tinySpace,
                 ),
                 GestureDetector(
+                  onTap: (){
+                    Share.share(S.of(context).share_content);
+                  },
                   child: Icon(
                     Icons.share,
                     color: ColorUtil.gray,
@@ -204,5 +219,11 @@ class _VCBExpressDetailScreenState extends BaseState<VCBExpressDetailScreen> {
   List<SingleChildWidget> providers() {
     // TODO: implement providers
     return [ChangeNotifierProvider.value(value: _newsDetailProvider)];
+  }
+
+  @override
+  initViewModel() {
+    // TODO: implement initViewModel
+    return new VCBExpressDetailViewModel(context);
   }
 }
