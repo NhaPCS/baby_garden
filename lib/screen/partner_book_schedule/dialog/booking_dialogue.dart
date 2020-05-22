@@ -140,7 +140,7 @@ class BookingDialogue extends Dialog {
                 RaisedButton(
                   onPressed: () async{
                     var userID = Provider.of<UserProvider>(context,listen: false).userInfo['id'];
-                    dynamic data = await service.bookingService(userID: userID,shopID: shopID,dateBooking: serviceData[2]['content'],timeBooking: serviceData[3]['content'],serviceID: serviceID,address: address);
+                    dynamic data = await service.bookingService(userID: userID,shopID: shopID,dateBooking: DateUtil.convertNormalToServerDate(serviceData[2]['content']),timeBooking: serviceData[3]['content'],serviceID: serviceID,address: address);
                     if (data !=null){
                       Navigator.of(context).pop(true);
                     }else{

@@ -6,6 +6,9 @@ class ShareValueProvider {
   final String _user_id = "_user_id";
   final String _user_info = "_user_info";
   final String _point = "_point";
+  final String _isRememberPass = "_is_remember_pass";
+  final String _pass = "_pass";
+  final String _user_name = "_user_name";
   final String setting_notify_product = "setting_notify_product";
   final String setting_notify_like_product_change = "setting_notify_like_product_change";
   final String setting_notify_service = "setting_notify_service";
@@ -15,16 +18,46 @@ class ShareValueProvider {
 
   static final ShareValueProvider shareValueProvider = ShareValueProvider._();
 
+  Future<bool> getIsRememberPass() async{
+    final shareValueProvider = await SharedPreferences.getInstance();
+    return shareValueProvider.getBool(_isRememberPass);
+  }
+
   Future<int> getPoint() async{
     final shareValueProvider = await SharedPreferences.getInstance();
     int point = shareValueProvider.getInt(_point);
     return point;
   }
 
+  Future<String> getUserName() async {
+    final shareValueProvider = await SharedPreferences.getInstance();
+    return  shareValueProvider.getString(_user_name);
+  }
+
+  Future<String> getPass() async {
+    final shareValueProvider = await SharedPreferences.getInstance();
+    return shareValueProvider.getString(_pass);
+  }
+
   Future<String> getUserId() async {
     final shareValueProvider = await SharedPreferences.getInstance();
     String rs = shareValueProvider.getString(_user_id);
     return rs;
+  }
+
+  Future<void> saveIsRememberPass(bool val) async {
+    final shareValueProvider = await SharedPreferences.getInstance();
+    shareValueProvider.setBool(_isRememberPass, val);
+  }
+
+  Future<void> saveUserName(String userName) async {
+    final shareValueProvider = await SharedPreferences.getInstance();
+    shareValueProvider.setString(_user_name, userName);
+  }
+
+  Future<void> savePass(String pass) async {
+    final shareValueProvider = await SharedPreferences.getInstance();
+    shareValueProvider.setString(_pass, pass);
   }
 
   Future<void> saveUserId(String key) async {

@@ -43,13 +43,16 @@ class PartnerBookScheduleScreen extends StatefulWidget {
   }
 }
 
-class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookScheduleScreen, BookingServiceViewModel>
+class _PartnerBookScheduleScreenState
+    extends BaseStateModel<PartnerBookScheduleScreen, BookingServiceViewModel>
     with TickerProviderStateMixin {
   final SeeMoreProvider _seeMoreProvider = SeeMoreProvider();
-  final PartnerChooseLocationProvider _partnerChooseLocation = PartnerChooseLocationProvider();
+  final PartnerChooseLocationProvider _partnerChooseLocation =
+      PartnerChooseLocationProvider();
   final PartnerTabbarProvider _partnerTabbarProvider = PartnerTabbarProvider();
   final ChangeServiceProvider _serviceProvider = ChangeServiceProvider();
-  final BookingServiceDetailProvider _bookingServiceDetailProvider = BookingServiceDetailProvider();
+  final BookingServiceDetailProvider _bookingServiceDetailProvider =
+      BookingServiceDetailProvider();
 
   TabController _tabController;
   String datePickerData;
@@ -63,6 +66,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
 
   final ValueNotifier<int> _dateValueController = new ValueNotifier(0);
   final ValueNotifier<int> _timeValueController = new ValueNotifier(0);
+
   @override
   void initState() {
     // TODO: implement initState
@@ -83,7 +87,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     if (_bookingServiceDetailProvider.data == null)
-      _bookingServiceDetailProvider.getdata(context,widget.shopID);
+      _bookingServiceDetailProvider.getdata(context, widget.shopID);
     super.didChangeDependencies();
   }
 
@@ -92,8 +96,12 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
     // TODO: implement buildWidget
     final productTabbarHei = SizeUtil.tab_bar_fix_height + 76;
     List<Tab> myTabs = <Tab>[
-      Tab(text: S.of(context).book,),
-      Tab(text: S.of(context).product,),
+      Tab(
+        text: S.of(context).book,
+      ),
+      Tab(
+        text: S.of(context).product,
+      ),
     ];
 
     //todo get hei set
@@ -130,7 +138,8 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
                   Text(
                     S.of(context).product,
                   ),
-                  Text("(${shopValue.products.length.toString()})",
+                  Text(
+                    "(${shopValue.products.length.toString()})",
                     style: TextStyle(fontSize: SizeUtil.textSizeTiny),
                   )
                 ],
@@ -167,8 +176,14 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
                                 pinned: true,
                                 forceElevated: isScrollInner,
                               ),
-                              Consumer<SeeMoreProvider>(builder: (BuildContext context, SeeMoreProvider value, Widget child) {
-                                  double hei = (value.isShow ? _rowHeightFull : _rowHeight.value) + imageHeight + 7;
+                              Consumer<SeeMoreProvider>(
+                                builder: (BuildContext context,
+                                    SeeMoreProvider value, Widget child) {
+                                  double hei = (value.isShow
+                                          ? _rowHeightFull
+                                          : _rowHeight.value) +
+                                      imageHeight +
+                                      7;
                                   return SliverPersistentHeader(
                                     pinned: false,
                                     floating: false,
@@ -179,40 +194,69 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
                                               children: <Widget>[
                                                 shopValue.data != null
                                                     ? CachedNetworkImage(
-                                                        imageUrl: shopValue.data['img'],
-                                                        width: MediaQuery.of(context).size.width,
+                                                        imageUrl: shopValue
+                                                            .data['img'],
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
                                                         height: imageHeight,
-                                                      ) : Image.asset(
+                                                      )
+                                                    : Image.asset(
                                                         "photo/partner_item_img.png",
                                                         fit: BoxFit.fitWidth,
-                                                        width: MediaQuery.of(context).size.width,
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
                                                         height: imageHeight,
                                                       ),
                                                 Positioned(
                                                   bottom: SizeUtil.smallSpace,
                                                   right: SizeUtil.smallSpace,
                                                   child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: <Widget>[
-                                                      ShopIconInfo(icon: "photo/comment_img.png",textData: shopValue.data != null ? shopValue.data['number_comment'] : "212",),
+                                                      ShopIconInfo(
+                                                        icon:
+                                                            "photo/comment_img.png",
+                                                        textData: shopValue
+                                                                    .data !=
+                                                                null
+                                                            ? shopValue.data[
+                                                                'number_comment']
+                                                            : "212",
+                                                      ),
                                                       SizedBox(
                                                         width:
                                                             SizeUtil.smallSpace,
                                                       ),
-                                                      ShopIconInfo(icon: "photo/heart.png",textData: shopValue.data != null ? shopValue.data['number_like'] : "12",)
+                                                      ShopIconInfo(
+                                                        icon: "photo/heart.png",
+                                                        textData: shopValue
+                                                                    .data !=
+                                                                null
+                                                            ? shopValue.data[
+                                                                'number_like']
+                                                            : "12",
+                                                      )
                                                     ],
                                                   ),
                                                 )
                                               ],
                                             ),
                                             //todo shop info
-                                            shopInfo(shopValue.data, value.isShow),
+                                            shopInfo(
+                                                shopValue.data, value.isShow),
                                             SizedBox(
                                               height: SizeUtil.tinySpace,
                                             ),
                                           ],
                                         ),
-                                        hei, hei),
+                                        hei,
+                                        hei),
                                   );
                                 },
                               ),
@@ -223,7 +267,8 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
                                     pinned: true,
                                     floating: false,
                                     delegate: SliverCategoryDelegate(
-                                        Column(children: <Widget>[
+                                        Column(
+                                          children: <Widget>[
                                             Container(
                                               height:
                                                   SizeUtil.tab_bar_fix_height,
@@ -263,29 +308,34 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
                                                 : SizedBox()
                                           ],
                                         ),
-                                        value.isProduct ? productTabbarHei : SizeUtil.tab_bar_fix_height,
-                                        value.isProduct ? productTabbarHei : SizeUtil.tab_bar_fix_height),
+                                        value.isProduct
+                                            ? productTabbarHei
+                                            : SizeUtil.tab_bar_fix_height,
+                                        value.isProduct
+                                            ? productTabbarHei
+                                            : SizeUtil.tab_bar_fix_height),
                                   );
                                 },
                               )
                             ];
                           },
                         )
-                      : Column(
-                          children: <Widget>[
-                            //TODO get detail info min height
-                            CachedNetworkImage(
-                              imageUrl: shopValue.data['img'],
-                              fit: BoxFit.fitWidth,
-                              key: _bannerKey,
-                              width: MediaQuery.of(context).size.width,
-                            ),
-                            shopHeiInfo(shopValue.data, false,
-                                _rowKey),
-                            //TODO get detail info max height
-                            shopHeiInfo(shopValue.data, true,
-                                _rowKeyFull)
-                          ],
+                      : Opacity(
+                          opacity: 0.0,
+                          child: Column(
+                            children: <Widget>[
+                              //TODO get detail info min height
+                              CachedNetworkImage(
+                                imageUrl: shopValue.data['img'],
+                                fit: BoxFit.fitWidth,
+                                key: _bannerKey,
+                                width: MediaQuery.of(context).size.width,
+                              ),
+                              shopHeiInfo(shopValue.data, false, _rowKey),
+                              //TODO get detail info max height
+                              shopHeiInfo(shopValue.data, true, _rowKeyFull)
+                            ],
+                          ),
                         ),
                 );
               });
@@ -293,8 +343,13 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
   }
 
   Widget bookingContent(dynamic data) {
-    dynamic chooseService = data['service'] != null && data['service'].length > 0 ? data['service'][0] : {};
-    String addressChoose = data['address'] != null && data['address'].length > 0 ? data['address'][0]['address'] : "";
+    dynamic chooseService =
+        data['service'] != null && data['service'].length > 0
+            ? data['service'][0]
+            : {};
+    String addressChoose = data['address'] != null && data['address'].length > 0
+        ? data['address'][0]['address']
+        : "";
     return ListView(
       children: <Widget>[
         Column(
@@ -312,9 +367,12 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
             ),
             WidgetUtil.getLine(margin: EdgeInsets.all(0), width: 2),
             //todo client list
-            Consumer<PartnerChooseLocationProvider>(builder: (BuildContext context, PartnerChooseLocationProvider value, Widget child) {
+            Consumer<PartnerChooseLocationProvider>(
+              builder: (BuildContext context,
+                  PartnerChooseLocationProvider value, Widget child) {
                 return Column(
-                    children: List.generate(data['address'] != null ? data['address'].length : 0,
+                    children: List.generate(
+                        data['address'] != null ? data['address'].length : 0,
                         (index) => CustomRadioButton(
                               titleContent:
                                   Text(data['address'][index]['address']),
@@ -377,16 +435,19 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
                           data: data['service'][index],
                           isSelected: isSelected,
                           onBook: () async {
-                            var returnValue =  await RouteUtil.push(context, PartnerServiceDetailScreen(data: data['service'][index]));
+                            var returnValue = await RouteUtil.push(
+                                context,
+                                PartnerServiceDetailScreen(
+                                    data: data['service'][index]));
                             if (returnValue != null) {
                               //todo update data from service detail to booking
                               datePickerData = returnValue['dateValue'];
-                              _dateValueController.value =returnValue['date'];
+                              _dateValueController.value = returnValue['date'];
                               _timeValueController.value = returnValue['time'];
                               _serviceProvider.onSelectService(index);
                               chooseService = data['service'][index];
                               //todo booking
-                              onBookingService(chooseService,addressChoose);
+                              onBookingService(chooseService, addressChoose);
                             }
                           },
                         ));
@@ -407,12 +468,17 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
               ),
             ),
             //TODO date of week tabbar
-            DatePicker(onValueChange: (val){
-              print("DatePicker $val");
-              datePickerData = val['date'];
-            },valueController: _dateValueController,),
+            DatePicker(
+              onValueChange: (val) {
+                print("DatePicker $val");
+                datePickerData = val['date'];
+              },
+              valueController: _dateValueController,
+            ),
             //TODO schedule time of day
-            TimePicker(valueController: _timeValueController,),
+            TimePicker(
+              valueController: _timeValueController,
+            ),
             //todo booking button
             Container(
                 padding: const EdgeInsets.only(
@@ -423,7 +489,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
                 width: MediaQuery.of(context).size.width,
                 child: RaisedButton(
                   onPressed: () async {
-                      onBookingService(chooseService,addressChoose);
+                    onBookingService(chooseService, addressChoose);
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
@@ -448,7 +514,8 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
     );
   }
 
-  Future<void> onBookingService(dynamic chooseService,String addressChoose)async{
+  Future<void> onBookingService(
+      dynamic chooseService, String addressChoose) async {
     String userId = await ShareValueProvider.shareValueProvider.getUserId();
     if (userId == null || userId.isEmpty) {
       if (context != null) {
@@ -456,38 +523,35 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
       }
     } else {
       List<dynamic> confirmForm = [
-        {
-          'title': 'Dịch vụ đã đặt: ',
-          'content': chooseService['content']
-        },
+        {'title': 'Dịch vụ đã đặt: ', 'content': chooseService['content']},
         {
           'title': 'Giá niêm yết:  ',
-          'content': '\nKhách hàng đã có thẻ hoặc mã voucher vui lòng mang tới cửa hàng để được hưởng đầy đủ ưu đãi.',
+          'content':
+              '\nKhách hàng đã có thẻ hoặc mã voucher vui lòng mang tới cửa hàng để được hưởng đầy đủ ưu đãi.',
           'value': chooseService['price']
         },
-        {
-          'title': 'Ngày sử dụng: ',
-          'content': datePickerData
-        },
+        {'title': 'Ngày sử dụng: ', 'content': datePickerData},
         {
           'title': 'Thời gian: ',
-          'content': StringUtil.time[_timeValueController.value]['time']},
-        {
-          'title': 'Thời gian thực hiện: ',
-          'content': chooseService['ex_time']
+          'content': StringUtil.time[_timeValueController.value]['time']
         },
+        {'title': 'Thời gian thực hiện: ', 'content': chooseService['ex_time']},
       ];
       var resultData = await showDialog(
           context: context,
-          builder: (BuildContext context) =>
-              BookingDialogue(context: context,
+          builder: (BuildContext context) => BookingDialogue(
+                context: context,
                 serviceData: confirmForm,
                 shopID: widget.shopID,
                 address: addressChoose,
-                serviceID: chooseService['id'],));
+                serviceID: chooseService['id'],
+              ));
       if (resultData != null && resultData) {
         //todo on booking success show success dialogue
-        var result = await showDialog(context: context, builder: (BuildContext context) => BookingScheduleSuccessDialogue(context));
+        var result = await showDialog(
+            context: context,
+            builder: (BuildContext context) =>
+                BookingScheduleSuccessDialogue(context));
         if (result == null || result) {
           //todo go back home
           pushAndReplaceAll(MainScreen(), "/main_screen");
@@ -534,7 +598,8 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
     if (data == null) {
       return Container(height: 0);
     }
-    final ValueNotifier<bool> isFavorite = ValueNotifier(data['is_favourite']=="1");
+    final ValueNotifier<bool> isFavorite =
+        ValueNotifier(data['is_favourite'] == "1");
     String content = data['introduce'];
     bool isShowSeeMore = content != null && content.length > 100;
     return Column(
@@ -545,20 +610,30 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            ShopInfoForm(title: S.of(context).mobilePhone_form,content: data["phone"],contentColor: ColorUtil.blueLight,),
+            ShopInfoForm(
+              title: S.of(context).mobilePhone_form,
+              content: data["phone"],
+              contentColor: ColorUtil.blueLight,
+            ),
             SizedBox(
               width: SizeUtil.tinySpace,
             ),
             //todo like button
-            FavoriteShopButton(isFavorite: isFavorite,shopId: widget.shopID,)
+            FavoriteShopButton(
+              isFavorite: isFavorite,
+              shopId: widget.shopID,
+            )
           ],
         )),
         paddingContainer(Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            ShopInfoForm(title: S.of(context).address_form,content: data['address'] != null &&
-                data['address'].length > 0 ? data['address'][0]["address"] : ""),
+            ShopInfoForm(
+                title: S.of(context).address_form,
+                content: data['address'] != null && data['address'].length > 0
+                    ? data['address'][0]["address"]
+                    : ""),
             SizedBox(
               width: SizeUtil.tinySpace,
             ),
@@ -566,8 +641,9 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
               width: SizeUtil.tinySpace,
             ),
             InkWell(
-              onTap: () {},//todo chua co API
-              child: Text("Chỉ đường",
+              onTap: () {}, //todo chua co API
+              child: Text(
+                "Chỉ đường",
                 style: TextStyle(
                     fontSize: SizeUtil.textSizeSmall,
                     color: ColorUtil.blueLight),
@@ -575,14 +651,18 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
             ),
           ],
         )),
-        paddingContainer(ShopInfoForm(isExpanded: false,title: S.of(context).service_type,content: data['category_id'],contentColor: ColorUtil.blueLight,)),
+        paddingContainer(ShopInfoForm(
+          isExpanded: false,
+          title: S.of(context).service_type,
+          content: data['category_id'],
+          contentColor: ColorUtil.blueLight,
+        )),
         paddingContainer(RichText(
           textAlign: TextAlign.start,
           text: TextSpan(
-              text:S.of(context).introduce,
+              text: S.of(context).introduce,
               style: TextStyle(
-                  color: ColorUtil.textColor,
-                  fontWeight: FontWeight.bold),
+                  color: ColorUtil.textColor, fontWeight: FontWeight.bold),
               children: <TextSpan>[
                 TextSpan(
                     text: isShowSeeMore && !isShow
@@ -593,10 +673,8 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
                         color: ColorUtil.textColor,
                         decoration: TextDecoration.none,
                         fontWeight: FontWeight.normal),
-                recognizer: TapGestureRecognizer()
-                ..onTap=()=>{
-                    _seeMoreProvider.onChange()
-                }),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => {_seeMoreProvider.onChange()}),
                 TextSpan(
                   text: isShowSeeMore && !isShow ? S.of(context).see_more : "",
                   style: TextStyle(
@@ -605,9 +683,7 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
                       decoration: TextDecoration.none,
                       fontWeight: FontWeight.normal),
                   recognizer: TapGestureRecognizer()
-                    ..onTap = () => {
-                      _seeMoreProvider.onChange()
-                    },
+                    ..onTap = () => {_seeMoreProvider.onChange()},
                 ),
               ]),
         )),
@@ -623,23 +699,40 @@ class _PartnerBookScheduleScreenState extends BaseStateModel<PartnerBookSchedule
     }
     String content = data['introduce'];
     bool isShowSeeMore = content != null && content.length > 100;
-    String contentShow = S.of(context).introduce + (isShowSeeMore && !isShow ? content.substring(0, 100) : content) + (isShowSeeMore && !isShow ? 'See_more' : "");
+    String contentShow = S.of(context).introduce +
+        (isShowSeeMore && !isShow ? content.substring(0, 100) : content) +
+        (isShowSeeMore && !isShow ? 'See_more' : "");
     return Column(
       key: key,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        paddingContainer(FavoriteShopButton(isFavorite: new ValueNotifier(false),shopId: "1",)),
-        paddingContainer(ShopInfoForm(isExpanded: false,title: S.of(context).address_form,content: data['address'] != null &&
-            data['address'].length > 0 ? data['address'][0]["address"] : "")),
-        paddingContainer(ShopInfoForm(isExpanded: false,title: S.of(context).service_type,content: "",contentColor: ColorUtil.blueLight,)),
-        paddingContainer(Text( contentShow, style: TextStyle(
-              color: ColorUtil.textColor,
-              fontWeight: FontWeight.normal),)),
+        paddingContainer(FavoriteShopButton(
+          isFavorite: new ValueNotifier(false),
+          shopId: "1",
+        )),
+        paddingContainer(ShopInfoForm(
+            isExpanded: false,
+            title: S.of(context).address_form,
+            content: data['address'] != null && data['address'].length > 0
+                ? data['address'][0]["address"]
+                : "")),
+        paddingContainer(ShopInfoForm(
+          isExpanded: false,
+          title: S.of(context).service_type,
+          content: "",
+          contentColor: ColorUtil.blueLight,
+        )),
+        paddingContainer(Text(
+          contentShow,
+          style: TextStyle(
+              color: ColorUtil.textColor, fontWeight: FontWeight.normal),
+        )),
       ],
     );
   }
 
-  Widget paddingContainer(Widget widget, {EdgeInsets padding = const EdgeInsets.only(
+  Widget paddingContainer(Widget widget,
+      {EdgeInsets padding = const EdgeInsets.only(
           left: SizeUtil.smallSpace,
           right: SizeUtil.smallSpace,
           top: SizeUtil.tinySpace)}) {
