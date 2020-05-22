@@ -1343,7 +1343,7 @@ class S {
 
   String overall_time(Object minute) {
     return Intl.message(
-      'Thời gian thực hiện: $minute phút',
+      'Thời gian thực hiện: $minute ',
       name: 'overall_time',
       desc: '',
       args: [minute],

@@ -20,6 +20,7 @@ class _WelcomeGuideScreenState extends BaseState<WelcomeGuideScreen> {
   Widget buildWidget(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
+      //todo-hung texxt hieenej truwoc anh
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
