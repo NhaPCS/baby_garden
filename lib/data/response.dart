@@ -6,6 +6,6 @@ class Response<D extends dynamic> {
   Response({this.message, this.errorId, this.data});
 
   bool isSuccess() {
-    return errorId != null && errorId == 200;
+    return errorId == null || errorId == 200;
   }
 }

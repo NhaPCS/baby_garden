@@ -10,7 +10,9 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:package_info/package_info.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share/share.dart';
 
 class ColorUtil {
   static const Color primaryColor = Color(0xffFF8918);
@@ -69,6 +71,16 @@ class ColorUtil {
 
 class DateUtil {
   static final String serverFormatDate = "yyyy-MM-dd HH:mm:ss";
+
+  static String convertNormalToServerDate(String date) {
+    if (date == null) return '';
+    try {
+      return new DateFormat("yyyy-MM-dd")
+          .format(new DateFormat("dd/MM/yyyy").parse(date));
+    } on Exception catch (e) {
+      return date;
+    }
+  }
 
   static String formatBirthdayDate(DateTime date) {
     return date == null ? '' : new DateFormat("dd/MM/yyyy").format(date);
@@ -174,6 +186,9 @@ class StringUtil {
 
   static double getSalesPercent(String numberSales, String total) {
     if (numberSales == null || total == null) return 0;
+    int number = int.parse(numberSales);
+    int all = int.parse(total);
+    if (number >= all) return 1;
     return int.parse(numberSales) / int.parse(total);
   }
 
@@ -472,7 +487,8 @@ class FileUtil {
     return file;
   }
 }
-enum SettingNotify{ NONE, PRODUCT, LIKE_PRODUCT_CHANGE, SERVICE, VCB_EXPRESS }
+
+enum SettingNotify { NONE, PRODUCT, LIKE_PRODUCT_CHANGE, SERVICE, VCB_EXPRESS }
 
 enum BookingType { NONE, BOOKING_PRODUCT, BOOKING_SERVICE }
 
@@ -488,19 +504,15 @@ enum TransportState {
   WAITING_CHECKOUT
 }
 
-enum CheckoutStatus{
+enum CheckoutStatus {
   NONE,
   UN_PAY,
   ALREADY_PAY,
 }
 
-enum CheckoutMethod{
-  NONE,
-  CAST,
-  CREDIT_TRANSFER
-}
+enum CheckoutMethod { NONE, CAST, CREDIT_TRANSFER }
 
-enum DeliveryMethodState{
+enum DeliveryMethodState {
   DELIVERY,
   RECEIVE_IN_SHOP,
   NONE,
@@ -529,6 +541,15 @@ enum TransferStatus {
 }
 
 class WidgetUtil {
+  static Future<void> shareApp(BuildContext context) async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    //TODO need add apple store id after registered IOS app
+    Share.share(S.of(context).share_format(Platform.isAndroid
+        ? "https://play.google.com/store/apps/details?id=${packageInfo.packageName}"
+        : packageInfo.packageName));
+  }
+
   static void showGenderSelectorDialog(
       BuildContext context, ValueChanged<int> selectedGender,
       {int initGender}) {
@@ -539,7 +560,7 @@ class WidgetUtil {
         ]),
         changeToFirst: true,
         hideHeader: false,
-        selecteds: initGender == null ? null : [initGender-1],
+        selecteds: initGender == null ? null : [initGender - 1],
         onConfirm: (Picker picker, List value) {
           selectedGender(value[0] + 1);
         }).showModal(context); //_scaffoldKey.currentState);

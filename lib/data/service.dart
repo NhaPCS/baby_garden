@@ -5,6 +5,7 @@ import 'package:baby_garden_flutter/data/model/remind_calendar.dart';
 import 'package:baby_garden_flutter/data/response.dart';
 import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
+import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -873,7 +874,7 @@ Future<dynamic> addBaby(BuildContext context,
     "user_id": userId,
     "name": name,
     "gender": gender.toString(),
-    "birthday": birthday,
+    "birthday": DateUtil.convertNormalToServerDate(birthday),
   };
   dynamic files = {"img": img};
   Response response = await postMultiPart(context,
@@ -890,7 +891,7 @@ Future<dynamic> editBaby(BuildContext context,
     "baby_id": babyId,
     "name": name,
     "gender": gender.toString(),
-    "birthday": birthday,
+    "birthday": DateUtil.convertNormalToServerDate(birthday),
   };
   dynamic files = {"img": img};
   Response response = await postMultiPart(context,
@@ -899,15 +900,14 @@ Future<dynamic> editBaby(BuildContext context,
   return null;
 }
 
-Future<dynamic> verifyCodeVoucher(BuildContext context,
+Future<Response> verifyCodeVoucher(BuildContext context,
     {String voucherId, String code}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {"user_id": userId, "voucher_id": voucherId, "code": code};
 
-  Response response = await get(null,
+  Response response = await post(null,
       path: 'verifyCodeVoucher', param: params, requireLogin: true);
-  if (response.isSuccess()) return response.data;
-  return null;
+  return response;
 }
 
 Future<dynamic> useVoucher({String voucherId}) async {
@@ -1070,7 +1070,7 @@ Future<dynamic> updateProfile(BuildContext context,
   Map<String, dynamic> params = {
     'user_id': userId,
     'name': name,
-    'birthday': birthday,
+    'birthday': DateUtil.convertNormalToServerDate(birthday),
     'gender': gender,
   };
 

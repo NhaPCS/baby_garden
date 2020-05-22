@@ -4643,6 +4643,24 @@ class S {
       args: [],
     );
   }
+
+  String get verify_voucher_success {
+    return Intl.message(
+      'Xác thực thành công',
+      name: 'verify_voucher_success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String share_format(Object link) {
+    return Intl.message(
+      'Tải app Vườn của bé $link.\n Mua hàng không giới hạn.',
+      name: 'share_format',
+      desc: '',
+      args: [link],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
