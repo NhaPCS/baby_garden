@@ -200,7 +200,7 @@ class _VCBExpressDetailScreenState extends BaseStateModel<VCBExpressDetailScreen
                 ),
                 GestureDetector(
                   onTap: (){
-                    Share.share(S.of(context).share_content);
+                    WidgetUtil.shareApp(context);
                   },
                   child: Icon(
                     Icons.share,

@@ -4644,6 +4644,15 @@ class S {
     );
   }
 
+  String get share_content {
+    return Intl.message(
+      'Tải app vườn của bé \n Mua hàng ko giới hạn',
+      name: 'share_content',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get verify_voucher_success {
     return Intl.message(
       'Xác thực thành công',

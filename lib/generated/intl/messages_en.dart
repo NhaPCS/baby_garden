@@ -527,6 +527,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "setting_2" : MessageLookupByLibrary.simpleMessage("Nhận thông báo thay đổi giá của sản phẩm yêu thích"),
     "setting_3" : MessageLookupByLibrary.simpleMessage("Nhận thông báo lịch mua và lịch sử dung sản phẩm"),
     "setting_4" : MessageLookupByLibrary.simpleMessage("Nhận thông báo từ VCB Express"),
+    "share_content" : MessageLookupByLibrary.simpleMessage("Tải app vườn của bé \n Mua hàng ko giới hạn"),
     "share_format" : m30,
     "shop" : m31,
     "shopName" : MessageLookupByLibrary.simpleMessage("Tên Shop"),
