@@ -36,6 +36,7 @@ class _HomeState extends BaseStateModel<HomeScreen, HomeViewModel> {
 
   @override
   Widget buildWidget(BuildContext context) {
+    print("MOAAA");
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (context, isScrollInner) {
@@ -72,7 +73,8 @@ class _HomeState extends BaseStateModel<HomeScreen, HomeViewModel> {
                         child: Consumer<GetBannersProvider>(
                           builder: (BuildContext context,
                               GetBannersProvider value, Widget child) {
-                            if(value.banners==null|| value.banners.isEmpty) return SizedBox();
+                            if (value.banners == null || value.banners.isEmpty)
+                              return SizedBox();
                             return MyCarouselSlider(
                               hasShadow: true,
                               images: value.banners,
@@ -117,27 +119,26 @@ class _HomeState extends BaseStateModel<HomeScreen, HomeViewModel> {
           ];
         },
         body: Container(
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: SizeUtil.lineHeight,
-                color: ColorUtil.lineColor,
-              ),
-              Expanded(
-                  child: ListView.builder(
-                      itemCount: getViewModel().SECTIONS.length + 1,
-                      padding: EdgeInsets.all(0),
-                      itemBuilder: (context, index) {
-                        if (index == 0) {
-                          return FlashSale();
-                        }
-                        return GridProduct(
-                          isHome: true,
-                          section: getViewModel().SECTIONS[index - 1],
-                        );
-                      }))
-            ],
-          ),
+          child: Column(children: <Widget>[
+            Container(
+              height: SizeUtil.lineHeight,
+              color: ColorUtil.lineColor,
+            ),
+            Expanded(
+                child: ListView(
+              padding: EdgeInsets.all(0),
+              children:
+                  List.generate(getViewModel().SECTIONS.length + 1, (index) {
+                if (index == 0) {
+                  return FlashSale();
+                }
+                return GridProduct(
+                  isHome: true,
+                  section: getViewModel().SECTIONS[index - 1],
+                );
+              }).toList(),
+            ))
+          ]),
           height: double.infinity,
         ),
       ),

@@ -44,7 +44,7 @@ class _GridProductState extends BaseState<GridProduct> {
             _getListProductProvider.products.isEmpty) &&
         widget.section != null) {
       _getListProductProvider.getData(context, widget.section.path,
-          categoryId: null,
+          categoryId: widget.categoryId==null?null:'0',
           parentId: widget.categoryId,
           numberPosts:
               widget.totalCount == null ? TOTAL_ITEMS : widget.totalCount);
