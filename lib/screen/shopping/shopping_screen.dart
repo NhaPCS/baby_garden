@@ -101,6 +101,7 @@ class _ShoppingState extends BaseState<ShoppingScreen> {
               builder: (BuildContext context, GetProductCategoryProvider value,
                   Widget child) {
                 return ListView(
+                  padding: EdgeInsets.all(0),
                   children: value.categories
                       .map((e) => GridProduct(
                             categoryId: e['id'].toString(),

@@ -126,6 +126,7 @@ class _HomeState extends BaseStateModel<HomeScreen, HomeViewModel> {
             ),
             Expanded(
                 child: ListView(
+              padding: EdgeInsets.all(0),
               children:
                   List.generate(getViewModel().SECTIONS.length + 1, (index) {
                 if (index == 0) {
