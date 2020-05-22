@@ -51,8 +51,7 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
         if (bookingDetailData == null) {
           return Container();
         }
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        return ListView(
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(
@@ -114,13 +113,28 @@ class _RatedDetailScreenState extends BaseState<RatedDetailScreen> {
                     ),
                     rateContent: bookingDetailData['content'],
                     rateImg: bookingDetailData['img'],
-                    rateTime: "",
+                    rateTime: bookingDetailData["time_rate"],
                   )
                 : (bookingDetailData['list_rating'] != null
                     ? Column(
                         children: List.generate(
                             bookingDetailData['list_rating'].length,
-                            (index) => RatedItem()))
+                            (index) {
+                              var productData = bookingDetailData['list_rating']
+                                      [index];
+                              return RatedItem(
+                                  shopImg: bookingDetailData['shop_img'],
+                                  shopName: bookingDetailData['shop_name'],
+                                  itemTitle: productData['product_name'],
+                              isShowStar: true,
+                              star: int.parse(
+                                productData['star'],
+                              ),
+                                  rateContent: productData['content'],
+                                  rateImg: productData['img'],
+                                  rateTime: productData["date"]
+                                );
+                            }))
                     : SizedBox()),
           ],
         );

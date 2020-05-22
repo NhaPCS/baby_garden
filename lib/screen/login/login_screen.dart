@@ -73,6 +73,7 @@ class _LoginScreenState extends BaseStateModel<LoginScreen, LoginViewModel> {
                     top: 0,
                     bottom: 0),
                 checkBg: Icons.check_box,
+                //todo-hung remember pass
                 text: Text(
                   S.of(context).remember_password,
                   style: TextStyle(fontSize: SizeUtil.textSizeDefault),

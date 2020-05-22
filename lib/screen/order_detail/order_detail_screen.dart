@@ -124,8 +124,10 @@ class _OrderDetailScreenState
                     ? S.of(context).cash_payment
                     : S.of(context).credit_transfer_payment,
               ),
+              //todo-hung thời gian dự kiến giao hàng, lỗi separate line
               isDelivering
-                  ? OrderInfo(
+                  ?
+              OrderInfo(
                       svgIcon: 'order_delivering.svg',
                       title: S.of(context).delivery_info,
                       content: S.of(context).delivery_service_header(
@@ -175,7 +177,7 @@ class _OrderDetailScreenState
                                   height: SizeUtil.tinySpace,
                                 ),
                                 Text(
-                                  "25-12-2019 15:42",
+                                  data['time_ship'],
                                   style: TextStyle(
                                       fontSize: SizeUtil.textSizeSmall,
                                       color: ColorUtil.textColor),
