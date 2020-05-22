@@ -13,11 +13,13 @@ class GetListProductProvider extends ChangeNotifier {
 
   Future<void> getData(BuildContext context, String path,
       {String categoryId,
+      String parentId,
       String productId,
       int index = 0,
       int numberPosts = service.PAGE_SIZE}) async {
     dynamic data = await service.listProducts(context, path,
         categoryId: categoryId,
+        parentId: parentId,
         productId: productId,
         index: index,
         numberPosts: numberPosts);

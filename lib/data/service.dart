@@ -5,6 +5,7 @@ import 'package:baby_garden_flutter/data/model/remind_calendar.dart';
 import 'package:baby_garden_flutter/data/response.dart';
 import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
+import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -303,11 +304,14 @@ Future<dynamic> deleteNoty({String notifyID}) async {
 //todo news
 Future<dynamic> news(
     {String index, String numberPost, String categoryId}) async {
-  Response response = await get(null, path: "news", param: {
+  dynamic params = {
     'index': index,
     'number_post': numberPost,
-    'categoryId': categoryId
-  });
+  };
+  if (categoryId != null && categoryId.isNotEmpty) {
+    params['category_id'] = categoryId;
+  }
+  Response response = await get(null, path: "news", param: params);
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -526,6 +530,7 @@ Future<dynamic> listShop(BuildContext context,
 
 Future<dynamic> listProducts(BuildContext context, String path,
     {String categoryId,
+    String parentId,
     String productId,
     int index = START_PAGE,
     int numberPosts = PAGE_SIZE}) async {
@@ -538,6 +543,9 @@ Future<dynamic> listProducts(BuildContext context, String path,
   };
   if (categoryId != null && categoryId.isNotEmpty) {
     params['category_id'] = categoryId;
+  }
+  if (parentId != null && parentId.isNotEmpty) {
+    params['parent_id'] = parentId;
   }
   if (productId != null && productId.isNotEmpty) {
     params['product_id'] = productId;
@@ -866,7 +874,7 @@ Future<dynamic> addBaby(BuildContext context,
     "user_id": userId,
     "name": name,
     "gender": gender.toString(),
-    "birthday": birthday,
+    "birthday": DateUtil.convertNormalToServerDate(birthday),
   };
   dynamic files = {"img": img};
   Response response = await postMultiPart(context,
@@ -883,7 +891,7 @@ Future<dynamic> editBaby(BuildContext context,
     "baby_id": babyId,
     "name": name,
     "gender": gender.toString(),
-    "birthday": birthday,
+    "birthday": DateUtil.convertNormalToServerDate(birthday),
   };
   dynamic files = {"img": img};
   Response response = await postMultiPart(context,
@@ -892,15 +900,14 @@ Future<dynamic> editBaby(BuildContext context,
   return null;
 }
 
-Future<dynamic> verifyCodeVoucher(BuildContext context,
+Future<Response> verifyCodeVoucher(BuildContext context,
     {String voucherId, String code}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {"user_id": userId, "voucher_id": voucherId, "code": code};
 
-  Response response = await get(null,
+  Response response = await post(null,
       path: 'verifyCodeVoucher', param: params, requireLogin: true);
-  if (response.isSuccess()) return response.data;
-  return null;
+  return response;
 }
 
 Future<dynamic> useVoucher({String voucherId}) async {
@@ -1030,12 +1037,11 @@ Future<dynamic> popup() async {
   return null;
 }
 
-
 Future<dynamic> numberBooking() async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {"user_id": userId};
 
-  Response response = await get(null, path: "popup", param: params);
+  Response response = await get(null, path: "numberBooking", param: params);
 
   if (response.isSuccess()) return response.data;
   return null;
@@ -1064,7 +1070,7 @@ Future<dynamic> updateProfile(BuildContext context,
   Map<String, dynamic> params = {
     'user_id': userId,
     'name': name,
-    'birthday': birthday,
+    'birthday': DateUtil.convertNormalToServerDate(birthday),
     'gender': gender,
   };
 
