@@ -24,7 +24,7 @@ class SetScheduleForProductDialog extends StatefulWidget {
 
 class _State
     extends BaseStateModel<SetScheduleForProductDialog, ReminderAddViewModel> {
-  RemindCalendar _remindCalendar;
+  RemindCalendar _remindCalendar = RemindCalendar();
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -63,19 +63,19 @@ class _State
             hasDivider: true,
             reminderSelectCallBack:
                 (type, buyDate, endDate, period, time1, time2, time3, time4) {
-              _remindCalendar = new RemindCalendar(
-                productId: widget.product['id'],
-                type: type == 1 ? RemindType.remindBuy : RemindType.remindUse,
-                dateStart: DateUtil.formatNormalDateTime(buyDate),
-                timeStart: DateUtil.formatTime(buyDate),
-                dateEnd: DateUtil.formatNormalDateTime(endDate),
-                timeEnd: DateUtil.formatTime(endDate),
-                period: period.toString(),
-                time1: DateUtil.formatTime(time1),
-                time2: DateUtil.formatTime(time2),
-                time3: DateUtil.formatTime(time3),
-                time4: DateUtil.formatTime(time4),
-              );
+                  _remindCalendar.type =
+                  type == 1 ? RemindType.remindBuy : RemindType.remindUse;
+                  _remindCalendar.dateStart =
+                      DateUtil.formatNormalDateTime(buyDate);
+                  _remindCalendar.timeStart = DateUtil.formatTime(buyDate);
+                  _remindCalendar.dateEnd =
+                      DateUtil.formatNormalDateTime(endDate);
+                  _remindCalendar.timeEnd = DateUtil.formatTime(endDate);
+                  _remindCalendar.period = period.toString();
+                  _remindCalendar.time1 = DateUtil.formatTime(time1);
+                  _remindCalendar.time2 = DateUtil.formatTime(time2);
+                  _remindCalendar.time3 = DateUtil.formatTime(time3);
+                  _remindCalendar.time4 = DateUtil.formatTime(time4);
             },
           ),
           Row(

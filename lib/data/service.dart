@@ -1023,8 +1023,19 @@ Future<dynamic> search(String key) async {
   return null;
 }
 
-Future<dynamic> promotion() async {
+Future<dynamic> popup() async {
   Response response = await get(null, path: "popup");
+
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+
+Future<dynamic> numberBooking() async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId};
+
+  Response response = await get(null, path: "popup", param: params);
 
   if (response.isSuccess()) return response.data;
   return null;

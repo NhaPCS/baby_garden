@@ -7,7 +7,7 @@ class GetPromotionPopupProvider extends ChangeNotifier {
   dynamic promotion;
 
   Future<void> getPromotion(BuildContext context) async {
-    promotion = await service.promotion();
+    promotion = await service.popup();
     got = true;
     if (promotion != null) {
       showDialog(
