@@ -93,6 +93,10 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
                         onTap: (index) {
                           _changeIndexProvider.changeIndex(index);
                           _tabController.animateTo(index);
+                          // reload orders
+                          if(index==3){
+                            Provider.of<OrdersProvider>(context, listen: false).getOrdersCount();
+                          }
                         },
                         items: [
                           getTabItem(

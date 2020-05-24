@@ -12,10 +12,9 @@ import 'package:provider/provider.dart';
 class ProductHorizontalItem extends StatelessWidget {
   final bool isAttach;
   final dynamic product;
-  final ValueNotifier<int> quantityController;
 
   const ProductHorizontalItem(
-      {Key key, this.isAttach = false, this.product, this.quantityController})
+      {Key key, this.isAttach = false, this.product})
       : super(key: key);
 
   @override
