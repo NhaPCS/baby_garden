@@ -103,18 +103,20 @@ Future<dynamic> unFavouriteShop({String shopID}) async {
 }
 
 //TODO require unFavouriteShop
-Future<dynamic> addComment(BuildContext context,{String newsId,String content}) async {
+Future<dynamic> addComment(BuildContext context,
+    {String newsId, String content}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await post(context,
-      path: "comment", param: {'user_id': userId, 'news_id': newsId,"content":content});
+      path: "comment",
+      param: {'user_id': userId, 'news_id': newsId, "content": content});
   if (response.isSuccess()) return response.data;
   return null;
 }
 
 //TODO require unFavouriteShop
 Future<dynamic> listComment({String newsId}) async {
-  Response response = await get(null,
-      path: "listComment", param: {'news_id': newsId});
+  Response response =
+      await get(null, path: "listComment", param: {'news_id': newsId});
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -256,10 +258,11 @@ Future<dynamic> cancelBooking(BuildContext context,
   return null;
 }
 
-Future<dynamic> listVoucherUser() async {
+Future<dynamic> listVoucherUser(int type) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  Response response =
-      await get(null, path: "listVoucherUser", param: {'user_id': userId});
+  Response response = await get(null,
+      path: "listVoucherUser",
+      param: {'user_id': userId, 'type': type.toString()});
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -614,12 +617,13 @@ Future<void> addProductCart({List<dynamic> products}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   List<dynamic> ps = new List();
   for (dynamic p in products) {
-    ps.add({
-      'product_id': p['id'],
-      'number': p['quantity'],
-      'color_id': p['color_id'],
-      'size_id': p['size_id'],
-    });
+    if (p['quantity'] != null && p['quantity'] > 0)
+      ps.add({
+        'product_id': p['id'],
+        'number': p['quantity'],
+        'color_id': p['color_id'],
+        'size_id': p['size_id'],
+      });
   }
   dynamic params = {
     "user_id": userId,
@@ -1067,6 +1071,12 @@ Future<dynamic> numberBooking() async {
 Future<dynamic> mainCategory() async {
   Response response = await get(null, path: "mainCategory");
 
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> listQuestion() async {
+  Response response = await get(null, path: "listQuestion");
   if (response.isSuccess()) return response.data;
   return null;
 }

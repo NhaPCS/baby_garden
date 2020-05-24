@@ -7,14 +7,16 @@ import 'package:flutter/material.dart';
 class VoucherList extends StatelessWidget {
   final List<dynamic> vouchers;
   final bool isNearExpire;
+  final VoidCallback onReload;
 
-  const VoucherList({Key key, this.vouchers, this.isNearExpire = false}) : super(key: key);
+  const VoucherList({Key key, this.vouchers, this.isNearExpire = false, this.onReload}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (vouchers == null || vouchers.isEmpty) {
       return LoadingView(
         isNoData: vouchers != null,
+        onReload: onReload,
       );
     }
     return ListView.builder(
@@ -22,7 +24,7 @@ class VoucherList extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
               onTap: () {
-                RouteUtil.push(context, VoucherDetailScreen());
+                RouteUtil.push(context, VoucherDetailScreen(voucher: vouchers[index],));
               },
               child: VoucherCardItem(
                 voucher: vouchers[index],

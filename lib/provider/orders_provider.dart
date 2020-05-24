@@ -109,8 +109,7 @@ class OrdersProvider extends ChangeNotifier {
             element['notify_count'] = getCount(data, 'dasudung');
             break;
           case 3:
-            //TODO missing field
-            element['notify_count'] = getCount(data, 'danhgiadichvu');
+            element['notify_count'] = getCount(data, 'huylich');
             break;
           case 0:
             element['notify_count'] = getCount(data, 'danhgiadichvu');

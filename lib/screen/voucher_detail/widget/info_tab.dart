@@ -70,7 +70,9 @@ class _InfoTabState extends BaseState<InfoTab> {
                     height: SizeUtil.smallSpace,
                   ),
                   Html(
-                    data: widget.voucher['instruction'],
+                    data: widget.voucher['instruction'] == null
+                        ? ''
+                        : widget.voucher['instruction'],
                   )
                 ],
               ),
@@ -78,7 +80,8 @@ class _InfoTabState extends BaseState<InfoTab> {
             WidgetUtil.getLine(width: SizeUtil.lineHeight),
             InkWell(
               onTap: () {
-                push(PartnerBookScheduleScreen(shopID:widget.voucher['shop_id']));
+                push(PartnerBookScheduleScreen(
+                    shopID: widget.voucher['shop_id']));
               },
               child: Padding(
                 padding: EdgeInsets.only(
@@ -127,7 +130,10 @@ class _InfoTabState extends BaseState<InfoTab> {
                         ));
                 break;
               case "2":
-                push(VoucherCodeScreen(context: context, voucher: widget.voucher,));
+                push(VoucherCodeScreen(
+                  context: context,
+                  voucher: widget.voucher,
+                ));
                 break;
             }
           },

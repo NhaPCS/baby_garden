@@ -63,16 +63,28 @@ class _VoucherManageState extends BaseState<VoucherManagement> {
                       children: [
                         VoucherList(
                           vouchers: value.getCodeVouchers,
+                          onReload: () {
+                            _getMyVoucherProvider.getVoucherOf(1);
+                          },
                         ),
                         VoucherList(
                           vouchers: value.unexpiredVouchers,
                           isNearExpire: true,
+                          onReload: () {
+                            _getMyVoucherProvider.getVoucherOf(2);
+                          },
                         ),
                         VoucherList(
                           vouchers: value.usedVouchers,
+                          onReload: () {
+                            _getMyVoucherProvider.getVoucherOf(3);
+                          },
                         ),
                         VoucherList(
                           vouchers: value.expireVouchers,
+                          onReload: () {
+                            _getMyVoucherProvider.getVoucherOf(4);
+                          },
                         ),
                       ],
                     );

@@ -8,13 +8,27 @@ class GetMyVoucherProvider extends ChangeNotifier {
   List<dynamic> unexpiredVouchers;
 
   Future<void> getMyVoucher() async {
-    dynamic data = await service.listVoucherUser();
-    if (data != null) {
-      getCodeVouchers = data['get_code'];
-      usedVouchers = data['used'];
-      expireVouchers = data['expire'];
-      unexpiredVouchers = data['unexpired'];
-      notifyListeners();
+    for (int i = 1; i <= 4; i++) {
+      getVoucherOf(i);
     }
+  }
+
+  Future<void> getVoucherOf(int type) async {
+    dynamic data = await service.listVoucherUser(type);
+    switch (type) {
+      case 1:
+        getCodeVouchers = data;
+        break;
+      case 2:
+        usedVouchers = data;
+        break;
+      case 3:
+        expireVouchers = data;
+        break;
+      case 4:
+        unexpiredVouchers = data;
+        break;
+    }
+    notifyListeners();
   }
 }

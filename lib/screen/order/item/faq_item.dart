@@ -1,8 +1,9 @@
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 
 class FaqItem extends StatelessWidget {
-  final String question;
+  final dynamic question;
   final VoidCallback onItemPressed;
 
   const FaqItem({Key key, @required this.question, this.onItemPressed})
@@ -13,7 +14,7 @@ class FaqItem extends StatelessWidget {
     return InkWell(
       child: Padding(
         padding: SizeUtil.smallPadding,
-        child: Text(question),
+        child: MyText(question['title']),
       ),
       onTap: onItemPressed,
     );
