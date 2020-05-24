@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/data/model/param.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/city_provider.dart';
 import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
@@ -25,6 +26,7 @@ class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue> {
       new TextEditingController();
   final TextEditingController _receiveAddressController =
       new TextEditingController();
+
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement build
@@ -38,8 +40,10 @@ class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
                 color: Colors.white,
-                border: Border.all(color: ColorUtil.primaryColor,
-                  width: 0.7,),
+                border: Border.all(
+                  color: ColorUtil.primaryColor,
+                  width: 0.7,
+                ),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -208,31 +212,29 @@ class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue> {
                       RaisedButton(
                         onPressed: () {
                           //todo-hung add verify param
-                          String error = "";
                           var provider =
                               Provider.of<CityProvider>(context, listen: false);
-                          if (_receiveNameController.text.trim().length == 0) {
-                            error = "Vui lòng nhập Tên ";
-                          } else if (_receivePhoneController.text
-                                  .trim()
-                                  .length ==
-                              0) {
-                            error = "Vui lòng nhập Số điện thoại ";
-                          } else if (_receiveAddressController.text
-                                  .trim()
-                                  .length ==
-                              0) {
-                            error =
-                                "Vui lòng nhập địa chỉ (số nhà, tên đường) ";
-                          } else if (provider.cityVal == null) {
-                            error = "Vui lòng chọn tỉnh/thành phố  ";
-                          } else if (provider.districtVal == null) {
-                            error = "Vui lòng chọn quận/huyện  ";
-                          } else if (provider.subDistrictVal == null) {
-                            error = "Vui lòng chọn phường/xã ";
-                          }
-                          print(error);
-                          if (error.length == 0) {
+                          if (WidgetUtil.verifyParams(context, params: [
+                            Param(
+                                key: S.of(context).enter_name,
+                                value: _receiveNameController.text.trim()),
+                            Param(
+                                key: S.of(context).phone_format,
+                                value: _receivePhoneController.text.trim(),
+                                checkType: CheckType.PHONE_FORMAT),
+                            Param(
+                                key: S.of(context).enter_address,
+                                value: _receiveAddressController.text.trim()),
+                            Param(
+                                key: S.of(context).enter_province,
+                                value: provider.cityVal),
+                            Param(
+                                key: S.of(context).enter_district,
+                                value: provider.districtVal),
+                            Param(
+                                key: S.of(context).enter_sub_district,
+                                value: provider.subDistrictVal),
+                          ]))  {
                             dynamic address = {
                               'userName': _receiveNameController.text.trim(),
                               'phone': _receivePhoneController.text.trim(),
@@ -254,8 +256,6 @@ class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue> {
                             Provider.of<CityProvider>(context, listen: false)
                                 .reset();
                             Navigator.of(context).pop();
-                          } else {
-                            WidgetUtil.showErrorDialog(context, error);
                           }
                         },
                         shape: RoundedRectangleBorder(

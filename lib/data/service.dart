@@ -102,6 +102,23 @@ Future<dynamic> unFavouriteShop({String shopID}) async {
   return null;
 }
 
+//TODO require unFavouriteShop
+Future<dynamic> addComment(BuildContext context,{String newsId,String content}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  Response response = await post(context,
+      path: "comment", param: {'user_id': userId, 'news_id': newsId,"content":content});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+//TODO require unFavouriteShop
+Future<dynamic> listComment({String newsId}) async {
+  Response response = await get(null,
+      path: "listComment", param: {'news_id': newsId});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 /*todo bookingService
 user_id: id người dùng
 shop_id: id shop
