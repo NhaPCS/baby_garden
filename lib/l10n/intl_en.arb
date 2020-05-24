@@ -514,6 +514,9 @@
     "choose_product": "Hãy chọn một sản phẩm",
   "share_content": "Tải app vườn của bé \n Mua hàng ko giới hạn",
   "verify_voucher_success": "Xác thực thành công",
-  "share_format": "Tải app Vườn của bé {link}.\n Mua hàng không giới hạn."
+  "share_format": "Tải app Vườn của bé {link}.\n Mua hàng không giới hạn.",
+    "enter_province": "chọn tỉnh/thành phố",
+    "enter_district": "chọn quận/huyện",
+    "enter_sub_district": "chọn phường/xã"
 
 }

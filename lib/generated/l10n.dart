@@ -4670,6 +4670,33 @@ class S {
       args: [link],
     );
   }
+
+  String get enter_province {
+    return Intl.message(
+      'chọn tỉnh/thành phố',
+      name: 'enter_province',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_district {
+    return Intl.message(
+      'chọn quận/huyện',
+      name: 'enter_district',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get enter_sub_district {
+    return Intl.message(
+      'chọn phường/xã',
+      name: 'enter_sub_district',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
