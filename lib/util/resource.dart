@@ -841,6 +841,13 @@ class WidgetUtil {
     print(" herererer");
     return true;
   }
+
+  static bool isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    return double.tryParse(s) != null;
+  }
 }
 
 setBorder(String side, Color borderColor, double width) {

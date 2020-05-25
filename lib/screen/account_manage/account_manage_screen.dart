@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:baby_garden_flutter/data/model/baby.dart';
 import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/provider/select_date_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/account_manage/dialog/add_child_dialog.dart';
 import 'package:baby_garden_flutter/screen/account_manage/item/baby_item.dart';
@@ -126,25 +125,28 @@ class _AccountManageScreenState
             key == 0 ? SizedBox() : Spacer(),
             key == 0
                 ? Expanded(
-                    child: Container(
-                      child: MyTextField(
-                        maxLines: null,
-                        textAlign: TextAlign.end,
-                        onEditingComplete: () async {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          Provider.of<UserProvider>(context, listen: false)
-                              .updateUserInfo(name: _nameController.text);
-                          await getViewModel().editProfile(
-                              user: Provider.of<UserProvider>(context,
-                                      listen: false)
+                    child: MyTextField(
+                    textEditingController: new TextEditingController.fromValue(
+                        new TextEditingValue(
+                            text: _nameController.text,
+                            selection: TextSelection.fromPosition(TextPosition(
+                                offset: _nameController.text.length)))),
+                    maxLines: null,
+                    autoFocus: true,
+                    onSubmitted: (val) async {
+                      _nameController.text = val;
+
+                      Provider.of<UserProvider>(context, listen: false)
+                          .updateUserInfo(name: _nameController.text);
+                      await getViewModel().editProfile(
+                          user:
+                              Provider.of<UserProvider>(context, listen: false)
                                   .userInfo);
-                        },
-                        contentPadding: EdgeInsets.all(0),
-                        isBorder: false,
-                        textEditingController: _nameController,
-                      ),
-                    ),
-                  )
+                    },
+                    contentPadding: EdgeInsets.all(0),
+                    textAlign: TextAlign.right,
+                    isBorder: false,
+                  ))
                 : Text(entry['content'],
                     textAlign: TextAlign.right,
                     style: TextStyle(

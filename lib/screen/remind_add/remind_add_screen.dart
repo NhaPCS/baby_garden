@@ -105,6 +105,7 @@ class _RemindAddScreen
                   _remindCalendar.time4 = DateUtil.formatTime(time4);
                 },
               ),
+              SizedBox(height: 50)
             ]),
             Align(
               alignment: Alignment.bottomCenter,

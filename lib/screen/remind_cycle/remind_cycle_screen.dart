@@ -62,14 +62,9 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
                       padding: SizeUtil.normalPadding,
                       hint: S.of(context).remindOtherOptionHint,
                       hintStyle: TextStyle(
-                          fontSize: SizeUtil.textSizeDefault,
+                          fontSize: SizeUtil.textSizeExpressTitle,
                           color: ColorUtil.darkGray),
                       textEditingController: _cycleTextFieldCtrl,
-                      onEditingComplete: () {
-                        _periodProvider.value =
-                            int.parse(_cycleTextFieldCtrl.text);
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
                       borderColor: ColorUtil.darkGray,
                       borderRadius: 8,
                     ),
@@ -90,6 +85,17 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
                   borderRadius: SizeUtil.tinyRadius,
                   matchParent: true,
                   onPressed: () {
+                    if (_cycleTextFieldCtrl.text.length > 0) {
+                      if (!WidgetUtil.isNumeric(_cycleTextFieldCtrl.text)) {
+                        WidgetUtil.showErrorDialog(
+                            context, 'Vui lòng nhập số ngày là một số nguyên.',
+                            onOkClick: () => _cycleTextFieldCtrl.text = '');
+                        return;
+                      }
+                      _periodProvider.value =
+                          int.parse(_cycleTextFieldCtrl.text);
+                    }
+
                     Navigator.of(context).pop(_periodProvider.value);
                   }),
             ),
