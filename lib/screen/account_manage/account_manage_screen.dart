@@ -135,7 +135,7 @@ class _AccountManageScreenState
                     autoFocus: true,
                     onSubmitted: (val) async {
                       _nameController.text = val;
-                      FocusScope.of(context).requestFocus(FocusNode());
+
                       Provider.of<UserProvider>(context, listen: false)
                           .updateUserInfo(name: _nameController.text);
                       await getViewModel().editProfile(

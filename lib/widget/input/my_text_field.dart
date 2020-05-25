@@ -171,7 +171,7 @@ class MyTextField extends StatelessWidget {
             enabled: enable,
             keyboardType: inputType,
             onTap: () {
-              ontap();
+              if (ontap != null) ontap();
             },
             onSubmitted: (val) {
               if (onSubmitted != null) onSubmitted(val);
