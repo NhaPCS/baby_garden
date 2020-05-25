@@ -23,7 +23,7 @@ class MyTextField extends StatelessWidget {
   final double elevation;
   final bool enable;
   final VoidCallback ontap;
-  final VoidCallback onEditingComplete;
+  final Function(String) onSubmitted;
   final FocusNode onFocus;
   final String labelText;
   final TextStyle labelStyle;
@@ -73,7 +73,7 @@ class MyTextField extends StatelessWidget {
       this.onFocus,
       this.maxLines = 1,
       this.ontap,
-      this.onEditingComplete,
+      this.onSubmitted,
       this.enable = true,
       InputDecoration decoration,
       this.labelText,
@@ -170,11 +170,11 @@ class MyTextField extends StatelessWidget {
             onChanged: onChanged,
             enabled: enable,
             keyboardType: inputType,
-            onTap: (){
+            onTap: () {
               ontap();
             },
-            onEditingComplete: () {
-              if (onEditingComplete != null) onEditingComplete();
+            onSubmitted: (val) {
+              if (onSubmitted != null) onSubmitted(val);
             },
             focusNode: onFocus,
             decoration: InputDecoration(

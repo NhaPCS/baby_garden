@@ -65,9 +65,8 @@ class _RemindCycleScreenState extends BaseState<RemindCycleScreen> {
                           fontSize: SizeUtil.textSizeDefault,
                           color: ColorUtil.darkGray),
                       textEditingController: _cycleTextFieldCtrl,
-                      onEditingComplete: () {
-                        _periodProvider.value =
-                            int.parse(_cycleTextFieldCtrl.text);
+                      onSubmitted: (val) {
+                        _periodProvider.value = int.parse(val);
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
                       borderColor: ColorUtil.darkGray,
