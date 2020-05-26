@@ -85,7 +85,7 @@ class RemindCardItem extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(
                               left: SizeUtil.midSmallSpace),
-                          child: Text(calendar.datetime,
+                          child: Text(calendar.dateStart,
                               style: TextStyle(
                                   color: ColorUtil.grayLine,
                                   fontSize: SizeUtil.textSizeSmall)),

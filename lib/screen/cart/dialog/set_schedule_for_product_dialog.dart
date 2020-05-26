@@ -12,9 +12,7 @@ import 'package:nested/nested.dart';
 class SetScheduleForProductDialog extends StatefulWidget {
   final dynamic product;
 
-  SetScheduleForProductDialog(
-      {Key key, this.product})
-      : super(key: key);
+  SetScheduleForProductDialog({Key key, this.product}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -63,19 +61,18 @@ class _State
             hasDivider: true,
             reminderSelectCallBack:
                 (type, buyDate, endDate, period, time1, time2, time3, time4) {
-                  _remindCalendar.type =
+              _remindCalendar.type =
                   type == 1 ? RemindType.remindBuy : RemindType.remindUse;
-                  _remindCalendar.dateStart =
-                      DateUtil.formatNormalDateTime(buyDate);
-                  _remindCalendar.timeStart = DateUtil.formatTime(buyDate);
-                  _remindCalendar.dateEnd =
-                      DateUtil.formatNormalDateTime(endDate);
-                  _remindCalendar.timeEnd = DateUtil.formatTime(endDate);
-                  _remindCalendar.period = period.toString();
-                  _remindCalendar.time1 = DateUtil.formatTime(time1);
-                  _remindCalendar.time2 = DateUtil.formatTime(time2);
-                  _remindCalendar.time3 = DateUtil.formatTime(time3);
-                  _remindCalendar.time4 = DateUtil.formatTime(time4);
+              _remindCalendar.dateStart =
+                  DateUtil.formatNormalDateTime(buyDate);
+              _remindCalendar.timeStart = DateUtil.formatTime(buyDate);
+              _remindCalendar.dateEnd = DateUtil.formatNormalDateTime(endDate);
+              _remindCalendar.timeEnd = DateUtil.formatTime(endDate);
+              _remindCalendar.period = period.toString();
+              _remindCalendar.time1 = DateUtil.formatTime(time1);
+              _remindCalendar.time2 = DateUtil.formatTime(time2);
+              _remindCalendar.time3 = DateUtil.formatTime(time3);
+              _remindCalendar.time4 = DateUtil.formatTime(time4);
             },
           ),
           Row(
@@ -97,7 +94,8 @@ class _State
               ),
               MyRaisedButton(
                 onPressed: () {
-                  getViewModel().addNewCalendar(context, calendar: _remindCalendar);
+                  getViewModel()
+                      .addNewCalendar(context, calendar: _remindCalendar);
                 },
                 text: S.of(context).agree,
                 color: ColorUtil.primaryColor,

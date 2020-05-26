@@ -22,19 +22,9 @@ class RemindCalendarProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> addNewCalendar(BuildContext context,
-      {bool isEdit = false, RemindCalendar calendar}) async {
-    final _calendar = isEdit ? calendar : newRemindCalendar;
-    final addSuccess =
-        await service.addRemindCalendar(context, calendar: _calendar);
-
-    notifyListeners();
-    return addSuccess != null;
-  }
-
   void deleteCalendar(BuildContext context, String calendarId) async {
     await service.deleteRemindCalendar(context, calendarId: calendarId);
     getListCalendar(context);
+    notifyListeners();
   }
-
 }

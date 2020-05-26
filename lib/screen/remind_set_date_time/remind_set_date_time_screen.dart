@@ -27,7 +27,7 @@ class _RemindSetDateTimeScreenState extends BaseState<RemindSetDateTimeScreen> {
 
   @override
   Widget buildWidget(BuildContext context) {
-    initializeDateFormatting('en', null);
+    initializeDateFormatting('vi', null);
 
     return Scaffold(
       appBar: getAppBar(
@@ -162,7 +162,7 @@ class _RemindSetDateTimeScreenState extends BaseState<RemindSetDateTimeScreen> {
     var selectedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2018),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2030),
       builder: (BuildContext context, Widget child) {
         return Theme(

@@ -56,9 +56,7 @@ class RemindCalendar {
   }
 
   RemindCalendar fromJson(Map<String, dynamic> calendar) {
-    print('olala');
     final images = calendar['image'] as List<dynamic>;
-    print(images.length);
 
     id = calendar['id'];
     dateStart = calendar['date_start'];
