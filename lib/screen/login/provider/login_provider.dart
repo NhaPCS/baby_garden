@@ -7,7 +7,7 @@ class LoginProvider extends ChangeNotifier{
   String username = "";
 
   void initView() async{
-    isRememberPass =await ShareValueProvider.shareValueProvider.getIsRememberPass();
+    isRememberPass = await ShareValueProvider.shareValueProvider.getIsRememberPass();
     if(isRememberPass){
       pass = await ShareValueProvider.shareValueProvider.getPass();
       username = await ShareValueProvider.shareValueProvider.getUserName();

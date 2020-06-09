@@ -5,6 +5,7 @@ import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
 import 'package:baby_garden_flutter/screen/booking/provider/transfer_method_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
+import 'package:baby_garden_flutter/screen/booking/provider/user_point_provider.dart';
 import 'package:baby_garden_flutter/screen/booking/widget/checkout_method.dart';
 import 'package:baby_garden_flutter/screen/booking/widget/delivery_method.dart';
 import 'package:baby_garden_flutter/screen/booking/widget/input_note.dart';
@@ -40,7 +41,8 @@ class _BookingScreenState
     with SingleTickerProviderStateMixin {
   ValueNotifier<int> deliveryMethod = new ValueNotifier(2);
   ValueNotifier<int> checkoutMethod = new ValueNotifier(1);
-  ValueNotifier<dynamic> receiveTime = new ValueNotifier({"data":"","id":"0"});
+  ValueNotifier<dynamic> receiveTime =
+      new ValueNotifier({"data": "", "id": "0"});
   String inShopReceiveAddress = "";
   final TransferMethodProvider _transferMethodProvider =
       new TransferMethodProvider();
@@ -49,12 +51,14 @@ class _BookingScreenState
   final TextEditingController _noteController = new TextEditingController();
   final ValueNotifier<bool> _pointCheckoutValueController =
       ValueNotifier(false);
+  final UserPointProvider _pointProvider = new UserPointProvider();
   int checkoutPoint = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     _transferMethodProvider.getShips();
+    _pointProvider.getPoint(context, shopId: widget.shopID);
     super.initState();
   }
 
@@ -212,20 +216,26 @@ class _BookingScreenState
           ),
           //TODO CHECKOUT MENTHOD
           ListTitleCustom(
-            icon: SvgIcon(
-              'ic_payment_method.svg',
-              width: SizeUtil.iconSizeDefault,
-              height: SizeUtil.iconSizeDefault,
-            ),
-            title: S.of(context).type_of_checkout,
-            content: CheckoutMethodWG(
-              onChangePoint: (pointVal) {
-                checkoutPoint = pointVal;
-              },
-              checkoutMethod: checkoutMethod,
-              pointCheckoutValueController: _pointCheckoutValueController,
-            ),
-          ),
+              icon: SvgIcon(
+                'ic_payment_method.svg',
+                width: SizeUtil.iconSizeDefault,
+                height: SizeUtil.iconSizeDefault,
+              ),
+              title: S.of(context).type_of_checkout,
+              content: Consumer<UserPointProvider>(
+                builder: (BuildContext context, UserPointProvider value,
+                    Widget child) {
+                  return CheckoutMethodWG(
+                    onChangePoint: (pointVal) {
+                      checkoutPoint = pointVal;
+                      _transferMethodProvider.onNotify();
+                    },
+                    totalPoint: value.totalPoint,
+                    checkoutMethod: checkoutMethod,
+                    pointCheckoutValueController: _pointCheckoutValueController,
+                  );
+                },
+              )),
           //TODO transfer menthod
           ValueListenableBuilder<int>(
             valueListenable: deliveryMethod,
@@ -308,7 +318,7 @@ class _BookingScreenState
                       Widget child) {
                     return Text(
                         StringUtil.getPriceText(
-                            (totalPrice - value.price).toString()),
+                            (totalPrice + value.price - checkoutPoint*1000).toString()),
                         style: TextStyle(
                             fontSize: SizeUtil.textSizeDefault,
                             color: Colors.red,
@@ -348,6 +358,7 @@ class _BookingScreenState
     // TODO: implement providers
     return [
       ChangeNotifierProvider.value(value: _transferMethodProvider),
+      ChangeNotifierProvider.value(value: _pointProvider),
     ];
   }
 
@@ -381,7 +392,7 @@ class _BookingScreenState
             receiveTime.value['id'].trim(),
             checkoutPoint.toString(),
             widget.shopID.toString(),
-            widget.promoteCode==null?"":widget.promoteCode,
+            widget.promoteCode == null ? "" : widget.promoteCode,
             deliveryMethod.value.toString(),
             receiveTime.value['data'].trim(),
             checkoutMethod.value.toString(),
@@ -401,9 +412,7 @@ class _BookingScreenState
               CheckoutScreen(
                 bookingId: getViewModel().bookingData['booking_id'],
                 bookingCode: getViewModel().bookingData['code'].toString(),
-                totalPrice:
-                    Provider.of<CartProvider>(context, listen: false).price -
-                        _transferMethodProvider.price,
+                totalPrice: getTotalPrice(),
                 phone: address != null ? address['phone'] : "",
               ));
         } else {
@@ -422,7 +431,7 @@ class _BookingScreenState
             receiveTime.value['id'].trim(),
             checkoutPoint.toString(),
             widget.shopID.toString(),
-            widget.promoteCode==null?"":widget.promoteCode,
+            widget.promoteCode == null ? "" : widget.promoteCode,
             deliveryMethod.value.toString(),
             receiveTime.value['data'].trim(),
             checkoutMethod.value.toString(),
@@ -443,9 +452,7 @@ class _BookingScreenState
               CheckoutScreen(
                 bookingId: getViewModel().bookingData['booking_id'],
                 bookingCode: getViewModel().bookingData['code'].toString(),
-                totalPrice:
-                    Provider.of<CartProvider>(context, listen: false).price -
-                        _transferMethodProvider.price,
+                totalPrice: getTotalPrice(),
                 phone: address != null ? address['phone'] : "",
               ));
         } else {
@@ -454,5 +461,11 @@ class _BookingScreenState
         Provider.of<CartProvider>(context, listen: false).getMyCart();
       }
     }
+  }
+
+  int getTotalPrice() {
+    return Provider.of<CartProvider>(context, listen: false).price +
+        _transferMethodProvider.price -
+        checkoutPoint * 1000;
   }
 }
