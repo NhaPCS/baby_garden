@@ -230,6 +230,7 @@ class _BookingScreenState
                       checkoutPoint = pointVal;
                       _transferMethodProvider.onNotify();
                     },
+                    totalPrice: getTotalPrice(),
                     totalPoint: value.totalPoint,
                     checkoutMethod: checkoutMethod,
                     pointCheckoutValueController: _pointCheckoutValueController,
@@ -278,6 +279,38 @@ class _BookingScreenState
           ),
           WidgetUtil.getLine(
               width: 1, color: ColorUtil.lineColor, margin: EdgeInsets.all(0)),
+          ValueListenableBuilder<bool>(valueListenable: _pointCheckoutValueController,builder: (BuildContext context, bool value, Widget child) {
+            if(!value){
+              return SizedBox();
+            }else {
+              return Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: SizeUtil.normalSpace,
+                        right: SizeUtil.normalSpace,
+                        top: SizeUtil.midSmallSpace,
+                        bottom: SizeUtil.midSmallSpace),
+                    child: Row(
+                      children: <Widget>[
+                        Text(S.of(context).point_checkout,
+                            style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail)),
+                        Spacer(),
+                        Consumer<TransferMethodProvider>(builder: (BuildContext context,
+                            TransferMethodProvider value, Widget child) {
+                          return Text("- ${StringUtil.getPriceText((checkoutPoint*1000).toString())}",
+                              style:
+                              TextStyle(fontSize: SizeUtil.textSizeExpressDetail,color: ColorUtil.blue));
+                        })
+                      ],
+                    ),
+                  ),
+                  WidgetUtil.getLine(
+                      width: 1, color: ColorUtil.lineColor, margin: EdgeInsets.all(0)),
+                ],
+              );
+            }
+          },),
           Padding(
             padding: const EdgeInsets.only(
                 left: SizeUtil.normalSpace,

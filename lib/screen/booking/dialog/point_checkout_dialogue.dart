@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 class PointCheckoutDialogue extends StatelessWidget {
   final int point;
   final int currentCheckoutPoint;
+  final int totalPrice;
 
-  const PointCheckoutDialogue({this.point = 0, this.currentCheckoutPoint = 0})
+  const PointCheckoutDialogue(
+      {this.point = 0, this.currentCheckoutPoint = 0, this.totalPrice = 0})
       : super();
 
   @override
@@ -159,11 +161,18 @@ class PointCheckoutDialogue extends StatelessWidget {
                       ),
                       RaisedButton(
                         onPressed: () {
-                          print(" show dialogue $pointCheckout $point");
-                          if (pointCheckout > point ||
-                              pointCheckout % 20 != 0) {
+                          print(" show dialogue $pointCheckout $point asd as $totalPrice");
+                          if (pointCheckout > point ) {
                             WidgetUtil.showMessageDialog(context,
                                 message: S.of(context).point_checkout_alert,
+                                title: S.of(context).notify);
+                          } else if (pointCheckout % 20 != 0 ) {
+                            WidgetUtil.showMessageDialog(context,
+                                message: S.of(context).point_checkout_alert_1,
+                                title: S.of(context).notify);
+                          } else if (pointCheckout * 1000 >= totalPrice) {
+                            WidgetUtil.showMessageDialog(context,
+                                message: S.of(context).point_checkout_alert_2,
                                 title: S.of(context).notify);
                           } else {
                             Navigator.of(context).pop(pointCheckout);
