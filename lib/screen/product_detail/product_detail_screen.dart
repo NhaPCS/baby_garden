@@ -55,15 +55,15 @@ class _ProductScreenState
   void initState() {
     _getListProductProvider.getData(null, "getProduct",
         productId: widget.productId);
+    _getProductDetailProvider.getProduct(null, widget.productId);
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    _getProductDetailProvider.getDetailInfoKey(context);
-    if (_getProductDetailProvider.product == null && widget.productId != null) {
-      _getProductDetailProvider.getProduct(context, widget.productId);
-    }
+    if (_getProductDetailProvider.DETAIL_INFO == null ||
+        _getProductDetailProvider.DETAIL_INFO.isEmpty)
+      _getProductDetailProvider.getDetailInfoKey(context);
     super.didChangeDependencies();
   }
 

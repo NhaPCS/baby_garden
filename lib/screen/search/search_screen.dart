@@ -48,12 +48,11 @@ class _SearchState extends BaseState<SearchScreen> {
           hasBack: true,
           enable: true,
           searchTextController: _searchTextController,
-          onSubmit: () {
-            if (_searchTextController.text.trim().isEmpty) {
+          onSubmit: (val) {
+            if (val.trim().isEmpty) {
               _searchingProvider.clear();
             } else
-              _searchingProvider.search(
-                  context, _searchTextController.text.trim());
+              _searchingProvider.search(context, val.trim());
           },
           onSearchTextChanged: (s) {
             if (_searchTextController.text.trim().isEmpty) {

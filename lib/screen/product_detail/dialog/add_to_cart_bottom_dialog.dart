@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 
 class AddToCartBottomDialog extends StatelessWidget {
   final dynamic product;
-  ValueNotifier<int> quantityController = ValueNotifier(1);
 
   AddToCartBottomDialog({Key key, this.product}) : super(key: key);
 
@@ -23,7 +22,6 @@ class AddToCartBottomDialog extends StatelessWidget {
         ButtonCloseDialog(),
         ProductHorizontalItem(
           product: product,
-          quantityController: quantityController,
         ),
         attachedProducts != null && attachedProducts.isNotEmpty
             ? Column(
@@ -31,7 +29,6 @@ class AddToCartBottomDialog extends StatelessWidget {
                     .map((e) => ProductHorizontalItem(
                           product: e,
                           isAttach: true,
-                          quantityController: quantityController,
                         ))
                     .toList(),
               )

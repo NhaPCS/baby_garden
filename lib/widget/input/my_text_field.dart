@@ -22,15 +22,15 @@ class MyTextField extends StatelessWidget {
   final int maxLines;
   final double elevation;
   final bool enable;
-  final Function ontap;
-  final Function onEditingComplete;
+  final VoidCallback ontap;
+  final Function(String) onSubmitted;
   final FocusNode onFocus;
   final String labelText;
   final TextStyle labelStyle;
 
   final String title;
   final TextStyle titleStyle;
-  final Function onTrailingTap;
+  final VoidCallback onTrailingTap;
   final bool showTrailing;
   final bool isBorder;
   final bool autoFocus;
@@ -73,7 +73,7 @@ class MyTextField extends StatelessWidget {
       this.onFocus,
       this.maxLines = 1,
       this.ontap,
-      this.onEditingComplete,
+      this.onSubmitted,
       this.enable = true,
       InputDecoration decoration,
       this.labelText,
@@ -120,7 +120,9 @@ class MyTextField extends StatelessWidget {
                       onChanged: onChanged,
                       enabled: enable,
                       keyboardType: inputType,
-                      onTap: ontap,
+                      onTap: () {
+                        if (ontap != null) ontap();
+                      },
                       focusNode: onFocus,
                       decoration: InputDecoration(
                           contentPadding: contentPadding,
@@ -145,7 +147,9 @@ class MyTextField extends StatelessWidget {
                       right: SizeUtil.defaultSpace,
                       top: 0,
                       child: GestureDetector(
-                          onTap: onTrailingTap,
+                          onTap: () {
+                            if (onTrailingTap != null) onTrailingTap();
+                          },
                           child: Container(
                             margin: const EdgeInsets.all(5.0),
                             child: Icon(
@@ -166,8 +170,12 @@ class MyTextField extends StatelessWidget {
             onChanged: onChanged,
             enabled: enable,
             keyboardType: inputType,
-            onTap: ontap,
-            onEditingComplete: onEditingComplete,
+            onTap: () {
+              if (ontap != null) ontap();
+            },
+            onSubmitted: (val) {
+              if (onSubmitted != null) onSubmitted(val);
+            },
             focusNode: onFocus,
             decoration: InputDecoration(
                 labelText: labelText,

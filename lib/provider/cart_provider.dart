@@ -28,6 +28,7 @@ class CartProvider extends ChangeNotifier {
   }
 
   Future<void> addProduct(dynamic product) async {
+    print("WTF  ${product}");
     await service.addProductCart(products: [product]);
     getMyCart();
   }
