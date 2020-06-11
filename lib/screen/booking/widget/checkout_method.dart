@@ -16,11 +16,16 @@ class CheckoutMethodWG extends StatefulWidget {
   final ValueNotifier<int> checkoutMethod;
   final ValueNotifier<bool> pointCheckoutValueController;
   final Function onChangePoint;
+  final int totalPoint;
+  final int currentCheckoutPoint;
+  final int totalPrice;
 
   const CheckoutMethodWG(
       {this.checkoutMethod,
       this.pointCheckoutValueController,
-      this.onChangePoint})
+      this.onChangePoint,
+      this.totalPoint = 0,
+      this.currentCheckoutPoint = 0, this.totalPrice = 0 })
       : super();
 
   @override
@@ -31,14 +36,10 @@ class CheckoutMethodWG extends StatefulWidget {
 }
 
 class _CheckoutMethodWGState extends BaseState<CheckoutMethodWG> {
-  int currentPoint = 0;
-
+  int checkoutPoint = 0;
   @override
   void initState() {
     // TODO: implement initState
-    ShareValueProvider.shareValueProvider
-        .getPoint()
-        .then((value) => currentPoint = value == null ? 0 : value);
     super.initState();
   }
 
@@ -120,40 +121,44 @@ class _CheckoutMethodWGState extends BaseState<CheckoutMethodWG> {
                           context: context,
                           builder: (BuildContext context) =>
                               PointCheckoutDialogue(
-                                point: currentPoint,
+                                point: widget.totalPoint,currentCheckoutPoint: checkoutPoint,totalPrice: widget.totalPrice
                               ));
                       if (widget.onChangePoint != null &&
                           point != null &&
                           point > 0) {
+                        checkoutPoint = point;
                         widget.onChangePoint(point);
-                        widget.pointCheckoutValueController.value =
-                            !widget.pointCheckoutValueController.value;
+                        widget.pointCheckoutValueController.value =true;
+                      }else if (checkoutPoint>0){
+                        widget.onChangePoint(checkoutPoint);
+                        widget.pointCheckoutValueController.value =true;
                       }
                     },
                     child: Text(
-                      S.of(context).point_payment(
-                          Provider.of<UserProvider>(context).userInfo['point']),
+                      S.of(context).point_payment(widget.totalPoint),
                       style: TextStyle(fontSize: SizeUtil.textSizeSmall),
                     ),
                   ),
                   Spacer(),
                   SwitchButton(
                     valueController: widget.pointCheckoutValueController,
-                    valueChanged: (result) async{
+                    valueChanged: (result) async {
                       if (result) {
                         var point = await showDialog(
                             context: context,
                             builder: (BuildContext context) =>
                                 PointCheckoutDialogue(
-                                  point: currentPoint,
+                                  point: widget.totalPoint,currentCheckoutPoint: checkoutPoint,totalPrice: widget.totalPrice
                                 ));
                         if (widget.onChangePoint != null &&
                             point != null &&
                             point > 0) {
                           widget.onChangePoint(point);
-                        }else{
-                          widget.pointCheckoutValueController.value =
-                          !widget.pointCheckoutValueController.value;
+                        } else if (checkoutPoint>0){
+                          widget.onChangePoint(checkoutPoint);
+                          widget.pointCheckoutValueController.value =true;
+                        }else {
+                          widget.pointCheckoutValueController.value =false;
                         }
                       }
                     },

@@ -8,6 +8,10 @@ class TransferMethodProvider extends ChangeNotifier{
   bool isActiveCode = false;
   List<dynamic> ships = List();
 
+  void onNotify(){
+    notifyListeners();
+  }
+
   Future<void> getShips() async{
     ships = await service.listShiper();
     try {

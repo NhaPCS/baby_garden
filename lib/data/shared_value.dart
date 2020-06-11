@@ -20,7 +20,7 @@ class ShareValueProvider {
 
   Future<bool> getIsRememberPass() async{
     final shareValueProvider = await SharedPreferences.getInstance();
-    return shareValueProvider.getBool(_isRememberPass);
+    return shareValueProvider.getBool(_isRememberPass)==null?false:shareValueProvider.getBool(_isRememberPass);
   }
 
   Future<int> getPoint() async{
