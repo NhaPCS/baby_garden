@@ -147,8 +147,8 @@ class _VoucherCodeScreenState
           // button scan qr code
           GestureDetector(
             onTap: () async {
-              var result = await BarcodeScanner.scan();
-              _codeController.text = result as String;
+              ScanResult result = await BarcodeScanner.scan();
+              _codeController.text = result.rawContent;
             },
             child: Container(
               margin: SizeUtil.smallPadding,

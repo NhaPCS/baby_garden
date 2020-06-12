@@ -1,14 +1,12 @@
-import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/search/provider/get_hot_keys_provider.dart';
 import 'package:baby_garden_flutter/screen/search/provider/get_search_history_provider.dart';
 import 'package:baby_garden_flutter/screen/search/provider/searching_provider.dart';
 import 'package:baby_garden_flutter/screen/search/widget/hot_keys.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/button/button_icon.dart';
-import 'package:baby_garden_flutter/widget/chip_tag.dart';
 import 'package:baby_garden_flutter/widget/input/search_bar.dart';
 import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +46,11 @@ class _SearchState extends BaseState<SearchScreen> {
           hasBack: true,
           enable: true,
           searchTextController: _searchTextController,
+          onQrPressed: () async {
+            ScanResult result = await BarcodeScanner.scan();
+            _searchTextController.text = result.rawContent;
+            _searchingProvider.search(context, result.rawContent);
+          },
           onSubmit: (val) {
             if (val.trim().isEmpty) {
               _searchingProvider.clear();
@@ -58,6 +61,8 @@ class _SearchState extends BaseState<SearchScreen> {
             if (_searchTextController.text.trim().isEmpty) {
               _searchingProvider.clear();
               _getSearchHistoryProvider.searchHistory();
+            } else {
+              _searchingProvider.search(context, s);
             }
           },
         ),

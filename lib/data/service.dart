@@ -674,7 +674,7 @@ Future<dynamic> myCart() async {
   dynamic params = {"user_id": userId};
   Response response = await get(null,
       path: 'cartInfo', param: params, requireLogin: true, showLoading: false);
-  if (response.isSuccess()) return response.data;
+  if (response != null && response.isSuccess()) return response.data;
   return null;
 }
 

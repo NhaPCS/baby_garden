@@ -21,8 +21,10 @@ import 'package:toast/toast.dart';
 
 class MainScreen extends StatefulWidget {
   final int index;
+  final bool getPromotion;
 
-  const MainScreen({Key key, this.index = 0}) : super(key: key);
+  const MainScreen({Key key, this.index = 0, this.getPromotion})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -33,7 +35,8 @@ class MainScreen extends StatefulWidget {
 class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
   TabController _tabController;
   final ChangeIndexProvider _changeIndexProvider = ChangeIndexProvider();
-  final GetPromotionPopupProvider _getPromotionProvider = GetPromotionPopupProvider();
+  final GetPromotionPopupProvider _getPromotionProvider =
+      GetPromotionPopupProvider();
   int _time = 0;
 
   @override
@@ -47,13 +50,12 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
 
     super.initState();
     if (widget.index > 0) _tabController.animateTo(widget.index);
-
   }
 
   @override
   Future<void> didChangeDependencies() async {
     super.didChangeDependencies();
-    if(!_getPromotionProvider.got){
+    if (widget.getPromotion == null && widget.getPromotion && !_getPromotionProvider.got) {
       _getPromotionProvider.getPromotion(context);
     }
   }
@@ -94,8 +96,9 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
                           _changeIndexProvider.changeIndex(index);
                           _tabController.animateTo(index);
                           // reload orders
-                          if(index==3){
-                            Provider.of<OrdersProvider>(context, listen: false).getOrdersCount();
+                          if (index == 3) {
+                            Provider.of<OrdersProvider>(context, listen: false)
+                                .getOrdersCount();
                           }
                         },
                         items: [
