@@ -53,9 +53,9 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
   }
 
   @override
-  Future<void> didChangeDependencies() async {
+  void didChangeDependencies() {
     super.didChangeDependencies();
-    if (widget.getPromotion == null && widget.getPromotion && !_getPromotionProvider.got) {
+    if (widget.getPromotion != null && widget.getPromotion && !_getPromotionProvider.got) {
       _getPromotionProvider.getPromotion(context);
     }
   }

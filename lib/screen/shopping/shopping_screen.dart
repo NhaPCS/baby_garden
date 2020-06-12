@@ -71,6 +71,7 @@ class _ShoppingState extends BaseState<ShoppingScreen> {
                               GetBannersProvider value, Widget child) {
                             return MyCarouselSlider(
                               hasShadow: true,
+                              autoPlay: true,
                               images: value.banners,
                               imageAttrName: "img",
                               onItemPressed: (index) {
