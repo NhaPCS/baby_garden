@@ -10,7 +10,8 @@ class ShareValueProvider {
   final String _pass = "_pass";
   final String _user_name = "_user_name";
   final String setting_notify_product = "setting_notify_product";
-  final String setting_notify_like_product_change = "setting_notify_like_product_change";
+  final String setting_notify_like_product_change =
+      "setting_notify_like_product_change";
   final String setting_notify_service = "setting_notify_service";
   final String setting_notify_vcb_express = "setting_notify_vcb_express";
 
@@ -18,12 +19,14 @@ class ShareValueProvider {
 
   static final ShareValueProvider shareValueProvider = ShareValueProvider._();
 
-  Future<bool> getIsRememberPass() async{
+  Future<bool> getIsRememberPass() async {
     final shareValueProvider = await SharedPreferences.getInstance();
-    return shareValueProvider.getBool(_isRememberPass)==null?false:shareValueProvider.getBool(_isRememberPass);
+    return shareValueProvider.getBool(_isRememberPass) == null
+        ? false
+        : shareValueProvider.getBool(_isRememberPass);
   }
 
-  Future<int> getPoint() async{
+  Future<int> getPoint() async {
     final shareValueProvider = await SharedPreferences.getInstance();
     int point = shareValueProvider.getInt(_point);
     return point;
@@ -31,7 +34,7 @@ class ShareValueProvider {
 
   Future<String> getUserName() async {
     final shareValueProvider = await SharedPreferences.getInstance();
-    return  shareValueProvider.getString(_user_name);
+    return shareValueProvider.getString(_user_name);
   }
 
   Future<String> getPass() async {
@@ -75,26 +78,28 @@ class ShareValueProvider {
     shareValueProvider.setString(_user_id, null);
   }
 
-  Future<Map> getUserInfo() async{
+  Future<Map> getUserInfo() async {
     final shareValueProvider = await SharedPreferences.getInstance();
     String rs = shareValueProvider.getString(_user_info);
-    Map<String, dynamic> user = jsonDecode(rs);
-    return user;
+    if (rs != null && rs.isNotEmpty) {
+      Map<String, dynamic> user = jsonDecode(rs);
+      return user;
+    }
+    return null;
   }
 
-  Future<void> saveUserInfo(String info) async{
+  Future<void> saveUserInfo(String info) async {
     final shareValueProvider = await SharedPreferences.getInstance();
     shareValueProvider.setString(_user_info, info);
   }
 
-  Future<void> saveSetting(String setting, bool isEnable) async{
+  Future<void> saveSetting(String setting, bool isEnable) async {
     final shareValueProvider = await SharedPreferences.getInstance();
     shareValueProvider.setBool(setting, isEnable);
   }
 
-  Future<bool> getSetting(String setting) async{
+  Future<bool> getSetting(String setting) async {
     final shareValueProvider = await SharedPreferences.getInstance();
     return shareValueProvider.getBool(setting);
   }
-
 }

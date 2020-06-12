@@ -1,11 +1,10 @@
-import 'package:baby_garden_flutter/screen/home/dialog/promotion_dialog.dart';
-import 'package:baby_garden_flutter/screen/home/item/home_category_item.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/get_banners_provider.dart';
+import 'package:baby_garden_flutter/screen/home/item/home_category_item.dart';
+import 'package:baby_garden_flutter/screen/home/view_model/home_view_model.dart';
 import 'package:baby_garden_flutter/screen/photo_view/photo_view_screen.dart';
 import 'package:baby_garden_flutter/screen/search/search_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/screen/home/view_model/home_view_model.dart';
 import 'package:baby_garden_flutter/widget/delegate/sliver_category_delegate.dart';
 import 'package:baby_garden_flutter/widget/input/search_bar.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
@@ -36,7 +35,6 @@ class _HomeState extends BaseStateModel<HomeScreen, HomeViewModel> {
 
   @override
   Widget buildWidget(BuildContext context) {
-    print("MOAAA");
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (context, isScrollInner) {

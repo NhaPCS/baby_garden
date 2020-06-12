@@ -36,7 +36,7 @@ class _WelcomeState extends BaseState<WelcomeScreen> {
           Text(S.of(context).welcome_title,
               textAlign: TextAlign.center, style: TextStyle(fontSize: 18)),
           Expanded(
-            child: Container(
+            child: Padding(
               child: Image.asset("photo/welcome_1.png"),
               padding: EdgeInsets.only(
                   left: SizeUtil.largeSpace,

@@ -20,6 +20,7 @@ class LoadMoreGridView extends StatefulWidget {
   final double childAspectRatio;
   final Axis scrollDirection;
   final ValueNotifier<int> pageController;
+  final ScrollPhysics physics;
 
   const LoadMoreGridView(
       {Key key,
@@ -34,7 +35,8 @@ class LoadMoreGridView extends StatefulWidget {
       this.scrollDirection = Axis.vertical,
       this.childAspectRatio = 1.0,
       this.data,
-      this.pageController})
+      this.pageController,
+      this.physics = const ScrollPhysics()})
       : super(key: key);
 
   @override
@@ -122,7 +124,7 @@ class _LoadMoreGridViewState extends State<LoadMoreGridView> {
       },
       padding: widget.padding,
       shrinkWrap: true,
-      physics: ScrollPhysics(),
+      physics: widget.physics,
       itemCount: listData == null ? 0 : listData.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: widget.crossAxisCount,

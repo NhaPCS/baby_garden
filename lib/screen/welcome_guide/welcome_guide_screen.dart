@@ -20,7 +20,6 @@ class _WelcomeGuideScreenState extends BaseState<WelcomeGuideScreen> {
   Widget buildWidget(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
-      //todo-hung texxt hieenej truwoc anh
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -50,7 +49,7 @@ class _WelcomeGuideScreenState extends BaseState<WelcomeGuideScreen> {
           InkWell(
             onTap: () {
               print("Yeah, this line is printed after 3 seconds");
-              pushReplacement(MainScreen());
+              pushReplacement(MainScreen(getPromotion: true,));
             },
             child: Padding(
               padding: const EdgeInsets.all(SizeUtil.tinySpace),

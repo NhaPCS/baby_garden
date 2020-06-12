@@ -11,21 +11,23 @@ class SearchBar extends StatelessWidget {
   final Widget trailing;
   final bool hasBack;
   final VoidCallback onPressed;
+  final VoidCallback onQrPressed;
   final EdgeInsets padding;
   final ValueChanged<String> onSearchTextChanged;
   final Function(String) onSubmit;
 
-  const SearchBar({
-    Key key,
-    this.searchTextController,
-    this.enable = true,
-    this.trailing,
-    this.hasBack = false,
-    this.onPressed,
-    this.padding,
-    this.onSearchTextChanged,
-    this.onSubmit,
-  }) : super(key: key);
+  const SearchBar(
+      {Key key,
+      this.searchTextController,
+      this.enable = true,
+      this.trailing,
+      this.hasBack = false,
+      this.onPressed,
+      this.padding,
+      this.onSearchTextChanged,
+      this.onSubmit,
+      this.onQrPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -101,10 +103,13 @@ class SearchBar extends StatelessWidget {
           left: SizeUtil.smallSpace,
         ),
         Positioned(
-          child: SvgIcon(
-            'ic_qr.svg',
-            width: SizeUtil.iconSizeBigger,
-            color: ColorUtil.textHint,
+          child: InkWell(
+            child: SvgIcon(
+              'ic_qr.svg',
+              width: SizeUtil.iconSizeBigger,
+              color: ColorUtil.textHint,
+            ),
+            onTap: onQrPressed,
           ),
           right: SizeUtil.smallSpace,
         )

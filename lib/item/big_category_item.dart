@@ -18,26 +18,27 @@ class BigCategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: Provider.of<AppProvider>(context).bigCategoryHeight,
-      width: Provider.of<AppProvider>(context).bigCategoryWidth,
       padding: EdgeInsets.only(
-          top: SizeUtil.smallSpace, bottom: SizeUtil.smallSpace),
+          top: SizeUtil.smallSpace, bottom: SizeUtil.tinySpace),
       child: Column(
         children: <Widget>[
           Container(
             child: CircleImage(
               imageUrl: category['img'],
-              width: 50,
-              height: 50,
+              width: 65,
+              height: 65,
+              margin: EdgeInsets.all(2.5),
             ),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(50)),
+              borderRadius: BorderRadius.all(Radius.circular(65)),
               color: isSelected ? ColorUtil.primaryColor : ColorUtil.lightGray,
             ),
           ),
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
-          Expanded(child: Padding(
+          Expanded(
+              child: Padding(
             padding: EdgeInsets.only(
               left: SizeUtil.smallSpace,
               right: SizeUtil.smallSpace,

@@ -65,7 +65,10 @@ class ProductItem extends StatelessWidget {
             Positioned(
               child: !showTime
                   ? favoriteTag(context)
-                  : CountDownTime(startTime: product['time_start'],endTime: product['time_end'],),
+                  : CountDownTime(
+                      startTime: product['time_start'],
+                      endTime: product['time_end'],
+                    ),
               left: 0,
               top: 0,
             ),
@@ -80,7 +83,11 @@ class ProductItem extends StatelessWidget {
         ),
       ),
       onTap: () {
-        RouteUtil.push(context, ProductDetailScreen(productId: product['id'],));
+        RouteUtil.push(
+            context,
+            ProductDetailScreen(
+              productId: product['id'],
+            ));
       },
     );
   }
@@ -152,7 +159,8 @@ class ProductItem extends StatelessWidget {
                     ? Provider.of<AppProvider>(context).productWidth
                     : width,
                 height: 18,
-                value: StringUtil.getSalesPercent(product['number_sales'], product['number']),
+                value: StringUtil.getSalesPercent(
+                    product['number_sales'], product['number']),
                 label: "${product['number_sales']}/${product['number']}",
               ),
         SizedBox(
@@ -163,7 +171,7 @@ class ProductItem extends StatelessWidget {
   }
 
   Widget favoriteTag(BuildContext context) {
-    return product!=null&&'1' == product['is_favourite']
+    return product != null && '1' == product['is_favourite']
         ? Stack(
             alignment: Alignment.center,
             children: <Widget>[
