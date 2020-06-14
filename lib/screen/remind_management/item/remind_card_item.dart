@@ -67,7 +67,7 @@ class RemindCardItem extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: SizeUtil.tinySpace),
                       child: Text(
-                        calendar.price,
+                        StringUtil.getPriceText(calendar.price),
                         style: TextStyle(
                             color: Colors.red,
                             fontSize: SizeUtil.textSizeBigger,

@@ -5,14 +5,13 @@ import 'package:flutter/cupertino.dart';
 class BookingServiceDetailProvider extends ChangeNotifier {
   dynamic data;
   List<dynamic> products = List();
+
   Future<dynamic> getdata(BuildContext context, String shopID) async {
-    String userID = await ShareValueProvider.shareValueProvider.getUserId();
     data = await shopDetail(context: context, shopID: shopID);
-    products = await listProductShop( shopID: shopID);
+    products = await listProductShop(shopID: shopID);
     if (data != null) {
       print("BookingServiceDetailProvider $data");
     }
     notifyListeners();
   }
-
 }

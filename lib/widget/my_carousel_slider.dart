@@ -22,6 +22,7 @@ class MyCarouselSlider extends StatefulWidget {
   final ValueChanged<int> onItemSelected;
   final String imageAttrName;
   final bool isShowImageCount;
+  final bool autoPlay;
 
   const MyCarouselSlider(
       {Key key,
@@ -39,7 +40,9 @@ class MyCarouselSlider extends StatefulWidget {
       this.hasShadow = false,
       this.onItemPressed,
       this.onItemSelected,
-      this.imageAttrName, this.isShowImageCount = false})
+      this.imageAttrName,
+      this.isShowImageCount = false,
+      this.autoPlay = false})
       : super(key: key);
 
   @override
@@ -61,9 +64,11 @@ class _MyCarouselState extends State<MyCarouselSlider> {
     return Stack(
       children: <Widget>[
         CarouselSlider(
+          autoPlay: widget.autoPlay,
+          autoPlayInterval: Duration(seconds: 3),
           height: widget.height,
           viewportFraction: 1.0,
-          enableInfiniteScroll: false,
+          enableInfiniteScroll: widget.autoPlay,
           aspectRatio: 1,
           onPageChanged: (index) {
             if (widget.onItemSelected != null) widget.onItemSelected(index);
@@ -96,12 +101,14 @@ class _MyCarouselState extends State<MyCarouselSlider> {
             );
           }).toList(),
         ),
-        widget.isShowImageCount?ImageCount(
-          backgroundColor: Colors.white,
-          borderColor: Colors.white,
-          textColor: ColorUtil.textColor,
-          text: "${selectedPosition + 1} / ${widget.images.length}",
-        ):SizedBox(),
+        widget.isShowImageCount
+            ? ImageCount(
+                backgroundColor: Colors.white,
+                borderColor: Colors.white,
+                textColor: ColorUtil.textColor,
+                text: "${selectedPosition + 1} / ${widget.images.length}",
+              )
+            : SizedBox(),
         Positioned(
             bottom: SizeUtil.smallSpace,
             left: 0,
@@ -129,8 +136,9 @@ class _MyCarouselState extends State<MyCarouselSlider> {
     );
   }
 
-  DecorationImage getItem(dynamic image){
-    String imagePath = widget.imageAttrName==null?image:image[widget.imageAttrName];
+  DecorationImage getItem(dynamic image) {
+    String imagePath =
+        widget.imageAttrName == null ? image : image[widget.imageAttrName];
     return DecorationImage(
         image: widget.isAssetImage
             ? AssetImage(image)

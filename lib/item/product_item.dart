@@ -23,6 +23,7 @@ class ProductItem extends StatelessWidget {
   final bool showTime;
   final int index;
   final dynamic product;
+  final bool isFlashSalePending;
 
   const ProductItem(
       {Key key,
@@ -41,7 +42,8 @@ class ProductItem extends StatelessWidget {
           fontSize: SizeUtil.textSizeSmall, fontWeight: FontWeight.bold),
       this.showTime = false,
       this.index = 0,
-      this.product})
+      this.product,
+      this.isFlashSalePending = false})
       : super(key: key);
 
   @override
@@ -72,13 +74,16 @@ class ProductItem extends StatelessWidget {
               left: 0,
               top: 0,
             ),
-            Positioned(
-              child: DiscountWidget(
-                  discount:
-                      product == null ? 0 : int.parse(product['number_sales'])),
-              right: 0,
-              top: SizeUtil.smallSpace,
-            )
+            isFlashSalePending
+                ? SizedBox()
+                : Positioned(
+                    child: DiscountWidget(
+                        discount: product == null
+                            ? 0
+                            : int.parse(product['number_sales'])),
+                    right: 0,
+                    top: SizeUtil.smallSpace,
+                  )
           ],
         ),
       ),
@@ -141,7 +146,9 @@ class ProductItem extends StatelessWidget {
             Text(
               product == null
                   ? ""
-                  : StringUtil.getPriceText(product['price_discount']),
+                  : isFlashSalePending
+                      ? product['price_discount']
+                      : StringUtil.getPriceText(product['price_discount']),
               style:
                   TextStyle(color: ColorUtil.red, fontWeight: FontWeight.bold),
             )
@@ -159,9 +166,13 @@ class ProductItem extends StatelessWidget {
                     ? Provider.of<AppProvider>(context).productWidth
                     : width,
                 height: 18,
-                value: StringUtil.getSalesPercent(
-                    product['number_sales'], product['number']),
-                label: "${product['number_sales']}/${product['number']}",
+                value: isFlashSalePending
+                    ? 1
+                    : StringUtil.getSalesPercent(
+                        product['number_sales'], product['number']),
+                label: isFlashSalePending
+                    ? S.of(context).will_sell_later
+                    : "${product['number_sales']}/${product['number']}",
               ),
         SizedBox(
           height: !showSoldCount ? 0 : SizeUtil.tinySpace,

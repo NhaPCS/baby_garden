@@ -75,6 +75,7 @@ class _HomeState extends BaseStateModel<HomeScreen, HomeViewModel> {
                               return SizedBox();
                             return MyCarouselSlider(
                               hasShadow: true,
+                              autoPlay: true,
                               images: value.banners,
                               imageAttrName: "img",
                               onItemPressed: (index) {

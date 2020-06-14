@@ -16,27 +16,39 @@ class AddToCartBottomDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<dynamic> attachedProducts = product['list_product'];
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        ButtonCloseDialog(),
-        ProductHorizontalItem(
-          product: product,
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SizedBox(height: SizeUtil.hugSpace,),
+              ProductHorizontalItem(
+                product: product,
+              ),
+              attachedProducts != null && attachedProducts.isNotEmpty
+                  ? Column(
+                      children: attachedProducts
+                          .map((e) => ProductHorizontalItem(
+                                product: e,
+                                isAttach: true,
+                              ))
+                          .toList(),
+                    )
+                  : SizedBox(),
+              SizedBox(height: SizeUtil.hugSpace,),
+            ],
+          ),
         ),
-        attachedProducts != null && attachedProducts.isNotEmpty
-            ? Column(
-                children: attachedProducts
-                    .map((e) => ProductHorizontalItem(
-                          product: e,
-                          isAttach: true,
-                        ))
-                    .toList(),
-              )
-            : SizedBox(),
-        Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(
-              left: SizeUtil.defaultSpace, right: SizeUtil.defaultSpace),
+        Positioned(
+          child: ButtonCloseDialog(),
+          right: 0,
+          width: 100,
+          top: SizeUtil.smallSpace,
+        ),
+        Positioned(
+          right: SizeUtil.defaultSpace,
+          left: SizeUtil.defaultSpace,
           child: MyRaisedButton(
             padding: SizeUtil.smallPadding,
             onPressed: () {
@@ -58,7 +70,8 @@ class AddToCartBottomDialog extends StatelessWidget {
             text: S.of(context).add_to_cart,
             textStyle: TextStyle(color: Colors.white),
           ),
-        ),
+          bottom: 0,
+        )
       ],
     );
   }

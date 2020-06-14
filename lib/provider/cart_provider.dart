@@ -28,8 +28,16 @@ class CartProvider extends ChangeNotifier {
   }
 
   Future<void> addProduct(dynamic product) async {
-    print("WTF  ${product}");
-    await service.addProductCart(products: [product]);
+    product['quantity'] = 1;
+    if(product['size']!=null && product['size'].isNotEmpty) {
+      product['size_id'] = product['size'][0]['id'];
+    }
+    if(product['color']!=null && product['color'].isNotEmpty) {
+      product['color_id'] = product['color'][0]['id'];
+    }
+    List<dynamic> pds = new List();
+    pds.add(product);
+    await service.addProductCart(products: pds);
     getMyCart();
   }
 

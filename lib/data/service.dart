@@ -136,14 +136,17 @@ Future<dynamic> bookingService(
     String timeBooking,
     String serviceID,
     String address}) async {
-  Response response = await post(null, path: "bookingService", param: {
+  dynamic params = {
     'user_id': userID,
     'shop_id': shopID,
     'date_booking': dateBooking,
     'time_booking': timeBooking,
-    'service_id': serviceID,
     'address': address
-  });
+  };
+  if (serviceID != null) {
+    params['service_id'] = serviceID;
+  }
+  Response response = await post(null, path: "bookingService", param: params);
   if (response.isSuccess()) return response.data;
   return null;
 }

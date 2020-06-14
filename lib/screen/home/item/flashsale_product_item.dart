@@ -11,8 +11,10 @@ import 'package:provider/provider.dart';
 
 class FlashSaleProductItem extends StatelessWidget {
   final dynamic product;
+  final bool isPending;
 
-  const FlashSaleProductItem({Key key, this.product}) : super(key: key);
+  const FlashSaleProductItem({Key key, this.product, this.isPending = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,9 @@ class FlashSaleProductItem extends StatelessWidget {
                   ),
                   Expanded(child: SizedBox()),
                   MyText(
-                    StringUtil.getPriceText(product['price_discount']),
+                    isPending
+                        ? product['price_discount']
+                        : StringUtil.getPriceText(product['price_discount']),
                     style: TextStyle(
                         color: ColorUtil.red, fontWeight: FontWeight.bold),
                   )
@@ -69,18 +73,30 @@ class FlashSaleProductItem extends StatelessWidget {
               RoundedProgress(
                 width: Provider.of<AppProvider>(context).flashSaleItemWidth,
                 height: 18,
-                value: StringUtil.getSalesPercent(product['number_sales'], product['number']),
-                label: S.of(context).sold_count(product['number_sales'], product['number']==null?"":product['number']),
+                value: isPending
+                    ? 1
+                    : StringUtil.getSalesPercent(
+                        product['number_sales'], product['number']),
+                label: isPending
+                    ? S.of(context).will_sell_later
+                    : S.of(context).sold_count(product['number_sales'],
+                        product['number'] == null ? "" : product['number']),
               )
             ],
           ),
+          isPending
+              ? SizedBox()
+              : Positioned(
+                  child: DiscountWidget(
+                      discount: StringUtil.getDiscountPercent(product)),
+                  right: 0,
+                  top: 0,
+                ),
           Positioned(
-            child: DiscountWidget(discount: StringUtil.getDiscountPercent(product)),
-            right: 0,
-            top: 0,
-          ),
-          Positioned(
-            child: CountDownTime(startTime: product['time_start'],endTime: product['time_end'],),
+            child: CountDownTime(
+              startTime: product['time_start'],
+              endTime: product['time_end'],
+            ),
             left: 0,
             top: -10,
           )
