@@ -4,7 +4,6 @@ import 'package:baby_garden_flutter/item/product_item.dart';
 import 'package:baby_garden_flutter/provider/get_list_product_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:baby_garden_flutter/widget/loadmore/loadmore_gridview.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +13,10 @@ import 'package:provider/provider.dart';
 class ListProductScreen extends StatefulWidget {
   final Section section;
   final String productId;
+  final bool isFlashSalePending;
 
-  const ListProductScreen({Key key, this.section, this.productId})
+  const ListProductScreen(
+      {Key key, this.section, this.productId, this.isFlashSalePending = false})
       : super(key: key);
 
   @override
@@ -81,6 +82,7 @@ class _ListProductState extends BaseState<ListProductScreen> {
                   return ProductItem(
                     product: product,
                     index: index,
+                    isFlashSalePending: widget.isFlashSalePending,
                     width: MediaQuery.of(context).size.width * 0.5,
                     borderRadius: SizeUtil.tinyRadius,
                     showSoldCount: true,

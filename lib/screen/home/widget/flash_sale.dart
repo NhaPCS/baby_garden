@@ -121,6 +121,8 @@ class _FlashSaleState extends BaseState<FlashSale> {
                             return GestureDetector(
                               child: FlashSaleProductItem(
                                 product: value.products[index],
+                                isPending:
+                                    _changeFlashSaleModeProvider.isPending,
                               ),
                               onTap: () {
                                 RouteUtil.push(
@@ -149,6 +151,7 @@ class _FlashSaleState extends BaseState<FlashSale> {
         RouteUtil.push(
             context,
             ListProductScreen(
+              isFlashSalePending: _changeFlashSaleModeProvider.isPending,
               section: Section(
                   title: _changeFlashSaleModeProvider.isPending
                       ? S.of(context).pending

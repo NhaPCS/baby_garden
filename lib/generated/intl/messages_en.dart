@@ -350,6 +350,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "mess_receive_notify_for_product" : MessageLookupByLibrary.simpleMessage("Bạn đã đăng ký nhận thông báo cho sản phẩm này thành công!"),
     "messageLogout" : MessageLookupByLibrary.simpleMessage("Bạn có muốn đăng xuất không?"),
     "message_add_baby_test_success" : MessageLookupByLibrary.simpleMessage("Nhập thông tin thành công!"),
+    "message_choose_service" : MessageLookupByLibrary.simpleMessage("Bạn vui lòng chọn Dịch vụ"),
     "message_confirm_delete_cart" : MessageLookupByLibrary.simpleMessage("Bạn có muốn xoá sản phẩm này khỏi giỏ hàng không?"),
     "message_empty" : m10,
     "message_require_login" : MessageLookupByLibrary.simpleMessage("Bạn vui lòng đăng nhập để sử dụng chức năng này!"),
@@ -617,6 +618,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "welcome" : MessageLookupByLibrary.simpleMessage("Welcome"),
     "welcome_title" : MessageLookupByLibrary.simpleMessage("Ứng dụng mua sắm trực tuyến\nDành cho mẹ và bé"),
     "when_order_wrong" : MessageLookupByLibrary.simpleMessage("Khi nhận hàng không đúng với hàng tôi đặt?"),
+    "will_sell_later" : MessageLookupByLibrary.simpleMessage("Sắp mở bán"),
     "yes" : MessageLookupByLibrary.simpleMessage("Có"),
     "your_full_name" : MessageLookupByLibrary.simpleMessage("Họ tên của bạn")
   };

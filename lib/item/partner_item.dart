@@ -20,11 +20,12 @@ class PartnerItem extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             ClipRRect(
-              // TODO không dùng card shape border vì k clip dc ảnh
               borderRadius: BorderRadius.circular(4.0),
               child: MyCachedImage(
                 url: shop['img'],
                 width: MediaQuery.of(context).size.width,
+                height: 180,
+                boxFit: BoxFit.cover,
               ),
             ),
             Positioned(
@@ -83,7 +84,7 @@ class PartnerItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           MyText(
-                            shop['service'],
+                            shop['name'],
                             style: TextStyle(
                                 fontSize: SizeUtil.textSizeBigger,
                                 color: ColorUtil.yellowPartnerColor,
@@ -103,8 +104,7 @@ class PartnerItem extends StatelessWidget {
                             shop['introduce'],
                             style: TextStyle(
                                 fontSize: SizeUtil.textSizeSmall,
-                                color: Colors.white,
-                                fontWeight: FontWeight.normal),
+                                color: Colors.white),
                           )
                         ],
                       ),

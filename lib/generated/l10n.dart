@@ -4724,6 +4724,24 @@ class S {
       args: [],
     );
   }
+
+  String get will_sell_later {
+    return Intl.message(
+      'Sắp mở bán',
+      name: 'will_sell_later',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get message_choose_service {
+    return Intl.message(
+      'Bạn vui lòng chọn Dịch vụ',
+      name: 'message_choose_service',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

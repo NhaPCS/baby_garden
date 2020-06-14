@@ -21,7 +21,9 @@ class MyCachedImage extends StatelessWidget {
       imageUrl: url == null ? "" : url,
       fit: boxFit,
       errorWidget: (context, url, err) {
-        return Center(
+        return Container(
+          height: height,
+          alignment: Alignment.center,
           child: Text(
             S.of(context).no_image,
             style: TextStyle(color: ColorUtil.lightGray),

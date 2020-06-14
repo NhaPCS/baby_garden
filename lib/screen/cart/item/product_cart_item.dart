@@ -40,7 +40,9 @@ class ProductCartItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               CircleImage(
-                imageUrl: StringUtil.dummyImage,
+                imageUrl: product['image'] == null && product['image'].isEmpty
+                    ? ''
+                    : product['image'][0],
                 borderRadius: 0,
                 margin: EdgeInsets.all(0),
                 width: Provider.of<AppProvider>(context).productCartWidth,
@@ -137,7 +139,8 @@ class ProductCartItem extends StatelessWidget {
                               showDialog(
                                   context: context,
                                   builder: (context) {
-                                    return SetScheduleForProductDialog(product: product);
+                                    return SetScheduleForProductDialog(
+                                        product: product);
                                   });
                             },
                           ),

@@ -50,6 +50,7 @@ dependencies:
     git: git://github.com/yangyxd/flutter_picker.git
   share: ^0.6.4+3
   package_info: ^0.4.0+18
+  url_launcher: ^5.4.10
 
 dev_dependencies:
   flutter_test:

@@ -7,7 +7,7 @@ class ButtonCloseDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: SizeUtil.smallPadding,
+      padding: SizeUtil.defaultPadding,
       child: ButtonIcon(
         backgroundColor: ColorUtil.lightGray,
         borderRadius: 20,

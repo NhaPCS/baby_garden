@@ -29,6 +29,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 //todo get category from cateID
 class PartnerBookScheduleScreen extends StatefulWidget {
@@ -69,7 +70,7 @@ class _PartnerBookScheduleScreenState
 
   @override
   void initState() {
-    // TODO: implement initState
+    _addCallBackFrame();
     _tabController = TabController(vsync: this, length: 2);
     _tabController.addListener(() {
       _partnerTabbarProvider.onChange();
@@ -85,7 +86,6 @@ class _PartnerBookScheduleScreenState
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     if (_bookingServiceDetailProvider.data == null)
       _bookingServiceDetailProvider.getdata(context, widget.shopID);
     super.didChangeDependencies();
@@ -93,260 +93,221 @@ class _PartnerBookScheduleScreenState
 
   @override
   Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
     final productTabbarHei = SizeUtil.tab_bar_fix_height + 76;
-    List<Tab> myTabs = <Tab>[
-      Tab(
-        text: S.of(context).book,
-      ),
-      Tab(
-        text: S.of(context).product,
-      ),
-    ];
-
-    //todo get hei set
     return Consumer<BookingServiceDetailProvider>(builder:
         (BuildContext context, BookingServiceDetailProvider shopValue,
             Widget child) {
-      if (shopValue.data != null && _rowHeight.value == -1) {
-        WidgetsBinding.instance.addPostFrameCallback((_) => {
-              if (_rowKey.currentContext != null)
-                _rowHeight.value = _rowKey.currentContext.size.height,
-              //TODO min height
-              if (_rowKeyFull.currentContext != null)
-                _rowHeightFull = _rowKeyFull.currentContext.size.height,
-              //TODO max height
-              if (_bannerKey.currentContext != null)
-                imageHeight = _bannerKey.currentContext.size.height,
-              //TODO max height
-              print("addPostFrameCallback ${_rowHeight.value}"),
-              //todo min height
-              print(_rowHeightFull)
-              // todo expand full height
-            });
-
-        myTabs = <Tab>[
-          Tab(
-            text: S.of(context).book,
-          ),
-          Tab(
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    S.of(context).product,
-                  ),
-                  Text(
-                    "(${shopValue.products.length.toString()})",
-                    style: TextStyle(fontSize: SizeUtil.textSizeTiny),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ];
-      }
-      return shopValue.data == null
-          ? Container()
-          : ValueListenableBuilder<double>(
-              valueListenable: _rowHeight,
-              builder: (BuildContext context, double height, Widget child) {
-                return Scaffold(
-                  body: _rowHeight.value > 0
-                      ? NestedScrollView(
-                          body: TabBarView(
-                              controller: _tabController,
-                              children: myTabs.map((Tab tab) {
-                                return myTabs.indexOf(tab) == 0
-                                    ? bookingContent(shopValue.data)
-                                    : productContent(shopValue.products);
-                              }).toList()),
-                          //todo get height view
-                          headerSliverBuilder: (context, isScrollInner) {
-                            return [
-                              new SliverAppBar(
-                                title: new Text(
-                                  shopValue.data['name'],
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                leading: BaseState.getLeading(context),
-                                centerTitle: true,
-                                pinned: true,
-                                forceElevated: isScrollInner,
-                              ),
-                              Consumer<SeeMoreProvider>(
-                                builder: (BuildContext context,
-                                    SeeMoreProvider value, Widget child) {
-                                  double hei = (value.isShow
-                                          ? _rowHeightFull
-                                          : _rowHeight.value) +
-                                      imageHeight +
-                                      7;
-                                  return SliverPersistentHeader(
-                                    pinned: false,
-                                    floating: false,
-                                    delegate: SliverCategoryDelegate(
-                                        Column(
+      _addCallBackFrame();
+      if (shopValue.data == null) return SizedBox();
+      return ValueListenableBuilder<double>(
+          valueListenable: _rowHeight,
+          builder: (BuildContext context, double height, Widget child) {
+            return Scaffold(
+              body: _rowHeight.value > 0
+                  ? NestedScrollView(
+                      body: TabBarView(controller: _tabController, children: [
+                        bookingContent(shopValue.data),
+                        productContent(shopValue.products)
+                      ]),
+                      //todo get height view
+                      headerSliverBuilder: (context, isScrollInner) {
+                        return [
+                          new SliverAppBar(
+                            title: new Text(
+                              shopValue.data['name'],
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            leading: BaseState.getLeading(context),
+                            centerTitle: true,
+                            pinned: true,
+                            forceElevated: isScrollInner,
+                          ),
+                          Consumer<SeeMoreProvider>(
+                            builder: (BuildContext context,
+                                SeeMoreProvider value, Widget child) {
+                              double hei = (value.isShow
+                                      ? _rowHeightFull
+                                      : _rowHeight.value) +
+                                  imageHeight +
+                                  7;
+                              return SliverPersistentHeader(
+                                pinned: false,
+                                floating: false,
+                                delegate: SliverCategoryDelegate(
+                                    Column(
+                                      children: <Widget>[
+                                        Stack(
                                           children: <Widget>[
-                                            Stack(
-                                              children: <Widget>[
-                                                shopValue.data != null
-                                                    ? CachedNetworkImage(
-                                                        imageUrl: shopValue
-                                                            .data['img'],
-                                                        width: MediaQuery.of(
-                                                                context)
+                                            shopValue.data != null
+                                                ? CachedNetworkImage(
+                                                    imageUrl:
+                                                        shopValue.data['img'],
+                                                    width:
+                                                        MediaQuery.of(context)
                                                             .size
                                                             .width,
-                                                        height: imageHeight,
-                                                      )
-                                                    : Image.asset(
-                                                        "photo/partner_item_img.png",
-                                                        fit: BoxFit.fitWidth,
-                                                        width: MediaQuery.of(
-                                                                context)
+                                                    height: imageHeight,
+                                                  )
+                                                : Image.asset(
+                                                    "photo/partner_item_img.png",
+                                                    fit: BoxFit.fitWidth,
+                                                    width:
+                                                        MediaQuery.of(context)
                                                             .size
                                                             .width,
-                                                        height: imageHeight,
-                                                      ),
-                                                Positioned(
-                                                  bottom: SizeUtil.smallSpace,
-                                                  right: SizeUtil.smallSpace,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: <Widget>[
-                                                      ShopIconInfo(
-                                                        icon:
-                                                            "photo/comment_img.png",
-                                                        textData: shopValue
-                                                                    .data !=
-                                                                null
-                                                            ? shopValue.data[
-                                                                'number_comment']
-                                                            : "212",
-                                                      ),
-                                                      SizedBox(
-                                                        width:
-                                                            SizeUtil.smallSpace,
-                                                      ),
-                                                      ShopIconInfo(
-                                                        icon: "photo/heart.png",
-                                                        textData: shopValue
-                                                                    .data !=
-                                                                null
-                                                            ? shopValue.data[
-                                                                'number_like']
-                                                            : "12",
-                                                      )
-                                                    ],
+                                                    height: imageHeight,
                                                   ),
-                                                )
+                                            Positioned(
+                                              bottom: SizeUtil.smallSpace,
+                                              right: SizeUtil.smallSpace,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  ShopIconInfo(
+                                                    icon:
+                                                        "photo/comment_img.png",
+                                                    textData: shopValue.data !=
+                                                            null
+                                                        ? shopValue.data[
+                                                            'number_comment']
+                                                        : "212",
+                                                  ),
+                                                  SizedBox(
+                                                    width: SizeUtil.smallSpace,
+                                                  ),
+                                                  ShopIconInfo(
+                                                    icon: "photo/heart.png",
+                                                    textData: shopValue.data !=
+                                                            null
+                                                        ? shopValue
+                                                            .data['number_like']
+                                                        : "12",
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        //todo shop info
+                                        shopInfo(shopValue.data, value.isShow),
+                                        SizedBox(
+                                          height: SizeUtil.tinySpace,
+                                        ),
+                                      ],
+                                    ),
+                                    hei,
+                                    hei),
+                              );
+                            },
+                          ),
+                          Consumer<PartnerTabbarProvider>(
+                            builder: (BuildContext context,
+                                PartnerTabbarProvider value, Widget child) {
+                              return SliverPersistentHeader(
+                                pinned: true,
+                                floating: false,
+                                delegate: SliverCategoryDelegate(
+                                    Column(
+                                      children: <Widget>[
+                                        Container(
+                                          height: SizeUtil.tab_bar_fix_height,
+                                          child: ColoredTabBar(
+                                            ColorUtil.lineColor,
+                                            TabBar(
+                                              onTap: (val) {
+                                                _partnerTabbarProvider
+                                                    .onChange();
+                                              },
+                                              indicatorWeight: 0,
+                                              controller: _tabController,
+                                              labelColor: Colors.white,
+                                              indicatorColor: ColorUtil.white,
+                                              indicator: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(0),
+                                                  color:
+                                                      ColorUtil.primaryColor),
+                                              unselectedLabelColor:
+                                                  ColorUtil.textColor,
+                                              tabs: [
+                                                Tab(
+                                                  text: S.of(context).book,
+                                                ),
+                                                Tab(
+                                                  child: Container(
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: <Widget>[
+                                                        Text(
+                                                          S.of(context).product,
+                                                        ),
+                                                        Text(
+                                                          "(${shopValue.products.length.toString()})",
+                                                          style: TextStyle(
+                                                              fontSize: SizeUtil
+                                                                  .textSizeTiny),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
                                               ],
                                             ),
-                                            //todo shop info
-                                            shopInfo(
-                                                shopValue.data, value.isShow),
-                                            SizedBox(
-                                              height: SizeUtil.tinySpace,
+                                          ),
+                                          decoration: BoxDecoration(boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey,
+                                              blurRadius: 5.0,
                                             ),
-                                          ],
-                                        ),
-                                        hei,
-                                        hei),
-                                  );
-                                },
-                              ),
-                              Consumer<PartnerTabbarProvider>(
-                                builder: (BuildContext context,
-                                    PartnerTabbarProvider value, Widget child) {
-                                  return SliverPersistentHeader(
-                                    pinned: true,
-                                    floating: false,
-                                    delegate: SliverCategoryDelegate(
-                                        Column(
-                                          children: <Widget>[
-                                            Container(
-                                              height:
-                                                  SizeUtil.tab_bar_fix_height,
-                                              child: ColoredTabBar(
-                                                ColorUtil.lineColor,
-                                                TabBar(
-                                                  onTap: (val) {
-                                                    _partnerTabbarProvider
-                                                        .onChange();
-                                                  },
-                                                  indicatorWeight: 0,
-                                                  controller: _tabController,
-                                                  labelColor: Colors.white,
-                                                  indicatorColor:
-                                                      ColorUtil.white,
-                                                  indicator: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              0),
-                                                      color: ColorUtil
-                                                          .primaryColor),
-                                                  unselectedLabelColor:
-                                                      ColorUtil.textColor,
-                                                  tabs: myTabs,
-                                                ),
-                                              ),
-                                              decoration:
-                                                  BoxDecoration(boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.grey,
-                                                  blurRadius: 5.0,
-                                                ),
-                                              ]),
-                                            ),
-                                            value.isProduct
-                                                ? ListCategory()
-                                                : SizedBox()
-                                          ],
+                                          ]),
                                         ),
                                         value.isProduct
-                                            ? productTabbarHei
-                                            : SizeUtil.tab_bar_fix_height,
-                                        value.isProduct
-                                            ? productTabbarHei
-                                            : SizeUtil.tab_bar_fix_height),
-                                  );
-                                },
-                              )
-                            ];
-                          },
-                        )
-                      : Opacity(
-                          opacity: 0.0,
-                          child: Column(
-                            children: <Widget>[
-                              //TODO get detail info min height
-                              CachedNetworkImage(
-                                imageUrl: shopValue.data['img'],
-                                fit: BoxFit.fitWidth,
-                                key: _bannerKey,
-                                width: MediaQuery.of(context).size.width,
-                              ),
-                              shopHeiInfo(shopValue.data, false, _rowKey),
-                              //TODO get detail info max height
-                              shopHeiInfo(shopValue.data, true, _rowKeyFull)
-                            ],
+                                            ? ListCategory()
+                                            : SizedBox()
+                                      ],
+                                    ),
+                                    value.isProduct
+                                        ? productTabbarHei
+                                        : SizeUtil.tab_bar_fix_height,
+                                    value.isProduct
+                                        ? productTabbarHei
+                                        : SizeUtil.tab_bar_fix_height),
+                              );
+                            },
+                          )
+                        ];
+                      },
+                    )
+                  : Opacity(
+                      opacity: 0.0,
+                      child: Column(
+                        children: <Widget>[
+                          //TODO get detail info min height
+                          CachedNetworkImage(
+                            imageUrl: shopValue.data['img'],
+                            fit: BoxFit.fitWidth,
+                            key: _bannerKey,
+                            width: MediaQuery.of(context).size.width,
                           ),
-                        ),
-                );
-              });
+                          shopHeiInfo(shopValue.data, false, _rowKey),
+                          //TODO get detail info max height
+                          shopHeiInfo(shopValue.data, true, _rowKeyFull)
+                        ],
+                      ),
+                    ),
+            );
+          });
     });
   }
 
   Widget bookingContent(dynamic data) {
-    dynamic chooseService =
-        data['service'] != null && data['service'].length > 0
-            ? data['service'][0]
-            : {};
+    dynamic chooseService = {};
     String addressChoose = data['address'] != null && data['address'].length > 0
         ? data['address'][0]['address']
         : "";
@@ -390,8 +351,10 @@ class _PartnerBookScheduleScreenState
                             )));
               },
             ),
-            WidgetUtil.getLine(
-                margin: EdgeInsets.only(top: SizeUtil.smallSpace), width: 2),
+            Center(
+              child: WidgetUtil.getLine(
+                  margin: EdgeInsets.only(top: SizeUtil.smallSpace), width: 2),
+            ),
             //todo choose service title
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -563,34 +526,37 @@ class _PartnerBookScheduleScreenState
   }
 
   Widget productContent(List<dynamic> products) {
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: GridView.builder(
-            scrollDirection: Axis.vertical,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, childAspectRatio: 0.78),
-            padding: EdgeInsets.only(
-                left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
-            itemCount: products.length,
-            itemBuilder: (context, index) {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: GridView.builder(
+              scrollDirection: Axis.vertical,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, childAspectRatio: 0.78),
+              padding: EdgeInsets.only(
+                  top: SizeUtil.tinySpace, left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
+              itemCount: products.length,
+              itemBuilder: (context, index) {
 //              bool isSelected =
 //                  _serviceProvider != null && _serviceProvider.index == index;
-              return ProductItem(
-                product: products[index],
-                width: MediaQuery.of(context).size.width * 0.5,
-                borderRadius: SizeUtil.tinyRadius,
-                showSoldCount: false,
-                nameStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
-                padding: EdgeInsets.only(
-                    left: SizeUtil.smallSpace,
-                    right: SizeUtil.smallSpace,
-                    top: 0),
-              );
-            },
+                return ProductItem(
+                  product: products[index],
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  borderRadius: SizeUtil.tinyRadius,
+                  showSoldCount: false,
+                  nameStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+                  padding: EdgeInsets.only(
+                      left: SizeUtil.smallSpace,
+                      right: SizeUtil.smallSpace,
+                      top: 0),
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
+      color: ColorUtil.lineColor,
     );
   }
 
@@ -610,10 +576,16 @@ class _PartnerBookScheduleScreenState
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            ShopInfoForm(
-              title: S.of(context).mobilePhone_form,
-              content: data["phone"],
-              contentColor: ColorUtil.blueLight,
+            InkWell(
+              child: ShopInfoForm(
+                title: S.of(context).mobilePhone_form,
+                content: data["phone"],
+                contentColor: ColorUtil.blueLight,
+              ),
+              onTap: () async {
+                String uri = "tel:${data["phone"]}";
+                if (await canLaunch(uri)) launch(uri);
+              },
             ),
             SizedBox(
               width: SizeUtil.tinySpace,
@@ -635,13 +607,18 @@ class _PartnerBookScheduleScreenState
                     ? data['address'][0]["address"]
                     : ""),
             SizedBox(
-              width: SizeUtil.tinySpace,
-            ),
-            SizedBox(
-              width: SizeUtil.tinySpace,
+              width: SizeUtil.smallSpace,
             ),
             InkWell(
-              onTap: () {}, //todo chua co API
+              onTap: () async {
+                String address =
+                    data['address'] != null && data['address'].length > 0
+                        ? data['address'][0]["address"]
+                        : null;
+                String uri =
+                    "https://www.google.com/maps/search/${Uri.encodeFull(address)}";
+                if (address != null && await canLaunch(uri)) launch(uri);
+              },
               child: Text(
                 "Chỉ đường",
                 style: TextStyle(
@@ -758,5 +735,22 @@ class _PartnerBookScheduleScreenState
   BookingServiceViewModel initViewModel() {
     // TODO: implement initViewModel
     return BookingServiceViewModel(context);
+  }
+
+  _addCallBackFrame() {
+    WidgetsBinding.instance.addPostFrameCallback((_) => {
+          if (_bookingServiceDetailProvider.data != null &&
+              _rowHeight.value == -1)
+            {
+              if (_rowKey.currentContext != null)
+                _rowHeight.value = _rowKey.currentContext.size.height,
+              //TODO min height
+              if (_rowKeyFull.currentContext != null)
+                _rowHeightFull = _rowKeyFull.currentContext.size.height,
+              //TODO max height
+              if (_bannerKey.currentContext != null)
+                imageHeight = _bannerKey.currentContext.size.height,
+            }
+        });
   }
 }
