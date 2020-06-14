@@ -32,9 +32,14 @@ class Baby {
 
   static String formatDate(String date) {
     if (date == null) return '';
-    DateTime inputDate = DateTime.parse(date);
-    String formattedDate = DateFormat.yMd('vi').format(inputDate);
-    return formattedDate;
+    print("DATE $date");
+    try{
+      DateTime inputDate = DateTime.parse(date);
+      String formattedDate = DateFormat.yMd('vi').format(inputDate);
+      return formattedDate;
+    } on Exception catch(e) {
+      return '';
+    }
   }
 }
 
