@@ -4742,6 +4742,15 @@ class S {
       args: [],
     );
   }
+
+  String get direct_address {
+    return Intl.message(
+      'Chỉ đường',
+      name: 'direct_address',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 
 class ShopIconInfo extends StatelessWidget {
@@ -13,18 +14,19 @@ class ShopIconInfo extends StatelessWidget {
 
   const ShopIconInfo(
       {this.icon = "photo/comment_img.png",
-      this.textData = "112",
+      this.textData,
       this.bgColor = ColorUtil.whiteIcon,
       this.isPadding = true,
       this.textColor = ColorUtil.textColor,
       this.iconSize = SizeUtil.iconSizeDefault,
-      this.textSize = SizeUtil.textSizeSmall, this.onTap});
+      this.textSize = SizeUtil.textSizeSmall,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return GestureDetector(
-      onTap: onTap!=null?onTap:(){},
+      onTap: onTap != null ? onTap : () {},
       child: Container(
         padding: isPadding
             ? EdgeInsets.only(
@@ -48,7 +50,7 @@ class ShopIconInfo extends StatelessWidget {
             SizedBox(
               width: SizeUtil.tinySpace,
             ),
-            Text(
+            MyText(
               textData,
               style: TextStyle(
                   fontSize: textSize,

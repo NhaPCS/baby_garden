@@ -522,5 +522,6 @@
   "enter_district": "chọn quận/huyện",
   "enter_sub_district": "chọn phường/xã",
   "will_sell_later": "Sắp mở bán",
-  "message_choose_service": "Bạn vui lòng chọn Dịch vụ"
+  "message_choose_service": "Bạn vui lòng chọn Dịch vụ",
+  "direct_address": "Chỉ đường"
 }

@@ -71,27 +71,24 @@ class _RemindSetTimeScreenState extends BaseState<RemindSetTimeScreen> {
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: SizeUtil.normalPadding,
-                child: MyRaisedButton(
-                    padding: SizeUtil.smallPadding,
-                    text: buttonTitle,
-                    textStyle: TextStyle(
-                        fontSize: SizeUtil.textSizeBigger,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                    color: ColorUtil.primaryColor,
-                    borderRadius: SizeUtil.tinyRadius,
-                    matchParent: true,
-                    onPressed: () {
-                      Navigator.of(context).pop(_selectedTime);
-                    }),
-              ),
-            )
           ],
-        ));
+        ),
+    bottomNavigationBar: Padding(
+      padding: SizeUtil.normalPadding,
+      child: MyRaisedButton(
+          padding: SizeUtil.smallPadding,
+          text: buttonTitle,
+          textStyle: TextStyle(
+              fontSize: SizeUtil.textSizeBigger,
+              fontWeight: FontWeight.bold,
+              color: Colors.white),
+          color: ColorUtil.primaryColor,
+          borderRadius: SizeUtil.tinyRadius,
+          matchParent: true,
+          onPressed: () {
+            Navigator.of(context).pop(_selectedTime);
+          }),
+    ),);
   }
 
   @override

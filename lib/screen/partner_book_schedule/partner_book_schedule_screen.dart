@@ -64,6 +64,8 @@ class _PartnerBookScheduleScreenState
   final ValueNotifier<double> _rowHeight = ValueNotifier<double>(-1);
   double _rowHeightFull = 0;
   double imageHeight = 151;
+  dynamic _chooseService = {};
+  dynamic _addressChoose;
 
   final ValueNotifier<int> _dateValueController = new ValueNotifier(0);
   final ValueNotifier<int> _timeValueController = new ValueNotifier(0);
@@ -301,6 +303,34 @@ class _PartnerBookScheduleScreenState
                         ],
                       ),
                     ),
+              bottomNavigationBar: Container(
+                  padding: const EdgeInsets.only(
+                      left: SizeUtil.smallSpace,
+                      right: SizeUtil.smallSpace,
+                      top: SizeUtil.tinySpace,
+                      bottom: SizeUtil.tinySpace),
+                  width: MediaQuery.of(context).size.width,
+                  child: RaisedButton(
+                    onPressed: () async {
+                      onBookingService();
+                    },
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(SizeUtil.smallRadius),
+                        )),
+                    color: ColorUtil.primaryColor,
+                    child: Padding(
+                      padding: const EdgeInsets.all(SizeUtil.midSpace),
+                      child: Text(
+                        S.of(context).book,
+                        style: TextStyle(
+                            fontSize: SizeUtil.textSizeDefault,
+                            color: Colors.white,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  )),
             );
           });
     });
@@ -308,7 +338,7 @@ class _PartnerBookScheduleScreenState
 
   Widget bookingContent(dynamic data) {
     dynamic chooseService = {};
-    String addressChoose = data['address'] != null && data['address'].length > 0
+    _addressChoose = data['address'] != null && data['address'].length > 0
         ? data['address'][0]['address']
         : "";
     return ListView(
@@ -345,7 +375,7 @@ class _PartnerBookScheduleScreenState
                               iconSize: SizeUtil.iconSize,
                               titleSize: SizeUtil.textSizeSmall,
                               onChanged: (val) {
-                                addressChoose = data['address'][val]['address'];
+                                _addressChoose= data['address'][val]['address'];
                                 _partnerChooseLocation.onChange(val);
                               },
                             )));
@@ -390,7 +420,7 @@ class _PartnerBookScheduleScreenState
                         onTap: () {
                           if (_serviceProvider != null &&
                               _serviceProvider.index != index) {
-                            chooseService = data['service'][index];
+                            _chooseService = data['service'][index];
                             _serviceProvider.onSelectService(index);
                           }
                         },
@@ -408,9 +438,9 @@ class _PartnerBookScheduleScreenState
                               _dateValueController.value = returnValue['date'];
                               _timeValueController.value = returnValue['time'];
                               _serviceProvider.onSelectService(index);
-                              chooseService = data['service'][index];
+                              _chooseService = data['service'][index];
                               //todo booking
-                              onBookingService(chooseService, addressChoose);
+                              onBookingService();
                             }
                           },
                         ));
@@ -442,43 +472,13 @@ class _PartnerBookScheduleScreenState
             TimePicker(
               valueController: _timeValueController,
             ),
-            //todo booking button
-            Container(
-                padding: const EdgeInsets.only(
-                    left: SizeUtil.smallSpace,
-                    right: SizeUtil.smallSpace,
-                    top: SizeUtil.tinySpace,
-                    bottom: SizeUtil.tinySpace),
-                width: MediaQuery.of(context).size.width,
-                child: RaisedButton(
-                  onPressed: () async {
-                    onBookingService(chooseService, addressChoose);
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                    Radius.circular(SizeUtil.smallRadius),
-                  )),
-                  color: ColorUtil.primaryColor,
-                  child: Padding(
-                    padding: const EdgeInsets.all(SizeUtil.midSpace),
-                    child: Text(
-                      S.of(context).book,
-                      style: TextStyle(
-                          fontSize: SizeUtil.textSizeDefault,
-                          color: Colors.white,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                )),
           ],
         ),
       ],
     );
   }
 
-  Future<void> onBookingService(
-      dynamic chooseService, String addressChoose) async {
+  Future<void> onBookingService() async {
     String userId = await ShareValueProvider.shareValueProvider.getUserId();
     if (userId == null || userId.isEmpty) {
       if (context != null) {
@@ -486,19 +486,19 @@ class _PartnerBookScheduleScreenState
       }
     } else {
       List<dynamic> confirmForm = [
-        {'title': 'Dịch vụ đã đặt: ', 'content': chooseService['content']},
+        {'title': 'Dịch vụ đã đặt: ', 'content': _chooseService['content']},
         {
           'title': 'Giá niêm yết:  ',
           'content':
               '\nKhách hàng đã có thẻ hoặc mã voucher vui lòng mang tới cửa hàng để được hưởng đầy đủ ưu đãi.',
-          'value': chooseService['price']
+          'value': _chooseService['price']
         },
         {'title': 'Ngày sử dụng: ', 'content': datePickerData},
         {
           'title': 'Thời gian: ',
           'content': StringUtil.time[_timeValueController.value]['time']
         },
-        {'title': 'Thời gian thực hiện: ', 'content': chooseService['ex_time']},
+        {'title': 'Thời gian thực hiện: ', 'content': _chooseService['ex_time']},
       ];
       var resultData = await showDialog(
           context: context,
@@ -506,8 +506,8 @@ class _PartnerBookScheduleScreenState
                 context: context,
                 serviceData: confirmForm,
                 shopID: widget.shopID,
-                address: addressChoose,
-                serviceID: chooseService['id'],
+                address: _addressChoose,
+                serviceID: _chooseService['id'],
               ));
       if (resultData != null && resultData) {
         //todo on booking success show success dialogue

@@ -249,6 +249,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "delivery_to_address" : MessageLookupByLibrary.simpleMessage("Giao hàng tận nơi"),
     "detail" : MessageLookupByLibrary.simpleMessage("Chi tiết"),
     "detail_info" : MessageLookupByLibrary.simpleMessage("Thông tin chi tiết"),
+    "direct_address" : MessageLookupByLibrary.simpleMessage("Chỉ đường"),
     "distributor_name" : MessageLookupByLibrary.simpleMessage("nhà cung cấp "),
     "district" : MessageLookupByLibrary.simpleMessage("Quận/ Huyện"),
     "done" : MessageLookupByLibrary.simpleMessage("Xong"),
