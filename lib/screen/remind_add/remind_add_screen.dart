@@ -46,94 +46,85 @@ class _RemindAddScreen
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
-        appBar: getAppBar(
-          title: S.of(context).remindManage,
-        ),
-        body: Stack(
-          children: <Widget>[
-            ListView(children: <Widget>[
-              widget.remindCalendar != null
-                  ? SizedBox()
-                  : Container(
-                      decoration: setBorder('bottom', ColorUtil.darkGray, 1),
-                      padding: const EdgeInsets.all(SizeUtil.smallSpace),
-                      child: InkWell(
-                        onTap: () {
-                          showPopupChooseProduct(context);
-                        },
-                        child: Row(
-                          children: <Widget>[
-                            Icon(Icons.add,
-                                color: ColorUtil.primaryColor,
-                                size: SizeUtil.iconSizeBig),
-                            SizedBox(width: SizeUtil.smallSpace),
-                            Expanded(
-                              child: Text(S.of(context).selectRemindProduct,
-                                  style: TextStyle(
-                                      color: ColorUtil.darkGray,
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                          ],
-                        ),
+      appBar: getAppBar(
+        title: S.of(context).remindManage,
+      ),
+      body: ListView(children: <Widget>[
+        widget.remindCalendar != null
+            ? SizedBox()
+            : Container(
+                decoration: setBorder('bottom', ColorUtil.darkGray, 1),
+                padding: const EdgeInsets.all(SizeUtil.smallSpace),
+                child: InkWell(
+                  onTap: () {
+                    showPopupChooseProduct(context);
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      Icon(Icons.add,
+                          color: ColorUtil.primaryColor,
+                          size: SizeUtil.iconSizeBig),
+                      SizedBox(width: SizeUtil.smallSpace),
+                      Expanded(
+                        child: Text(S.of(context).selectRemindProduct,
+                            style: TextStyle(
+                                color: ColorUtil.darkGray,
+                                fontWeight: FontWeight.bold)),
                       ),
-                    ),
-              ValueListenableBuilder<Product>(
-                valueListenable: _productController,
-                builder: (BuildContext context, Product product, Widget child) {
-                  if (product != null) {
-                    return ProductItem(product: product);
-                  }
-                  return SizedBox();
-                },
+                    ],
+                  ),
+                ),
               ),
-              ReminderLayout(
-                remindCalendar: widget.remindCalendar,
-                reminderSelectCallBack: (type, buyDate, endDate, period, time1,
-                    time2, time3, time4) {
-                  _remindCalendar.type =
-                      type == 1 ? RemindType.remindBuy : RemindType.remindUse;
-                  _remindCalendar.dateStart =
-                      DateUtil.formatNormalDateTime(buyDate);
-                  _remindCalendar.timeStart = DateUtil.formatTime(buyDate);
-                  _remindCalendar.dateEnd =
-                      DateUtil.formatNormalDateTime(endDate);
-                  _remindCalendar.timeEnd = DateUtil.formatTime(endDate);
-                  _remindCalendar.period = period.toString();
-                  _remindCalendar.time1 = DateUtil.formatTime(time1);
-                  _remindCalendar.time2 = DateUtil.formatTime(time2);
-                  _remindCalendar.time3 = DateUtil.formatTime(time3);
-                  _remindCalendar.time4 = DateUtil.formatTime(time4);
-                },
-              ),
-              SizedBox(height: 50)
-            ]),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                  padding: SizeUtil.normalPadding,
-                  child: MyRaisedButton(
-                    padding: SizeUtil.normalPadding,
-                    borderRadius: SizeUtil.tinyRadius,
-                    matchParent: true,
-                    onPressed: () {
-                      if (!validateInput()) {
-                        WidgetUtil.showErrorDialog(
-                            context, S.of(context).choose_product);
-                        return;
-                      }
-                      getViewModel()
-                          .addNewCalendar(context, calendar: _remindCalendar);
-                    },
-                    color: ColorUtil.primaryColor,
-                    text: widget.remindCalendar == null
-                        ? S.of(context).addReminder
-                        : S.of(context).editReminder,
-                    textStyle: TextStyle(
-                        fontSize: SizeUtil.textSizeBigger, color: Colors.white),
-                  )),
-            )
-          ],
-        ));
+        ValueListenableBuilder<Product>(
+          valueListenable: _productController,
+          builder: (BuildContext context, Product product, Widget child) {
+            if (product != null) {
+              return ProductItem(product: product);
+            }
+            return SizedBox();
+          },
+        ),
+        ReminderLayout(
+          remindCalendar: widget.remindCalendar,
+          reminderSelectCallBack:
+              (type, buyDate, endDate, period, time1, time2, time3, time4) {
+            _remindCalendar.type =
+                type == 1 ? RemindType.remindBuy : RemindType.remindUse;
+            _remindCalendar.dateStart = DateUtil.formatNormalDateTime(buyDate);
+            _remindCalendar.timeStart = DateUtil.formatTime(buyDate);
+            _remindCalendar.dateEnd = DateUtil.formatNormalDateTime(endDate);
+            _remindCalendar.timeEnd = DateUtil.formatTime(endDate);
+            _remindCalendar.period = period.toString();
+            _remindCalendar.time1 = DateUtil.formatTime(time1);
+            _remindCalendar.time2 = DateUtil.formatTime(time2);
+            _remindCalendar.time3 = DateUtil.formatTime(time3);
+            _remindCalendar.time4 = DateUtil.formatTime(time4);
+          },
+        ),
+        SizedBox(height: 50)
+      ]),
+      bottomNavigationBar: Padding(
+          padding: SizeUtil.normalPadding,
+          child: MyRaisedButton(
+            padding: SizeUtil.normalPadding,
+            borderRadius: SizeUtil.tinyRadius,
+            matchParent: true,
+            onPressed: () {
+              if (!validateInput()) {
+                WidgetUtil.showErrorDialog(
+                    context, S.of(context).choose_product);
+                return;
+              }
+              getViewModel().addNewCalendar(context, calendar: _remindCalendar);
+            },
+            color: ColorUtil.primaryColor,
+            text: widget.remindCalendar == null
+                ? S.of(context).addReminder
+                : S.of(context).editReminder,
+            textStyle: TextStyle(
+                fontSize: SizeUtil.textSizeBigger, color: Colors.white),
+          )),
+    );
   }
 
   bool validateInput() {
