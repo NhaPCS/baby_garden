@@ -337,7 +337,6 @@ class _PartnerBookScheduleScreenState
   }
 
   Widget bookingContent(dynamic data) {
-    dynamic chooseService = {};
     _addressChoose = data['address'] != null && data['address'].length > 0
         ? data['address'][0]['address']
         : "";
@@ -527,34 +526,30 @@ class _PartnerBookScheduleScreenState
 
   Widget productContent(List<dynamic> products) {
     return Container(
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: GridView.builder(
-              scrollDirection: Axis.vertical,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, childAspectRatio: 0.78),
-              padding: EdgeInsets.only(
-                  top: SizeUtil.tinySpace, left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
-              itemCount: products.length,
-              itemBuilder: (context, index) {
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, childAspectRatio: 0.78),
+        padding: EdgeInsets.only(
+            top: SizeUtil.tinySpace, left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
+        itemCount: products.length,
+        itemBuilder: (context, index) {
 //              bool isSelected =
 //                  _serviceProvider != null && _serviceProvider.index == index;
-                return ProductItem(
-                  product: products[index],
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  borderRadius: SizeUtil.tinyRadius,
-                  showSoldCount: false,
-                  nameStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
-                  padding: EdgeInsets.only(
-                      left: SizeUtil.smallSpace,
-                      right: SizeUtil.smallSpace,
-                      top: 0),
-                );
-              },
-            ),
-          ),
-        ],
+          return ProductItem(
+            product: products[index],
+            width: MediaQuery.of(context).size.width * 0.5,
+            borderRadius: SizeUtil.tinyRadius,
+            showSoldCount: false,
+            nameStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
+            padding: EdgeInsets.only(
+                left: SizeUtil.smallSpace,
+                right: SizeUtil.smallSpace,
+                top: 0),
+          );
+        },
       ),
       color: ColorUtil.lineColor,
     );
@@ -576,7 +571,7 @@ class _PartnerBookScheduleScreenState
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            InkWell(
+            Expanded(child: InkWell(
               child: ShopInfoForm(
                 title: S.of(context).mobilePhone_form,
                 content: data["phone"],
@@ -586,7 +581,7 @@ class _PartnerBookScheduleScreenState
                 String uri = "tel:${data["phone"]}";
                 if (await canLaunch(uri)) launch(uri);
               },
-            ),
+            )),
             SizedBox(
               width: SizeUtil.tinySpace,
             ),
@@ -601,11 +596,11 @@ class _PartnerBookScheduleScreenState
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            ShopInfoForm(
+            Expanded(child: ShopInfoForm(
                 title: S.of(context).address_form,
                 content: data['address'] != null && data['address'].length > 0
                     ? data['address'][0]["address"]
-                    : ""),
+                    : "")),
             SizedBox(
               width: SizeUtil.smallSpace,
             ),
@@ -629,7 +624,6 @@ class _PartnerBookScheduleScreenState
           ],
         )),
         paddingContainer(ShopInfoForm(
-          isExpanded: false,
           title: S.of(context).service_type,
           content: data['category_id'],
           contentColor: ColorUtil.blueLight,
@@ -688,13 +682,11 @@ class _PartnerBookScheduleScreenState
           shopId: "1",
         )),
         paddingContainer(ShopInfoForm(
-            isExpanded: false,
             title: S.of(context).address_form,
             content: data['address'] != null && data['address'].length > 0
                 ? data['address'][0]["address"]
                 : "")),
         paddingContainer(ShopInfoForm(
-          isExpanded: false,
           title: S.of(context).service_type,
           content: "",
           contentColor: ColorUtil.blueLight,

@@ -83,43 +83,77 @@ class DateUtil {
   }
 
   static String formatBirthdayDate(DateTime date) {
-    return date == null ? '' : new DateFormat("dd/MM/yyyy").format(date);
+    try {
+      return date == null ? '' : new DateFormat("dd/MM/yyyy").format(date);
+    } on Exception catch (e) {
+      return '';
+    }
   }
 
   static String formatNormalDate(DateTime date) {
-    return date == null ? '' : new DateFormat("dd/MM/yyyy").format(date);
+    try {
+      return date == null ? '' : new DateFormat("dd/MM/yyyy").format(date);
+    } on Exception catch (e) {
+      return '';
+    }
   }
 
   static String formatNormalDateTime(DateTime date) {
-    return date == null ? '' : new DateFormat("dd/MM/yyyy HH:mm").format(date);
+    try {
+      return date == null
+          ? ''
+          : new DateFormat("dd/MM/yyyy HH:mm").format(date);
+    } on Exception catch (e) {
+      return '';
+    }
   }
 
   static String formatTime(DateTime date) {
-    return date == null ? '' : new DateFormat("HH:mm").format(date);
+    try {
+      return date == null ? '' : new DateFormat("HH:mm").format(date);
+    } on Exception catch (e) {
+      return '';
+    }
   }
 
   static DateTime parseBirthdayDate(String date) {
-    return date == null || date.isEmpty
-        ? null
-        : new DateFormat("dd/MM/yyyy").parse(date);
+    try {
+      return date == null || date.isEmpty
+          ? null
+          : new DateFormat("dd/MM/yyyy").parse(date);
+    } on Exception catch (e) {
+      return null;
+    }
   }
 
   static String formatDDMMyyyy(String rawDate) {
-    DateTime date = new DateFormat(serverFormatDate).parse(rawDate);
-    return new DateFormat("dd/MM/yyyy").format(date);
+    try {
+      DateTime date = new DateFormat(serverFormatDate).parse(rawDate);
+      return new DateFormat("dd/MM/yyyy").format(date);
+    } on Exception catch (e) {
+      return '';
+    }
   }
 
   static DateTime getServerDate(String rawDate, String rawTime) {
-    if (rawDate == null || rawDate.isEmpty || rawDate.contains('0000'))
+    try {
+      if (rawDate == null || rawDate.isEmpty || rawDate.contains('0000'))
+        return null;
+      String merge = "${rawDate} ${rawTime == null ? '' : rawTime}";
+      return new DateFormat(serverFormatDate).parse(merge);
+    } on Exception catch (e) {
       return null;
-    String merge = "${rawDate} ${rawTime == null ? '' : rawTime}";
-    return new DateFormat(serverFormatDate).parse(merge);
+    }
   }
 
   static DateTime getServerTime(String rawTime) {
-    return rawTime == null || rawTime.isEmpty
-        ? null
-        : new DateFormat('HH:mm:ss').parse(rawTime);
+    try {
+      return rawTime == null || rawTime.isEmpty
+          ? null
+          : new DateFormat('HH:mm:ss').parse(rawTime);
+    } on Exception catch (e) {
+      return null;
+    }
   }
 
   /*
@@ -134,18 +168,20 @@ class DateUtil {
   */
   static List<dynamic> getDate() {
     List<dynamic> dates = List();
-    final dowFormat = new DateFormat("EEEE", "vi");
-    final dateFormat = new DateFormat("dd/MM/yyyy");
-    var now = new DateTime.now();
-    for (int i = 0; i <= 6; i++) {
-      final date = now.add(new Duration(days: i));
-      dates.add({
-        'index': date.weekday == 7 ? 1 : date.weekday + 1,
-        'dow': dowFormat.format(date),
-        'date': dateFormat.format(date)
-      });
-    }
-    print("getDate $dates");
+    try {
+      final dowFormat = new DateFormat("EEEE", "vi");
+      final dateFormat = new DateFormat("dd/MM/yyyy");
+      var now = new DateTime.now();
+      for (int i = 0; i <= 6; i++) {
+        final date = now.add(new Duration(days: i));
+        dates.add({
+          'index': date.weekday == 7 ? 1 : date.weekday + 1,
+          'dow': dowFormat.format(date),
+          'date': dateFormat.format(date)
+        });
+      }
+      print("getDate $dates");
+    } on Exception catch (e) {}
     return dates;
   }
 }
