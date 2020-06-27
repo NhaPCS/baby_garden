@@ -4751,6 +4751,24 @@ class S {
       args: [],
     );
   }
+
+  String get mess_verify_report_dialog {
+    return Intl.message(
+      'Vui lòng nhập tiêu đề hoặc nội dung để gửi báo cáo',
+      name: 'mess_verify_report_dialog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mess_report_success {
+    return Intl.message(
+      'Cảm ơn bạn đã gửi báo cáo. Chúng tôi sẽ xem xét báo cáo của bạn trong thời gian sớm nhất.',
+      name: 'mess_report_success',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

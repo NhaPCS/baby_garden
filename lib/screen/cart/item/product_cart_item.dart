@@ -3,6 +3,7 @@ import 'package:baby_garden_flutter/screen/cart/dialog/set_schedule_for_product_
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
+import 'package:baby_garden_flutter/screen/cart/widget/product_properties.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_icon.dart';
 import 'package:baby_garden_flutter/widget/change_quantity_widget.dart';
@@ -57,7 +58,7 @@ class ProductCartItem extends StatelessWidget {
                 children: <Widget>[
                   WidgetUtil.paddingWidget(
                       MyText(
-                        product['name'],
+                        product['product_name'],
                         textAlign: TextAlign.left,
                       ),
                       padding: EdgeInsets.only(right: SizeUtil.smallSpace)),
@@ -95,6 +96,7 @@ class ProductCartItem extends StatelessWidget {
                             fontSize: SizeUtil.textSizeSmall),
                       ),
                       padding: EdgeInsets.only(right: SizeUtil.bigSpace)),
+                  ProductProperties(product: product),
                   Row(
                     children: <Widget>[
                       Text(
@@ -127,8 +129,9 @@ class ProductCartItem extends StatelessWidget {
                             left: SizeUtil.smallSpace,
                             right: SizeUtil.smallSpace),
                         quantityChanged: (value) {
+                          product['quantity'] = value;
                           Provider.of<CartProvider>(context, listen: false)
-                              .editProductCart(product['product_id'], value);
+                              .editProductCart(product);
                         },
                       ),
                       Expanded(

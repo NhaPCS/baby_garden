@@ -349,6 +349,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "mess_delete_search_history" : MessageLookupByLibrary.simpleMessage("Bạn có muốn xoá lịch sử tìm kiếm không?"),
     "mess_get_code_voucher_success" : MessageLookupByLibrary.simpleMessage("Lấy mã code thành công!"),
     "mess_receive_notify_for_product" : MessageLookupByLibrary.simpleMessage("Bạn đã đăng ký nhận thông báo cho sản phẩm này thành công!"),
+    "mess_report_success" : MessageLookupByLibrary.simpleMessage("Cảm ơn bạn đã gửi báo cáo. Chúng tôi sẽ xem xét báo cáo của bạn trong thời gian sớm nhất."),
+    "mess_verify_report_dialog" : MessageLookupByLibrary.simpleMessage("Vui lòng nhập tiêu đề hoặc nội dung để gửi báo cáo"),
     "messageLogout" : MessageLookupByLibrary.simpleMessage("Bạn có muốn đăng xuất không?"),
     "message_add_baby_test_success" : MessageLookupByLibrary.simpleMessage("Nhập thông tin thành công!"),
     "message_choose_service" : MessageLookupByLibrary.simpleMessage("Bạn vui lòng chọn Dịch vụ"),

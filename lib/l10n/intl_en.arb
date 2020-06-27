@@ -523,5 +523,7 @@
   "enter_sub_district": "chọn phường/xã",
   "will_sell_later": "Sắp mở bán",
   "message_choose_service": "Bạn vui lòng chọn Dịch vụ",
-  "direct_address": "Chỉ đường"
+  "direct_address": "Chỉ đường",
+  "mess_verify_report_dialog": "Vui lòng nhập tiêu đề hoặc nội dung để gửi báo cáo",
+  "mess_report_success": "Cảm ơn bạn đã gửi báo cáo. Chúng tôi sẽ xem xét báo cáo của bạn trong thời gian sớm nhất."
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:baby_garden_flutter/data/model/param.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/product_detail/provider/get_report_title_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
@@ -126,6 +127,16 @@ class _ReportProductState
             Center(
               child: MyRaisedButton(
                 onPressed: () {
+                  if ((_anotherTitleController.text == null ||
+                          _anotherTitleController.text.isEmpty) &&
+                      (_selectedTitleIdController.value == null ||
+                          _selectedTitleIdController.value.isEmpty) &&
+                      (_contentController.text == null ||
+                          _contentController.text.isEmpty)) {
+                    WidgetUtil.showErrorDialog(
+                        context, S.of(context).mess_verify_report_dialog);
+                    return;
+                  }
                   getViewModel().reportProduct(
                       widget.productId,
                       _anotherTitleController.text,

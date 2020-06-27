@@ -10,6 +10,15 @@ class GetProductDetailProvider extends ChangeNotifier {
   dynamic product;
   List<dynamic> DETAIL_INFO = List();
 
+  void favorite(BuildContext context, {dynamic product}) async {
+    if (product['is_favourite'] == '0') {
+      await service.favoriteProduct(context, productId: product['id']);
+    } else {
+      await service.unFavoriteProduct(context, productId: product['id']);
+    }
+    getProduct(context, product['id']);
+  }
+
   Future<void> getProduct(BuildContext context, String productId) async {
     dynamic data = await service.productDetail(context, productId: productId);
     product = data;
@@ -20,7 +29,6 @@ class GetProductDetailProvider extends ChangeNotifier {
       if (product['size'] == null) {
         DETAIL_INFO.removeWhere((element) => element['key'] == 'size');
       }
-      print("WWW ${DETAIL_INFO}");
     }
     notifyListeners();
   }

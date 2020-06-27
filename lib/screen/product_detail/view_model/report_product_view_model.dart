@@ -21,7 +21,11 @@ class ReportProductViewModel extends BaseViewModel {
         titleId: titleId,
         img: img);
     if (data != null) {
-      Navigator.of(context).pop();
+      WidgetUtil.showMessageDialog(context,
+          message: S.of(context).mess_report_success,
+          title: S.of(context).success, onOkClick: () {
+        Navigator.of(context).pop();
+      });
     }
   }
 
