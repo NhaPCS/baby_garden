@@ -10,9 +10,10 @@ class ProductProperties extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(product['color_name'] != null || product['size_name'] != null){
+    if (product['color_name'] != null || product['size_name'] != null) {
       return Padding(
-        padding: SizeUtil.smallPadding,
+        padding: EdgeInsets.only(
+            top: SizeUtil.tinySpace, bottom: SizeUtil.tinySpace),
         child: Row(
           children: <Widget>[
             Text(
@@ -21,7 +22,8 @@ class ProductProperties extends StatelessWidget {
             ),
             MyText(
               product['color_name'],
-              style: TextStyle(color: ColorUtil.blue),
+              style: TextStyle(
+                  color: ColorUtil.blue, fontSize: SizeUtil.textSizeSmall),
             ),
             SizedBox(
               width: SizeUtil.defaultSpace,
@@ -30,7 +32,8 @@ class ProductProperties extends StatelessWidget {
                 style: TextStyle(fontSize: SizeUtil.textSizeSmall)),
             MyText(
               product['size_name'],
-              style: TextStyle(color: ColorUtil.blue),
+              style: TextStyle(
+                  color: ColorUtil.blue, fontSize: SizeUtil.textSizeSmall),
             ),
           ],
         ),

@@ -84,7 +84,9 @@ class ProductHeader extends StatelessWidget {
                         size: SizeUtil.iconSize,
                       ),
                       MyText(
-                        product['number_favourite'],
+                        product['number_favourite'] == null
+                            ? ''
+                            : product['number_favourite'].toString(),
                         style: TextStyle(color: ColorUtil.primaryColor),
                       )
                     ],

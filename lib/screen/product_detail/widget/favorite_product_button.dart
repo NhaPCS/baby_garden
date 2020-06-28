@@ -23,13 +23,13 @@ class _State extends BaseState<FavoriteProductButton> {
 
   @override
   void initState() {
-    _favoriteProductProvider.isFavorite =
-        widget.product != null && '1' == widget.product['is_favourite'];
     super.initState();
   }
 
   @override
   Widget buildWidget(BuildContext context) {
+    _favoriteProductProvider.isFavorite =
+        widget.product != null && '1' == widget.product['is_favourite'];
     return InkWell(child: Container(
       child: Consumer<FavoriteProductProvider>(
         builder: (BuildContext context, FavoriteProductProvider value,
