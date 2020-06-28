@@ -14,6 +14,7 @@ class PromotionInput extends StatelessWidget {
   final VoidCallback onGoBookingPress;
   final VoidCallback onApplyCodePress;
   final VoidCallback onRemoveCodePress;
+  final GetPromotionDetailProvider getPromotionDetailProvider;
 
   const PromotionInput(
       {Key key,
@@ -21,11 +22,13 @@ class PromotionInput extends StatelessWidget {
       this.price,
       this.onGoBookingPress,
       this.onApplyCodePress,
-      this.onRemoveCodePress})
+      this.onRemoveCodePress,
+      this.getPromotionDetailProvider})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print("AAAA $price");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -61,10 +64,20 @@ class PromotionInput extends StatelessWidget {
         Consumer<GetPromotionDetailProvider>(
           builder: (BuildContext context, GetPromotionDetailProvider value,
               Widget child) {
-            if (value.promotion == null) return SizedBox();
+            if (value.promotion == null && value.error == null)
+              return SizedBox();
+            if (value.error != null)
+              return Padding(
+                padding: SizeUtil.smallPadding,
+                child: Text(
+                  S.of(context).promotion_code_error,
+                  style: TextStyle(color: ColorUtil.red),
+                ),
+              );
             return AddedPromoItem(
               promotion: value.promotion,
               onRemoved: () {
+                promoCodeController.text = '';
                 onRemoveCodePress();
               },
             );
@@ -99,6 +112,26 @@ class PromotionInput extends StatelessWidget {
             ),
             padding: SizeUtil.smallPadding),
         WidgetUtil.getLine(width: 5, margin: EdgeInsets.all(0)),
+        Padding(
+          padding: SizeUtil.smallPadding,
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(S.of(context).total_price),
+              ),
+              Consumer<GetPromotionDetailProvider>(
+                builder: (BuildContext context,
+                    GetPromotionDetailProvider value, Widget child) {
+                  return Text(
+                    StringUtil.getPriceText(_getTotalPrice()),
+                    style: TextStyle(
+                        color: ColorUtil.red, fontWeight: FontWeight.bold, fontSize: SizeUtil.textSizeBigger),
+                  );
+                },
+              )
+            ],
+          ),
+        ),
         Container(
           padding: SizeUtil.defaultPadding,
           width: double.infinity,
@@ -115,5 +148,18 @@ class PromotionInput extends StatelessWidget {
         )
       ],
     );
+  }
+
+  _getTotalPrice() {
+    try {
+      print("PRICE $price  ${price.runtimeType}");
+      int promotionPrice = getPromotionDetailProvider.promotion == null ||
+              getPromotionDetailProvider.promotion['value'] == null
+          ? 0
+          : int.parse(getPromotionDetailProvider.promotion['value']);
+      return (int.parse(price) - promotionPrice).toString();
+    } on Exception catch (e) {
+      return "0";
+    }
   }
 }

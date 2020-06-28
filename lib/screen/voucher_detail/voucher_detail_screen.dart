@@ -28,7 +28,10 @@ class _VoucherDetailScreenState
   @override
   void initState() {
     _getVoucherDetailProvider.setVoucher(widget.voucher);
-    _getVoucherDetailProvider.getVoucherDetail(widget.voucher['id']);
+    _getVoucherDetailProvider.getVoucherDetail(
+        widget.voucher['voucher_id'] != null
+            ? widget.voucher['voucher_id']
+            : widget.voucher['id']);
     super.initState();
   }
 

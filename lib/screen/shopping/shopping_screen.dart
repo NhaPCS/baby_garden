@@ -38,7 +38,6 @@ class _ShoppingState extends BaseState<ShoppingScreen> {
           return [
             SliverAppBar(
               floating: true,
-              snap: true,
               elevation: 0,
               pinned: true,
               backgroundColor: Colors.white,

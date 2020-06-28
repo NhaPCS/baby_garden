@@ -26,7 +26,7 @@ class _CommentBottomSheetDialogue
   @override
   void initState() {
     // TODO: implement initState
-    if (_listCommentProvider.listNews.length == 0) {
+    if (_listCommentProvider.listComments.length == 0) {
       _listCommentProvider.getListComment(widget.newsId);
     }
     super.initState();
@@ -41,15 +41,15 @@ class _CommentBottomSheetDialogue
       child: Consumer<ListCommentProvider>(
         builder:
             (BuildContext context, ListCommentProvider value, Widget child) {
-              if (value.listNews == null || value.listNews.isEmpty)
+              if (value.listComments == null || value.listComments.isEmpty)
                 return LoadingView(
-                  isNoData: value.listNews != null,
+                  isNoData: value.listComments != null,
                   onReload: () {
                     _listCommentProvider.getListComment(widget.newsId);
                   },
                 );
           return ListView(
-            children: value.listNews
+            children: value.listComments
                 .map((e) => Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[

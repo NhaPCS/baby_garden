@@ -3,7 +3,6 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/remind_cycle/remind_cycle_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_set_date/remind_set_date_screen.dart';
-import 'package:baby_garden_flutter/screen/remind_set_date_time/remind_set_date_time_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_set_time/remind_set_time_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
@@ -56,7 +55,6 @@ class _ReminderState extends BaseState<ReminderLayout> {
   @override
   void initState() {
     if (widget.remindCalendar != null) {
-      //TODO need to check
       _typeController.value = widget.remindCalendar.type.index + 1;
       _buyDateController.value = DateUtil.getServerDate(
           widget.remindCalendar.dateStart, widget.remindCalendar.timeStart);
@@ -196,14 +194,14 @@ class _ReminderState extends BaseState<ReminderLayout> {
         rowSelectRemindType(S.of(context).remindBuyProduct, 1),
         InkWell(
           onTap: () async {
-            DateTime date = await push(RemindSetDateTimeScreen());
+            DateTime date = await push(RemindSetDateScreen());
             _buyDateController.value = date;
             updateCallBack();
           },
           child: ValueListenableBuilder<DateTime>(
             builder: (BuildContext context, DateTime value, Widget child) {
               return rowTimeTable(S.of(context).remindTime,
-                  DateUtil.formatNormalDateTime(value));
+                  DateUtil.formatNormalDate(value));
             },
             valueListenable: _buyDateController,
           ),

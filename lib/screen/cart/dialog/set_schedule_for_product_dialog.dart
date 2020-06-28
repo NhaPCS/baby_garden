@@ -11,9 +11,9 @@ import 'package:nested/nested.dart';
 
 class SetScheduleForProductDialog extends StatefulWidget {
   final dynamic product;
+  final VoidCallback onAddedCalendar;
 
-  SetScheduleForProductDialog(
-      {Key key, this.product})
+  SetScheduleForProductDialog({Key key, this.product, this.onAddedCalendar})
       : super(key: key);
 
   @override
@@ -28,6 +28,9 @@ class _State
 
   @override
   Widget buildWidget(BuildContext context) {
+    if (widget.product['calendar'] != null)
+      _remindCalendar = RemindCalendar().fromJson(widget.product['calendar']);
+    _remindCalendar.productId = widget.product['product_id'];
     return AlertDialog(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -61,21 +64,22 @@ class _State
           ReminderLayout(
             showDesc: false,
             hasDivider: true,
+            remindCalendar:
+                widget.product['calendar'] != null ? _remindCalendar : null,
             reminderSelectCallBack:
                 (type, buyDate, endDate, period, time1, time2, time3, time4) {
-                  _remindCalendar.type =
+              _remindCalendar.type =
                   type == 1 ? RemindType.remindBuy : RemindType.remindUse;
-                  _remindCalendar.dateStart =
-                      DateUtil.formatNormalDateTime(buyDate);
-                  _remindCalendar.timeStart = DateUtil.formatTime(buyDate);
-                  _remindCalendar.dateEnd =
-                      DateUtil.formatNormalDateTime(endDate);
-                  _remindCalendar.timeEnd = DateUtil.formatTime(endDate);
-                  _remindCalendar.period = period.toString();
-                  _remindCalendar.time1 = DateUtil.formatTime(time1);
-                  _remindCalendar.time2 = DateUtil.formatTime(time2);
-                  _remindCalendar.time3 = DateUtil.formatTime(time3);
-                  _remindCalendar.time4 = DateUtil.formatTime(time4);
+              _remindCalendar.dateStart =
+                  DateUtil.formatNormalDateTime(buyDate);
+              _remindCalendar.timeStart = DateUtil.formatTime(buyDate);
+              _remindCalendar.dateEnd = DateUtil.formatNormalDateTime(endDate);
+              _remindCalendar.timeEnd = DateUtil.formatTime(endDate);
+              _remindCalendar.period = period.toString();
+              _remindCalendar.time1 = DateUtil.formatTime(time1);
+              _remindCalendar.time2 = DateUtil.formatTime(time2);
+              _remindCalendar.time3 = DateUtil.formatTime(time3);
+              _remindCalendar.time4 = DateUtil.formatTime(time4);
             },
           ),
           Row(
@@ -97,7 +101,9 @@ class _State
               ),
               MyRaisedButton(
                 onPressed: () {
-                  getViewModel().addNewCalendar(context, calendar: _remindCalendar);
+                  getViewModel()
+                      .addNewCalendar(context, calendar: _remindCalendar);
+                  widget.onAddedCalendar();
                 },
                 text: S.of(context).agree,
                 color: ColorUtil.primaryColor,

@@ -197,7 +197,6 @@
   "vcb_express": "VCB Express",
   "vcb_ex_detail_short_title": "Vườn của bé: Thời trang dành cho bé\n năm 2019",
   "vcb_ex_detail_full_title": "Thời trang dành cho bé năm 2019 phong cách xuân hè.",
-  "vcb_ex_detail_post_time": "Thời trang cho bé | {time}",
   "vcb_ex_detail_ctm_hint": "Viết bình luận của bạn",
   "vcb_ex_detail_first_content": "Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn.",
   "vcb_ex_detail_second_content": "Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn.",
@@ -525,5 +524,8 @@
   "message_choose_service": "Bạn vui lòng chọn Dịch vụ",
   "direct_address": "Chỉ đường",
   "mess_verify_report_dialog": "Vui lòng nhập tiêu đề hoặc nội dung để gửi báo cáo",
-  "mess_report_success": "Cảm ơn bạn đã gửi báo cáo. Chúng tôi sẽ xem xét báo cáo của bạn trong thời gian sớm nhất."
+  "mess_report_success": "Cảm ơn bạn đã gửi báo cáo. Chúng tôi sẽ xem xét báo cáo của bạn trong thời gian sớm nhất.",
+  "mess_confirm_delete_calendar": "Bạn có muốn xoá lịch nhắc này không?",
+  "promotion_code_error": "Mã giảm giá không đúng hoặc đã được sử dụng",
+  "total_price": "Thành tiền"
 }

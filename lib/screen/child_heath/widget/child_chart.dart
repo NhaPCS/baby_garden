@@ -60,7 +60,6 @@ class ChildChartState extends State<ChildChart> {
                           enabled: true,
                           touchCallback: (barRes) {
                             if (barRes != null && barRes.spot != null) {
-                              print("AA ${barRes.spot.touchedRodDataIndex}");
                               showDialog(
                                   context: context,
                                   builder: (context) {

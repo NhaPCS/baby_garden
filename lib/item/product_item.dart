@@ -80,7 +80,7 @@ class ProductItem extends StatelessWidget {
                     child: DiscountWidget(
                         discount: product == null
                             ? 0
-                            : int.parse(product['number_sales'])),
+                            : StringUtil.getDiscountPercent(product)),
                     right: 0,
                     top: SizeUtil.smallSpace,
                   )

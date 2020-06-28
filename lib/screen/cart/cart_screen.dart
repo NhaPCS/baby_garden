@@ -69,6 +69,7 @@ class _CartState extends BaseState<CartScreen> {
                       if (index == value.shops.length) {
                         return PromotionInput(
                           promoCodeController: _promoCodeController,
+                          getPromotionDetailProvider: _getPromotionDetailProvider ,
                           onApplyCodePress: () {
                             if (_promoCodeController.text.isNotEmpty)
                               _getPromotionDetailProvider.getPromotionDetail(

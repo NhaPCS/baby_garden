@@ -129,13 +129,21 @@ class ProductCartItem extends StatelessWidget {
                       Expanded(
                         child: Center(
                           child: ButtonIcon(
-                            icon: SvgIcon('ic_alarm.svg'),
+                            icon: SvgIcon(product['calendar'] == null
+                                ? 'ic_alarm_disable.svg'
+                                : 'ic_alarm.svg'),
                             onPressed: () {
                               showDialog(
                                   context: context,
                                   builder: (context) {
                                     return SetScheduleForProductDialog(
-                                        product: product);
+                                      product: product,
+                                      onAddedCalendar: () {
+                                        Provider.of<CartProvider>(context,
+                                                listen: false)
+                                            .getMyCart();
+                                      },
+                                    );
                                   });
                             },
                           ),

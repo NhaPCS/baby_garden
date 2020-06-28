@@ -12,12 +12,12 @@ import 'package:flutter/material.dart';
 class RemindCardItem extends StatelessWidget {
   final RemindCalendar calendar;
   final VoidCallback onEdit;
+  final RemindCalendarProvider remindCalendarProvider;
 
-  RemindCardItem({Key key, this.calendar, this.onEdit}) : super(key: key);
+  RemindCardItem({Key key, this.calendar, this.onEdit, this.remindCalendarProvider}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final _remindCalendarProvider = RemindCalendarProvider();
     bool _validURL =
         calendar.image != null ? Uri.parse(calendar.image).isAbsolute : false;
 
@@ -101,7 +101,12 @@ class RemindCardItem extends StatelessWidget {
                   size: SizeUtil.iconMidSize, color: ColorUtil.darkGray),
               onPressed: () {
                 //remove reminder
-                _remindCalendarProvider.deleteCalendar(context, calendar.id);
+                WidgetUtil.showConfirmDialog(context,
+                    title: S.of(context).confirm,
+                    message: S.of(context).mess_confirm_delete_calendar,
+                    positive: S.of(context).yes, positiveClicked: () {
+                  remindCalendarProvider.deleteCalendar(context, calendar.id);
+                });
               },
             ),
             ButtonIcon(
