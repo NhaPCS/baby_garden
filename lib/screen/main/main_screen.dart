@@ -8,16 +8,19 @@ import 'package:baby_garden_flutter/screen/cart/cart_screen.dart';
 import 'package:baby_garden_flutter/screen/home/home_screen.dart';
 import 'package:baby_garden_flutter/screen/main/provider/get_promotion_popup_provider.dart';
 import 'package:baby_garden_flutter/screen/order/order_screen.dart';
+import 'package:baby_garden_flutter/screen/order_detail/order_detail_screen.dart';
 import 'package:baby_garden_flutter/screen/profile/profile_screen.dart';
 import 'package:baby_garden_flutter/screen/shopping/shopping_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
+import 'package:baby_garden_flutter/data/service.dart' as service;
 
 class MainScreen extends StatefulWidget {
   final int index;
@@ -34,6 +37,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
   TabController _tabController;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   final ChangeIndexProvider _changeIndexProvider = ChangeIndexProvider();
   final GetPromotionPopupProvider _getPromotionProvider =
       GetPromotionPopupProvider();
@@ -47,7 +51,7 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
     _tabController.addListener(() {
       _changeIndexProvider.changeIndex(_tabController.index);
     });
-
+    _configFirebaseMessaging();
     super.initState();
     if (widget.index > 0) _tabController.animateTo(widget.index);
   }
@@ -55,7 +59,9 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (widget.getPromotion != null && widget.getPromotion && !_getPromotionProvider.got) {
+    if (widget.getPromotion != null &&
+        widget.getPromotion &&
+        !_getPromotionProvider.got) {
       _getPromotionProvider.getPromotion(context);
     }
   }
@@ -204,5 +210,52 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
   @override
   List<SingleChildWidget> providers() {
     return [ChangeNotifierProvider.value(value: _changeIndexProvider)];
+  }
+
+  _configFirebaseMessaging() {
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        _showItemDialog(message);
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+        _navigateToBooking(message);
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+        _navigateToBooking(message);
+      },
+    );
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(
+            sound: true, badge: true, alert: true, provisional: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+    _firebaseMessaging.getToken().then((String token) {
+      service.updateToken(token: token);
+      print("TOKEN  ${token}");
+    });
+  }
+
+  void _showItemDialog(Map<String, dynamic> message) {
+    final dynamic data = message['data'] ?? message;
+    if (data != null) {
+      WidgetUtil.showMessageDialog(context,
+          message: data['content'], title: data['title'], onOkClick: () {
+        _navigateToBooking(message);
+      });
+    }
+  }
+
+  void _navigateToBooking(Map<String, dynamic> message) {
+    final dynamic data = message['data'] ?? message;
+    if (data['booking_id'] != null) {
+      push(OrderDetailScreen(
+        bookingId: data['booking_id'],
+      ));
+    }
   }
 }

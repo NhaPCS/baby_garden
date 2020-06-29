@@ -23,6 +23,8 @@ class LoginViewModel extends BaseViewModel{
     dynamic data = await login(context,
         password: password, phone: phone);
     if (data != null) {
+      String token = await ShareValueProvider.shareValueProvider.getFcmToken();
+      updateToken(token: token);
       ShareValueProvider.shareValueProvider.saveUserInfo(jsonEncode(data));
       ShareValueProvider.shareValueProvider.savePoint(int.parse(data["point"]));
       Provider.of<UserProvider>(context,listen: false).getUserInfo();

@@ -1114,6 +1114,18 @@ Future<Response> deleteSearch(BuildContext context) async {
   return null;
 }
 
+Future<Response> updateToken({String token}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  ShareValueProvider.shareValueProvider.saveFcmToken(token);
+  if (userId == null) return null;
+  dynamic params = {"user_id": userId, "token_fcm": token};
+
+  Response response = await post(null, path: "updateToken", param: params);
+
+  if (response.isSuccess()) return response;
+  return null;
+}
+
 Future<dynamic> updateProfile(BuildContext context,
     {String name, String gender, String birthday}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
