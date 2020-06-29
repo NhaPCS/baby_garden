@@ -1,13 +1,11 @@
 import 'package:baby_garden_flutter/provider/app_provider.dart';
-import 'package:baby_garden_flutter/provider/get_banners_provider.dart';
 import 'package:baby_garden_flutter/screen/home/item/home_category_item.dart';
 import 'package:baby_garden_flutter/screen/home/view_model/home_view_model.dart';
-import 'package:baby_garden_flutter/screen/photo_view/photo_view_screen.dart';
+import 'package:baby_garden_flutter/screen/home/widget/banners.dart';
 import 'package:baby_garden_flutter/screen/search/search_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/delegate/sliver_category_delegate.dart';
 import 'package:baby_garden_flutter/widget/input/search_bar.dart';
-import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
 import 'package:baby_garden_flutter/widget/product/grid_product.dart';
 import 'package:baby_garden_flutter/widget/product/notify_icon.dart';
 import 'package:flutter/cupertino.dart';
@@ -68,26 +66,7 @@ class _HomeState extends BaseStateModel<HomeScreen, HomeViewModel> {
                         },
                       ),
                       Expanded(
-                        child: Consumer<GetBannersProvider>(
-                          builder: (BuildContext context,
-                              GetBannersProvider value, Widget child) {
-                            if (value.banners == null || value.banners.isEmpty)
-                              return SizedBox();
-                            return MyCarouselSlider(
-                              hasShadow: true,
-                              autoPlay: true,
-                              images: value.banners,
-                              imageAttrName: "img",
-                              onItemPressed: (index) {
-                                push(PhotoViewScreen(
-                                  images: value.banners,
-                                  imageAttrName: 'img',
-                                  initIndex: index,
-                                ));
-                              },
-                            );
-                          },
-                        ),
+                        child: Banners(),
                       ),
                     ],
                   )

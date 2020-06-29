@@ -89,6 +89,7 @@ class ProductCartItem extends StatelessWidget {
                           },
                         ),
                   ProductProperties(product: product),
+                  SizedBox(height: SizeUtil.defaultSpace,),
                   Row(
                     children: <Widget>[
                       Text(
