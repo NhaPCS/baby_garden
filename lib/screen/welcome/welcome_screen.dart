@@ -18,33 +18,38 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeState extends BaseState<WelcomeScreen> {
   _WelcomeState() {
     new Timer(const Duration(milliseconds: 3000), () {
-      pushReplacement(WelcomeGuideScreen());
+//      pushReplacement(WelcomeGuideScreen());
     });
   }
 
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          SizedBox(height: SizeUtil.hugSpace),
-          Image.asset("photo/logo.png",
-              width: MediaQuery.of(context).size.width / 3),
-          HoboText(fontSize: 22,),
-          SizedBox(height: SizeUtil.defaultSpace),
-          Text(S.of(context).welcome_title,
-              textAlign: TextAlign.center, style: TextStyle(fontSize: 18)),
-          Expanded(
-            child: Padding(
-              child: Image.asset("photo/welcome_1.png"),
-              padding: EdgeInsets.only(
-                  left: SizeUtil.largeSpace,
-                  right: SizeUtil.largeSpace,
-                  bottom: SizeUtil.tinySpace),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(height: SizeUtil.hugSpace),
+            Image.asset("photo/logo.png",
+                width: MediaQuery.of(context).size.width / 3),
+            HoboText(
+              fontSize: 22,
             ),
-          )
-        ],
+            SizedBox(height: SizeUtil.defaultSpace),
+            Text(S.of(context).welcome_title,
+                textAlign: TextAlign.center, style: TextStyle(fontSize: 18)),
+            Expanded(
+              child: Padding(
+                child: Image.asset("photo/welcome_1.png"),
+                padding: EdgeInsets.only(
+                    left: SizeUtil.largeSpace,
+                    right: SizeUtil.largeSpace,
+                    bottom: SizeUtil.tinySpace),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
