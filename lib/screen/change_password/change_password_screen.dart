@@ -42,17 +42,13 @@ class _ChangePasswordScreenState extends BaseStateModel<ChangePasswordScreen,Cha
             height: MediaQuery.of(context).size.width / 4,),
           HoboText(fontSize: 22),
           SizedBox(height: SizeUtil.defaultSpace,),
-          MyTextField(
+          MyPasswordTextField(
+            controller: _oldPasswordController,
             hint: S
                 .of(context)
                 .enter_old_password,
-            textEditingController: _oldPasswordController,
-            borderColor: ColorUtil.colorAccent,
-            elevation: SizeUtil.smallElevation,
-            borderRadius: SizeUtil.tinyRadius,
-            contentPadding: SizeUtil.normalPadding,
-            inputType: TextInputType.text,
           ),
+          SizedBox(),
           SizedBox(height: SizeUtil.normalSpace,),
           MyPasswordTextField(
             controller: _newPasswordController,

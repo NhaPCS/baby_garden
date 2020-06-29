@@ -12,6 +12,7 @@ import 'package:baby_garden_flutter/screen/booking/widget/input_note.dart';
 import 'package:baby_garden_flutter/screen/booking/widget/list_title_custom.dart';
 import 'package:baby_garden_flutter/screen/booking/widget/transfer_service.dart';
 import 'package:baby_garden_flutter/screen/checkout/checkout_screen.dart';
+import 'package:baby_garden_flutter/screen/checkout/dialogue/confirm_dialogue.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/widget/button/privacy_policy_button.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -53,18 +54,26 @@ class _BookingScreenState
       ValueNotifier(false);
   final UserPointProvider _pointProvider = new UserPointProvider();
   int checkoutPoint = 0;
+  int totalPriceAfterFix = 0;
+  int totalPrice = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     _transferMethodProvider.getShips();
     _pointProvider.getPoint(context, shopId: widget.shopID);
+    if (Provider.of<ReceiveAddressListProvider>(context, listen: false)
+            .addressList
+            .length ==
+        0) {
+      Provider.of<ReceiveAddressListProvider>(context, listen: false).getData();
+    }
+    totalPriceAfterFix = getTotalPrice();
     super.initState();
   }
 
   @override
   Widget buildWidget(BuildContext context) {
-    final totalPrice = Provider.of<CartProvider>(context).price;
     // TODO: implement buildWidget
     return Scaffold(
       appBar: getAppBar(
@@ -83,7 +92,7 @@ class _BookingScreenState
                   ? SizedBox()
                   : ListTitleCustom(
                       icon: SvgIcon(
-                        'ic_receive_location.svg',
+                        'passage-of-time.svg',
                         width: SizeUtil.iconSizeDefault,
                         height: SizeUtil.iconSizeDefault,
                       ),
@@ -230,7 +239,7 @@ class _BookingScreenState
                       checkoutPoint = pointVal;
                       _transferMethodProvider.onNotify();
                     },
-                    totalPrice: getTotalPrice(),
+                    totalPrice: totalPrice,
                     totalPoint: value.totalPoint,
                     checkoutMethod: checkoutMethod,
                     pointCheckoutValueController: _pointCheckoutValueController,
@@ -279,38 +288,47 @@ class _BookingScreenState
           ),
           WidgetUtil.getLine(
               width: 1, color: ColorUtil.lineColor, margin: EdgeInsets.all(0)),
-          ValueListenableBuilder<bool>(valueListenable: _pointCheckoutValueController,builder: (BuildContext context, bool value, Widget child) {
-            if(!value){
-              return SizedBox();
-            }else {
-              return Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: SizeUtil.normalSpace,
-                        right: SizeUtil.normalSpace,
-                        top: SizeUtil.midSmallSpace,
-                        bottom: SizeUtil.midSmallSpace),
-                    child: Row(
-                      children: <Widget>[
-                        Text(S.of(context).point_checkout,
-                            style: TextStyle(fontSize: SizeUtil.textSizeExpressDetail)),
-                        Spacer(),
-                        Consumer<TransferMethodProvider>(builder: (BuildContext context,
-                            TransferMethodProvider value, Widget child) {
-                          return Text("- ${StringUtil.getPriceText((checkoutPoint*1000).toString())}",
-                              style:
-                              TextStyle(fontSize: SizeUtil.textSizeExpressDetail,color: ColorUtil.blue));
-                        })
-                      ],
+          ValueListenableBuilder<bool>(
+            valueListenable: _pointCheckoutValueController,
+            builder: (BuildContext context, bool value, Widget child) {
+              if (!value) {
+                return SizedBox();
+              } else {
+                return Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: SizeUtil.normalSpace,
+                          right: SizeUtil.normalSpace,
+                          top: SizeUtil.midSmallSpace,
+                          bottom: SizeUtil.midSmallSpace),
+                      child: Row(
+                        children: <Widget>[
+                          Text(S.of(context).point_checkout,
+                              style: TextStyle(
+                                  fontSize: SizeUtil.textSizeExpressDetail)),
+                          Spacer(),
+                          Consumer<TransferMethodProvider>(builder:
+                              (BuildContext context,
+                                  TransferMethodProvider value, Widget child) {
+                            return Text(
+                                "- ${StringUtil.getPriceText((checkoutPoint * 1000).toString())}",
+                                style: TextStyle(
+                                    fontSize: SizeUtil.textSizeExpressDetail,
+                                    color: ColorUtil.blue));
+                          })
+                        ],
+                      ),
                     ),
-                  ),
-                  WidgetUtil.getLine(
-                      width: 1, color: ColorUtil.lineColor, margin: EdgeInsets.all(0)),
-                ],
-              );
-            }
-          },),
+                    WidgetUtil.getLine(
+                        width: 1,
+                        color: ColorUtil.lineColor,
+                        margin: EdgeInsets.all(0)),
+                  ],
+                );
+              }
+            },
+          ),
           Padding(
             padding: const EdgeInsets.only(
                 left: SizeUtil.normalSpace,
@@ -351,7 +369,8 @@ class _BookingScreenState
                       Widget child) {
                     return Text(
                         StringUtil.getPriceText(
-                            (totalPrice + value.price - checkoutPoint*1000).toString()),
+                            (totalPrice + value.price - checkoutPoint * 1000)
+                                .toString()),
                         style: TextStyle(
                             fontSize: SizeUtil.textSizeDefault,
                             color: Colors.red,
@@ -445,11 +464,14 @@ class _BookingScreenState
               CheckoutScreen(
                 bookingId: getViewModel().bookingData['booking_id'],
                 bookingCode: getViewModel().bookingData['code'].toString(),
-                totalPrice: getTotalPrice(),
+                totalPrice: totalPriceAfterFix,
                 phone: address != null ? address['phone'] : "",
               ));
         } else {
-          RouteUtil.pushAndReplaceAll(context, MainScreen(index: 1), "/main");
+          int index =  await showDialog(
+              context: context,
+              builder: (BuildContext context) => ConfirmDialogue());
+          pushAndReplaceAll(MainScreen(index: index), "/main_screen");
         }
         Provider.of<CartProvider>(context, listen: false).getMyCart();
       }
@@ -485,19 +507,25 @@ class _BookingScreenState
               CheckoutScreen(
                 bookingId: getViewModel().bookingData['booking_id'],
                 bookingCode: getViewModel().bookingData['code'].toString(),
-                totalPrice: getTotalPrice(),
+                totalPrice: totalPriceAfterFix,
                 phone: address != null ? address['phone'] : "",
               ));
         } else {
-          RouteUtil.pushAndReplaceAll(context, MainScreen(index: 1), "/main");
+          int index =  await showDialog(
+              context: context,
+              builder: (BuildContext context) => ConfirmDialogue());
+          pushAndReplaceAll(MainScreen(index: index), "/main_screen");
         }
         Provider.of<CartProvider>(context, listen: false).getMyCart();
       }
     }
   }
 
+
   int getTotalPrice() {
-    return Provider.of<CartProvider>(context, listen: false).price +
+    print("SHOP2112233 ${Provider.of<CartProvider>(context, listen: false).getShopTotalPrice(widget.shopID)}");
+    totalPrice = Provider.of<CartProvider>(context, listen: false).getShopTotalPrice(widget.shopID);
+    return totalPrice +
         _transferMethodProvider.price -
         checkoutPoint * 1000;
   }

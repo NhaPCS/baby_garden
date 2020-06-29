@@ -27,6 +27,26 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  int getShopTotalPrice(String shopId) {
+    int price = 0;
+    if (shops != null) {
+      shops.forEach((element) {
+        if (element["shop_id"] == shopId &&
+            element != null &&
+            element['product'] != null) {
+          element['product'].forEach((p) {
+            int number = int.parse(p['number']);
+            badge += number;
+            if (p['price_discount'] != null)
+              price += int.parse(p['price_discount']) * number;
+          });
+          return price;
+        }
+      });
+    }
+    return price;
+  }
+
   Future<void> addProduct(dynamic product) async {
     if (product['quantity'] == null || product['quantity'] <= 0)
       product['quantity'] = 1;
