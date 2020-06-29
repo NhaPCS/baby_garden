@@ -14,7 +14,7 @@ class ChangePasswordViewModel extends BaseViewModel{
       Param(key: S.of(context).new_password,value: password),
       Param(key: S.of(context).renew_password,value: rePassword),
       Param(key: S.of(context).alert_compare_pass_repass,value: password,checkType: CheckType.COMPARE_VALUE,valueConpare: rePassword)])){
-      return null;
+      return false;
     }
     Map userInfo  = await ShareValueProvider.shareValueProvider.getUserInfo();
     String phone  = userInfo['phone'];

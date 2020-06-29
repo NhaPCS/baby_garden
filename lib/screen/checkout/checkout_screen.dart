@@ -62,9 +62,9 @@ class _CheckoutScreenState
             bgColor: ColorUtil.primaryColor,
             titleColor: Colors.white,
             backColor: Colors.white,
-        isShowConfirmDialogue: true,
-        content: S.of(context).checkout_notice,
-        alertTitle: S.of(context).notify),
+            isShowConfirmDialogue: true,
+            content: S.of(context).checkout_notice,
+            alertTitle: S.of(context).notify),
         body: ListView(
           children: <Widget>[
             TitleIcon(
@@ -260,7 +260,7 @@ class _CheckoutScreenState
                       builder:
                           (BuildContext context, File value, Widget child) {
                         print(value);
-                        return value.path == ""
+                        return value == null || value.path == ""
                             ? SvgIcon("photo-camera.svg",
                                 width: MediaQuery.of(context).size.width / 5)
                             : CircleImage(
@@ -367,7 +367,12 @@ class _CheckoutScreenState
                 int index = await showDialog(
                     context: context,
                     builder: (BuildContext context) => ConfirmDialogue());
-                pushAndReplaceAll(MainScreen(index: index), "/main_screen");
+                print(" HOME INDEX $index");
+                if (index != null) {
+                  pushAndReplaceAll(MainScreen(index: index), "/main_screen");
+                }else{
+                  pushAndReplaceAll(MainScreen(index: 0), "/main_screen");
+                }
               },
               text: S.of(context).finish_checkout.toUpperCase(),
               textStyle: TextStyle(
@@ -394,7 +399,6 @@ class _CheckoutScreenState
   }
 
   Future<bool> _onBackPress() async {
-    print("HEHEHEHEHEHE");
     return showDialog(
         context: context,
         barrierDismissible: false,

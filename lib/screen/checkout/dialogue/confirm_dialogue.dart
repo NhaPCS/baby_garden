@@ -43,7 +43,7 @@ class ConfirmDialogue extends StatelessWidget {
                   margin: EdgeInsets.only(bottom: SizeUtil.tinySpace),
                   color: ColorUtil.lineColor),
               Text(
-                S.of(context).congratulation_booking(" Moon "),
+                S.of(context).congratulation_booking(""),
                 style: TextStyle(
                   fontSize: SizeUtil.textSizeExpressTitle,
                 ),
