@@ -1096,6 +1096,14 @@ Future<dynamic> support() async {
   return null;
 }
 
+Future<dynamic> productTest({String babyId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId, "baby_id": babyId};
+  Response response = await get(null, path: "productTest", param: params);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 Future<Response> deleteSearch(BuildContext context) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {"user_id": userId};
@@ -1117,7 +1125,10 @@ Future<dynamic> updateProfile(BuildContext context,
   };
 
   Response response = await post(context,
-          path: "updateProfile", param: params, requireLogin: true, showLoading: true);
-  if(response.isSuccess()) return response.data;
+      path: "updateProfile",
+      param: params,
+      requireLogin: true,
+      showLoading: true);
+  if (response.isSuccess()) return response.data;
   return response;
 }
