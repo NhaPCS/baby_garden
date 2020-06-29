@@ -4787,6 +4787,15 @@ class S {
       args: [],
     );
   }
+
+  String get mess_error_user_name {
+    return Intl.message(
+      'Bạn vui lòng nhập đầy đủ họ tên',
+      name: 'mess_error_user_name',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

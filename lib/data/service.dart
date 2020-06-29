@@ -1110,18 +1110,8 @@ Future<dynamic> updateProfile(BuildContext context,
     'gender': gender,
   };
 
-  String path = 'updateProfile';
-
   Response response = await post(context,
-          path: path, param: params, requireLogin: true, showLoading: true)
-      .then((value) {
-    print(value);
-    if (value.isSuccess()) return value;
-    return null;
-  }).catchError((onError) {
-    print(onError);
-    return null;
-  });
-
+          path: "updateProfile", param: params, requireLogin: true, showLoading: true);
+  if(response.isSuccess()) return response.data;
   return response;
 }

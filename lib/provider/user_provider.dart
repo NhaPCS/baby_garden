@@ -33,11 +33,8 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateUserInfo({String name, int gender, String birthday}) {
-    if (name != null) userInfo['name'] = name;
-    if (gender != null) userInfo['gender'] = gender;
-    if (birthday != null) userInfo['birthday'] = birthday;
-
+  void updateUserData(dynamic data) {
+    userInfo = data;
     notifyListeners();
   }
 
@@ -57,7 +54,7 @@ class UserProvider extends ChangeNotifier {
           S.of(context).gender,
           userInfo == null
               ? ""
-              : userInfo['gender'] == 1
+              : userInfo['gender'] == "1"
                   ? S.of(context).male
                   : S.of(context).female,
           ''),

@@ -29,7 +29,6 @@ class _AccountManageScreenState
     extends BaseStateModel<AccountManageScreen, AccountManageViewModel> {
   final GetListBabyProvider _getListBabyProvider = GetListBabyProvider();
   final TextEditingController _nameController = TextEditingController();
-  UserProvider _userProvider;
 
   File _avatarFile;
 
@@ -41,8 +40,6 @@ class _AccountManageScreenState
 
   @override
   Widget buildWidget(BuildContext context) {
-    _userProvider = Provider.of<UserProvider>(context, listen: false);
-
     return Scaffold(
         appBar: getAppBar(title: S.of(context).accManage),
         body: Column(
@@ -99,10 +96,13 @@ class _AccountManageScreenState
       onTap: () async {
         switch (key) {
           case 2:
+            if (entry['content'] != null &&
+                entry['content'].toString().isNotEmpty) {
+              return;
+            }
             showBirthdaySelectorDialog(context, (birthday) async {
-              _userProvider.updateUserInfo(
+              await getViewModel().editProfile(context,
                   birthday: DateUtil.formatBirthdayDate(birthday));
-              await getViewModel().editProfile(user: _userProvider.userInfo);
             });
             break;
           case 3:
@@ -135,13 +135,8 @@ class _AccountManageScreenState
                     autoFocus: true,
                     onSubmitted: (val) async {
                       _nameController.text = val;
-
-                      Provider.of<UserProvider>(context, listen: false)
-                          .updateUserInfo(name: _nameController.text);
-                      await getViewModel().editProfile(
-                          user:
-                              Provider.of<UserProvider>(context, listen: false)
-                                  .userInfo);
+                      await getViewModel()
+                          .editProfile(context, name: _nameController.text);
                     },
                     contentPadding: EdgeInsets.all(0),
                     textAlign: TextAlign.right,
@@ -240,20 +235,14 @@ class _AccountManageScreenState
                 CupertinoActionSheetAction(
                     onPressed: () async {
                       Navigator.of(context).pop();
-                      Provider.of<UserProvider>(context, listen: false)
-                          .updateUserInfo(gender: 1);
-                      await getViewModel()
-                          .editProfile(user: _userProvider.userInfo);
+                      await getViewModel().editProfile(context, gender: 1);
                     },
                     child: Text(S.of(context).male)),
                 CupertinoActionSheetAction(
                     isDefaultAction: true,
                     onPressed: () async {
                       Navigator.of(context).pop();
-                      Provider.of<UserProvider>(context, listen: false)
-                          .updateUserInfo(gender: 2);
-                      await getViewModel()
-                          .editProfile(user: _userProvider.userInfo);
+                      await getViewModel().editProfile(context, gender: 2);
                     },
                     child: Text(S.of(context).female))
               ],
