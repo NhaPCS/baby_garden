@@ -136,6 +136,14 @@ class DateUtil {
     }
   }
 
+  static DateTime getDateFrom(String rawDate) {
+    try {
+      return new DateFormat("yyyy-MM-dd").parse(rawDate);
+    } on Exception catch (e) {
+      return null;
+    }
+  }
+
   static DateTime getServerDate(String rawDate, String rawTime) {
     try {
       if (rawDate == null || rawDate.isEmpty || rawDate.contains('0000'))
@@ -257,7 +265,7 @@ class StringUtil {
     }
   }
 
-  static String removeHtml(String htmlString){
+  static String removeHtml(String htmlString) {
     var document = parse(htmlString);
     String parsedString = parse(document.body.text).documentElement.text;
     return parsedString;
@@ -628,7 +636,7 @@ class WidgetUtil {
         positive: S.of(context).from_camera,
         negative: S.of(context).from_gallery,
         positiveClicked: onCameraClick,
-        negativeClick: onGalleryClick);
+        negativeClick: onGalleryClick, barrierDismissible: true);
   }
 
   static void showRequireLoginDialog(BuildContext context) {
@@ -781,10 +789,11 @@ class WidgetUtil {
       String positive = "OK",
       String negative = "Cancel",
       VoidCallback positiveClicked,
-      VoidCallback negativeClick}) {
+      VoidCallback negativeClick,
+      bool barrierDismissible = false}) {
     showDialog(
       context: context,
-      barrierDismissible: false,
+      barrierDismissible: barrierDismissible,
       child: new CupertinoAlertDialog(
         title: Text(title),
         content: Padding(

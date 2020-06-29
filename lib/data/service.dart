@@ -1090,11 +1090,37 @@ Future<dynamic> listQuestion() async {
   return null;
 }
 
+Future<dynamic> support() async {
+  Response response = await get(null, path: "support");
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> productTest({String babyId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {"user_id": userId, "baby_id": babyId};
+  Response response = await get(null, path: "productTest", param: params);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 Future<Response> deleteSearch(BuildContext context) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {"user_id": userId};
 
   Response response = await post(context, path: "deleteSearch", param: params);
+
+  if (response.isSuccess()) return response;
+  return null;
+}
+
+Future<Response> updateToken({String token}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  ShareValueProvider.shareValueProvider.saveFcmToken(token);
+  if (userId == null) return null;
+  dynamic params = {"user_id": userId, "token_fcm": token};
+
+  Response response = await post(null, path: "updateToken", param: params);
 
   if (response.isSuccess()) return response;
   return null;
@@ -1111,7 +1137,10 @@ Future<dynamic> updateProfile(BuildContext context,
   };
 
   Response response = await post(context,
-          path: "updateProfile", param: params, requireLogin: true, showLoading: true);
-  if(response.isSuccess()) return response.data;
+      path: "updateProfile",
+      param: params,
+      requireLogin: true,
+      showLoading: true);
+  if (response.isSuccess()) return response.data;
   return response;
 }
