@@ -1809,15 +1809,6 @@ class S {
     );
   }
 
-  String vcb_ex_detail_post_time(Object time) {
-    return Intl.message(
-      'Thời trang cho bé | $time',
-      name: 'vcb_ex_detail_post_time',
-      desc: '',
-      args: [time],
-    );
-  }
-
   String get vcb_ex_detail_ctm_hint {
     return Intl.message(
       'Viết bình luận của bạn',
@@ -4747,6 +4738,60 @@ class S {
     return Intl.message(
       'Chỉ đường',
       name: 'direct_address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mess_verify_report_dialog {
+    return Intl.message(
+      'Vui lòng nhập tiêu đề hoặc nội dung để gửi báo cáo',
+      name: 'mess_verify_report_dialog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mess_report_success {
+    return Intl.message(
+      'Cảm ơn bạn đã gửi báo cáo. Chúng tôi sẽ xem xét báo cáo của bạn trong thời gian sớm nhất.',
+      name: 'mess_report_success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mess_confirm_delete_calendar {
+    return Intl.message(
+      'Bạn có muốn xoá lịch nhắc này không?',
+      name: 'mess_confirm_delete_calendar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get promotion_code_error {
+    return Intl.message(
+      'Mã giảm giá không đúng hoặc đã được sử dụng',
+      name: 'promotion_code_error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get total_price {
+    return Intl.message(
+      'Thành tiền',
+      name: 'total_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mess_error_user_name {
+    return Intl.message(
+      'Bạn vui lòng nhập đầy đủ họ tên',
+      name: 'mess_error_user_name',
       desc: '',
       args: [],
     );

@@ -641,13 +641,20 @@ Future<void> addProductCart({List<dynamic> products}) async {
   return null;
 }
 
-Future<void> editProductCart({String productId, int number}) async {
+Future<void> editProductCart(
+    {String productId, int number, String sizeId, String colorId}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {
     "user_id": userId,
     "product_id": productId,
     "number": number.toString(),
   };
+  if (sizeId != null) {
+    params['size_id'] = sizeId;
+  }
+  if (colorId != null) {
+    params['color_id'] = colorId;
+  }
   Response response = await post(null,
       path: 'editProduct',
       param: params,
@@ -697,9 +704,9 @@ Future<Response> reportProduct(BuildContext context,
   dynamic params = {
     "user_id": userId,
     "product_id": productId,
-    "title": title,
-    "content": content,
-    "titleId": titleId
+    "title": title ?? '',
+    "content": content ?? '',
+    "titleId": titleId ?? ''
   };
   dynamic files = {"img": img};
   Response response = await postMultiPart(context,
@@ -958,7 +965,6 @@ Future<dynamic> getListRemindCalendar(BuildContext context) async {
   dynamic params = {"user_id": userId};
 
   Response response = await get(context, path: "listCalendar", param: params);
-  print(response);
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -1104,18 +1110,8 @@ Future<dynamic> updateProfile(BuildContext context,
     'gender': gender,
   };
 
-  String path = 'updateProfile';
-
   Response response = await post(context,
-          path: path, param: params, requireLogin: true, showLoading: true)
-      .then((value) {
-    print(value);
-    if (value.isSuccess()) return value;
-    return null;
-  }).catchError((onError) {
-    print(onError);
-    return null;
-  });
-
+          path: "updateProfile", param: params, requireLogin: true, showLoading: true);
+  if(response.isSuccess()) return response.data;
   return response;
 }

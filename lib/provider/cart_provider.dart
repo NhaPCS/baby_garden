@@ -28,13 +28,19 @@ class CartProvider extends ChangeNotifier {
   }
 
   Future<void> addProduct(dynamic product) async {
-    product['quantity'] = 1;
-    if(product['size']!=null && product['size'].isNotEmpty) {
+    if (product['quantity'] == null || product['quantity'] <= 0)
+      product['quantity'] = 1;
+    if (product['selected_size'] == null || product['selected_size'].isEmpty) {
       product['size_id'] = product['size'][0]['id'];
-    }
-    if(product['color']!=null && product['color'].isNotEmpty) {
+    } else
+      product['size_id'] = product['selected_size'];
+
+    if (product['selected_color'] == null ||
+        product['selected_color'].isEmpty) {
       product['color_id'] = product['color'][0]['id'];
-    }
+    } else
+      product['color_id'] = product['selected_color'];
+
     List<dynamic> pds = new List();
     pds.add(product);
     await service.addProductCart(products: pds);
@@ -46,15 +52,19 @@ class CartProvider extends ChangeNotifier {
     getMyCart();
   }
 
-  Future<void> editProductCart(String productId, int number) async {
-    await service.editProductCart(productId: productId, number: number);
+  Future<void> editProductCart(dynamic product) async {
+    await service.editProductCart(
+        productId: product['product_id'],
+        number: product['quantity'],
+        sizeId: product['size_id'],
+        colorId: product['color_id']);
     getMyCart();
   }
 
-  void clearCart(){
-     shops.clear();
-     badge = 0;
-     price = 0;
-     isRun = false;
+  void clearCart() {
+    shops.clear();
+    badge = 0;
+    price = 0;
+    isRun = false;
   }
 }

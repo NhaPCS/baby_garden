@@ -8,14 +8,11 @@ import 'package:baby_garden_flutter/screen/child_heath/provider/change_mode_ente
 import 'package:baby_garden_flutter/screen/child_heath/provider/get_baby_test_result_provider.dart';
 import 'package:baby_garden_flutter/screen/child_heath/provider/get_list_baby_provider.dart';
 import 'package:baby_garden_flutter/screen/child_heath/view_model/child_health_view_model.dart';
+import 'package:baby_garden_flutter/screen/child_heath/widget/child_header.dart';
 import 'package:baby_garden_flutter/screen/child_heath/widget/enter_weight_height.dart';
-import 'package:baby_garden_flutter/screen/child_heath/widget/select_child_dropdow.dart';
 import 'package:baby_garden_flutter/screen/child_heath/widget/view_weight_height.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
-import 'package:baby_garden_flutter/widget/image/circle_image.dart';
-import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
-import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
@@ -41,24 +38,27 @@ class _ChildHeathState
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   final ChangeModeEnterHeathProvider _changeModeEnterHeathProvider =
-  ChangeModeEnterHeathProvider();
+      ChangeModeEnterHeathProvider();
   final ChangeIndexProvider _changeIndexProvider = ChangeIndexProvider();
   final GetListBabyProvider _getListBabyProvider = GetListBabyProvider();
   final GetBabyTestResultProvider _getBabyTestResultProvider =
-  GetBabyTestResultProvider();
+      GetBabyTestResultProvider();
 
   @override
   void initState() {
     super.initState();
-    _getListBabyProvider.listBaby();
+    _getListBabyProvider.listBaby(
+        dropdownController: _dropdownController,
+        selectedId: widget.selectedChildId,
+        onChangeChild: () {
+          _loadTestResults();
+        });
   }
 
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
-      appBar: getAppBar(title: S
-          .of(context)
-          .weight_height),
+      appBar: getAppBar(title: S.of(context).weight_height),
       body: NestedScrollView(headerSliverBuilder: (context, isScrollInner) {
         return [
           SliverAppBar(
@@ -68,93 +68,17 @@ class _ChildHeathState
             leading: SizedBox(
               width: 0,
             ),
-            expandedHeight: Provider
-                .of<AppProvider>(context)
-                .childHeightBar,
-            flexibleSpace: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    SizedBox(
-                      width: SizeUtil.defaultSpace,
-                    ),
-                    Column(
-                      children: <Widget>[
-                        SvgIcon(
-                          isBoy() ? 'boy.svg' : 'girl.svg',
-                          width: SizeUtil.iconSizeLarge,
-                        ),
-                        SizedBox(
-                          height: SizeUtil.tinySpace,
-                        ),
-                        Text(
-                          isBoy() ? S
-                              .of(context)
-                              .boy : S
-                              .of(context)
-                              .girl,
-                          style: TextStyle(color: Colors.white),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      width: SizeUtil.defaultSpace,
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: CircleImage(
-                          width: 100,
-                          height: 100,
-                          imageUrl: _dropdownController.value == null
-                              ? ''
-                              : _dropdownController.value['avatar'],
-                          borderRadius: SizeUtil.smallRadius,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: SizeUtil.defaultSpace,
-                    ),
-                    Column(
-                      children: <Widget>[
-                        SvgIcon(
-                          'birthday_cake.svg',
-                          width: SizeUtil.iconSizeLarge,
-                        ),
-                        SizedBox(
-                          height: SizeUtil.tinySpace,
-                        ),
-                        MyText(
-                          _dropdownController.value == null
-                              ? ''
-                              : _dropdownController.value['birthday'],
-                          style: TextStyle(color: Colors.white),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      width: SizeUtil.defaultSpace,
-                    ),
-                  ],
-                ),
-                Consumer<GetListBabyProvider>(
-                  builder: (BuildContext context, GetListBabyProvider value,
-                      Widget child) {
-                    if (value.babies == null || value.babies.isEmpty) {
-                      return SizedBox();
-                    }
-                    return SelectChildDropDown(
-                      babies: value.babies,
-                      controller: _dropdownController,
-                      selectedId: widget.selectedChildId,
-                      onChangeChild: (selectedChild) {
-                        _loadTestResults();
-                      },
-                    );
-                  },
-                )
-              ],
-            ),
+            expandedHeight: Provider.of<AppProvider>(context).childHeightBar,
+            flexibleSpace: ValueListenableBuilder(valueListenable: _dropdownController, builder: (context, selected, child){
+              return ChildHeader(
+                isBoy: isBoy(),
+                dropdownController: _dropdownController,
+                selectedChildId: widget.selectedChildId,
+                onChangeChild: (selected) {
+                  _loadTestResults();
+                },
+              );
+            }),
             bottom: PreferredSize(
                 child: Consumer<ChangeModeEnterHeathProvider>(
                   builder: (BuildContext context,
@@ -166,12 +90,8 @@ class _ChildHeathState
                         _loadTestResults();
                         return Row(
                           children: <Widget>[
-                            getTab(text: S
-                                .of(context)
-                                .height, index: 0),
-                            getTab(text: S
-                                .of(context)
-                                .weight, index: 1)
+                            getTab(text: S.of(context).height, index: 0),
+                            getTab(text: S.of(context).weight, index: 1)
                           ],
                         );
                       },
@@ -237,12 +157,9 @@ class _ChildHeathState
             }
           },
           color: ColorUtil.primaryColor,
-          text: S
-              .of(context)
-              .enter_weight_height
-              .toUpperCase(),
+          text: S.of(context).enter_weight_height.toUpperCase(),
           textStyle:
-          TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           padding: SizeUtil.smallPadding,
         ),
       ),
@@ -252,33 +169,32 @@ class _ChildHeathState
   Widget getTab({String text, int index}) {
     return Expanded(
         child: InkWell(
-          child: InkWell(
-            child: Container(
-              margin: EdgeInsets.only(
-                  left: SizeUtil.defaultSpace, right: SizeUtil.defaultSpace),
-              alignment: Alignment.center,
-              padding: SizeUtil.smallPadding,
-              decoration: BoxDecoration(
-                  color: _changeIndexProvider.index == index
-                      ? Colors.white
-                      : Colors.white.withOpacity(0.5),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30))),
-              child: Text(
-                text,
-                style: TextStyle(
-                    color: _changeIndexProvider.index == index
-                        ? ColorUtil.blueLight
-                        : Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            onTap: () {
-              _changeIndexProvider.changeIndex(index);
-            },
+      child: InkWell(
+        child: Container(
+          margin: EdgeInsets.only(
+              left: SizeUtil.defaultSpace, right: SizeUtil.defaultSpace),
+          alignment: Alignment.center,
+          padding: SizeUtil.smallPadding,
+          decoration: BoxDecoration(
+              color: _changeIndexProvider.index == index
+                  ? Colors.white
+                  : Colors.white.withOpacity(0.5),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+          child: Text(
+            text,
+            style: TextStyle(
+                color: _changeIndexProvider.index == index
+                    ? ColorUtil.blueLight
+                    : Colors.white,
+                fontWeight: FontWeight.bold),
           ),
-        ));
+        ),
+        onTap: () {
+          _changeIndexProvider.changeIndex(index);
+        },
+      ),
+    ));
   }
 
   void _loadTestResults() {

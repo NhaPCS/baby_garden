@@ -97,7 +97,9 @@ class ChartClickedInfoDialog extends StatelessWidget {
           RichText(
               text: TextSpan(children: [
             TextSpan(
-                text: S.of(context).weight_is,
+                text: testResult['type'] == 1
+                    ? S.of(context).height_is
+                    : S.of(context).weight_is,
                 style: TextStyle(
                     color: ColorUtil.textGray,
                     fontSize: SizeUtil.textSizeDefault)),
@@ -112,7 +114,7 @@ class ChartClickedInfoDialog extends StatelessWidget {
                     color: ColorUtil.textGray,
                     fontSize: SizeUtil.textSizeDefault)),
             TextSpan(
-                text: testResult==null?'':testResult['rank'],
+                text: testResult == null ? '' : testResult['rank'],
                 style: TextStyle(
                     color: ColorUtil.primaryColor,
                     fontSize: SizeUtil.textSizeDefault))
@@ -139,7 +141,7 @@ class ChartClickedInfoDialog extends StatelessWidget {
   }
 
   String getValueText() {
-    if (testResult['type'] == 1) {
+    if (testResult['type'] == '1') {
       return " ${testResult['value']}cm";
     } else {
       return " ${testResult['value']}kg";

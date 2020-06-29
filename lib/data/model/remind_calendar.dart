@@ -45,7 +45,9 @@ class RemindCalendar {
       'time_start': this.timeStart,
       'date_end': DateUtil.convertNormalToServerDate(this.dateEnd),
       'time_end': this.timeEnd,
-      'type': this.type == RemindType.remindBuy ? "1" : "2",
+      'type': this.type == RemindType.remindBuy
+          ? "1"
+          : this.type == RemindType.remindUse ? "2" : "3",
       'period': this.period,
       'time_1': this.time1,
       'time_2': this.time2,
@@ -65,8 +67,17 @@ class RemindCalendar {
     timeStart = calendar['time_start'];
     dateEnd = calendar['date_end'];
     timeEnd = calendar['time_end'];
-    type =
-        calendar['type'] == "1" ? RemindType.remindBuy : RemindType.remindUse;
+    switch (calendar['type']) {
+      case "1":
+        type = RemindType.remindBuy;
+        break;
+      case "2":
+        type = RemindType.remindUse;
+        break;
+      case "3":
+        type = RemindType.all;
+        break;
+    }
     period = calendar['period'];
     time1 = calendar['time_1'];
     time2 = calendar['time_2'];
@@ -83,4 +94,4 @@ class RemindCalendar {
   }
 }
 
-enum RemindType { remindBuy, remindUse }
+enum RemindType { remindBuy, remindUse, all }

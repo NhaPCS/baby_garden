@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:html/parser.dart';
 
 import 'package:baby_garden_flutter/data/model/param.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
@@ -256,6 +257,12 @@ class StringUtil {
     }
   }
 
+  static String removeHtml(String htmlString){
+    var document = parse(htmlString);
+    String parsedString = parse(document.body.text).documentElement.text;
+    return parsedString;
+  }
+
   static const String dummyImage =
       "https://imgix.bustle.com/uploads/image/2019/1/23/4ca31ad3-6f9b-4e75-a0bf-fada7bfecfae-shutterstock_10068471c.jpg?w=970&h=546&fit=crop&crop=faces&auto=format&q=70&dpr=2";
   static const List<String> dummyImageList = [
@@ -263,19 +270,6 @@ class StringUtil {
     "https://fashioninthecity.com/wp-content/uploads/2018/12/GENDER-NEUTRAL-BANNER-FINAL.jpg",
     "https://r8zlusvr.rocketcdn.com/templates/selectfashion.co.uk.new/assets/images/home/main-page-pods/pod2-newin2.jpg",
     "https://www.telegraph.co.uk/content/dam/fashion/2019/11/26/LKB_AW19_AUGUST_10_trans_NvBQzQNjv4BqXxNHKgVzGLlMTFfSc8ogRjgvSsGPs1UGfa2r2ifahVI.jpg?imwidth=450"
-  ];
-  static const List<String> dummyProduct = [
-    'https://m2.ikea.cn/cn/en/images/products/leka-baby-gym__0757034_PE749099_S5.JPG?f=s',
-    'https://cdn.cheapism.com/images/090517_dangerous_baby_products_sl.2e16d0ba.fill-1440x605.jpg',
-    'https://auto.ndtvimg.com/bike-images/big/yamaha/r15-v30/yamaha-r15-v30.jpg?v=16',
-    'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone8-gold-select-2018?wid=940&hei=1112&fmt=png-alpha&qlt=80&.v=1550795416637',
-    'https://media.4rgos.it/i/Argos/8615002_R_Z001A_UC887197?w=750&h=440&qlt=70',
-    'https://www.thespruceeats.com/thmb/ecUy27FyEII2nwF4HWNe5Yoi6Xk=/2667x2667/smart/filters:no_upscale()/PanSobaoBread-019-Done-f0ac98a6918c43aca4dd7f03b0ffcf96.jpg',
-    'https://cdn.tobi.com/product_images/md/1/plum-maddie-asymmetrical-bodycon-dress.jpg',
-    'https://imgix.bustle.com/rehost/2016/9/14/461f461b-f90c-4f8d-8c65-7c0e10adc8ac.jpg?w=970&h=546&fit=crop&crop=faces&auto=format&q=70',
-    'https://cdn.shopify.com/s/files/1/1301/4561/products/36-1_grande.jpg?v=1494826094',
-    'https://lh3.googleusercontent.com/proxy/6_fGFEGl3dfZRnHIqBzUvxKB8M5hiSUH5_P19UUDIfjlvp-bO2gAVqj8oqF4J-w79oeofEX0eTqF4KwDrgOPa7JP8TTpzfK7TgCcqIvTw4Rint-BEbidGFASJOvA27omERAjOkrQjzH8uotky13lneBFVidlRyyQP2nV1atffojYZ60jJOyxi62HM2Y0R5M73EKLFSLTlOxxIxirNCAoVIOZwqbhuo9fdw',
-    'https://www.whwatts.co.uk/images/chicco-hoopla-baby-bouncer-ocean-p31636-79697_zoom.jpg',
   ];
   static const String dummyText =
       "- Đế giày làm bằng cao su nhiệt dẻo (TPR). xẻ rãnh chống trơn trượt cho bé vui chơi thỏa thích \n- Cách tính cỡ Giày trẻ em cho bé (Bạn đo chiều dài bàn chân xem kích thước là bao nhiêu)\n- Ướm đi thử vừa là vừa";

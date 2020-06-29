@@ -28,7 +28,7 @@ class _State extends State<ContentViewMoreable> {
             widget.content,
             style: TextStyle(color: ColorUtil.textGray),
             overflow: isExpanded?null: TextOverflow.ellipsis,
-            maxLines: isExpanded ? null : 5,
+            maxLines: isExpanded ? null : 2,
           ),
           SizedBox(
             height: SizeUtil.smallSpace,

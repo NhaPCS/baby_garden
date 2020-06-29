@@ -4,6 +4,7 @@ import 'package:baby_garden_flutter/item/product_item.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_parent_category_provider.dart';
 import 'package:baby_garden_flutter/provider/get_list_product_provider.dart';
+import 'package:baby_garden_flutter/provider/get_main_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/category_product/provider/get_product_category_by_parent_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -16,6 +17,13 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class CategoryProductScreen extends StatefulWidget {
+  final String selectedCategoryId;
+  final String selectedParentId;
+
+  const CategoryProductScreen(
+      {Key key, this.selectedCategoryId, this.selectedParentId})
+      : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _CategoryProductState();
@@ -43,6 +51,15 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    if (widget.selectedParentId != null) {
+      _getProductCategoryByParentProvider.getProductCategories(widget.selectedParentId);
+      int selectedIndex = Provider.of<GetMainCategoryProvider>(context)
+          .categories
+          .indexWhere((element) => element['id'] == widget.selectedParentId);
+      if (selectedIndex >= 0){
+        _changeParentCategoryProvider.index = selectedIndex;
+      }
+    }
   }
 
   @override
@@ -126,6 +143,10 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
                   Consumer<GetProductCategoryByParentProvider>(
                 builder: (BuildContext context,
                     GetProductCategoryByParentProvider value, Widget child) {
+                  int selectedCategory = value.categories.indexWhere(
+                      (element) => element['id'] == widget.selectedCategoryId);
+                  if (selectedCategory >= 0)
+                    _selectSubCategoryController.value = selectedCategory + 1;
                   return ListCategory(
                     selectedController: _selectSubCategoryController,
                     categories: value.categories,

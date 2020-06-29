@@ -24,16 +24,6 @@ class SelectChildDropDown extends StatefulWidget {
 class _SelectChildState extends State<SelectChildDropDown> {
   @override
   void initState() {
-    if (widget.babies != null) {
-      widget.controller.value = widget.babies[0];
-      if (widget.selectedId != null) {
-        widget.controller.value = widget.babies
-            .firstWhere((element) => element['id'] == widget.selectedId);
-      }
-      if (widget.onChangeChild != null) {
-        widget.onChangeChild(widget.controller.value);
-      }
-    }
     super.initState();
   }
 

@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/data/model/remind_calendar.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/favorite_product/item/product_favorite_seen_item.dart';
@@ -8,7 +9,7 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class AddRemindDialogScreen extends StatefulWidget {
-  final String type;
+  final RemindType type;
 
   const AddRemindDialogScreen({Key key, this.type})
       : super(key: key);

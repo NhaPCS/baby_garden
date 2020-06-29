@@ -59,6 +59,7 @@ class _State extends BaseState<SelectProductProperty> {
                   selectedBorderColor: ColorUtil.primaryColor,
                   hasCheckable: true,
                   onItemPressed: (item) {
+                    widget.product['selected_${widget.property}'] = widget.product[widget.property][index]['id'];
                     _changeIndexProvider.changeIndex(index);
                   },
                   checked: value.index == index,

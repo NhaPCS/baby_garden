@@ -49,5 +49,13 @@
     <string>Ứng dụng cần quyền truy cập thư camera của bạn để thực hiện chức năng này.</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>Ứng dụng cần quyền truy cập thư microphone của bạn để thực hiện chức năng này.</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+        <key>NSAllowsArbitraryLoadsInWebContent</key>
+        <true/>
+    </dict>
+
 </dict>
 </plist>

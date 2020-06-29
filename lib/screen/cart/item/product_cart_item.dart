@@ -3,6 +3,9 @@ import 'package:baby_garden_flutter/screen/cart/dialog/set_schedule_for_product_
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
+import 'package:baby_garden_flutter/screen/cart/widget/discount_note.dart';
+import 'package:baby_garden_flutter/screen/cart/widget/product_properties.dart';
+import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_icon.dart';
 import 'package:baby_garden_flutter/widget/change_quantity_widget.dart';
@@ -57,44 +60,36 @@ class ProductCartItem extends StatelessWidget {
                 children: <Widget>[
                   WidgetUtil.paddingWidget(
                       MyText(
-                        product['name'],
+                        product['product_name'],
                         textAlign: TextAlign.left,
                       ),
                       padding: EdgeInsets.only(right: SizeUtil.smallSpace)),
-                  ButtonIcon(
-                    padding: EdgeInsets.only(
-                        top: SizeUtil.tinySpace, bottom: SizeUtil.tinySpace),
-                    icon: Row(
-                      children: <Widget>[
-                        Icon(
-                          FontAwesomeIcons.angleDoubleLeft,
-                          size: SizeUtil.iconSizeSmall,
-                          color: ColorUtil.blueLight,
-                        ),
-                        SizedBox(
-                          width: SizeUtil.tinySpace,
-                        ),
-                        Expanded(
-                            child: Text(
-                          S.of(context).note_for_product_promo,
-                          style: TextStyle(
-                              color: ColorUtil.blueLight,
-                              fontSize: SizeUtil.textSizeSmall),
-                        ))
-                      ],
-                    ),
-                    onPressed: () {
-                      //TODO
-                    },
+                  DiscountNote(
+                    note: product['discount_note'],
                   ),
-                  WidgetUtil.paddingWidget(
-                      MyText(
-                        product['product_name'],
-                        style: TextStyle(
-                            color: ColorUtil.primaryColor,
-                            fontSize: SizeUtil.textSizeSmall),
-                      ),
-                      padding: EdgeInsets.only(right: SizeUtil.bigSpace)),
+                  product['main_product_name'] == null
+                      ? SizedBox()
+                      : InkWell(
+                          child: WidgetUtil.paddingWidget(
+                              MyText(
+                                product['main_product_name'],
+                                style: TextStyle(
+                                    color: ColorUtil.primaryColor,
+                                    fontSize: SizeUtil.textSizeSmall),
+                              ),
+                              padding:
+                                  EdgeInsets.only(right: SizeUtil.bigSpace)),
+                          onTap: () {
+                            if (product['main_product_id'] != null) {
+                              RouteUtil.push(
+                                  context,
+                                  ProductDetailScreen(
+                                      productId: product['main_product_id']));
+                            }
+                          },
+                        ),
+                  ProductProperties(product: product),
+                  SizedBox(height: SizeUtil.defaultSpace,),
                   Row(
                     children: <Widget>[
                       Text(
@@ -127,20 +122,29 @@ class ProductCartItem extends StatelessWidget {
                             left: SizeUtil.smallSpace,
                             right: SizeUtil.smallSpace),
                         quantityChanged: (value) {
+                          product['quantity'] = value;
                           Provider.of<CartProvider>(context, listen: false)
-                              .editProductCart(product['product_id'], value);
+                              .editProductCart(product);
                         },
                       ),
                       Expanded(
                         child: Center(
                           child: ButtonIcon(
-                            icon: SvgIcon('ic_alarm.svg'),
+                            icon: SvgIcon(product['calendar'] == null
+                                ? 'ic_alarm_disable.svg'
+                                : 'ic_alarm.svg'),
                             onPressed: () {
                               showDialog(
                                   context: context,
                                   builder: (context) {
                                     return SetScheduleForProductDialog(
-                                        product: product);
+                                      product: product,
+                                      onAddedCalendar: () {
+                                        Provider.of<CartProvider>(context,
+                                                listen: false)
+                                            .getMyCart();
+                                      },
+                                    );
                                   });
                             },
                           ),

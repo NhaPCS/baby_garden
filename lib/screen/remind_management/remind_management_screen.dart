@@ -46,6 +46,7 @@ class _RemindManageState extends BaseState<RemindManagementScreen> {
         ),
         body: Consumer<RemindCalendarProvider>(
           builder: (context, value, child) {
+            print("WWTF");
             if (value.remindList == null || value.remindList.isEmpty)
               return LoadingView(
                 isNoData: value.remindList != null,
@@ -58,6 +59,7 @@ class _RemindManageState extends BaseState<RemindManagementScreen> {
                       RemindCalendar().fromJson(value.remindList[index]);
                   return RemindCardItem(
                     calendar: _calendar,
+                    remindCalendarProvider: _remindCalendarProvider,
                     onEdit: () async {
                       bool added = await push(RemindAddScreen(remindCalendar: _calendar,));
                       if (added != null && added) {

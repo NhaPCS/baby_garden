@@ -1,6 +1,7 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/product_detail/item/product_horizontal_item.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
+import 'package:baby_garden_flutter/screen/product_detail/widget/attached_products.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_close_dialog.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
@@ -26,16 +27,7 @@ class AddToCartBottomDialog extends StatelessWidget {
               ProductHorizontalItem(
                 product: product,
               ),
-              attachedProducts != null && attachedProducts.isNotEmpty
-                  ? Column(
-                      children: attachedProducts
-                          .map((e) => ProductHorizontalItem(
-                                product: e,
-                                isAttach: true,
-                              ))
-                          .toList(),
-                    )
-                  : SizedBox(),
+              AttachedProducts(attachedProducts: attachedProducts,),
               SizedBox(height: SizeUtil.hugSpace,),
             ],
           ),
