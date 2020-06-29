@@ -18,7 +18,7 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeState extends BaseState<WelcomeScreen> {
   _WelcomeState() {
     new Timer(const Duration(milliseconds: 3000), () {
-//      pushReplacement(WelcomeGuideScreen());
+      pushReplacement(WelcomeGuideScreen());
     });
   }
 
