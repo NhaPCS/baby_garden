@@ -59,16 +59,18 @@ class ChildChartState extends State<ChildChart> {
 //                        touchTooltipData: BarTouchTooltipData(),
                           enabled: true,
                           touchCallback: (barRes) {
-                            if (barRes != null && barRes.spot != null) {
+                            try {
                               showDialog(
                                   context: context,
                                   builder: (context) {
                                     return ChartClickedInfoDialog(
                                       testResult: widget.testResults[
-                                          barRes.spot.touchedBarGroupIndex],
+                                      barRes.spot.touchedBarGroupIndex],
                                       baby: widget.baby,
                                     );
                                   });
+                            } on Exception catch(e){
+
                             }
                           }),
                       titlesData: FlTitlesData(

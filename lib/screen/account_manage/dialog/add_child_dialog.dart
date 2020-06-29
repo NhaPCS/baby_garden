@@ -44,7 +44,7 @@ class _ShowAddAddressDialogState extends BaseState<AddChildDialog> {
       _nameController.text = widget.baby.name;
       _selectGenderProvider.updateGender(widget.baby.gender.index + 1);
       _selectDateProvider
-          .updateDate(DateUtil.parseBirthdayDate(widget.baby.birthday));
+          .updateDate(DateUtil.getDateFrom(widget.baby.birthday));
     }
   }
 
@@ -74,25 +74,13 @@ class _ShowAddAddressDialogState extends BaseState<AddChildDialog> {
               padding: const EdgeInsets.only(top: SizeUtil.midSpace),
               child: Center(
                 child: ChangeAvatar(
+                  hasBottomIcon: true,
                   avatarUrl: widget.baby == null ? null : widget.baby.avatar,
                   borderRadius: SizeUtil.tinyRadius,
                   width: 92,
                   height: 92,
                   onSelectImage: widget.onSelectImage,
                 ),
-              ),
-            ),
-            Center(
-                child: Icon(
-              Icons.photo_camera,
-              color: ColorUtil.colorAccent,
-            )),
-            Center(
-              child: Text(
-                S.of(context).uploadChildAvatar,
-                style: TextStyle(
-                    color: ColorUtil.colorAccent,
-                    fontSize: SizeUtil.textSizeSmall),
               ),
             ),
             Padding(
@@ -228,7 +216,9 @@ class _ShowAddAddressDialogState extends BaseState<AddChildDialog> {
                 top: SizeUtil.midSpace,
                 bottom: SizeUtil.midSpace,
               ),
-              text: S.of(context).addChild.toUpperCase(),
+              text: widget.baby != null
+                  ? S.of(context).edit.toUpperCase()
+                  : S.of(context).addChild.toUpperCase(),
               textStyle: TextStyle(
                   fontSize: SizeUtil.textSizeSmall, color: Colors.white),
               color: ColorUtil.colorAccent,

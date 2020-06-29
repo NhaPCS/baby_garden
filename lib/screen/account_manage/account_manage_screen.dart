@@ -8,6 +8,7 @@ import 'package:baby_garden_flutter/screen/account_manage/dialog/add_child_dialo
 import 'package:baby_garden_flutter/screen/account_manage/item/baby_item.dart';
 import 'package:baby_garden_flutter/screen/account_manage/view_model/account_manage_view_model.dart';
 import 'package:baby_garden_flutter/screen/address_setting/address_setting_screen.dart';
+import 'package:baby_garden_flutter/screen/address_setting/provider/get_list_address_provider.dart';
 import 'package:baby_garden_flutter/screen/change_password/change_password_screen.dart';
 import 'package:baby_garden_flutter/screen/child_heath/provider/get_list_baby_provider.dart';
 import 'package:baby_garden_flutter/screen/profile/widget/user_infor.dart';
@@ -28,6 +29,8 @@ class AccountManageScreen extends StatefulWidget {
 class _AccountManageScreenState
     extends BaseStateModel<AccountManageScreen, AccountManageViewModel> {
   final GetListBabyProvider _getListBabyProvider = GetListBabyProvider();
+  final GetListAddressProvider _getListAddressProvider =
+      GetListAddressProvider();
   final TextEditingController _nameController = TextEditingController();
 
   File _avatarFile;
@@ -36,6 +39,7 @@ class _AccountManageScreenState
   void initState() {
     super.initState();
     _getListBabyProvider.listBaby();
+    _getListAddressProvider.getData();
   }
 
   @override
@@ -51,10 +55,11 @@ class _AccountManageScreenState
             Expanded(
                 child: ListView(children: <Widget>[
               // user information
-              Consumer<UserProvider>(
-                builder:
-                    (BuildContext context, UserProvider value, Widget child) {
-                  var entries = value.getEntries(context);
+              Consumer2<UserProvider, GetListAddressProvider>(
+                builder: (BuildContext context, UserProvider value,
+                    GetListAddressProvider addressProvider, Widget child) {
+                  var entries = value.getEntries(context,
+                      address: addressProvider.mainAddress);
 
                   final listEntryUser = List<Widget>();
                   entries.asMap().forEach((key, value) {
@@ -112,7 +117,8 @@ class _AccountManageScreenState
             push(ChangePasswordScreen());
             break;
           case 5:
-            push(AddressSettingScreen());
+            await push(AddressSettingScreen());
+            _getListAddressProvider.getData();
             break;
         }
       },
@@ -198,7 +204,10 @@ class _AccountManageScreenState
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _getListBabyProvider)];
+    return [
+      ChangeNotifierProvider.value(value: _getListBabyProvider),
+      ChangeNotifierProvider.value(value: _getListAddressProvider),
+    ];
   }
 
   @override

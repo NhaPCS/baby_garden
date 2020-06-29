@@ -14,6 +14,7 @@ class ShareValueProvider {
       "setting_notify_like_product_change";
   final String setting_notify_service = "setting_notify_service";
   final String setting_notify_vcb_express = "setting_notify_vcb_express";
+  final String token_fcm = "token_fcm";
 
   ShareValueProvider._();
 
@@ -101,5 +102,15 @@ class ShareValueProvider {
   Future<bool> getSetting(String setting) async {
     final shareValueProvider = await SharedPreferences.getInstance();
     return shareValueProvider.getBool(setting);
+  }
+
+  Future<void> saveFcmToken(String token) async {
+    final shareValueProvider = await SharedPreferences.getInstance();
+    shareValueProvider.setString(token_fcm, token);
+  }
+
+  Future<String> getFcmToken() async {
+    final shareValueProvider = await SharedPreferences.getInstance();
+    return shareValueProvider.getString(token_fcm);
   }
 }

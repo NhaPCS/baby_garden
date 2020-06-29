@@ -1,8 +1,10 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/screen/child_heath/provider/get_product_test_provider.dart';
 import 'package:baby_garden_flutter/screen/child_heath/widget/list_suggest_for_child.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/screen/child_heath/widget/child_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ViewWeightHeight extends StatelessWidget {
   final List<dynamic> testResults;
@@ -93,8 +95,20 @@ class ViewWeightHeight extends StatelessWidget {
           style: TextStyle(
               color: ColorUtil.blueLight, fontWeight: FontWeight.bold),
         ),
-        ListSuggestForChild(),
-        ListSuggestForChild()
+        Consumer<GetProductTestProvider>(
+          builder: (BuildContext context, GetProductTestProvider value,
+              Widget child) {
+            if (value.data == null) return SizedBox();
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: value.data.map((category) {
+                return ListSuggestForChild(
+                  category: category['category'],
+                );
+              }).toList(),
+            );
+          },
+        )
       ],
     );
   }
