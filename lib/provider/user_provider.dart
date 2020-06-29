@@ -38,7 +38,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<dynamic> getEntries(BuildContext context) {
+  List<dynamic> getEntries(BuildContext context, {String address}) {
     Map<String, String> entry(String title, String content, String icon) {
       return {'title': title, 'content': content, "icon": icon};
     }
@@ -59,7 +59,7 @@ class UserProvider extends ChangeNotifier {
                   : S.of(context).female,
           ''),
       entry(S.of(context).password, S.of(context).changePassword, 'right.png'),
-      entry(S.of(context).address, '', 'right.png'),
+      entry(S.of(context).address, address ?? '', 'right.png'),
     ];
 
     return entries;
