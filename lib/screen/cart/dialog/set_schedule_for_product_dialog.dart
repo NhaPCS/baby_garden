@@ -68,8 +68,7 @@ class _State
                 widget.product['calendar'] != null ? _remindCalendar : null,
             reminderSelectCallBack:
                 (type, buyDate, endDate, period, time1, time2, time3, time4) {
-              _remindCalendar.type =
-                  type == 1 ? RemindType.remindBuy : RemindType.remindUse;
+              _remindCalendar.type = type;
               _remindCalendar.dateStart =
                   DateUtil.formatNormalDateTime(buyDate);
               _remindCalendar.timeStart = DateUtil.formatTime(buyDate);

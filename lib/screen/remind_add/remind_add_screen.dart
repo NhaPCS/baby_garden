@@ -88,8 +88,7 @@ class _RemindAddScreen
           remindCalendar: widget.remindCalendar,
           reminderSelectCallBack:
               (type, buyDate, endDate, period, time1, time2, time3, time4) {
-            _remindCalendar.type =
-                type == 1 ? RemindType.remindBuy : RemindType.remindUse;
+            _remindCalendar.type = type;
             _remindCalendar.dateStart = DateUtil.formatNormalDateTime(buyDate);
             _remindCalendar.timeStart = DateUtil.formatTime(buyDate);
             _remindCalendar.dateEnd = DateUtil.formatNormalDateTime(endDate);
@@ -136,10 +135,9 @@ class _RemindAddScreen
     Product _product = await showModalBottomSheet(
         context: context,
         builder: (BuildContext context) => AddRemindDialogScreen(
-              type: _remindCalendar == null ||
-                      _remindCalendar.type == RemindType.remindBuy
-                  ? "1"
-                  : "2",
+              type: _remindCalendar == null
+                  ? RemindType.remindBuy
+                  : _remindCalendar.type,
             ));
     _productController.value = _product;
     if (_product != null) _remindCalendar.productId = _product.id;

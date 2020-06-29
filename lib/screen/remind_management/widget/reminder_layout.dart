@@ -5,13 +5,14 @@ import 'package:baby_garden_flutter/screen/remind_cycle/remind_cycle_screen.dart
 import 'package:baby_garden_flutter/screen/remind_set_date/remind_set_date_screen.dart';
 import 'package:baby_garden_flutter/screen/remind_set_time/remind_set_time_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/checkbox/circle_checkbox.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:baby_garden_flutter/widget/line/dashed_line.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 
 typedef ReminderSelectCallBack = void Function(
-    int type,
+    RemindType type,
     DateTime buyTime,
     DateTime endTime,
     int period,
@@ -43,7 +44,8 @@ class ReminderLayout extends StatefulWidget {
 class _ReminderState extends BaseState<ReminderLayout> {
   var remindBuy = false;
   var remindUsed = false;
-  final ValueNotifier<int> _typeController = ValueNotifier(1);
+  final ValueNotifier<List<bool>> _typeController =
+      ValueNotifier([true, false]);
   final ValueNotifier<DateTime> _buyDateController = ValueNotifier(null);
   final ValueNotifier<DateTime> _endDateController = ValueNotifier(null);
   final ValueNotifier<int> _periodDateController = ValueNotifier(null);
@@ -55,7 +57,17 @@ class _ReminderState extends BaseState<ReminderLayout> {
   @override
   void initState() {
     if (widget.remindCalendar != null) {
-      _typeController.value = widget.remindCalendar.type.index + 1;
+      switch (widget.remindCalendar.type) {
+        case RemindType.remindBuy:
+          _typeController.value = [true, false];
+          break;
+        case RemindType.remindUse:
+          _typeController.value = [false, true];
+          break;
+        case RemindType.all:
+          _typeController.value = [true, true];
+          break;
+      }
       _buyDateController.value = DateUtil.getServerDate(
           widget.remindCalendar.dateStart, widget.remindCalendar.timeStart);
       _endDateController.value = DateUtil.getServerDate(
@@ -150,20 +162,22 @@ class _ReminderState extends BaseState<ReminderLayout> {
     );
   }
 
-  Widget rowSelectRemindType(String title, int type) {
-    return ValueListenableBuilder<int>(
-      builder: (BuildContext context, int selectedType, Widget child) {
+  Widget rowSelectRemindType(String title, int index) {
+    return ValueListenableBuilder<List<bool>>(
+      builder: (BuildContext context, List<bool> selectedTypes, Widget child) {
         return Row(
           children: <Widget>[
-            Radio(
+            CircleCheckbox(
+              uncheckBg: Icons.check_box_outline_blank,
+              checkBg: Icons.check_box,
               onChanged: (val) {
                 if (widget.remindCalendar != null) return;
-                _typeController.value = val;
+                selectedTypes[index] = val;
+                _typeController.value = selectedTypes;
                 updateCallBack();
               },
-              value: type,
+              checked: selectedTypes[index],
               activeColor: ColorUtil.primaryColor,
-              groupValue: selectedType,
             ),
             Text(
               title,
@@ -191,7 +205,7 @@ class _ReminderState extends BaseState<ReminderLayout> {
                         fontWeight: FontWeight.bold,
                         color: ColorUtil.darkGray)))
             : SizedBox(),
-        rowSelectRemindType(S.of(context).remindBuyProduct, 1),
+        rowSelectRemindType(S.of(context).remindBuyProduct, 0),
         InkWell(
           onTap: () async {
             DateTime date = await push(RemindSetDateScreen());
@@ -200,13 +214,13 @@ class _ReminderState extends BaseState<ReminderLayout> {
           },
           child: ValueListenableBuilder<DateTime>(
             builder: (BuildContext context, DateTime value, Widget child) {
-              return rowTimeTable(S.of(context).remindTime,
-                  DateUtil.formatNormalDate(value));
+              return rowTimeTable(
+                  S.of(context).remindTime, DateUtil.formatNormalDate(value));
             },
             valueListenable: _buyDateController,
           ),
         ),
-        rowSelectRemindType(S.of(context).remindUseProduct, 2),
+        rowSelectRemindType(S.of(context).remindUseProduct, 1),
         InkWell(
           onTap: () async {
             DateTime date = await push(RemindSetDateScreen());
@@ -334,8 +348,21 @@ class _ReminderState extends BaseState<ReminderLayout> {
   }
 
   void updateCallBack() {
+    RemindType remindType;
+    if (_typeController.value[0] && _typeController.value[1]) {
+      remindType = RemindType.all;
+    } else if (_typeController.value[0]) {
+      remindType = RemindType.remindBuy;
+    } else if (_typeController.value[1]) {
+      remindType = RemindType.remindUse;
+    } else {
+      remindType = RemindType.remindBuy;
+      _typeController.value = [true, false];
+      print("TYPE  ${remindType}");
+    }
+
     widget.reminderSelectCallBack(
-        _typeController.value,
+        remindType,
         _buyDateController.value,
         _endDateController.value,
         _periodDateController.value,
