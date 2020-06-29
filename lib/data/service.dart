@@ -1090,6 +1090,12 @@ Future<dynamic> listQuestion() async {
   return null;
 }
 
+Future<dynamic> support() async {
+  Response response = await get(null, path: "support");
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 Future<Response> deleteSearch(BuildContext context) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {"user_id": userId};
