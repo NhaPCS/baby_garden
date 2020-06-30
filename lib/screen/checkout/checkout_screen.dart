@@ -26,9 +26,10 @@ class CheckoutScreen extends StatefulWidget {
   final int totalPrice;
   final String bookingCode;
   final String phone;
+  final String shopName;
 
   const CheckoutScreen(
-      {this.bookingId, this.totalPrice, this.bookingCode, this.phone})
+      {this.bookingId, this.totalPrice, this.bookingCode, this.phone, this.shopName})
       : super();
 
   @override
@@ -71,8 +72,8 @@ class _CheckoutScreenState
             TitleIcon(
               padding: const EdgeInsets.all(8.0),
               svgIcon: "shop.svg",
-              title: "Shop",
-              content: " Vườn Của Bé",
+              title: "Shop ",
+              content: widget.shopName,
               contentStyle: TextStyle(
                   color: ColorUtil.primaryColor,
                   fontSize: SizeUtil.textSizeExpressDetail,
@@ -368,10 +369,9 @@ class _CheckoutScreenState
                 int index = await showDialog(
                     context: context,
                     builder: (BuildContext context) => ConfirmDialogue());
-                print(" HOME INDEX $index");
                 if (index != null) {
                   if(index>0){
-                    push(OrderDetailScreen(
+                    pushReplacement(OrderDetailScreen(
                       bookingId: widget.bookingId.toString(),
                     ));
                   }else {

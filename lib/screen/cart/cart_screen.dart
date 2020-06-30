@@ -89,6 +89,8 @@ class _CartState extends BaseState<CartScreen> {
                                             .promotion['code'],
                                 shopID: value.shops[_changeIndexProvider.index]
                                     ['shop_id'],
+                                shopName: value.shops[_changeIndexProvider.index]
+                                ['shop_name'],
                               ));
                           },
                           price: value.price.toString(),

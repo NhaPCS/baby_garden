@@ -30,7 +30,7 @@ class _ChangeDeliveryTimeDialogueState
   @override
   void initState() {
     // TODO: implement initState
-    _dayTabController = TabController(vsync: this, length: 7);
+    _dayTabController = TabController(vsync: this, length: 3);
     if (_changeDeliveryTimeProvider.schedules.length == 0) {
       _changeDeliveryTimeProvider.getInShopReceiveTime(null, widget.shopId);
     }
@@ -39,7 +39,7 @@ class _ChangeDeliveryTimeDialogueState
 
   @override
   Widget buildWidget(BuildContext context) {
-    final List<dynamic> dates = DateUtil.getDate();
+    final List<dynamic> dates = DateUtil.getDate(3);
     String chooseTime = "";
     String chooseDate = dates[0]['date'];
     String timeId = "";
@@ -92,9 +92,7 @@ class _ChangeDeliveryTimeDialogueState
                 builder: (BuildContext context,
                     ChangeDeliveryTimeProvider value, Widget child) {
                   List<dynamic> schedule = value.getDateSchedule();
-
                   timeId = schedule.isNotEmpty?schedule[0]['id']:"0";
-                  print(schedule);
                   if (schedule == null || schedule.isEmpty) {
                     return Column(
                       children: <Widget>[
@@ -111,9 +109,8 @@ class _ChangeDeliveryTimeDialogueState
                               color: ColorUtil.primaryColor,
                               fontSize: SizeUtil.textSizeSmall),
                         ),
-                        //todo-hung refactor string
                         Text(
-                          "Vui lòng chọn ngày khác",
+                          S.of(context).choose_other_day,
                           style: TextStyle(
                               color: ColorUtil.textColor,
                               fontSize: SizeUtil.textSizeSmall),
