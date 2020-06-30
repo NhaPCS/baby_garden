@@ -5,6 +5,7 @@ import 'package:baby_garden_flutter/screen/checkout/dialogue/confirm_dialogue.da
 import 'package:baby_garden_flutter/screen/checkout/provider/payment_info_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
+import 'package:baby_garden_flutter/screen/order_detail/order_detail_screen.dart';
 import 'package:baby_garden_flutter/widget/button/privacy_policy_button.dart';
 import 'package:baby_garden_flutter/screen/checkout/widget/rich_text_form.dart';
 import 'package:baby_garden_flutter/screen/checkout/widget/title_icon.dart';
@@ -369,7 +370,13 @@ class _CheckoutScreenState
                     builder: (BuildContext context) => ConfirmDialogue());
                 print(" HOME INDEX $index");
                 if (index != null) {
-                  pushAndReplaceAll(MainScreen(index: index), "/main_screen");
+                  if(index>0){
+                    push(OrderDetailScreen(
+                      bookingId: widget.bookingId.toString(),
+                    ));
+                  }else {
+                    pushAndReplaceAll(MainScreen(index: index), "/main_screen");
+                  }
                 }else{
                   pushAndReplaceAll(MainScreen(index: 0), "/main_screen");
                 }
