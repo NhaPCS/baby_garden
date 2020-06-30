@@ -41,7 +41,7 @@ class _DatePickerState extends BaseState<DatePicker>
   @override
   void initState() {
     // TODO: implement initState
-    dates = DateUtil.getDate();
+    dates = DateUtil.getDate(7);
     if (widget.onValueChange != null) widget.onValueChange(dates[0]);
     super.initState();
   }

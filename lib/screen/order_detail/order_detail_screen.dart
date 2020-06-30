@@ -296,6 +296,7 @@ class _OrderDetailScreenState
                           bookingCode: data['code'].toString(),
                           totalPrice: costMoney,
                           phone: data['user_phone'],
+                          shopName: data['shop_name'],
                         ));
                       },
                       text: S.of(context).checkout.toUpperCase(),

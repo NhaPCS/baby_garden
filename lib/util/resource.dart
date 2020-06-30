@@ -175,16 +175,20 @@ class DateUtil {
       static const int sunday = 1;
       static const int daysPerWeek = 7;
   */
-  static List<dynamic> getDate() {
+  static List<dynamic> getDate(int size) {
+    int days = 7;
+    if(size!=null){
+      days = size;
+    }
     List<dynamic> dates = List();
     try {
       final dowFormat = new DateFormat("EEEE", "vi");
       final dateFormat = new DateFormat("dd/MM/yyyy");
       var now = new DateTime.now();
-      for (int i = 0; i <= 6; i++) {
+      for (int i = 0; i <= days-1; i++) {
         final date = now.add(new Duration(days: i));
         dates.add({
-          'index': date.weekday == 7 ? 1 : date.weekday + 1,
+          'index': date.weekday == days ? 1 : date.weekday + 1,
           'dow': dowFormat.format(date),
           'date': dateFormat.format(date)
         });

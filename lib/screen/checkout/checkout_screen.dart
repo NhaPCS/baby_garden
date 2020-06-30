@@ -5,6 +5,7 @@ import 'package:baby_garden_flutter/screen/checkout/dialogue/confirm_dialogue.da
 import 'package:baby_garden_flutter/screen/checkout/provider/payment_info_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
+import 'package:baby_garden_flutter/screen/order_detail/order_detail_screen.dart';
 import 'package:baby_garden_flutter/widget/button/privacy_policy_button.dart';
 import 'package:baby_garden_flutter/screen/checkout/widget/rich_text_form.dart';
 import 'package:baby_garden_flutter/screen/checkout/widget/title_icon.dart';
@@ -25,9 +26,10 @@ class CheckoutScreen extends StatefulWidget {
   final int totalPrice;
   final String bookingCode;
   final String phone;
+  final String shopName;
 
   const CheckoutScreen(
-      {this.bookingId, this.totalPrice, this.bookingCode, this.phone})
+      {this.bookingId, this.totalPrice, this.bookingCode, this.phone, this.shopName})
       : super();
 
   @override
@@ -70,8 +72,8 @@ class _CheckoutScreenState
             TitleIcon(
               padding: const EdgeInsets.all(8.0),
               svgIcon: "shop.svg",
-              title: "Shop",
-              content: " Vườn Của Bé",
+              title: "Shop ",
+              content: widget.shopName,
               contentStyle: TextStyle(
                   color: ColorUtil.primaryColor,
                   fontSize: SizeUtil.textSizeExpressDetail,
@@ -367,9 +369,14 @@ class _CheckoutScreenState
                 int index = await showDialog(
                     context: context,
                     builder: (BuildContext context) => ConfirmDialogue());
-                print(" HOME INDEX $index");
                 if (index != null) {
-                  pushAndReplaceAll(MainScreen(index: index), "/main_screen");
+                  if(index>0){
+                    pushReplacement(OrderDetailScreen(
+                      bookingId: widget.bookingId.toString(),
+                    ));
+                  }else {
+                    pushAndReplaceAll(MainScreen(index: index), "/main_screen");
+                  }
                 }else{
                   pushAndReplaceAll(MainScreen(index: 0), "/main_screen");
                 }
