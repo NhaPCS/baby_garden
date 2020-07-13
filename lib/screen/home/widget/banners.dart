@@ -22,31 +22,7 @@ class Banners extends StatelessWidget {
           imageAttrName: "img",
           onItemPressed: (index) {
             dynamic banner = value.banners[index];
-            if (banner == null || banner['type'] == null) return;
-            switch (banner['type']) {
-              case "1":
-                RouteUtil.push(
-                    context, VCBExpressDetailScreen(banner['link_id']));
-                break;
-              case "2":
-                RouteUtil.push(
-                    context,
-                    VoucherDetailScreen(
-                      voucher: {"id": banner['link_id']},
-                    ));
-                break;
-              case "3":
-                RouteUtil.push(
-                    context,
-                    ProductDetailScreen(
-                      productId: banner['link_id'],
-                    ));
-                break;
-              case "4":
-                RouteUtil.push(context,
-                    PartnerBookScheduleScreen(shopID: banner['link_id']));
-                break;
-            }
+            WidgetUtil.linkToScreen(context, banner);
           },
         );
       },

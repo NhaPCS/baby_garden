@@ -8,12 +8,8 @@ import 'intl/messages_all.dart';
 // Made by Localizely
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
-
 class S {
   S();
-  
-  static S current;
   
   static const AppLocalizationDelegate delegate =
     AppLocalizationDelegate();
@@ -23,9 +19,7 @@ class S {
     final localeName = Intl.canonicalizedLocale(name); 
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
-      S.current = S();
-      
-      return S.current;
+      return S();
     });
   } 
 
@@ -33,7 +27,6 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `VƯỜN CỦA BÉ`
   String get app_name_title {
     return Intl.message(
       'VƯỜN CỦA BÉ',
@@ -43,7 +36,6 @@ class S {
     );
   }
 
-  /// `Welcome`
   String get welcome {
     return Intl.message(
       'Welcome',
@@ -53,7 +45,6 @@ class S {
     );
   }
 
-  /// `Trang chủ`
   String get home {
     return Intl.message(
       'Trang chủ',
@@ -63,7 +54,6 @@ class S {
     );
   }
 
-  /// `Shopping`
   String get shopping {
     return Intl.message(
       'Shopping',
@@ -73,7 +63,6 @@ class S {
     );
   }
 
-  /// `Giỏ hàng`
   String get cart {
     return Intl.message(
       'Giỏ hàng',
@@ -83,7 +72,6 @@ class S {
     );
   }
 
-  /// `Đơn hàng`
   String get order {
     return Intl.message(
       'Đơn hàng',
@@ -93,7 +81,6 @@ class S {
     );
   }
 
-  /// `Tài khoản`
   String get account {
     return Intl.message(
       'Tài khoản',
@@ -103,7 +90,6 @@ class S {
     );
   }
 
-  /// `Ứng dụng mua sắm trực tuyến\nDành cho mẹ và bé`
   String get welcome_title {
     return Intl.message(
       'Ứng dụng mua sắm trực tuyến\nDành cho mẹ và bé',
@@ -113,7 +99,6 @@ class S {
     );
   }
 
-  /// `Vöôøn Cuûa Beù`
   String get app_name {
     return Intl.message(
       'Vöôøn Cuûa Beù',
@@ -123,7 +108,6 @@ class S {
     );
   }
 
-  /// `Thanh toán điểm`
   String get point_checkout {
     return Intl.message(
       'Thanh toán điểm',
@@ -133,7 +117,6 @@ class S {
     );
   }
 
-  /// `Bạn muốn tìm gì hôm nay?`
   String get search_hint {
     return Intl.message(
       'Bạn muốn tìm gì hôm nay?',
@@ -143,7 +126,6 @@ class S {
     );
   }
 
-  /// `Hướng dẫn sử dụng App`
   String get guide_title {
     return Intl.message(
       'Hướng dẫn sử dụng App',
@@ -153,7 +135,6 @@ class S {
     );
   }
 
-  /// `Đăng nhập`
   String get login {
     return Intl.message(
       'Đăng nhập',
@@ -163,7 +144,6 @@ class S {
     );
   }
 
-  /// `Nhập số điện thoại`
   String get enter_phone_number {
     return Intl.message(
       'Nhập số điện thoại',
@@ -173,7 +153,6 @@ class S {
     );
   }
 
-  /// `Nhập mật khẩu`
   String get enter_password {
     return Intl.message(
       'Nhập mật khẩu',
@@ -183,7 +162,6 @@ class S {
     );
   }
 
-  /// `Ghi nhớ mật khẩu`
   String get remember_password {
     return Intl.message(
       'Ghi nhớ mật khẩu',
@@ -193,7 +171,6 @@ class S {
     );
   }
 
-  /// `Quên mật khẩu`
   String get foget_pasword {
     return Intl.message(
       'Quên mật khẩu',
@@ -203,7 +180,6 @@ class S {
     );
   }
 
-  /// `Bạn chưa có tài khoản?`
   String get dont_have_account {
     return Intl.message(
       'Bạn chưa có tài khoản?',
@@ -213,7 +189,6 @@ class S {
     );
   }
 
-  /// `Họ tên của bạn`
   String get your_full_name {
     return Intl.message(
       'Họ tên của bạn',
@@ -223,7 +198,6 @@ class S {
     );
   }
 
-  /// `Mật khẩu`
   String get password {
     return Intl.message(
       'Mật khẩu',
@@ -233,7 +207,6 @@ class S {
     );
   }
 
-  /// `Nhập lại mật khẩu`
   String get reenter_password {
     return Intl.message(
       'Nhập lại mật khẩu',
@@ -243,7 +216,6 @@ class S {
     );
   }
 
-  /// `Nhập số điện thoại giới thiệu `
   String get enter_invite_phone_number {
     return Intl.message(
       'Nhập số điện thoại giới thiệu ',
@@ -253,7 +225,6 @@ class S {
     );
   }
 
-  /// ` Đăng ký `
   String get register {
     return Intl.message(
       ' Đăng ký ',
@@ -263,7 +234,6 @@ class S {
     );
   }
 
-  /// `Quay lại đăng nhập nếu đã có tài khoản`
   String get return_login_if_had_account {
     return Intl.message(
       'Quay lại đăng nhập nếu đã có tài khoản',
@@ -273,7 +243,6 @@ class S {
     );
   }
 
-  /// `Quay lại đăng nhập`
   String get return_login {
     return Intl.message(
       'Quay lại đăng nhập',
@@ -283,7 +252,6 @@ class S {
     );
   }
 
-  /// `Nhập mã OTP`
   String get enter_otp {
     return Intl.message(
       'Nhập mã OTP',
@@ -293,7 +261,6 @@ class S {
     );
   }
 
-  /// `Gửi lại mã xác thực`
   String get resend_otp {
     return Intl.message(
       'Gửi lại mã xác thực',
@@ -303,7 +270,6 @@ class S {
     );
   }
 
-  /// `Nếu bạn không đăng ký được, vui lòng gọi\nđiện tới số  0912 277 022 để được hỗ trợ`
   String get otp_timer_out {
     return Intl.message(
       'Nếu bạn không đăng ký được, vui lòng gọi\nđiện tới số  0912 277 022 để được hỗ trợ',
@@ -313,7 +279,6 @@ class S {
     );
   }
 
-  /// `Hoàn thành`
   String get finish {
     return Intl.message(
       'Hoàn thành',
@@ -323,7 +288,6 @@ class S {
     );
   }
 
-  /// `Nhập mật khẩu mới`
   String get enter_new_password {
     return Intl.message(
       'Nhập mật khẩu mới',
@@ -333,7 +297,6 @@ class S {
     );
   }
 
-  /// `Nhập lại mật khẩu mới`
   String get reenter_new_password {
     return Intl.message(
       'Nhập lại mật khẩu mới',
@@ -343,7 +306,6 @@ class S {
     );
   }
 
-  /// `Xác nhận`
   String get confirm {
     return Intl.message(
       'Xác nhận',
@@ -353,7 +315,6 @@ class S {
     );
   }
 
-  /// `Đổi mật khẩu`
   String get change_password {
     return Intl.message(
       'Đổi mật khẩu',
@@ -363,7 +324,6 @@ class S {
     );
   }
 
-  /// `Nhập mật khẩu cũ`
   String get enter_old_password {
     return Intl.message(
       'Nhập mật khẩu cũ',
@@ -373,7 +333,6 @@ class S {
     );
   }
 
-  /// `(0:{time})`
   String count_down_time(Object time) {
     return Intl.message(
       '(0:$time)',
@@ -383,7 +342,6 @@ class S {
     );
   }
 
-  /// `Trang cá nhân`
   String get myProfile {
     return Intl.message(
       'Trang cá nhân',
@@ -393,7 +351,6 @@ class S {
     );
   }
 
-  /// `Quản lý tài khoản`
   String get accManage {
     return Intl.message(
       'Quản lý tài khoản',
@@ -403,7 +360,6 @@ class S {
     );
   }
 
-  /// `Quản lý điểm`
   String get pointManage {
     return Intl.message(
       'Quản lý điểm',
@@ -413,7 +369,6 @@ class S {
     );
   }
 
-  /// `Quản lý lịch nhắc`
   String get remindManage {
     return Intl.message(
       'Quản lý lịch nhắc',
@@ -423,7 +378,6 @@ class S {
     );
   }
 
-  /// `Quản lý voucher`
   String get voucherManage {
     return Intl.message(
       'Quản lý voucher',
@@ -433,7 +387,6 @@ class S {
     );
   }
 
-  /// `Sản phẩm yêu thích`
   String get favoriteProduct {
     return Intl.message(
       'Sản phẩm yêu thích',
@@ -443,7 +396,6 @@ class S {
     );
   }
 
-  /// `Đối tác yêu thích`
   String get favoritePatner {
     return Intl.message(
       'Đối tác yêu thích',
@@ -453,7 +405,6 @@ class S {
     );
   }
 
-  /// `Sản phẩm đã xem`
   String get seenProduct {
     return Intl.message(
       'Sản phẩm đã xem',
@@ -463,7 +414,6 @@ class S {
     );
   }
 
-  /// `Hỗ trợ khách hàng`
   String get customerHelper {
     return Intl.message(
       'Hỗ trợ khách hàng',
@@ -473,7 +423,6 @@ class S {
     );
   }
 
-  /// `Cài đặt`
   String get setting {
     return Intl.message(
       'Cài đặt',
@@ -483,7 +432,6 @@ class S {
     );
   }
 
-  /// `Xem thêm`
   String get view_more {
     return Intl.message(
       'Xem thêm',
@@ -493,7 +441,6 @@ class S {
     );
   }
 
-  /// `Thu gọn`
   String get collapse {
     return Intl.message(
       'Thu gọn',
@@ -503,7 +450,6 @@ class S {
     );
   }
 
-  /// `Tất cả`
   String get all {
     return Intl.message(
       'Tất cả',
@@ -513,7 +459,6 @@ class S {
     );
   }
 
-  /// `Danh mục`
   String get category {
     return Intl.message(
       'Danh mục',
@@ -523,7 +468,6 @@ class S {
     );
   }
 
-  /// `Đang diễn ra`
   String get happening {
     return Intl.message(
       'Đang diễn ra',
@@ -533,7 +477,6 @@ class S {
     );
   }
 
-  /// `Sắp diễn ra`
   String get pending {
     return Intl.message(
       'Sắp diễn ra',
@@ -543,7 +486,6 @@ class S {
     );
   }
 
-  /// `Đã bán {sold}/{total}`
   String sold_count(Object sold, Object total) {
     return Intl.message(
       'Đã bán $sold/$total',
@@ -553,7 +495,6 @@ class S {
     );
   }
 
-  /// `Tham gia từ`
   String get joinDate {
     return Intl.message(
       'Tham gia từ',
@@ -563,7 +504,6 @@ class S {
     );
   }
 
-  /// `Họ và tên`
   String get fullname {
     return Intl.message(
       'Họ và tên',
@@ -573,7 +513,6 @@ class S {
     );
   }
 
-  /// `Ngày sinh`
   String get birthday {
     return Intl.message(
       'Ngày sinh',
@@ -583,7 +522,6 @@ class S {
     );
   }
 
-  /// `Giới tính`
   String get gender {
     return Intl.message(
       'Giới tính',
@@ -593,7 +531,6 @@ class S {
     );
   }
 
-  /// `Địa chỉ`
   String get address {
     return Intl.message(
       'Địa chỉ',
@@ -603,7 +540,6 @@ class S {
     );
   }
 
-  /// `Địa chỉ: `
   String get address_form {
     return Intl.message(
       'Địa chỉ: ',
@@ -613,7 +549,6 @@ class S {
     );
   }
 
-  /// `Số điện thoại`
   String get mobilePhone {
     return Intl.message(
       'Số điện thoại',
@@ -623,7 +558,6 @@ class S {
     );
   }
 
-  /// `Điện thoại: `
   String get mobilePhone_form {
     return Intl.message(
       'Điện thoại: ',
@@ -633,7 +567,6 @@ class S {
     );
   }
 
-  /// `Danh mục sản phẩm`
   String get category_product {
     return Intl.message(
       'Danh mục sản phẩm',
@@ -643,7 +576,6 @@ class S {
     );
   }
 
-  /// `Loại dịch vụ: `
   String get service_type {
     return Intl.message(
       'Loại dịch vụ: ',
@@ -653,7 +585,6 @@ class S {
     );
   }
 
-  /// `Giới thiệu: `
   String get introduce {
     return Intl.message(
       'Giới thiệu: ',
@@ -663,7 +594,6 @@ class S {
     );
   }
 
-  /// `Đăng ký đối tác`
   String get partnerRegister {
     return Intl.message(
       'Đăng ký đối tác',
@@ -673,7 +603,6 @@ class S {
     );
   }
 
-  /// `Nhập thông tin sau để trở thành đối tác của VCB nhé!`
   String get partnerRegisHeadTitle {
     return Intl.message(
       'Nhập thông tin sau để trở thành đối tác của VCB nhé!',
@@ -683,7 +612,6 @@ class S {
     );
   }
 
-  /// `Tên Shop`
   String get shopName {
     return Intl.message(
       'Tên Shop',
@@ -693,7 +621,6 @@ class S {
     );
   }
 
-  /// `Nhập tên shop của bạn`
   String get shopPlaceholder {
     return Intl.message(
       'Nhập tên shop của bạn',
@@ -703,7 +630,6 @@ class S {
     );
   }
 
-  /// `Nhập SĐT của bạn`
   String get mobilePlaceholder {
     return Intl.message(
       'Nhập SĐT của bạn',
@@ -713,7 +639,6 @@ class S {
     );
   }
 
-  /// `Nhập địa chỉ của bạn`
   String get addressPlaceholder {
     return Intl.message(
       'Nhập địa chỉ của bạn',
@@ -723,7 +648,6 @@ class S {
     );
   }
 
-  /// `Ngành nghề`
   String get career {
     return Intl.message(
       'Ngành nghề',
@@ -733,7 +657,6 @@ class S {
     );
   }
 
-  /// `Nhập ngành nghề của bạn`
   String get careerPlaceholder {
     return Intl.message(
       'Nhập ngành nghề của bạn',
@@ -743,7 +666,6 @@ class S {
     );
   }
 
-  /// `Đổi mật khẩu`
   String get changePassword {
     return Intl.message(
       'Đổi mật khẩu',
@@ -753,7 +675,6 @@ class S {
     );
   }
 
-  /// `Thông tin con`
   String get childInfor {
     return Intl.message(
       'Thông tin con',
@@ -763,7 +684,6 @@ class S {
     );
   }
 
-  /// `Thêm con`
   String get addChild {
     return Intl.message(
       'Thêm con',
@@ -773,7 +693,6 @@ class S {
     );
   }
 
-  /// `Tên bé`
   String get childName {
     return Intl.message(
       'Tên bé',
@@ -783,7 +702,6 @@ class S {
     );
   }
 
-  /// `Chỉ số sức khỏe`
   String get healthIndex {
     return Intl.message(
       'Chỉ số sức khỏe',
@@ -793,7 +711,6 @@ class S {
     );
   }
 
-  /// `Ngày đo gần nhất`
   String get lastDayCheck {
     return Intl.message(
       'Ngày đo gần nhất',
@@ -803,7 +720,6 @@ class S {
     );
   }
 
-  /// `Chọn sản phẩm nhắc`
   String get selectRemindProduct {
     return Intl.message(
       'Chọn sản phẩm nhắc',
@@ -813,7 +729,6 @@ class S {
     );
   }
 
-  /// `Chọn thời gian nhắc lịch mua sản phẩm`
   String get selectRemindBuyTime {
     return Intl.message(
       'Chọn thời gian nhắc lịch mua sản phẩm',
@@ -823,7 +738,6 @@ class S {
     );
   }
 
-  /// `Xem chi tiết`
   String get moreDetail {
     return Intl.message(
       'Xem chi tiết',
@@ -833,7 +747,6 @@ class S {
     );
   }
 
-  /// `Nhận thông báo các sản phẩm giờ vàng`
   String get setting_1 {
     return Intl.message(
       'Nhận thông báo các sản phẩm giờ vàng',
@@ -843,7 +756,6 @@ class S {
     );
   }
 
-  /// `Nhận thông báo thay đổi giá của sản phẩm yêu thích`
   String get setting_2 {
     return Intl.message(
       'Nhận thông báo thay đổi giá của sản phẩm yêu thích',
@@ -853,7 +765,6 @@ class S {
     );
   }
 
-  /// `Nhận thông báo lịch mua và lịch sử dung sản phẩm`
   String get setting_3 {
     return Intl.message(
       'Nhận thông báo lịch mua và lịch sử dung sản phẩm',
@@ -863,7 +774,6 @@ class S {
     );
   }
 
-  /// `Nhận thông báo từ VCB Express`
   String get setting_4 {
     return Intl.message(
       'Nhận thông báo từ VCB Express',
@@ -873,7 +783,6 @@ class S {
     );
   }
 
-  /// `Hỗ trợ khách hàng`
   String get customer_support {
     return Intl.message(
       'Hỗ trợ khách hàng',
@@ -883,7 +792,6 @@ class S {
     );
   }
 
-  /// `Giới thiệu về VCB`
   String get vcb_present {
     return Intl.message(
       'Giới thiệu về VCB',
@@ -893,7 +801,6 @@ class S {
     );
   }
 
-  /// `Thông tin liên hệ với VCB`
   String get vcb_contact {
     return Intl.message(
       'Thông tin liên hệ với VCB',
@@ -903,7 +810,6 @@ class S {
     );
   }
 
-  /// `Hướng dẫn mua hàng`
   String get buy_guide {
     return Intl.message(
       'Hướng dẫn mua hàng',
@@ -913,7 +819,6 @@ class S {
     );
   }
 
-  /// `Hướng dẫn cập nhật thông tin`
   String get update_info_guide {
     return Intl.message(
       'Hướng dẫn cập nhật thông tin',
@@ -923,7 +828,6 @@ class S {
     );
   }
 
-  /// `Chính sách hệ thống`
   String get policy {
     return Intl.message(
       'Chính sách hệ thống',
@@ -933,7 +837,6 @@ class S {
     );
   }
 
-  /// `Đăng ký làm đối tác với VCB`
   String get vcb_register_partner {
     return Intl.message(
       'Đăng ký làm đối tác với VCB',
@@ -943,7 +846,6 @@ class S {
     );
   }
 
-  /// `Thông báo`
   String get notify {
     return Intl.message(
       'Thông báo',
@@ -953,7 +855,6 @@ class S {
     );
   }
 
-  /// `Khuyến mãi`
   String get sale {
     return Intl.message(
       'Khuyến mãi',
@@ -963,7 +864,6 @@ class S {
     );
   }
 
-  /// `Cá nhân`
   String get personal {
     return Intl.message(
       'Cá nhân',
@@ -973,7 +873,6 @@ class S {
     );
   }
 
-  /// `Nhập từ khóa tìm kiếm thông báo`
   String get notify_hint_search {
     return Intl.message(
       'Nhập từ khóa tìm kiếm thông báo',
@@ -983,7 +882,6 @@ class S {
     );
   }
 
-  /// `Ẩn tin đã đọc`
   String get hide_readed_notify {
     return Intl.message(
       'Ẩn tin đã đọc',
@@ -993,7 +891,6 @@ class S {
     );
   }
 
-  /// `Gửi bởi: {author}`
   String send_by(Object author) {
     return Intl.message(
       'Gửi bởi: $author',
@@ -1003,7 +900,6 @@ class S {
     );
   }
 
-  /// `Thời gian: {time}`
   String notice_time(Object time) {
     return Intl.message(
       'Thời gian: $time',
@@ -1013,7 +909,6 @@ class S {
     );
   }
 
-  /// `Trả lời đánh giá đơn `
   String get notify_title {
     return Intl.message(
       'Trả lời đánh giá đơn ',
@@ -1023,7 +918,6 @@ class S {
     );
   }
 
-  /// `Chúc mừng quý khách đã đặt hàng thành công `
   String get notify_booking_success {
     return Intl.message(
       'Chúc mừng quý khách đã đặt hàng thành công ',
@@ -1033,7 +927,6 @@ class S {
     );
   }
 
-  /// `Chi tiết sản phẩm`
   String get product_detail {
     return Intl.message(
       'Chi tiết sản phẩm',
@@ -1043,7 +936,6 @@ class S {
     );
   }
 
-  /// `Yêu thích`
   String get favorite {
     return Intl.message(
       'Yêu thích',
@@ -1053,7 +945,6 @@ class S {
     );
   }
 
-  /// `Đã thích`
   String get favorited {
     return Intl.message(
       'Đã thích',
@@ -1063,7 +954,6 @@ class S {
     );
   }
 
-  /// `Còn hàng`
   String get product_existing {
     return Intl.message(
       'Còn hàng',
@@ -1073,7 +963,6 @@ class S {
     );
   }
 
-  /// `Hết hàng`
   String get product_out_stock {
     return Intl.message(
       'Hết hàng',
@@ -1083,7 +972,6 @@ class S {
     );
   }
 
-  /// `Thông tin chi tiết`
   String get detail_info {
     return Intl.message(
       'Thông tin chi tiết',
@@ -1093,7 +981,6 @@ class S {
     );
   }
 
-  /// `Mã SKU: {code}`
   String sku_code(Object code) {
     return Intl.message(
       'Mã SKU: $code',
@@ -1103,7 +990,6 @@ class S {
     );
   }
 
-  /// `Thương hiệu`
   String get brand {
     return Intl.message(
       'Thương hiệu',
@@ -1113,7 +999,6 @@ class S {
     );
   }
 
-  /// `Xuất xứ`
   String get origin {
     return Intl.message(
       'Xuất xứ',
@@ -1123,7 +1008,6 @@ class S {
     );
   }
 
-  /// `Kích thước`
   String get size {
     return Intl.message(
       'Kích thước',
@@ -1133,7 +1017,6 @@ class S {
     );
   }
 
-  /// `Đối tượng sử dụng`
   String get customer_target {
     return Intl.message(
       'Đối tượng sử dụng',
@@ -1143,7 +1026,6 @@ class S {
     );
   }
 
-  /// `Mô tả sản phẩm`
   String get product_description {
     return Intl.message(
       'Mô tả sản phẩm',
@@ -1153,7 +1035,6 @@ class S {
     );
   }
 
-  /// `Sản phẩm tương tự`
   String get same_product {
     return Intl.message(
       'Sản phẩm tương tự',
@@ -1163,7 +1044,6 @@ class S {
     );
   }
 
-  /// `Mua ngay`
   String get buy_now {
     return Intl.message(
       'Mua ngay',
@@ -1173,7 +1053,6 @@ class S {
     );
   }
 
-  /// `Dự kiến mua`
   String get expect_to_buy {
     return Intl.message(
       'Dự kiến mua',
@@ -1183,7 +1062,6 @@ class S {
     );
   }
 
-  /// `Thêm vào giỏ hàng`
   String get add_to_cart {
     return Intl.message(
       'Thêm vào giỏ hàng',
@@ -1193,7 +1071,6 @@ class S {
     );
   }
 
-  /// `Nhận thông báo khi có hàng`
   String get get_notify_when_stocking {
     return Intl.message(
       'Nhận thông báo khi có hàng',
@@ -1203,7 +1080,6 @@ class S {
     );
   }
 
-  /// `Gửi thông báo`
   String get send_report {
     return Intl.message(
       'Gửi thông báo',
@@ -1213,7 +1089,6 @@ class S {
     );
   }
 
-  /// `Báo cáo hay góp ý với chúng rôi về hình ảnh hay thông tin về sản phẩm nhé!`
   String get report_desc {
     return Intl.message(
       'Báo cáo hay góp ý với chúng rôi về hình ảnh hay thông tin về sản phẩm nhé!',
@@ -1223,7 +1098,6 @@ class S {
     );
   }
 
-  /// `Tiêu đề báo cáo`
   String get report_title {
     return Intl.message(
       'Tiêu đề báo cáo',
@@ -1233,7 +1107,6 @@ class S {
     );
   }
 
-  /// `Chọn khác`
   String get choose_other {
     return Intl.message(
       'Chọn khác',
@@ -1243,7 +1116,6 @@ class S {
     );
   }
 
-  /// `Nhập tiêu đề tự chọn`
   String get report_title_hint {
     return Intl.message(
       'Nhập tiêu đề tự chọn',
@@ -1253,7 +1125,6 @@ class S {
     );
   }
 
-  /// `Viết nội dung báo cáo/ góp ý của bạn`
   String get report_content_hint {
     return Intl.message(
       'Viết nội dung báo cáo/ góp ý của bạn',
@@ -1263,7 +1134,6 @@ class S {
     );
   }
 
-  /// `Gửi`
   String get send {
     return Intl.message(
       'Gửi',
@@ -1273,7 +1143,6 @@ class S {
     );
   }
 
-  /// `Số lượng:`
   String get product_count {
     return Intl.message(
       'Số lượng:',
@@ -1283,7 +1152,6 @@ class S {
     );
   }
 
-  /// `Màu sắc`
   String get color {
     return Intl.message(
       'Màu sắc',
@@ -1293,7 +1161,6 @@ class S {
     );
   }
 
-  /// `Từ khóa HOT`
   String get hot_key {
     return Intl.message(
       'Từ khóa HOT',
@@ -1303,7 +1170,6 @@ class S {
     );
   }
 
-  /// `Lịch sử tìm kiếm`
   String get search_key_history {
     return Intl.message(
       'Lịch sử tìm kiếm',
@@ -1313,7 +1179,6 @@ class S {
     );
   }
 
-  /// `Xóa`
   String get delete {
     return Intl.message(
       'Xóa',
@@ -1323,7 +1188,6 @@ class S {
     );
   }
 
-  /// `Tìm kiếm theo tên sản phẩm`
   String get search_by_name {
     return Intl.message(
       'Tìm kiếm theo tên sản phẩm',
@@ -1333,7 +1197,6 @@ class S {
     );
   }
 
-  /// `Tìm kiếm theo nội dung sản phẩm`
   String get search_by_content {
     return Intl.message(
       'Tìm kiếm theo nội dung sản phẩm',
@@ -1343,7 +1206,6 @@ class S {
     );
   }
 
-  /// `nhà cung cấp `
   String get distributor_name {
     return Intl.message(
       'nhà cung cấp ',
@@ -1353,7 +1215,6 @@ class S {
     );
   }
 
-  /// `Đánh giá dịch vụ`
   String get rating_service {
     return Intl.message(
       'Đánh giá dịch vụ',
@@ -1363,7 +1224,6 @@ class S {
     );
   }
 
-  /// `Đánh giá đơn hàng`
   String get rating_order {
     return Intl.message(
       'Đánh giá đơn hàng',
@@ -1373,7 +1233,6 @@ class S {
     );
   }
 
-  /// `Chờ đánh giá`
   String get waitting_rate {
     return Intl.message(
       'Chờ đánh giá',
@@ -1383,7 +1242,6 @@ class S {
     );
   }
 
-  /// `Đã đánh giá`
   String get rated {
     return Intl.message(
       'Đã đánh giá',
@@ -1393,7 +1251,6 @@ class S {
     );
   }
 
-  /// `Mã đơn {code}`
   String order_code(Object code) {
     return Intl.message(
       'Mã đơn $code',
@@ -1403,7 +1260,6 @@ class S {
     );
   }
 
-  /// `Mã đặt lịch {code}`
   String booking_code(Object code) {
     return Intl.message(
       'Mã đặt lịch $code',
@@ -1413,7 +1269,6 @@ class S {
     );
   }
 
-  /// `Đơn hàng {code}`
   String order_with_code(Object code) {
     return Intl.message(
       'Đơn hàng $code',
@@ -1423,7 +1278,6 @@ class S {
     );
   }
 
-  /// `Cung cấp bởi: `
   String get supply_by {
     return Intl.message(
       'Cung cấp bởi: ',
@@ -1433,7 +1287,6 @@ class S {
     );
   }
 
-  /// `Cung cấp bởi: {supplier}`
   String supply_by_supplier(Object supplier) {
     return Intl.message(
       'Cung cấp bởi: $supplier',
@@ -1443,7 +1296,6 @@ class S {
     );
   }
 
-  /// `Ngày đặt lịch: {time}`
   String booking_date(Object time) {
     return Intl.message(
       'Ngày đặt lịch: $time',
@@ -1453,7 +1305,6 @@ class S {
     );
   }
 
-  /// `Mã đặt lịch: {code}\nNgày đặt lịch: {date_booking} - {time_booking}`
   String service_header(Object code, Object date_booking, Object time_booking) {
     return Intl.message(
       'Mã đặt lịch: $code\nNgày đặt lịch: $date_booking - $time_booking',
@@ -1463,7 +1314,6 @@ class S {
     );
   }
 
-  /// `Ngày đặt hàng: {date}`
   String order_date(Object date) {
     return Intl.message(
       'Ngày đặt hàng: $date',
@@ -1473,7 +1323,6 @@ class S {
     );
   }
 
-  /// `Ngày hết hạn giữ hàng: {date}`
   String date_of_expiration_holding(Object date) {
     return Intl.message(
       'Ngày hết hạn giữ hàng: $date',
@@ -1483,7 +1332,6 @@ class S {
     );
   }
 
-  /// `Chăm sóc da mặt từ cơ bản đến nâng cao`
   String get service_title {
     return Intl.message(
       'Chăm sóc da mặt từ cơ bản đến nâng cao',
@@ -1493,7 +1341,6 @@ class S {
     );
   }
 
-  /// `Áo giữ nhiệt Trẻ em màu 11 Pink size 100 vạch hồng\ncổ cao`
   String get order_title {
     return Intl.message(
       'Áo giữ nhiệt Trẻ em màu 11 Pink size 100 vạch hồng\ncổ cao',
@@ -1503,7 +1350,6 @@ class S {
     );
   }
 
-  /// `Thời gian thực hiện: {minute} `
   String overall_time(Object minute) {
     return Intl.message(
       'Thời gian thực hiện: $minute ',
@@ -1513,7 +1359,6 @@ class S {
     );
   }
 
-  /// `{price} x {count}`
   String order_detail(Object price, Object count) {
     return Intl.message(
       '$price x $count',
@@ -1523,7 +1368,6 @@ class S {
     );
   }
 
-  /// `Tổng {count} sản phẩm`
   String order_count_summary(Object count) {
     return Intl.message(
       'Tổng $count sản phẩm',
@@ -1533,7 +1377,6 @@ class S {
     );
   }
 
-  /// `Ngày sử dung: {date}`
   String expiry_date(Object date) {
     return Intl.message(
       'Ngày sử dung: $date',
@@ -1543,7 +1386,6 @@ class S {
     );
   }
 
-  /// `Tổng đơn hàng: `
   String get invoice {
     return Intl.message(
       'Tổng đơn hàng: ',
@@ -1553,7 +1395,6 @@ class S {
     );
   }
 
-  /// `Xem thêm`
   String get see_more {
     return Intl.message(
       'Xem thêm',
@@ -1563,7 +1404,6 @@ class S {
     );
   }
 
-  /// `Đánh giá đơn {code}`
   String order_rating(Object code) {
     return Intl.message(
       'Đánh giá đơn $code',
@@ -1573,7 +1413,6 @@ class S {
     );
   }
 
-  /// `Ngày nhận hàng: {date}`
   String receiving_date(Object date) {
     return Intl.message(
       'Ngày nhận hàng: $date',
@@ -1583,7 +1422,6 @@ class S {
     );
   }
 
-  /// `Viết chia sẻ của bạn về sản phẩm này`
   String get rating_hint {
     return Intl.message(
       'Viết chia sẻ của bạn về sản phẩm này',
@@ -1593,7 +1431,6 @@ class S {
     );
   }
 
-  /// `Thêm hình ảnh`
   String get add_image {
     return Intl.message(
       'Thêm hình ảnh',
@@ -1603,7 +1440,6 @@ class S {
     );
   }
 
-  /// `Ngày sử dung: {date}`
   String using_date(Object date) {
     return Intl.message(
       'Ngày sử dung: $date',
@@ -1613,7 +1449,6 @@ class S {
     );
   }
 
-  /// `GỬI ĐÁNH GIÁ`
   String get send_rating {
     return Intl.message(
       'GỬI ĐÁNH GIÁ',
@@ -1623,7 +1458,6 @@ class S {
     );
   }
 
-  /// `Dịch vụ đã hủy`
   String get canceled_service {
     return Intl.message(
       'Dịch vụ đã hủy',
@@ -1633,7 +1467,6 @@ class S {
     );
   }
 
-  /// `Bỏ qua >>`
   String get skip {
     return Intl.message(
       'Bỏ qua >>',
@@ -1643,7 +1476,6 @@ class S {
     );
   }
 
-  /// `Ghi chú khuyến mại của sản phẩm`
   String get note_for_product_promo {
     return Intl.message(
       'Ghi chú khuyến mại của sản phẩm',
@@ -1653,7 +1485,6 @@ class S {
     );
   }
 
-  /// `Nhập mã giảm giá`
   String get type_promo_code {
     return Intl.message(
       'Nhập mã giảm giá',
@@ -1663,7 +1494,6 @@ class S {
     );
   }
 
-  /// `Áp dụng`
   String get apply {
     return Intl.message(
       'Áp dụng',
@@ -1673,7 +1503,6 @@ class S {
     );
   }
 
-  /// `Mã giảm giá`
   String get promo_code {
     return Intl.message(
       'Mã giảm giá',
@@ -1683,7 +1512,6 @@ class S {
     );
   }
 
-  /// `Tạm tính`
   String get pre_count {
     return Intl.message(
       'Tạm tính',
@@ -1693,7 +1521,6 @@ class S {
     );
   }
 
-  /// `Tiến hành đặt hàng`
   String get take_order {
     return Intl.message(
       'Tiến hành đặt hàng',
@@ -1703,7 +1530,6 @@ class S {
     );
   }
 
-  /// `Đơn hàng của tôi `
   String get my_order {
     return Intl.message(
       'Đơn hàng của tôi ',
@@ -1713,7 +1539,6 @@ class S {
     );
   }
 
-  /// `Chờ\nthanh toán`
   String get waiting_payment {
     return Intl.message(
       'Chờ\nthanh toán',
@@ -1723,7 +1548,6 @@ class S {
     );
   }
 
-  /// `Chờ\nxác nhận`
   String get waiting_confirm {
     return Intl.message(
       'Chờ\nxác nhận',
@@ -1733,7 +1557,6 @@ class S {
     );
   }
 
-  /// `Nhận hàng\ntại Shop`
   String get get_at_shop {
     return Intl.message(
       'Nhận hàng\ntại Shop',
@@ -1743,7 +1566,6 @@ class S {
     );
   }
 
-  /// `Đang\nđóng gói`
   String get packing {
     return Intl.message(
       'Đang\nđóng gói',
@@ -1753,7 +1575,6 @@ class S {
     );
   }
 
-  /// `Đang\nvận chuyển`
   String get transporting {
     return Intl.message(
       'Đang\nvận chuyển',
@@ -1763,7 +1584,6 @@ class S {
     );
   }
 
-  /// `Đơn hàng\nthành công`
   String get success_order {
     return Intl.message(
       'Đơn hàng\nthành công',
@@ -1773,7 +1593,6 @@ class S {
     );
   }
 
-  /// `Đơn hàng\nđã hủy`
   String get cancelled_order {
     return Intl.message(
       'Đơn hàng\nđã hủy',
@@ -1783,7 +1602,6 @@ class S {
     );
   }
 
-  /// `Đánh giá\nđơn hàng`
   String get rate_order {
     return Intl.message(
       'Đánh giá\nđơn hàng',
@@ -1793,7 +1611,6 @@ class S {
     );
   }
 
-  /// `Dịch vụ của tôi`
   String get my_service {
     return Intl.message(
       'Dịch vụ của tôi',
@@ -1803,7 +1620,6 @@ class S {
     );
   }
 
-  /// `Đã\nđặt lịch`
   String get booked {
     return Intl.message(
       'Đã\nđặt lịch',
@@ -1813,7 +1629,6 @@ class S {
     );
   }
 
-  /// `Đã\nsử dụng`
   String get used {
     return Intl.message(
       'Đã\nsử dụng',
@@ -1823,7 +1638,6 @@ class S {
     );
   }
 
-  /// `Đã hủy\nđặt lịch`
   String get cancelled_book {
     return Intl.message(
       'Đã hủy\nđặt lịch',
@@ -1833,7 +1647,6 @@ class S {
     );
   }
 
-  /// `Đặt lịch`
   String get book {
     return Intl.message(
       'Đặt lịch',
@@ -1843,7 +1656,6 @@ class S {
     );
   }
 
-  /// `Sản phẩm`
   String get product {
     return Intl.message(
       'Sản phẩm',
@@ -1853,7 +1665,6 @@ class S {
     );
   }
 
-  /// `Đánh giá\ndịch vụ`
   String get rate_service {
     return Intl.message(
       'Đánh giá\ndịch vụ',
@@ -1863,7 +1674,6 @@ class S {
     );
   }
 
-  /// `Các câu hỏi thường gặp`
   String get faq {
     return Intl.message(
       'Các câu hỏi thường gặp',
@@ -1873,7 +1683,6 @@ class S {
     );
   }
 
-  /// `Làm thế nào để đặt đơn hàng?`
   String get how_to_order {
     return Intl.message(
       'Làm thế nào để đặt đơn hàng?',
@@ -1883,7 +1692,6 @@ class S {
     );
   }
 
-  /// `Tôi phải làm sao để biết được đơn hàng đang ở đâu?`
   String get how_to_know_where_my_order {
     return Intl.message(
       'Tôi phải làm sao để biết được đơn hàng đang ở đâu?',
@@ -1893,7 +1701,6 @@ class S {
     );
   }
 
-  /// `Tôi muốn hủy đơn để đặt đơn khác thì làm thế nào?`
   String get how_to_cancel_order {
     return Intl.message(
       'Tôi muốn hủy đơn để đặt đơn khác thì làm thế nào?',
@@ -1903,7 +1710,6 @@ class S {
     );
   }
 
-  /// `Khi nhận hàng không đúng với hàng tôi đặt?`
   String get when_order_wrong {
     return Intl.message(
       'Khi nhận hàng không đúng với hàng tôi đặt?',
@@ -1913,7 +1719,6 @@ class S {
     );
   }
 
-  /// `Làm thế nào để tôi có thể liên hệ với chủ Shop?`
   String get how_to_contact_with_shop {
     return Intl.message(
       'Làm thế nào để tôi có thể liên hệ với chủ Shop?',
@@ -1923,7 +1728,6 @@ class S {
     );
   }
 
-  /// `Cung cấp bởi: `
   String get provided_by {
     return Intl.message(
       'Cung cấp bởi: ',
@@ -1933,7 +1737,6 @@ class S {
     );
   }
 
-  /// `Tổng đơn: `
   String get total_order_price {
     return Intl.message(
       'Tổng đơn: ',
@@ -1943,7 +1746,6 @@ class S {
     );
   }
 
-  /// `Vườn của bé: Thời trang dành cho bé MFGM PRO\ntinh chất dinh dưỡng quý trong sữa năm 2019`
   String get express_title {
     return Intl.message(
       'Vườn của bé: Thời trang dành cho bé MFGM PRO\ntinh chất dinh dưỡng quý trong sữa năm 2019',
@@ -1953,7 +1755,6 @@ class S {
     );
   }
 
-  /// `Thời trang cho bé`
   String get express_descrip {
     return Intl.message(
       'Thời trang cho bé',
@@ -1963,7 +1764,6 @@ class S {
     );
   }
 
-  /// `MFGM là một màng cầu dinh dưỡng bao quanh giọt chất béo trong sữa tự nhiên, đóng vai trò quan trọng trong việc cải thiện chức năng nhận thức, khả năng miễn dịch và sức khỏe đường ruột của trẻ, là tinh chất rất A +.`
   String get express_short_content {
     return Intl.message(
       'MFGM là một màng cầu dinh dưỡng bao quanh giọt chất béo trong sữa tự nhiên, đóng vai trò quan trọng trong việc cải thiện chức năng nhận thức, khả năng miễn dịch và sức khỏe đường ruột của trẻ, là tinh chất rất A +.',
@@ -1973,7 +1773,6 @@ class S {
     );
   }
 
-  /// `12/09/2019 - 14:00`
   String get express_time {
     return Intl.message(
       '12/09/2019 - 14:00',
@@ -1983,7 +1782,6 @@ class S {
     );
   }
 
-  /// `VCB Express`
   String get vcb_express {
     return Intl.message(
       'VCB Express',
@@ -1993,7 +1791,6 @@ class S {
     );
   }
 
-  /// `Vườn của bé: Thời trang dành cho bé\n năm 2019`
   String get vcb_ex_detail_short_title {
     return Intl.message(
       'Vườn của bé: Thời trang dành cho bé\n năm 2019',
@@ -2003,7 +1800,6 @@ class S {
     );
   }
 
-  /// `Thời trang dành cho bé năm 2019 phong cách xuân hè.`
   String get vcb_ex_detail_full_title {
     return Intl.message(
       'Thời trang dành cho bé năm 2019 phong cách xuân hè.',
@@ -2013,7 +1809,6 @@ class S {
     );
   }
 
-  /// `Viết bình luận của bạn`
   String get vcb_ex_detail_ctm_hint {
     return Intl.message(
       'Viết bình luận của bạn',
@@ -2023,7 +1818,6 @@ class S {
     );
   }
 
-  /// `Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn.`
   String get vcb_ex_detail_first_content {
     return Intl.message(
       'Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn.',
@@ -2033,7 +1827,6 @@ class S {
     );
   }
 
-  /// `Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn.`
   String get vcb_ex_detail_second_content {
     return Intl.message(
       'Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn.',
@@ -2043,7 +1836,6 @@ class S {
     );
   }
 
-  /// `Chi tiết khuyến mãi`
   String get saling_detail {
     return Intl.message(
       'Chi tiết khuyến mãi',
@@ -2053,7 +1845,6 @@ class S {
     );
   }
 
-  /// `[BIG SAle] {title}`
   String saling_detail_title(Object title) {
     return Intl.message(
       '[BIG SAle] $title',
@@ -2063,7 +1854,6 @@ class S {
     );
   }
 
-  /// `Thời gian áp dung: {time}`
   String saling_detail_time(Object time) {
     return Intl.message(
       'Thời gian áp dung: $time',
@@ -2073,7 +1863,6 @@ class S {
     );
   }
 
-  /// `Sản phẩm khuyến mãi`
   String get product_for_sale {
     return Intl.message(
       'Sản phẩm khuyến mãi',
@@ -2083,7 +1872,6 @@ class S {
     );
   }
 
-  /// `Đối tác yêu thích`
   String get familier_partner {
     return Intl.message(
       'Đối tác yêu thích',
@@ -2093,7 +1881,6 @@ class S {
     );
   }
 
-  /// `Chọn cơ sở`
   String get choose_client {
     return Intl.message(
       'Chọn cơ sở',
@@ -2103,7 +1890,6 @@ class S {
     );
   }
 
-  /// `Chọn dịch vụ ({number} dịch vụ)`
   String choose_service(Object number) {
     return Intl.message(
       'Chọn dịch vụ ($number dịch vụ)',
@@ -2113,7 +1899,6 @@ class S {
     );
   }
 
-  /// `{minute}\nPhút`
   String service_time_range(Object minute) {
     return Intl.message(
       '$minute\nPhút',
@@ -2123,7 +1908,6 @@ class S {
     );
   }
 
-  /// `Nhấn 1 lần nữa để thoát ứng dụng!`
   String get press_back_again_to_exit {
     return Intl.message(
       'Nhấn 1 lần nữa để thoát ứng dụng!',
@@ -2133,7 +1917,6 @@ class S {
     );
   }
 
-  /// `Đối tác`
   String get partner {
     return Intl.message(
       'Đối tác',
@@ -2143,7 +1926,6 @@ class S {
     );
   }
 
-  /// `Voucher`
   String get voucher {
     return Intl.message(
       'Voucher',
@@ -2153,7 +1935,6 @@ class S {
     );
   }
 
-  /// `Chỉ số\nsức khỏe`
   String get heath_number {
     return Intl.message(
       'Chỉ số\nsức khỏe',
@@ -2163,7 +1944,6 @@ class S {
     );
   }
 
-  /// `Đã lấy mã`
   String get codeTakenVoucher {
     return Intl.message(
       'Đã lấy mã',
@@ -2173,7 +1953,6 @@ class S {
     );
   }
 
-  /// `Sắp hết hạn`
   String get expireVoucher {
     return Intl.message(
       'Sắp hết hạn',
@@ -2183,7 +1962,6 @@ class S {
     );
   }
 
-  /// `Đã sử dụng`
   String get usedVoucher {
     return Intl.message(
       'Đã sử dụng',
@@ -2193,7 +1971,6 @@ class S {
     );
   }
 
-  /// `Đã hết hạn`
   String get expiredVoucher {
     return Intl.message(
       'Đã hết hạn',
@@ -2203,7 +1980,6 @@ class S {
     );
   }
 
-  /// `Lịch sử tích điểm và sử dụng điểm`
   String get pointHistoryHeadText {
     return Intl.message(
       'Lịch sử tích điểm và sử dụng điểm',
@@ -2213,7 +1989,6 @@ class S {
     );
   }
 
-  /// `Địa chỉ tài khoản`
   String get addressAccount {
     return Intl.message(
       'Địa chỉ tài khoản',
@@ -2223,7 +1998,6 @@ class S {
     );
   }
 
-  /// `Thiết lập địa chỉ`
   String get addressSetting {
     return Intl.message(
       'Thiết lập địa chỉ',
@@ -2233,7 +2007,6 @@ class S {
     );
   }
 
-  /// `Địa chỉ giao hàng mặc định`
   String get defaultAddress {
     return Intl.message(
       'Địa chỉ giao hàng mặc định',
@@ -2243,7 +2016,6 @@ class S {
     );
   }
 
-  /// `Địa chỉ của tôi`
   String get myAddress {
     return Intl.message(
       'Địa chỉ của tôi',
@@ -2253,7 +2025,6 @@ class S {
     );
   }
 
-  /// `Thêm địa chỉ của tôi`
   String get addAddress {
     return Intl.message(
       'Thêm địa chỉ của tôi',
@@ -2263,7 +2034,6 @@ class S {
     );
   }
 
-  /// `Sửa`
   String get edit {
     return Intl.message(
       'Sửa',
@@ -2273,7 +2043,6 @@ class S {
     );
   }
 
-  /// `Mặc định`
   String get isDefault {
     return Intl.message(
       'Mặc định',
@@ -2283,7 +2052,6 @@ class S {
     );
   }
 
-  /// `Địa chỉ cụ thể`
   String get addressDetail {
     return Intl.message(
       'Địa chỉ cụ thể',
@@ -2293,7 +2061,6 @@ class S {
     );
   }
 
-  /// `Nhập số nhà, tên đường...`
   String get addressDetailHint {
     return Intl.message(
       'Nhập số nhà, tên đường...',
@@ -2303,7 +2070,6 @@ class S {
     );
   }
 
-  /// `Danh sách người đánh giá`
   String get list_user_rated {
     return Intl.message(
       'Danh sách người đánh giá',
@@ -2313,7 +2079,6 @@ class S {
     );
   }
 
-  /// `Thêm mới`
   String get addNew {
     return Intl.message(
       'Thêm mới',
@@ -2323,7 +2088,6 @@ class S {
     );
   }
 
-  /// `Tên của bé`
   String get nameOfChild {
     return Intl.message(
       'Tên của bé',
@@ -2333,7 +2097,6 @@ class S {
     );
   }
 
-  /// `Ngày tháng năm sinh`
   String get dateOfBirth {
     return Intl.message(
       'Ngày tháng năm sinh',
@@ -2343,7 +2106,6 @@ class S {
     );
   }
 
-  /// `trở lại`
   String get comeBack {
     return Intl.message(
       'trở lại',
@@ -2353,7 +2115,6 @@ class S {
     );
   }
 
-  /// `Upload ảnh của bé`
   String get uploadChildAvatar {
     return Intl.message(
       'Upload ảnh của bé',
@@ -2363,7 +2124,6 @@ class S {
     );
   }
 
-  /// `Xác Nhận Đặt Lịch`
   String get booking_schedule_verify {
     return Intl.message(
       'Xác Nhận Đặt Lịch',
@@ -2373,7 +2133,6 @@ class S {
     );
   }
 
-  /// `Quay lại`
   String get back {
     return Intl.message(
       'Quay lại',
@@ -2383,7 +2142,6 @@ class S {
     );
   }
 
-  /// `Bạn Đã Đặt lịch thành công`
   String get booking_schedule_success {
     return Intl.message(
       'Bạn Đã Đặt lịch thành công',
@@ -2393,7 +2151,6 @@ class S {
     );
   }
 
-  /// `Chọn thời gian`
   String get choose_time {
     return Intl.message(
       'Chọn thời gian',
@@ -2403,7 +2160,6 @@ class S {
     );
   }
 
-  /// `Đặt hàng`
   String get booking {
     return Intl.message(
       'Đặt hàng',
@@ -2413,7 +2169,6 @@ class S {
     );
   }
 
-  /// `Địa chỉ nhận hàng`
   String get place_of_delivery {
     return Intl.message(
       'Địa chỉ nhận hàng',
@@ -2423,7 +2178,6 @@ class S {
     );
   }
 
-  /// `Hình thức nhận hàng`
   String get type_of_delivery {
     return Intl.message(
       'Hình thức nhận hàng',
@@ -2433,7 +2187,6 @@ class S {
     );
   }
 
-  /// `Hình thức thanh toán`
   String get type_of_checkout {
     return Intl.message(
       'Hình thức thanh toán',
@@ -2443,7 +2196,6 @@ class S {
     );
   }
 
-  /// `Đơn vị vận chuyển`
   String get delivery_service {
     return Intl.message(
       'Đơn vị vận chuyển',
@@ -2453,7 +2205,6 @@ class S {
     );
   }
 
-  /// `Đơn vị vận chuyển: {delivery_unit}`
   String delivery_service_header(Object delivery_unit) {
     return Intl.message(
       'Đơn vị vận chuyển: $delivery_unit',
@@ -2463,7 +2214,6 @@ class S {
     );
   }
 
-  /// `Nhập mã giảm giá vận chuyển`
   String get enter_delivery_code {
     return Intl.message(
       'Nhập mã giảm giá vận chuyển',
@@ -2473,7 +2223,6 @@ class S {
     );
   }
 
-  /// `Mã giảm giá vận chuyển`
   String get delivery_code {
     return Intl.message(
       'Mã giảm giá vận chuyển',
@@ -2483,7 +2232,6 @@ class S {
     );
   }
 
-  /// `Chi chú đặt hàng`
   String get booking_note {
     return Intl.message(
       'Chi chú đặt hàng',
@@ -2493,7 +2241,6 @@ class S {
     );
   }
 
-  /// `Viết ghi chú của bạn`
   String get enter_your_note {
     return Intl.message(
       'Viết ghi chú của bạn',
@@ -2503,7 +2250,6 @@ class S {
     );
   }
 
-  /// `Tiền hàng (sau giảm giá)`
   String get cost {
     return Intl.message(
       'Tiền hàng (sau giảm giá)',
@@ -2513,7 +2259,6 @@ class S {
     );
   }
 
-  /// `Phí vận chuyển (sau giảm giá)`
   String get delivery_fee {
     return Intl.message(
       'Phí vận chuyển (sau giảm giá)',
@@ -2523,7 +2268,6 @@ class S {
     );
   }
 
-  /// `Thành tiền`
   String get total {
     return Intl.message(
       'Thành tiền',
@@ -2533,7 +2277,6 @@ class S {
     );
   }
 
-  /// `Hoàn tất đặt hàng`
   String get booking_submit {
     return Intl.message(
       'Hoàn tất đặt hàng',
@@ -2543,7 +2286,6 @@ class S {
     );
   }
 
-  /// `Thay đổi`
   String get change {
     return Intl.message(
       'Thay đổi',
@@ -2553,7 +2295,6 @@ class S {
     );
   }
 
-  /// `Chi tiết`
   String get detail {
     return Intl.message(
       'Chi tiết',
@@ -2563,7 +2304,6 @@ class S {
     );
   }
 
-  /// `Nhận hàng tại Shop`
   String get delivery_in_shop {
     return Intl.message(
       'Nhận hàng tại Shop',
@@ -2573,7 +2313,6 @@ class S {
     );
   }
 
-  /// `Giao hàng tận nơi`
   String get delivery_to_address {
     return Intl.message(
       'Giao hàng tận nơi',
@@ -2583,7 +2322,6 @@ class S {
     );
   }
 
-  /// `Thanh toán tiền mặt khi nhận hàng`
   String get cash_payment {
     return Intl.message(
       'Thanh toán tiền mặt khi nhận hàng',
@@ -2593,7 +2331,6 @@ class S {
     );
   }
 
-  /// `Thanh toán chuyển khoản qua tài khoản`
   String get credit_transfer_payment {
     return Intl.message(
       'Thanh toán chuyển khoản qua tài khoản',
@@ -2603,7 +2340,6 @@ class S {
     );
   }
 
-  /// `Thanh toán điểm hiện có [{point}]`
   String point_payment(Object point) {
     return Intl.message(
       'Thanh toán điểm hiện có [$point]',
@@ -2613,7 +2349,6 @@ class S {
     );
   }
 
-  /// `Dự kiến giao khoảng {day}`
   String delivery_plan(Object day) {
     return Intl.message(
       'Dự kiến giao khoảng $day',
@@ -2623,7 +2358,6 @@ class S {
     );
   }
 
-  /// `Thanh toán điểm`
   String get point_payment_title {
     return Intl.message(
       'Thanh toán điểm',
@@ -2633,7 +2367,6 @@ class S {
     );
   }
 
-  /// `Số điểm hiện tại: `
   String get current_point {
     return Intl.message(
       'Số điểm hiện tại: ',
@@ -2643,7 +2376,6 @@ class S {
     );
   }
 
-  /// `Số điểm thanh toán: `
   String get point_for_booking {
     return Intl.message(
       'Số điểm thanh toán: ',
@@ -2653,7 +2385,6 @@ class S {
     );
   }
 
-  /// `* Tỷ lệ quy đổi tích điểm: 100.000 vnđ = 1 điểm\n* Mỗi 1 điểm đổi tương ứng với 1.000 vnđ\n* Số điểm có thể đổi phải chia hết cho 20.\nLưu ý: hóa đơn thanh toán bằng điểm sẽ không được\ntích điểm.`
   String get point_payment_policy {
     return Intl.message(
       '* Tỷ lệ quy đổi tích điểm: 100.000 vnđ = 1 điểm\n* Mỗi 1 điểm đổi tương ứng với 1.000 vnđ\n* Số điểm có thể đổi phải chia hết cho 20.\nLưu ý: hóa đơn thanh toán bằng điểm sẽ không được\ntích điểm.',
@@ -2663,7 +2394,6 @@ class S {
     );
   }
 
-  /// `Cập Nhật Thanh toán điểm`
   String get point_payment_update {
     return Intl.message(
       'Cập Nhật Thanh toán điểm',
@@ -2673,7 +2403,6 @@ class S {
     );
   }
 
-  /// `Đã cập nhật`
   String get updated {
     return Intl.message(
       'Đã cập nhật',
@@ -2683,7 +2412,6 @@ class S {
     );
   }
 
-  /// `Cập nhật`
   String get update {
     return Intl.message(
       'Cập nhật',
@@ -2693,7 +2421,6 @@ class S {
     );
   }
 
-  /// `Chính sách và điều khoản dịch vụ`
   String get policy_privacy {
     return Intl.message(
       'Chính sách và điều khoản dịch vụ',
@@ -2703,7 +2430,6 @@ class S {
     );
   }
 
-  /// `Chính sách chung:`
   String get overral_policy {
     return Intl.message(
       'Chính sách chung:',
@@ -2713,7 +2439,6 @@ class S {
     );
   }
 
-  /// `- Chính sách bảo mật này nhằm mục đích giúp bạn\nhiểu rõ những thông tin chúng tôi thu thập, lý do\nchúng tôi thu thập và cách bạn có thể cập nhật, quản\nlý, xuất và xóa thông tin của mình.`
   String get policy_1 {
     return Intl.message(
       '- Chính sách bảo mật này nhằm mục đích giúp bạn\nhiểu rõ những thông tin chúng tôi thu thập, lý do\nchúng tôi thu thập và cách bạn có thể cập nhật, quản\nlý, xuất và xóa thông tin của mình.',
@@ -2723,7 +2448,6 @@ class S {
     );
   }
 
-  /// `Điều khoản dịch vụ của Shop:`
   String get privacy {
     return Intl.message(
       'Điều khoản dịch vụ của Shop:',
@@ -2733,7 +2457,6 @@ class S {
     );
   }
 
-  /// `- Khi sử dụng dịch vụ của chúng tôi, bạn tin tưởng\ncung cấp thông tin của bạn cho chúng tôi. Chúng tôi\nhiểu rằng đây là một trách nhiệm lớn và chúng tôi nỗ\nlực bảo vệ thông tin của bạn cũng như để bạn nắm\nquyền kiểm soát.`
   String get privacy_1 {
     return Intl.message(
       '- Khi sử dụng dịch vụ của chúng tôi, bạn tin tưởng\ncung cấp thông tin của bạn cho chúng tôi. Chúng tôi\nhiểu rằng đây là một trách nhiệm lớn và chúng tôi nỗ\nlực bảo vệ thông tin của bạn cũng như để bạn nắm\nquyền kiểm soát.',
@@ -2743,7 +2466,6 @@ class S {
     );
   }
 
-  /// `Thêm Địa chỉ nhận hàng`
   String get add_delivery_address {
     return Intl.message(
       'Thêm Địa chỉ nhận hàng',
@@ -2753,7 +2475,6 @@ class S {
     );
   }
 
-  /// `Tên người nhận`
   String get add_receiver {
     return Intl.message(
       'Tên người nhận',
@@ -2763,7 +2484,6 @@ class S {
     );
   }
 
-  /// `Nhập họ và tên người nhận hàng`
   String get enter_receiver_name {
     return Intl.message(
       'Nhập họ và tên người nhận hàng',
@@ -2773,7 +2493,6 @@ class S {
     );
   }
 
-  /// `Số điện thoại`
   String get phone {
     return Intl.message(
       'Số điện thoại',
@@ -2783,7 +2502,6 @@ class S {
     );
   }
 
-  /// `Nhập số điện thoại nhận hàng`
   String get enter_receive_phone {
     return Intl.message(
       'Nhập số điện thoại nhận hàng',
@@ -2793,7 +2511,6 @@ class S {
     );
   }
 
-  /// `Địa chỉ nhận hàng`
   String get delivery_address {
     return Intl.message(
       'Địa chỉ nhận hàng',
@@ -2803,7 +2520,6 @@ class S {
     );
   }
 
-  /// `Nhập số nhà, tên đường...`
   String get enter_address {
     return Intl.message(
       'Nhập số nhà, tên đường...',
@@ -2813,7 +2529,6 @@ class S {
     );
   }
 
-  /// `Thời gian nhận hàng`
   String get receive_time {
     return Intl.message(
       'Thời gian nhận hàng',
@@ -2823,7 +2538,6 @@ class S {
     );
   }
 
-  /// `Nhận hàng vào lúc: `
   String get receive_in {
     return Intl.message(
       'Nhận hàng vào lúc: ',
@@ -2833,7 +2547,6 @@ class S {
     );
   }
 
-  /// `Tỉnh/ Thành Phố`
   String get province {
     return Intl.message(
       'Tỉnh/ Thành Phố',
@@ -2843,7 +2556,6 @@ class S {
     );
   }
 
-  /// `Chọn Tỉnh/ Thành phố`
   String get choose_province {
     return Intl.message(
       'Chọn Tỉnh/ Thành phố',
@@ -2853,7 +2565,6 @@ class S {
     );
   }
 
-  /// `Quận/ Huyện`
   String get district {
     return Intl.message(
       'Quận/ Huyện',
@@ -2863,7 +2574,6 @@ class S {
     );
   }
 
-  /// `Chọn Quận/ Huyện`
   String get choose_district {
     return Intl.message(
       'Chọn Quận/ Huyện',
@@ -2873,7 +2583,6 @@ class S {
     );
   }
 
-  /// `Phường/ Xã`
   String get sub_district {
     return Intl.message(
       'Phường/ Xã',
@@ -2883,7 +2592,6 @@ class S {
     );
   }
 
-  /// `Chọn Phường/ Xã`
   String get choose_sub_district {
     return Intl.message(
       'Chọn Phường/ Xã',
@@ -2893,7 +2601,6 @@ class S {
     );
   }
 
-  /// `Đặt làm địa chỉ nhận hàng mặc định`
   String get set_delivery_address {
     return Intl.message(
       'Đặt làm địa chỉ nhận hàng mặc định',
@@ -2903,7 +2610,6 @@ class S {
     );
   }
 
-  /// `Thêm mới`
   String get add_new {
     return Intl.message(
       'Thêm mới',
@@ -2913,7 +2619,6 @@ class S {
     );
   }
 
-  /// `Thanh Toán Chuyển Khoản`
   String get credit_transfer {
     return Intl.message(
       'Thanh Toán Chuyển Khoản',
@@ -2923,7 +2628,6 @@ class S {
     );
   }
 
-  /// `Giao hàng tận nơi:`
   String get delivery_in_place {
     return Intl.message(
       'Giao hàng tận nơi:',
@@ -2933,7 +2637,6 @@ class S {
     );
   }
 
-  /// `Bạn có thực sự muốn dừng thanh toán?`
   String get checkout_notice {
     return Intl.message(
       'Bạn có thực sự muốn dừng thanh toán?',
@@ -2943,7 +2646,6 @@ class S {
     );
   }
 
-  /// `- Khi nhận hàng bạn không cần thanh toán tiền mặt\nnữa\n- Nếu khách hàng ở tỉnh lẻ, thanh toán chuyển khoản\ntrước sẽ giảm được chi phí vận chuyển COD.`
   String get delivery_policy {
     return Intl.message(
       '- Khi nhận hàng bạn không cần thanh toán tiền mặt\nnữa\n- Nếu khách hàng ở tỉnh lẻ, thanh toán chuyển khoản\ntrước sẽ giảm được chi phí vận chuyển COD.',
@@ -2953,7 +2655,6 @@ class S {
     );
   }
 
-  /// `Lấy hàng tại Shop:`
   String get get_in_shop {
     return Intl.message(
       'Lấy hàng tại Shop:',
@@ -2963,7 +2664,6 @@ class S {
     );
   }
 
-  /// `- Khi thanh toán chuyển khoản trước, khách hàng sẽ\nđược giữ hàng lâu hơn 3 ngày.\n`
   String get checkout_policy {
     return Intl.message(
       '- Khi thanh toán chuyển khoản trước, khách hàng sẽ\nđược giữ hàng lâu hơn 3 ngày.\n',
@@ -2973,7 +2673,6 @@ class S {
     );
   }
 
-  /// `Khi bạn chọn hình thức thanh toán chuyển khoản, để\nhoàn tất đơn hàng bạn cần thanh toán chuyển khoản\nđể xác nhận đơn hàng`
   String get checkout_policy_overal {
     return Intl.message(
       'Khi bạn chọn hình thức thanh toán chuyển khoản, để\nhoàn tất đơn hàng bạn cần thanh toán chuyển khoản\nđể xác nhận đơn hàng',
@@ -2983,7 +2682,6 @@ class S {
     );
   }
 
-  /// `Thay đổi địa chỉ nhận hàng`
   String get change_delivery_address {
     return Intl.message(
       'Thay đổi địa chỉ nhận hàng',
@@ -2993,7 +2691,6 @@ class S {
     );
   }
 
-  /// `09:00 - 11:00`
   String get delivery_time_1 {
     return Intl.message(
       '09:00 - 11:00',
@@ -3003,7 +2700,6 @@ class S {
     );
   }
 
-  /// `14:00 - 16:00`
   String get delivery_time_2 {
     return Intl.message(
       '14:00 - 16:00',
@@ -3013,7 +2709,6 @@ class S {
     );
   }
 
-  /// `19:00 - 21:00`
   String get delivery_time_3 {
     return Intl.message(
       '19:00 - 21:00',
@@ -3023,7 +2718,6 @@ class S {
     );
   }
 
-  /// `Không có giờ giao hàng`
   String get no_delivery_time_1 {
     return Intl.message(
       'Không có giờ giao hàng',
@@ -3033,7 +2727,6 @@ class S {
     );
   }
 
-  /// `Vui lòng chọn ngày khác`
   String get no_delivery_time_2 {
     return Intl.message(
       'Vui lòng chọn ngày khác',
@@ -3043,7 +2736,6 @@ class S {
     );
   }
 
-  /// `Thanh toán`
   String get checkout {
     return Intl.message(
       'Thanh toán',
@@ -3053,7 +2745,6 @@ class S {
     );
   }
 
-  /// `Shop {shop}`
   String shop(Object shop) {
     return Intl.message(
       'Shop $shop',
@@ -3063,7 +2754,6 @@ class S {
     );
   }
 
-  /// `Ngân hàng:`
   String get bank {
     return Intl.message(
       'Ngân hàng:',
@@ -3073,7 +2763,6 @@ class S {
     );
   }
 
-  /// `Số tài khoản:`
   String get bank_number {
     return Intl.message(
       'Số tài khoản:',
@@ -3083,7 +2772,6 @@ class S {
     );
   }
 
-  /// `Chủ tài khoản:`
   String get owner_name {
     return Intl.message(
       'Chủ tài khoản:',
@@ -3093,7 +2781,6 @@ class S {
     );
   }
 
-  /// `Thông Tin Chuyển Khoản`
   String get transfer_info {
     return Intl.message(
       'Thông Tin Chuyển Khoản',
@@ -3103,7 +2790,6 @@ class S {
     );
   }
 
-  /// `Mã HĐ:`
   String get contract_code {
     return Intl.message(
       'Mã HĐ:',
@@ -3113,7 +2799,6 @@ class S {
     );
   }
 
-  /// `Nội dung CK:`
   String get transfer_content {
     return Intl.message(
       'Nội dung CK:',
@@ -3123,7 +2808,6 @@ class S {
     );
   }
 
-  /// `Số tiền:`
   String get amount {
     return Intl.message(
       'Số tiền:',
@@ -3133,7 +2817,6 @@ class S {
     );
   }
 
-  /// `Bấm để upload`
   String get press_to_upload {
     return Intl.message(
       'Bấm để upload',
@@ -3143,7 +2826,6 @@ class S {
     );
   }
 
-  /// `(Upload hình ảnh thanh toán chuyển khoản thành công)`
   String get upload_notice {
     return Intl.message(
       '(Upload hình ảnh thanh toán chuyển khoản thành công)',
@@ -3153,7 +2835,6 @@ class S {
     );
   }
 
-  /// `Nhập ghi chú thanh toán`
   String get enter_checkout_note {
     return Intl.message(
       'Nhập ghi chú thanh toán',
@@ -3163,7 +2844,6 @@ class S {
     );
   }
 
-  /// `Ghi chú thanh toán Quý khách muốn gửi tới Shop`
   String get checkout_note {
     return Intl.message(
       'Ghi chú thanh toán Quý khách muốn gửi tới Shop',
@@ -3173,7 +2853,6 @@ class S {
     );
   }
 
-  /// `hoàn tất thanh toán`
   String get finish_checkout {
     return Intl.message(
       'hoàn tất thanh toán',
@@ -3183,7 +2862,6 @@ class S {
     );
   }
 
-  /// `Đặt Hàng Thành Công`
   String get booking_success {
     return Intl.message(
       'Đặt Hàng Thành Công',
@@ -3193,7 +2871,6 @@ class S {
     );
   }
 
-  /// `Chúc mừng Anh/chị {username} đã đặt hàng\nthành công `
   String congratulation_booking(Object username) {
     return Intl.message(
       'Chúc mừng Anh/chị $username đã đặt hàng\nthành công ',
@@ -3203,7 +2880,6 @@ class S {
     );
   }
 
-  /// `Mã đơn hàng:`
   String get order_code_title {
     return Intl.message(
       'Mã đơn hàng:',
@@ -3213,7 +2889,6 @@ class S {
     );
   }
 
-  /// `Mã đơn hàng: {orderCode}\nNgày đặt hàng: {orderDate}`
   String order_header(Object orderCode, Object orderDate) {
     return Intl.message(
       'Mã đơn hàng: $orderCode\nNgày đặt hàng: $orderDate',
@@ -3223,7 +2898,6 @@ class S {
     );
   }
 
-  /// `Tiếp tục mua sắm`
   String get continue_buying {
     return Intl.message(
       'Tiếp tục mua sắm',
@@ -3233,7 +2907,6 @@ class S {
     );
   }
 
-  /// `Xem đơn hàng`
   String get view_order {
     return Intl.message(
       'Xem đơn hàng',
@@ -3243,7 +2916,6 @@ class S {
     );
   }
 
-  /// `Hủy bỏ`
   String get cancel {
     return Intl.message(
       'Hủy bỏ',
@@ -3253,7 +2925,6 @@ class S {
     );
   }
 
-  /// `Nhận hàng tại shop`
   String get receive_in_shop {
     return Intl.message(
       'Nhận hàng tại shop',
@@ -3263,7 +2934,6 @@ class S {
     );
   }
 
-  /// `Nhận hàng`
   String get receive {
     return Intl.message(
       'Nhận hàng',
@@ -3273,7 +2943,6 @@ class S {
     );
   }
 
-  /// `Đang vận chuyển`
   String get delivering {
     return Intl.message(
       'Đang vận chuyển',
@@ -3283,7 +2952,6 @@ class S {
     );
   }
 
-  /// `Thông tin vận chuyển`
   String get delivery_info {
     return Intl.message(
       'Thông tin vận chuyển',
@@ -3293,7 +2961,6 @@ class S {
     );
   }
 
-  /// `Thời hạn`
   String get period {
     return Intl.message(
       'Thời hạn',
@@ -3303,7 +2970,6 @@ class S {
     );
   }
 
-  /// `Số Voucher`
   String get numberOfVoucher {
     return Intl.message(
       'Số Voucher',
@@ -3313,7 +2979,6 @@ class S {
     );
   }
 
-  /// `nhắc mua`
   String get remindBuy {
     return Intl.message(
       'nhắc mua',
@@ -3323,7 +2988,6 @@ class S {
     );
   }
 
-  /// `nhắc sử dụng`
   String get remindUse {
     return Intl.message(
       'nhắc sử dụng',
@@ -3333,7 +2997,6 @@ class S {
     );
   }
 
-  /// `Thông tin đơn hàng`
   String get order_info {
     return Intl.message(
       'Thông tin đơn hàng',
@@ -3343,7 +3006,6 @@ class S {
     );
   }
 
-  /// `Quý khách vui lòng đưa mã barcode cho\nnhân viên tại cửa hàng để được nhận hàng`
   String get barcode_note {
     return Intl.message(
       'Quý khách vui lòng đưa mã barcode cho\nnhân viên tại cửa hàng để được nhận hàng',
@@ -3353,7 +3015,6 @@ class S {
     );
   }
 
-  /// `Đơn hàng đã đặt`
   String get ordered {
     return Intl.message(
       'Đơn hàng đã đặt',
@@ -3363,7 +3024,6 @@ class S {
     );
   }
 
-  /// `Đơn hàng đã huỷ`
   String get canceled_order {
     return Intl.message(
       'Đơn hàng đã huỷ',
@@ -3373,7 +3033,6 @@ class S {
     );
   }
 
-  /// `Dịch vụ đã đặt lịch`
   String get service_booked {
     return Intl.message(
       'Dịch vụ đã đặt lịch',
@@ -3383,7 +3042,6 @@ class S {
     );
   }
 
-  /// `Dịch vụ đã sử dụng`
   String get used_service {
     return Intl.message(
       'Dịch vụ đã sử dụng',
@@ -3393,7 +3051,6 @@ class S {
     );
   }
 
-  /// `Địa chỉ sử dung dịch vụ`
   String get service_using_address {
     return Intl.message(
       'Địa chỉ sử dung dịch vụ',
@@ -3403,7 +3060,6 @@ class S {
     );
   }
 
-  /// `Thời gian sử dụng`
   String get time_using {
     return Intl.message(
       'Thời gian sử dụng',
@@ -3413,7 +3069,6 @@ class S {
     );
   }
 
-  /// `Ngày sử dụng`
   String get date_using {
     return Intl.message(
       'Ngày sử dụng',
@@ -3423,7 +3078,6 @@ class S {
     );
   }
 
-  /// `Thông tin dịch vụ`
   String get service_info {
     return Intl.message(
       'Thông tin dịch vụ',
@@ -3433,7 +3087,6 @@ class S {
     );
   }
 
-  /// `Hủy Lịch`
   String get cancel_schedule {
     return Intl.message(
       'Hủy Lịch',
@@ -3443,7 +3096,6 @@ class S {
     );
   }
 
-  /// `Nhắc lịch mua sản phẩm`
   String get remindBuyProduct {
     return Intl.message(
       'Nhắc lịch mua sản phẩm',
@@ -3453,7 +3105,6 @@ class S {
     );
   }
 
-  /// `Thời gian nhắc:`
   String get remindTime {
     return Intl.message(
       'Thời gian nhắc:',
@@ -3463,7 +3114,6 @@ class S {
     );
   }
 
-  /// `Nhắc lịch sử dụng sản phẩm`
   String get remindUseProduct {
     return Intl.message(
       'Nhắc lịch sử dụng sản phẩm',
@@ -3473,7 +3123,6 @@ class S {
     );
   }
 
-  /// `Ngày kết thúc nhắc:`
   String get endDateOfReminder {
     return Intl.message(
       'Ngày kết thúc nhắc:',
@@ -3483,7 +3132,6 @@ class S {
     );
   }
 
-  /// `Chu kỳ nhắc (ngày):`
   String get reminderCycle {
     return Intl.message(
       'Chu kỳ nhắc (ngày):',
@@ -3493,7 +3141,6 @@ class S {
     );
   }
 
-  /// ` Chọn 1 là nhắc lịch hàng ngày, 2 là 2 ngày sẽ nhắc 1 lần...`
   String get reminderCycleHint {
     return Intl.message(
       ' Chọn 1 là nhắc lịch hàng ngày, 2 là 2 ngày sẽ nhắc 1 lần...',
@@ -3503,7 +3150,6 @@ class S {
     );
   }
 
-  /// `Chọn`
   String get select {
     return Intl.message(
       'Chọn',
@@ -3513,7 +3159,6 @@ class S {
     );
   }
 
-  /// `Thời gian nhắc lần {order}`
   String reminderTimeAt(Object order) {
     return Intl.message(
       'Thời gian nhắc lần $order',
@@ -3523,7 +3168,6 @@ class S {
     );
   }
 
-  /// `Thêm lịch nhắc`
   String get addReminder {
     return Intl.message(
       'Thêm lịch nhắc',
@@ -3533,7 +3177,6 @@ class S {
     );
   }
 
-  /// `Lưu thay đổi`
   String get saveChange {
     return Intl.message(
       'Lưu thay đổi',
@@ -3543,7 +3186,6 @@ class S {
     );
   }
 
-  /// `Ngày`
   String get date {
     return Intl.message(
       'Ngày',
@@ -3553,7 +3195,6 @@ class S {
     );
   }
 
-  /// `Sửa lịch nhắc`
   String get editReminder {
     return Intl.message(
       'Sửa lịch nhắc',
@@ -3563,7 +3204,6 @@ class S {
     );
   }
 
-  /// `Đăng ký thành công`
   String get register_success {
     return Intl.message(
       'Đăng ký thành công',
@@ -3573,7 +3213,6 @@ class S {
     );
   }
 
-  /// `Đổi mật khẩu thành công`
   String get change_pass_success {
     return Intl.message(
       'Đổi mật khẩu thành công',
@@ -3583,7 +3222,6 @@ class S {
     );
   }
 
-  /// `Nhập lại mật khẩu chưa trùng khớp`
   String get pass_repass_must_same {
     return Intl.message(
       'Nhập lại mật khẩu chưa trùng khớp',
@@ -3593,7 +3231,6 @@ class S {
     );
   }
 
-  /// `Hãy nhập đầy đủ các ô`
   String get fill_all_blank {
     return Intl.message(
       'Hãy nhập đầy đủ các ô',
@@ -3603,7 +3240,6 @@ class S {
     );
   }
 
-  /// `Cập nhật thất bại`
   String get change_fail {
     return Intl.message(
       'Cập nhật thất bại',
@@ -3613,7 +3249,6 @@ class S {
     );
   }
 
-  /// `Thành công`
   String get success {
     return Intl.message(
       'Thành công',
@@ -3623,7 +3258,6 @@ class S {
     );
   }
 
-  /// `Thông tin nhà cung cấp`
   String get provider_info {
     return Intl.message(
       'Thông tin nhà cung cấp',
@@ -3633,7 +3267,6 @@ class S {
     );
   }
 
-  /// `Chi tiết Voucher`
   String get voucherDetail {
     return Intl.message(
       'Chi tiết Voucher',
@@ -3643,7 +3276,6 @@ class S {
     );
   }
 
-  /// `Thông tin`
   String get information {
     return Intl.message(
       'Thông tin',
@@ -3653,7 +3285,6 @@ class S {
     );
   }
 
-  /// `Hướng dẫn`
   String get guide {
     return Intl.message(
       'Hướng dẫn',
@@ -3663,7 +3294,6 @@ class S {
     );
   }
 
-  /// `Hình ảnh`
   String get images {
     return Intl.message(
       'Hình ảnh',
@@ -3673,7 +3303,6 @@ class S {
     );
   }
 
-  /// `Liên hệ`
   String get contact {
     return Intl.message(
       'Liên hệ',
@@ -3683,7 +3312,6 @@ class S {
     );
   }
 
-  /// `lấy mã`
   String get getCode {
     return Intl.message(
       'lấy mã',
@@ -3693,7 +3321,6 @@ class S {
     );
   }
 
-  /// `Huỷ`
   String get cancelDialog {
     return Intl.message(
       'Huỷ',
@@ -3703,7 +3330,6 @@ class S {
     );
   }
 
-  /// `Đồng ý`
   String get agree {
     return Intl.message(
       'Đồng ý',
@@ -3713,7 +3339,6 @@ class S {
     );
   }
 
-  /// `Thông tin đơn vị cung cấp`
   String get providerInfo {
     return Intl.message(
       'Thông tin đơn vị cung cấp',
@@ -3723,7 +3348,6 @@ class S {
     );
   }
 
-  /// `Email`
   String get email {
     return Intl.message(
       'Email',
@@ -3733,7 +3357,6 @@ class S {
     );
   }
 
-  /// `Điện thoại`
   String get telePhone {
     return Intl.message(
       'Điện thoại',
@@ -3743,7 +3366,6 @@ class S {
     );
   }
 
-  /// `Sử dụng mã`
   String get useCode {
     return Intl.message(
       'Sử dụng mã',
@@ -3753,7 +3375,6 @@ class S {
     );
   }
 
-  /// `Mã khuyến mãi`
   String get voucherCode {
     return Intl.message(
       'Mã khuyến mãi',
@@ -3763,7 +3384,6 @@ class S {
     );
   }
 
-  /// `Thời gian còn lại sử dung mã khuyễn mãi là: 24 giờ`
   String get codeTimeRemain {
     return Intl.message(
       'Thời gian còn lại sử dung mã khuyễn mãi là: 24 giờ',
@@ -3773,7 +3393,6 @@ class S {
     );
   }
 
-  /// `Mã ưu đãi`
   String get promotionCode {
     return Intl.message(
       'Mã ưu đãi',
@@ -3783,7 +3402,6 @@ class S {
     );
   }
 
-  /// `Xác thực mã ưu đãi`
   String get authenPromoCode {
     return Intl.message(
       'Xác thực mã ưu đãi',
@@ -3793,7 +3411,6 @@ class S {
     );
   }
 
-  /// `Nhập mã xác thực`
   String get fillAuthenCode {
     return Intl.message(
       'Nhập mã xác thực',
@@ -3803,7 +3420,6 @@ class S {
     );
   }
 
-  /// `Gửi mã`
   String get sendCode {
     return Intl.message(
       'Gửi mã',
@@ -3813,7 +3429,6 @@ class S {
     );
   }
 
-  /// `Hoặc`
   String get or {
     return Intl.message(
       'Hoặc',
@@ -3823,7 +3438,6 @@ class S {
     );
   }
 
-  /// `Quét mã QR Code`
   String get scanQRCode {
     return Intl.message(
       'Quét mã QR Code',
@@ -3833,7 +3447,6 @@ class S {
     );
   }
 
-  /// `Đăng xuất`
   String get logout {
     return Intl.message(
       'Đăng xuất',
@@ -3843,7 +3456,6 @@ class S {
     );
   }
 
-  /// `Sản phẩm mua kèm`
   String get attached_product {
     return Intl.message(
       'Sản phẩm mua kèm',
@@ -3853,7 +3465,6 @@ class S {
     );
   }
 
-  /// `Chọn thời gian nhắc`
   String get selectRemindTime {
     return Intl.message(
       'Chọn thời gian nhắc',
@@ -3863,7 +3474,6 @@ class S {
     );
   }
 
-  /// `Chiều cao - Cân nặng`
   String get weight_height {
     return Intl.message(
       'Chiều cao - Cân nặng',
@@ -3873,7 +3483,6 @@ class S {
     );
   }
 
-  /// `Bé gái`
   String get girl {
     return Intl.message(
       'Bé gái',
@@ -3883,7 +3492,6 @@ class S {
     );
   }
 
-  /// `Bé trai`
   String get boy {
     return Intl.message(
       'Bé trai',
@@ -3893,7 +3501,6 @@ class S {
     );
   }
 
-  /// `Chiều Cao`
   String get height {
     return Intl.message(
       'Chiều Cao',
@@ -3903,7 +3510,6 @@ class S {
     );
   }
 
-  /// `Cân nặng`
   String get weight {
     return Intl.message(
       'Cân nặng',
@@ -3913,7 +3519,6 @@ class S {
     );
   }
 
-  /// `Biểu đồ chiều cao theo tuổi cho bé gái`
   String get chart_for_girl {
     return Intl.message(
       'Biểu đồ chiều cao theo tuổi cho bé gái',
@@ -3923,7 +3528,6 @@ class S {
     );
   }
 
-  /// `Chiều cao bình thường`
   String get normal_height {
     return Intl.message(
       'Chiều cao bình thường',
@@ -3933,7 +3537,6 @@ class S {
     );
   }
 
-  /// `Chiều cao cao hơn so với tuổi`
   String get greater_than_age {
     return Intl.message(
       'Chiều cao cao hơn so với tuổi',
@@ -3943,7 +3546,6 @@ class S {
     );
   }
 
-  /// `Trẻ suy dinh dưỡng thể thấp còi, mức độ vừa`
   String get suy_dinh_duong_normal {
     return Intl.message(
       'Trẻ suy dinh dưỡng thể thấp còi, mức độ vừa',
@@ -3953,7 +3555,6 @@ class S {
     );
   }
 
-  /// `Trẻ suy dinh dưỡng thể thấp còi, mức độ nặng`
   String get sdd_nang {
     return Intl.message(
       'Trẻ suy dinh dưỡng thể thấp còi, mức độ nặng',
@@ -3963,7 +3564,6 @@ class S {
     );
   }
 
-  /// `Nhập chiều cao/cân nặng`
   String get enter_weight_height {
     return Intl.message(
       'Nhập chiều cao/cân nặng',
@@ -3973,7 +3573,6 @@ class S {
     );
   }
 
-  /// `Nhập các chỉ số chiều cao, cân nặng của bé`
   String get enter_all_value_child {
     return Intl.message(
       'Nhập các chỉ số chiều cao, cân nặng của bé',
@@ -3983,7 +3582,6 @@ class S {
     );
   }
 
-  /// `Chi tiết dịch vụ`
   String get service_detail {
     return Intl.message(
       'Chi tiết dịch vụ',
@@ -3993,7 +3591,6 @@ class S {
     );
   }
 
-  /// `Chọn ngày nhắc`
   String get selectRemindDate {
     return Intl.message(
       'Chọn ngày nhắc',
@@ -4003,7 +3600,6 @@ class S {
     );
   }
 
-  /// `Tháng`
   String get month {
     return Intl.message(
       'Tháng',
@@ -4013,7 +3609,6 @@ class S {
     );
   }
 
-  /// `Sử dụng dịch vụ`
   String get use_service {
     return Intl.message(
       'Sử dụng dịch vụ',
@@ -4023,7 +3618,6 @@ class S {
     );
   }
 
-  /// `chọn chu kì nhắc`
   String get selectRemindCycle {
     return Intl.message(
       'chọn chu kì nhắc',
@@ -4033,7 +3627,6 @@ class S {
     );
   }
 
-  /// `Mã khuyến mãi của bạn có hiệu lực trong 24 giờ. Bạn có muốn lấy mã không?`
   String get getCodeNotifyText {
     return Intl.message(
       'Mã khuyến mãi của bạn có hiệu lực trong 24 giờ. Bạn có muốn lấy mã không?',
@@ -4043,7 +3636,6 @@ class S {
     );
   }
 
-  /// `Xem tất cả`
   String get view_all {
     return Intl.message(
       'Xem tất cả',
@@ -4053,7 +3645,6 @@ class S {
     );
   }
 
-  /// `Chiều cao (cm)`
   String get height_cm {
     return Intl.message(
       'Chiều cao (cm)',
@@ -4063,7 +3654,6 @@ class S {
     );
   }
 
-  /// `Cân nặng (kg)`
   String get weight_kg {
     return Intl.message(
       'Cân nặng (kg)',
@@ -4073,7 +3663,6 @@ class S {
     );
   }
 
-  /// `Tháng tuối`
   String get age_month {
     return Intl.message(
       'Tháng tuối',
@@ -4083,7 +3672,6 @@ class S {
     );
   }
 
-  /// `HÀNG MỚI VỀ`
   String get home_new_products {
     return Intl.message(
       'HÀNG MỚI VỀ',
@@ -4093,7 +3681,6 @@ class S {
     );
   }
 
-  /// `HÀNG bán chạy`
   String get home_hot_products {
     return Intl.message(
       'HÀNG bán chạy',
@@ -4103,7 +3690,6 @@ class S {
     );
   }
 
-  /// `HÀNG khuyến mãi`
   String get home_discount_products {
     return Intl.message(
       'HÀNG khuyến mãi',
@@ -4113,7 +3699,6 @@ class S {
     );
   }
 
-  /// `Xem Shop`
   String get view_shop {
     return Intl.message(
       'Xem Shop',
@@ -4123,7 +3708,6 @@ class S {
     );
   }
 
-  /// `Vườn Của Bé ,Xin chào!`
   String get profileWelcomeText {
     return Intl.message(
       'Vườn Của Bé ,Xin chào!',
@@ -4133,7 +3717,6 @@ class S {
     );
   }
 
-  /// `No image`
   String get no_image {
     return Intl.message(
       'No image',
@@ -4143,7 +3726,6 @@ class S {
     );
   }
 
-  /// `Chưa bắt đầu`
   String get time_pending {
     return Intl.message(
       'Chưa bắt đầu',
@@ -4153,7 +3735,6 @@ class S {
     );
   }
 
-  /// `Đã kết thúc`
   String get time_ended {
     return Intl.message(
       'Đã kết thúc',
@@ -4163,7 +3744,6 @@ class S {
     );
   }
 
-  /// `Yêu cầu đăng nhập`
   String get title_require_login {
     return Intl.message(
       'Yêu cầu đăng nhập',
@@ -4173,7 +3753,6 @@ class S {
     );
   }
 
-  /// `Bạn vui lòng đăng nhập để sử dụng chức năng này!`
   String get message_require_login {
     return Intl.message(
       'Bạn vui lòng đăng nhập để sử dụng chức năng này!',
@@ -4183,7 +3762,6 @@ class S {
     );
   }
 
-  /// `Bạn chưa có sản phẩm nào trong giỏ.\nShopping ngay nào!`
   String get no_product_in_cart {
     return Intl.message(
       'Bạn chưa có sản phẩm nào trong giỏ.\nShopping ngay nào!',
@@ -4193,7 +3771,6 @@ class S {
     );
   }
 
-  /// `Shopping`
   String get go_shopping {
     return Intl.message(
       'Shopping',
@@ -4203,7 +3780,6 @@ class S {
     );
   }
 
-  /// `Xác nhận`
   String get title_confirm_delete_cart {
     return Intl.message(
       'Xác nhận',
@@ -4213,7 +3789,6 @@ class S {
     );
   }
 
-  /// `Bạn có muốn xoá sản phẩm này khỏi giỏ hàng không?`
   String get message_confirm_delete_cart {
     return Intl.message(
       'Bạn có muốn xoá sản phẩm này khỏi giỏ hàng không?',
@@ -4223,7 +3798,6 @@ class S {
     );
   }
 
-  /// `Có`
   String get yes {
     return Intl.message(
       'Có',
@@ -4233,7 +3807,6 @@ class S {
     );
   }
 
-  /// `Không`
   String get no {
     return Intl.message(
       'Không',
@@ -4243,7 +3816,6 @@ class S {
     );
   }
 
-  /// `Chưa có dữ liệu`
   String get no_data {
     return Intl.message(
       'Chưa có dữ liệu',
@@ -4253,7 +3825,6 @@ class S {
     );
   }
 
-  /// `Tải lại`
   String get reload {
     return Intl.message(
       'Tải lại',
@@ -4263,7 +3834,6 @@ class S {
     );
   }
 
-  /// `Vui lòng nhập {key} để tiếp tục`
   String message_empty(Object key) {
     return Intl.message(
       'Vui lòng nhập $key để tiếp tục',
@@ -4273,7 +3843,6 @@ class S {
     );
   }
 
-  /// `Chọn ảnh`
   String get title_select_pick_image {
     return Intl.message(
       'Chọn ảnh',
@@ -4283,7 +3852,6 @@ class S {
     );
   }
 
-  /// `Bạn muốn chụp ảnh từ camera hay lấy ảnh từ thư viên?`
   String get message_select_pick_image {
     return Intl.message(
       'Bạn muốn chụp ảnh từ camera hay lấy ảnh từ thư viên?',
@@ -4293,7 +3861,6 @@ class S {
     );
   }
 
-  /// `Chụp ảnh`
   String get from_camera {
     return Intl.message(
       'Chụp ảnh',
@@ -4303,7 +3870,6 @@ class S {
     );
   }
 
-  /// `Lấy ảnh từ thư viện`
   String get from_gallery {
     return Intl.message(
       'Lấy ảnh từ thư viện',
@@ -4313,7 +3879,6 @@ class S {
     );
   }
 
-  /// `Đăng ký trở thành đối tác`
   String get register_partner {
     return Intl.message(
       'Đăng ký trở thành đối tác',
@@ -4323,7 +3888,6 @@ class S {
     );
   }
 
-  /// `Đăng ký trở thành đối tác thành công!`
   String get register_partner_success {
     return Intl.message(
       'Đăng ký trở thành đối tác thành công!',
@@ -4333,7 +3897,6 @@ class S {
     );
   }
 
-  /// `Lấy mã`
   String get voucher_get_code {
     return Intl.message(
       'Lấy mã',
@@ -4343,7 +3906,6 @@ class S {
     );
   }
 
-  /// `Sử dụng mã`
   String get voucher_use_code {
     return Intl.message(
       'Sử dụng mã',
@@ -4353,7 +3915,6 @@ class S {
     );
   }
 
-  /// `Đã sử dụng`
   String get voucher_used {
     return Intl.message(
       'Đã sử dụng',
@@ -4363,7 +3924,6 @@ class S {
     );
   }
 
-  /// `Chưa lấy mã`
   String get voucher_not_get {
     return Intl.message(
       'Chưa lấy mã',
@@ -4373,7 +3933,6 @@ class S {
     );
   }
 
-  /// `Đã lấy mã`
   String get voucher_got {
     return Intl.message(
       'Đã lấy mã',
@@ -4383,7 +3942,6 @@ class S {
     );
   }
 
-  /// `Dùng đến: {date} - {time}`
   String use_to_time(Object date, Object time) {
     return Intl.message(
       'Dùng đến: $date - $time',
@@ -4393,7 +3951,6 @@ class S {
     );
   }
 
-  /// `Thông tin Voucher`
   String get voucher_info {
     return Intl.message(
       'Thông tin Voucher',
@@ -4403,7 +3960,6 @@ class S {
     );
   }
 
-  /// `Lấy mã code thành công!`
   String get mess_get_code_voucher_success {
     return Intl.message(
       'Lấy mã code thành công!',
@@ -4413,7 +3969,6 @@ class S {
     );
   }
 
-  /// `Xong`
   String get done {
     return Intl.message(
       'Xong',
@@ -4423,7 +3978,6 @@ class S {
     );
   }
 
-  /// `Vui lòng nhập tên`
   String get alert_missing_enter_name {
     return Intl.message(
       'Vui lòng nhập tên',
@@ -4433,7 +3987,6 @@ class S {
     );
   }
 
-  /// `Vui lòng nhập mật khẩu`
   String get alert_missing_enter_new_password {
     return Intl.message(
       'Vui lòng nhập mật khẩu',
@@ -4443,7 +3996,6 @@ class S {
     );
   }
 
-  /// `Vui lòng nhập lại mật khẩu`
   String get alert_missing_enter_new_repassword {
     return Intl.message(
       'Vui lòng nhập lại mật khẩu',
@@ -4453,7 +4005,6 @@ class S {
     );
   }
 
-  /// `mật khẩu và nhập lại mật khẩu chưa trùng khớp`
   String get alert_compare_pass_repass {
     return Intl.message(
       'mật khẩu và nhập lại mật khẩu chưa trùng khớp',
@@ -4463,7 +4014,6 @@ class S {
     );
   }
 
-  /// `Đổi mật khẩu thành công, mời bạn tiếp tục mua hàng`
   String get alert_resert_pass_success {
     return Intl.message(
       'Đổi mật khẩu thành công, mời bạn tiếp tục mua hàng',
@@ -4473,7 +4023,6 @@ class S {
     );
   }
 
-  /// `Code đã hết hạn, bạn vui lòng thử lại sau`
   String get alert_code_expire_time {
     return Intl.message(
       'Code đã hết hạn, bạn vui lòng thử lại sau',
@@ -4483,7 +4032,6 @@ class S {
     );
   }
 
-  /// `Mật khẩu mới`
   String get new_password {
     return Intl.message(
       'Mật khẩu mới',
@@ -4493,7 +4041,6 @@ class S {
     );
   }
 
-  /// `Xác nhận mật khẩu mới`
   String get renew_password {
     return Intl.message(
       'Xác nhận mật khẩu mới',
@@ -4503,7 +4050,6 @@ class S {
     );
   }
 
-  /// `Mật khẩu cũ`
   String get old_password {
     return Intl.message(
       'Mật khẩu cũ',
@@ -4513,7 +4059,6 @@ class S {
     );
   }
 
-  /// `Lý do hủy`
   String get cancel_reason {
     return Intl.message(
       'Lý do hủy',
@@ -4523,7 +4068,6 @@ class S {
     );
   }
 
-  /// `Hủy vào lúc`
   String get cancel_time {
     return Intl.message(
       'Hủy vào lúc',
@@ -4533,7 +4077,6 @@ class S {
     );
   }
 
-  /// `Hủy vào lúc: {time}`
   String cancel_time_inset(Object time) {
     return Intl.message(
       'Hủy vào lúc: $time',
@@ -4543,7 +4086,6 @@ class S {
     );
   }
 
-  /// `Hủy bởi`
   String get cancel_by {
     return Intl.message(
       'Hủy bởi',
@@ -4553,7 +4095,6 @@ class S {
     );
   }
 
-  /// `Muốn thay đổi loại dịch vụ`
   String get change_service_type {
     return Intl.message(
       'Muốn thay đổi loại dịch vụ',
@@ -4563,7 +4104,6 @@ class S {
     );
   }
 
-  /// `Bạn có muốn thực sự muốn huỷ ?`
   String get cancel_question {
     return Intl.message(
       'Bạn có muốn thực sự muốn huỷ ?',
@@ -4573,7 +4113,6 @@ class S {
     );
   }
 
-  /// `Chú ý`
   String get attention {
     return Intl.message(
       'Chú ý',
@@ -4583,7 +4122,6 @@ class S {
     );
   }
 
-  /// `Nhập thông tin thành công!`
   String get message_add_baby_test_success {
     return Intl.message(
       'Nhập thông tin thành công!',
@@ -4593,7 +4131,6 @@ class S {
     );
   }
 
-  /// `Nhập chiều cao của bé`
   String get enter_baby_height {
     return Intl.message(
       'Nhập chiều cao của bé',
@@ -4603,7 +4140,6 @@ class S {
     );
   }
 
-  /// `Nhập cân nặng của bé`
   String get enter_baby_weight {
     return Intl.message(
       'Nhập cân nặng của bé',
@@ -4613,7 +4149,6 @@ class S {
     );
   }
 
-  /// `Bố/mẹ viết lại những lưu bút tại thời điểm kiểm tra của bé tại đây nhé!`
   String get enter_baby_note {
     return Intl.message(
       'Bố/mẹ viết lại những lưu bút tại thời điểm kiểm tra của bé tại đây nhé!',
@@ -4623,7 +4158,6 @@ class S {
     );
   }
 
-  /// `(cm)`
   String get cm_unit {
     return Intl.message(
       '(cm)',
@@ -4633,7 +4167,6 @@ class S {
     );
   }
 
-  /// `(kg)`
   String get kg_unit {
     return Intl.message(
       '(kg)',
@@ -4643,7 +4176,6 @@ class S {
     );
   }
 
-  /// `Bấm vào đây`
   String get click_on_here {
     return Intl.message(
       'Bấm vào đây',
@@ -4653,7 +4185,6 @@ class S {
     );
   }
 
-  /// `Đổi hình khác`
   String get change_image {
     return Intl.message(
       'Đổi hình khác',
@@ -4663,7 +4194,6 @@ class S {
     );
   }
 
-  /// `Lưu trữ kỷ niệm bạn upload ảnh mới nhất của bé nhé`
   String get child_take_photo_desc {
     return Intl.message(
       'Lưu trữ kỷ niệm bạn upload ảnh mới nhất của bé nhé',
@@ -4673,7 +4203,6 @@ class S {
     );
   }
 
-  /// `Xác nhận thông tin`
   String get confirm_info {
     return Intl.message(
       'Xác nhận thông tin',
@@ -4683,7 +4212,6 @@ class S {
     );
   }
 
-  /// `Bố/mẹ kiểm tra lại thông tin chiều cao, can năng của bé vừa nhập đã nhập đã đúng chưa nhé:`
   String get confirm_child_info_message {
     return Intl.message(
       'Bố/mẹ kiểm tra lại thông tin chiều cao, can năng của bé vừa nhập đã nhập đã đúng chưa nhé:',
@@ -4693,7 +4221,6 @@ class S {
     );
   }
 
-  /// `Chiều cao:`
   String get height_is {
     return Intl.message(
       'Chiều cao:',
@@ -4703,7 +4230,6 @@ class S {
     );
   }
 
-  /// `Cân nặng:`
   String get weight_is {
     return Intl.message(
       'Cân nặng:',
@@ -4713,7 +4239,6 @@ class S {
     );
   }
 
-  /// `       Xếp hạng: `
   String get rank_is {
     return Intl.message(
       '       Xếp hạng: ',
@@ -4723,7 +4248,6 @@ class S {
     );
   }
 
-  /// `Lưu bút:`
   String get note_is {
     return Intl.message(
       'Lưu bút:',
@@ -4733,7 +4257,6 @@ class S {
     );
   }
 
-  /// `Ảnh của bé:`
   String get image_is {
     return Intl.message(
       'Ảnh của bé:',
@@ -4743,7 +4266,6 @@ class S {
     );
   }
 
-  /// `Nhập lại`
   String get enter_again {
     return Intl.message(
       'Nhập lại',
@@ -4753,7 +4275,6 @@ class S {
     );
   }
 
-  /// `Mã SKU`
   String get sku_product {
     return Intl.message(
       'Mã SKU',
@@ -4763,7 +4284,6 @@ class S {
     );
   }
 
-  /// `{point} điểm`
   String numPoint(Object point) {
     return Intl.message(
       '$point điểm',
@@ -4773,7 +4293,6 @@ class S {
     );
   }
 
-  /// `Bạn có muốn đăng xuất không?`
   String get messageLogout {
     return Intl.message(
       'Bạn có muốn đăng xuất không?',
@@ -4783,7 +4302,6 @@ class S {
     );
   }
 
-  /// `Bạn đã đăng ký nhận thông báo cho sản phẩm này thành công!`
   String get mess_receive_notify_for_product {
     return Intl.message(
       'Bạn đã đăng ký nhận thông báo cho sản phẩm này thành công!',
@@ -4793,7 +4311,6 @@ class S {
     );
   }
 
-  /// `Đánh giá kết quả: `
   String get child_test_results_evaluate {
     return Intl.message(
       'Đánh giá kết quả: ',
@@ -4803,7 +4320,6 @@ class S {
     );
   }
 
-  /// `(Lần kiểm tra mới nhất: {time} tháng)`
   String newest_test_time(Object time) {
     return Intl.message(
       '(Lần kiểm tra mới nhất: $time tháng)',
@@ -4813,7 +4329,6 @@ class S {
     );
   }
 
-  /// `Tư vấn dinh dưỡng:`
   String get nutrition_consulting {
     return Intl.message(
       'Tư vấn dinh dưỡng:',
@@ -4823,7 +4338,6 @@ class S {
     );
   }
 
-  /// `Sản phẩm gợi ý:`
   String get suggestion_products {
     return Intl.message(
       'Sản phẩm gợi ý:',
@@ -4833,7 +4347,6 @@ class S {
     );
   }
 
-  /// `Mời nhập tên`
   String get enter_name {
     return Intl.message(
       'Mời nhập tên',
@@ -4843,7 +4356,6 @@ class S {
     );
   }
 
-  /// `Mời nhập mã OTP`
   String get enter_code {
     return Intl.message(
       'Mời nhập mã OTP',
@@ -4853,7 +4365,6 @@ class S {
     );
   }
 
-  /// `tên`
   String get name {
     return Intl.message(
       'tên',
@@ -4863,7 +4374,6 @@ class S {
     );
   }
 
-  /// `Số điện thoại không tồn tại, mời nhập lại`
   String get phone_format {
     return Intl.message(
       'Số điện thoại không tồn tại, mời nhập lại',
@@ -4873,7 +4383,6 @@ class S {
     );
   }
 
-  /// `Đang vận chuyển`
   String get in_delivery {
     return Intl.message(
       'Đang vận chuyển',
@@ -4883,7 +4392,6 @@ class S {
     );
   }
 
-  /// `Chờ thanh toán`
   String get waiting_checkout {
     return Intl.message(
       'Chờ thanh toán',
@@ -4893,7 +4401,6 @@ class S {
     );
   }
 
-  /// `Vui lòng chọn shop nhận hàng`
   String get choose_shop_address {
     return Intl.message(
       'Vui lòng chọn shop nhận hàng',
@@ -4903,7 +4410,6 @@ class S {
     );
   }
 
-  /// `Vui lòng nhập địa chỉ nhận hàng `
   String get choose_delivery_address {
     return Intl.message(
       'Vui lòng nhập địa chỉ nhận hàng ',
@@ -4913,7 +4419,6 @@ class S {
     );
   }
 
-  /// `Vui lòng thời gian nhận hàng `
   String get choose_time_Schedule {
     return Intl.message(
       'Vui lòng thời gian nhận hàng ',
@@ -4923,7 +4428,6 @@ class S {
     );
   }
 
-  /// `Thiếu thông tin`
   String get missing_information {
     return Intl.message(
       'Thiếu thông tin',
@@ -4933,7 +4437,6 @@ class S {
     );
   }
 
-  /// `Xem lộ trình`
   String get view_delivery {
     return Intl.message(
       'Xem lộ trình',
@@ -4943,7 +4446,6 @@ class S {
     );
   }
 
-  /// `Số điểm bạn nhập vượt quá số điểm hiện có`
   String get point_checkout_alert {
     return Intl.message(
       'Số điểm bạn nhập vượt quá số điểm hiện có',
@@ -4953,7 +4455,6 @@ class S {
     );
   }
 
-  /// `Số điểm bạn nhập phải chia hết cho 20`
   String get point_checkout_alert_1 {
     return Intl.message(
       'Số điểm bạn nhập phải chia hết cho 20',
@@ -4963,7 +4464,6 @@ class S {
     );
   }
 
-  /// `Số điểm bạn nhập vượt quá số tiền cần thanh toán`
   String get point_checkout_alert_2 {
     return Intl.message(
       'Số điểm bạn nhập vượt quá số tiền cần thanh toán',
@@ -4973,7 +4473,6 @@ class S {
     );
   }
 
-  /// `01 ( 1 ngày nhắc / 1 chu kỳ )`
   String get remindCycle1 {
     return Intl.message(
       '01 ( 1 ngày nhắc / 1 chu kỳ )',
@@ -4983,7 +4482,6 @@ class S {
     );
   }
 
-  /// `02 ( 2 ngày nhắc / 1 chu kỳ )`
   String get remindCycle2 {
     return Intl.message(
       '02 ( 2 ngày nhắc / 1 chu kỳ )',
@@ -4993,7 +4491,6 @@ class S {
     );
   }
 
-  /// `03 ( 3 ngày nhắc / 1 chu kỳ )`
   String get remindCycle3 {
     return Intl.message(
       '03 ( 3 ngày nhắc / 1 chu kỳ )',
@@ -5003,7 +4500,6 @@ class S {
     );
   }
 
-  /// `Tùy chọn khác`
   String get remindOtherOption {
     return Intl.message(
       'Tùy chọn khác',
@@ -5013,7 +4509,6 @@ class S {
     );
   }
 
-  /// `Nhập số ngày nhắc mong muốn/ 1 lần =/1 kỳ`
   String get remindOtherOptionHint {
     return Intl.message(
       'Nhập số ngày nhắc mong muốn/ 1 lần =/1 kỳ',
@@ -5023,7 +4518,6 @@ class S {
     );
   }
 
-  /// `Nam`
   String get male {
     return Intl.message(
       'Nam',
@@ -5033,7 +4527,6 @@ class S {
     );
   }
 
-  /// `Nữ`
   String get female {
     return Intl.message(
       'Nữ',
@@ -5043,7 +4536,6 @@ class S {
     );
   }
 
-  /// `Set lịch nhắc sản phẩm`
   String get set_schedule_alarm_product {
     return Intl.message(
       'Set lịch nhắc sản phẩm',
@@ -5053,7 +4545,6 @@ class S {
     );
   }
 
-  /// `Kết quả kiểm tra`
   String get check_result {
     return Intl.message(
       'Kết quả kiểm tra',
@@ -5063,7 +4554,6 @@ class S {
     );
   }
 
-  /// `Bé:`
   String get baby {
     return Intl.message(
       'Bé:',
@@ -5073,7 +4563,6 @@ class S {
     );
   }
 
-  /// `Ngày sinh:`
   String get birthday_is {
     return Intl.message(
       'Ngày sinh:',
@@ -5083,7 +4572,6 @@ class S {
     );
   }
 
-  /// `Ngày kiểm tra:`
   String get check_date_is {
     return Intl.message(
       'Ngày kiểm tra:',
@@ -5093,7 +4581,6 @@ class S {
     );
   }
 
-  /// `Không có thời gian nhận hàng\nVui lòng chọn ngày khác`
   String get no_receive_time {
     return Intl.message(
       'Không có thời gian nhận hàng\nVui lòng chọn ngày khác',
@@ -5103,7 +4590,6 @@ class S {
     );
   }
 
-  /// `Đánh giá kết quả:`
   String get test_result_is {
     return Intl.message(
       'Đánh giá kết quả:',
@@ -5113,7 +4599,6 @@ class S {
     );
   }
 
-  /// `Bạn có muốn xoá lịch sử tìm kiếm không?`
   String get mess_delete_search_history {
     return Intl.message(
       'Bạn có muốn xoá lịch sử tìm kiếm không?',
@@ -5123,7 +4608,6 @@ class S {
     );
   }
 
-  /// `Bạn chưa có lịch sử tìm kiếm`
   String get no_search_history {
     return Intl.message(
       'Bạn chưa có lịch sử tìm kiếm',
@@ -5133,7 +4617,6 @@ class S {
     );
   }
 
-  /// `Nhập mã thành công`
   String get correct_code {
     return Intl.message(
       'Nhập mã thành công',
@@ -5143,7 +4626,6 @@ class S {
     );
   }
 
-  /// `Mã không đúng`
   String get incorrect_code {
     return Intl.message(
       'Mã không đúng',
@@ -5153,7 +4635,6 @@ class S {
     );
   }
 
-  /// `Người đặt`
   String get cancel_by_owner {
     return Intl.message(
       'Người đặt',
@@ -5163,7 +4644,6 @@ class S {
     );
   }
 
-  /// `Chủ Shop`
   String get cancel_by_shop {
     return Intl.message(
       'Chủ Shop',
@@ -5173,7 +4653,6 @@ class S {
     );
   }
 
-  /// `Hãy chọn một sản phẩm`
   String get choose_product {
     return Intl.message(
       'Hãy chọn một sản phẩm',
@@ -5183,7 +4662,6 @@ class S {
     );
   }
 
-  /// `Tải app vườn của bé \n Mua hàng ko giới hạn`
   String get share_content {
     return Intl.message(
       'Tải app vườn của bé \n Mua hàng ko giới hạn',
@@ -5193,7 +4671,6 @@ class S {
     );
   }
 
-  /// `Xác thực thành công`
   String get verify_voucher_success {
     return Intl.message(
       'Xác thực thành công',
@@ -5203,7 +4680,6 @@ class S {
     );
   }
 
-  /// `Tải app Vườn của bé {link}.\n Mua hàng không giới hạn.`
   String share_format(Object link) {
     return Intl.message(
       'Tải app Vườn của bé $link.\n Mua hàng không giới hạn.',
@@ -5213,7 +4689,6 @@ class S {
     );
   }
 
-  /// `chọn tỉnh/thành phố`
   String get enter_province {
     return Intl.message(
       'chọn tỉnh/thành phố',
@@ -5223,7 +4698,6 @@ class S {
     );
   }
 
-  /// `chọn quận/huyện`
   String get enter_district {
     return Intl.message(
       'chọn quận/huyện',
@@ -5233,7 +4707,6 @@ class S {
     );
   }
 
-  /// `chọn phường/xã`
   String get enter_sub_district {
     return Intl.message(
       'chọn phường/xã',
@@ -5243,7 +4716,6 @@ class S {
     );
   }
 
-  /// `Sắp mở bán`
   String get will_sell_later {
     return Intl.message(
       'Sắp mở bán',
@@ -5253,7 +4725,6 @@ class S {
     );
   }
 
-  /// `Bạn vui lòng chọn Dịch vụ`
   String get message_choose_service {
     return Intl.message(
       'Bạn vui lòng chọn Dịch vụ',
@@ -5263,7 +4734,6 @@ class S {
     );
   }
 
-  /// `Chỉ đường`
   String get direct_address {
     return Intl.message(
       'Chỉ đường',
@@ -5273,7 +4743,6 @@ class S {
     );
   }
 
-  /// `Vui lòng nhập tiêu đề hoặc nội dung để gửi báo cáo`
   String get mess_verify_report_dialog {
     return Intl.message(
       'Vui lòng nhập tiêu đề hoặc nội dung để gửi báo cáo',
@@ -5283,7 +4752,6 @@ class S {
     );
   }
 
-  /// `Cảm ơn bạn đã gửi báo cáo. Chúng tôi sẽ xem xét báo cáo của bạn trong thời gian sớm nhất.`
   String get mess_report_success {
     return Intl.message(
       'Cảm ơn bạn đã gửi báo cáo. Chúng tôi sẽ xem xét báo cáo của bạn trong thời gian sớm nhất.',
@@ -5293,7 +4761,6 @@ class S {
     );
   }
 
-  /// `Bạn có muốn xoá lịch nhắc này không?`
   String get mess_confirm_delete_calendar {
     return Intl.message(
       'Bạn có muốn xoá lịch nhắc này không?',
@@ -5303,7 +4770,6 @@ class S {
     );
   }
 
-  /// `Mã giảm giá không đúng hoặc đã được sử dụng`
   String get promotion_code_error {
     return Intl.message(
       'Mã giảm giá không đúng hoặc đã được sử dụng',
@@ -5313,7 +4779,6 @@ class S {
     );
   }
 
-  /// `Thành tiền`
   String get total_price {
     return Intl.message(
       'Thành tiền',
@@ -5323,7 +4788,6 @@ class S {
     );
   }
 
-  /// `Bạn vui lòng nhập đầy đủ họ tên`
   String get mess_error_user_name {
     return Intl.message(
       'Bạn vui lòng nhập đầy đủ họ tên',

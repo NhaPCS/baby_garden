@@ -35,34 +35,41 @@ class PromotionDialog extends AlertDialog {
   Widget get content => Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[
-          Container(
-            width: double.infinity,
-            child: Card(
-              margin: EdgeInsets.only(
-                  top: Provider.of<AppProvider>(context).width03 / 2),
-              shape: shape,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  GiftBoxAnimation(imgUrl: promotion['img'],),
-                  Text(
-                    promotion == null ? '' : promotion['title'],
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: ColorUtil.red,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 50,
+          GestureDetector(
+            child: Container(
+              width: double.infinity,
+              child: Card(
+                margin: EdgeInsets.only(
+                    top: Provider.of<AppProvider>(context).width03 / 2),
+                shape: shape,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    GiftBoxAnimation(
+                      imgUrl: promotion['img'],
                     ),
-                  ),
-                  SizedBox(
-                    height: SizeUtil.hugSpace,
-                  ),
-                ],
+                    Text(
+                      promotion == null ? '' : promotion['title'],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: ColorUtil.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 50,
+                      ),
+                    ),
+                    SizedBox(
+                      height: SizeUtil.hugSpace,
+                    ),
+                  ],
+                ),
+                color: Colors.white,
               ),
-              color: Colors.white,
             ),
+            onTap: () {
+              WidgetUtil.linkToScreen(context, promotion);
+            },
           ),
           Stack(
             children: List.generate(
@@ -149,6 +156,7 @@ class GiftBoxAnimation extends StatefulWidget {
   final String imgUrl;
 
   const GiftBoxAnimation({Key key, this.imgUrl}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _GiftBoxState();
@@ -178,7 +186,12 @@ class _GiftBoxState extends State<GiftBoxAnimation>
     return SlideTransition(
       position: Tween<Offset>(begin: Offset(0, -3), end: Offset(0, 0)).animate(
           CurvedAnimation(parent: controller, curve: Curves.elasticInOut)),
-      child: MyCachedImage(url: widget.imgUrl,width: 200,height: 200,boxFit: BoxFit.contain,),
+      child: MyCachedImage(
+        url: widget.imgUrl,
+        width: 200,
+        height: 200,
+        boxFit: BoxFit.contain,
+      ),
     );
   }
 }
