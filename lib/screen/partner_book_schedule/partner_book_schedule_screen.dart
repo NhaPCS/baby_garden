@@ -63,7 +63,7 @@ class _PartnerBookScheduleScreenState
   final GlobalKey _rowKeyFull = GlobalKey();
   final ValueNotifier<double> _rowHeight = ValueNotifier<double>(-1);
   double _rowHeightFull = 0;
-  double imageHeight = 151;
+  double imageHeight = 200;
   dynamic _chooseService = {};
   dynamic _addressChoose;
 
@@ -149,6 +149,7 @@ class _PartnerBookScheduleScreenState
                                                             .size
                                                             .width,
                                                     height: imageHeight,
+                                                    fit: BoxFit.cover,
                                                   )
                                                 : Image.asset(
                                                     "photo/partner_item_img.png",
@@ -316,8 +317,8 @@ class _PartnerBookScheduleScreenState
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
-                          Radius.circular(SizeUtil.smallRadius),
-                        )),
+                      Radius.circular(SizeUtil.smallRadius),
+                    )),
                     color: ColorUtil.primaryColor,
                     child: Padding(
                       padding: const EdgeInsets.all(SizeUtil.midSpace),
@@ -374,7 +375,8 @@ class _PartnerBookScheduleScreenState
                               iconSize: SizeUtil.iconSize,
                               titleSize: SizeUtil.textSizeSmall,
                               onChanged: (val) {
-                                _addressChoose= data['address'][val]['address'];
+                                _addressChoose =
+                                    data['address'][val]['address'];
                                 _partnerChooseLocation.onChange(val);
                               },
                             )));
@@ -497,7 +499,10 @@ class _PartnerBookScheduleScreenState
           'title': 'Thời gian: ',
           'content': StringUtil.time[_timeValueController.value]['time']
         },
-        {'title': 'Thời gian thực hiện: ', 'content': _chooseService['ex_time']},
+        {
+          'title': 'Thời gian thực hiện: ',
+          'content': _chooseService['ex_time']
+        },
       ];
       var resultData = await showDialog(
           context: context,
@@ -533,7 +538,9 @@ class _PartnerBookScheduleScreenState
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, childAspectRatio: 0.78),
         padding: EdgeInsets.only(
-            top: SizeUtil.tinySpace, left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
+            top: SizeUtil.tinySpace,
+            left: SizeUtil.tinySpace,
+            right: SizeUtil.tinySpace),
         itemCount: products.length,
         itemBuilder: (context, index) {
 //              bool isSelected =
@@ -545,9 +552,7 @@ class _PartnerBookScheduleScreenState
             showSoldCount: false,
             nameStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
             padding: EdgeInsets.only(
-                left: SizeUtil.smallSpace,
-                right: SizeUtil.smallSpace,
-                top: 0),
+                left: SizeUtil.smallSpace, right: SizeUtil.smallSpace, top: 0),
           );
         },
       ),
@@ -571,7 +576,8 @@ class _PartnerBookScheduleScreenState
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Expanded(child: InkWell(
+            Expanded(
+                child: InkWell(
               child: ShopInfoForm(
                 title: S.of(context).mobilePhone_form,
                 content: data["phone"],
@@ -596,11 +602,13 @@ class _PartnerBookScheduleScreenState
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Expanded(child: ShopInfoForm(
-                title: S.of(context).address_form,
-                content: data['address'] != null && data['address'].length > 0
-                    ? data['address'][0]["address"]
-                    : "")),
+            Expanded(
+                child: ShopInfoForm(
+                    title: S.of(context).address_form,
+                    content:
+                        data['address'] != null && data['address'].length > 0
+                            ? data['address'][0]["address"]
+                            : "")),
             SizedBox(
               width: SizeUtil.smallSpace,
             ),
@@ -740,8 +748,8 @@ class _PartnerBookScheduleScreenState
               if (_rowKeyFull.currentContext != null)
                 _rowHeightFull = _rowKeyFull.currentContext.size.height,
               //TODO max height
-              if (_bannerKey.currentContext != null)
-                imageHeight = _bannerKey.currentContext.size.height,
+//              if (_bannerKey.currentContext != null)
+//                imageHeight = _bannerKey.currentContext.size.height,
             }
         });
   }
