@@ -4797,6 +4797,7 @@ class S {
     );
   }
 
+
   String get choose_other_day {
     return Intl.message(
       'Vui lòng chọn ngày khác',
@@ -4805,6 +4806,7 @@ class S {
       args: [],
     );
   }
+
 
   String total_search(Object total) {
     return Intl.message(
