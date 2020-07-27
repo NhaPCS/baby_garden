@@ -53,7 +53,7 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
     });
     _configFirebaseMessaging();
     super.initState();
-    if (widget.index > 0) _tabController.animateTo(widget.index);
+    if (widget.index !=null && widget.index > 0) _tabController.animateTo(widget.index);
   }
 
   @override

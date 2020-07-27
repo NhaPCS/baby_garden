@@ -84,6 +84,16 @@ Future<dynamic> changePassword(BuildContext context,
   return null;
 }
 
+Future<dynamic> updatePassword(BuildContext context,
+    {String oldPass, String newPass}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  Response response = await post(context,
+      path: "updatePassword",
+      param: {"user_id": userId, 'old_pass': oldPass, 'new_pass': newPass});
+  if (response.isSuccess()) return response;
+  return null;
+}
+
 //TODO require favouriteShop
 Future<dynamic> favouriteShop({String shopID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
@@ -1055,6 +1065,21 @@ Future<dynamic> search(String key) async {
   dynamic params = {"user_id": userId, "key": key};
 
   Response response = await get(null, path: "search", param: params);
+
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> searchProduct({String key, int index = 0}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    "user_id": userId,
+    "key": key,
+    "index": index.toString(),
+    "number_post": PAGE_SIZE.toString()
+  };
+
+  Response response = await get(null, path: "searchProduct", param: params);
 
   if (response.isSuccess()) return response.data;
   return null;

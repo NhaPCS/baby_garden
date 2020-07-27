@@ -11,8 +11,9 @@ import 'package:flutter/material.dart';
 
 class VoucherItem extends StatelessWidget {
   final dynamic voucher;
+  final VoidCallback onItemClick;
 
-  const VoucherItem({Key key, this.voucher}) : super(key: key);
+  const VoucherItem({Key key, this.voucher, this.onItemClick}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -126,11 +127,9 @@ class VoucherItem extends StatelessWidget {
         ),
       ),
       onTap: () {
-        RouteUtil.push(
-            context,
-            VoucherDetailScreen(
-              voucher: voucher,
-            ));
+        if(onItemClick!=null){
+          onItemClick();
+        }
       },
     );
   }

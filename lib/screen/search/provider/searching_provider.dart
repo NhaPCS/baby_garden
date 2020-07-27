@@ -4,6 +4,14 @@ import 'package:baby_garden_flutter/data/service.dart' as service;
 
 class SearchingProvider extends ChangeNotifier {
   List<dynamic> searchResult;
+  List<dynamic> finalResult;
+  int total = 0;
+  String key;
+
+  void clearFinalResult(){
+    finalResult=null;
+    notifyListeners();
+  }
 
   Future<void> search(BuildContext context, String key) async {
     dynamic data = await service.search(key);
@@ -13,7 +21,7 @@ class SearchingProvider extends ChangeNotifier {
         searchResult.add(S.of(context).search_by_name);
         searchResult.addAll(data['title']);
       }
-      if (data['content'] != null  && data['content'].isNotEmpty) {
+      if (data['content'] != null && data['content'].isNotEmpty) {
         searchResult.add(S.of(context).search_by_content);
         searchResult.addAll(data['content']);
       }
@@ -21,7 +29,23 @@ class SearchingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void clear(){
+  Future<void> searchProduct(BuildContext context,
+      {String key, int index = 0}) async {
+    dynamic data = await service.searchProduct(key: key, index: index);
+    if (data != null) {
+      total = data['total'];
+      if (data['list'] != null) {
+        if (index == 0) {
+          finalResult = data['list'];
+        } else {
+          finalResult.addAll(data['list']);
+        }
+      }
+      notifyListeners();
+    }
+  }
+
+  void clear() {
     searchResult = null;
     notifyListeners();
   }

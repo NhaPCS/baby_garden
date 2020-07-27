@@ -36,6 +36,7 @@ class _VCBExpressDetailScreenState
   void initState() {
     super.initState();
     _newsDetailProvider.getNewsDetail(widget.newsID);
+    _listCommentProvider.getListComment(widget.newsID);
   }
 
   @override

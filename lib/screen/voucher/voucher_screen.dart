@@ -4,6 +4,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/voucher/item/voucher_item.dart';
 import 'package:baby_garden_flutter/screen/voucher/provider/get_list_voucher_provider.dart';
+import 'package:baby_garden_flutter/screen/voucher_detail/voucher_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/loadmore/loadmore_listview.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
@@ -65,6 +66,14 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
                 itemBuilder: (context, voucher, index) {
                   return VoucherItem(
                     voucher: voucher,
+                    onItemClick: () async {
+                      dynamic rs = await RouteUtil.push(
+                          context,
+                          VoucherDetailScreen(
+                            voucher: voucher,
+                          ));
+                      _loadData();
+                    },
                   );
                 },
               );

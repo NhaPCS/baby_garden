@@ -21,6 +21,7 @@ class LoadMoreGridView extends StatefulWidget {
   final Axis scrollDirection;
   final ValueNotifier<int> pageController;
   final ScrollPhysics physics;
+  final bool dataIsFull;
 
   const LoadMoreGridView(
       {Key key,
@@ -36,7 +37,8 @@ class LoadMoreGridView extends StatefulWidget {
       this.childAspectRatio = 1.0,
       this.data,
       this.pageController,
-      this.physics = const ScrollPhysics()})
+      this.physics = const ScrollPhysics(),
+      this.dataIsFull = false})
       : super(key: key);
 
   @override
@@ -79,6 +81,10 @@ class _LoadMoreGridViewState extends State<LoadMoreGridView> {
   }
 
   void generateList() {
+    if(widget.dataIsFull) {
+      listData=widget.data;
+      return;
+    }
     print("page $page ");
     if (page == 0) {
       listData = widget.data;

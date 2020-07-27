@@ -89,9 +89,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m34(supplier) => "Cung cấp bởi: ${supplier}";
 
-  static m35(date, time) => "Dùng đến: ${date} - ${time}";
+  static m35(total) => "${total} kết quả tìm kiếm";
 
-  static m36(date) => "Ngày sử dung: ${date}";
+  static m36(date, time) => "Dùng đến: ${date} - ${time}";
+
+  static m37(date) => "Ngày sử dung: ${date}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -569,6 +571,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "total" : MessageLookupByLibrary.simpleMessage("Thành tiền"),
     "total_order_price" : MessageLookupByLibrary.simpleMessage("Tổng đơn: "),
     "total_price" : MessageLookupByLibrary.simpleMessage("Thành tiền"),
+    "total_search" : m35,
     "transfer_content" : MessageLookupByLibrary.simpleMessage("Nội dung CK:"),
     "transfer_info" : MessageLookupByLibrary.simpleMessage("Thông Tin Chuyển Khoản"),
     "transporting" : MessageLookupByLibrary.simpleMessage("Đang\nvận chuyển"),
@@ -582,11 +585,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "upload_notice" : MessageLookupByLibrary.simpleMessage("(Upload hình ảnh thanh toán chuyển khoản thành công)"),
     "useCode" : MessageLookupByLibrary.simpleMessage("Sử dụng mã"),
     "use_service" : MessageLookupByLibrary.simpleMessage("Sử dụng dịch vụ"),
-    "use_to_time" : m35,
+    "use_to_time" : m36,
     "used" : MessageLookupByLibrary.simpleMessage("Đã\nsử dụng"),
     "usedVoucher" : MessageLookupByLibrary.simpleMessage("Đã sử dụng"),
     "used_service" : MessageLookupByLibrary.simpleMessage("Dịch vụ đã sử dụng"),
-    "using_date" : m36,
+    "using_date" : m37,
     "vcb_contact" : MessageLookupByLibrary.simpleMessage("Thông tin liên hệ với VCB"),
     "vcb_ex_detail_ctm_hint" : MessageLookupByLibrary.simpleMessage("Viết bình luận của bạn"),
     "vcb_ex_detail_first_content" : MessageLookupByLibrary.simpleMessage("Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn."),

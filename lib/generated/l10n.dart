@@ -4797,13 +4797,21 @@ class S {
     );
   }
 
-  /// `Vui lòng chọn ngày khác`
   String get choose_other_day {
     return Intl.message(
       'Vui lòng chọn ngày khác',
       name: 'choose_other_day',
       desc: '',
       args: [],
+    );
+  }
+
+  String total_search(Object total) {
+    return Intl.message(
+      '$total kết quả tìm kiếm',
+      name: 'total_search',
+      desc: '',
+      args: [total],
     );
   }
 }

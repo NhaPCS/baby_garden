@@ -385,7 +385,7 @@ class _BookingScreenState
               color: ColorUtil.lineColor,
               margin: EdgeInsets.only(bottom: SizeUtil.smallSpace)),
           PrivacyPolicyButton(),
-          MyRaisedButton(
+          Padding(padding: SizeUtil.defaultPadding, child: MyRaisedButton(
             onPressed: onCompleteBooking,
             color: ColorUtil.primaryColor,
             text: S.of(context).booking_submit.toUpperCase(),
@@ -399,7 +399,7 @@ class _BookingScreenState
                 right: SizeUtil.smallSpace,
                 top: SizeUtil.smallSpace,
                 bottom: SizeUtil.smallSpace),
-          ),
+          ),),
         ],
       ),
     );

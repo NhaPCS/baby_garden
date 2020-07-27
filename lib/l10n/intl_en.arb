@@ -529,5 +529,6 @@
   "promotion_code_error": "Mã giảm giá không đúng hoặc đã được sử dụng",
   "total_price": "Thành tiền",
   "mess_error_user_name": "Bạn vui lòng nhập đầy đủ họ tên",
-  "choose_other_day": "Vui lòng chọn ngày khác"
+  "choose_other_day": "Vui lòng chọn ngày khác",
+  "total_search": "{total} kết quả tìm kiếm"
 }

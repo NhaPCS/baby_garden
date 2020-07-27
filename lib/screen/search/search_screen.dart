@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/data/service.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/search/provider/get_hot_keys_provider.dart';
 import 'package:baby_garden_flutter/screen/search/provider/get_search_history_provider.dart';
@@ -13,6 +14,7 @@ import 'package:provider/provider.dart';
 
 import 'item/search_history_item.dart';
 import 'item/search_product_item.dart';
+import 'widget/final_search_result.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -54,10 +56,13 @@ class _SearchState extends BaseState<SearchScreen> {
           onSubmit: (val) {
             if (val.trim().isEmpty) {
               _searchingProvider.clear();
-            } else
-              _searchingProvider.search(context, val.trim());
+            } else {
+              _searchingProvider.searchProduct(context,
+                  key: val.trim(), index: 0);
+            }
           },
           onSearchTextChanged: (s) {
+            _searchingProvider.clearFinalResult();
             if (_searchTextController.text.trim().isEmpty) {
               _searchingProvider.clear();
               _getSearchHistoryProvider.searchHistory();
@@ -70,6 +75,18 @@ class _SearchState extends BaseState<SearchScreen> {
       body: Consumer<SearchingProvider>(
         builder: (BuildContext context, SearchingProvider searchProvider,
             Widget child) {
+          if (searchProvider.finalResult != null) {
+            return FinalSearchResult(
+                products: searchProvider.finalResult,
+                reloadCallback: (page) {
+                  searchProvider.searchProduct(
+                    context,
+                    key: searchProvider.key,
+                    index: page * PAGE_SIZE,
+                  );
+                },
+                total: searchProvider.total);
+          }
           if (searchProvider.searchResult == null) {
             return Consumer2<GetHotKeysProvider, GetSearchHistoryProvider>(
               builder: (BuildContext context, GetHotKeysProvider hotKeyProvider,
