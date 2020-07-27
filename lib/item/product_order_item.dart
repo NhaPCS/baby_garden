@@ -34,7 +34,7 @@ class ProductOrderItem extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: SizeUtil.midSmallSpace),
           child: CachedNetworkImage(
-            imageUrl: imageUrl == null ? StringUtil.dummyImage : imageUrl,
+            imageUrl: imageUrl ?? '',
             width: MediaQuery.of(context).size.width / 6,
           ),
         ),

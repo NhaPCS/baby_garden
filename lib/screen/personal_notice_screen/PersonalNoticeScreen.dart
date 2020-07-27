@@ -64,9 +64,7 @@ class _PersonalNoticeScreenState extends BaseState<PersonalNoticeScreen> {
                       borderRadius: BorderRadius.circular(SizeUtil.smallSpace),
                       child: Container(
                         child: CachedNetworkImage(
-                          imageUrl: value.detail['shop_img'] == null
-                              ? StringUtil.dummyImage
-                              : value.detail['shop_img'],
+                          imageUrl: value.detail['shop_img'] ?? '',
                           width: MediaQuery.of(context).size.width / 6,
                           height: MediaQuery.of(context).size.width / 6,
                           fit: BoxFit.cover,

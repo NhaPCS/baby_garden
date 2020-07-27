@@ -82,7 +82,7 @@ class ServiceItem extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: SizeUtil.midSmallSpace),
                     child: CachedNetworkImage(
-                      imageUrl: itemData['shop_img']==""?StringUtil.dummyImage:itemData['shop_img'],
+                      imageUrl: itemData['shop_img'] ?? '',
                       width: MediaQuery.of(context).size.width / 6,
                     ),
                   ),

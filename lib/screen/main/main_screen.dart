@@ -13,6 +13,7 @@ import 'package:baby_garden_flutter/screen/profile/profile_screen.dart';
 import 'package:baby_garden_flutter/screen/shopping/shopping_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,8 +44,10 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
       GetPromotionPopupProvider();
   int _time = 0;
 
+
   @override
   void initState() {
+    this.initDynamicLinks();
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     _tabController = TabController(length: 5, vsync: this);
@@ -53,7 +56,7 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
     });
     _configFirebaseMessaging();
     super.initState();
-    if (widget.index > 0) _tabController.animateTo(widget.index);
+    if (widget.index !=null && widget.index > 0) _tabController.animateTo(widget.index);
   }
 
   @override
@@ -258,4 +261,28 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
       ));
     }
   }
+
+  void initDynamicLinks() async {
+    FirebaseDynamicLinks.instance.onLink(
+        onSuccess: (PendingDynamicLinkData dynamicLink) async {
+          final Uri deepLink = dynamicLink?.link;
+
+          if (deepLink != null) {
+            Navigator.pushNamed(context, deepLink.path);
+          }
+        },
+        onError: (OnLinkErrorException e) async {
+          print('onLinkError');
+          print(e.message);
+        }
+    );
+
+    final PendingDynamicLinkData data = await FirebaseDynamicLinks.instance.getInitialLink();
+    final Uri deepLink = data?.link;
+
+    if (deepLink != null) {
+      Navigator.pushNamed(context, deepLink.path);
+    }
+  }
+
 }

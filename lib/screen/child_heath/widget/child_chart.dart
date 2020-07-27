@@ -65,13 +65,14 @@ class ChildChartState extends State<ChildChart> {
                                   builder: (context) {
                                     return ChartClickedInfoDialog(
                                       testResult: widget.testResults[
-                                      barRes.spot.touchedBarGroupIndex],
+                                         barRes==null|| barRes.spot == null
+                                              ? 0
+                                              : barRes
+                                                  .spot.touchedBarGroupIndex],
                                       baby: widget.baby,
                                     );
                                   });
-                            } on Exception catch(e){
-
-                            }
+                            } on Exception catch (e) {}
                           }),
                       titlesData: FlTitlesData(
                         show: true,

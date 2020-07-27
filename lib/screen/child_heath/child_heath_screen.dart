@@ -200,6 +200,7 @@ class _ChildHeathState
   }
 
   void _loadTestResults() {
+    if(_dropdownController.value==null) return;
     _getProductTestProvider.getProductTest(babyId: _dropdownController.value['id']);
     if (_dropdownController.value != null)
       _getBabyTestResultProvider.testResult(
