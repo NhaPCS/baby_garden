@@ -33,9 +33,7 @@ class RatedItem extends StatelessWidget{
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               CachedNetworkImage(
-                  imageUrl: shopImg != ""
-                      ? shopImg
-                      : StringUtil.dummyImage,
+                  imageUrl: shopImg ?? '',
                   width: MediaQuery.of(context).size.width / 6),
               Expanded(
                 child: Padding(
@@ -86,9 +84,7 @@ class RatedItem extends StatelessWidget{
                 top: SizeUtil.smallSpace,
                 bottom: SizeUtil.smallSpace),
             child: CachedNetworkImage(
-                imageUrl: rateImg != ""
-                    ? rateImg
-                    : StringUtil.dummyImage,
+                imageUrl: rateImg ?? '',
                 width: MediaQuery.of(context).size.width / 2)),
         Padding(
           padding: const EdgeInsets.all(SizeUtil.smallSpace),

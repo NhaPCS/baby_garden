@@ -40,7 +40,7 @@ class RatingItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               CachedNetworkImage(
-                imageUrl: imgLink==""?StringUtil.dummyImage:imgLink,
+                imageUrl: imgLink?? "",
                   width: MediaQuery.of(context).size.width / 6,
                 height:MediaQuery.of(context).size.width / 6,
               ),

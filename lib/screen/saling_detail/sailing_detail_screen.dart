@@ -55,14 +55,7 @@ class _SailingDetailScreenState extends BaseState<SailingDetailScreen> {
                           .saleDetailSlideHeight,
                       borderRadius: 0,
                       margin: EdgeInsets.all(0),
-                      images: value.detail['image'] != null
-                          ? value.detail['image']
-                          : [
-                              StringUtil.dummyImage,
-                              StringUtil.dummyImage,
-                              StringUtil.dummyImage,
-                              StringUtil.dummyImage
-                            ],
+                      images: value.detail['image']?? [],
                       isShowImageCount: true,
                     ),
                     Padding(

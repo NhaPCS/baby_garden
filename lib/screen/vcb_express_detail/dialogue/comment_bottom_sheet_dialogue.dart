@@ -54,9 +54,7 @@ class _CommentBottomSheetDialogue
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         CircleImage(
-                          imageUrl: e["user_avatar"] != null
-                              ? e["user_avatar"]
-                              : StringUtil.dummyImage,
+                          imageUrl: e["user_avatar"] ?? '',
                           width: SizeUtil.iconSizeBig,
                           height: SizeUtil.iconSizeBig,
                         ),

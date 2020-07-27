@@ -1,18 +1,18 @@
 import 'dart:io';
 import 'dart:ui';
-import 'package:baby_garden_flutter/screen/partner_book_schedule/partner_book_schedule_screen.dart';
-import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
-import 'package:baby_garden_flutter/screen/vcb_express_detail/vcb_express_detail_screen.dart';
-import 'package:baby_garden_flutter/screen/voucher_detail/voucher_detail_screen.dart';
-import 'package:html/parser.dart';
 
 import 'package:baby_garden_flutter/data/model/param.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/login/login_screen.dart';
+import 'package:baby_garden_flutter/screen/partner_book_schedule/partner_book_schedule_screen.dart';
+import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
+import 'package:baby_garden_flutter/screen/vcb_express_detail/vcb_express_detail_screen.dart';
+import 'package:baby_garden_flutter/screen/voucher_detail/voucher_detail_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:html/parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info/package_info.dart';
@@ -279,41 +279,8 @@ class StringUtil {
     return parsedString;
   }
 
-  static const String dummyImage =
-      "https://imgix.bustle.com/uploads/image/2019/1/23/4ca31ad3-6f9b-4e75-a0bf-fada7bfecfae-shutterstock_10068471c.jpg?w=970&h=546&fit=crop&crop=faces&auto=format&q=70&dpr=2";
-  static const List<String> dummyImageList = [
-    "https://static.topshop.com/v1/static/json-0000156327_TSHP_WK25_THURSDAY_DESKTOP_UK_01jpg",
-    "https://fashioninthecity.com/wp-content/uploads/2018/12/GENDER-NEUTRAL-BANNER-FINAL.jpg",
-    "https://r8zlusvr.rocketcdn.com/templates/selectfashion.co.uk.new/assets/images/home/main-page-pods/pod2-newin2.jpg",
-    "https://www.telegraph.co.uk/content/dam/fashion/2019/11/26/LKB_AW19_AUGUST_10_trans_NvBQzQNjv4BqXxNHKgVzGLlMTFfSc8ogRjgvSsGPs1UGfa2r2ifahVI.jpg?imwidth=450"
-  ];
-  static const String dummyText =
-      "- Đế giày làm bằng cao su nhiệt dẻo (TPR). xẻ rãnh chống trơn trượt cho bé vui chơi thỏa thích \n- Cách tính cỡ Giày trẻ em cho bé (Bạn đo chiều dài bàn chân xem kích thước là bao nhiêu)\n- Ướm đi thử vừa là vừa";
 
-  static List<dynamic> categoryDummy = [
-    {'icon': 'photo/ic_phone.png', 'title': "Điện thoại & phụ kiện"},
-    {'icon': 'photo/ic_toy.png', 'title': "Đồ chơi"},
-    {'icon': 'photo/ic_store.png', 'title': "Bách Hóa Online"},
-    {'icon': 'photo/ic_bike.png', 'title': "Ô tô - xe máy, xe đạp"},
-    {'icon': 'photo/ic_phone.png', 'title': "Điện thoại & phụ kiện"},
-    {'icon': 'photo/ic_toy.png', 'title': "Đồ chơi"},
-  ];
 
-  static List<dynamic> confirmForm = [
-    {
-      'title': 'Dịch vụ đã đặt: ',
-      'content': 'Chăm sóc da mặt từ cơ bản đến nâng cao'
-    },
-    {
-      'title': 'Giá niêm yết:  ',
-      'content':
-          '\nKhách hàng đã có thẻ hoặc mã voucher vui lòng mang tới cửa hàng để được hưởng đầy đủ ưu đãi.',
-      'value': '150.000 đ'
-    },
-    {'title': 'Ngày sử dụng: ', 'content': '14/02/2020'},
-    {'title': 'Thời gian: ', 'content': '10:00'},
-    {'title': 'Thời gian thực hiện: ', 'content': '120 Phút'},
-  ];
 
   static List<dynamic> time = [
     {'time': '08:00'},
@@ -374,66 +341,6 @@ class StringUtil {
     {'time': '21:45'},
   ];
 
-  static List<String> banks1 = [
-    'VietcomBank',
-    'TechcomBank',
-    'BIDV',
-    'ViettinBank',
-    'MBBank'
-  ];
-
-  static List<dynamic> banks = [
-    {
-      'bank': 'VietcomBank',
-      'accountNumber': '00112233445566',
-      'accountOwner': 'Vũ Thị Hài'
-    },
-    {
-      'bank': 'TechcomBank',
-      'accountNumber': '00880900989089',
-      'accountOwner': 'Vũ Thị Hài'
-    },
-    {
-      'bank': 'BIDV',
-      'accountNumber': '00880900989089',
-      'accountOwner': 'Vũ Thị Hài'
-    },
-    {
-      'bank': 'ViettinBank',
-      'accountNumber': '10923809821989',
-      'accountOwner': 'Vũ Thị Hài'
-    },
-    {
-      'bank': 'MBBank',
-      'accountNumber': '00112233445566',
-      'accountOwner': 'Vũ Thị Hài'
-    },
-  ];
-
-  static List<DropdownMenuItem<dynamic>> bankAccounts = [
-    new DropdownMenuItem(child: Text('VietcomBank'), value: banks1[0]),
-    new DropdownMenuItem(child: Text('TechcomBank'), value: banks1[1]),
-    new DropdownMenuItem(child: Text('BIDV'), value: banks1[2]),
-    new DropdownMenuItem(child: Text('ViettinBank'), value: banks1[3]),
-    new DropdownMenuItem(child: Text('MBBank'), value: banks1[4]),
-  ];
-
-  static List<dynamic> week = [
-    {'dow': 'Thứ 2', 'date': '12/02/2020'},
-    {'dow': 'Thứ 3', 'date': '13/02/2020'},
-    {'dow': 'Thứ 4', 'date': '14/02/2020'},
-    {'dow': 'Thứ 5', 'date': '15/02/2020'},
-    {'dow': 'Thứ 6', 'date': '16/02/2020'},
-    {'dow': 'Thứ 7', 'date': '17/02/2020'},
-    {'dow': 'Chủ nhật', 'date': '18/02/2020'},
-  ];
-
-  static List<dynamic> clientList = [
-    {'address': '38 Nguyễn Viết Xuân, Thanh Xuân, Hà Nội'},
-    {'address': '15B Đào Tấn, Ba Đình, Hà Nội'},
-    {'address': '134 Lê Lợi, Hà Đông, Hà Nội'},
-    {'address': '134 Lê Lợi, Hà Đông, Hà Nội'}
-  ];
 }
 
 class RouteUtil {
