@@ -31,6 +31,7 @@ class SearchingProvider extends ChangeNotifier {
 
   Future<void> searchProduct(BuildContext context,
       {String key, int index = 0}) async {
+    this.key=key;
     dynamic data = await service.searchProduct(key: key, index: index);
     if (data != null) {
       total = data['total'];
