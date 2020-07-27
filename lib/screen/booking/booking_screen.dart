@@ -27,8 +27,8 @@ import 'package:provider/provider.dart';
 class BookingScreen extends StatefulWidget {
   final String shopID;
   final String promoteCode;
-
-  const BookingScreen({this.shopID = '1', this.promoteCode = '123'}) : super();
+  final String shopName;
+  const BookingScreen({this.shopID = '1', this.promoteCode = '123', this.shopName=""}) : super();
 
   @override
   State<StatefulWidget> createState() {
@@ -465,7 +465,7 @@ class _BookingScreenState
                 bookingId: getViewModel().bookingData['booking_id'],
                 bookingCode: getViewModel().bookingData['code'].toString(),
                 totalPrice: totalPriceAfterFix,
-                phone: address != null ? address['phone'] : "",
+                phone: address != null ? address['phone'] : "",shopName: widget.shopName,
               ));
         } else {
           int index =  await showDialog(
@@ -508,7 +508,7 @@ class _BookingScreenState
                 bookingId: getViewModel().bookingData['booking_id'],
                 bookingCode: getViewModel().bookingData['code'].toString(),
                 totalPrice: totalPriceAfterFix,
-                phone: address != null ? address['phone'] : "",
+                phone: address != null ? address['phone'] : "",shopName: widget.shopName,
               ));
         } else {
           int index =  await showDialog(
@@ -523,7 +523,6 @@ class _BookingScreenState
 
 
   int getTotalPrice() {
-    print("SHOP2112233 ${Provider.of<CartProvider>(context, listen: false).getShopTotalPrice(widget.shopID)}");
     totalPrice = Provider.of<CartProvider>(context, listen: false).getShopTotalPrice(widget.shopID);
     return totalPrice +
         _transferMethodProvider.price -

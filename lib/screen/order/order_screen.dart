@@ -59,7 +59,6 @@ class _OrderState extends BaseState<OrderScreen> {
                   onTap: () {
                     if (Provider.of<UserProvider>(context, listen: false)
                         .isLogin) {
-                      print("asdjhbaskdas ${e['transportState']}");
                       if (e['transportState'] == TransportState.NONE.index) {
                         push(BookingRateScreen(
                           isService: false,

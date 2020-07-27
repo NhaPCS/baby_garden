@@ -4796,6 +4796,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Vui lòng chọn ngày khác`
+  String get choose_other_day {
+    return Intl.message(
+      'Vui lòng chọn ngày khác',
+      name: 'choose_other_day',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

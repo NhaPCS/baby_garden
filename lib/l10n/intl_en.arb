@@ -528,5 +528,6 @@
   "mess_confirm_delete_calendar": "Bạn có muốn xoá lịch nhắc này không?",
   "promotion_code_error": "Mã giảm giá không đúng hoặc đã được sử dụng",
   "total_price": "Thành tiền",
-  "mess_error_user_name": "Bạn vui lòng nhập đầy đủ họ tên"
+  "mess_error_user_name": "Bạn vui lòng nhập đầy đủ họ tên",
+  "choose_other_day": "Vui lòng chọn ngày khác"
 }
