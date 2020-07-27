@@ -65,7 +65,7 @@ class ProductCartItem extends StatelessWidget {
                       ),
                       padding: EdgeInsets.only(right: SizeUtil.smallSpace)),
                   DiscountNote(
-                    note: product['discount_note'],
+                    note: product['promotion_info'],
                   ),
                   product['main_product_name'] == null
                       ? SizedBox()
