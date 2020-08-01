@@ -130,7 +130,7 @@ class ProductCartItem extends StatelessWidget {
                       Expanded(
                         child: Center(
                           child: ButtonIcon(
-                            icon: SvgIcon(product['calendar'] == null
+                            icon: SvgIcon(product['calendar']==null || product['calendar'].isEmpty
                                 ? 'ic_alarm_disable.svg'
                                 : 'ic_alarm.svg'),
                             onPressed: () {

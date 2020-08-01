@@ -9,7 +9,7 @@ class ReminderAddViewModel extends BaseViewModel {
 
   ReminderAddViewModel(this.context);
 
-  void addNewCalendar(BuildContext context, {RemindCalendar calendar}) async {
+  Future<void> addNewCalendar(BuildContext context, {RemindCalendar calendar}) async {
     if (calendar.productId == null) {
       print("product id null");
       return;

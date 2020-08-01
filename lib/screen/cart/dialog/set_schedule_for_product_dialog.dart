@@ -28,13 +28,10 @@ class _State
 
   @override
   Widget buildWidget(BuildContext context) {
-    if (widget.product['calendar'] != null) {
-      print("widget.product['calendar'].runtimeType  ${widget.product['calendar'].runtimeType}");
-      if (widget.product['calendar'].runtimeType.toString().startsWith("List") &&
-          widget.product['calendar'].isNotEmpty) {
-        _remindCalendar = RemindCalendar().fromJson(widget.product['calendar'][0]);
-      } else
-        _remindCalendar = RemindCalendar().fromJson(widget.product['calendar']);
+    if (widget.product['calendar'] != null &&
+        widget.product['calendar'].isNotEmpty) {
+      _remindCalendar =
+          RemindCalendar().fromJson(widget.product['calendar'][0]);
     }
     _remindCalendar.productId = widget.product['product_id'];
     return AlertDialog(
@@ -105,8 +102,8 @@ class _State
                 width: SizeUtil.defaultSpace,
               ),
               MyRaisedButton(
-                onPressed: () {
-                  getViewModel()
+                onPressed: () async {
+                  await getViewModel()
                       .addNewCalendar(context, calendar: _remindCalendar);
                   widget.onAddedCalendar();
                 },
