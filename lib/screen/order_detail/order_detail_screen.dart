@@ -126,8 +126,7 @@ class _OrderDetailScreenState
               ),
               //todo-hung thời gian dự kiến giao hàng, lỗi separate line
               isDelivering
-                  ?
-              OrderInfo(
+                  ? OrderInfo(
                       svgIcon: 'order_delivering.svg',
                       title: S.of(context).delivery_info,
                       content: S.of(context).delivery_service_header(
@@ -204,6 +203,13 @@ class _OrderDetailScreenState
                                 skuTitle: data["list_product"][index]
                                     ['product_id'],
                                 price: data["list_product"][index]['price'],
+                                imageUrl: data['list_product'][index]
+                                                ['image'] !=
+                                            null &&
+                                        data['list_product'][index]['image']
+                                            .isNotEmpty
+                                    ? data['list_product'][index]['image'][0]
+                                    : '',
                                 productCount: data["list_product"][index]
                                     ['number'],
                               ))),
@@ -286,73 +292,88 @@ class _OrderDetailScreenState
                   color: isDelivering ? ColorUtil.white : ColorUtil.lineColor,
                   margin: EdgeInsets.all(0)),
               isShowCheckout
-                  ? MyRaisedButton(
+                  ? Padding(
                       padding: EdgeInsets.only(
-                          top: SizeUtil.smallSpace,
-                          bottom: SizeUtil.smallSpace),
-                      onPressed: () {
-                        push(CheckoutScreen(
-                          bookingId: int.parse(widget.bookingId),
-                          bookingCode: data['code'].toString(),
-                          totalPrice: costMoney,
-                          phone: data['user_phone'],
-                          shopName: data['shop_name'],
-                        ));
-                      },
-                      text: S.of(context).checkout.toUpperCase(),
-                      color: ColorUtil.primaryColor,
-                      textStyle: TextStyle(
-                          fontSize: SizeUtil.textSizeDefault,
-                          color: Colors.white,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.bold),
+                          left: SizeUtil.defaultSpace,
+                          right: SizeUtil.defaultSpace),
+                      child: MyRaisedButton(
+                        padding: EdgeInsets.only(
+                            top: SizeUtil.smallSpace,
+                            bottom: SizeUtil.smallSpace),
+                        onPressed: () {
+                          push(CheckoutScreen(
+                            bookingId: int.parse(widget.bookingId),
+                            bookingCode: data['code'].toString(),
+                            totalPrice: costMoney,
+                            phone: data['user_phone'],
+                            shopName: data['shop_name'],
+                          ));
+                        },
+                        text: S.of(context).checkout.toUpperCase(),
+                        color: ColorUtil.primaryColor,
+                        textStyle: TextStyle(
+                            fontSize: SizeUtil.textSizeDefault,
+                            color: Colors.white,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.bold),
+                      ),
                     )
                   : SizedBox(),
               isShowPositiveButton
-                  ? MyRaisedButton(
+                  ? Padding(
                       padding: EdgeInsets.only(
-                          top: SizeUtil.smallSpace,
-                          bottom: SizeUtil.smallSpace),
-                      onPressed: () {
-                        onPositiveClick(data['id']);
-                      },
-                      text: state == BookingState.RECEIVE_IN_SHOP
-                          ? S.of(context).receive.toUpperCase()
-                          : S.of(context).rating_order,
-                      color: ColorUtil.primaryColor,
-                      textStyle: TextStyle(
-                          fontSize: SizeUtil.textSizeDefault,
-                          color: Colors.white,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.bold),
+                          left: SizeUtil.defaultSpace,
+                          right: SizeUtil.defaultSpace),
+                      child: MyRaisedButton(
+                        padding: EdgeInsets.only(
+                            top: SizeUtil.smallSpace,
+                            bottom: SizeUtil.smallSpace),
+                        onPressed: () {
+                          onPositiveClick(data['id']);
+                        },
+                        text: state == BookingState.RECEIVE_IN_SHOP
+                            ? S.of(context).receive.toUpperCase()
+                            : S.of(context).rating_order,
+                        color: ColorUtil.primaryColor,
+                        textStyle: TextStyle(
+                            fontSize: SizeUtil.textSizeDefault,
+                            color: Colors.white,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.bold),
+                      ),
                     )
                   : SizedBox(
                       height: SizeUtil.smallSpace,
                     ),
               isShowNegativeButton
-                  ? MyRaisedButton(
+                  ? Padding(
                       padding: EdgeInsets.only(
-                          top: SizeUtil.smallSpace,
-                          bottom: SizeUtil.smallSpace),
-                      onPressed: () {
-                        WidgetUtil.showConfirmDialog(
-                          context,
-                          message: S.of(context).cancel_question,
-                          title: S.of(context).attention,
-                          positiveClicked: () async {
-                            await getViewModel().onCancelBooking(context,
-                                bookingId: widget.bookingId);
-                            Navigator.of(context).pop();
-                          },
-                        );
-                      },
-                      textStyle: TextStyle(
-                          fontSize: SizeUtil.textSizeDefault,
-                          color: Colors.white,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.bold),
-                      text: S.of(context).cancel.toUpperCase(),
-                      color: ColorUtil.primaryColor,
+                          left: SizeUtil.defaultSpace,
+                          right: SizeUtil.defaultSpace),
+                      child: MyRaisedButton(
+                        padding: EdgeInsets.only(
+                            top: SizeUtil.smallSpace,
+                            bottom: SizeUtil.smallSpace),
+                        onPressed: () {
+                          WidgetUtil.showConfirmDialog(
+                            context,
+                            message: S.of(context).cancel_question,
+                            title: S.of(context).attention,
+                            positiveClicked: () async {
+                              await getViewModel().onCancelBooking(context,
+                                  bookingId: widget.bookingId);
+                              Navigator.of(context).pop();
+                            },
+                          );
+                        },
+                        textStyle: TextStyle(
+                            fontSize: SizeUtil.textSizeDefault,
+                            color: Colors.white,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.bold),
+                        text: S.of(context).cancel.toUpperCase(),
+                        color: ColorUtil.primaryColor,
+                      ),
                     )
                   : SizedBox(
                       height: SizeUtil.smallSpace,

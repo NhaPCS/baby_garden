@@ -62,12 +62,7 @@ class _BookingScreenState
     // TODO: implement initState
     _transferMethodProvider.getShips();
     _pointProvider.getPoint(context, shopId: widget.shopID);
-    if (Provider.of<ReceiveAddressListProvider>(context, listen: false)
-            .addressList
-            .length ==
-        0) {
-      Provider.of<ReceiveAddressListProvider>(context, listen: false).getData();
-    }
+    Provider.of<ReceiveAddressListProvider>(context, listen: false).getData();
     totalPriceAfterFix = getTotalPrice();
     super.initState();
   }
