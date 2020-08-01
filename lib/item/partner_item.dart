@@ -133,7 +133,7 @@ class PartnerItem extends StatelessWidget {
                           textSize: SizeUtil.textSizeDefault,
                           textColor: Colors.white,
                           onTap: (){
-                            RouteUtil.push(context, ListUserRatedScreen());
+                            RouteUtil.push(context, ListUserRatedScreen( shopId: shop['id'],));
                           },
                         ),
                       ],

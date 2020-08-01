@@ -561,6 +561,17 @@ Future<dynamic> listShop(BuildContext context,
   return null;
 }
 
+Future<dynamic> listRating({String shopId, int type = 1}) async {
+  dynamic params = {
+    "shop_id": shopId,
+    "type": type.toString(),
+  };
+  Response response =
+      await get(null, path: "listRating", param: params, showLoading: true);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 Future<dynamic> listProducts(BuildContext context, String path,
     {String categoryId,
     String parentId,

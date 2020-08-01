@@ -4,11 +4,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UserRatedItem extends StatelessWidget {
+  final dynamic comment;
+
+  const UserRatedItem({Key key, this.comment}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left:SizeUtil.midSmallSpace,right: SizeUtil.midSmallSpace,top: SizeUtil.superTinySpace,bottom: SizeUtil.superTinySpace),
+      margin: EdgeInsets.only(
+          left: SizeUtil.midSmallSpace,
+          right: SizeUtil.midSmallSpace,
+          top: SizeUtil.superTinySpace,
+          bottom: SizeUtil.superTinySpace),
       child: Card(
         elevation: 4,
         shape: RoundedRectangleBorder(

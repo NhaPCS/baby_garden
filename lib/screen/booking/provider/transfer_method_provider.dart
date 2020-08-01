@@ -1,18 +1,18 @@
 import 'package:baby_garden_flutter/data/service.dart' as service;
 import 'package:flutter/cupertino.dart';
 
-class TransferMethodProvider extends ChangeNotifier{
-  int transferMethod =0;
+class TransferMethodProvider extends ChangeNotifier {
+  int transferMethod = 0;
   int price = 0;
-  String promoteCode="";
+  String promoteCode = "";
   bool isActiveCode = false;
   List<dynamic> ships = List();
 
-  void onNotify(){
+  void onNotify() {
     notifyListeners();
   }
 
-  Future<void> getShips() async{
+  Future<void> getShips() async {
     ships = await service.listShiper();
     try {
       final method = ships[transferMethod];
@@ -25,7 +25,8 @@ class TransferMethodProvider extends ChangeNotifier{
     }
     notifyListeners();
   }
-  void onChange(val){
+
+  void onChange(val) {
     transferMethod = val;
     final method = ships[val];
     try {
@@ -39,20 +40,20 @@ class TransferMethodProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  bool checkPromoteCode(code){
+  bool checkPromoteCode(code) {
     return code == promoteCode;
   }
 
-  void setIsActive(){
+  void setIsActive() {
     isActiveCode = true;
-    price = int.parse(ships[transferMethod]['price'])- int.parse(ships[transferMethod]['price_discount']);
+    price = int.parse(ships[transferMethod]['price']) -
+        int.parse(ships[transferMethod]['price_discount']);
     notifyListeners();
   }
 
-  void removePromote(){
+  void removePromote() {
     price = int.parse(ships[transferMethod]['price']);
     isActiveCode = false;
     notifyListeners();
   }
-
 }

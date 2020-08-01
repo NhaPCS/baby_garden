@@ -69,7 +69,8 @@ class _CartState extends BaseState<CartScreen> {
                       if (index == value.shops.length) {
                         return PromotionInput(
                           promoCodeController: _promoCodeController,
-                          getPromotionDetailProvider: _getPromotionDetailProvider ,
+                          getPromotionDetailProvider:
+                              _getPromotionDetailProvider,
                           onApplyCodePress: () {
                             if (_promoCodeController.text.isNotEmpty)
                               _getPromotionDetailProvider.getPromotionDetail(
@@ -81,6 +82,12 @@ class _CartState extends BaseState<CartScreen> {
                           onGoBookingPress: () {
                             if (_changeIndexProvider.index >= 0)
                               push(BookingScreen(
+                                promotePrice: _getPromotionDetailProvider
+                                            .promotion['value'] ==
+                                        null
+                                    ? 0
+                                    : int.parse(_getPromotionDetailProvider
+                                        .promotion['value']),
                                 promoteCode:
                                     _getPromotionDetailProvider.promotion ==
                                             null
@@ -89,8 +96,9 @@ class _CartState extends BaseState<CartScreen> {
                                             .promotion['code'],
                                 shopID: value.shops[_changeIndexProvider.index]
                                     ['shop_id'],
-                                shopName: value.shops[_changeIndexProvider.index]
-                                ['shop_name'],
+                                shopName:
+                                    value.shops[_changeIndexProvider.index]
+                                        ['shop_name'],
                               ));
                           },
                           price: value.price.toString(),
