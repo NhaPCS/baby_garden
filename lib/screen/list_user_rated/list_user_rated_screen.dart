@@ -45,7 +45,7 @@ class _ListUserRatedScreenState extends BaseState<ListUserRatedScreen> {
       ),
       body: Consumer<GetRatingsProvider>(
         builder:
-            (BuildContext context, GetRatingsProvider value, Widget child) {
+            (BuildContext context, GetRatingsProvider getRatingsProvider, Widget child) {
           return Consumer<FilterProvider>(
             builder:
                 (BuildContext context, FilterProvider value, Widget child) {
@@ -64,7 +64,7 @@ class _ListUserRatedScreenState extends BaseState<ListUserRatedScreen> {
                           child: TagItem(
                             isSelected: value.index == 0,
                             title: "Tất cả",
-                            subTitle: "( 1235 )",
+                            subTitle: "( ${getRatingsProvider.counts[0] ?? 0} )",
                             ontab: () {
                               reloadSelectedType(0);
                             },
@@ -74,7 +74,7 @@ class _ListUserRatedScreenState extends BaseState<ListUserRatedScreen> {
                           child: TagItem(
                             isSelected: value.index == 1,
                             title: "Có bình luận",
-                            subTitle: "( 1035 )",
+                            subTitle: "( ${getRatingsProvider.counts[1] ?? 0} )",
                             ontab: () {
                               reloadSelectedType(1);
                             },
@@ -84,7 +84,7 @@ class _ListUserRatedScreenState extends BaseState<ListUserRatedScreen> {
                           child: TagItem(
                             isSelected: value.index == 2,
                             title: "Có hình ảnh",
-                            subTitle: "( 105 )",
+                            subTitle: "( ${getRatingsProvider.counts[2] ?? 0} )",
                             ontab: () {
                               reloadSelectedType(2);
                             },
@@ -110,7 +110,7 @@ class _ListUserRatedScreenState extends BaseState<ListUserRatedScreen> {
                           child: StarItem(
                             isSelected: value.index == index + 3,
                             star: index + 1,
-                            subTitle: "( 1235 )",
+                            subTitle: "( ${getRatingsProvider.counts[index+3] ?? 0} )",
                             ontab: () {
                               reloadSelectedType(index + 3);
                             },

@@ -15,8 +15,8 @@ class CityProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> onChangeCity(int val) async {
-    this.cityVal = val;
+  Future<void> onChangeCity(int index) async {
+    this.cityVal = index;
     this.districtVal = null;
     this.subDistrictVal = null;
     if (districts != null)
@@ -24,19 +24,19 @@ class CityProvider extends ChangeNotifier {
     else {
       districts = List();
     }
-    districts = await service.district(id: val.toString());
+    districts = await service.district(id: cities[index]['id']);
     notifyListeners();
   }
 
-  Future<void> onChangeDistrict(int val) async {
-    this.districtVal = val;
+  Future<void> onChangeDistrict(int index) async {
+    this.districtVal = index;
     this.subDistrictVal = null;
     if (subDistricts != null)
       subDistricts.clear();
     else {
       subDistricts = List();
     }
-    subDistricts = await service.district(id: val.toString());
+    subDistricts = await service.ward(id: districts[index]['id']);
     notifyListeners();
   }
 

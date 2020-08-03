@@ -374,6 +374,13 @@ Future<dynamic> district({String id}) async {
   return null;
 }
 
+//todo ward
+Future<dynamic> ward({String id}) async {
+  Response response = await get(null, path: "ward", param: {'district_id': id});
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 //todo listShiper
 Future<dynamic> listShiper() async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();

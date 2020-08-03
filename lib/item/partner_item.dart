@@ -101,7 +101,7 @@ class PartnerItem extends StatelessWidget {
                             height: 2,
                           ),
                           Text(
-                            shop['introduce'],
+                            shop['introduce']??"",
                             style: TextStyle(
                                 fontSize: SizeUtil.textSizeSmall,
                                 color: Colors.white),
@@ -126,7 +126,7 @@ class PartnerItem extends StatelessWidget {
                         ),
                         ShopIconInfo(
                           icon: "photo/comment_img.png",
-                          textData: shop['number_comment'],
+                          textData: shop['number_rate'],
                           bgColor: ColorUtil.white,
                           isPadding: false,
                           iconSize: SizeUtil.iconSizeBigger,
