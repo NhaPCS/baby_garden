@@ -4232,7 +4232,7 @@ class S {
 
   String get note_is {
     return Intl.message(
-      'Lưu bút:',
+      'Lưu bút: ',
       name: 'note_is',
       desc: '',
       args: [],

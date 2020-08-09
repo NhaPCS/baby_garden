@@ -15,6 +15,7 @@ class StoreInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (shop == null) return SizedBox();
     return Row(
       children: <Widget>[
         CircleImage(
@@ -32,11 +33,13 @@ class StoreInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             MyText(
-             shop['name'],
+              shop['name'],
               style: TextStyle(
                   color: ColorUtil.primaryColor, fontWeight: FontWeight.bold),
             ),
-            RatingBar(value: int.parse(shop['star']),)
+            RatingBar(
+              value: int.parse(shop['star']),
+            )
           ],
         ),
         Expanded(child: SizedBox()),
@@ -51,8 +54,7 @@ class StoreInfo extends StatelessWidget {
               return null;
             } else {
               RouteUtil.push(
-                  context,
-                  PartnerBookScheduleScreen(shopID: shop['id']));
+                  context, PartnerBookScheduleScreen(shopID: shop['id']));
             }
           },
           borderColor: ColorUtil.primaryColor,

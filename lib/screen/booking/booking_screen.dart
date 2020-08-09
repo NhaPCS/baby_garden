@@ -127,7 +127,7 @@ class _BookingScreenState
                                     ? value.currentAddress
                                     : "";
                             print(address);
-                            return Text(
+                            return MyText(
                               address,
                               style: TextStyle(
                                   fontSize: SizeUtil.textSizeSmall,

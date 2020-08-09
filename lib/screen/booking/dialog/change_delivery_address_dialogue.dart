@@ -3,6 +3,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/checkbox/custom_radio_button.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -53,7 +54,7 @@ class ChangeDeliveryAddressDialogue extends StatelessWidget{
                     ),
                     Column(
                       children: List.generate(value.addressList.length, (index) => CustomRadioButton(
-                        titleContent: Text(
+                        titleContent: MyText(
                           value.getFullAddress(index),
                           style: TextStyle(
                               fontSize: SizeUtil.textSizeSmall,

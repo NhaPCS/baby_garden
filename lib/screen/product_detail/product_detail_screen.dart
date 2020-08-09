@@ -98,7 +98,7 @@ class _ProductScreenState
                     width: SizeUtil.smallSpace,
                   ),
                   Expanded(
-                      child: Text(
+                      child: MyText(
                         productProvider.product['name'],
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ))

@@ -385,7 +385,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "no_search_history" : MessageLookupByLibrary.simpleMessage("Bạn chưa có lịch sử tìm kiếm"),
     "normal_height" : MessageLookupByLibrary.simpleMessage("Chiều cao bình thường"),
     "note_for_product_promo" : MessageLookupByLibrary.simpleMessage("Ghi chú khuyến mại của sản phẩm"),
-    "note_is" : MessageLookupByLibrary.simpleMessage("Lưu bút:"),
+    "note_is" : MessageLookupByLibrary.simpleMessage("Lưu bút: "),
     "notice_time" : m12,
     "notify" : MessageLookupByLibrary.simpleMessage("Thông báo"),
     "notify_booking_success" : MessageLookupByLibrary.simpleMessage("Chúc mừng quý khách đã đặt hàng thành công "),
