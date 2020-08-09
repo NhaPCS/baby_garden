@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:baby_garden_flutter/data/dynamic_link_service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/screen/vcb_express_detail/dialogue/comment_bottom_sheet_dialogue.dart';
@@ -195,7 +196,11 @@ class _VCBExpressDetailScreenState
                   ),
                   GestureDetector(
                     onTap: () {
-                      WidgetUtil.shareApp(context);
+                      DynamicLinkService.createDynamicLink(
+                          title: _newsDetailProvider.currentDetail['title'],
+                          content: _newsDetailProvider.currentDetail['content'],
+                          id: _newsDetailProvider.currentDetail['id'],
+                          suffix: 'news');
                     },
                     child: Icon(
                       Icons.share,

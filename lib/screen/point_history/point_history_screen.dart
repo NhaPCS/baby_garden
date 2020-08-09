@@ -22,13 +22,11 @@ class PointHistoryScreen extends StatefulWidget {
 class _PointHistoryScreenState extends BaseState<PointHistoryScreen> {
   final PointManageProvider _pointManageProvider = PointManageProvider();
 
+
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_pointManageProvider.pointList == null ||
-        _pointManageProvider.pointList.isEmpty) {
-      _pointManageProvider.getPointDetailList(context, widget.pointInfo.shopId);
-    }
+  void initState() {
+    super.initState();
+    _pointManageProvider.getPointDetailList(widget.pointInfo.shopId);
   }
 
   @override

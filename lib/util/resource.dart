@@ -536,15 +536,6 @@ class WidgetUtil {
     }
   }
 
-  static Future<void> shareApp(BuildContext context) async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-
-    //TODO need add apple store id after registered IOS app
-    Share.share(S.of(context).share_format(Platform.isAndroid
-        ? "https://play.google.com/store/apps/details?id=${packageInfo.packageName}"
-        : packageInfo.packageName));
-  }
-
   static void showGenderSelectorDialog(
       BuildContext context, ValueChanged<int> selectedGender,
       {int initGender}) {
