@@ -39,9 +39,9 @@ class _InfoTabState extends BaseState<InfoTab> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  MyText(
-                    widget.voucher['info'],
-                    style: TextStyle(
+                  Html(
+                    data: widget.voucher['info'] ?? '',
+                    defaultTextStyle: TextStyle(
                         color: ColorUtil.textDark,
                         fontSize: SizeUtil.textSizeDefault,
                         fontWeight: FontWeight.bold),

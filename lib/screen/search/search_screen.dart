@@ -17,6 +17,10 @@ import 'item/search_product_item.dart';
 import 'widget/final_search_result.dart';
 
 class SearchScreen extends StatefulWidget {
+  final bool isPickup;
+
+  const SearchScreen({Key key, this.isPickup}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _SearchState();
@@ -78,6 +82,7 @@ class _SearchState extends BaseState<SearchScreen> {
           if (searchProvider.finalResult != null) {
             return FinalSearchResult(
                 products: searchProvider.finalResult,
+                isPickup: widget.isPickup,
                 reloadCallback: (page) {
                   searchProvider.searchProduct(
                     context,
@@ -148,7 +153,8 @@ class _SearchState extends BaseState<SearchScreen> {
                   );
                 } else
                   return SearchProductItem(
-                      product: searchProvider.searchResult[index]);
+                    product: searchProvider.searchResult[index],
+                  );
               },
             );
         },
