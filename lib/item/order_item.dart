@@ -18,9 +18,11 @@ class OrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    dynamic orderItem = itemData != null && itemData['list_product'].length > 0
-        ? itemData['list_product'][0]
-        : null;
+    print("DATA ${itemData['list_product']}");
+    dynamic productItem =
+        itemData != null && itemData['list_product'].length > 0
+            ? itemData['list_product'][0]
+            : null;
     if (itemData == null) {
       itemData = {
         'code': "0",
@@ -97,13 +99,15 @@ class OrderItem extends StatelessWidget {
                 color: ColorUtil.gray,
               ),
               ProductOrderItem(
-                title: orderItem == null
-                    ? S.of(context).order_title
-                    : orderItem['name'],
+                title: productItem['name'],
                 price: StringUtil.getPriceText(
-                        orderItem == null ? "3000" : orderItem['price']) +
+                        productItem == null ? "" : productItem['price']) +
                     " X ",
-                productCount: orderItem == null ? "3" : orderItem['number'],
+                productCount: productItem == null ? "" : productItem['number'],
+                imageUrl: productItem['image'] != null &&
+                        productItem['image'].isNotEmpty
+                    ? productItem['image'][0]
+                    : '',
                 star: isRated
                     ? int.parse(itemData['star'])
                     : null, // todo- hung  thiếu rating

@@ -42,7 +42,7 @@ class CircleImage extends StatelessWidget {
                   ? CachedNetworkImageProvider(imageUrl)
                   : imageFile != null
                       ? FileImage(imageFile)
-                      : AssetImage("photo/child_avatar.png"),
+                      : AssetImage("photo/logo.png"),
               fit: BoxFit.cover),
         ),
       ),

@@ -2,7 +2,9 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/order_item.dart';
 import 'package:baby_garden_flutter/screen/checkout/widget/rich_text_form.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/image/circle_image.dart';
 import 'package:baby_garden_flutter/widget/star_display.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -27,15 +29,16 @@ class ProductOrderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(top: SizeUtil.midSmallSpace),
-          child: CachedNetworkImage(
+          child: CircleImage(
+            borderRadius: 1,
             imageUrl: imageUrl ?? '',
             width: MediaQuery.of(context).size.width / 6,
+            height: 50,
           ),
         ),
         SizedBox(
@@ -49,18 +52,19 @@ class ProductOrderItem extends StatelessWidget {
                 SizedBox(
                   height: SizeUtil.smallSpace,
                 ),
-                Text(
+                MyText(
                   title,
                   style: TextStyle(
                       fontSize: subTitle != null
                           ? SizeUtil.textSizeExpressDetail
                           : SizeUtil.textSizeSmall,
-                      fontWeight:
-                          subTitle != null ? FontWeight.bold : FontWeight.normal),
+                      fontWeight: subTitle != null
+                          ? FontWeight.bold
+                          : FontWeight.normal),
                   textAlign: TextAlign.start,
                 ),
                 subTitle != null
-                    ? Text(
+                    ? MyText(
                         subTitle,
                         style: TextStyle(
                             height: 1.5, fontSize: SizeUtil.textSizeNoticeTime),

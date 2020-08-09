@@ -40,7 +40,6 @@ class CartProvider extends ChangeNotifier {
             if (p['price_discount'] != null)
               price += int.parse(p['price_discount']) * number;
           });
-          return price;
         }
       });
     }
@@ -51,13 +50,17 @@ class CartProvider extends ChangeNotifier {
     if (product['quantity'] == null || product['quantity'] <= 0)
       product['quantity'] = 1;
     if (product['selected_size'] == null || product['selected_size'].isEmpty) {
-      product['size_id'] = product['size'][0]['id'];
+      if (product['size'] != null && product['size'].isNotEmpty) {
+        product['size_id'] = product['size'][0]['id'];
+      }
     } else
       product['size_id'] = product['selected_size'];
 
     if (product['selected_color'] == null ||
         product['selected_color'].isEmpty) {
-      product['color_id'] = product['color'][0]['id'];
+      if (product['color'] != null && product['color'].isNotEmpty ) {
+        product['color_id'] = product['color'][0]['id'];
+      }
     } else
       product['color_id'] = product['selected_color'];
 

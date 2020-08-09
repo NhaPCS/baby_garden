@@ -44,7 +44,7 @@ class _GridProductState extends BaseState<GridProduct> {
             _getListProductProvider.products.isEmpty) &&
         widget.section != null) {
       _getListProductProvider.getData(context, widget.section.path,
-          categoryId: widget.categoryId==null?null:'0',
+          categoryId: widget.categoryId == null ? null : '0',
           parentId: widget.categoryId,
           numberPosts:
               widget.totalCount == null ? TOTAL_ITEMS : widget.totalCount);
@@ -105,7 +105,7 @@ class _GridProductState extends BaseState<GridProduct> {
             builder: (BuildContext context, GetListProductProvider value,
                 Widget child) {
               return ListHorizontalProduct(
-                maxItems: widget.isHome ? value.products.length : null,
+                maxItems: widget.isHome ? (value.products.length + 1) : null,
                 rowsCount: widget.isHome ? 1 : 2,
                 products: value.products,
               );

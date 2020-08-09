@@ -1,14 +1,24 @@
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/image/circle_image.dart';
+import 'package:baby_garden_flutter/widget/image/my_cached_image.dart';
 import 'package:baby_garden_flutter/widget/rating_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UserRatedItem extends StatelessWidget {
+  final dynamic comment;
+
+  const UserRatedItem({Key key, this.comment}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<dynamic> imgs = comment['image'];
     return Container(
-      margin: EdgeInsets.only(left:SizeUtil.midSmallSpace,right: SizeUtil.midSmallSpace,top: SizeUtil.superTinySpace,bottom: SizeUtil.superTinySpace),
+      margin: EdgeInsets.only(
+          left: SizeUtil.midSmallSpace,
+          right: SizeUtil.midSmallSpace,
+          top: SizeUtil.superTinySpace,
+          bottom: SizeUtil.superTinySpace),
       child: Card(
         elevation: 4,
         shape: RoundedRectangleBorder(
@@ -25,8 +35,10 @@ class UserRatedItem extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              CircleAvatar(
-                backgroundImage: ExactAssetImage("photo/child_avatar.png"),
+              CircleImage(
+                imageUrl: comment['user_avatar'] ?? '',
+                width: 45,
+                height: 45,
               ),
               SizedBox(
                 width: SizeUtil.tinySpace,
@@ -35,7 +47,7 @@ class UserRatedItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Trần Đỗ Minh Ân",
+                    comment['user_name'] ?? '',
                     style: TextStyle(
                         color: ColorUtil.black33, fontWeight: FontWeight.bold),
                   ),
@@ -45,43 +57,41 @@ class UserRatedItem extends StatelessWidget {
                   RatingBar(
                     enable: false,
                     iconColor: ColorUtil.primaryColor,
-                    showRateCount: true,
+                    showRateCount: false,
                     isIcon: true,
-                    value: 4,
-                    rateCount: 4,
+                    value: int.parse(comment['star'] ?? '0'),
                     alignment: MainAxisAlignment.start,
                   ),
                   SizedBox(
                     height: SizeUtil.tinySpace,
                   ),
                   Text(
-                    "- Những sản phẩm Vườn Của Bé thật tuyệt vời",
+                    comment['content'] ?? '',
                     style: TextStyle(fontSize: SizeUtil.textSizeSmall),
                   ),
                   SizedBox(
                     height: SizeUtil.tinySpace,
                   ),
-                  Row(
-                    children: <Widget>[
-                      Image.asset(
-                        "photo/saling_detail_img.png.png",
-                        width: MediaQuery.of(context).size.width / 3,
-                        height: MediaQuery.of(context).size.width * 2 / 9,
-                      ),
-                      SizedBox(
-                        width: SizeUtil.smallSpace,
-                      ),
-                      Image.asset(
-                        "photo/saling_detail_img.png.png",
-                        width: MediaQuery.of(context).size.width / 3,
-                        height: MediaQuery.of(context).size.width * 2 / 9,
-                      ),
-                    ],
-                  ),
+                  imgs != null && imgs.isNotEmpty
+                      ? SingleChildScrollView(
+                          child: Row(
+                            children: imgs.map((img) {
+                              return Padding(
+                                padding: EdgeInsets.only(right: 10),
+                                child: MyCachedImage(
+                                  url: img,
+                                  width: 100,
+                                  height: 70,
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        )
+                      : SizedBox(),
                   SizedBox(
                     height: SizeUtil.tinySpace,
                   ),
-                  Text("26/12/2019 15:10 I Áo len dạ nỉ bé gái 12 tuổi",
+                  Text(comment['date'] ?? '',
                       style: TextStyle(fontSize: SizeUtil.textSizeSmall))
                 ],
               )

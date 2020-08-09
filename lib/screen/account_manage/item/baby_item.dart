@@ -47,16 +47,9 @@ class BabyItem extends StatelessWidget {
             alignment: Alignment.center,
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(SizeUtil.tinyRadius),
-                child: baby.avatar.isEmpty
-                    ? Image.asset(
-                        'photo/child_avatar.png',
-                        width: 95.0,
-                        height: 95.0,
-                        fit: BoxFit.fill,
-                      )
-                    : CachedNetworkImage(
+                child: CachedNetworkImage(
                         fit: BoxFit.cover,
-                        imageUrl: baby.avatar,
+                        imageUrl: baby.avatar ?? '',
                         width: 95.0,
                         height: 95.0,
                       )),

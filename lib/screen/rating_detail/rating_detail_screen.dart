@@ -16,7 +16,7 @@ class RatingDetailScreen extends StatefulWidget {
   final String bookingId;
   final bool isService;
 
-  const RatingDetailScreen({this.bookingId = "1", this.isService = false})
+  const RatingDetailScreen({this.bookingId = "", this.isService = false})
       : super();
 
   @override
@@ -133,13 +133,22 @@ class _RatingDetailScreenState
                       uploadImageController: uploadImageController,
                       title: bookingDetailData['service_name'],
                       shopName: bookingDetailData["shop_name"],
-                imgLink: bookingDetailData['shop_img'],
+                      imgLink: bookingDetailData['shop_img'],
                     )
                   : ListView(
                       children: List.generate(
                           productCount,
                           (index) => RatingItem(
                               rate: rates[index],
+                              imgLink: bookingDetailData['list_product'][index]
+                                              ['image'] !=
+                                          null &&
+                                      bookingDetailData['list_product'][index]
+                                              ['image']
+                                          .isNotEmpty
+                                  ? bookingDetailData['list_product'][index]
+                                      ['image'][0]
+                                  : '',
                               controller: _noteProductController[index],
                               title: bookingDetailData["list_product"][index]
                                   ["name"],

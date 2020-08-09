@@ -19,6 +19,7 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/screen/booking/view_model/booking_product_view_model.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -28,7 +29,14 @@ class BookingScreen extends StatefulWidget {
   final String shopID;
   final String promoteCode;
   final String shopName;
-  const BookingScreen({this.shopID = '1', this.promoteCode = '123', this.shopName=""}) : super();
+  final int promotePrice;
+
+  const BookingScreen(
+      {this.shopID = '1',
+      this.promoteCode = '123',
+      this.shopName = "",
+      this.promotePrice = 0})
+      : super();
 
   @override
   State<StatefulWidget> createState() {
@@ -62,12 +70,7 @@ class _BookingScreenState
     // TODO: implement initState
     _transferMethodProvider.getShips();
     _pointProvider.getPoint(context, shopId: widget.shopID);
-    if (Provider.of<ReceiveAddressListProvider>(context, listen: false)
-            .addressList
-            .length ==
-        0) {
-      Provider.of<ReceiveAddressListProvider>(context, listen: false).getData();
-    }
+    Provider.of<ReceiveAddressListProvider>(context, listen: false).getData();
     totalPriceAfterFix = getTotalPrice();
     super.initState();
   }
@@ -124,7 +127,7 @@ class _BookingScreenState
                                     ? value.currentAddress
                                     : "";
                             print(address);
-                            return Text(
+                            return MyText(
                               address,
                               style: TextStyle(
                                   fontSize: SizeUtil.textSizeSmall,
@@ -351,6 +354,28 @@ class _BookingScreenState
           ),
           WidgetUtil.getLine(
               width: 1, color: ColorUtil.lineColor, margin: EdgeInsets.all(0)),
+          widget.promotePrice == null
+              ? SizedBox()
+              : Padding(
+                  padding: const EdgeInsets.only(
+                      left: SizeUtil.normalSpace,
+                      right: SizeUtil.normalSpace,
+                      top: SizeUtil.midSmallSpace,
+                      bottom: SizeUtil.midSmallSpace),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(child: Text(S.of(context).promo_code)),
+                      MyText(
+                        "-${StringUtil.getPriceText(widget.promotePrice.toString())}",
+                        style: TextStyle(
+                            color: ColorUtil.blueLight,
+                            fontSize: SizeUtil.textSizeExpressDetail),
+                      )
+                    ],
+                  ),
+                ),
+          WidgetUtil.getLine(
+              width: 1, color: ColorUtil.lineColor, margin: EdgeInsets.all(0)),
           Padding(
             padding: const EdgeInsets.only(
                 left: SizeUtil.normalSpace,
@@ -369,7 +394,7 @@ class _BookingScreenState
                       Widget child) {
                     return Text(
                         StringUtil.getPriceText(
-                            (totalPrice + value.price - checkoutPoint * 1000)
+                            (totalPrice + value.price - checkoutPoint * 1000 - widget.promotePrice ?? 0)
                                 .toString()),
                         style: TextStyle(
                             fontSize: SizeUtil.textSizeDefault,
@@ -385,21 +410,24 @@ class _BookingScreenState
               color: ColorUtil.lineColor,
               margin: EdgeInsets.only(bottom: SizeUtil.smallSpace)),
           PrivacyPolicyButton(),
-          Padding(padding: SizeUtil.defaultPadding, child: MyRaisedButton(
-            onPressed: onCompleteBooking,
-            color: ColorUtil.primaryColor,
-            text: S.of(context).booking_submit.toUpperCase(),
-            textStyle: TextStyle(
-                fontSize: SizeUtil.textSizeDefault,
-                color: Colors.white,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.bold),
-            padding: const EdgeInsets.only(
-                left: SizeUtil.smallSpace,
-                right: SizeUtil.smallSpace,
-                top: SizeUtil.smallSpace,
-                bottom: SizeUtil.smallSpace),
-          ),),
+          Padding(
+            padding: SizeUtil.defaultPadding,
+            child: MyRaisedButton(
+              onPressed: onCompleteBooking,
+              color: ColorUtil.primaryColor,
+              text: S.of(context).booking_submit.toUpperCase(),
+              textStyle: TextStyle(
+                  fontSize: SizeUtil.textSizeDefault,
+                  color: Colors.white,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.bold),
+              padding: const EdgeInsets.only(
+                  left: SizeUtil.smallSpace,
+                  right: SizeUtil.smallSpace,
+                  top: SizeUtil.smallSpace,
+                  bottom: SizeUtil.smallSpace),
+            ),
+          ),
         ],
       ),
     );
@@ -465,10 +493,11 @@ class _BookingScreenState
                 bookingId: getViewModel().bookingData['booking_id'],
                 bookingCode: getViewModel().bookingData['code'].toString(),
                 totalPrice: totalPriceAfterFix,
-                phone: address != null ? address['phone'] : "",shopName: widget.shopName,
+                phone: address != null ? address['phone'] : "",
+                shopName: widget.shopName,
               ));
         } else {
-          int index =  await showDialog(
+          int index = await showDialog(
               context: context,
               builder: (BuildContext context) => ConfirmDialogue());
           pushAndReplaceAll(MainScreen(index: index), "/main_screen");
@@ -508,10 +537,11 @@ class _BookingScreenState
                 bookingId: getViewModel().bookingData['booking_id'],
                 bookingCode: getViewModel().bookingData['code'].toString(),
                 totalPrice: totalPriceAfterFix,
-                phone: address != null ? address['phone'] : "",shopName: widget.shopName,
+                phone: address != null ? address['phone'] : "",
+                shopName: widget.shopName,
               ));
         } else {
-          int index =  await showDialog(
+          int index = await showDialog(
               context: context,
               builder: (BuildContext context) => ConfirmDialogue());
           pushAndReplaceAll(MainScreen(index: index), "/main_screen");
@@ -521,11 +551,12 @@ class _BookingScreenState
     }
   }
 
-
   int getTotalPrice() {
-    totalPrice = Provider.of<CartProvider>(context, listen: false).getShopTotalPrice(widget.shopID);
+    totalPrice = Provider.of<CartProvider>(context, listen: false)
+        .getShopTotalPrice(widget.shopID);
     return totalPrice +
         _transferMethodProvider.price -
-        checkoutPoint * 1000;
+        checkoutPoint * 1000 -
+        widget.promotePrice;
   }
 }

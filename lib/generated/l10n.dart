@@ -1332,24 +1332,6 @@ class S {
     );
   }
 
-  String get service_title {
-    return Intl.message(
-      'Chăm sóc da mặt từ cơ bản đến nâng cao',
-      name: 'service_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get order_title {
-    return Intl.message(
-      'Áo giữ nhiệt Trẻ em màu 11 Pink size 100 vạch hồng\ncổ cao',
-      name: 'order_title',
-      desc: '',
-      args: [],
-    );
-  }
-
   String overall_time(Object minute) {
     return Intl.message(
       'Thời gian thực hiện: $minute ',
@@ -4250,7 +4232,7 @@ class S {
 
   String get note_is {
     return Intl.message(
-      'Lưu bút:',
+      'Lưu bút: ',
       name: 'note_is',
       desc: '',
       args: [],
@@ -4797,7 +4779,6 @@ class S {
     );
   }
 
-
   String get choose_other_day {
     return Intl.message(
       'Vui lòng chọn ngày khác',
@@ -4806,7 +4787,6 @@ class S {
       args: [],
     );
   }
-
 
   String total_search(Object total) {
     return Intl.message(

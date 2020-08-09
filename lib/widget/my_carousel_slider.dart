@@ -115,22 +115,24 @@ class _MyCarouselState extends State<MyCarouselSlider> {
             right: 0,
             child: Container(
               alignment: Alignment.center,
-              child: DotsIndicator(
-                dotsCount: widget.images.length,
-                position: selectedPosition.toDouble(),
-                decorator: DotsDecorator(
-                  color: widget.indicatorInactiveColor,
-                  activeColor: widget.indicatorActiveColor,
-                  size: Size.square(widget.indicationSize),
-                  activeSize: Size.square(widget.indicationSize),
-                  shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(widget.indicationSize)),
-                  activeShape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(widget.indicationSize)),
-                ),
-              ),
+              child: widget.images == null || widget.images.length <= 0
+                  ? null
+                  : DotsIndicator(
+                      dotsCount: widget.images.length,
+                      position: selectedPosition.toDouble(),
+                      decorator: DotsDecorator(
+                        color: widget.indicatorInactiveColor,
+                        activeColor: widget.indicatorActiveColor,
+                        size: Size.square(widget.indicationSize),
+                        activeSize: Size.square(widget.indicationSize),
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(widget.indicationSize)),
+                        activeShape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(widget.indicationSize)),
+                      ),
+                    ),
             ))
       ],
     );

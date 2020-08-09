@@ -158,6 +158,7 @@ class _InfoTabState extends BaseState<InfoTab> {
       case "2":
         return ColorUtil.blue;
       case "3":
+      case "4":
         return ColorUtil.gray;
     }
     return ColorUtil.primaryColor;
@@ -171,6 +172,8 @@ class _InfoTabState extends BaseState<InfoTab> {
         return S.of(context).voucher_use_code;
       case "3":
         return S.of(context).voucher_used;
+      case "4":
+        return S.of(context).expiredVoucher;
     }
     return "";
   }

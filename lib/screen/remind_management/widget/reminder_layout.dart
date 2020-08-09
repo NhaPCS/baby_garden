@@ -72,7 +72,9 @@ class _ReminderState extends BaseState<ReminderLayout> {
           widget.remindCalendar.dateStart, widget.remindCalendar.timeStart);
       _endDateController.value = DateUtil.getServerDate(
           widget.remindCalendar.dateEnd, widget.remindCalendar.timeEnd);
-      _periodDateController.value = int.parse(widget.remindCalendar.period);
+      if (widget.remindCalendar.period != null &&
+          widget.remindCalendar.period.isNotEmpty)
+        _periodDateController.value = int.parse(widget.remindCalendar.period);
       _time1Controller.value =
           DateUtil.getServerTime(widget.remindCalendar.time1);
       _time2Controller.value =
@@ -171,9 +173,9 @@ class _ReminderState extends BaseState<ReminderLayout> {
               uncheckBg: Icons.check_box_outline_blank,
               checkBg: Icons.check_box,
               onChanged: (val) {
-                if (widget.remindCalendar != null) return;
                 selectedTypes[index] = val;
                 _typeController.value = selectedTypes;
+                print("VALUUUU ${_typeController.value}");
                 updateCallBack();
               },
               checked: selectedTypes[index],

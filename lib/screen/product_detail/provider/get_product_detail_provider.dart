@@ -44,7 +44,8 @@ class GetProductDetailProvider extends ChangeNotifier {
     if (key.contains("category")) {
       dynamic category = Provider.of<GetProductCategoryProvider>(context)
           .categories
-          .firstWhere((element) => element['id'] == product[key]);
+          .firstWhere((element) => element['id'] == product[key],
+              orElse: () => null);
       if (category != null) return category['name'];
     }
     if (key == 'size' || key == 'color') {

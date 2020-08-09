@@ -23,8 +23,11 @@ class StarItem extends StatelessWidget {
         margin: EdgeInsets.only(
             left: SizeUtil.superTinySpace, right: SizeUtil.superTinySpace),
         decoration: BoxDecoration(
-          color: ColorUtil.lineColor,
+          color: isSelected ? ColorUtil.white : ColorUtil.lineColor,
           borderRadius: BorderRadius.all(Radius.circular(SizeUtil.smallRadius)),
+          border: Border.all(
+              color: isSelected ? ColorUtil.primaryColor : ColorUtil.white,
+              width: 1),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
