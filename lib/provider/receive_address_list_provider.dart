@@ -3,68 +3,61 @@ import 'package:baby_garden_flutter/data/service.dart' as service;
 
 class ReceiveAddressListProvider extends ChangeNotifier {
   List<dynamic> addressList = List();
-  int val = 0;
+  dynamic selectedAddress;
+  int selectedIndex = 0;
 
-  String currentAddress = "";
-
-  void onAddAddress(dynamic address, bool isDefault) {
-    addressList.add(address);
-    if (isDefault) val = addressList.length - 1;
-    currentAddress = getFullAddress(val);
-    service.addUserAddress(null, address: currentAddress, isMain: 0);
+  Future<void> onAddAddress(
+      {String address,
+      bool isDefault,
+      String cityId,
+      String districtId,
+      String wardId,
+      String phone,
+      String name}) async {
+    selectedAddress = {
+      "phone": phone,
+      "name": name,
+      "city_id": cityId,
+      "district_id": districtId,
+      "ward_id": wardId,
+      "address": address
+    };
+    if (isDefault)
+      selectedIndex = 0;
+    else
+      selectedIndex = addressList.length;
+    await service.addUserAddress(null,
+        address: address,
+        isMain: isDefault ? 1 : 0,
+        cityId: cityId,
+        districtId: districtId,
+        wardId: wardId,
+        phone: phone,
+        name: name);
+    getData();
     notifyListeners();
   }
 
   void onChangeVal(int val) {
-    this.val = val;
-    currentAddress = getFullAddress(val);
+    selectedIndex = val;
+    selectedAddress = addressList[val];
     notifyListeners();
-  }
-
-  String getFullAddress(index) {
-    dynamic address = addressList[index];
-    print("getFullAddress $address");
-    if (address["address_detail"].toString().isNotEmpty) {
-      return address["address_detail"];
-    }
-    print("getFullAddress");
-    return "${address['userName']} - ${address['phone']}\n ${address['address']} \n Phường , Quận ${address['districtName']}, ${address['city']}";
   }
 
   Future<void> getData() async {
     dynamic data = await service.listAddress();
     if (data != null) {
-      addressList.add({
-        "address_detail": data['main_address'],
-        "userName": "",
-        "phone": "",
-        "address": "",
-        "districtID": "",
-        "cityID": ""
-      });
-      if(data['list_address']!=null){
-        for (var address in data['list_address']) {
-          addressList.add({
-            "address_detail": address['address'],
-            "userName": "",
-            "phone": "",
-            "address": "",
-            "districtID": "",
-            "cityID": ""
-          });
-        }
+      addressList = [];
+      if (data['main_address'] != null) {
+        addressList.add(data['main_address']);
       }
-      currentAddress = data['main_address'];
-      val = 0;
-      if (currentAddress == null &&
-          addressList != null &&
-          addressList.isNotEmpty) {
-        currentAddress = getFullAddress(0);
+      if (data['list_address'] != null) {
+        addressList.addAll(data['list_address']);
       }
-      print("list ADDRESS ${data['main_address']} ${data['list_address']}");
+      if (selectedAddress == null && addressList.isNotEmpty) {
+        selectedAddress = addressList[0];
+      }
     }
-
-    print(addressList);
     notifyListeners();
   }
 }

@@ -12,17 +12,6 @@ abstract class BaseState<S extends StatefulWidget> extends State<S>
 
   List<SingleChildWidget> providers();
 
-//  CircularTransitionController _circularSplashController;
-
-  @override
-  void initState() {
-    super.initState();
-//    _circularSplashController = CircularTransitionController(
-//      color: ColorUtil.primaryColor,
-//      duration: Duration(milliseconds: 300),
-//    );
-  }
-
   @override
   Widget build(BuildContext context) {
     Provider.of<AppProvider>(context).updateCategorySize(

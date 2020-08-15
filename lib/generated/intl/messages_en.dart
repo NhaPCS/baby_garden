@@ -347,6 +347,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "login" : MessageLookupByLibrary.simpleMessage("Đăng nhập"),
     "logout" : MessageLookupByLibrary.simpleMessage("Đăng xuất"),
     "male" : MessageLookupByLibrary.simpleMessage("Nam"),
+    "mess_confirm_delete" : MessageLookupByLibrary.simpleMessage("Bạn có muốn xoá không?"),
     "mess_confirm_delete_calendar" : MessageLookupByLibrary.simpleMessage("Bạn có muốn xoá lịch nhắc này không?"),
     "mess_delete_search_history" : MessageLookupByLibrary.simpleMessage("Bạn có muốn xoá lịch sử tìm kiếm không?"),
     "mess_error_user_name" : MessageLookupByLibrary.simpleMessage("Bạn vui lòng nhập đầy đủ họ tên"),

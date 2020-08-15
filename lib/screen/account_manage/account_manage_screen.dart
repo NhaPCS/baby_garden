@@ -59,7 +59,7 @@ class _AccountManageScreenState
                 builder: (BuildContext context, UserProvider value,
                     GetListAddressProvider addressProvider, Widget child) {
                   var entries = value.getEntries(context,
-                      address: addressProvider.mainAddress);
+                      address: StringUtil.getFullAddress(addressProvider.mainAddress));
 
                   final listEntryUser = List<Widget>();
                   entries.asMap().forEach((key, value) {

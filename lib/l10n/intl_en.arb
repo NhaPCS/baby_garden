@@ -529,5 +529,6 @@
   "mess_error_user_name": "Bạn vui lòng nhập đầy đủ họ tên",
 
   "choose_other_day": "Vui lòng chọn ngày khác",
-  "total_search": "{total} kết quả tìm kiếm"
+  "total_search": "{total} kết quả tìm kiếm",
+  "mess_confirm_delete": "Bạn có muốn xoá không?"
 }

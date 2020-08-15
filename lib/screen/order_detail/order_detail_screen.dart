@@ -108,7 +108,7 @@ class _OrderDetailScreenState
                   : OrderInfo(
                       svgIcon: "ic_receive_location.svg",
                       title: S.of(context).delivery_address,
-                      content: data['user_address'],
+                      content: getFullAddress(),
                     ),
               OrderInfo(
                   svgIcon: 'ic_receive_method.svg',
@@ -450,6 +450,14 @@ class _OrderDetailScreenState
       ));
       _bookingDetailProvider.getBookingDetail(widget.bookingId);
     }
+  }
+
+  String getFullAddress() {
+    if(_bookingDetailProvider.bookingDetailData==null) return '';
+    String userAddress = _bookingDetailProvider.bookingDetailData['user_address'] ?? '';
+    String userName = "${_bookingDetailProvider.bookingDetailData['user_name']}," ?? '';
+    String userPhone = "${_bookingDetailProvider.bookingDetailData['user_phone']}," ?? '';
+    return "$userName $userPhone $userAddress";
   }
 
   @override

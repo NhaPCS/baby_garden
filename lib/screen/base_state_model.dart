@@ -20,16 +20,10 @@ abstract class BaseStateModel<S extends StatefulWidget, V extends BaseViewModel>
     return this._baseViewModel;
   }
 
-//  CircularTransitionController _circularSplashController;
-
   @override
   void initState() {
     this._baseViewModel = initViewModel();
     super.initState();
-//    _circularSplashController = CircularTransitionController(
-//      color: ColorUtil.primaryColor,
-//      duration: Duration(milliseconds: 300),
-//    );
   }
 
   @override

@@ -25,7 +25,7 @@ class _CountdownState extends State<CountDownTime> {
   int _start;
   DateTime _startDate;
   DateTime _endDate;
-  String _status;
+  ValueNotifier<String> _status = new ValueNotifier(null);
 
   void startTimer() {
     if (widget.startTime != null && widget.endTime != null) {
@@ -33,24 +33,22 @@ class _CountdownState extends State<CountDownTime> {
       _endDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(widget.endTime);
       DateTime _now = DateTime.now();
       if (!_now.isAfter(_startDate)) {
-        _status = S.of(context).time_pending;
+        _status.value = S.of(context).time_pending;
         return;
       }
       if (!_now.isBefore(_endDate)) {
-        _status = S.of(context).time_ended;
+        _status.value = S.of(context).time_ended;
         return;
       }
       _start =
           _endDate.millisecondsSinceEpoch - _startDate.millisecondsSinceEpoch;
       _timer = new Timer.periodic(Duration(seconds: 1), (Timer timer) {
-        setState(() {
-          _start = _start - 1000;
-          _status = DateFormat("HH:mm:ss")
-              .format(new DateTime.fromMillisecondsSinceEpoch(_start));
-          if (_start <= 0) {
-            _timer.cancel();
-          }
-        });
+        _start = _start - 1000;
+        _status.value = DateFormat("HH:mm:ss")
+            .format(new DateTime.fromMillisecondsSinceEpoch(_start));
+        if (_start <= 0) {
+          _timer.cancel();
+        }
       });
     }
   }
@@ -58,7 +56,6 @@ class _CountdownState extends State<CountDownTime> {
   @override
   void initState() {
     super.initState();
-    startTimer();
   }
 
   @override
@@ -69,12 +66,14 @@ class _CountdownState extends State<CountDownTime> {
 
   @override
   Widget build(BuildContext context) {
-    return _status == null
+    startTimer();
+    return _status.value==null
         ? SizedBox(
             width: 0,
             height: 0,
           )
-        : MyRaisedButton(
+        : ValueListenableBuilder(valueListenable: _status, builder: (context, value, child){
+          return MyRaisedButton(
             onPressed: () {},
             padding: EdgeInsets.only(
                 left: SizeUtil.smallSpace,
@@ -83,8 +82,9 @@ class _CountdownState extends State<CountDownTime> {
                 bottom: SizeUtil.tinySpace),
             textStyle: TextStyle(
                 color: Colors.white, fontSize: SizeUtil.textSizeSmall),
-            text: _status,
+            text: _status.value,
             borderRadius: SizeUtil.bigRadius,
           );
+    });
   }
 }

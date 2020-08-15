@@ -4796,6 +4796,15 @@ class S {
       args: [total],
     );
   }
+
+  String get mess_confirm_delete {
+    return Intl.message(
+      'Bạn có muốn xoá không?',
+      name: 'mess_confirm_delete',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
