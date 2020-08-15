@@ -8,8 +8,9 @@ import 'package:flutter/material.dart';
 
 class SearchProductItem extends StatelessWidget {
   final dynamic product;
+  final bool isPickup;
 
-  const SearchProductItem({Key key, this.product})
+  const SearchProductItem({Key key, this.product, this.isPickup = false})
       : super(key: key);
 
   @override
@@ -47,6 +48,10 @@ class SearchProductItem extends StatelessWidget {
                 style: TextStyle(color: ColorUtil.blue)),
           ])),
           onTap: () {
+            if (isPickup != null && isPickup) {
+              Navigator.of(context).pop(product);
+              return;
+            }
             RouteUtil.push(
                 context,
                 ProductDetailScreen(

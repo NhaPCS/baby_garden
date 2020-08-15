@@ -323,6 +323,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "height_cm" : MessageLookupByLibrary.simpleMessage("Chiều cao (cm)"),
     "height_is" : MessageLookupByLibrary.simpleMessage("Chiều cao:"),
     "hide_readed_notify" : MessageLookupByLibrary.simpleMessage("Ẩn tin đã đọc"),
+    "hint_pick_a_product" : MessageLookupByLibrary.simpleMessage("Hãy chon một sản phẩm để nhắc lịch..."),
     "home" : MessageLookupByLibrary.simpleMessage("Trang chủ"),
     "home_discount_products" : MessageLookupByLibrary.simpleMessage("HÀNG khuyến mãi"),
     "home_hot_products" : MessageLookupByLibrary.simpleMessage("HÀNG bán chạy"),

@@ -4805,6 +4805,15 @@ class S {
       args: [],
     );
   }
+
+  String get hint_pick_a_product {
+    return Intl.message(
+      'Hãy chon một sản phẩm để nhắc lịch...',
+      name: 'hint_pick_a_product',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

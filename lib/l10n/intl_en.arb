@@ -530,5 +530,6 @@
 
   "choose_other_day": "Vui lòng chọn ngày khác",
   "total_search": "{total} kết quả tìm kiếm",
-  "mess_confirm_delete": "Bạn có muốn xoá không?"
+  "mess_confirm_delete": "Bạn có muốn xoá không?",
+  "hint_pick_a_product": "Hãy chon một sản phẩm để nhắc lịch..."
 }
