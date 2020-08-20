@@ -2909,7 +2909,7 @@ class S {
 
   String get receive_in_shop {
     return Intl.message(
-      'Nhận hàng tại shop',
+      'Nhận hàng tại shop ',
       name: 'receive_in_shop',
       desc: '',
       args: [],

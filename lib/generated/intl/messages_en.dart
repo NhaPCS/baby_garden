@@ -469,7 +469,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "rating_service" : MessageLookupByLibrary.simpleMessage("Đánh giá dịch vụ"),
     "receive" : MessageLookupByLibrary.simpleMessage("Nhận hàng"),
     "receive_in" : MessageLookupByLibrary.simpleMessage("Nhận hàng vào lúc: "),
-    "receive_in_shop" : MessageLookupByLibrary.simpleMessage("Nhận hàng tại shop"),
+    "receive_in_shop" : MessageLookupByLibrary.simpleMessage("Nhận hàng tại shop "),
     "receive_time" : MessageLookupByLibrary.simpleMessage("Thời gian nhận hàng"),
     "receiving_date" : m23,
     "reenter_new_password" : MessageLookupByLibrary.simpleMessage("Nhập lại mật khẩu mới"),

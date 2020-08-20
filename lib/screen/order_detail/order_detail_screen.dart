@@ -116,7 +116,7 @@ class _OrderDetailScreenState
                   content: state == BookingState.RECEIVE_IN_SHOP
                       ? S.of(context).receive_in_shop
                       : S.of(context).delivery_in_place,
-                  contentNote: data['time_ship']),
+                  contentNote: "${data['time_ship']}\n${data['address']??''}"),
               OrderInfo(
                 svgIcon: 'ic_payment_method.svg',
                 title: S.of(context).type_of_checkout,
