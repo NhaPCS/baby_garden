@@ -122,9 +122,13 @@ class _BookingScreenState
                         child: Consumer<ReceiveAddressListProvider>(
                           builder: (BuildContext context,
                               ReceiveAddressListProvider value, Widget child) {
-                            if(value.addressList==null) return SizedBox();
+                            if (value.addressList == null) return SizedBox();
                             return MyText(
-                              StringUtil.getFullAddress(value.addressList[value.selectedIndex]),
+                              value.addressList == null ||
+                                      value.addressList.isEmpty
+                                  ? ''
+                                  : StringUtil.getFullAddress(
+                                      value.addressList[value.selectedIndex]),
                               style: TextStyle(
                                   fontSize: SizeUtil.textSizeSmall,
                                   height: 1.3,
