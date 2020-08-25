@@ -122,13 +122,13 @@ class _BookingScreenState
                         child: Consumer<ReceiveAddressListProvider>(
                           builder: (BuildContext context,
                               ReceiveAddressListProvider value, Widget child) {
-                            String address =
-                                value.addressList.length > value.val
-                                    ? value.currentAddress
-                                    : "";
-                            print(address);
+                            if (value.addressList == null) return SizedBox();
                             return MyText(
-                              address,
+                              value.addressList == null ||
+                                      value.addressList.isEmpty
+                                  ? ''
+                                  : StringUtil.getFullAddress(
+                                      value.addressList[value.selectedIndex]),
                               style: TextStyle(
                                   fontSize: SizeUtil.textSizeSmall,
                                   height: 1.3,
@@ -393,9 +393,12 @@ class _BookingScreenState
                   builder: (BuildContext context, TransferMethodProvider value,
                       Widget child) {
                     return Text(
-                        StringUtil.getPriceText(
-                            (totalPrice + value.price - checkoutPoint * 1000 - widget.promotePrice ?? 0)
-                                .toString()),
+                        StringUtil.getPriceText((totalPrice +
+                                    value.price -
+                                    checkoutPoint * 1000 -
+                                    widget.promotePrice ??
+                                0)
+                            .toString()),
                         style: TextStyle(
                             fontSize: SizeUtil.textSizeDefault,
                             color: Colors.red,
@@ -451,11 +454,8 @@ class _BookingScreenState
   void onCompleteBooking() async {
     //TODO booking
     var receiveAddress =
-        Provider.of<ReceiveAddressListProvider>(context, listen: false);
-    var address;
-    if (receiveAddress.addressList.length > receiveAddress.val) {
-      address = receiveAddress.addressList[receiveAddress.val];
-    }
+        Provider.of<ReceiveAddressListProvider>(context, listen: false)
+            .selectedAddress;
     //note nếu là nhận hàng tại shop thì không cần check đại chỉ nhận hàng, đơn vị giao hàng
     //todo check thêm thời gian nhận hàng
     if (deliveryMethod.value == DeliveryMethodState.RECEIVE_IN_SHOP.index) {
@@ -469,6 +469,7 @@ class _BookingScreenState
             title: S.of(context).missing_information);
       } else {
         await getViewModel().onBookingProduct(
+            context,
             receiveTime.value['id'].trim(),
             checkoutPoint.toString(),
             widget.shopID.toString(),
@@ -479,6 +480,7 @@ class _BookingScreenState
             _noteController.text.toString(),
             "",
             inShopReceiveAddress,
+            "",
             "",
             "",
             "",
@@ -493,7 +495,7 @@ class _BookingScreenState
                 bookingId: getViewModel().bookingData['booking_id'],
                 bookingCode: getViewModel().bookingData['code'].toString(),
                 totalPrice: totalPriceAfterFix,
-                phone: address != null ? address['phone'] : "",
+                phone: receiveAddress['phone'] ?? '',
                 shopName: widget.shopName,
               ));
         } else {
@@ -506,12 +508,13 @@ class _BookingScreenState
       }
     } else {
       //note
-      if (address == null) {
+      if (receiveAddress == null) {
         WidgetUtil.showMessageDialog(context,
             message: S.of(context).choose_delivery_address,
             title: S.of(context).missing_information);
       } else {
         await getViewModel().onBookingProduct(
+            context,
             receiveTime.value['id'].trim(),
             checkoutPoint.toString(),
             widget.shopID.toString(),
@@ -524,11 +527,12 @@ class _BookingScreenState
                 .ships[_transferMethodProvider.transferMethod]['id'],
             inShopReceiveAddress,
             _promoteShipCodeController.text.trim(),
-            address['userName'],
-            address['phone'],
-            address['address'],
-            address['cityID'],
-            address['districtID']);
+            receiveAddress['name'],
+            receiveAddress['phone'],
+            receiveAddress['address'],
+            receiveAddress['city_id'],
+            receiveAddress['district_id'],
+            receiveAddress['ward_id']);
         if (checkoutMethod.value == CheckoutMethod.CREDIT_TRANSFER.index) {
           print(getViewModel().bookingData['booking_id']);
           RouteUtil.pushReplacement(
@@ -537,7 +541,7 @@ class _BookingScreenState
                 bookingId: getViewModel().bookingData['booking_id'],
                 bookingCode: getViewModel().bookingData['code'].toString(),
                 totalPrice: totalPriceAfterFix,
-                phone: address != null ? address['phone'] : "",
+                phone: receiveAddress['phone'] ?? '',
                 shopName: widget.shopName,
               ));
         } else {

@@ -30,6 +30,7 @@
 				<string>com.vuoncuabe</string>
 			</array>
 		</dict>
+		<dict/>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
@@ -76,5 +77,10 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
+	<key>FirebaseDynamicLinksCustomDomains</key>
+    <array>
+      <string>https://vuoncuabe.com/app/product</string>
+    </array>
+
 </dict>
 </plist>

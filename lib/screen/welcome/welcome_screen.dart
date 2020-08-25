@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:baby_garden_flutter/data/dynamic_link_service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/welcome_guide/welcome_guide_screen.dart';
@@ -16,6 +17,8 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeState extends BaseState<WelcomeScreen> {
+
+
   _WelcomeState() {
     new Timer(const Duration(milliseconds: 3000), () {
       pushReplacement(WelcomeGuideScreen());

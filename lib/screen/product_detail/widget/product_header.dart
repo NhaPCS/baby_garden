@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/data/dynamic_link_service.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
 import 'package:baby_garden_flutter/screen/photo_view/photo_view_screen.dart';
@@ -103,7 +104,7 @@ class ProductHeader extends StatelessWidget {
                   ),
                   borderRadius: SizeUtil.iconSize,
                   onPressed: () {
-                    WidgetUtil.shareApp(context);
+                    DynamicLinkService.createDynamicLink(title: product['name'], content: product['content'], id: product['id'], suffix: 'product');
                   },
                 ),
                 ButtonIcon(

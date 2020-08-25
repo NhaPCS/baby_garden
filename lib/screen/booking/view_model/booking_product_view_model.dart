@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/data/service.dart' as service;
+import 'package:baby_garden_flutter/provider/orders_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/view_model/base_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,27 +7,28 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class BookingProductViewModel extends BaseViewModel {
-  dynamic bookingData="";
+  dynamic bookingData = "";
   int totalPoint = -1;
 
   Future<int> getPoint(shopId) async {
-    if(totalPoint==-1){
+    if (totalPoint == -1) {
       List<dynamic> data = await service.getListPoint(context);
       if (data != null && data.length != 0) {
-        for(int i=0;i< data.length;i++ ){
-          if(data[i]["shop_id"] == shopId){
+        for (int i = 0; i < data.length; i++) {
+          if (data[i]["shop_id"] == shopId) {
             totalPoint = int.parse(data[i]["point"]);
             return int.parse(data[i]["point"]);
           }
         }
       }
-    }else{
+    } else {
       return totalPoint;
     }
     return 0;
   }
 
   Future<void> onBookingProduct(
+      BuildContext context,
       String inShopReceiveTime,
       String point,
       String shopID,
@@ -42,7 +44,8 @@ class BookingProductViewModel extends BaseViewModel {
       String userPhone,
       String userAddress,
       String cityID,
-      String districtID) async {
+      String districtID,
+      String wardId) async {
     var userID =
         Provider.of<UserProvider>(context, listen: false).userInfo['id'];
     var now = new DateTime.now();
@@ -51,11 +54,11 @@ class BookingProductViewModel extends BaseViewModel {
     var bookingDate = dateFormat.format(now),
         bookingTime = timeFormat.format(now);
     dynamic data = await service.bookingProduct(
-      inShopReceiveTimeId: inShopReceiveTime,
-      point: point,
+        inShopReceiveTimeId: inShopReceiveTime,
+        point: point,
         userID: userID,
         shopID: shopID,
-        bookingDate:  bookingDate,
+        bookingDate: bookingDate,
         bookingTime: bookingTime,
         promoteCode: promoteCode,
         isReceiveInShop: isReceiveInShop,
@@ -69,13 +72,13 @@ class BookingProductViewModel extends BaseViewModel {
         userPhone: userPhone,
         userAddress: userAddress,
         cityID: cityID,
-        districtID: districtID);
+        districtID: districtID,
+        wardId: wardId);
     if (data != null) {
       bookingData = data;
+      Provider.of<OrdersProvider>(context, listen: false).getOrdersCount();
     }
   }
-
-
 
   String getDate() {
     var now = new DateTime.now();

@@ -2909,7 +2909,7 @@ class S {
 
   String get receive_in_shop {
     return Intl.message(
-      'Nhận hàng tại shop',
+      'Nhận hàng tại shop ',
       name: 'receive_in_shop',
       desc: '',
       args: [],
@@ -4794,6 +4794,24 @@ class S {
       name: 'total_search',
       desc: '',
       args: [total],
+    );
+  }
+
+  String get mess_confirm_delete {
+    return Intl.message(
+      'Bạn có muốn xoá không?',
+      name: 'mess_confirm_delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get hint_pick_a_product {
+    return Intl.message(
+      'Hãy chon một sản phẩm để nhắc lịch...',
+      name: 'hint_pick_a_product',
+      desc: '',
+      args: [],
     );
   }
 }

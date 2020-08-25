@@ -11,20 +11,47 @@ class AddressSettingViewModel extends BaseViewModel {
 
   AddressSettingViewModel(this.context, this._getListAddressProvider);
 
-  Future<void> addAddress({String address, int isMain}) async {
-    Response response =
-        await service.addUserAddress(context, address: address, isMain: isMain);
+  Future<void> addAddress(
+      {String address,
+      int isMain,
+      String cityId,
+      String districtId,
+      String wardId,
+      String phone,
+      String name}) async {
+    Response response = await service.addUserAddress(context,
+        address: address,
+        isMain: isMain,
+        cityId: cityId,
+        districtId: districtId,
+        wardId: wardId,
+        phone: phone,
+        name: name);
     if (response != null) {
-      _getListAddressProvider.updateData(response.data);
+      _getListAddressProvider.getData();
     }
   }
 
   Future<void> editAddress(
-      {String address, int isMain = 0, String addressId}) async {
+      {String address,
+      int isMain = 0,
+      String addressId,
+      String cityId,
+      String districtId,
+      String wardId,
+      String phone,
+      String name}) async {
     Response response = await service.editUserAddress(context,
-        address: address, isMain: isMain, addressId: addressId);
+        address: address,
+        isMain: isMain,
+        addressId: addressId,
+        cityId: cityId,
+        districtId: districtId,
+        wardId: wardId,
+        phone: phone,
+        name: name);
     if (response != null) {
-      _getListAddressProvider.updateData(response.data);
+      _getListAddressProvider.getData();
     }
   }
 

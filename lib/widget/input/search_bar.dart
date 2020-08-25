@@ -15,19 +15,21 @@ class SearchBar extends StatelessWidget {
   final EdgeInsets padding;
   final ValueChanged<String> onSearchTextChanged;
   final Function(String) onSubmit;
+  final String hint;
 
-  const SearchBar(
-      {Key key,
-      this.searchTextController,
-      this.enable = true,
-      this.trailing,
-      this.hasBack = false,
-      this.onPressed,
-      this.padding,
-      this.onSearchTextChanged,
-      this.onSubmit,
-      this.onQrPressed})
-      : super(key: key);
+  const SearchBar({
+    Key key,
+    this.searchTextController,
+    this.enable = true,
+    this.trailing,
+    this.hasBack = false,
+    this.onPressed,
+    this.padding,
+    this.onSearchTextChanged,
+    this.onSubmit,
+    this.onQrPressed,
+    this.hint,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +87,7 @@ class SearchBar extends StatelessWidget {
           textEditingController: searchTextController,
           borderRadius: SizeUtil.tinyRadius,
           enable: enable,
-          hint: S.of(context).search_hint,
+          hint: hint ?? S.of(context).search_hint,
           onChanged: onSearchTextChanged,
           onSubmitted: onSubmit,
           contentPadding: EdgeInsets.only(

@@ -8,12 +8,13 @@ class FinalSearchResult extends StatelessWidget {
   final List<dynamic> products;
   final ReloadCallback reloadCallback;
   final int total;
+  final bool isPickup;
 
   const FinalSearchResult(
       {Key key,
       @required this.products,
       @required this.reloadCallback,
-      @required this.total})
+      @required this.total, this.isPickup})
       : super(key: key);
 
   @override
@@ -48,6 +49,7 @@ class FinalSearchResult extends StatelessWidget {
             totalElement: total,
             itemBuilder: (context, product, index) {
               return ProductItem(
+                isPickup: isPickup,
                 product: product,
                 index: index,
                 width: MediaQuery.of(context).size.width * 0.5,

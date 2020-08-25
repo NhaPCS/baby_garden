@@ -222,7 +222,7 @@ Future<dynamic> bookingProduct(
     String userAddress,
     String cityID,
     String point,
-    String districtID}) async {
+    String districtID, String wardId}) async {
   Response response = await post(null, path: "bookingProduct", param: {
     'point': point,
     'user_id': userID,
@@ -239,8 +239,10 @@ Future<dynamic> bookingProduct(
     'ship_code': shipCode,
     'user_name': userName,
     'user_phone': userPhone,
+    'user_address': userAddress,
     'city_id': cityID,
-    'district_id': districtID
+    'district_id': districtID,
+    'ward_id': wardId,
   });
   if (response.isSuccess()) return response.data;
   return null;
@@ -817,13 +819,28 @@ Future<dynamic> listPromotion() async {
 }
 
 Future<Response> addUserAddress(BuildContext context,
-    {String address, int isMain}) async {
+    {String address, int isMain, String cityId, String districtId, String wardId, String phone, String name}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {
     "user_id": userId,
     "address": address,
     "is_main": isMain.toString(),
   };
+  if(cityId!=null){
+    params['city_id'] = cityId.toString();
+  }
+  if(cityId!=null){
+    params['district_id'] = districtId.toString();
+  }
+  if(cityId!=null){
+    params['ward_id'] = wardId.toString();
+  }
+  if(cityId!=null){
+    params['phone'] = phone.toString();
+  }
+  if(cityId!=null){
+    params['name'] = name.toString();
+  }
 
   Response response = await post(context,
       path: "addAddress", param: params, requireLogin: true, showLoading: true);
@@ -832,7 +849,7 @@ Future<Response> addUserAddress(BuildContext context,
 }
 
 Future<Response> editUserAddress(BuildContext context,
-    {String address, int isMain, String addressId}) async {
+    {String address, int isMain, String addressId, String cityId, String districtId, String wardId, String phone, String name}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {
     "user_id": userId,
@@ -841,6 +858,21 @@ Future<Response> editUserAddress(BuildContext context,
     "address_id": addressId
   };
 
+  if(cityId!=null){
+    params['city_id'] = cityId.toString();
+  }
+  if(cityId!=null){
+    params['district_id'] = districtId.toString();
+  }
+  if(cityId!=null){
+    params['ward_id'] = wardId.toString();
+  }
+  if(cityId!=null){
+    params['phone'] = phone.toString();
+  }
+  if(cityId!=null){
+    params['name'] = name.toString();
+  }
   Response response = await post(context,
       path: "editAddress",
       param: params,

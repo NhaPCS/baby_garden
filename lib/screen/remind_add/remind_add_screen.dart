@@ -6,6 +6,7 @@ import 'package:baby_garden_flutter/screen/favorite_product/item/product_favorit
 import 'package:baby_garden_flutter/screen/remind_add/dialog/remind_add_dialog.dart';
 import 'package:baby_garden_flutter/screen/remind_add/view_model/reminder_add_view_model.dart';
 import 'package:baby_garden_flutter/screen/remind_management/widget/reminder_layout.dart';
+import 'package:baby_garden_flutter/screen/search/search_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:flutter/material.dart';
@@ -132,13 +133,29 @@ class _RemindAddScreen
   }
 
   Future<void> showPopupChooseProduct(BuildContext context) async {
-    Product _product = await showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) => AddRemindDialogScreen(
-              type: _remindCalendar == null
-                  ? RemindType.remindBuy
-                  : _remindCalendar.type,
-            ));
+//    Product _product = await showModalBottomSheet(
+//        context: context,
+//        builder: (BuildContext context) => AddRemindDialogScreen(
+//              type: _remindCalendar == null
+//                  ? RemindType.remindBuy
+//                  : _remindCalendar.type,
+//            ));
+//    _productController.value = _product;
+//    if (_product != null) _remindCalendar.productId = _product.id;
+    dynamic p = await RouteUtil.push(
+        context,
+        SearchScreen(
+          isPickup: true,
+        ));
+    Product _product = Product(
+        id: p['id'],
+        shopId: p['shop_id'],
+        categoryId: p['category_id'],
+        name: p['name'],
+        price: p['price'],
+        date: p['date'],
+        isFavorite: p['is_favourite'] == '1' ? true : false,
+        image: p['image']);
     _productController.value = _product;
     if (_product != null) _remindCalendar.productId = _product.id;
   }

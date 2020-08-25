@@ -50,24 +50,23 @@ class OrderInfo extends StatelessWidget {
         ),
         content!=null?Padding(
           padding: EdgeInsets.only(
-              left: SizeUtil.notifyHintSpace, bottom: SizeUtil.tinySpace),
-          child: Wrap(
-            direction: Axis.horizontal,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            alignment: WrapAlignment.start,
+              left: SizeUtil.biggerSpace, bottom: SizeUtil.tinySpace),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(content,
                   style: TextStyle(
                       fontSize: SizeUtil.textSizeSmall,
                       height: 1.3,
                       color: Colors.black)),
+              SizedBox(width: 5,),
               contentNote == null
                   ? SizedBox()
-                  : Text(contentNote,
+                  : Expanded(child: Text(contentNote,
                   style: TextStyle(
-                      fontSize: SizeUtil.textSizeTiny,
+                      fontSize: SizeUtil.textSizeSmall,
                       height: 1.3,
-                      color: Colors.blue)),
+                      color: Colors.blue))),
             ],
           ),
         ):SizedBox(),

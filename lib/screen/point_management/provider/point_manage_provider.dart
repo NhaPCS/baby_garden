@@ -37,10 +37,10 @@ class PointManageProvider extends ChangeNotifier {
     return point;
   }
 
-  Future<void> getPointDetailList(BuildContext context, String shopId) async {
-    dynamic data = await service.getPointDetail(context, shopId.toString());
+  Future<void> getPointDetailList(String shopId) async {
+    dynamic data = await service.getPointDetail(null, shopId.toString());
 
-    if (data != null && data.length != 0) {
+    if (data != null) {
       pointDetailList = data;
       notifyListeners();
     }

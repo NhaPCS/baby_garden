@@ -16,17 +16,28 @@ import 'package:provider/provider.dart';
 //   _AddAddressDialogState createState() => _AddAddressDialogState();
 // }
 
-typedef AddAddressCallBack = void Function(String address, int isMain);
+typedef AddAddressCallBack = void Function(String address, String cityId,
+    String districtId, String wardId, int isMain);
 
 class AddAddressDialog extends StatelessWidget {
   final detailCtrl = TextEditingController();
+  final dynamic address;
+  final bool isMain;
   final GetListAddressProvider _getListAddressProvider =
       GetListAddressProvider();
   final AddAddressCallBack addAddressCallBack;
 
-  AddAddressDialog({Key key, this.addAddressCallBack}) : super(key: key);
+  AddAddressDialog(
+      {Key key, this.addAddressCallBack, this.address, this.isMain = false})
+      : super(key: key);
 
   Widget build(BuildContext context) {
+    if (address != null) {
+      _getListAddressProvider.isDefaultAddress = isMain;
+      detailCtrl.text = address['address'] ?? '';
+      Provider.of<CityProvider>(context, listen: false).onUpdateAll(
+          address['city_id'], address['district_id'], address['ward_id']);
+    }
     return Dialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
@@ -180,21 +191,20 @@ class AddAddressDialog extends StatelessWidget {
 
             if (error.isEmpty) {
               final detail = detailCtrl.text.trim();
-              final city = provider.cities[provider.cityVal]['name'];
-              final district = provider.districts[provider.districtVal]['name'];
-              final commune =
-                  provider.subDistricts[provider.subDistrictVal]['name'];
 
-              final newAddress = "$detail, $commune, $district, $city";
-
-              addAddressCallBack(newAddress,_getListAddressProvider.isDefaultAddress ? 1 : 0 );
+              addAddressCallBack(
+                  detail,
+                  provider.cities[provider.cityVal]['id'],
+                  provider.districts[provider.districtVal]['id'],
+                  provider.subDistricts[provider.subDistrictVal]['id'],
+                  _getListAddressProvider.isDefaultAddress ? 1 : 0);
               Provider.of<CityProvider>(context, listen: false).reset();
               Navigator.of(context).pop(true);
             } else {
               WidgetUtil.showErrorDialog(context, error);
             }
           },
-          text: S.of(context).addNew,
+          text: address == null ? S.of(context).addNew : S.of(context).edit,
           textStyle:
               TextStyle(fontSize: SizeUtil.textSizeSmall, color: Colors.white),
         ),

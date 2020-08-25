@@ -6,10 +6,13 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 
-class SearchProductItem extends StatelessWidget{
+class SearchProductItem extends StatelessWidget {
   final dynamic product;
+  final bool isPickup;
 
-  const SearchProductItem({Key key, this.product}) : super(key: key);
+  const SearchProductItem({Key key, this.product, this.isPickup = false})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,8 +22,8 @@ class SearchProductItem extends StatelessWidget{
             children: <Widget>[
               Expanded(
                   child: MyText(
-                    product['name'],
-                  )),
+                product['name'],
+              )),
               Text(
                 StringUtil.getPriceText(product['price_discount']),
                 style: TextStyle(color: ColorUtil.red),
@@ -37,24 +40,29 @@ class SearchProductItem extends StatelessWidget{
           ),
           subtitle: RichText(
               text: TextSpan(children: [
-                TextSpan(
-                    text: S.of(context).distributor_name,
-                    style:
-                    TextStyle(color: ColorUtil.textGray)),
-                TextSpan(
-                    text: product['shop_name'],
-                    style: TextStyle(color: ColorUtil.blue)),
-              ])),
+            TextSpan(
+                text: S.of(context).distributor_name,
+                style: TextStyle(color: ColorUtil.textGray)),
+            TextSpan(
+                text: product['shop_name'],
+                style: TextStyle(color: ColorUtil.blue)),
+          ])),
           onTap: () {
-            RouteUtil.push(context, ProductDetailScreen(productId: product['id'],));
+            if (isPickup != null && isPickup) {
+              Navigator.of(context).pop(product);
+              return;
+            }
+            RouteUtil.push(
+                context,
+                ProductDetailScreen(
+                  productId: product['id'],
+                ));
           },
         ),
         WidgetUtil.getLine(
             margin: EdgeInsets.only(
-                left: SizeUtil.defaultSpace,
-                right: SizeUtil.defaultSpace))
+                left: SizeUtil.defaultSpace, right: SizeUtil.defaultSpace))
       ],
     );
   }
-
 }

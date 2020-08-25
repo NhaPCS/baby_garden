@@ -108,7 +108,7 @@ class _OrderDetailScreenState
                   : OrderInfo(
                       svgIcon: "ic_receive_location.svg",
                       title: S.of(context).delivery_address,
-                      content: data['user_address'],
+                      content: getFullAddress(),
                     ),
               OrderInfo(
                   svgIcon: 'ic_receive_method.svg',
@@ -116,7 +116,7 @@ class _OrderDetailScreenState
                   content: state == BookingState.RECEIVE_IN_SHOP
                       ? S.of(context).receive_in_shop
                       : S.of(context).delivery_in_place,
-                  contentNote: data['time_ship']),
+                  contentNote: "${data['time_ship']}\n${data['address']??''}"),
               OrderInfo(
                 svgIcon: 'ic_payment_method.svg',
                 title: S.of(context).type_of_checkout,
@@ -450,6 +450,14 @@ class _OrderDetailScreenState
       ));
       _bookingDetailProvider.getBookingDetail(widget.bookingId);
     }
+  }
+
+  String getFullAddress() {
+    if(_bookingDetailProvider.bookingDetailData==null) return '';
+    String userAddress = _bookingDetailProvider.bookingDetailData['user_address'] ?? '';
+    String userName = "${_bookingDetailProvider.bookingDetailData['user_name']}," ?? '';
+    String userPhone = "${_bookingDetailProvider.bookingDetailData['user_phone']}," ?? '';
+    return "$userName $userPhone $userAddress";
   }
 
   @override
