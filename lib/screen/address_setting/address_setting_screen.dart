@@ -1,6 +1,5 @@
 // import 'dart:html';
 
-import 'package:baby_garden_flutter/data/model/address.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/address_setting/item/address_item.dart';
 import 'package:baby_garden_flutter/screen/address_setting/provider/get_list_address_provider.dart';
@@ -26,16 +25,13 @@ class _AddressSettingScreenState
       GetListAddressProvider();
   final _defaultPadding = const EdgeInsets.only(
       top: SizeUtil.normalSpace, left: SizeUtil.midSmallSpace);
-  final List<AddressItem> addressList = [];
 
   final mainAddressCtrl = TextEditingController();
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_getListAddressProvider.mainAddress == null) {
-      _getListAddressProvider.getData();
-    }
+  void initState() {
+    super.initState();
+    _getListAddressProvider.getData();
   }
 
   @override
@@ -44,27 +40,6 @@ class _AddressSettingScreenState
         appBar: getAppBar(title: S.of(context).addressAccount),
         body:
             Consumer<GetListAddressProvider>(builder: (context, value, child) {
-          final List<AddressItem> addressList = [];
-
-          if (value.address != null)
-            for (var _address in value.address) {
-              var address = Address(
-                  id: _address['id'],
-                  date: _address['date'],
-                  active: _address['active'] == '1' ? true : false,
-                  address: _address['address']);
-              addressList.add(AddressItem(
-                address: ValueNotifier(address),
-                onEditAddress: (address, addressId) {
-                  getViewModel()
-                      .editAddress(address: address, addressId: addressId);
-                },
-                onDeleteAddress: (id) {
-                  getViewModel().deleteAddress(addressId: id);
-                },
-              ));
-            }
-
           return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -80,7 +55,7 @@ class _AddressSettingScreenState
                         fontWeight: FontWeight.bold, color: ColorUtil.darkGray),
                   ),
                 ),
-                myAddress(addressList),
+                myAddress(value.address),
               ]);
         }));
   }
@@ -97,7 +72,8 @@ class _AddressSettingScreenState
   }
 
   Widget addressSetting() {
-    mainAddressCtrl.text = _getListAddressProvider.mainAddress;
+    mainAddressCtrl.text =
+        StringUtil.getFullAddress(_getListAddressProvider.mainAddress);
 
     return Padding(
       padding: const EdgeInsets.only(
@@ -113,12 +89,7 @@ class _AddressSettingScreenState
                   fontWeight: FontWeight.bold, color: ColorUtil.darkGray),
             ),
           ),
-          Column(
-            children: [
-              commonBtnMainAddress(),
-              commonBtnMainAddress(isDone: true)
-            ],
-          ),
+          commonBtnMainAddress(),
           SizedBox(width: SizeUtil.midSmallSpace),
         ]),
         SizedBox(
@@ -136,7 +107,7 @@ class _AddressSettingScreenState
                   child: MyTextField(
                       maxLines: null,
                       inputType: TextInputType.text,
-                      enable: _getListAddressProvider.isEditingMain,
+                      enable: false,
                       contentPadding: EdgeInsets.only(left: 0),
                       textStyle: TextStyle(fontSize: SizeUtil.textSizeDefault),
                       isBorder: false,
@@ -161,13 +132,40 @@ class _AddressSettingScreenState
     );
   }
 
-  Widget myAddress(List<AddressItem> addressList) {
+  Widget myAddress(List<dynamic> addressList) {
+    if (addressList == null) return SizedBox();
     return Expanded(
       child: ListView(
         children: <Widget>[
-          addressList.length > 0
+          addressList != null && addressList.length > 0
               ? Column(
-                  children: addressList.map((e) => e).toList(),
+                  children: addressList
+                      .map((e) => AddressItem(
+                            address: e,
+                            onEditAddress: () {
+                              final addAddress = AddAddressDialog(
+                                address: e,
+                                addAddressCallBack: (address, cityId,
+                                    districtId, wardId, isMain) {
+                                  getViewModel().editAddress(
+                                      address: address,
+                                      addressId: e['id'],
+                                      isMain: isMain,
+                                      cityId: cityId,
+                                      districtId: districtId,
+                                      wardId: wardId);
+                                },
+                              );
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      addAddress);
+                            },
+                            onDeleteAddress: () {
+                              getViewModel().deleteAddress(addressId: e['id']);
+                            },
+                          ))
+                      .toList(),
                 )
               : SizedBox(),
           WidgetUtil.getLine(width: SizeUtil.lineHeight),
@@ -185,8 +183,13 @@ class _AddressSettingScreenState
         onTap: () {
           // show dialog
           final addAddress = AddAddressDialog(
-            addAddressCallBack: (address, isMain) {
-              getViewModel().addAddress(address: address, isMain: isMain);
+            addAddressCallBack: (address, cityId, districtId, wardId, isMain) {
+              getViewModel().addAddress(
+                  address: address,
+                  isMain: isMain,
+                  cityId: cityId,
+                  districtId: districtId,
+                  wardId: wardId);
             },
           );
           showDialog(
@@ -208,36 +211,33 @@ class _AddressSettingScreenState
     );
   }
 
-  Widget commonBtnMainAddress({bool isDone = false}) {
+  Widget commonBtnMainAddress() {
     final onTapDone = () {
-      final newAddress = mainAddressCtrl.text.trim();
-
-      if (newAddress.isEmpty ||
-          newAddress == _getListAddressProvider.mainAddress) {
-        _getListAddressProvider.isEditingMainAddress(false);
-        return;
-      }
-
-      // edit main address
-      getViewModel().addAddress(address: newAddress, isMain: 1);
+      final addAddress = AddAddressDialog(
+        address: _getListAddressProvider.mainAddress,
+        isMain: true,
+        addAddressCallBack: (address, cityId, districtId, wardId, isMain) {
+          getViewModel().addAddress(
+              address: address,
+              isMain: 1,
+              cityId: cityId,
+              districtId: districtId,
+              wardId: wardId);
+        },
+      );
+      showDialog(
+          context: context, builder: (BuildContext context) => addAddress);
     };
 
-    return Visibility(
-      visible: isDone
-          ? _getListAddressProvider.isEditingMain
-          : !_getListAddressProvider.isEditingMain,
-      child: GestureDetector(
-          onTap: isDone
-              ? onTapDone
-              : () => _getListAddressProvider.isEditingMainAddress(true),
-          child: Text(
-            isDone ? S.of(context).done : S.of(context).edit,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: ColorUtil.darkGray,
-                fontSize: SizeUtil.textSizeSmall),
-          )),
-    );
+    return GestureDetector(
+        onTap: onTapDone,
+        child: Text(
+          S.of(context).edit,
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: ColorUtil.darkGray,
+              fontSize: SizeUtil.textSizeSmall),
+        ));
   }
 
   @override

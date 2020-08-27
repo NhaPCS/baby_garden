@@ -181,7 +181,7 @@ class DateUtil {
   */
   static List<dynamic> getDate(int size) {
     int days = 7;
-    if(size!=null){
+    if (size != null) {
       days = size;
     }
     List<dynamic> dates = List();
@@ -189,7 +189,7 @@ class DateUtil {
       final dowFormat = new DateFormat("EEEE", "vi");
       final dateFormat = new DateFormat("dd/MM/yyyy");
       var now = new DateTime.now();
-      for (int i = 0; i <= days-1; i++) {
+      for (int i = 0; i <= days - 1; i++) {
         final date = now.add(new Duration(days: i));
         dates.add({
           'index': date.weekday == days ? 1 : date.weekday + 1,
@@ -219,6 +219,20 @@ class ImageUtil {
 }
 
 class StringUtil {
+  static String getFullAddress(dynamic address) {
+    if (address == null) return '';
+    String detailAddress = address['address'] ?? '';
+    String city =
+        address['city_name'] != null ? "${address['city_name']}," : '';
+    String district =
+        address['district_name'] != null ? "${address['district_name']}," : '';
+    String ward =
+        address['ward_name'] != null ? "${address['ward_name']}," : '';
+    String name = address['name'] != null ? "${address['name']}," : '';
+    String phone = address['phone'] != null ? "${address['phone']}," : '';
+    return "$name $phone $detailAddress $ward $district $city";
+  }
+
   /*"active:
   1: đã đặt,
   2: xác nhận,
@@ -279,9 +293,6 @@ class StringUtil {
     return parsedString;
   }
 
-
-
-
   static List<dynamic> time = [
     {'time': '08:00'},
     {'time': '08:15'},
@@ -340,7 +351,6 @@ class StringUtil {
     {'time': '21:30'},
     {'time': '21:45'},
   ];
-
 }
 
 class RouteUtil {
@@ -507,13 +517,11 @@ enum TransferStatus {
 }
 
 class WidgetUtil {
-
   static void linkToScreen(BuildContext context, dynamic data) {
     if (data == null || data['type'] == null) return;
     switch (data['type']) {
       case "1":
-        RouteUtil.push(
-            context, VCBExpressDetailScreen(data['link_id']));
+        RouteUtil.push(context, VCBExpressDetailScreen(data['link_id']));
         break;
       case "2":
         RouteUtil.push(
@@ -530,19 +538,10 @@ class WidgetUtil {
             ));
         break;
       case "4":
-        RouteUtil.push(context,
-            PartnerBookScheduleScreen(shopID: data['link_id']));
+        RouteUtil.push(
+            context, PartnerBookScheduleScreen(shopID: data['link_id']));
         break;
     }
-  }
-
-  static Future<void> shareApp(BuildContext context) async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-
-    //TODO need add apple store id after registered IOS app
-    Share.share(S.of(context).share_format(Platform.isAndroid
-        ? "https://play.google.com/store/apps/details?id=${packageInfo.packageName}"
-        : packageInfo.packageName));
   }
 
   static void showGenderSelectorDialog(
@@ -580,7 +579,8 @@ class WidgetUtil {
         positive: S.of(context).from_camera,
         negative: S.of(context).from_gallery,
         positiveClicked: onCameraClick,
-        negativeClick: onGalleryClick, barrierDismissible: true);
+        negativeClick: onGalleryClick,
+        barrierDismissible: true);
   }
 
   static void showRequireLoginDialog(BuildContext context) {

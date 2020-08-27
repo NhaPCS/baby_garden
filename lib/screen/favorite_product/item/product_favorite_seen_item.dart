@@ -26,7 +26,7 @@ class ProductItem extends StatelessWidget {
         child: Row(children: <Widget>[
           SizedBox(width: SizeUtil.smallSpace),
           Flexible(
-            child: product.image.length > 0
+            child: product.image != null && product.image.length > 0
                 ? ClipRRect(
                     child: Image.network(
                       product.image[0],

@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/data/service.dart';
+import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/search/provider/get_hot_keys_provider.dart';
 import 'package:baby_garden_flutter/screen/search/provider/get_search_history_provider.dart';
@@ -17,6 +18,10 @@ import 'item/search_product_item.dart';
 import 'widget/final_search_result.dart';
 
 class SearchScreen extends StatefulWidget {
+  final bool isPickup;
+
+  const SearchScreen({Key key, this.isPickup = false}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _SearchState();
@@ -33,8 +38,12 @@ class _SearchState extends BaseState<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    _getHotKeysProvider.hotKeys();
-    _getSearchHistoryProvider.searchHistory();
+    if (widget.isPickup) {
+      _searchingProvider.searchProduct(context, key: '', index: 0);
+    } else {
+      _getHotKeysProvider.hotKeys();
+      _getSearchHistoryProvider.searchHistory();
+    }
   }
 
   @override
@@ -47,6 +56,7 @@ class _SearchState extends BaseState<SearchScreen> {
           padding: EdgeInsets.only(right: SizeUtil.smallSpace),
           hasBack: true,
           enable: true,
+          hint: widget.isPickup ? S.of(context).hint_pick_a_product : null,
           searchTextController: _searchTextController,
           onQrPressed: () async {
             ScanResult result = await BarcodeScanner.scan();
@@ -62,6 +72,11 @@ class _SearchState extends BaseState<SearchScreen> {
             }
           },
           onSearchTextChanged: (s) {
+            if (widget.isPickup) {
+              _searchingProvider.searchProduct(context,
+                  key: s.trim(), index: 0);
+              return;
+            }
             _searchingProvider.clearFinalResult();
             if (_searchTextController.text.trim().isEmpty) {
               _searchingProvider.clear();
@@ -78,6 +93,7 @@ class _SearchState extends BaseState<SearchScreen> {
           if (searchProvider.finalResult != null) {
             return FinalSearchResult(
                 products: searchProvider.finalResult,
+                isPickup: widget.isPickup,
                 reloadCallback: (page) {
                   searchProvider.searchProduct(
                     context,
@@ -148,7 +164,9 @@ class _SearchState extends BaseState<SearchScreen> {
                   );
                 } else
                   return SearchProductItem(
-                      product: searchProvider.searchResult[index]);
+                    isPickup: widget.isPickup,
+                    product: searchProvider.searchResult[index],
+                  );
               },
             );
         },

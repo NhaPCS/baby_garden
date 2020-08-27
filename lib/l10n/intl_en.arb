@@ -319,7 +319,7 @@
   "continue_buying": "Tiếp tục mua sắm",
   "view_order": "Xem đơn hàng",
   "cancel": "Hủy bỏ",
-  "receive_in_shop": "Nhận hàng tại shop",
+  "receive_in_shop": "Nhận hàng tại shop ",
   "receive": "Nhận hàng",
   "delivering": "Đang vận chuyển",
   "delivery_info": "Thông tin vận chuyển",
@@ -531,4 +531,6 @@
   "choose_other_day": "Vui lòng chọn ngày khác",
   "total_search": "{total} kết quả tìm kiếm",
   "alert_shop_has_no_address": "Shop hiện tại không có địa chỉ nhận hàng nào.\n Vui lòng chọn hình thức nhận hàng khác."
+  "mess_confirm_delete": "Bạn có muốn xoá không?",
+  "hint_pick_a_product": "Hãy chon một sản phẩm để nhắc lịch..."
 }

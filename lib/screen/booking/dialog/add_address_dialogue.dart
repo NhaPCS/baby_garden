@@ -254,10 +254,20 @@ class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue> {
                             Provider.of<ReceiveAddressListProvider>(context,
                                     listen: false)
                                 .onAddAddress(
-                                    address,
-                                    Provider.of<CityProvider>(context,
+                                    address:
+                                        _receiveAddressController.text.trim(),
+                                    isDefault: Provider.of<CityProvider>(
+                                            context,
                                             listen: false)
-                                        .isDefault);
+                                        .isDefault,
+                                    cityId: provider.cities[provider.cityVal]
+                                        ['id'],
+                                    districtId: provider
+                                        .districts[provider.districtVal]['id'],
+                                    wardId: provider.subDistricts[
+                                        provider.subDistrictVal]['id'],
+                                    phone: _receivePhoneController.text.trim(),
+                                    name: _receiveNameController.text.trim());
                             Provider.of<CityProvider>(context, listen: false)
                                 .reset();
                             Navigator.of(context).pop();

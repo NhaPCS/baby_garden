@@ -3,21 +3,44 @@ import 'package:baby_garden_flutter/data/service.dart' as service;
 
 class ReceiveAddressListProvider extends ChangeNotifier {
   List<dynamic> addressList = List();
-  int val = 0;
+  dynamic selectedAddress;
+  int selectedIndex = 0;
 
-  String currentAddress = "";
-
-  void onAddAddress(dynamic address, bool isDefault) {
-    addressList.add(address);
-    if (isDefault) val = addressList.length - 1;
-    currentAddress = getFullAddress(val);
-    service.addUserAddress(null, address: currentAddress, isMain: 0);
+  Future<void> onAddAddress(
+      {String address,
+      bool isDefault,
+      String cityId,
+      String districtId,
+      String wardId,
+      String phone,
+      String name}) async {
+    selectedAddress = {
+      "phone": phone,
+      "name": name,
+      "city_id": cityId,
+      "district_id": districtId,
+      "ward_id": wardId,
+      "address": address
+    };
+    if (isDefault)
+      selectedIndex = 0;
+    else
+      selectedIndex = addressList.length;
+    await service.addUserAddress(null,
+        address: address,
+        isMain: isDefault ? 1 : 0,
+        cityId: cityId,
+        districtId: districtId,
+        wardId: wardId,
+        phone: phone,
+        name: name);
+    getData();
     notifyListeners();
   }
 
   void onChangeVal(int val) {
-    this.val = val;
-    currentAddress = getFullAddress(val);
+    selectedIndex = val;
+    selectedAddress = addressList[val];
     notifyListeners();
   }
 

@@ -23,6 +23,7 @@ class ProductItem extends StatelessWidget {
   final bool showTime;
   final int index;
   final dynamic product;
+  final bool isPickup;
   final bool isFlashSalePending;
 
   const ProductItem(
@@ -43,7 +44,8 @@ class ProductItem extends StatelessWidget {
       this.showTime = false,
       this.index = 0,
       this.product,
-      this.isFlashSalePending = false})
+      this.isFlashSalePending = false,
+      this.isPickup})
       : super(key: key);
 
   @override
@@ -88,11 +90,14 @@ class ProductItem extends StatelessWidget {
         ),
       ),
       onTap: () {
-        RouteUtil.push(
-            context,
-            ProductDetailScreen(
-              productId: product['id'],
-            ));
+        if (isPickup != null && isPickup) {
+          Navigator.of(context).pop(product);
+        } else
+          RouteUtil.push(
+              context,
+              ProductDetailScreen(
+                productId: product['id'],
+              ));
       },
     );
   }

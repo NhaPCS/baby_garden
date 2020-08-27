@@ -3236,7 +3236,7 @@ class S {
   /// `Nhận hàng tại shop`
   String get receive_in_shop {
     return Intl.message(
-      'Nhận hàng tại shop',
+      'Nhận hàng tại shop ',
       name: 'receive_in_shop',
       desc: '',
       args: [],
@@ -5333,11 +5333,20 @@ class S {
     );
   }
 
-  /// `Shop hiện tại không có địa chỉ nhận hàng nào.\n Vui lòng chọn hình thức nhận hàng khác.`
-  String get alert_shop_has_no_address {
+
+  String get mess_confirm_delete {
     return Intl.message(
-      'Shop hiện tại không có địa chỉ nhận hàng nào.\n Vui lòng chọn hình thức nhận hàng khác.',
-      name: 'alert_shop_has_no_address',
+      'Bạn có muốn xoá không?',
+      name: 'mess_confirm_delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get hint_pick_a_product {
+    return Intl.message(
+      'Hãy chon một sản phẩm để nhắc lịch...',
+      name: 'hint_pick_a_product',
       desc: '',
       args: [],
     );

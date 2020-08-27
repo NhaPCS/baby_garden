@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:baby_garden_flutter/data/dynamic_link_service.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
@@ -47,7 +48,7 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    this.initDynamicLinks();
+    new DynamicLinkService().handleDynamicLinks(context);
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     _tabController = TabController(length: 5, vsync: this);
@@ -259,29 +260,6 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
       push(OrderDetailScreen(
         bookingId: data['booking_id']
       ));
-    }
-  }
-
-  void initDynamicLinks() async {
-    FirebaseDynamicLinks.instance.onLink(
-        onSuccess: (PendingDynamicLinkData dynamicLink) async {
-          final Uri deepLink = dynamicLink?.link;
-
-          if (deepLink != null) {
-            Navigator.pushNamed(context, deepLink.path);
-          }
-        },
-        onError: (OnLinkErrorException e) async {
-          print('onLinkError');
-          print(e.message);
-        }
-    );
-
-    final PendingDynamicLinkData data = await FirebaseDynamicLinks.instance.getInitialLink();
-    final Uri deepLink = data?.link;
-
-    if (deepLink != null) {
-      Navigator.pushNamed(context, deepLink.path);
     }
   }
 
