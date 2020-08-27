@@ -41,13 +41,13 @@ class _CommentBottomSheetDialogue
       child: Consumer<ListCommentProvider>(
         builder:
             (BuildContext context, ListCommentProvider value, Widget child) {
-              if (value.listComments == null || value.listComments.isEmpty)
-                return LoadingView(
-                  isNoData: value.listComments != null,
-                  onReload: () {
-                    _listCommentProvider.getListComment(widget.newsId);
-                  },
-                );
+          if (value.listComments == null || value.listComments.isEmpty)
+            return LoadingView(
+              isNoData: value.listComments != null,
+              onReload: () {
+                _listCommentProvider.getListComment(widget.newsId);
+              },
+            );
           return ListView(
             children: value.listComments
                 .map((e) => Row(
@@ -81,6 +81,15 @@ class _CommentBottomSheetDialogue
                                   style: TextStyle(
                                       fontWeight: FontWeight.normal,
                                       fontSize: SizeUtil.textSizeDefault),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: SizeUtil.tinySpace),
+                                  child: Text(
+                                    e["date"],
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: SizeUtil.textSizeSmall),
+                                  ),
                                 )
                               ],
                             ),

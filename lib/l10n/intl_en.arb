@@ -529,5 +529,6 @@
   "mess_error_user_name": "Bạn vui lòng nhập đầy đủ họ tên",
 
   "choose_other_day": "Vui lòng chọn ngày khác",
-  "total_search": "{total} kết quả tìm kiếm"
+  "total_search": "{total} kết quả tìm kiếm",
+  "alert_shop_has_no_address": "Shop hiện tại không có địa chỉ nhận hàng nào.\n Vui lòng chọn hình thức nhận hàng khác."
 }

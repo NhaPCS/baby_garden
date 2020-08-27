@@ -1,14 +1,15 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/checkout/widget/rich_text_form.dart';
+import 'package:baby_garden_flutter/screen/order_detail/order_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmDialogue extends StatelessWidget {
-  final String bookingId;
+  final String bookingCode;
 
-  const ConfirmDialogue({Key key, this.bookingId=""}) : super(key: key);
+  const ConfirmDialogue({Key key, this.bookingCode=""}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +61,7 @@ class ConfirmDialogue extends StatelessWidget {
                 padding: const EdgeInsets.only(left: SizeUtil.normalSpace),
                 child: RichTextForm(
                   title: S.of(context).order_code_title,
-                  content: "  " + bookingId,
+                  content: "  " + bookingCode,
                   contentColor: ColorUtil.primaryColor,
                 ),
               ),
@@ -85,7 +86,7 @@ class ConfirmDialogue extends StatelessWidget {
                   MyRaisedButton(
                     color: ColorUtil.primaryColor,
                     onPressed: () {
-                      Navigator.pop(context, 3);
+                      Navigator.pop(context, 1);
                     },
                     text: S.of(context).view_order,
                     textStyle: TextStyle(

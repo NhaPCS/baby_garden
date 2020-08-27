@@ -5332,6 +5332,16 @@ class S {
       args: [total],
     );
   }
+
+  /// `Shop hiện tại không có địa chỉ nhận hàng nào.\n Vui lòng chọn hình thức nhận hàng khác.`
+  String get alert_shop_has_no_address {
+    return Intl.message(
+      'Shop hiện tại không có địa chỉ nhận hàng nào.\n Vui lòng chọn hình thức nhận hàng khác.',
+      name: 'alert_shop_has_no_address',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

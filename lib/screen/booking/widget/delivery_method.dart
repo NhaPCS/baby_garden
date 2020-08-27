@@ -13,7 +13,10 @@ class DeliveryMethod extends StatefulWidget {
   final ValueNotifier<int> deliveryMethod;
   final String shopId;
   final ValueChanged<String> inShopAddressValueChanged;
-  const DeliveryMethod({this.deliveryMethod, this.shopId = "0", this.inShopAddressValueChanged}) : super();
+
+  const DeliveryMethod(
+      {this.deliveryMethod, this.shopId = "0", this.inShopAddressValueChanged})
+      : super();
 
   @override
   State<StatefulWidget> createState() {
@@ -43,53 +46,56 @@ class _DeliveryMethodState extends BaseState<DeliveryMethod> {
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            CustomRadioButton(
-              titleContent: Text(S.of(context).delivery_in_shop),
-              padding: const EdgeInsets.only(
-                  left: SizeUtil.bigSpaceHigher,
-                  top: SizeUtil.smallSpace,
-                  bottom: SizeUtil.smallSpace),
-              value: 1,
-              groupValue: value,
-              onChanged: (val) {
-                widget.deliveryMethod.value = val;
-              },
-            ),
-            //todo shop location
-            value == 1
-                ? Consumer<ShopLocationProvider>(
-                    builder: (BuildContext context, ShopLocationProvider value,
-                        Widget child) {
-                      if (value.locations == null || value.locations.isEmpty)
-                        return LoadingView(
-                          isNoData: value.locations != null,
-                          onReload: (){
-                            _shopLocationProvider.getShopId(widget.shopId);
-                          },
-                        );
-                      return Column(
-                        children: value.locations
-                            .map((e) => CustomRadioButton(
-                                  titleContent: Text(e['address']),
-                                  padding: const EdgeInsets.only(
-                                      left: SizeUtil.hugSpace,
-                                      bottom: SizeUtil.tinySpace),
-                                  value: value.locations.indexOf(e),
-                                  groupValue: value.shopLocation,
-                                  iconSize: SizeUtil.iconSize,
-                                  titleSize: SizeUtil.textSizeSmall,
-                                  onChanged: (val) {
-                                    if(widget.inShopAddressValueChanged!=null){
-                                      widget.inShopAddressValueChanged(e['address']);
-                                    }
-                                    _shopLocationProvider.onChange(val);
-                                  },
-                                ))
-                            .toList(),
-                      );
+            Consumer<ShopLocationProvider>(builder: (BuildContext context,
+                ShopLocationProvider locationValue, Widget child) {
+              if (locationValue.locations == null ||
+                  locationValue.locations.isEmpty) {
+                return SizedBox();
+              }
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  CustomRadioButton(
+                    titleContent: Text(S.of(context).delivery_in_shop),
+                    padding: const EdgeInsets.only(
+                        left: SizeUtil.bigSpaceHigher,
+                        top: SizeUtil.smallSpace,
+                        bottom: SizeUtil.smallSpace),
+                    value: 1,
+                    groupValue: value,
+                    onChanged: (val) {
+                      widget.deliveryMethod.value = val;
                     },
-                  )
-                : SizedBox(),
+                  ),
+                  value == 1
+                      ? Column(
+                          children: locationValue.locations
+                              .map((e) => CustomRadioButton(
+                                    titleContent: Text(e['address']),
+                                    padding: const EdgeInsets.only(
+                                        left: SizeUtil.hugSpace,
+                                        bottom: SizeUtil.tinySpace),
+                                    value: locationValue.locations.indexOf(e),
+                                    groupValue: locationValue.shopLocation,
+                                    iconSize: SizeUtil.iconSize,
+                                    titleSize: SizeUtil.textSizeSmall,
+                                    onChanged: (val) {
+                                      if (widget.inShopAddressValueChanged !=
+                                          null) {
+                                        widget.inShopAddressValueChanged(
+                                            e['address']);
+                                      }
+                                      _shopLocationProvider.onChange(val);
+                                    },
+                                  ))
+                              .toList(),
+                        )
+                      : SizedBox(),
+                ],
+              );
+            }),
+            //todo shop location
+
             CustomRadioButton(
               titleContent: Text(S.of(context).delivery_to_address),
               padding: const EdgeInsets.only(
