@@ -52,20 +52,17 @@ class ReceiveAddressListProvider extends ChangeNotifier {
   Future<void> getData() async {
     dynamic data = await service.listAddress();
     if (data != null) {
-      dynamic address_main = data['main_address'];
-      address_main["address_detail"] = "";
-      addressList.add(address_main);
-      if (data['list_address'] != null) {
-        for (var address in data['list_address']) {
-          address["address_detail"] = "";
-          addressList.add(address);
-        }
+      addressList = [];
+      if (data['main_address'] != null) {
+        addressList.add(data['main_address']);
       }
-      currentAddress = getFullAddress(0);
-      val = 0;
-
+      if (data['list_address'] != null) {
+        addressList.addAll(data['list_address']);
+      }
+      if (selectedAddress == null && addressList.isNotEmpty) {
+        selectedAddress = addressList[0];
+      }
     }
-    print("list ADDRESS $addressList");
     notifyListeners();
   }
 }

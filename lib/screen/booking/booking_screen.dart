@@ -510,7 +510,7 @@ class _BookingScreenState
     } else {
       //note
 
-      if (address == null) {
+      if (receiveAddress == null) {
         WidgetUtil.showMessageDialog(context,
             message: S.of(context).choose_delivery_address,
             title: S.of(context).missing_information);
@@ -530,12 +530,12 @@ class _BookingScreenState
                 .ships[_transferMethodProvider.transferMethod]['id'],
             inShopReceiveAddress,
             _promoteShipCodeController.text.trim(),
-            address['name'],
-            address['phone'],
-            address['address'],
-            address['city_id'],
-            address['district_id'],
-            address['ward_id']);
+            receiveAddress['name'],
+            receiveAddress['phone'],
+            receiveAddress['address'],
+            receiveAddress['city_id'],
+            receiveAddress['district_id'],
+            receiveAddress['ward_id']);
         if (checkoutMethod.value == CheckoutMethod.CREDIT_TRANSFER.index) {
           print(getViewModel().bookingData['booking_id']);
           RouteUtil.pushReplacement(

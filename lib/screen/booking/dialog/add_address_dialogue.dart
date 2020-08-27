@@ -235,22 +235,6 @@ class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue> {
                                 key: S.of(context).enter_sub_district,
                                 value: provider.subDistrictVal),
                           ])) {
-                            dynamic address = {
-                              'name': _receiveNameController.text.trim(),
-                              'phone': _receivePhoneController.text.trim(),
-                              'address': _receiveAddressController.text.trim(),
-                              'ward_name': provider
-                                  .subDistricts[provider.subDistrictVal]['name'],
-                              'ward_id': provider
-                                  .subDistricts[provider.subDistrictVal]['id'],
-                              'district_name': provider
-                                  .districts[provider.districtVal]['name'],
-                              'district_id': provider
-                                  .districts[provider.districtVal]['id'],
-                              'city_name': provider.cities[provider.cityVal]
-                                  ['name'],
-                              'city_id': provider.cities[provider.cityVal]['id']
-                            };
                             Provider.of<ReceiveAddressListProvider>(context,
                                     listen: false)
                                 .onAddAddress(

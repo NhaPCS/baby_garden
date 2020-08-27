@@ -57,41 +57,40 @@ class ChangeDeliveryAddressDialogue extends StatelessWidget {
                       ),
                       Container(
                           height: 300,
-                        child: ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            itemCount: value.addressList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return CustomRadioButton(
-                                titleContent: MyText(
-                                  value.getFullAddress(index),
-                                  style: TextStyle(
-                                      fontSize: SizeUtil.textSizeSmall,
-                                      color: Colors.black),
-                                ),
-                                padding: const EdgeInsets.only(
-                                    bottom: SizeUtil.tinySpace,
-                                    top: SizeUtil.tinySpace,
-                                    left: SizeUtil.smallSpace,
-                                    right: SizeUtil.smallSpace),
-                                value: index,
-                                //const value
-                                groupValue:
-                                Provider.of<ReceiveAddressListProvider>(
-                                    context,
-                                    listen: false)
-                                    .val,
-                                // dynamic value
-                                iconSize: SizeUtil.iconSize,
-                                titleSize: SizeUtil.textSizeSmall,
-                                onChanged: (val) {
-                                  Provider.of<ReceiveAddressListProvider>(
-                                      context,
-                                      listen: false)
-                                      .onChangeVal(val);
-                                },
-                              );
-                            }),
-                      ),
+                          child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: value.addressList.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return CustomRadioButton(
+                                  titleContent: MyText(
+                                    value.getFullAddress(index),
+                                    style: TextStyle(
+                                        fontSize: SizeUtil.textSizeSmall,
+                                        color: Colors.black),
+                                  ),
+                                  padding: const EdgeInsets.only(
+                                      bottom: SizeUtil.tinySpace,
+                                      top: SizeUtil.tinySpace,
+                                      left: SizeUtil.smallSpace,
+                                      right: SizeUtil.smallSpace),
+                                  value: index,
+                                  //const value
+                                  groupValue:
+                                      Provider.of<ReceiveAddressListProvider>(
+                                              context,
+                                              listen: false)
+                                          .selectedIndex,
+                                  // dynamic value
+                                  iconSize: SizeUtil.iconSize,
+                                  titleSize: SizeUtil.textSizeSmall,
+                                  onChanged: (val) {
+                                    Provider.of<ReceiveAddressListProvider>(
+                                            context,
+                                            listen: false)
+                                        .onChangeVal(val);
+                                  },
+                                );
+                              })),
                       SizedBox(
                         height: SizeUtil.smallSpace,
                       ),
