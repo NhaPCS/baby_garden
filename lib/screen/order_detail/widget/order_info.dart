@@ -54,7 +54,7 @@ class OrderInfo extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(content,
+              Text(content + " ",
                   style: TextStyle(
                       fontSize: SizeUtil.textSizeSmall,
                       height: 1.3,

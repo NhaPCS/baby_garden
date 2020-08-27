@@ -152,7 +152,7 @@ class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue> {
                               Provider.of<CityProvider>(context, listen: false)
                                   .onChangeSubDistrict(val);
                             },
-                            dataSource: value.districts,
+                            dataSource: value.subDistricts,
                             textField: 'name',
                           )
                         ],

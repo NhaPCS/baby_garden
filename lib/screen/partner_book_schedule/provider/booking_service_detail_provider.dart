@@ -14,4 +14,5 @@ class BookingServiceDetailProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
 }

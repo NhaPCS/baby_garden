@@ -45,7 +45,9 @@ class PartnerItem extends StatelessWidget {
                   children: <Widget>[
                     RatingBar(
                       starSize: SizeUtil.iconSize,
-                      value: shop['star'] == null ? 0 : int.parse(shop['star']),
+                      value: shop['star'] == null || shop['star'] == "0"
+                          ? 5
+                          : int.parse(shop['star']),
                       enable: false,
                       isIcon: true,
                       showRateCount: false,
@@ -101,7 +103,7 @@ class PartnerItem extends StatelessWidget {
                             height: 2,
                           ),
                           Text(
-                            shop['introduce']??"",
+                            shop['introduce'] ?? "",
                             style: TextStyle(
                                 fontSize: SizeUtil.textSizeSmall,
                                 color: Colors.white),
@@ -132,8 +134,12 @@ class PartnerItem extends StatelessWidget {
                           iconSize: SizeUtil.iconSizeBigger,
                           textSize: SizeUtil.textSizeDefault,
                           textColor: Colors.white,
-                          onTap: (){
-                            RouteUtil.push(context, ListUserRatedScreen( shopId: shop['id'],));
+                          onTap: () {
+                            RouteUtil.push(
+                                context,
+                                ListUserRatedScreen(
+                                  shopId: shop['id'],
+                                ));
                           },
                         ),
                       ],

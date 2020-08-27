@@ -55,12 +55,15 @@ class ChangeDeliveryAddressDialogue extends StatelessWidget {
                       SizedBox(
                         height: SizeUtil.smallSpace,
                       ),
-                      Column(
-                        children: List.generate(
-                            value.addressList.length,
-                            (index) => CustomRadioButton(
+                      Container(
+                          height: 300,
+                          child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: value.addressList.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return CustomRadioButton(
                                   titleContent: MyText(
-                                    StringUtil.getFullAddress(value.addressList[index]),
+                                    value.getFullAddress(index),
                                     style: TextStyle(
                                         fontSize: SizeUtil.textSizeSmall,
                                         color: Colors.black),
@@ -86,8 +89,8 @@ class ChangeDeliveryAddressDialogue extends StatelessWidget {
                                             listen: false)
                                         .onChangeVal(val);
                                   },
-                                )),
-                      ),
+                                );
+                              })),
                       SizedBox(
                         height: SizeUtil.smallSpace,
                       ),

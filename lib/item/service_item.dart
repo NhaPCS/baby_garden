@@ -8,8 +8,7 @@ class ServiceItem extends StatelessWidget {
   final bool isShowBookingDate;
   final dynamic itemData;
 
-  ServiceItem(
-      {Key key, this.isShowBookingDate = true,this.itemData})
+  ServiceItem({Key key, this.isShowBookingDate = true, this.itemData})
       : super(key: key);
 
   @override
@@ -62,7 +61,7 @@ class ServiceItem extends StatelessWidget {
                   ? Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        S.of(context).booking_date(itemData['date_booking']),
+                        S.of(context).booking_date(itemData['date']),
                         style: TextStyle(fontSize: SizeUtil.textSizeTiny),
                         textAlign: TextAlign.start,
                       ),
@@ -97,7 +96,9 @@ class ServiceItem extends StatelessWidget {
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              itemData['service_name']==null?"":itemData['service_name'],
+                              itemData['service_name'] == null
+                                  ? ""
+                                  : itemData['service_name'],
                               style: TextStyle(
                                   fontSize: SizeUtil.textSizeExpressDetail,
                                   color: ColorUtil.textColor),
@@ -110,7 +111,9 @@ class ServiceItem extends StatelessWidget {
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              S.of(context).overall_time(itemData['time_service']),
+                              S
+                                  .of(context)
+                                  .overall_time(itemData['time_service']),
                               style:
                                   TextStyle(fontSize: SizeUtil.textSizeSmall),
                               textAlign: TextAlign.start,
@@ -122,7 +125,7 @@ class ServiceItem extends StatelessWidget {
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              S.of(context).using_date(itemData["time_finish"]),
+                              S.of(context).using_date(itemData["date_booking"],itemData["time_booking"]),
                               style:
                                   TextStyle(fontSize: SizeUtil.textSizeSmall),
                               textAlign: TextAlign.start,

@@ -45,7 +45,8 @@ class BookingProductViewModel extends BaseViewModel {
       String userAddress,
       String cityID,
       String districtID,
-      String wardId) async {
+      String ward_id
+      ) async {
     var userID =
         Provider.of<UserProvider>(context, listen: false).userInfo['id'];
     var now = new DateTime.now();
@@ -73,7 +74,8 @@ class BookingProductViewModel extends BaseViewModel {
         userAddress: userAddress,
         cityID: cityID,
         districtID: districtID,
-        wardId: wardId);
+      ward_id: ward_id
+    );
     if (data != null) {
       bookingData = data;
       Provider.of<OrdersProvider>(context, listen: false).getOrdersCount();
