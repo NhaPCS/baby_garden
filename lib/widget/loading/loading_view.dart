@@ -19,17 +19,13 @@ class LoadingView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Image.asset("photo/logo_dim.png", width: 50,),
+            SizedBox(height: SizeUtil.smallSpace,),
             Text(
               title == null ? S.of(context).no_data : title,
               textAlign: TextAlign.center,
+              style: TextStyle(color: ColorUtil.textGray),
             ),
-            MyRaisedButton(
-                onPressed: () {
-                  if (onReload != null) onReload();
-                },
-                text: S.of(context).reload,
-                textStyle: TextStyle(color: Colors.white),
-                color: ColorUtil.primaryColor)
           ],
         ),
       );
