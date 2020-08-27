@@ -6,6 +6,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmDialogue extends StatelessWidget {
+  final String bookingId;
+
+  const ConfirmDialogue({Key key, this.bookingId=""}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +60,7 @@ class ConfirmDialogue extends StatelessWidget {
                 padding: const EdgeInsets.only(left: SizeUtil.normalSpace),
                 child: RichTextForm(
                   title: S.of(context).order_code_title,
-                  content: "  VCB355125",
+                  content: "  " + bookingId,
                   contentColor: ColorUtil.primaryColor,
                 ),
               ),

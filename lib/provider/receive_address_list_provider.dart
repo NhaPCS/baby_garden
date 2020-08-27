@@ -23,48 +23,26 @@ class ReceiveAddressListProvider extends ChangeNotifier {
 
   String getFullAddress(index) {
     dynamic address = addressList[index];
-    print("getFullAddress $address");
-    if (address["address_detail"].toString().isNotEmpty) {
-      return address["address_detail"];
-    }
-    print("getFullAddress");
-    return "${address['userName']} - ${address['phone']}\n ${address['address']} \n Phường , Quận ${address['districtName']}, ${address['city']}";
+    return "${address['name']} - ${address['phone']}\n ${address['address']} \n Phường , Quận ${address['district_name']}, ${address['city_name']}";
   }
 
   Future<void> getData() async {
     dynamic data = await service.listAddress();
     if (data != null) {
-      addressList.add({
-        "address_detail": data['main_address'],
-        "userName": "",
-        "phone": "",
-        "address": "",
-        "districtID": "",
-        "cityID": ""
-      });
-      if(data['list_address']!=null){
+      dynamic address_main = data['main_address'];
+      address_main["address_detail"] = "";
+      addressList.add(address_main);
+      if (data['list_address'] != null) {
         for (var address in data['list_address']) {
-          addressList.add({
-            "address_detail": address['address'],
-            "userName": "",
-            "phone": "",
-            "address": "",
-            "districtID": "",
-            "cityID": ""
-          });
+          address["address_detail"] = "";
+          addressList.add(address);
         }
       }
-      currentAddress = data['main_address'];
+      currentAddress = getFullAddress(0);
       val = 0;
-      if (currentAddress == null &&
-          addressList != null &&
-          addressList.isNotEmpty) {
-        currentAddress = getFullAddress(0);
-      }
-      print("list ADDRESS ${data['main_address']} ${data['list_address']}");
-    }
 
-    print(addressList);
+    }
+    print("list ADDRESS $addressList");
     notifyListeners();
   }
 }

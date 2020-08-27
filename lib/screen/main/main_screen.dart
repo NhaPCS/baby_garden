@@ -257,7 +257,7 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
     final dynamic data = message['data'] ?? message;
     if (data['booking_id'] != null) {
       push(OrderDetailScreen(
-        bookingId: data['booking_id'],
+        bookingId: data['booking_id']
       ));
     }
   }

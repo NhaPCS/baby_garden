@@ -152,7 +152,7 @@ class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue> {
                               Provider.of<CityProvider>(context, listen: false)
                                   .onChangeSubDistrict(val);
                             },
-                            dataSource: value.districts,
+                            dataSource: value.subDistricts,
                             textField: 'name',
                           )
                         ],
@@ -234,17 +234,22 @@ class _AddingAddressDialogueState extends BaseState<AddingAddressDialogue> {
                             Param(
                                 key: S.of(context).enter_sub_district,
                                 value: provider.subDistrictVal),
-                          ]))  {
+                          ])) {
                             dynamic address = {
-                              'userName': _receiveNameController.text.trim(),
+                              'name': _receiveNameController.text.trim(),
                               'phone': _receivePhoneController.text.trim(),
                               'address': _receiveAddressController.text.trim(),
-                              'districtName': provider
+                              'ward_name': provider
+                                  .subDistricts[provider.subDistrictVal]['name'],
+                              'ward_id': provider
+                                  .subDistricts[provider.subDistrictVal]['id'],
+                              'district_name': provider
                                   .districts[provider.districtVal]['name'],
-                              'districtID': provider
+                              'district_id': provider
                                   .districts[provider.districtVal]['id'],
-                              'city': provider.cities[provider.cityVal]['name'],
-                              'cityID': provider.cities[provider.cityVal]['id']
+                              'city_name': provider.cities[provider.cityVal]
+                                  ['name'],
+                              'city_id': provider.cities[provider.cityVal]['id']
                             };
                             Provider.of<ReceiveAddressListProvider>(context,
                                     listen: false)

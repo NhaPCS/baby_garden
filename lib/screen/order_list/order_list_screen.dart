@@ -73,6 +73,7 @@ class _OrderListScreenState extends BaseState<OrderListScreen> {
                               onTap: () async {
                                 await push(OrderDetailScreen(
                                   bookingId: e['id'],
+                                  title: widget.title,
                                 ));
                                 _orderListProvider.getListData(widget.state);
                               },

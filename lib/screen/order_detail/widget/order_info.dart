@@ -56,7 +56,7 @@ class OrderInfo extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             alignment: WrapAlignment.start,
             children: <Widget>[
-              Text(content,
+              Text(content + " ",
                   style: TextStyle(
                       fontSize: SizeUtil.textSizeSmall,
                       height: 1.3,

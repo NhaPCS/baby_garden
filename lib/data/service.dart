@@ -99,8 +99,10 @@ Future<dynamic> favouriteShop({String shopID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await post(null,
       path: "favouriteShop", param: {'user_id': userId, 'shop_id': shopID});
-  if (response.isSuccess()) return response.data;
-  return null;
+  if(response.isSuccess()){
+    return true;
+  }
+  return false;
 }
 
 //TODO require unFavouriteShop
@@ -108,8 +110,10 @@ Future<dynamic> unFavouriteShop({String shopID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await post(null,
       path: "unFavouriteShop", param: {'user_id': userId, 'shop_id': shopID});
-  if (response.isSuccess()) return response.data;
-  return null;
+  if(response.isSuccess()){
+    return true;
+  }
+  return false;
 }
 
 //TODO require unFavouriteShop
@@ -222,7 +226,9 @@ Future<dynamic> bookingProduct(
     String userAddress,
     String cityID,
     String point,
-    String districtID}) async {
+    String districtID,
+    String ward_id
+    }) async {
   Response response = await post(null, path: "bookingProduct", param: {
     'point': point,
     'user_id': userID,
@@ -240,7 +246,8 @@ Future<dynamic> bookingProduct(
     'user_name': userName,
     'user_phone': userPhone,
     'city_id': cityID,
-    'district_id': districtID
+    'district_id': districtID,
+    'ward_id': ward_id
   });
   if (response.isSuccess()) return response.data;
   return null;

@@ -484,7 +484,8 @@ class _BookingScreenState
             "",
             "",
             "",
-            "");
+            "",
+        "");
         if (checkoutMethod.value == CheckoutMethod.CREDIT_TRANSFER.index) {
           print(getViewModel().bookingData['booking_id']);
           RouteUtil.pushReplacement(
@@ -506,11 +507,13 @@ class _BookingScreenState
       }
     } else {
       //note
+//      print("$address");
       if (address == null) {
         WidgetUtil.showMessageDialog(context,
             message: S.of(context).choose_delivery_address,
             title: S.of(context).missing_information);
-      } else {
+      }
+      else {
         await getViewModel().onBookingProduct(
             receiveTime.value['id'].trim(),
             checkoutPoint.toString(),
@@ -524,11 +527,12 @@ class _BookingScreenState
                 .ships[_transferMethodProvider.transferMethod]['id'],
             inShopReceiveAddress,
             _promoteShipCodeController.text.trim(),
-            address['userName'],
+            address['name'],
             address['phone'],
             address['address'],
-            address['cityID'],
-            address['districtID']);
+            address['city_id'],
+            address['district_id'],
+            address['ward_id']);
         if (checkoutMethod.value == CheckoutMethod.CREDIT_TRANSFER.index) {
           print(getViewModel().bookingData['booking_id']);
           RouteUtil.pushReplacement(
@@ -543,7 +547,7 @@ class _BookingScreenState
         } else {
           int index = await showDialog(
               context: context,
-              builder: (BuildContext context) => ConfirmDialogue());
+              builder: (BuildContext context) => ConfirmDialogue(bookingId: getViewModel().bookingData['code'].toString()));
           pushAndReplaceAll(MainScreen(index: index), "/main_screen");
         }
         Provider.of<CartProvider>(context, listen: false).getMyCart();

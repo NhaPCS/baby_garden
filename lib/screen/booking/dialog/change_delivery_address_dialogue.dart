@@ -8,9 +8,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ChangeDeliveryAddressDialogue extends StatelessWidget{
+class ChangeDeliveryAddressDialogue extends StatelessWidget {
+  const ChangeDeliveryAddressDialogue({Key key}) : super(key: key);
 
-  const ChangeDeliveryAddressDialogue({Key key}):super(key:key);
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -24,110 +24,130 @@ class ChangeDeliveryAddressDialogue extends StatelessWidget{
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
                 color: Colors.white,
-                border: Border.all(color: ColorUtil.primaryColor,
-                  width: 0.7,),
+                border: Border.all(
+                  color: ColorUtil.primaryColor,
+                  width: 0.7,
+                ),
               ),
-              child:
-              Consumer<ReceiveAddressListProvider>(builder: (BuildContext context, ReceiveAddressListProvider value, Widget child) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: SizeUtil.midSmallSpace,
-                          bottom: SizeUtil.midSmallSpace),
-                      child: Text(
-                        S.of(context).change_delivery_address,
-                        style: TextStyle(
-                            color: ColorUtil.primaryColor,
-                            fontSize: SizeUtil.textSizeExpressTitle,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    WidgetUtil.getLine(
-                        margin: EdgeInsets.only(bottom: SizeUtil.tinySpace),
-                        color: ColorUtil.lineColor),
-                    SizedBox(
-                      height: SizeUtil.smallSpace,
-                    ),
-                    Column(
-                      children: List.generate(value.addressList.length, (index) => CustomRadioButton(
-                        titleContent: MyText(
-                          value.getFullAddress(index),
-                          style: TextStyle(
-                              fontSize: SizeUtil.textSizeSmall,
-                              color: Colors.black),
-                        ),
+              child: Consumer<ReceiveAddressListProvider>(
+                builder: (BuildContext context,
+                    ReceiveAddressListProvider value, Widget child) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
                         padding: const EdgeInsets.only(
-                            bottom: SizeUtil.tinySpace,
-                            top: SizeUtil.tinySpace,
-                            left: SizeUtil.smallSpace,
-                            right: SizeUtil.smallSpace),
-                        value: index,//const value
-                        groupValue: Provider.of<ReceiveAddressListProvider>(context,listen: false).val,// dynamic value
-                        iconSize: SizeUtil.iconSize,
-                        titleSize: SizeUtil.textSizeSmall,
-                        onChanged: (val) {
-                          Provider.of<ReceiveAddressListProvider>(context,listen: false).onChangeVal(val);
-                        },
-                      )),
-                    ),
-                    SizedBox(
-                      height: SizeUtil.smallSpace,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        RaisedButton(
-                          onPressed: () {
-                            showDialog(
-                                context: context, builder: (BuildContext context) => AddingAddressDialogue());
-                          },
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(SizeUtil.smallRadius),
-                              )),
-                          color: ColorUtil.primaryColor,
-                          child: Text(
-                            S.of(context).add_new,
-                            style: TextStyle(
-                                fontSize: SizeUtil.textSizeSmall,
-                                color: Colors.white,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.bold),
+                            top: SizeUtil.midSmallSpace,
+                            bottom: SizeUtil.midSmallSpace),
+                        child: Text(
+                          S.of(context).change_delivery_address,
+                          style: TextStyle(
+                              color: ColorUtil.primaryColor,
+                              fontSize: SizeUtil.textSizeExpressTitle,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      WidgetUtil.getLine(
+                          margin: EdgeInsets.only(bottom: SizeUtil.tinySpace),
+                          color: ColorUtil.lineColor),
+                      SizedBox(
+                        height: SizeUtil.smallSpace,
+                      ),
+                      Container(
+                          height: 300,
+                        child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: value.addressList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return CustomRadioButton(
+                                titleContent: MyText(
+                                  value.getFullAddress(index),
+                                  style: TextStyle(
+                                      fontSize: SizeUtil.textSizeSmall,
+                                      color: Colors.black),
+                                ),
+                                padding: const EdgeInsets.only(
+                                    bottom: SizeUtil.tinySpace,
+                                    top: SizeUtil.tinySpace,
+                                    left: SizeUtil.smallSpace,
+                                    right: SizeUtil.smallSpace),
+                                value: index,
+                                //const value
+                                groupValue:
+                                Provider.of<ReceiveAddressListProvider>(
+                                    context,
+                                    listen: false)
+                                    .val,
+                                // dynamic value
+                                iconSize: SizeUtil.iconSize,
+                                titleSize: SizeUtil.textSizeSmall,
+                                onChanged: (val) {
+                                  Provider.of<ReceiveAddressListProvider>(
+                                      context,
+                                      listen: false)
+                                      .onChangeVal(val);
+                                },
+                              );
+                            }),
+                      ),
+                      SizedBox(
+                        height: SizeUtil.smallSpace,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          RaisedButton(
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AddingAddressDialogue());
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                              Radius.circular(SizeUtil.smallRadius),
+                            )),
+                            color: ColorUtil.primaryColor,
+                            child: Text(
+                              S.of(context).add_new,
+                              style: TextStyle(
+                                  fontSize: SizeUtil.textSizeSmall,
+                                  color: Colors.white,
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: SizeUtil.defaultSpace,
-                        ),
-                        RaisedButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(SizeUtil.smallRadius),
-                              )),
-                          color: ColorUtil.primaryColor,
-                          child: Text(
-                            S.of(context).confirm,
-                            style: TextStyle(
-                                fontSize: SizeUtil.textSizeSmall,
-                                color: Colors.white,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.bold),
+                          SizedBox(
+                            width: SizeUtil.defaultSpace,
                           ),
-                        ),
-                      ],
-                    )
-                  ],
-                );
-              },),
+                          RaisedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                              Radius.circular(SizeUtil.smallRadius),
+                            )),
+                            color: ColorUtil.primaryColor,
+                            child: Text(
+                              S.of(context).confirm,
+                              style: TextStyle(
+                                  fontSize: SizeUtil.textSizeSmall,
+                                  color: Colors.white,
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  );
+                },
+              ),
             );
           },
         ));
   }
-
 }

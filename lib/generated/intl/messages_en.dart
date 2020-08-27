@@ -75,7 +75,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m27(author) => "Gửi bởi: ${author}";
 
-  static m28(code, date_booking, time_booking) => "Mã đặt lịch: ${code}\nNgày đặt lịch: ${date_booking} - ${time_booking}";
+  static m28(code, date_booking) => "Mã đặt lịch: ${code}\nNgày đặt lịch: ${date_booking}";
 
   static m29(minute) => "${minute}\nPhút";
 
@@ -93,7 +93,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m36(date, time) => "Dùng đến: ${date} - ${time}";
 
-  static m37(date) => "Ngày sử dung: ${date}";
+  static m37(date, time) => "Ngày sử dung: ${date} ${time}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
