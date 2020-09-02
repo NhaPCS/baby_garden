@@ -6,8 +6,7 @@ class GetListBabyProvider extends ChangeNotifier {
 
   Future<void> listBaby(
       {ValueNotifier<dynamic> dropdownController,
-      String selectedId,
-      VoidCallback onChangeChild}) async {
+      String selectedId}) async {
     babies = await service.listBaby(null);
 
     if (dropdownController != null && babies != null) {
@@ -15,9 +14,6 @@ class GetListBabyProvider extends ChangeNotifier {
       if (selectedId != null) {
         dropdownController.value =
             babies.firstWhere((element) => element['id'] == selectedId);
-      }
-      if (onChangeChild != null) {
-        onChangeChild();
       }
     }
     notifyListeners();

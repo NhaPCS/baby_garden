@@ -3501,12 +3501,12 @@ class S {
     );
   }
 
-  String get chart_for_girl {
+  String chart_for_girl(Object type, Object gender) {
     return Intl.message(
-      'Biểu đồ chiều cao theo tuổi cho bé gái',
+      'Biểu đồ $type theo tuổi cho $gender',
       name: 'chart_for_girl',
       desc: '',
-      args: [],
+      args: [type, gender],
     );
   }
 
@@ -3519,10 +3519,28 @@ class S {
     );
   }
 
+  String get normal_weight {
+    return Intl.message(
+      'Cân nặng bình thường',
+      name: 'normal_weight',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get greater_than_age {
     return Intl.message(
       'Chiều cao cao hơn so với tuổi',
       name: 'greater_than_age',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get weight_greater_than_age {
+    return Intl.message(
+      'Cân nặng cao hơn so với tuổi',
+      name: 'weight_greater_than_age',
       desc: '',
       args: [],
     );
@@ -4205,7 +4223,7 @@ class S {
 
   String get height_is {
     return Intl.message(
-      'Chiều cao:',
+      'Chiều cao: ',
       name: 'height_is',
       desc: '',
       args: [],
@@ -4214,8 +4232,17 @@ class S {
 
   String get weight_is {
     return Intl.message(
-      'Cân nặng:',
+      'Cân nặng: ',
       name: 'weight_is',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get checking_button {
+    return Intl.message(
+      'Tiến hành kiểm tra',
+      name: 'checking_button',
       desc: '',
       args: [],
     );

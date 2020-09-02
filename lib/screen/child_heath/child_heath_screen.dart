@@ -54,10 +54,7 @@ class _ChildHeathState
     super.initState();
     _getListBabyProvider.listBaby(
         dropdownController: _dropdownController,
-        selectedId: widget.selectedChildId,
-        onChangeChild: () {
-          _loadTestResults();
-        });
+        selectedId: widget.selectedChildId);
   }
 
   @override
@@ -95,13 +92,11 @@ class _ChildHeathState
                 flexibleSpace: ValueListenableBuilder(
                     valueListenable: _dropdownController,
                     builder: (context, selected, child) {
+                      _loadTestResults();
                       return ChildHeader(
                         isBoy: isBoy(),
                         dropdownController: _dropdownController,
                         selectedChildId: widget.selectedChildId,
-                        onChangeChild: (selected) {
-                          _loadTestResults();
-                        },
                       );
                     }),
                 bottom: PreferredSize(
@@ -126,9 +121,9 @@ class _ChildHeathState
                     preferredSize: Size.fromHeight(60)),
               ),
             ];
-          }, body: Consumer<ChangeModeEnterHeathProvider>(
+          }, body: Consumer2<ChangeModeEnterHeathProvider, ChangeIndexProvider>(
             builder: (BuildContext context, ChangeModeEnterHeathProvider value,
-                Widget child) {
+                ChangeIndexProvider indexProvider, Widget child) {
               if (value.isEntering) {
                 return EnterWeightHeight(
                   heightController: _heightController,
@@ -140,10 +135,13 @@ class _ChildHeathState
               return Consumer<GetBabyTestResultProvider>(
                 builder: (BuildContext context, GetBabyTestResultProvider value,
                     Widget child) {
-                  return ViewWeightHeight(
-                    testResults: value.results,
-                    baby: _dropdownController.value,
-                  );
+                  return ValueListenableBuilder(builder: (BuildContext context, listener, Widget child) {
+                    return ViewWeightHeight(
+                      testResults: value.results,
+                      baby: _dropdownController.value,
+                      tab: indexProvider.index,
+                    );
+                  },valueListenable: _dropdownController,);
                 },
               );
             },
@@ -182,7 +180,9 @@ class _ChildHeathState
                 }
               },
               color: ColorUtil.primaryColor,
-              text: S.of(context).enter_weight_height.toUpperCase(),
+              text: _changeModeEnterHeathProvider.isEntering
+                  ? S.of(context).checking_button
+                  : S.of(context).enter_weight_height.toUpperCase(),
               textStyle:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               padding: SizeUtil.smallPadding,

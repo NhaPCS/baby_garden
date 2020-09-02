@@ -9,20 +9,28 @@ import 'package:provider/provider.dart';
 class ViewWeightHeight extends StatelessWidget {
   final List<dynamic> testResults;
   final dynamic baby;
+  final int tab;
 
-  const ViewWeightHeight({Key key, this.testResults, this.baby})
+  const ViewWeightHeight({Key key, this.testResults, this.baby, this.tab = 0})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool isHeightTab = tab == 0;
     dynamic newestResult = testResults != null && testResults.isNotEmpty
         ? testResults[testResults.length - 1]
         : null;
+    String typeText = isHeightTab
+        ? S.of(context).height.toLowerCase()
+        : S.of(context).weight.toLowerCase();
+    String gender = baby['gender'] == "1"
+        ? S.of(context).boy.toLowerCase()
+        : S.of(context).girl.toLowerCase();
     return ListView(
       padding: SizeUtil.smallPadding,
       children: <Widget>[
         Text(
-          S.of(context).chart_for_girl,
+          S.of(context).chart_for_girl(typeText, gender),
           style:
               TextStyle(color: ColorUtil.textGray, fontWeight: FontWeight.bold),
         ),
@@ -38,9 +46,18 @@ class ViewWeightHeight extends StatelessWidget {
         ),
         Wrap(
           children: [
-            getNotice(context, S.of(context).normal_height, Color(0xff00BBFF)),
             getNotice(
-                context, S.of(context).greater_than_age, Color(0xffFFD500)),
+                context,
+                isHeightTab
+                    ? S.of(context).normal_height
+                    : S.of(context).normal_weight,
+                Color(0xff00BBFF)),
+            getNotice(
+                context,
+                isHeightTab
+                    ? S.of(context).greater_than_age
+                    : S.of(context).weight_greater_than_age,
+                Color(0xffFFD500)),
             getNotice(context, S.of(context).suy_dinh_duong_normal,
                 Color(0xffFF9100)),
             getNotice(context, S.of(context).sdd_nang, Color(0xffFF0000)),
@@ -65,11 +82,9 @@ class ViewWeightHeight extends StatelessWidget {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: newestResult == null
-                  ? ''
-                  : newestResult['type'] == 1
-                      ? S.of(context).height_is
-                      : S.of(context).weight_is,
+              text: isHeightTab
+                  ? S.of(context).height_is
+                  : S.of(context).weight_is,
               style: TextStyle(color: ColorUtil.textColor)),
           TextSpan(
               text: newestResult == null ? '' : newestResult['result'],
