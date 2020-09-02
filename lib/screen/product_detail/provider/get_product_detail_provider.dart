@@ -23,10 +23,10 @@ class GetProductDetailProvider extends ChangeNotifier {
     dynamic data = await service.productDetail(context, productId: productId);
     product = data;
     if (product != null) {
-      if (product['color'] == null) {
+      if (product['color'] == null || product['color'].isEmpty) {
         DETAIL_INFO.removeWhere((element) => element['key'] == 'color');
       }
-      if (product['size'] == null) {
+      if (product['size'] == null || product['size'].isEmpty) {
         DETAIL_INFO.removeWhere((element) => element['key'] == 'size');
       }
     }
@@ -53,11 +53,11 @@ class GetProductDetailProvider extends ChangeNotifier {
       if (product[key] != null && product[key].isNotEmpty) {
         for (dynamic s in product[key]) {
           if ('1' == s['active']) {
-            value += '${s['name']} ';
+            value += '${(s['name'] ?? '').toString().trim()}, ';
           }
         }
       }
-      return value;
+      return value.trim().substring(0, value.trim().length - 1);
     }
     return product[key];
   }

@@ -24,9 +24,10 @@ class MyCachedImage extends StatelessWidget {
         return Container(
           height: height,
           alignment: Alignment.center,
+          color: ColorUtil.lightGray,
           child: Text(
             S.of(context).no_image,
-            style: TextStyle(color: ColorUtil.lightGray),
+            style: TextStyle(color: ColorUtil.gray),
           ),
         );
       },

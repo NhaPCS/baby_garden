@@ -198,7 +198,6 @@ class _VCBExpressDetailScreenState
                     onTap: () {
                       DynamicLinkService.createDynamicLink(
                           title: _newsDetailProvider.currentDetail['title'],
-                          content: _newsDetailProvider.currentDetail['content'],
                           id: _newsDetailProvider.currentDetail['id'],
                           suffix: 'news');
                     },

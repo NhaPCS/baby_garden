@@ -4,6 +4,7 @@ import 'package:baby_garden_flutter/data/model/baby.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/child_heath/child_heath_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/image/circle_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -43,16 +44,11 @@ class BabyItem extends StatelessWidget {
         decoration: setBorder("bottom", ColorUtil.lineLightGray, 1),
         child: Row(children: <Widget>[
           // avatar
-          Align(
-            alignment: Alignment.center,
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(SizeUtil.tinyRadius),
-                child: CachedNetworkImage(
-                        fit: BoxFit.cover,
-                        imageUrl: baby.avatar ?? '',
-                        width: 95.0,
-                        height: 95.0,
-                      )),
+          CircleImage(
+            width: 95,
+            height: 95,
+            imageUrl: baby.avatar,
+            borderRadius: SizeUtil.tinyRadius,
           ),
           SizedBox(width: SizeUtil.smallSpace),
           Expanded(

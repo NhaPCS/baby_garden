@@ -14,6 +14,7 @@ import 'package:baby_garden_flutter/screen/child_heath/provider/get_list_baby_pr
 import 'package:baby_garden_flutter/screen/profile/widget/user_infor.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/input/my_text_field.dart';
+import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -59,7 +60,8 @@ class _AccountManageScreenState
                 builder: (BuildContext context, UserProvider value,
                     GetListAddressProvider addressProvider, Widget child) {
                   var entries = value.getEntries(context,
-                      address: StringUtil.getFullAddress(addressProvider.mainAddress));
+                      address: StringUtil.getFullAddress(
+                          addressProvider.mainAddress));
 
                   final listEntryUser = List<Widget>();
                   entries.asMap().forEach((key, value) {
@@ -76,7 +78,11 @@ class _AccountManageScreenState
               Consumer<GetListBabyProvider>(
                 builder: (BuildContext context, GetListBabyProvider value,
                     Widget child) {
-                  if (value.babies == null) return SizedBox();
+                  if (value.babies == null || value.babies.isEmpty)
+                    return SizedBox(child: LoadingView(
+                      isNoData: true,
+                      title: S.of(context).no_child,
+                    ), height: 200,);
                   return Column(
                     children: value.babies
                         .map((e) => BabyItem(

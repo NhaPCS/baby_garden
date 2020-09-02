@@ -23,17 +23,18 @@ class _State extends State<ContentViewMoreable> {
     return Padding(
       padding: SizeUtil.smallPadding,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           MyText(
             widget.content,
             style: TextStyle(color: ColorUtil.textGray),
             overflow: isExpanded?null: TextOverflow.ellipsis,
-            maxLines: isExpanded ? null : 2,
+            maxLines: isExpanded ? null : 5,
           ),
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
-          ButtonIcon(
+          Center(child: ButtonIcon(
             onPressed: () {
               setState(() {
                 isExpanded = !isExpanded;
@@ -52,7 +53,7 @@ class _State extends State<ContentViewMoreable> {
                 top: SizeUtil.tinySpace,
                 bottom: SizeUtil.tinySpace),
             backgroundColor: Colors.transparent,
-          )
+          ),)
         ],
       ),
     );

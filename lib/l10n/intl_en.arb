@@ -385,9 +385,11 @@
   "boy": "Bé trai",
   "height": "Chiều Cao",
   "weight": "Cân nặng",
-  "chart_for_girl": "Biểu đồ chiều cao theo tuổi cho bé gái",
+  "chart_for_girl": "Biểu đồ {type} theo tuổi cho {gender}",
   "normal_height": "Chiều cao bình thường",
+  "normal_weight": "Cân nặng bình thường",
   "greater_than_age": "Chiều cao cao hơn so với tuổi",
+  "weight_greater_than_age": "Cân nặng cao hơn so với tuổi",
   "suy_dinh_duong_normal": "Trẻ suy dinh dưỡng thể thấp còi, mức độ vừa",
   "sdd_nang": "Trẻ suy dinh dưỡng thể thấp còi, mức độ nặng",
   "enter_weight_height": "Nhập chiều cao/cân nặng",
@@ -430,7 +432,7 @@
   "voucher_get_code": "Lấy mã",
   "voucher_use_code": "Sử dụng mã",
   "voucher_used": "Đã sử dụng",
-  "voucher_not_get": "Chưa lấy mã",
+  "voucher_not_get": "Chưa lấy",
   "voucher_got": "Đã lấy mã",
   "use_to_time": "Dùng đến: {date} - {time}",
   "voucher_info": "Thông tin Voucher",
@@ -463,8 +465,9 @@
   "child_take_photo_desc": "Lưu trữ kỷ niệm bạn upload ảnh mới nhất của bé nhé",
   "confirm_info": "Xác nhận thông tin",
   "confirm_child_info_message": "Bố/mẹ kiểm tra lại thông tin chiều cao, can năng của bé vừa nhập đã nhập đã đúng chưa nhé:",
-  "height_is": "Chiều cao:",
-  "weight_is": "Cân nặng:",
+  "height_is": "Chiều cao: ",
+  "weight_is": "Cân nặng: ",
+  "checking_button": "Tiến hành kiểm tra",
   "rank_is": "       Xếp hạng: ",
   "note_is": "Lưu bút: ",
   "image_is": "Ảnh của bé:",
@@ -527,10 +530,11 @@
   "promotion_code_error": "Mã giảm giá không đúng hoặc đã được sử dụng",
   "total_price": "Thành tiền",
   "mess_error_user_name": "Bạn vui lòng nhập đầy đủ họ tên",
-
   "choose_other_day": "Vui lòng chọn ngày khác",
   "total_search": "{total} kết quả tìm kiếm",
-  "alert_shop_has_no_address": "Shop hiện tại không có địa chỉ nhận hàng nào.\n Vui lòng chọn hình thức nhận hàng khác."
+  "alert_shop_has_no_address": "Shop hiện tại không có địa chỉ nhận hàng nào.\n Vui lòng chọn hình thức nhận hàng khác.",
   "mess_confirm_delete": "Bạn có muốn xoá không?",
-  "hint_pick_a_product": "Hãy chon một sản phẩm để nhắc lịch..."
+  "hint_pick_a_product": "Hãy chon một sản phẩm để nhắc lịch...",
+  "no_child": "Bố mẹ đã có con chưa? Hãy thêm bé vào để sử dụng chức năng này nhé!",
+  "product_share_content": "{name} đang có giá chỉ {price} tại Vườn Của Bé, chi tiết tham khảo:"
 }

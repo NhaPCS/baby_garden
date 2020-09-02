@@ -53,7 +53,6 @@ class DynamicLinkService {
 
   static Future<void> createDynamicLink(
       {@required String title,
-      @required String content,
       @required String id,
       @required String suffix}) async {
     String appId = "com.vuoncuabe";
@@ -74,6 +73,6 @@ class DynamicLinkService {
     var shortLink = await parameters.buildShortLink();
     var shortUrl = shortLink.shortUrl;
 
-    Share.share("${title}\n ${shortUrl}");
+    Share.share("${title} \n${shortUrl}");
   }
 }
