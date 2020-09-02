@@ -7,19 +7,24 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/image/circle_image.dart';
 import 'package:baby_garden_flutter/widget/image/my_cached_image.dart';
 import 'package:baby_garden_flutter/widget/painter/draw_triangle.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class VoucherItem extends StatelessWidget {
   final dynamic voucher;
   final VoidCallback onItemClick;
 
-  const VoucherItem({Key key, this.voucher, this.onItemClick}) : super(key: key);
+  const VoucherItem({Key key, this.voucher, this.onItemClick})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if(voucher == null) return SizedBox();
+    if (voucher == null) return SizedBox();
     return InkWell(
       child: Card(
+        shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.all(Radius.circular(SizeUtil.smallRadius))),
         margin: EdgeInsets.only(
             left: SizeUtil.smallSpace,
             right: SizeUtil.smallSpace,
@@ -27,10 +32,14 @@ class VoucherItem extends StatelessWidget {
         child: Stack(
           alignment: AlignmentDirectional.bottomCenter,
           children: <Widget>[
-            MyCachedImage(
-              url: voucher['img'],
-              width: double.infinity,
+            Container(
               height: 200,
+              decoration: BoxDecoration(
+                  color: ColorUtil.lightGray,
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(SizeUtil.smallRadius)),
+                  image: DecorationImage(
+                      image: CachedNetworkImageProvider(voucher['img'] ?? ''))),
             ),
             Positioned(
               left: 0,
@@ -64,70 +73,82 @@ class VoucherItem extends StatelessWidget {
                   width: 50,
                   height: 50,
                 )),
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(6)),
-              padding: SizeUtil.normalPadding,
-              child: Column(children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: Text(
-                    voucher['info'],
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.black),
-                    maxLines: 2,
-                  ),
+            Stack(
+              overflow: Overflow.visible,
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(SizeUtil.smallRadius)),
+                  padding: SizeUtil.normalPadding,
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0, top: 14),
+                          child: Text(
+                            StringUtil.removeHtml(voucher['info']),
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(color: Colors.black),
+                            maxLines: 2,
+                          ),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            RichText(
+                                text: TextSpan(
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                    children: <TextSpan>[
+                                  TextSpan(
+                                      text: "${S.of(context).period}: ",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                  TextSpan(
+                                      text:
+                                          "${voucher['time_end']} ${voucher['date_end']}")
+                                ])),
+                            Expanded(child: SizedBox()),
+                            RichText(
+                                text: TextSpan(
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                    children: [
+                                  TextSpan(
+                                      text:
+                                          "${S.of(context).numberOfVoucher}: ",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                  TextSpan(
+                                      text:
+                                          "${voucher['number_used']}/${voucher['number']}"),
+                                ])),
+                          ],
+                        )
+                      ]),
                 ),
-                Row(
-                  children: <Widget>[
-                    RichText(
-                        text: TextSpan(
-                            style: TextStyle(fontSize: 14, color: Colors.black),
-                            children: <TextSpan>[
-                          TextSpan(
-                              text: "${S.of(context).period}: ",
-                              style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(
-                              text:
-                                  "${voucher['time_end']} ${voucher['date_end']}")
-                        ])),
-                    Expanded(child: SizedBox()),
-                    RichText(
-                        text: TextSpan(
-                            style: TextStyle(fontSize: 14, color: Colors.black),
-                            children: [
-                          TextSpan(
-                              text: "${S.of(context).numberOfVoucher}: ",
-                              style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(
-                              text:
-                                  "${voucher['number_used']}/${voucher['number']}"),
-                        ])),
-                  ],
-                )
-              ]),
+                Positioned(
+                    top: -14,
+                    left: 30,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(28)),
+                      ),
+                      child: CircleImage(
+                        imageUrl: voucher['shop_img'],
+                        width: 28,
+                        height: 28,
+                        margin: EdgeInsets.all(2),
+                      ),
+                    )),
+              ],
             ),
-            Positioned(
-              bottom: 75,
-              left: 40,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(28)),
-                ),
-                child: CircleImage(
-                  imageUrl: voucher['shop_img'],
-                  width: 28,
-                  height: 28,
-                  margin: EdgeInsets.all(2),
-                ),
-              ),
-            )
           ],
         ),
       ),
       onTap: () {
-        if(onItemClick!=null){
+        if (onItemClick != null) {
           onItemClick();
         }
       },

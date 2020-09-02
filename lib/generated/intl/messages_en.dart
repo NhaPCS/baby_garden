@@ -612,7 +612,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "voucher_get_code" : MessageLookupByLibrary.simpleMessage("Lấy mã"),
     "voucher_got" : MessageLookupByLibrary.simpleMessage("Đã lấy mã"),
     "voucher_info" : MessageLookupByLibrary.simpleMessage("Thông tin Voucher"),
-    "voucher_not_get" : MessageLookupByLibrary.simpleMessage("Chưa lấy mã"),
+    "voucher_not_get" : MessageLookupByLibrary.simpleMessage("Chưa lấy"),
     "voucher_use_code" : MessageLookupByLibrary.simpleMessage("Sử dụng mã"),
     "voucher_used" : MessageLookupByLibrary.simpleMessage("Đã sử dụng"),
     "waiting_checkout" : MessageLookupByLibrary.simpleMessage("Chờ thanh toán"),

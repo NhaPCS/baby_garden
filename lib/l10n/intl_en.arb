@@ -430,7 +430,7 @@
   "voucher_get_code": "Lấy mã",
   "voucher_use_code": "Sử dụng mã",
   "voucher_used": "Đã sử dụng",
-  "voucher_not_get": "Chưa lấy mã",
+  "voucher_not_get": "Chưa lấy",
   "voucher_got": "Đã lấy mã",
   "use_to_time": "Dùng đến: {date} - {time}",
   "voucher_info": "Thông tin Voucher",

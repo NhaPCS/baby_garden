@@ -3908,7 +3908,7 @@ class S {
 
   String get voucher_not_get {
     return Intl.message(
-      'Chưa lấy mã',
+      'Chưa lấy',
       name: 'voucher_not_get',
       desc: '',
       args: [],

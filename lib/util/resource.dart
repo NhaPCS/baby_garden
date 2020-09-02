@@ -288,6 +288,7 @@ class StringUtil {
   }
 
   static String removeHtml(String htmlString) {
+    if(htmlString==null) return '';
     var document = parse(htmlString);
     String parsedString = parse(document.body.text).documentElement.text;
     return parsedString;
