@@ -14,6 +14,7 @@ import 'package:baby_garden_flutter/screen/booking/widget/transfer_service.dart'
 import 'package:baby_garden_flutter/screen/checkout/checkout_screen.dart';
 import 'package:baby_garden_flutter/screen/checkout/dialogue/confirm_dialogue.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
+import 'package:baby_garden_flutter/screen/order_detail/order_detail_screen.dart';
 import 'package:baby_garden_flutter/widget/button/privacy_policy_button.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/screen/booking/view_model/booking_product_view_model.dart';
@@ -163,7 +164,7 @@ class _BookingScreenState
               return value == 1
                   ? ListTitleCustom(
                       icon: SvgIcon(
-                        'ic_transfer_info.svg',
+                        'passage-of-time.svg',
                         width: SizeUtil.iconSizeDefault,
                         height: SizeUtil.iconSizeDefault,
                       ),
@@ -508,11 +509,13 @@ class _BookingScreenState
       }
     } else {
       //note
+
       if (receiveAddress == null) {
         WidgetUtil.showMessageDialog(context,
             message: S.of(context).choose_delivery_address,
             title: S.of(context).missing_information);
-      } else {
+      }
+      else {
         await getViewModel().onBookingProduct(
             context,
             receiveTime.value['id'].trim(),
@@ -547,8 +550,16 @@ class _BookingScreenState
         } else {
           int index = await showDialog(
               context: context,
-              builder: (BuildContext context) => ConfirmDialogue());
-          pushAndReplaceAll(MainScreen(index: index), "/main_screen");
+              builder: (BuildContext context) => ConfirmDialogue(bookingCode:getViewModel().bookingData['code'].toString()));
+          if (index>0){
+            RouteUtil.pushReplacement(
+                context,
+                OrderDetailScreen(
+                  bookingId: getViewModel().bookingData['booking_id'].toString(),
+                ));
+          }else {
+            pushAndReplaceAll(MainScreen(index: index), "/main_screen");
+          }
         }
         Provider.of<CartProvider>(context, listen: false).getMyCart();
       }

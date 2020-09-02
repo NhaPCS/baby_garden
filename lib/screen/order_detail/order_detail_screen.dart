@@ -19,8 +19,10 @@ import '../order_delivery_info/order_delivery_info_screen.dart';
 
 class OrderDetailScreen extends StatefulWidget {
   final String bookingId;
+  final String title;
 
-  const OrderDetailScreen({Key key, this.bookingId = "0"}) : super(key: key);
+  const OrderDetailScreen({Key key, this.bookingId = "0", this.title = ""})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -63,7 +65,7 @@ class _OrderDetailScreenState
             data['payment'], data['is_rate']);
         return Scaffold(
             appBar: getAppBar(
-              title: title,
+              title: widget.title == "" ? title : widget.title,
               centerTitle: true,
               bgColor: ColorUtil.primaryColor,
               titleColor: Colors.white,
@@ -120,7 +122,7 @@ class _OrderDetailScreenState
               OrderInfo(
                 svgIcon: 'ic_payment_method.svg',
                 title: S.of(context).type_of_checkout,
-                content: data['payment'] == 1
+                content: data['payment'] == "1"
                     ? S.of(context).cash_payment
                     : S.of(context).credit_transfer_payment,
               ),
@@ -399,7 +401,7 @@ class _OrderDetailScreenState
     switch (state) {
       case BookingState.WAITING_CONFIRM: //đã đặt
         title = S.of(context).waiting_confirm;
-        isShowPositiveButton = true;
+        isShowPositiveButton = false;
         isShowNegativeButton = true;
         break;
       case BookingState.CONFIRM: //xác nhận

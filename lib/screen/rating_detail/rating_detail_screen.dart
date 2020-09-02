@@ -113,7 +113,7 @@ class _RatingDetailScreenState
                         : (widget.isService
                             ? S
                                 .of(context)
-                                .using_date(bookingDetailData["time_finish"])
+                                .using_date(bookingDetailData["date_booking"],bookingDetailData["time_booking"])
                             : S.of(context).receiving_date(
                                 bookingDetailData["time_finish"])),
                     style: TextStyle(fontSize: SizeUtil.textSizeTiny),

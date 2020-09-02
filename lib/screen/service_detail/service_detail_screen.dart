@@ -74,8 +74,7 @@ class _ServiceDetailScreenState
                       Text(
                         S.of(context).service_header(
                             bookingDetailData['code'],
-                            bookingDetailData['date_booking'],
-                            bookingDetailData['time_booking']),
+                            bookingDetailData['date']),
                         style: TextStyle(height: 1.5),
                       ),
                       RichTextForm(
@@ -106,7 +105,7 @@ class _ServiceDetailScreenState
               OrderInfo(
                 svgIcon: 'ic_payment_method.svg',
                 title: S.of(context).date_using,
-                content: bookingDetailData['time_finish'],
+                content: bookingDetailData['date_booking'] + " " + bookingDetailData['time_booking'],
               ),
               OrderInfo(
                 svgIcon: 'order_info.svg',

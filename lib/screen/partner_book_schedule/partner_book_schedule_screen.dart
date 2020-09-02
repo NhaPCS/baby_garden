@@ -73,10 +73,10 @@ class _PartnerBookScheduleScreenState
   @override
   void initState() {
     _addCallBackFrame();
-    _tabController = TabController(vsync: this, length: 2);
-    _tabController.addListener(() {
-      _partnerTabbarProvider.onChange();
-    });
+//    _tabController = TabController(vsync: this, length: 2);
+//    _tabController.addListener(() {
+//      _partnerTabbarProvider.onChange();
+//    });
     super.initState();
   }
 
@@ -96,21 +96,41 @@ class _PartnerBookScheduleScreenState
   @override
   Widget buildWidget(BuildContext context) {
     final productTabbarHei = SizeUtil.tab_bar_fix_height + 76;
+    ValueNotifier<int> numberLike;
     return Consumer<BookingServiceDetailProvider>(builder:
         (BuildContext context, BookingServiceDetailProvider shopValue,
             Widget child) {
       _addCallBackFrame();
       if (shopValue.data == null) return SizedBox();
+      numberLike = ValueNotifier(int.parse(
+          shopValue.data != null ? shopValue.data['number_like'] : "0"));
+      _tabController = TabController(
+          vsync: this,
+          length: (shopValue.data['service'] == null ? 0 : 1) +
+              (shopValue.data['number_product'] == 0 ? 0 : 1));
+      _tabController.addListener(() {
+        _partnerTabbarProvider.onChange();
+      });
       return ValueListenableBuilder<double>(
           valueListenable: _rowHeight,
           builder: (BuildContext context, double height, Widget child) {
             return Scaffold(
               body: _rowHeight.value > 0
                   ? NestedScrollView(
-                      body: TabBarView(controller: _tabController, children: [
-                        bookingContent(shopValue.data),
-                        productContent(shopValue.products)
-                      ]),
+                      body: shopValue.data['service'] == null &&
+                              shopValue.data['number_product'] == 0
+                          ? SizedBox()
+                          : TabBarView(
+                              controller: _tabController,
+                              children: shopValue.data['service'] != null &&
+                                      shopValue.data['number_product'] > 0
+                                  ? [
+                                      bookingContent(shopValue.data),
+                                      productContent(shopValue.products)
+                                    ]
+                                  : shopValue.data['service'] != null
+                                      ? [bookingContent(shopValue.data)]
+                                      : [productContent(shopValue.products)]),
                       //todo get height view
                       headerSliverBuilder: (context, isScrollInner) {
                         return [
@@ -170,30 +190,34 @@ class _PartnerBookScheduleScreenState
                                                   ShopIconInfo(
                                                     icon:
                                                         "photo/comment_img.png",
-                                                    textData: shopValue.data !=
-                                                            null
-                                                        ? shopValue.data[
-                                                            'number_comment']
-                                                        : "212",
+                                                    textData: shopValue
+                                                        .data['number_comment'],
                                                   ),
                                                   SizedBox(
                                                     width: SizeUtil.smallSpace,
                                                   ),
-                                                  ShopIconInfo(
-                                                    icon: "photo/heart.png",
-                                                    textData: shopValue.data !=
-                                                            null
-                                                        ? shopValue
-                                                            .data['number_like']
-                                                        : "12",
-                                                  )
+                                                  ValueListenableBuilder<int>(
+                                                      valueListenable:
+                                                          numberLike,
+                                                      builder:
+                                                          (BuildContext context,
+                                                              int value,
+                                                              Widget child) {
+                                                        return ShopIconInfo(
+                                                          icon:
+                                                              "photo/heart.png",
+                                                          textData:
+                                                              value.toString(),
+                                                        );
+                                                      }),
                                                 ],
                                               ),
                                             )
                                           ],
                                         ),
                                         //todo shop info
-                                        shopInfo(shopValue.data, value.isShow),
+                                        shopInfo(shopValue.data, value.isShow,
+                                            numberLike),
                                         SizedBox(
                                           height: SizeUtil.tinySpace,
                                         ),
@@ -213,63 +237,76 @@ class _PartnerBookScheduleScreenState
                                 delegate: SliverCategoryDelegate(
                                     Column(
                                       children: <Widget>[
-                                        Container(
-                                          height: SizeUtil.tab_bar_fix_height,
-                                          child: ColoredTabBar(
-                                            ColorUtil.lineColor,
-                                            TabBar(
-                                              onTap: (val) {
-                                                _partnerTabbarProvider
-                                                    .onChange();
-                                              },
-                                              indicatorWeight: 0,
-                                              controller: _tabController,
-                                              labelColor: Colors.white,
-                                              indicatorColor: ColorUtil.white,
-                                              indicator: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(0),
-                                                  color:
-                                                      ColorUtil.primaryColor),
-                                              unselectedLabelColor:
-                                                  ColorUtil.textColor,
-                                              tabs: [
-                                                Tab(
-                                                  text: S.of(context).book,
-                                                ),
-                                                Tab(
-                                                  child: Container(
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: <Widget>[
-                                                        Text(
-                                                          S.of(context).product,
-                                                        ),
-                                                        Text(
-                                                          "(${shopValue.products.length.toString()})",
-                                                          style: TextStyle(
-                                                              fontSize: SizeUtil
-                                                                  .textSizeTiny),
-                                                        )
-                                                      ],
-                                                    ),
+                                        shopValue.data['service'] == null &&
+                                                shopValue.data[
+                                                        'number_product'] ==
+                                                    0
+                                            ? SizedBox()
+                                            : Container(
+                                                height:
+                                                    SizeUtil.tab_bar_fix_height,
+                                                child: ColoredTabBar(
+                                                  ColorUtil.lineColor,
+                                                  TabBar(
+                                                    onTap: (val) {
+                                                      _partnerTabbarProvider
+                                                          .onChange();
+                                                    },
+                                                    indicatorWeight: 0,
+                                                    controller: _tabController,
+                                                    labelColor: Colors.white,
+                                                    indicatorColor:
+                                                        ColorUtil.white,
+                                                    indicator: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(0),
+                                                        color: ColorUtil
+                                                            .primaryColor),
+                                                    unselectedLabelColor:
+                                                        ColorUtil.textColor,
+                                                    tabs: shopValue.data[
+                                                                    'service'] !=
+                                                                null &&
+                                                            shopValue.data[
+                                                                    'number_product'] >
+                                                                0
+                                                        ? [
+                                                            Tab(
+                                                              text: S
+                                                                  .of(context)
+                                                                  .book,
+                                                            ),
+                                                            productTab(shopValue
+                                                                .products.length
+                                                                .toString()),
+                                                          ]
+                                                        : shopValue.data[
+                                                                    'service'] !=
+                                                                null
+                                                            ? [
+                                                                Tab(
+                                                                  text: S
+                                                                      .of(context)
+                                                                      .book,
+                                                                )
+                                                              ]
+                                                            : [
+                                                                productTab(shopValue
+                                                                    .products
+                                                                    .length
+                                                                    .toString())
+                                                              ],
                                                   ),
                                                 ),
-                                              ],
-                                            ),
-                                          ),
-                                          decoration: BoxDecoration(boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey,
-                                              blurRadius: 5.0,
-                                            ),
-                                          ]),
-                                        ),
+                                                decoration:
+                                                    BoxDecoration(boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey,
+                                                    blurRadius: 5.0,
+                                                  ),
+                                                ]),
+                                              ),
                                         value.isProduct
                                             ? ListCategory()
                                             : SizedBox()
@@ -342,12 +379,14 @@ class _PartnerBookScheduleScreenState
         ? data['address'][0]['address']
         : "";
     return ListView(
+      padding: EdgeInsets.all(0),
       children: <Widget>[
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(SizeUtil.midSmallSpace),
               child: Text(
                 S.of(context).choose_client,
                 style: TextStyle(
@@ -560,7 +599,7 @@ class _PartnerBookScheduleScreenState
     );
   }
 
-  Widget shopInfo(dynamic data, bool isShow) {
+  Widget shopInfo(dynamic data, bool isShow, ValueNotifier<int> numberLike) {
     if (data == null) {
       return Container(height: 0);
     }
@@ -595,6 +634,11 @@ class _PartnerBookScheduleScreenState
             FavoriteShopButton(
               isFavorite: isFavorite,
               shopId: widget.shopID,
+              onPerformance: (isLike, success) {
+                if (success) {
+                  numberLike.value = numberLike.value + (isLike ? 1 : -1);
+                }
+              },
             )
           ],
         )),
@@ -618,9 +662,11 @@ class _PartnerBookScheduleScreenState
                     data['address'] != null && data['address'].length > 0
                         ? data['address'][0]["address"]
                         : null;
+//                String uri = "https://www.google.com/maps/search/${Uri.encodeFull(address)}";
                 String uri =
-                    "https://www.google.com/maps/search/${Uri.encodeFull(address)}";
-                if (address != null && await canLaunch(uri)) launch(uri);
+                    "https://www.google.com/maps/search/?api=1&query=${Uri.encodeFull(data['lat'])},${Uri.encodeFull(data['lng'])}";
+//                if (address != null && await canLaunch(uri)) launch(uri);
+                if (await canLaunch(uri)) launch(uri);
               },
               child: Text(
                 "Chỉ đường",
@@ -752,5 +798,25 @@ class _PartnerBookScheduleScreenState
 //                imageHeight = _bannerKey.currentContext.size.height,
             }
         });
+  }
+
+  Widget productTab(String data) {
+    return Tab(
+      child: Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              S.of(context).product,
+            ),
+            Text(
+              "(${data})",
+              style: TextStyle(fontSize: SizeUtil.textSizeTiny),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

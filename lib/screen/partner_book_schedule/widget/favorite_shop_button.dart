@@ -8,8 +8,10 @@ import 'package:nested/nested.dart';
 class FavoriteShopButton extends StatefulWidget {
   final ValueNotifier<bool> isFavorite;
   final String shopId;
+  final Function onPerformance;
 
-  const FavoriteShopButton({Key key, this.isFavorite, this.shopId})
+  const FavoriteShopButton(
+      {Key key, this.isFavorite, this.shopId, this.onPerformance})
       : super(key: key);
 
   @override
@@ -19,6 +21,7 @@ class FavoriteShopButton extends StatefulWidget {
 }
 
 class _State extends BaseState<FavoriteShopButton> {
+  bool isClickable = true;
 
   @override
   void initState() {
@@ -63,17 +66,23 @@ class _State extends BaseState<FavoriteShopButton> {
         },
       ),
       onTap: () {
+        isClickable = false;
         widget.isFavorite.value = !widget.isFavorite.value;
         changeFavorite();
+        print("${widget.isFavorite.value}");
       },
     );
   }
 
   void changeFavorite() async {
     if (widget.isFavorite.value) {
-      await favouriteShop(shopID: widget.shopId);
+      var data = await favouriteShop(shopID: widget.shopId);
+      widget.onPerformance(true, data);
+      isClickable = true;
     } else {
-      await unFavouriteShop(shopID: widget.shopId);
+      var data = await unFavouriteShop(shopID: widget.shopId);
+      widget.onPerformance(false, data);
+      isClickable = true;
     }
   }
 

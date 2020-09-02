@@ -1305,12 +1305,12 @@ class S {
     );
   }
 
-  String service_header(Object code, Object date_booking, Object time_booking) {
+  String service_header(Object code, Object date_booking) {
     return Intl.message(
-      'Mã đặt lịch: $code\nNgày đặt lịch: $date_booking - $time_booking',
+      'Mã đặt lịch: $code\nNgày đặt lịch: $date_booking',
       name: 'service_header',
       desc: '',
-      args: [code, date_booking, time_booking],
+      args: [code, date_booking],
     );
   }
 
@@ -1422,12 +1422,12 @@ class S {
     );
   }
 
-  String using_date(Object date) {
+  String using_date(Object date, Object time) {
     return Intl.message(
-      'Ngày sử dung: $date',
+      'Ngày sử dung: $date $time',
       name: 'using_date',
       desc: '',
-      args: [date],
+      args: [date, time],
     );
   }
 
@@ -4821,6 +4821,15 @@ class S {
       name: 'total_search',
       desc: '',
       args: [total],
+    );
+  }
+
+  String get alert_shop_has_no_address {
+    return Intl.message(
+      'Shop hiện tại không có địa chỉ nhận hàng nào.\n Vui lòng chọn hình thức nhận hàng khác.',
+      name: 'alert_shop_has_no_address',
+      desc: '',
+      args: [],
     );
   }
 

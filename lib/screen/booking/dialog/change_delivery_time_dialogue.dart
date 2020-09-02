@@ -109,12 +109,6 @@ class _ChangeDeliveryTimeDialogueState
                               color: ColorUtil.primaryColor,
                               fontSize: SizeUtil.textSizeSmall),
                         ),
-                        Text(
-                          S.of(context).choose_other_day,
-                          style: TextStyle(
-                              color: ColorUtil.textColor,
-                              fontSize: SizeUtil.textSizeSmall),
-                        ),
                         SizedBox(
                           height: SizeUtil.bigSpaceHigher,
                         ),

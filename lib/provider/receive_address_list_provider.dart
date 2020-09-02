@@ -44,6 +44,11 @@ class ReceiveAddressListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  String getFullAddress(index) {
+    dynamic address = addressList[index];
+    return "${address['name']} - ${address['phone']}\n ${address['address']} \n Phường , Quận ${address['district_name']}, ${address['city_name']}";
+  }
+
   Future<void> getData() async {
     dynamic data = await service.listAddress();
     if (data != null) {

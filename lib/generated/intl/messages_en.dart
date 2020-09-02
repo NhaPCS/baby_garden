@@ -79,7 +79,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m29(author) => "Gửi bởi: ${author}";
 
-  static m30(code, date_booking, time_booking) => "Mã đặt lịch: ${code}\nNgày đặt lịch: ${date_booking} - ${time_booking}";
+  static m30(code, date_booking) => "Mã đặt lịch: ${code}\nNgày đặt lịch: ${date_booking}";
 
   static m31(minute) => "${minute}\nPhút";
 
@@ -97,7 +97,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m38(date, time) => "Dùng đến: ${date} - ${time}";
 
-  static m39(date) => "Ngày sử dung: ${date}";
+  static m39(date, time) => "Ngày sử dung: ${date} ${time}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -127,6 +127,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "alert_missing_enter_new_password" : MessageLookupByLibrary.simpleMessage("Vui lòng nhập mật khẩu"),
     "alert_missing_enter_new_repassword" : MessageLookupByLibrary.simpleMessage("Vui lòng nhập lại mật khẩu"),
     "alert_resert_pass_success" : MessageLookupByLibrary.simpleMessage("Đổi mật khẩu thành công, mời bạn tiếp tục mua hàng"),
+    "alert_shop_has_no_address" : MessageLookupByLibrary.simpleMessage("Shop hiện tại không có địa chỉ nhận hàng nào.\n Vui lòng chọn hình thức nhận hàng khác."),
     "all" : MessageLookupByLibrary.simpleMessage("Tất cả"),
     "amount" : MessageLookupByLibrary.simpleMessage("Số tiền:"),
     "app_name" : MessageLookupByLibrary.simpleMessage("Vöôøn Cuûa Beù"),
