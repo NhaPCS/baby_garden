@@ -15,9 +15,7 @@ import 'package:flutter_picker/flutter_picker.dart';
 import 'package:html/parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:package_info/package_info.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:share/share.dart';
 
 class ColorUtil {
   static const Color primaryColor = Color(0xffFF8918);

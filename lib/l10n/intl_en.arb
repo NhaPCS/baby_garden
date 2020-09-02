@@ -535,5 +535,6 @@
   "total_search": "{total} kết quả tìm kiếm",
   "mess_confirm_delete": "Bạn có muốn xoá không?",
   "hint_pick_a_product": "Hãy chon một sản phẩm để nhắc lịch...",
-  "no_child": "Bố mẹ đã có con chưa? Hãy thêm bé vào để sử dụng chức năng này nhé!"
+  "no_child": "Bố mẹ đã có con chưa? Hãy thêm bé vào để sử dụng chức năng này nhé!",
+  "product_share_content": "{name} đang có giá chỉ {price} tại Vườn Của Bé, chi tiết tham khảo:"
 }

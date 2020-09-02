@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/data/dynamic_link_service.dart';
+import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/change_index_provider.dart';
 import 'package:baby_garden_flutter/screen/photo_view/photo_view_screen.dart';
@@ -38,6 +39,7 @@ class ProductHeader extends StatelessWidget {
           onItemSelected: (index) {
             onCarouselItemSelected(index);
           },
+          autoPlay: true,
           onItemPressed: (index) {
             RouteUtil.push(
                 context,
@@ -104,7 +106,12 @@ class ProductHeader extends StatelessWidget {
                   ),
                   borderRadius: SizeUtil.iconSize,
                   onPressed: () {
-                    DynamicLinkService.createDynamicLink(title: product['name'], content: product['content'], id: product['id'], suffix: 'product');
+                    DynamicLinkService.createDynamicLink(
+                        title: S.of(context).product_share_content(
+                            product['name'] ?? '',
+                            StringUtil.getPriceText(product['price_discount'])),
+                        id: product['id'],
+                        suffix: 'product');
                   },
                 ),
                 ButtonIcon(

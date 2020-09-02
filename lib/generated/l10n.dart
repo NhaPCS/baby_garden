@@ -4850,6 +4850,15 @@ class S {
       args: [],
     );
   }
+
+  String product_share_content(Object name, Object price) {
+    return Intl.message(
+      '$name đang có giá chỉ $price tại Vườn Của Bé, chi tiết tham khảo:',
+      name: 'product_share_content',
+      desc: '',
+      args: [name, price],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

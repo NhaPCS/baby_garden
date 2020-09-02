@@ -43,9 +43,9 @@ class _ProductScreenState
     extends BaseStateModel<ProductDetailScreen, ProductDetailViewModel> {
   final ChangeIndexProvider _changeIndexProvider = ChangeIndexProvider();
   final GetListProductProvider _getListProductProvider =
-  GetListProductProvider();
+      GetListProductProvider();
   final GetProductDetailProvider _getProductDetailProvider =
-  GetProductDetailProvider();
+      GetProductDetailProvider();
 
   @override
   void initState() {
@@ -67,9 +67,7 @@ class _ProductScreenState
   Widget buildWidget(BuildContext context) {
     return Scaffold(
       appBar: getAppBar(
-        title: S
-            .of(context)
-            .product_detail,
+        title: S.of(context).product_detail,
         actions: [CartIcon()],
       ),
       body: Consumer<GetProductDetailProvider>(
@@ -84,8 +82,8 @@ class _ProductScreenState
                   _changeIndexProvider.changeIndex(index);
                 },
                 onFavoriteClicked: () {
-                  _getProductDetailProvider.favorite(
-                      context, product: productProvider.product);
+                  _getProductDetailProvider.favorite(context,
+                      product: productProvider.product);
                 },
               ),
               paddingContainer(Row(
@@ -99,9 +97,9 @@ class _ProductScreenState
                   ),
                   Expanded(
                       child: MyText(
-                        productProvider.product['name'],
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ))
+                    productProvider.product['name'],
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ))
                 ],
               )),
               paddingContainer(MyText(
@@ -130,12 +128,8 @@ class _ProductScreenState
                   Expanded(child: SizedBox()),
                   Text(
                     productProvider.isOutStock()
-                        ? S
-                        .of(context)
-                        .product_out_stock
-                        : S
-                        .of(context)
-                        .product_existing,
+                        ? S.of(context).product_out_stock
+                        : S.of(context).product_existing,
                     style: TextStyle(
                         color: ColorUtil.blue,
                         fontSize: SizeUtil.textSizeSmall),
@@ -148,9 +142,7 @@ class _ProductScreenState
               ),
               WidgetUtil.getLine(width: 2),
               paddingContainer(Text(
-                S
-                    .of(context)
-                    .detail_info,
+                S.of(context).detail_info,
                 style: TextStyle(fontWeight: FontWeight.bold),
               )),
               SizedBox(
@@ -159,82 +151,73 @@ class _ProductScreenState
               Column(
                 children: List.generate(
                     _getProductDetailProvider.DETAIL_INFO.length,
-                        (index) =>
-                        infoRow(
-                            _getProductDetailProvider.DETAIL_INFO[index],
-                            index)),
+                    (index) => infoRow(
+                        _getProductDetailProvider.DETAIL_INFO[index], index)),
               ),
               WidgetUtil.getLine(width: 2),
               paddingContainer(Text(
-                S
-                    .of(context)
-                    .product_description,
+                S.of(context).product_description,
                 style: TextStyle(fontWeight: FontWeight.bold),
               )),
               ContentViewMoreable(
                 content: productProvider.product['content'],
               ),
               WidgetUtil.getLine(width: 2, margin: EdgeInsets.all(0)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                      child: paddingContainer(
+              Consumer<GetListProductProvider>(
+                builder: (BuildContext context,
+                    GetListProductProvider listProductProvider, Widget child) {
+                  if (listProductProvider.products == null ||
+                      listProductProvider.products.isEmpty) return SizedBox();
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                          child: paddingContainer(
                         Text(
-                          S
-                              .of(context)
-                              .same_product,
+                          S.of(context).same_product,
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         padding: SizeUtil.smallPadding,
                       )),
-                  ButtonIcon(
-                    icon: Wrap(
-                      alignment: WrapAlignment.center,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      spacing: SizeUtil.tinySpace,
-                      children: <Widget>[
-                        Text(
-                          S
-                              .of(context)
-                              .view_more,
-                          style: TextStyle(
+                      ButtonIcon(
+                        icon: Wrap(
+                          alignment: WrapAlignment.center,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: SizeUtil.tinySpace,
+                          children: <Widget>[
+                            Text(
+                              S.of(context).view_more,
+                              style: TextStyle(
+                                  color: ColorUtil.primaryColor,
+                                  fontSize: SizeUtil.textSizeSmall),
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
                               color: ColorUtil.primaryColor,
-                              fontSize: SizeUtil.textSizeSmall),
+                              size: SizeUtil.iconSizeSmall,
+                            )
+                          ],
                         ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: ColorUtil.primaryColor,
-                          size: SizeUtil.iconSizeSmall,
-                        )
-                      ],
-                    ),
-                    onPressed: () {
-                      push(ListProductScreen(
-                        section: Section(
-                            title: S
-                                .of(context)
-                                .same_product,
-                            path: "getProduct"),
-                        productId: productProvider.product['id'],
-                      ));
-                    },
-                  )
-                ],
+                        onPressed: () {
+                          push(ListProductScreen(
+                            section: Section(
+                                title: S.of(context).same_product,
+                                path: "getProduct"),
+                            productId: productProvider.product['id'],
+                          ));
+                        },
+                      )
+                    ],
+                  );
+                },
               ),
               // Sp tuong tu
               Consumer<GetListProductProvider>(
                 builder: (BuildContext context,
                     GetListProductProvider listProductProvider, Widget child) {
                   if (listProductProvider.products == null ||
-                      listProductProvider.products.isEmpty)
-                    return SizedBox(
-                      height: 100,
-                      child: LoadingView(
-                        isNoData: listProductProvider.products != null,
-                      ),
-                    );
+                      listProductProvider.products.isEmpty) return SizedBox();
                   return ListHorizontalProduct(
                     products: listProductProvider.products,
                     padding: EdgeInsets.only(top: SizeUtil.tinySpace),
@@ -254,8 +237,7 @@ class _ProductScreenState
             children: <Widget>[
               MyFlatButton(
                 onPressed: () {
-                  if (!Provider
-                      .of<UserProvider>(context, listen: false)
+                  if (!Provider.of<UserProvider>(context, listen: false)
                       .isLogin) {
                     WidgetUtil.showRequireLoginDialog(context);
                     return;
@@ -270,12 +252,8 @@ class _ProductScreenState
                 },
                 height: 50,
                 text: productProvider.isOutStock()
-                    ? S
-                    .of(context)
-                    .expect_to_buy
-                    : S
-                    .of(context)
-                    .buy_now,
+                    ? S.of(context).expect_to_buy
+                    : S.of(context).buy_now,
                 textStyle: TextStyle(color: Colors.white),
                 borderRadius: 0,
                 padding: EdgeInsets.only(
@@ -289,8 +267,7 @@ class _ProductScreenState
                 child: MyFlatButton(
                   height: 50,
                   onPressed: () {
-                    if (!Provider
-                        .of<UserProvider>(context, listen: false)
+                    if (!Provider.of<UserProvider>(context, listen: false)
                         .isLogin) {
                       WidgetUtil.showRequireLoginDialog(context);
                       return;
@@ -302,33 +279,28 @@ class _ProductScreenState
                       showModalBottomSheet(
                           isScrollControlled: true,
                           context: context,
-                          builder: (_) =>
-                              AddToCartBottomDialog(
+                          builder: (_) => AddToCartBottomDialog(
                                 product: productProvider.product,
                               ));
                     }
                   },
                   text: productProvider.isOutStock()
-                      ? S
-                      .of(context)
-                      .get_notify_when_stocking
-                      : S
-                      .of(context)
-                      .add_to_cart,
+                      ? S.of(context).get_notify_when_stocking
+                      : S.of(context).add_to_cart,
                   textStyle: TextStyle(color: Colors.white),
                   borderRadius: 0,
                   padding: SizeUtil.normalPadding,
                   color: ColorUtil.blueLight,
                   icon: productProvider.isOutStock()
                       ? Icon(
-                    Icons.notifications_active,
-                    color: Colors.white,
-                    size: SizeUtil.iconSize,
-                  )
+                          Icons.notifications_active,
+                          color: Colors.white,
+                          size: SizeUtil.iconSize,
+                        )
                       : SvgIcon(
-                    'ic_add_cart.svg',
-                    height: SizeUtil.iconSize,
-                  ),
+                          'ic_add_cart.svg',
+                          height: SizeUtil.iconSize,
+                        ),
                 ),
               )
             ],
@@ -362,9 +334,9 @@ class _ProductScreenState
                 if (e['key'] == 'category_id') {
                   push(CategoryProductScreen(
                     selectedParentId:
-                    _getProductDetailProvider.product['parent_id'],
+                        _getProductDetailProvider.product['parent_id'],
                     selectedCategoryId:
-                    _getProductDetailProvider.product['category_id'],
+                        _getProductDetailProvider.product['category_id'],
                   ));
                 }
               },
