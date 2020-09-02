@@ -378,6 +378,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "new_password" : MessageLookupByLibrary.simpleMessage("Mật khẩu mới"),
     "newest_test_time" : m11,
     "no" : MessageLookupByLibrary.simpleMessage("Không"),
+    "no_child" : MessageLookupByLibrary.simpleMessage("Bố mẹ đã có con chưa? Hãy thêm bé vào để sử dụng chức năng này nhé!"),
     "no_data" : MessageLookupByLibrary.simpleMessage("Chưa có dữ liệu"),
     "no_delivery_time_1" : MessageLookupByLibrary.simpleMessage("Không có giờ giao hàng"),
     "no_delivery_time_2" : MessageLookupByLibrary.simpleMessage("Vui lòng chọn ngày khác"),

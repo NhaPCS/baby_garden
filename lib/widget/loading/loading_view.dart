@@ -8,8 +8,16 @@ class LoadingView extends StatelessWidget {
   final bool isNoData;
   final VoidCallback onReload;
   final String title;
+  final bool showButton;
+  final String buttonLabel;
 
-  const LoadingView({Key key, this.isNoData = false, this.onReload, this.title})
+  const LoadingView(
+      {Key key,
+      this.isNoData = false,
+      this.onReload,
+      this.title,
+      this.showButton = false,
+      this.buttonLabel})
       : super(key: key);
 
   @override
@@ -19,13 +27,32 @@ class LoadingView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset("photo/logo_dim.png", width: 50,),
-            SizedBox(height: SizeUtil.smallSpace,),
-            Text(
-              title == null ? S.of(context).no_data : title,
-              textAlign: TextAlign.center,
-              style: TextStyle(color: ColorUtil.textGray),
+            !showButton
+                ? Image.asset(
+                    "photo/logo_dim.png",
+                    width: 50,
+                  )
+                : SizedBox(),
+            SizedBox(
+              height: SizeUtil.smallSpace,
             ),
+            Padding(
+              padding: EdgeInsets.only(left: 50, right: 50),
+              child: Text(
+                title == null ? S.of(context).no_data : title,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: ColorUtil.textGray),
+              ),
+            ),
+            showButton
+                ? MyRaisedButton(
+                    onPressed: () {
+                      if (onReload != null) onReload();
+                    },
+                    text: buttonLabel ?? S.of(context).reload,
+                    textStyle: TextStyle(color: Colors.white),
+                    color: ColorUtil.primaryColor)
+                : SizedBox()
           ],
         ),
       );

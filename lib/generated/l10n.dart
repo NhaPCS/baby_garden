@@ -4814,6 +4814,15 @@ class S {
       args: [],
     );
   }
+
+  String get no_child {
+    return Intl.message(
+      'Bố mẹ đã có con chưa? Hãy thêm bé vào để sử dụng chức năng này nhé!',
+      name: 'no_child',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

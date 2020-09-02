@@ -55,7 +55,7 @@ class VoucherItem extends StatelessWidget {
                 left: 0,
                 top: 0,
                 child: Container(
-                  padding: SizeUtil.tinyPadding,
+                  padding: EdgeInsets.only(top: 10, left: 5),
                   child: Transform.rotate(
                       angle: -90 * pi / 360,
                       child: AutoSizeText(
