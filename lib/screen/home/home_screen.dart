@@ -1,6 +1,7 @@
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/screen/home/item/home_category_item.dart';
 import 'package:baby_garden_flutter/screen/home/view_model/home_view_model.dart';
+import 'package:baby_garden_flutter/screen/home/widget/balloon.dart';
 import 'package:baby_garden_flutter/screen/home/widget/banners.dart';
 import 'package:baby_garden_flutter/screen/search/search_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -26,6 +27,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeState extends BaseStateModel<HomeScreen, HomeViewModel> {
   ValueNotifier<int> _reloadNotifier = new ValueNotifier(0);
+
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
@@ -35,97 +37,111 @@ class _HomeState extends BaseStateModel<HomeScreen, HomeViewModel> {
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
-      body: ValueListenableBuilder(valueListenable: _reloadNotifier, builder: (BuildContext context, value, Widget child) {
-        return NestedScrollView(
-          headerSliverBuilder: (context, isScrollInner) {
-            return [
-              SliverAppBar(
-                floating: true,
-                elevation: 0,
-                pinned: true,
-                backgroundColor: Colors.white,
-                expandedHeight:
-                Provider.of<AppProvider>(context).expandHeaderHeight,
-                flexibleSpace: Stack(
-                  children: <Widget>[
-                    Container(
-                      height: Provider.of<AppProvider>(context).bgHeaderHeight,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('photo/bg_header.png'),
-                              fit: BoxFit.cover),
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(SizeUtil.bigRadius),
-                              bottomRight: Radius.circular(SizeUtil.bigRadius))),
+      body: Stack(
+        alignment: Alignment.bottomRight,
+        children: <Widget>[
+          ValueListenableBuilder(
+            valueListenable: _reloadNotifier,
+            builder: (BuildContext context, value, Widget child) {
+              return NestedScrollView(
+                headerSliverBuilder: (context, isScrollInner) {
+                  return [
+                    SliverAppBar(
+                      floating: true,
+                      elevation: 0,
+                      pinned: true,
+                      backgroundColor: Colors.white,
+                      expandedHeight:
+                          Provider.of<AppProvider>(context).expandHeaderHeight,
+                      flexibleSpace: Stack(
+                        children: <Widget>[
+                          Container(
+                            height: Provider.of<AppProvider>(context)
+                                .bgHeaderHeight,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage('photo/bg_header.png'),
+                                    fit: BoxFit.cover),
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft:
+                                        Radius.circular(SizeUtil.bigRadius),
+                                    bottomRight:
+                                        Radius.circular(SizeUtil.bigRadius))),
+                          ),
+                          Column(
+                            children: <Widget>[
+                              SearchBar(
+                                trailing: NotifyIcon(),
+                                enable: false,
+                                onPressed: () {
+                                  push(SearchScreen());
+                                },
+                              ),
+                              Expanded(
+                                child: Banners(),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
-                    Column(
-                      children: <Widget>[
-                        SearchBar(
-                          trailing: NotifyIcon(),
-                          enable: false,
-                          onPressed: () {
-                            push(SearchScreen());
-                          },
+                    SliverPersistentHeader(
+                      pinned: true,
+                      floating: false,
+                      delegate: SliverCategoryDelegate(
+                          Card(
+                            margin: EdgeInsets.all(0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: getViewModel()
+                                  .HOME_CATEGORIES
+                                  .map((e) => HomeCategoryItem(
+                                        category: e,
+                                      ))
+                                  .toList(),
+                            ),
+                            color: Colors.white,
+                          ),
+                          Provider.of<AppProvider>(context).homeCategoryHeight,
+                          Provider.of<AppProvider>(context).homeCategoryHeight),
+                    ),
+                  ];
+                },
+                body: RefreshIndicator(
+                    child: Container(
+                      child: Column(children: <Widget>[
+                        Container(
+                          height: SizeUtil.lineHeight,
+                          color: ColorUtil.lineColor,
                         ),
                         Expanded(
-                          child: Banners(),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              SliverPersistentHeader(
-                pinned: true,
-                floating: false,
-                delegate: SliverCategoryDelegate(
-                    Card(
-                      margin: EdgeInsets.all(0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: getViewModel()
-                            .HOME_CATEGORIES
-                            .map((e) => HomeCategoryItem(
-                          category: e,
+                            child: ListView(
+                          padding: EdgeInsets.all(0),
+                          children: List.generate(
+                              getViewModel().SECTIONS.length + 1, (index) {
+                            if (index == 0) {
+                              return FlashSale();
+                            }
+                            return GridProduct(
+                              isHome: true,
+                              section: getViewModel().SECTIONS[index - 1],
+                            );
+                          }).toList(),
                         ))
-                            .toList(),
-                      ),
-                      color: Colors.white,
+                      ]),
+                      height: double.infinity,
                     ),
-                    Provider.of<AppProvider>(context).homeCategoryHeight,
-                    Provider.of<AppProvider>(context).homeCategoryHeight),
-              ),
-            ];
-          },
-          body: RefreshIndicator(child: Container(
-            child: Column(children: <Widget>[
-              Container(
-                height: SizeUtil.lineHeight,
-                color: ColorUtil.lineColor,
-              ),
-              Expanded(
-                  child: ListView(
-                    padding: EdgeInsets.all(0),
-                    children:
-                    List.generate(getViewModel().SECTIONS.length + 1, (index) {
-                      if (index == 0) {
-                        return FlashSale();
-                      }
-                      return GridProduct(
-                        isHome: true,
-                        section: getViewModel().SECTIONS[index - 1],
-                      );
-                    }).toList(),
-                  ))
-            ]),
-            height: double.infinity,
-          ), onRefresh: (){
-            _reloadNotifier.value= _reloadNotifier.value++;
-            return Future.delayed(Duration(milliseconds: 1000));
-          }),
-        );
-      },),
+                    onRefresh: () {
+                      _reloadNotifier.value = _reloadNotifier.value++;
+                      return Future.delayed(Duration(milliseconds: 1000));
+                    }),
+              );
+            },
+          ),
+          Balloon()
+        ],
+      ),
     );
   }
 

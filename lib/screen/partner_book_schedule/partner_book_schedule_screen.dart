@@ -375,9 +375,7 @@ class _PartnerBookScheduleScreenState
   }
 
   Widget bookingContent(dynamic data) {
-    _addressChoose = data['address'] != null && data['address'].length > 0
-        ? data['address'][0]['address']
-        : "";
+    _addressChoose = getAddress(data);
     return ListView(
       padding: EdgeInsets.all(0),
       children: <Widget>[
@@ -402,7 +400,10 @@ class _PartnerBookScheduleScreenState
                   PartnerChooseLocationProvider value, Widget child) {
                 return Column(
                     children: List.generate(
-                        data['address'] != null ? data['address'].length : 0,
+                        data['address'] != null &&
+                                data['address'].runtimeType == List
+                            ? data['address'].length
+                            : 0,
                         (index) => CustomRadioButton(
                               titleContent:
                                   Text(data['address'][index]['address']),
@@ -526,7 +527,7 @@ class _PartnerBookScheduleScreenState
       }
     } else {
       List<dynamic> confirmForm = [
-        {'title': 'Dịch vụ đã đặt: ', 'content': _chooseService['content']},
+        {'title': 'Dịch vụ đã đặt: ', 'content': _chooseService['name']},
         {
           'title': 'Giá niêm yết:  ',
           'content':
@@ -649,23 +650,14 @@ class _PartnerBookScheduleScreenState
             Expanded(
                 child: ShopInfoForm(
                     title: S.of(context).address_form,
-                    content:
-                        data['address'] != null && data['address'].length > 0
-                            ? data['address'][0]["address"]
-                            : "")),
+                    content: getAddress(data))),
             SizedBox(
               width: SizeUtil.smallSpace,
             ),
             InkWell(
               onTap: () async {
-                String address =
-                    data['address'] != null && data['address'].length > 0
-                        ? data['address'][0]["address"]
-                        : null;
-//                String uri = "https://www.google.com/maps/search/${Uri.encodeFull(address)}";
                 String uri =
                     "https://www.google.com/maps/search/?api=1&query=${Uri.encodeFull(data['lat'])},${Uri.encodeFull(data['lng'])}";
-//                if (address != null && await canLaunch(uri)) launch(uri);
                 if (await canLaunch(uri)) launch(uri);
               },
               child: Text(
@@ -736,10 +728,7 @@ class _PartnerBookScheduleScreenState
           shopId: "1",
         )),
         paddingContainer(ShopInfoForm(
-            title: S.of(context).address_form,
-            content: data['address'] != null && data['address'].length > 0
-                ? data['address'][0]["address"]
-                : "")),
+            title: S.of(context).address_form, content: getAddress(data))),
         paddingContainer(ShopInfoForm(
           title: S.of(context).service_type,
           content: "",
@@ -818,5 +807,19 @@ class _PartnerBookScheduleScreenState
         ),
       ),
     );
+  }
+
+  String getAddress(dynamic data) {
+    try {
+      if (data['address'].runtimeType == List) {
+        return data['address'] != null && data['address'].length > 0
+            ? data['address'][0]['address']
+            : "";
+      } else {
+        return data['address'];
+      }
+    } on Exception catch (e) {
+      return data;
+    }
   }
 }
