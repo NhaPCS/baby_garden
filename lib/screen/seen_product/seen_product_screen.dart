@@ -46,7 +46,7 @@ class _SeenProductScreen extends BaseState<SeenProductScreen> {
                   final _product = _getListProductProvider.fromJson(product);
 
                   return _product != null
-                      ? ProductItem(
+                      ? ProductFavoriteItem(
                           onTap: () {
                             push(ProductDetailScreen(
                               productId: _product.id,

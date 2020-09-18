@@ -1,13 +1,18 @@
+import 'dart:math';
+
 import 'package:baby_garden_flutter/data/model/product.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ProductItem extends StatelessWidget {
+class ProductFavoriteItem extends StatelessWidget {
   final Product product;
   final Function onTap;
+  final bool showDate;
 
-  ProductItem({Key key, this.onTap, @required this.product}) : super(key: key);
+  ProductFavoriteItem(
+      {Key key, this.onTap, @required this.product, this.showDate = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,29 +61,39 @@ class ProductItem extends StatelessWidget {
                             fontSize: SizeUtil.textSizeBigger),
                       ),
                       SizedBox(height: SizeUtil.tinySpace),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                              product.date == null
-                                  ? ''
-                                  : DateUtil.formatDDMMyyyy(product.date),
-                              style: TextStyle(
-                                  color: Color.fromRGBO(10, 133, 158, 1),
-                                  fontSize: SizeUtil.textSizeSmall)),
-                          Spacer(),
-                          Icon(
-                            Icons.favorite,
-                            color: product.isFavorite == true
-                                ? Colors.pink
-                                : Colors.white,
-                            size: SizeUtil.iconSizeBigger,
-                          ),
-                        ],
-                      ),
+                      showDate
+                          ? Row(
+                              children: <Widget>[
+                                Text(
+                                    getDate(),
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(10, 133, 158, 1),
+                                        fontSize: SizeUtil.textSizeSmall)),
+                                Spacer(),
+                                Icon(
+                                  Icons.favorite,
+                                  color: product.isFavorite == true
+                                      ? Colors.pink
+                                      : Colors.white,
+                                  size: SizeUtil.iconSizeBigger,
+                                ),
+                              ],
+                            )
+                          : SizedBox(),
                     ])),
           ),
         ]),
       ),
     );
+  }
+
+  String getDate() {
+    if (product.isFavorite) {
+      return product.favoriteDate == null
+          ? ''
+          : DateUtil.formatDDMMyyyy(product.favoriteDate);
+    } else {
+      return product.date == null ? '' : DateUtil.formatDDMMyyyy(product.date);
+    }
   }
 }

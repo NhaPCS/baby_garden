@@ -22,7 +22,6 @@ class RemindCardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     bool _validURL =
         calendar.image != null ? Uri.parse(calendar.image).isAbsolute : false;
-
     return Container(
       padding: const EdgeInsets.all(
         SizeUtil.midSmallSpace,
@@ -35,6 +34,7 @@ class RemindCardItem extends StatelessWidget {
                 elevation: 0,
                 width: 76.0,
                 height: 76.0,
+                borderRadius: 0,
                 imageUrl: calendar.image)
             : SizedBox(
                 width: 76.0,
@@ -64,24 +64,7 @@ class RemindCardItem extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: SizeUtil.tinySpace),
-                      child: Row(children: [
-                        Icon(
-                          Icons.alarm,
-                          color: Colors.orange,
-                          size: SizeUtil.iconMidSize,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: SizeUtil.midSmallSpace),
-                          child: Text(calendar.datetime,
-                              style: TextStyle(
-                                  color: ColorUtil.grayLine,
-                                  fontSize: SizeUtil.textSizeSmall)),
-                        ),
-                      ]),
-                    )
+                    getTextTimes()
                   ])),
         ),
         Column(
@@ -116,6 +99,82 @@ class RemindCardItem extends StatelessWidget {
         )
       ]),
     );
+  }
+
+  Widget getTextTimes() {
+    String time = '';
+    if (calendar.time1 != null && calendar.time1 != '00:00:00') {
+      time = '${time} | ${calendar.time1}';
+    }
+    if (calendar.time2 != null && calendar.time2 != '00:00:00') {
+      time = '${time} | ${calendar.time2}';
+    }
+    if (calendar.time3 != null && calendar.time3 != '00:00:00') {
+      time = '${time} | ${calendar.time3}';
+    }
+    if (calendar.time4 != null && calendar.time4 != '00:00:00') {
+      time = '${time} | ${calendar.time4}';
+    }
+    switch (calendar.type) {
+      case RemindType.remindBuy:
+        return Padding(
+          padding: const EdgeInsets.only(top: SizeUtil.tinySpace),
+          child: Row(children: [
+            Icon(
+              Icons.alarm,
+              color: Colors.orange,
+              size: SizeUtil.iconMidSize,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: SizeUtil.midSmallSpace),
+              child: Text(calendar.dateStart,
+                  style: TextStyle(
+                      color: ColorUtil.grayLine,
+                      fontSize: SizeUtil.textSizeSmall)),
+            ),
+          ]),
+        );
+      case RemindType.remindUse:
+        return Padding(
+          padding: const EdgeInsets.only(top: SizeUtil.tinySpace),
+          child: Row(children: [
+            Icon(
+              Icons.alarm,
+              color: Colors.orange,
+              size: SizeUtil.iconMidSize,
+            ),
+            Expanded(
+                child: Padding(
+              padding: const EdgeInsets.only(left: SizeUtil.midSmallSpace),
+              child: Text("${calendar.dateEnd} ${time}",
+                  style: TextStyle(
+                      color: ColorUtil.grayLine,
+                      fontSize: SizeUtil.textSizeSmall)),
+            )),
+          ], crossAxisAlignment: CrossAxisAlignment.start,),
+        );
+        break;
+      case RemindType.all:
+        return Padding(
+          padding: const EdgeInsets.only(top: SizeUtil.tinySpace),
+          child: Row(children: [
+            Icon(
+              Icons.alarm,
+              color: Colors.orange,
+              size: SizeUtil.iconMidSize,
+            ),
+            Expanded(
+                child: Padding(
+              padding: const EdgeInsets.only(left: SizeUtil.midSmallSpace),
+              child: Text("Mua: ${calendar.dateStart}\nSử dụng: ${calendar.dateEnd} ${time}",
+                  style: TextStyle(
+                      color: ColorUtil.grayLine,
+                      fontSize: SizeUtil.textSizeSmall)),
+            )),
+          ], crossAxisAlignment: CrossAxisAlignment.start,),
+        );
+        break;
+    }
   }
 
   List<TextSpan> getRemindTypeSpans(BuildContext context) {

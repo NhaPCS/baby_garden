@@ -80,7 +80,7 @@ class _RemindAddScreen
           valueListenable: _productController,
           builder: (BuildContext context, Product product, Widget child) {
             if (product != null) {
-              return ProductItem(product: product);
+              return ProductFavoriteItem(product: product, showDate: false,);
             }
             return SizedBox();
           },

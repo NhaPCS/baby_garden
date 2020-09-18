@@ -29,7 +29,8 @@ class _InfoTabState extends BaseState<InfoTab> {
   Widget buildWidget(BuildContext context) {
     List<dynamic> imgs;
     try {
-      imgs = widget.voucher == null ? null : widget.voucher['img'];
+      if (widget.voucher != null && widget.voucher['img'] != null && widget.voucher['img'].runtimeType.toString().contains("List"))
+        imgs = widget.voucher == null ? null : widget.voucher['img'];
     } on Exception catch (e) {
       imgs = null;
     }
