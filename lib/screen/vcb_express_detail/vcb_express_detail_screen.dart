@@ -84,7 +84,7 @@ class _VCBExpressDetailScreenState
                     Expanded(
                       child: SingleChildScrollView(
                         child: Html(
-                          data: value.currentDetail['content'],
+                          data: value.currentDetail['content'] ?? '',
                         ),
                       ),
                     ),

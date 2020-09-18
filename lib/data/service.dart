@@ -99,7 +99,7 @@ Future<dynamic> favouriteShop({String shopID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await post(null,
       path: "favouriteShop", param: {'user_id': userId, 'shop_id': shopID});
-  if(response.isSuccess()){
+  if (response.isSuccess()) {
     return true;
   }
   return false;
@@ -110,7 +110,7 @@ Future<dynamic> unFavouriteShop({String shopID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await post(null,
       path: "unFavouriteShop", param: {'user_id': userId, 'shop_id': shopID});
-  if(response.isSuccess()){
+  if (response.isSuccess()) {
     return true;
   }
   return false;
@@ -227,8 +227,7 @@ Future<dynamic> bookingProduct(
     String cityID,
     String point,
     String districtID,
-    String ward_id
-    }) async {
+    String ward_id}) async {
   Response response = await post(null, path: "bookingProduct", param: {
     'point': point,
     'user_id': userID,
@@ -255,7 +254,9 @@ Future<dynamic> bookingProduct(
 }
 
 Future<dynamic> listVoucher({int index, String categoryId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic param = {
+    'user_id': userId,
     'index': index.toString(),
     'number_post': PAGE_SIZE.toString(),
   };
@@ -825,26 +826,32 @@ Future<dynamic> listPromotion() async {
 }
 
 Future<Response> addUserAddress(BuildContext context,
-    {String address, int isMain, String cityId, String districtId, String wardId, String phone, String name}) async {
+    {String address,
+    int isMain,
+    String cityId,
+    String districtId,
+    String wardId,
+    String phone,
+    String name}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {
     "user_id": userId,
     "address": address,
     "is_main": isMain.toString(),
   };
-  if(cityId!=null){
+  if (cityId != null) {
     params['city_id'] = cityId.toString();
   }
-  if(cityId!=null){
+  if (cityId != null) {
     params['district_id'] = districtId.toString();
   }
-  if(cityId!=null){
+  if (cityId != null) {
     params['ward_id'] = wardId.toString();
   }
-  if(cityId!=null){
+  if (cityId != null) {
     params['phone'] = phone.toString();
   }
-  if(cityId!=null){
+  if (cityId != null) {
     params['name'] = name.toString();
   }
 
@@ -855,7 +862,14 @@ Future<Response> addUserAddress(BuildContext context,
 }
 
 Future<Response> editUserAddress(BuildContext context,
-    {String address, int isMain, String addressId, String cityId, String districtId, String wardId, String phone, String name}) async {
+    {String address,
+    int isMain,
+    String addressId,
+    String cityId,
+    String districtId,
+    String wardId,
+    String phone,
+    String name}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {
     "user_id": userId,
@@ -864,19 +878,19 @@ Future<Response> editUserAddress(BuildContext context,
     "address_id": addressId
   };
 
-  if(cityId!=null){
+  if (cityId != null) {
     params['city_id'] = cityId.toString();
   }
-  if(cityId!=null){
+  if (cityId != null) {
     params['district_id'] = districtId.toString();
   }
-  if(cityId!=null){
+  if (cityId != null) {
     params['ward_id'] = wardId.toString();
   }
-  if(cityId!=null){
+  if (cityId != null) {
     params['phone'] = phone.toString();
   }
-  if(cityId!=null){
+  if (cityId != null) {
     params['name'] = name.toString();
   }
   Response response = await post(context,
@@ -1126,7 +1140,7 @@ Future<dynamic> search(String key) async {
   return null;
 }
 
-Future<dynamic> searchProduct({String key, int index = 0}) async {
+Future<dynamic> searchProduct({String key, String code, int index = 0}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {
     "user_id": userId,
@@ -1134,6 +1148,12 @@ Future<dynamic> searchProduct({String key, int index = 0}) async {
     "index": index.toString(),
     "number_post": PAGE_SIZE.toString()
   };
+  if (key != null) {
+    params['key'] = key;
+  }
+  if (code != null) {
+    params['code'] = code;
+  }
 
   Response response = await get(null, path: "searchProduct", param: params);
 
@@ -1224,4 +1244,10 @@ Future<dynamic> updateProfile(BuildContext context,
       showLoading: true);
   if (response.isSuccess()) return response.data;
   return response;
+}
+
+Future<dynamic> listIntroduction({String babyId}) async {
+  Response response = await get(null, path: "listIntroduction");
+  if (response.isSuccess()) return response.data;
+  return null;
 }

@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/image/my_cached_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +10,16 @@ class ImageTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        MyCachedImage(url: voucher['img'],)
-      ],
+    return ListView.builder(
+      itemCount: voucher['img'] == null ? 0 : voucher['img'].length,
+      itemBuilder: (BuildContext context, int index) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: SizeUtil.defaultSpace),
+          child: MyCachedImage(
+            url: voucher['img'][index],
+          ),
+        );
+      },
     );
   }
 }

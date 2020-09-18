@@ -6,6 +6,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/login/login_screen.dart';
 import 'package:baby_garden_flutter/screen/partner_book_schedule/partner_book_schedule_screen.dart';
 import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
+import 'package:baby_garden_flutter/screen/saling_detail/sailing_detail_screen.dart';
 import 'package:baby_garden_flutter/screen/vcb_express_detail/vcb_express_detail_screen.dart';
 import 'package:baby_garden_flutter/screen/voucher_detail/voucher_detail_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -520,7 +521,8 @@ class WidgetUtil {
     if (data == null || data['type'] == null) return;
     switch (data['type']) {
       case "1":
-        RouteUtil.push(context, VCBExpressDetailScreen(data['link_id']));
+        RouteUtil.push(
+            context, PartnerBookScheduleScreen(shopID: data['link_id']));
         break;
       case "2":
         RouteUtil.push(
@@ -530,15 +532,22 @@ class WidgetUtil {
             ));
         break;
       case "3":
+        RouteUtil.push(context, VCBExpressDetailScreen(data['link_id']));
+        break;
+      case "4":
+      case "5":
         RouteUtil.push(
             context,
             ProductDetailScreen(
               productId: data['link_id'],
             ));
         break;
-      case "4":
+      case "6":
         RouteUtil.push(
-            context, PartnerBookScheduleScreen(shopID: data['link_id']));
+            context,
+            SailingDetailScreen(
+              notifyId: data['link_id'],
+            ));
         break;
     }
   }

@@ -27,13 +27,25 @@ class InfoTab extends StatefulWidget {
 class _InfoTabState extends BaseState<InfoTab> {
   @override
   Widget buildWidget(BuildContext context) {
+    List<dynamic> imgs;
+    try {
+      imgs = widget.voucher == null ? null : widget.voucher['img'];
+    } on Exception catch (e) {
+      imgs = null;
+    }
     return Column(children: [
       Expanded(
         child: ListView(
           children: <Widget>[
-            MyCachedImage(
-              url: widget.voucher['img'],
-            ),
+            imgs != null
+                ? Column(
+                    children: imgs.map((img) {
+                      return MyCachedImage(
+                        url: img,
+                      );
+                    }).toList(),
+                  )
+                : SizedBox(),
             Padding(
               padding: SizeUtil.smallPadding,
               child: Column(
@@ -152,7 +164,7 @@ class _InfoTabState extends BaseState<InfoTab> {
   }
 
   Color getVoucherColorStatus() {
-    switch (widget.voucher['active']) {
+    switch (widget.voucher['take_voucher']) {
       case "1":
         return ColorUtil.primaryColor;
       case "2":
@@ -165,7 +177,7 @@ class _InfoTabState extends BaseState<InfoTab> {
   }
 
   String getVoucherStatus() {
-    switch (widget.voucher['active']) {
+    switch (widget.voucher['take_voucher']) {
       case "1":
         return S.of(context).voucher_get_code;
       case "2":

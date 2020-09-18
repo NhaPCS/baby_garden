@@ -22,7 +22,7 @@ class ShopInfoForm extends StatelessWidget {
               color: ColorUtil.textColor, fontWeight: FontWeight.bold),
           children: <TextSpan>[
             TextSpan(
-                text: " " + content,
+                text: " $content",
                 style: TextStyle(
                     fontSize: SizeUtil.textSizeSmall,
                     color: contentColor,
