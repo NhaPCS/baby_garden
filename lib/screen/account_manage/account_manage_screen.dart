@@ -72,17 +72,22 @@ class _AccountManageScreenState
                 },
               ),
 
-              headerChildInfor(),
+              Consumer<GetListBabyProvider>(builder: (BuildContext context, GetListBabyProvider value, Widget child) {
+                return headerChildInfor();
+              },),
               WidgetUtil.getLine(
                   color: ColorUtil.lineLightGray, margin: EdgeInsets.all(0)),
               Consumer<GetListBabyProvider>(
                 builder: (BuildContext context, GetListBabyProvider value,
                     Widget child) {
                   if (value.babies == null || value.babies.isEmpty)
-                    return SizedBox(child: LoadingView(
-                      isNoData: true,
-                      title: S.of(context).no_child,
-                    ), height: 200,);
+                    return SizedBox(
+                      child: LoadingView(
+                        isNoData: true,
+                        title: S.of(context).no_child,
+                      ),
+                      height: 200,
+                    );
                   return Column(
                     children: value.babies
                         .map((e) => BabyItem(
@@ -187,22 +192,25 @@ class _AccountManageScreenState
                   fontSize: SizeUtil.textSizeBigger),
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              // show dialog
-              showChildDialog();
-            },
-            child: Row(children: <Widget>[
-              Text(
-                S.of(context).addChild,
-                style: TextStyle(color: ColorUtil.primaryColor),
-              ),
-              SizedBox(width: SizeUtil.tinySpace),
-              Image.asset("photo/add_child.png",
-                  width: SizeUtil.iconSizeBigger,
-                  height: SizeUtil.iconSizeBigger)
-            ]),
-          )
+          _getListBabyProvider.babies == null ||
+                  _getListBabyProvider.babies.length < 4
+              ? GestureDetector(
+                  onTap: () {
+                    // show dialog
+                    showChildDialog();
+                  },
+                  child: Row(children: <Widget>[
+                    Text(
+                      S.of(context).addChild,
+                      style: TextStyle(color: ColorUtil.primaryColor),
+                    ),
+                    SizedBox(width: SizeUtil.tinySpace),
+                    Image.asset("photo/add_child.png",
+                        width: SizeUtil.iconSizeBigger,
+                        height: SizeUtil.iconSizeBigger)
+                  ]),
+                )
+              : SizedBox()
         ],
       ),
     );
