@@ -159,6 +159,9 @@ class _ShowAddAddressDialogState extends BaseState<AddChildDialog> {
               child: ButtonTheme(
                 child: RaisedButton(
                   onPressed: () {
+                    if (widget.baby != null &&
+                        widget.baby.birthday != null &&
+                        widget.baby.birthday.isNotEmpty) return;
                     WidgetUtil.showBirthdaySelectorDialog(context, (birthday) {
                       _selectDateProvider.updateDate(birthday);
                     });
@@ -171,6 +174,8 @@ class _ShowAddAddressDialogState extends BaseState<AddChildDialog> {
                         String dob = S.of(context).dateOfBirth;
                         if (value.date != null) {
                           dob = DateUtil.formatBirthdayDate(value.date);
+                        } else if (widget.baby != null) {
+                          dob = widget.baby.birthday;
                         }
                         return Text(
                           dob,
