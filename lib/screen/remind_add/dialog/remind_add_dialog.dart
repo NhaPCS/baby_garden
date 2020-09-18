@@ -52,7 +52,8 @@ class _AddRemindDialogScreenState extends BaseState<AddRemindDialogScreen> {
               }
               final _product = _remindAddProvider.getProduct(index-1);
 
-              return ProductItem(
+              return ProductFavoriteItem(
+                showDate: false,
                 onTap: () {
                   Navigator.of(context).pop(_product);
                 },

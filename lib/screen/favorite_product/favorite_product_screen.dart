@@ -49,7 +49,7 @@ class _FavoriteProductScreen extends BaseState<FavoriteProductScreen> {
                       isFavorite: true);
 
                   return _product != null
-                      ? ProductItem(
+                      ? ProductFavoriteItem(
                           onTap: () {
                             push(ProductDetailScreen(
                               productId: _product.id,

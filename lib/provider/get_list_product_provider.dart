@@ -42,6 +42,7 @@ class GetListProductProvider extends ChangeNotifier {
         priceDiscount: _product['price_discount'],
         active: _product['active'] == '1' ? true : false,
         image: _product['image'] == null ? '' : _product['image'],
+        favoriteDate: _product['favorite_date'] == null ? null : _product['favorite_date'],
         isFavorite: isFavorite);
 
     return product;

@@ -1800,6 +1800,15 @@ class S {
     );
   }
 
+  String get vcb_can_not_comment {
+    return Intl.message(
+      'Bạn không thể bình luận cho bài viết này',
+      name: 'vcb_can_not_comment',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get vcb_ex_detail_first_content {
     return Intl.message(
       'Thời trang dành cho bé năm 2019 phong cách xuân hè.\nTôi luôn thích cái kết happy ending, những nhân vật chính và những người yêu nhau sẽ có cơ hội đến với nhau. \nNhưng tôi lại thấy đây là cái kết hoàn hảo cho phim vì một chút day dứt, lưu luyến sẽ để lại trong lòng người xem ấn tượng khó phai hơn.',

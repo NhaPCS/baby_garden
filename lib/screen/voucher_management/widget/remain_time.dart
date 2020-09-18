@@ -25,7 +25,7 @@ class _RemainState extends State<RemainTime> {
   String _status;
 
   void startTimer() {
-    if (widget.endDateText != null && widget.endTimeText != null) {
+    if (widget.endDateText != null && widget.endDateText.isNotEmpty && widget.endTimeText != null && widget.endTimeText.isNotEmpty) {
       DateTime _endDate = DateFormat("yyyy-MM-dd").parse(widget.endDateText);
       DateTime _endTime = DateFormat("HH:mm").parse(widget.endTimeText);
       _endDateTime = new DateTime(_endDate.year, _endDate.month, _endDate.day,
