@@ -61,7 +61,7 @@ class _SearchState extends BaseState<SearchScreen> {
           onQrPressed: () async {
             ScanResult result = await BarcodeScanner.scan();
             _searchTextController.text = result.rawContent;
-            _searchingProvider.search(context, result.rawContent);
+            _searchingProvider.searchProduct(context, code: result.rawContent);
           },
           onSubmit: (val) {
             if (val.trim().isEmpty) {

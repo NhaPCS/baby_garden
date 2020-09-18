@@ -1,6 +1,7 @@
 import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/product_item.dart';
+import 'package:baby_garden_flutter/screen/list_user_rated/list_user_rated_screen.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/partner_book_schedule/provider/partner_tabbar_provider.dart';
 import 'package:baby_garden_flutter/screen/partner_book_schedule/provider/see_more_provider.dart';
@@ -23,6 +24,7 @@ import 'package:baby_garden_flutter/widget/partner/date_picker.dart';
 import 'package:baby_garden_flutter/widget/partner/time_picker.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:baby_garden_flutter/item/service_detail_item.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -31,7 +33,6 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-//todo get category from cateID
 class PartnerBookScheduleScreen extends StatefulWidget {
   final String shopID;
 
@@ -39,7 +40,6 @@ class PartnerBookScheduleScreen extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _PartnerBookScheduleScreenState();
   }
 }
@@ -73,24 +73,14 @@ class _PartnerBookScheduleScreenState
   @override
   void initState() {
     _addCallBackFrame();
-//    _tabController = TabController(vsync: this, length: 2);
-//    _tabController.addListener(() {
-//      _partnerTabbarProvider.onChange();
-//    });
     super.initState();
+    _bookingServiceDetailProvider.getdata(widget.shopID);
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    if (_bookingServiceDetailProvider.data == null)
-      _bookingServiceDetailProvider.getdata(context, widget.shopID);
-    super.didChangeDependencies();
   }
 
   @override
@@ -101,9 +91,9 @@ class _PartnerBookScheduleScreenState
         (BuildContext context, BookingServiceDetailProvider shopValue,
             Widget child) {
       _addCallBackFrame();
-      if (shopValue.data == null) return SizedBox();
+      if (shopValue.data == null) return Scaffold(appBar: getAppBar(),);
       numberLike = ValueNotifier(int.parse(
-          shopValue.data != null ? shopValue.data['number_like'] : "0"));
+          shopValue.data != null ? shopValue.data['number_like'] ?? '0' : "0"));
       _tabController = TabController(
           vsync: this,
           length: (shopValue.data['service'] == null ? 0 : 1) +
@@ -118,7 +108,8 @@ class _PartnerBookScheduleScreenState
               body: _rowHeight.value > 0
                   ? NestedScrollView(
                       body: shopValue.data['service'] == null &&
-                              shopValue.data['number_product'] == 0
+                              (shopValue.data['number_product'] == null ||
+                                  shopValue.data['number_product'] == 0)
                           ? SizedBox()
                           : TabBarView(
                               controller: _tabController,
@@ -135,7 +126,7 @@ class _PartnerBookScheduleScreenState
                       headerSliverBuilder: (context, isScrollInner) {
                         return [
                           new SliverAppBar(
-                            title: new Text(
+                            title: new MyText(
                               shopValue.data['name'],
                               style: TextStyle(color: Colors.white),
                             ),
@@ -163,7 +154,8 @@ class _PartnerBookScheduleScreenState
                                             shopValue.data != null
                                                 ? CachedNetworkImage(
                                                     imageUrl:
-                                                        shopValue.data['img'],
+                                                        shopValue.data['img'] ??
+                                                            '',
                                                     width:
                                                         MediaQuery.of(context)
                                                             .size
@@ -192,6 +184,13 @@ class _PartnerBookScheduleScreenState
                                                         "photo/comment_img.png",
                                                     textData: shopValue
                                                         .data['number_comment'],
+                                                    onTap: (){
+                                                      RouteUtil.push(
+                                                          context,
+                                                          ListUserRatedScreen(
+                                                            shopId: widget.shopID,
+                                                          ));
+                                                    },
                                                   ),
                                                   SizedBox(
                                                     width: SizeUtil.smallSpace,
@@ -330,7 +329,7 @@ class _PartnerBookScheduleScreenState
                         children: <Widget>[
                           //TODO get detail info min height
                           CachedNetworkImage(
-                            imageUrl: shopValue.data['img'],
+                            imageUrl: shopValue.data['img'] ?? '',
                             fit: BoxFit.fitWidth,
                             key: _bannerKey,
                             width: MediaQuery.of(context).size.width,
@@ -375,9 +374,7 @@ class _PartnerBookScheduleScreenState
   }
 
   Widget bookingContent(dynamic data) {
-    _addressChoose = data['address'] != null && data['address'].length > 0
-        ? data['address'][0]['address']
-        : "";
+    _addressChoose = getAddress(data);
     return ListView(
       padding: EdgeInsets.all(0),
       children: <Widget>[
@@ -402,7 +399,10 @@ class _PartnerBookScheduleScreenState
                   PartnerChooseLocationProvider value, Widget child) {
                 return Column(
                     children: List.generate(
-                        data['address'] != null ? data['address'].length : 0,
+                        data['address'] != null &&
+                                data['address'].runtimeType == List
+                            ? data['address'].length
+                            : 0,
                         (index) => CustomRadioButton(
                               titleContent:
                                   Text(data['address'][index]['address']),
@@ -526,7 +526,7 @@ class _PartnerBookScheduleScreenState
       }
     } else {
       List<dynamic> confirmForm = [
-        {'title': 'Dịch vụ đã đặt: ', 'content': _chooseService['content']},
+        {'title': 'Dịch vụ đã đặt: ', 'content': _chooseService['name']},
         {
           'title': 'Giá niêm yết:  ',
           'content':
@@ -649,23 +649,14 @@ class _PartnerBookScheduleScreenState
             Expanded(
                 child: ShopInfoForm(
                     title: S.of(context).address_form,
-                    content:
-                        data['address'] != null && data['address'].length > 0
-                            ? data['address'][0]["address"]
-                            : "")),
+                    content: getAddress(data))),
             SizedBox(
               width: SizeUtil.smallSpace,
             ),
             InkWell(
               onTap: () async {
-                String address =
-                    data['address'] != null && data['address'].length > 0
-                        ? data['address'][0]["address"]
-                        : null;
-//                String uri = "https://www.google.com/maps/search/${Uri.encodeFull(address)}";
                 String uri =
                     "https://www.google.com/maps/search/?api=1&query=${Uri.encodeFull(data['lat'])},${Uri.encodeFull(data['lng'])}";
-//                if (address != null && await canLaunch(uri)) launch(uri);
                 if (await canLaunch(uri)) launch(uri);
               },
               child: Text(
@@ -724,9 +715,8 @@ class _PartnerBookScheduleScreenState
     }
     String content = data['introduce'];
     bool isShowSeeMore = content != null && content.length > 100;
-    String contentShow = S.of(context).introduce +
-        (isShowSeeMore && !isShow ? content.substring(0, 100) : content) +
-        (isShowSeeMore && !isShow ? 'See_more' : "");
+    String contentShow =
+        "${S.of(context).introduce} ${(isShowSeeMore && !isShow ? content.substring(0, 100) : content)} ${(isShowSeeMore && !isShow ? 'See_more' : "")}";
     return Column(
       key: key,
       mainAxisSize: MainAxisSize.min,
@@ -736,10 +726,7 @@ class _PartnerBookScheduleScreenState
           shopId: "1",
         )),
         paddingContainer(ShopInfoForm(
-            title: S.of(context).address_form,
-            content: data['address'] != null && data['address'].length > 0
-                ? data['address'][0]["address"]
-                : "")),
+            title: S.of(context).address_form, content: getAddress(data))),
         paddingContainer(ShopInfoForm(
           title: S.of(context).service_type,
           content: "",
@@ -818,5 +805,19 @@ class _PartnerBookScheduleScreenState
         ),
       ),
     );
+  }
+
+  String getAddress(dynamic data) {
+    try {
+      if (data['address'].runtimeType == List) {
+        return data['address'] != null && data['address'].length > 0
+            ? data['address'][0]['address']
+            : "";
+      } else {
+        return data['address'];
+      }
+    } on Exception catch (e) {
+      return data;
+    }
   }
 }

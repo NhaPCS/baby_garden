@@ -13,11 +13,18 @@ class ContactTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<dynamic> imgs = voucher['img'];
     return ListView(
       children: <Widget>[
-        MyCachedImage(
-          url: voucher['img'],
-        ),
+        imgs != null
+            ? Column(
+          children: imgs.map((img) {
+            return MyCachedImage(
+              url: img,
+            );
+          }).toList(),
+        )
+            : SizedBox(),
         Padding(
           padding: SizeUtil.smallPadding,
           child: Column(
@@ -54,7 +61,7 @@ class ContactTab extends StatelessWidget {
                       ),
                       TextSpan(
                         text:
-                            ': ${voucher['address']}',
+                            ': ${voucher['contact_address']}',
                       )
                     ])),
                 Padding(
@@ -72,7 +79,7 @@ class ContactTab extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                         TextSpan(
-                          text: ': ${voucher['email']}',
+                          text: ': ${voucher['contact_email']}',
                         )
                       ])),
                 ),
@@ -91,7 +98,7 @@ class ContactTab extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                         TextSpan(
-                          text: ': ${voucher['phone']}',
+                          text: ': ${voucher['contact_tel']}',
                         )
                       ])),
                 ),

@@ -9,6 +9,7 @@ import 'package:baby_garden_flutter/screen/saling_detail/provider/sailing_detail
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:baby_garden_flutter/widget/my_carousel_slider.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -85,7 +86,7 @@ class _SailingDetailScreenState extends BaseState<SailingDetailScreen> {
                           SizedBox(
                             height: SizeUtil.superTinySpace,
                           ),
-                          Text(
+                          MyText(
                             value.detail["content"],
                             style: TextStyle(
                                 fontWeight: FontWeight.normal,

@@ -36,7 +36,7 @@ class ServiceDetailItem extends StatelessWidget{
                   top: SizeUtil.smallSpace,
                   bottom: SizeUtil.smallSpace),
               child: Text(
-                data['content'],textAlign: TextAlign.start,
+                data['name'],textAlign: TextAlign.start,
                 style: TextStyle(
                     fontSize: 12, color: isSelected?Colors.white:Color(0xff646464)),
               ),

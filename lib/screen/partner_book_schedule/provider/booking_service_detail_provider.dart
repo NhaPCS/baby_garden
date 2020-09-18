@@ -6,8 +6,8 @@ class BookingServiceDetailProvider extends ChangeNotifier {
   dynamic data;
   List<dynamic> products = List();
 
-  Future<dynamic> getdata(BuildContext context, String shopID) async {
-    data = await shopDetail(context: context, shopID: shopID);
+  Future<dynamic> getdata( String shopID) async {
+    data = await shopDetail(context: null, shopID: shopID);
     products = await listProductShop(shopID: shopID);
     if (data != null) {
       print("BookingServiceDetailProvider $data");

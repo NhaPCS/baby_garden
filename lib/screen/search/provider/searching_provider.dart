@@ -8,8 +8,8 @@ class SearchingProvider extends ChangeNotifier {
   int total = 0;
   String key;
 
-  void clearFinalResult(){
-    finalResult=null;
+  void clearFinalResult() {
+    finalResult = null;
     notifyListeners();
   }
 
@@ -30,9 +30,10 @@ class SearchingProvider extends ChangeNotifier {
   }
 
   Future<void> searchProduct(BuildContext context,
-      {String key, int index = 0}) async {
-    this.key=key;
-    dynamic data = await service.searchProduct(key: key, index: index);
+      {String key, String code, int index = 0}) async {
+    this.key = key;
+    dynamic data =
+        await service.searchProduct(key: key, code: code, index: index);
     if (data != null) {
       total = data['total'];
       if (data['list'] != null) {
