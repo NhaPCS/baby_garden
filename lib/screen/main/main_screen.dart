@@ -63,6 +63,10 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    if (_changeIndexProvider.index == 3) {
+      Provider.of<OrdersProvider>(context, listen: false)
+          .getOrdersCount();
+    }
     if (widget.getPromotion != null &&
         widget.getPromotion &&
         !_getPromotionProvider.got) {

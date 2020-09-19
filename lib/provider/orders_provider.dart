@@ -123,9 +123,20 @@ class OrdersProvider extends ChangeNotifier {
   int getCount(dynamic data, String key) {
     if (data != null && data[key] != null) {
       int count = data[key];
-      totalCount += count;
+      if (!ignoreKeys.contains(key)) {
+        totalCount += count;
+      }
+
       return count;
     }
     return 0;
   }
+
+  final List<String> ignoreKeys = [
+    'thanhcong',
+    'huydonhang',
+    'danhgiadonhang',
+    'huylich',
+    'danhgiadichvu'
+  ];
 }

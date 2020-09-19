@@ -82,15 +82,6 @@ class _CartState extends BaseState<CartScreen> {
                           onGoBookingPress: () {
                             if (_changeIndexProvider.index >= 0)
                               push(BookingScreen(
-                                promotePrice:
-                                    _getPromotionDetailProvider.promotion ==
-                                                null ||
-                                            _getPromotionDetailProvider
-                                                    .promotion['value'] ==
-                                                null
-                                        ? 0
-                                        : int.parse(_getPromotionDetailProvider
-                                            .promotion['value']),
                                 promoteCode:
                                     _getPromotionDetailProvider.promotion ==
                                             null

@@ -6,6 +6,7 @@ import 'package:baby_garden_flutter/provider/get_main_category_provider.dart';
 import 'package:baby_garden_flutter/provider/get_product_category_provider.dart';
 import 'package:baby_garden_flutter/provider/get_service_category_provider.dart';
 import 'package:baby_garden_flutter/provider/orders_provider.dart';
+import 'package:baby_garden_flutter/provider/privacy_provider.dart';
 import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/notify/provider/notify_control_provider.dart';
@@ -31,6 +32,7 @@ void main() {
           ChangeNotifierProvider(create: (_) => NotifyProvider()),
           ChangeNotifierProvider(create: (_) => OrdersProvider()),
           ChangeNotifierProvider(create: (_) => GetMainCategoryProvider()),
+          ChangeNotifierProvider(create: (_) => PrivacyProvider()),
         ],
         child: MyApp(),
       )));
@@ -47,8 +49,17 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
+    if (Provider.of<PrivacyProvider>(context).privacy == null)
+      Provider.of<PrivacyProvider>(context).getPrivacy();
+
     // get product categories
     if (Provider.of<GetProductCategoryProvider>(context).categories == null ||
         Provider.of<GetProductCategoryProvider>(context).categories.isEmpty)
@@ -57,7 +68,6 @@ class _MyAppState extends State<MyApp> {
     if (Provider.of<GetMainCategoryProvider>(context).categories == null ||
         Provider.of<GetMainCategoryProvider>(context).categories.isEmpty)
       Provider.of<GetMainCategoryProvider>(context).getMainCategories();
-
 
     // get service categories
     if (Provider.of<GetServiceCategoryProvider>(context).categories == null ||
