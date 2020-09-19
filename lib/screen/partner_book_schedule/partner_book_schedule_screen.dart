@@ -91,13 +91,17 @@ class _PartnerBookScheduleScreenState
         (BuildContext context, BookingServiceDetailProvider shopValue,
             Widget child) {
       _addCallBackFrame();
-      if (shopValue.data == null) return Scaffold(appBar: getAppBar(),);
+      if (shopValue.data == null)
+        return Scaffold(
+          appBar: getAppBar(),
+        );
       numberLike = ValueNotifier(int.parse(
           shopValue.data != null ? shopValue.data['number_like'] ?? '0' : "0"));
       _tabController = TabController(
           vsync: this,
           length: (shopValue.data['service'] == null ? 0 : 1) +
               (shopValue.data['number_product'] == 0 ? 0 : 1));
+        _partnerTabbarProvider.setIsProduct(shopValue.data['service'] == null);
       _tabController.addListener(() {
         _partnerTabbarProvider.onChange();
       });
@@ -184,11 +188,12 @@ class _PartnerBookScheduleScreenState
                                                         "photo/comment_img.png",
                                                     textData: shopValue
                                                         .data['number_comment'],
-                                                    onTap: (){
+                                                    onTap: () {
                                                       RouteUtil.push(
                                                           context,
                                                           ListUserRatedScreen(
-                                                            shopId: widget.shopID,
+                                                            shopId:
+                                                                widget.shopID,
                                                           ));
                                                     },
                                                   ),
@@ -340,34 +345,40 @@ class _PartnerBookScheduleScreenState
                         ],
                       ),
                     ),
-              bottomNavigationBar: Container(
-                  padding: const EdgeInsets.only(
-                      left: SizeUtil.smallSpace,
-                      right: SizeUtil.smallSpace,
-                      top: SizeUtil.tinySpace,
-                      bottom: SizeUtil.tinySpace),
-                  width: MediaQuery.of(context).size.width,
-                  child: RaisedButton(
-                    onPressed: () async {
-                      onBookingService();
-                    },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                      Radius.circular(SizeUtil.smallRadius),
-                    )),
-                    color: ColorUtil.primaryColor,
-                    child: Padding(
-                      padding: const EdgeInsets.all(SizeUtil.midSpace),
-                      child: Text(
-                        S.of(context).book,
-                        style: TextStyle(
-                            fontSize: SizeUtil.textSizeDefault,
-                            color: Colors.white,
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  )),
+              bottomNavigationBar: Consumer<PartnerTabbarProvider>(builder:
+                  (BuildContext context, PartnerTabbarProvider value,
+                      Widget child) {
+                return value.isProduct
+                    ? SizedBox()
+                    : Container(
+                        padding: const EdgeInsets.only(
+                            left: SizeUtil.smallSpace,
+                            right: SizeUtil.smallSpace,
+                            top: SizeUtil.tinySpace,
+                            bottom: SizeUtil.tinySpace),
+                        width: MediaQuery.of(context).size.width,
+                        child: RaisedButton(
+                          onPressed: () async {
+                            onBookingService();
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                            Radius.circular(SizeUtil.smallRadius),
+                          )),
+                          color: ColorUtil.primaryColor,
+                          child: Padding(
+                            padding: const EdgeInsets.all(SizeUtil.midSpace),
+                            child: Text(
+                              S.of(context).book,
+                              style: TextStyle(
+                                  fontSize: SizeUtil.textSizeDefault,
+                                  color: Colors.white,
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ));
+              }),
             );
           });
     });
@@ -443,75 +454,94 @@ class _PartnerBookScheduleScreenState
             Consumer<ChangeServiceProvider>(
               builder: (BuildContext context, ChangeServiceProvider value,
                   Widget child) {
-                return GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, childAspectRatio: 3.3),
-                  padding: EdgeInsets.only(
-                      left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
-                  itemCount:
-                      data['service'] != null ? data['service'].length : 0,
-                  itemBuilder: (context, index) {
-                    bool isSelected = _serviceProvider != null &&
-                        _serviceProvider.index == index;
-                    return GestureDetector(
-                        onTap: () {
-                          if (_serviceProvider != null &&
-                              _serviceProvider.index != index) {
-                            _chooseService = data['service'][index];
-                            _serviceProvider.onSelectService(index);
-                          }
-                        },
-                        child: ServiceDetailItem(
-                          data: data['service'][index],
-                          isSelected: isSelected,
-                          onBook: () async {
-                            var returnValue = await RouteUtil.push(
-                                context,
-                                PartnerServiceDetailScreen(
-                                    data: data['service'][index]));
-                            if (returnValue != null) {
-                              //todo update data from service detail to booking
-                              datePickerData = returnValue['dateValue'];
-                              _dateValueController.value = returnValue['date'];
-                              _timeValueController.value = returnValue['time'];
-                              _serviceProvider.onSelectService(index);
-                              _chooseService = data['service'][index];
-                              //todo booking
-                              onBookingService();
-                            }
-                          },
-                        ));
-                  },
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, childAspectRatio: 3.3),
+                      padding: EdgeInsets.only(
+                          left: SizeUtil.tinySpace, right: SizeUtil.tinySpace),
+                      itemCount:
+                          data['service'] != null ? data['service'].length : 0,
+                      itemBuilder: (context, index) {
+                        bool isSelected = _serviceProvider != null &&
+                            _serviceProvider.index == index;
+                        return GestureDetector(
+                            onTap: () {
+                              if (_serviceProvider != null &&
+                                  _serviceProvider.index != index) {
+                                _chooseService = data['service'][index];
+                                _serviceProvider.onSelectService(index);
+                              }
+                            },
+                            child: ServiceDetailItem(
+                              data: data['service'][index],
+                              isSelected: isSelected,
+                              onBook: () async {
+                                var returnValue = await RouteUtil.push(
+                                    context,
+                                    PartnerServiceDetailScreen(
+                                        data: data['service'][index]));
+                                if (returnValue != null) {
+                                  //todo update data from service detail to booking
+                                  datePickerData = returnValue['dateValue'];
+                                  _dateValueController.value =
+                                      returnValue['date'];
+                                  _timeValueController.value =
+                                      returnValue['time'];
+                                  _serviceProvider.onSelectService(index);
+                                  _chooseService = data['service'][index];
+                                  //todo booking
+                                  onBookingService();
+                                }
+                              },
+                            ));
+                      },
+                    ),
+                    WidgetUtil.getLine(margin: EdgeInsets.all(0), width: 2),
+                    //todo choose service title
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        S.of(context).choose_time,
+                        style: TextStyle(
+                            color: ColorUtil.textColor,
+                            fontSize: SizeUtil.textSizeDefault,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    //TODO date of week tabbar
+                    _serviceProvider.index == -1
+                        ? SizedBox()
+                        : DatePicker(
+                            onValueChange: (val) {
+                              print("DatePicker $val");
+                              datePickerData = val['date'];
+                            },
+                            valueController: _dateValueController,
+                          ),
+                    //TODO schedule time of day
+                    _serviceProvider.index == -1
+                        ? Center(
+                            child: Text(
+                              S.of(context).choose_service_title,
+                              style: TextStyle(
+                                  color: ColorUtil.textColor,
+                                  fontSize: SizeUtil.textSizeDefault),
+                            ),
+                          )
+                        : TimePicker(
+                            valueController: _timeValueController,
+                          ),
+                  ],
                 );
               },
-            ),
-            WidgetUtil.getLine(margin: EdgeInsets.all(0), width: 2),
-            //todo choose service title
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                S.of(context).choose_time,
-                style: TextStyle(
-                    color: ColorUtil.textColor,
-                    fontSize: SizeUtil.textSizeDefault,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            //TODO date of week tabbar
-            DatePicker(
-              onValueChange: (val) {
-                print("DatePicker $val");
-                datePickerData = val['date'];
-              },
-              valueController: _dateValueController,
-            ),
-            //TODO schedule time of day
-            TimePicker(
-              valueController: _timeValueController,
-            ),
+            )
           ],
         ),
       ],
@@ -519,6 +549,11 @@ class _PartnerBookScheduleScreenState
   }
 
   Future<void> onBookingService() async {
+    if (_serviceProvider.index == -1) {
+      WidgetUtil.showMessageDialog(context,
+          message: S.of(context).choose_service_title, title: "");
+      return;
+    }
     String userId = await ShareValueProvider.shareValueProvider.getUserId();
     if (userId == null || userId.isEmpty) {
       if (context != null) {
