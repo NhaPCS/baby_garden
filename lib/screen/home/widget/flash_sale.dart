@@ -1,10 +1,10 @@
 import 'package:baby_garden_flutter/data/model/section.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/screen/home/item/flashsale_product_item.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
-import 'package:baby_garden_flutter/screen/home/provider/change_flashsale_mode_provider.dart';
-import 'package:baby_garden_flutter/provider/get_list_product_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/home/item/flashsale_product_item.dart';
+import 'package:baby_garden_flutter/screen/home/provider/change_flashsale_mode_provider.dart';
+import 'package:baby_garden_flutter/screen/home/provider/flashsale_provider.dart';
 import 'package:baby_garden_flutter/screen/list_product/list_product_screen.dart';
 import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -23,104 +23,102 @@ class FlashSale extends StatefulWidget {
 }
 
 class _FlashSaleState extends BaseState<FlashSale> {
-  final GetListProductProvider _getListProductProvider =
-      GetListProductProvider();
+  final FlashSaleProvider _getFlashSaleProvider = FlashSaleProvider();
   final ChangeFlashSaleModeProvider _changeFlashSaleModeProvider =
       ChangeFlashSaleModeProvider();
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_getListProductProvider.products == null ||
-        _getListProductProvider.products.isEmpty) {
-      _loadData();
-    }
-  }
-
-  void _loadData() {
-    _getListProductProvider.getData(
-        context,
-        _changeFlashSaleModeProvider.isPending
-            ? "flashSalesPending"
-            : "flashSales");
+  void initState() {
+    _getFlashSaleProvider.getData();
+    super.initState();
   }
 
   @override
   Widget buildWidget(BuildContext context) {
-    return GestureDetector(
-      child: Container(
-        width: double.infinity,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            SizedBox(
-              width: SizeUtil.smallSpace,
-            ),
-            SizedBox(
-              height:
-                  Provider.of<AppProvider>(context).flashSaleItemHeight * 0.2,
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: SizeUtil.smallPadding,
-                    child: Image.asset(
-                      'photo/lb_flashsale.png',
-                      fit: BoxFit.fitHeight,
-                    ),
-                  ),
-                  Expanded(child: SizedBox()),
-                  Stack(
-                    alignment: Alignment.center,
+    return Consumer<FlashSaleProvider>(
+      builder: (BuildContext context, FlashSaleProvider flashSaleProvider,
+          Widget child) {
+        if (flashSaleProvider.flashSalesPending.isEmpty &&
+            flashSaleProvider.flashSales.isEmpty) return SizedBox();
+        final List<dynamic> list = _changeFlashSaleModeProvider.isPending || flashSaleProvider.flashSales.isEmpty
+            ? flashSaleProvider.flashSalesPending
+            : flashSaleProvider.flashSales;
+        return GestureDetector(
+          child: Container(
+            width: double.infinity,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(
+                  width: SizeUtil.smallSpace,
+                ),
+                SizedBox(
+                  height:
+                      Provider.of<AppProvider>(context).flashSaleItemHeight *
+                          0.2,
+                  child: Row(
                     children: <Widget>[
-                      SvgPicture.asset('photo/svg/bg_triangle.svg'),
-                      Text(
-                        S.of(context).view_more.toUpperCase(),
-                        style: TextStyle(color: Colors.white),
-                      )
+                      Padding(
+                        padding: SizeUtil.smallPadding,
+                        child: Image.asset(
+                          'photo/lb_flashsale.png',
+                          fit: BoxFit.fitHeight,
+                        ),
+                      ),
+                      Expanded(child: SizedBox()),
+                      Stack(
+                        alignment: Alignment.center,
+                        children: <Widget>[
+                          SvgPicture.asset('photo/svg/bg_triangle.svg'),
+                          Text(
+                            S.of(context).view_more.toUpperCase(),
+                            style: TextStyle(color: Colors.white),
+                          )
+                        ],
+                      ),
                     ],
                   ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: SizeUtil.midSmallSpace),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(SizeUtil.smallRadius))),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Consumer<ChangeFlashSaleModeProvider>(
-                    builder: (BuildContext context,
-                        ChangeFlashSaleModeProvider value, Widget child) {
-                      return Row(
-                        children: <Widget>[
-                          SizedBox(
-                            width: SizeUtil.smallSpace,
-                          ),
-                          _getModeButton(false),
-                          SizedBox(
-                            width: SizeUtil.smallSpace,
-                          ),
-                          _getModeButton(true)
-                        ],
-                      );
-                    },
-                  ),
-                  SizedBox(
-                    height:
-                        Provider.of<AppProvider>(context).flashSaleItemHeight,
-                    child: Consumer<GetListProductProvider>(
-                      builder: (BuildContext context,
-                          GetListProductProvider value, Widget child) {
-                        return ListView.builder(
+                ),
+                Container(
+                  margin: EdgeInsets.only(bottom: SizeUtil.midSmallSpace),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(SizeUtil.smallRadius))),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Consumer<ChangeFlashSaleModeProvider>(
+                        builder: (BuildContext context,
+                            ChangeFlashSaleModeProvider value, Widget child) {
+                          return Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: SizeUtil.smallSpace,
+                              ),
+                              flashSaleProvider.flashSales.isNotEmpty
+                                  ? _getModeButton(false)
+                                  : SizedBox(),
+                              SizedBox(
+                                width: SizeUtil.smallSpace,
+                              ),
+                              flashSaleProvider.flashSalesPending.isNotEmpty
+                                  ? _getModeButton(true)
+                                  : SizedBox()
+                            ],
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: Provider.of<AppProvider>(context)
+                            .flashSaleItemHeight,
+                        child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: value.products.length,
+                          itemCount: list.length,
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
                               child: FlashSaleProductItem(
-                                product: value.products[index],
+                                product: list[index],
                                 isPending:
                                     _changeFlashSaleModeProvider.isPending,
                               ),
@@ -128,38 +126,38 @@ class _FlashSaleState extends BaseState<FlashSale> {
                                 RouteUtil.push(
                                     context,
                                     ProductDetailScreen(
-                                      productId: value.products[index]['id'],
+                                      productId: list[index]['id'],
                                     ));
                               },
                             );
                           },
-                        );
-                      },
-                    ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: SizeUtil.tinySpace,
+                      )
+                    ],
                   ),
-                  SizedBox(
-                    height: SizeUtil.tinySpace,
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-        color: ColorUtil.flashSaleColor,
-      ),
-      onTap: () {
-        RouteUtil.push(
-            context,
-            ListProductScreen(
-              isFlashSalePending: _changeFlashSaleModeProvider.isPending,
-              section: Section(
-                  title: _changeFlashSaleModeProvider.isPending
-                      ? S.of(context).pending
-                      : S.of(context).happening,
-                  path: _changeFlashSaleModeProvider.isPending
-                      ? "flashSalesPending"
-                      : "flashSales"),
-            ));
+                )
+              ],
+            ),
+            color: ColorUtil.flashSaleColor,
+          ),
+          onTap: () {
+            RouteUtil.push(
+                context,
+                ListProductScreen(
+                  isFlashSalePending: _changeFlashSaleModeProvider.isPending,
+                  section: Section(
+                      title: _changeFlashSaleModeProvider.isPending
+                          ? S.of(context).pending
+                          : S.of(context).happening,
+                      path: _changeFlashSaleModeProvider.isPending
+                          ? "flashSalesPending"
+                          : "flashSales"),
+                ));
+          },
+        );
       },
     );
   }
@@ -168,7 +166,7 @@ class _FlashSaleState extends BaseState<FlashSale> {
     return MyRaisedButton(
       onPressed: () {
         _changeFlashSaleModeProvider.changeMode(isPending);
-        _loadData();
+        _getFlashSaleProvider.getData();
       },
       text: isPending ? S.of(context).pending : S.of(context).happening,
       color: _changeFlashSaleModeProvider.isPending == isPending
@@ -184,7 +182,7 @@ class _FlashSaleState extends BaseState<FlashSale> {
   @override
   List<SingleChildWidget> providers() {
     return [
-      ChangeNotifierProvider.value(value: _getListProductProvider),
+      ChangeNotifierProvider.value(value: _getFlashSaleProvider),
       ChangeNotifierProvider.value(value: _changeFlashSaleModeProvider),
     ];
   }

@@ -132,7 +132,8 @@ class _ReportProductState
                       (_selectedTitleIdController.value == null ||
                           _selectedTitleIdController.value.isEmpty) &&
                       (_contentController.text == null ||
-                          _contentController.text.isEmpty)) {
+                          _contentController.text.isEmpty) &&
+                      (_pickedImageController.value == null)) {
                     WidgetUtil.showErrorDialog(
                         context, S.of(context).mess_verify_report_dialog);
                     return;
