@@ -66,7 +66,12 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
     listView.add(logined
         ? Container(
             // user information
-            child: UserInfor())
+            child: GestureDetector(
+            child: UserInfor(),
+            onTap: () {
+              push(AccountManageScreen());
+            },
+          ))
         : HeaderWithoutLogin());
 
     entries.asMap().forEach((index, entry) {
@@ -172,8 +177,8 @@ class _ProfileScreenState extends BaseState<ProfileScreen> {
           ShareValueProvider.shareValueProvider.saveUserInfo(null);
           ShareValueProvider.shareValueProvider.savePoint(null);
           Provider.of<UserProvider>(context, listen: false).logout(false);
-          Provider.of<NotifyProvider>(context,listen: false).clearData();
-          Provider.of<CartProvider>(context,listen: false).clearCart();
+          Provider.of<NotifyProvider>(context, listen: false).clearData();
+          Provider.of<CartProvider>(context, listen: false).clearCart();
           pushReplacement(MainScreen());
         }, negativeClick: () {});
         break;

@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/provider/privacy_provider.dart';
 import 'package:baby_garden_flutter/screen/booking/dialog/change_delivery_address_dialogue.dart';
 import 'package:baby_garden_flutter/screen/booking/dialog/change_delivery_time_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
@@ -30,13 +31,9 @@ class BookingScreen extends StatefulWidget {
   final String shopID;
   final String promoteCode;
   final String shopName;
-  final int promotePrice;
 
   const BookingScreen(
-      {this.shopID = '1',
-      this.promoteCode = '123',
-      this.shopName = "",
-      this.promotePrice = 0})
+      {this.shopID = '1', this.promoteCode = '123', this.shopName = ""})
       : super();
 
   @override
@@ -68,12 +65,18 @@ class _BookingScreenState
 
   @override
   void initState() {
-    // TODO: implement initState
     _transferMethodProvider.getShips();
     _pointProvider.getPoint(context, shopId: widget.shopID);
     Provider.of<ReceiveAddressListProvider>(context, listen: false).getData();
     totalPriceAfterFix = getTotalPrice();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (Provider.of<PrivacyProvider>(context).privacy == null)
+      Provider.of<PrivacyProvider>(context).getPrivacy();
+    super.didChangeDependencies();
   }
 
   @override
@@ -129,7 +132,7 @@ class _BookingScreenState
                                       value.addressList.isEmpty
                                   ? ''
                                   : StringUtil.getFullAddress(
-                                      value.addressList[value.selectedIndex]),
+                                      value.addressList[value.selectedIndex], hasBreak: true),
                               style: TextStyle(
                                   fontSize: SizeUtil.textSizeSmall,
                                   height: 1.3,
@@ -355,28 +358,6 @@ class _BookingScreenState
           ),
           WidgetUtil.getLine(
               width: 1, color: ColorUtil.lineColor, margin: EdgeInsets.all(0)),
-          widget.promotePrice == null
-              ? SizedBox()
-              : Padding(
-                  padding: const EdgeInsets.only(
-                      left: SizeUtil.normalSpace,
-                      right: SizeUtil.normalSpace,
-                      top: SizeUtil.midSmallSpace,
-                      bottom: SizeUtil.midSmallSpace),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(child: Text(S.of(context).promo_code)),
-                      MyText(
-                        "-${StringUtil.getPriceText(widget.promotePrice.toString())}",
-                        style: TextStyle(
-                            color: ColorUtil.blueLight,
-                            fontSize: SizeUtil.textSizeExpressDetail),
-                      )
-                    ],
-                  ),
-                ),
-          WidgetUtil.getLine(
-              width: 1, color: ColorUtil.lineColor, margin: EdgeInsets.all(0)),
           Padding(
             padding: const EdgeInsets.only(
                 left: SizeUtil.normalSpace,
@@ -394,12 +375,9 @@ class _BookingScreenState
                   builder: (BuildContext context, TransferMethodProvider value,
                       Widget child) {
                     return Text(
-                        StringUtil.getPriceText((totalPrice +
-                                    value.price -
-                                    checkoutPoint * 1000 -
-                                    widget.promotePrice ??
-                                0)
-                            .toString()),
+                        StringUtil.getPriceText(
+                            (totalPrice + value.price - checkoutPoint * 1000)
+                                .toString()),
                         style: TextStyle(
                             fontSize: SizeUtil.textSizeDefault,
                             color: Colors.red,
@@ -514,8 +492,7 @@ class _BookingScreenState
         WidgetUtil.showMessageDialog(context,
             message: S.of(context).choose_delivery_address,
             title: S.of(context).missing_information);
-      }
-      else {
+      } else {
         await getViewModel().onBookingProduct(
             context,
             receiveTime.value['id'].trim(),
@@ -550,14 +527,16 @@ class _BookingScreenState
         } else {
           int index = await showDialog(
               context: context,
-              builder: (BuildContext context) => ConfirmDialogue(bookingCode:getViewModel().bookingData['code'].toString()));
-          if (index>0){
+              builder: (BuildContext context) => ConfirmDialogue(
+                  bookingCode: getViewModel().bookingData['code'].toString()));
+          if (index > 0) {
             RouteUtil.pushReplacement(
                 context,
                 OrderDetailScreen(
-                  bookingId: getViewModel().bookingData['booking_id'].toString(),
+                  bookingId:
+                      getViewModel().bookingData['booking_id'].toString(),
                 ));
-          }else {
+          } else {
             pushAndReplaceAll(MainScreen(index: index), "/main_screen");
           }
         }
@@ -569,9 +548,6 @@ class _BookingScreenState
   int getTotalPrice() {
     totalPrice = Provider.of<CartProvider>(context, listen: false)
         .getShopTotalPrice(widget.shopID);
-    return totalPrice +
-        _transferMethodProvider.price -
-        checkoutPoint * 1000 -
-        widget.promotePrice;
+    return totalPrice + _transferMethodProvider.price - checkoutPoint * 1000;
   }
 }

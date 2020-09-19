@@ -33,7 +33,7 @@ class _AccountManageScreenState
   final GetListAddressProvider _getListAddressProvider =
       GetListAddressProvider();
   final TextEditingController _nameController = TextEditingController();
-
+  bool isSet = false;
   File _avatarFile;
 
   @override
@@ -72,9 +72,12 @@ class _AccountManageScreenState
                 },
               ),
 
-              Consumer<GetListBabyProvider>(builder: (BuildContext context, GetListBabyProvider value, Widget child) {
-                return headerChildInfor();
-              },),
+              Consumer<GetListBabyProvider>(
+                builder: (BuildContext context, GetListBabyProvider value,
+                    Widget child) {
+                  return headerChildInfor();
+                },
+              ),
               WidgetUtil.getLine(
                   color: ColorUtil.lineLightGray, margin: EdgeInsets.all(0)),
               Consumer<GetListBabyProvider>(
@@ -106,7 +109,10 @@ class _AccountManageScreenState
   }
 
   Widget userInfoRow(int key, dynamic entry) {
-    if (key == 0) _nameController.text = entry['content'];
+    if (key == 0 && !isSet) {
+      _nameController.text = entry['content'];
+      isSet = true;
+    }
 
     return GestureDetector(
       onTap: () async {

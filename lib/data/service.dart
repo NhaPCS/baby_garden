@@ -842,16 +842,16 @@ Future<Response> addUserAddress(BuildContext context,
   if (cityId != null) {
     params['city_id'] = cityId.toString();
   }
-  if (cityId != null) {
+  if (districtId != null) {
     params['district_id'] = districtId.toString();
   }
-  if (cityId != null) {
+  if (wardId != null) {
     params['ward_id'] = wardId.toString();
   }
-  if (cityId != null) {
+  if (phone != null) {
     params['phone'] = phone.toString();
   }
-  if (cityId != null) {
+  if (name != null) {
     params['name'] = name.toString();
   }
 
@@ -1248,6 +1248,14 @@ Future<dynamic> updateProfile(BuildContext context,
 
 Future<dynamic> listIntroduction({String babyId}) async {
   Response response = await get(null, path: "listIntroduction");
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+
+Future<dynamic> privacy() async {
+  Response response = await get(null, path: "privacy");
+
   if (response.isSuccess()) return response.data;
   return null;
 }

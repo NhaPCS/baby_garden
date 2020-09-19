@@ -218,18 +218,22 @@ class ImageUtil {
 }
 
 class StringUtil {
-  static String getFullAddress(dynamic address) {
+  static String getFullAddress(dynamic address, {bool hasBreak = false}) {
     if (address == null) return '';
     String detailAddress = address['address'] ?? '';
     String city =
-        address['city_name'] != null ? "${address['city_name']}," : '';
+        address['city_name'] != null ? "${address['city_name']}" : '';
     String district =
-        address['district_name'] != null ? "${address['district_name']}," : '';
+        address['district_name'] != null ? "${address['district_name']}" : '';
     String ward =
-        address['ward_name'] != null ? "${address['ward_name']}," : '';
-    String name = address['name'] != null ? "${address['name']}," : '';
-    String phone = address['phone'] != null ? "${address['phone']}," : '';
-    return "$name $phone $detailAddress $ward $district $city";
+        address['ward_name'] != null ? "${address['ward_name']}" : '';
+    String name = address['name'] != null ? "${address['name']}" : '';
+    String phone = address['phone'] != null ? "${address['phone']}" : '';
+    if(hasBreak){
+      return "$name - $phone\n$detailAddress\n$ward, $district, $city";
+    } else{
+      return "$name, $phone, $detailAddress, $ward, $district, $city";
+    }
   }
 
   /*"active:
@@ -287,7 +291,7 @@ class StringUtil {
   }
 
   static String removeHtml(String htmlString) {
-    if(htmlString==null) return '';
+    if (htmlString == null) return '';
     var document = parse(htmlString);
     String parsedString = parse(document.body.text).documentElement.text;
     return parsedString;

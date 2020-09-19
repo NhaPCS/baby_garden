@@ -1,7 +1,10 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/privacy_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:provider/provider.dart';
 
 class PrivacyAndPolicyDialogue extends StatelessWidget {
   @override
@@ -43,38 +46,13 @@ class PrivacyAndPolicyDialogue extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     left: SizeUtil.smallSpace,
                     top: SizeUtil.tinySpace,
-                    right: SizeUtil.tinySpace),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      S.of(context).overral_policy,
-                      style: TextStyle(
-                          color: ColorUtil.textColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: SizeUtil.textSizeSmall),
-                    ),
-                    Text(
-                      S.of(context).policy_1,
-                      style: TextStyle(
-                          color: ColorUtil.textColor,
-                          fontSize: SizeUtil.textSizeSmall),
-                    ),
-                    Text(
-                      S.of(context).privacy,
-                      style: TextStyle(
-                          color: ColorUtil.textColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: SizeUtil.textSizeSmall),
-                    ),
-                    Text(
-                      S.of(context).privacy_1,
-                      style: TextStyle(
-                          color: ColorUtil.textColor,
-                          fontSize: SizeUtil.textSizeSmall),
-                    ),
-                  ],
+                    right: SizeUtil.tinySpace,
+                    bottom: SizeUtil.tinySpace),
+                child: Html(
+                  data: Provider.of<PrivacyProvider>(context).privacy ?? '',
+                  defaultTextStyle: TextStyle(
+                      color: ColorUtil.textColor,
+                      fontSize: SizeUtil.textSizeSmall),
                 ),
               ),
               Center(
