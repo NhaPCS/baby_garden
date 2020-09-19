@@ -132,7 +132,7 @@ class _BookingScreenState
                                       value.addressList.isEmpty
                                   ? ''
                                   : StringUtil.getFullAddress(
-                                      value.addressList[value.selectedIndex]),
+                                      value.addressList[value.selectedIndex], hasBreak: true),
                               style: TextStyle(
                                   fontSize: SizeUtil.textSizeSmall,
                                   height: 1.3,

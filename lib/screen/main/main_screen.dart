@@ -45,7 +45,6 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
       GetPromotionPopupProvider();
   int _time = 0;
 
-
   @override
   void initState() {
     new DynamicLinkService().handleDynamicLinks(context);
@@ -57,15 +56,18 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
     });
     _configFirebaseMessaging();
     super.initState();
-    if (widget.index !=null && widget.index > 0) _tabController.animateTo(widget.index);
+    if (widget.index != null && widget.index > 0)
+      _tabController.animateTo(widget.index);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_changeIndexProvider.index == 3) {
-      Provider.of<OrdersProvider>(context, listen: false)
-          .getOrdersCount();
+      Provider.of<OrdersProvider>(context, listen: false).getOrdersCount();
+    }
+    if (_changeIndexProvider.index == 2) {
+      Provider.of<CartProvider>(context, listen: false).getMyCart();
     }
     if (widget.getPromotion != null &&
         widget.getPromotion &&
@@ -86,7 +88,7 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
                 ShoppingScreen(),
                 CartScreen(
                   onGoHome: () {
-                    _tabController.animateTo(0);
+                    _tabController.animateTo(1);
                   },
                 ),
                 OrderScreen(),
@@ -113,6 +115,10 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
                           if (index == 3) {
                             Provider.of<OrdersProvider>(context, listen: false)
                                 .getOrdersCount();
+                          }
+                          if (index == 2) {
+                            Provider.of<CartProvider>(context, listen: false)
+                                .getMyCart();
                           }
                         },
                         items: [
@@ -261,10 +267,7 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
   void _navigateToBooking(Map<String, dynamic> message) {
     final dynamic data = message['data'] ?? message;
     if (data['booking_id'] != null) {
-      push(OrderDetailScreen(
-        bookingId: data['booking_id']
-      ));
+      push(OrderDetailScreen(bookingId: data['booking_id']));
     }
   }
-
 }
