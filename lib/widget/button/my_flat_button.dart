@@ -41,18 +41,19 @@ class MyFlatButton extends StatelessWidget {
                 style: textStyle,
               )
             : Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   icon,
                   SizedBox(
                     width: SizeUtil.smallSpace,
                   ),
-                  Expanded(
-                      child: AutoSizeText(
+                  AutoSizeText(
                     text,
                     maxFontSize: SizeUtil.textSizeDefault,
                     minFontSize: SizeUtil.textSizeSmall,
                     style: textStyle,
-                  ))
+                  )
                 ],
               ),
         decoration: BoxDecoration(

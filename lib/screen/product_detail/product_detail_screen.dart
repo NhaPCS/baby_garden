@@ -235,34 +235,34 @@ class _ProductScreenState
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              MyFlatButton(
-                onPressed: () {
-                  if (!Provider.of<UserProvider>(context, listen: false)
-                      .isLogin) {
-                    WidgetUtil.showRequireLoginDialog(context);
-                    return;
-                  }
-                  Provider.of<CartProvider>(context, listen: false)
-                      .addProduct(productProvider.product);
-                  pushAndReplaceAll(
-                      MainScreen(
-                        index: 2,
-                      ),
-                      "/main_screen");
-                },
-                height: 50,
-                text: productProvider.isOutStock()
-                    ? S.of(context).expect_to_buy
-                    : S.of(context).buy_now,
-                textStyle: TextStyle(color: Colors.white),
-                borderRadius: 0,
-                padding: EdgeInsets.only(
-                    left: SizeUtil.bigSpace,
-                    right: SizeUtil.bigSpace,
-                    top: SizeUtil.normalSpace,
-                    bottom: SizeUtil.normalSpace),
-                color: ColorUtil.primaryColor,
-              ),
+              productProvider.isOutStock()
+                  ? SizedBox()
+                  : MyFlatButton(
+                      onPressed: () {
+                        if (!Provider.of<UserProvider>(context, listen: false)
+                            .isLogin) {
+                          WidgetUtil.showRequireLoginDialog(context);
+                          return;
+                        }
+                        Provider.of<CartProvider>(context, listen: false)
+                            .addProduct(productProvider.product);
+                        pushAndReplaceAll(
+                            MainScreen(
+                              index: 2,
+                            ),
+                            "/main_screen");
+                      },
+                      height: 50,
+                      text: S.of(context).buy_now,
+                      textStyle: TextStyle(color: Colors.white),
+                      borderRadius: 0,
+                      padding: EdgeInsets.only(
+                          left: SizeUtil.bigSpace,
+                          right: SizeUtil.bigSpace,
+                          top: SizeUtil.normalSpace,
+                          bottom: SizeUtil.normalSpace),
+                      color: ColorUtil.primaryColor,
+                    ),
               Expanded(
                 child: MyFlatButton(
                   height: 50,
