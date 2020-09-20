@@ -6,4 +6,8 @@ class PartnerTabbarProvider extends ChangeNotifier{
     isProduct = !isProduct;
     notifyListeners();
   }
+
+  void setIsProduct(product){
+    isProduct = product;
+  }
 }
