@@ -20,40 +20,74 @@ class _State extends State<ContentViewMoreable> {
 
   @override
   Widget build(BuildContext context) {
+    bool canExpand = widget.content != null && widget.content.length > 300;
     return Padding(
       padding: SizeUtil.smallPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          MyText(
-            widget.content,
-            style: TextStyle(color: ColorUtil.textGray),
-            overflow: isExpanded?null: TextOverflow.ellipsis,
-            maxLines: isExpanded ? null : 5,
+          ConstrainedBox(
+            constraints: new BoxConstraints(
+                minHeight: 50, maxHeight: isExpanded ? double.infinity : 100),
+            child: Stack(
+              children: <Widget>[
+                MyText(
+                  widget.content,
+                  style: TextStyle(color: ColorUtil.textGray),
+//                  overflow: TextOverflow.ellipsis,
+                ),
+                isExpanded || !canExpand
+                    ? SizedBox()
+                    : Positioned(
+                        child: Container(
+                          height: 50,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                Colors.white10,
+                                Colors.white24,
+                                Colors.white70
+                              ])),
+                        ),
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                      )
+              ],
+            ),
           ),
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
-          Center(child: ButtonIcon(
-            onPressed: () {
-              setState(() {
-                isExpanded = !isExpanded;
-              });
-            },
-            icon: Text(
-              isExpanded ? S.of(context).collapse : S.of(context).view_more,
-              style: TextStyle(
-                  color: ColorUtil.primaryColor,
-                  fontSize: SizeUtil.textSizeSmall),
-            ),
-            borderRadius: SizeUtil.bigRadius,
-            padding: EdgeInsets.only(
-                left: SizeUtil.smallSpace,
-                right: SizeUtil.smallSpace,
-                top: SizeUtil.tinySpace,
-                bottom: SizeUtil.tinySpace),
-            backgroundColor: Colors.transparent,
-          ),)
+          canExpand
+              ? Center(
+                  child: ButtonIcon(
+                    onPressed: () {
+                      setState(() {
+                        isExpanded = !isExpanded;
+                      });
+                    },
+                    icon: Text(
+                      isExpanded
+                          ? S.of(context).collapse
+                          : S.of(context).view_more,
+                      style: TextStyle(
+                          color: ColorUtil.primaryColor,
+                          fontSize: SizeUtil.textSizeSmall),
+                    ),
+                    borderRadius: SizeUtil.bigRadius,
+                    padding: EdgeInsets.only(
+                        left: SizeUtil.smallSpace,
+                        right: SizeUtil.smallSpace,
+                        top: SizeUtil.tinySpace,
+                        bottom: SizeUtil.tinySpace),
+                    backgroundColor: Colors.transparent,
+                  ),
+                )
+              : SizedBox()
         ],
       ),
     );

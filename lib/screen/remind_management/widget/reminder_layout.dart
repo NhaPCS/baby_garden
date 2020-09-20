@@ -114,53 +114,60 @@ class _ReminderState extends BaseState<ReminderLayout> {
         notifier = _time4Controller;
         break;
     }
-    return Padding(
-      padding: const EdgeInsets.only(top: SizeUtil.normalSpace),
-      child: Row(children: <Widget>[
-        Text(
-          label,
-          style: TextStyle(fontSize: SizeUtil.textSizeSmall),
-        ),
-        ValueListenableBuilder<DateTime>(
-          valueListenable: notifier,
-          builder: (BuildContext context, DateTime value, Widget child) {
-            return value == null
+    return ValueListenableBuilder<DateTime>(
+      valueListenable: notifier,
+      builder: (BuildContext context, DateTime value, Widget child) {
+        return Padding(
+          padding: const EdgeInsets.only(top: SizeUtil.normalSpace),
+          child: Row(children: <Widget>[
+            Text(
+              label,
+              style: TextStyle(fontSize: SizeUtil.textSizeSmall),
+            ),
+            value == null
                 ? SizedBox()
                 : Text(
                     "   ${DateUtil.formatTime(value)}   ",
                     style: TextStyle(color: ColorUtil.primaryColor),
-                  );
-          },
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: SizeUtil.tinySpace),
-          child: GestureDetector(
-            onTap: () async {
-              DateTime time = await push(RemindSetTimeScreen());
-              switch (index) {
-                case 0:
-                  _time1Controller.value = time;
-                  break;
-                case 1:
-                  _time2Controller.value = time;
-                  break;
-                case 2:
-                  _time3Controller.value = time;
-                  break;
-                case 3:
-                  _time4Controller.value = time;
-                  break;
-              }
-              updateCallBack();
-            },
-            child: Text(
-              S.of(context).select,
-              style: TextStyle(
-                  fontSize: SizeUtil.textSizeSmall, color: Colors.orange),
+                  ),
+            Padding(
+              padding: const EdgeInsets.only(left: SizeUtil.tinySpace),
+              child: GestureDetector(
+                onTap: () async {
+                  if (notifier.value != null) {
+                    notifier.value = null;
+                    updateCallBack();
+                    return;
+                  }
+                  DateTime time = await push(RemindSetTimeScreen());
+                  switch (index) {
+                    case 0:
+                      _time1Controller.value = time;
+                      break;
+                    case 1:
+                      _time2Controller.value = time;
+                      break;
+                    case 2:
+                      _time3Controller.value = time;
+                      break;
+                    case 3:
+                      _time4Controller.value = time;
+                      break;
+                  }
+                  updateCallBack();
+                },
+                child: Text(
+                  notifier.value != null
+                      ? S.of(context).remove_select
+                      : S.of(context).select,
+                  style: TextStyle(
+                      fontSize: SizeUtil.textSizeSmall, color: Colors.orange),
+                ),
+              ),
             ),
-          ),
-        ),
-      ]),
+          ]),
+        );
+      },
     );
   }
 

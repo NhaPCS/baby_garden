@@ -3618,6 +3618,15 @@ class S {
     );
   }
 
+  String get remove_select {
+    return Intl.message(
+      'Bỏ chọn',
+      name: 'remove_select',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get use_service {
     return Intl.message(
       'Sử dụng dịch vụ',
@@ -3629,7 +3638,7 @@ class S {
 
   String get selectRemindCycle {
     return Intl.message(
-      'chọn chu kì nhắc',
+      'Chọn chu kỳ nhắc',
       name: 'selectRemindCycle',
       desc: '',
       args: [],
@@ -4493,7 +4502,7 @@ class S {
 
   String get remindCycle1 {
     return Intl.message(
-      '01 ( 1 ngày nhắc / 1 chu kỳ )',
+      '01 (1 ngày nhắc / 1 lần)',
       name: 'remindCycle1',
       desc: '',
       args: [],
@@ -4502,7 +4511,7 @@ class S {
 
   String get remindCycle2 {
     return Intl.message(
-      '02 ( 2 ngày nhắc / 1 chu kỳ )',
+      '02 (2 ngày nhắc / 1 lần)',
       name: 'remindCycle2',
       desc: '',
       args: [],
@@ -4511,7 +4520,7 @@ class S {
 
   String get remindCycle3 {
     return Intl.message(
-      '03 ( 3 ngày nhắc / 1 chu kỳ )',
+      '03 (3 ngày nhắc / 1 lần)',
       name: 'remindCycle3',
       desc: '',
       args: [],
