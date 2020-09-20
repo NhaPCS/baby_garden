@@ -124,6 +124,7 @@ class _HomeState extends BaseStateModel<HomeScreen, HomeViewModel> {
                               return FlashSale();
                             }
                             return GridProduct(
+                              reload: _reloadNotifier.value,
                               isHome: true,
                               section: getViewModel().SECTIONS[index - 1],
                             );
@@ -133,7 +134,7 @@ class _HomeState extends BaseStateModel<HomeScreen, HomeViewModel> {
                       height: double.infinity,
                     ),
                     onRefresh: () {
-                      _reloadNotifier.value = _reloadNotifier.value++;
+                      _reloadNotifier.value = _reloadNotifier.value + 1;
                       return Future.delayed(Duration(milliseconds: 1000));
                     }),
               );

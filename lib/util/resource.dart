@@ -218,21 +218,20 @@ class ImageUtil {
 }
 
 class StringUtil {
-  static String getFullAddress(dynamic address, {bool hasBreak = false}) {
+  static String getFullAddress(dynamic address,
+      {bool hasBreak = false, bool hasPersonalData = true}) {
     if (address == null) return '';
     String detailAddress = address['address'] ?? '';
-    String city =
-        address['city_name'] != null ? "${address['city_name']}" : '';
+    String city = address['city_name'] != null ? "${address['city_name']}" : '';
     String district =
-        address['district_name'] != null ? "${address['district_name']}" : '';
-    String ward =
-        address['ward_name'] != null ? "${address['ward_name']}" : '';
+        address['district_name'] != null ? "${address['district_name']}," : '';
+    String ward = address['ward_name'] != null ? "${address['ward_name']}," : '';
     String name = address['name'] != null ? "${address['name']}" : '';
     String phone = address['phone'] != null ? "${address['phone']}" : '';
-    if(hasBreak){
-      return "$name - $phone\n$detailAddress\n$ward, $district, $city";
-    } else{
-      return "$name, $phone, $detailAddress, $ward, $district, $city";
+    if (hasBreak) {
+      return "$name - $phone\n$detailAddress\n$ward $district $city";
+    } else {
+      return "${hasPersonalData ? '$name, $phone,' : ''} $detailAddress $ward $district $city";
     }
   }
 

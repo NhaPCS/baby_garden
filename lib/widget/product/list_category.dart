@@ -59,7 +59,10 @@ class _ListCategoryState extends State<ListCategory> {
     return ValueListenableBuilder<int>(
       builder: (BuildContext context, int selectCategoryIndex, Widget child) {
         if (widget.onChangedCategory != null) {
-          widget.onChangedCategory(selectCategoryIndex == 0
+          widget.onChangedCategory(selectCategoryIndex == 0 ||
+                  categories == null ||
+                  categories.isEmpty ||
+                  selectCategoryIndex - 1 >= categories.length
               ? null
               : categories[selectCategoryIndex - 1]);
         }

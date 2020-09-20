@@ -53,7 +53,7 @@ class ListParentCategory extends StatelessWidget {
                             isSelected: changeCategoryProvider.index == index,
                           ),
                           onTap: () {
-                            changeCategoryProvider.selectCategory(index);
+                            changeCategoryProvider.selectCategory(index, mainCategoryProvider.categories[index]['id']);
                             onParentCategoryChanged(
                                 mainCategoryProvider.categories[index]);
                           },

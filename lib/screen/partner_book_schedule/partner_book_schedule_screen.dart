@@ -684,7 +684,7 @@ class _PartnerBookScheduleScreenState
             Expanded(
                 child: ShopInfoForm(
                     title: S.of(context).address_form,
-                    content: getAddress(data))),
+                    content: StringUtil.getFullAddress(data, hasPersonalData: false))),
             SizedBox(
               width: SizeUtil.smallSpace,
             ),

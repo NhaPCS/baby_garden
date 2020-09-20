@@ -27,12 +27,17 @@ class _State
   RemindCalendar _remindCalendar = RemindCalendar();
 
   @override
-  Widget buildWidget(BuildContext context) {
+  void initState() {
+    super.initState();
     if (widget.product['calendar'] != null &&
         widget.product['calendar'].isNotEmpty) {
       _remindCalendar =
           RemindCalendar().fromJson(widget.product['calendar'][0]);
     }
+  }
+
+  @override
+  Widget buildWidget(BuildContext context) {
     _remindCalendar.productId = widget.product['product_id'];
     return AlertDialog(
       shape: RoundedRectangleBorder(
