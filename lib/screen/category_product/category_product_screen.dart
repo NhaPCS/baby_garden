@@ -35,8 +35,6 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
       ChangeParentCategoryProvider();
   final GetListProductProvider _getListProductProvider =
       new GetListProductProvider();
-  final GetProductCategoryByParentProvider _getProductCategoryByParentProvider =
-      GetProductCategoryByParentProvider();
   String _selectedCategoryId;
   final ValueNotifier<int> _selectSubCategoryController = ValueNotifier(0);
   String _selectedParentId;
@@ -52,13 +50,25 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (widget.selectedParentId != null) {
-      _getProductCategoryByParentProvider.getProductCategories(widget.selectedParentId);
       int selectedIndex = Provider.of<GetMainCategoryProvider>(context)
           .categories
           .indexWhere((element) => element['id'] == widget.selectedParentId);
-      if (selectedIndex >= 0){
+      if (selectedIndex >= 0) {
         _changeParentCategoryProvider.index = selectedIndex;
       }
+    } else {_loadBigCategoryAt(0);}
+  }
+
+  _loadBigCategoryAt(int index) {
+    dynamic parentCategory =
+        Provider.of<GetMainCategoryProvider>(context).categories[index];
+    if(parentCategory==null) return;
+    _changeParentCategoryProvider.selectCategory(0, parentCategory['id']);
+    _page = 0;
+    if (parentCategory != null) {
+      _selectedParentId = parentCategory['id'];
+      _selectedCategoryId = null;
+      _selectSubCategoryController.value = 0;
     }
   }
 
@@ -123,13 +133,8 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
                       _page = 0;
                       if (parentCategory != null) {
                         _selectedParentId = parentCategory['id'];
-                        _getProductCategoryByParentProvider
-                            .getProductCategories(parentCategory['id']);
                         _selectedCategoryId = null;
                         _selectSubCategoryController.value = 0;
-                      } else {
-                        _getProductCategoryByParentProvider
-                            .getProductCategories(null);
                       }
                     },
                   ),
@@ -140,13 +145,10 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
               pinned: true,
               floating: false,
               delegate: SliverCategoryDelegate(
-                  Consumer<GetProductCategoryByParentProvider>(
+                  Consumer<ChangeParentCategoryProvider>(
                 builder: (BuildContext context,
-                    GetProductCategoryByParentProvider value, Widget child) {
-                  int selectedCategory = value.categories.indexWhere(
-                      (element) => element['id'] == widget.selectedCategoryId);
-                  if (selectedCategory >= 0)
-                    _selectSubCategoryController.value = selectedCategory + 1;
+                    ChangeParentCategoryProvider value, Widget child) {
+                  _selectSubCategoryController.value = value.index;
                   return ListCategory(
                     selectedController: _selectSubCategoryController,
                     categories: value.categories,
@@ -185,7 +187,6 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
     return [
       ChangeNotifierProvider.value(value: _changeParentCategoryProvider),
       ChangeNotifierProvider.value(value: _getListProductProvider),
-      ChangeNotifierProvider.value(value: _getProductCategoryByParentProvider),
     ];
   }
 }

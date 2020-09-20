@@ -1,4 +1,5 @@
-import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
+import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/image/circle_image.dart';
 import 'package:flutter/material.dart';
 
 class Balloon extends StatefulWidget {
@@ -24,8 +25,17 @@ class _State extends State<Balloon> {
             left: _offset.value.dx,
             top: _offset.value.dy,
             child: Draggable(
-              child: SvgIcon("girl.svg"),
-              feedback: SvgIcon("girl.svg"),
+              child: CircleImage(
+                  width: 50,
+                  height: 50,
+                  imageUrl: 'http://chap.com.vn/vcb/uploads/balloons/sales.png',
+                  borderRadius: SizeUtil.smallRadius),
+              feedback: CircleImage(
+                width: 50,
+                height: 50,
+                imageUrl: 'http://chap.com.vn/vcb/uploads/balloons/sales.png',
+                borderRadius: SizeUtil.smallRadius,
+              ),
               childWhenDragging: SizedBox(),
               onDragEnd: (detail) {
                 _offset.value = detail.offset;
