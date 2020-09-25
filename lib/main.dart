@@ -1,10 +1,12 @@
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
 import 'package:baby_garden_flutter/provider/city_provider.dart';
+import 'package:baby_garden_flutter/provider/get_balloon_provider.dart';
 import 'package:baby_garden_flutter/provider/get_banners_provider.dart';
 import 'package:baby_garden_flutter/provider/get_main_category_provider.dart';
 import 'package:baby_garden_flutter/provider/get_product_category_provider.dart';
 import 'package:baby_garden_flutter/provider/get_service_category_provider.dart';
+import 'package:baby_garden_flutter/provider/list_introduct_provider.dart';
 import 'package:baby_garden_flutter/provider/orders_provider.dart';
 import 'package:baby_garden_flutter/provider/privacy_provider.dart';
 import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
@@ -33,13 +35,14 @@ void main() {
           ChangeNotifierProvider(create: (_) => OrdersProvider()),
           ChangeNotifierProvider(create: (_) => GetMainCategoryProvider()),
           ChangeNotifierProvider(create: (_) => PrivacyProvider()),
+          ChangeNotifierProvider(create: (_) => ListIntroductionProvider()),
+          ChangeNotifierProvider(create: (_) => GetBalloonProvider()),
         ],
         child: MyApp(),
       )));
 }
 
 class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
 
   @override
   State<StatefulWidget> createState() {
@@ -100,6 +103,9 @@ class _MyAppState extends State<MyApp> {
 
     if (Provider.of<OrdersProvider>(context).SERVICE_OPTIONS.isEmpty)
       Provider.of<OrdersProvider>(context).init();
+
+    if (Provider.of<GetBalloonProvider>(context).balloon==null)
+      Provider.of<GetBalloonProvider>(context).getBalloon();
   }
 
   @override

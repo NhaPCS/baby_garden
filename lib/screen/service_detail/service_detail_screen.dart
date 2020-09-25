@@ -2,7 +2,6 @@ import 'package:baby_garden_flutter/dialog/receive_barcode_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/product_order_item.dart';
 import 'package:baby_garden_flutter/provider/booking_detail_provider.dart';
-import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/screen/checkout/widget/rich_text_form.dart';
 import 'package:baby_garden_flutter/screen/order_detail/widget/order_info.dart';
@@ -303,13 +302,11 @@ class _ServiceDetailScreenState
 
   @override
   List<SingleChildWidget> providers() {
-    // TODO: implement providers
     return [ChangeNotifierProvider.value(value: _bookingDetailProvider)];
   }
 
   @override
   ServiceDetailViewModel initViewModel() {
-    // TODO: implement initViewModel
     return new ServiceDetailViewModel(context);
   }
 }

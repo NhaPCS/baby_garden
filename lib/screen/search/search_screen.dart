@@ -46,130 +46,150 @@ class _SearchState extends BaseState<SearchScreen> {
     }
   }
 
+  bool _onBackPress() {
+    if (_searchingProvider.finalResult != null) {
+      _searchingProvider.clearFinalResult();
+      return false;
+    } else {
+      Navigator.of(context).pop();
+      return false;
+    }
+  }
+
   @override
   Widget buildWidget(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        titleSpacing: 0,
-        automaticallyImplyLeading: false, // Don't show the leading button
-        title: SearchBar(
-          padding: EdgeInsets.only(right: SizeUtil.smallSpace),
-          hasBack: true,
-          enable: true,
-          hint: widget.isPickup ? S.of(context).hint_pick_a_product : null,
-          searchTextController: _searchTextController,
-          onQrPressed: () async {
-            ScanResult result = await BarcodeScanner.scan();
-            _searchTextController.text = result.rawContent;
-            _searchingProvider.searchProduct(context, code: result.rawContent);
-          },
-          onSubmit: (val) {
-            if (val.trim().isEmpty) {
-              _searchingProvider.clear();
-            } else {
+    return WillPopScope(
+      onWillPop: () async {
+        return _onBackPress();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          titleSpacing: 0,
+          automaticallyImplyLeading: false, // Don't show the leading button
+          title: SearchBar(
+            onBackPress: _onBackPress,
+            padding: EdgeInsets.only(right: SizeUtil.smallSpace),
+            hasBack: true,
+            enable: true,
+            hint: widget.isPickup ? S.of(context).hint_pick_a_product : null,
+            searchTextController: _searchTextController,
+            onQrPressed: () async {
+              ScanResult result = await BarcodeScanner.scan();
+              _searchTextController.text = result.rawContent;
               _searchingProvider.searchProduct(context,
-                  key: val.trim(), index: 0);
-            }
-          },
-          onSearchTextChanged: (s) {
-            if (widget.isPickup) {
-              _searchingProvider.searchProduct(context,
-                  key: s.trim(), index: 0);
-              return;
-            }
-            _searchingProvider.clearFinalResult();
-            if (_searchTextController.text.trim().isEmpty) {
-              _searchingProvider.clear();
-              _getSearchHistoryProvider.searchHistory();
-            } else {
-              _searchingProvider.search(context, s);
-            }
-          },
+                  code: result.rawContent);
+            },
+            onSubmit: (val) {
+              if (val.trim().isEmpty) {
+                _searchingProvider.clear();
+              } else {
+                _searchingProvider.searchProduct(context,
+                    key: val.trim(), index: 0);
+              }
+            },
+            onSearchTextChanged: (s) {
+              if (widget.isPickup) {
+                _searchingProvider.searchProduct(context,
+                    key: s.trim(), index: 0);
+                return;
+              }
+              _searchingProvider.clearFinalResult();
+              if (_searchTextController.text.trim().isEmpty) {
+                _searchingProvider.clear();
+                _getSearchHistoryProvider.searchHistory();
+              } else {
+                _searchingProvider.search(context, s);
+              }
+            },
+          ),
         ),
-      ),
-      body: Consumer<SearchingProvider>(
-        builder: (BuildContext context, SearchingProvider searchProvider,
-            Widget child) {
-          if (searchProvider.finalResult != null) {
-            return FinalSearchResult(
-                products: searchProvider.finalResult,
-                isPickup: widget.isPickup,
-                reloadCallback: (page) {
-                  searchProvider.searchProduct(
-                    context,
-                    key: searchProvider.key,
-                    index: page * PAGE_SIZE,
+        body: Consumer<SearchingProvider>(
+          builder: (BuildContext context, SearchingProvider searchProvider,
+              Widget child) {
+            if (searchProvider.finalResult != null) {
+              return FinalSearchResult(
+                  products: searchProvider.finalResult,
+                  isPickup: widget.isPickup,
+                  reloadCallback: (page) {
+                    searchProvider.searchProduct(
+                      context,
+                      key: searchProvider.key,
+                      index: page * PAGE_SIZE,
+                    );
+                  },
+                  total: searchProvider.total);
+            }
+            if (searchProvider.searchResult == null) {
+              return Consumer2<GetHotKeysProvider, GetSearchHistoryProvider>(
+                builder: (BuildContext context,
+                    GetHotKeysProvider hotKeyProvider,
+                    GetSearchHistoryProvider historyProvider,
+                    Widget child) {
+                  return ListView.builder(
+                    itemCount: historyProvider.histories == null ||
+                            historyProvider.histories.isEmpty
+                        ? 1
+                        : historyProvider.histories.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index == 0) {
+                        return HotKeys(
+                          onHotKeyPress: (s) {
+                            _searchTextController.text = s;
+                            _searchingProvider.search(context, s);
+                          },
+                          onDeleteHistory: () {
+                            _getSearchHistoryProvider
+                                .deleteSearchHistory(context);
+                          },
+                          histories: historyProvider.histories,
+                        );
+                      }
+                      return SearchHistoryItem(
+                          onSearchItemPress: (t) {
+                            _searchingProvider.search(context, t);
+                          },
+                          history: historyProvider.histories[index - 1]);
+                    },
                   );
                 },
-                total: searchProvider.total);
-          }
-          if (searchProvider.searchResult == null) {
-            return Consumer2<GetHotKeysProvider, GetSearchHistoryProvider>(
-              builder: (BuildContext context, GetHotKeysProvider hotKeyProvider,
-                  GetSearchHistoryProvider historyProvider, Widget child) {
-                return ListView.builder(
-                  itemCount: historyProvider.histories == null ||
-                          historyProvider.histories.isEmpty
-                      ? 1
-                      : historyProvider.histories.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    if (index == 0) {
-                      return HotKeys(
-                        onHotKeyPress: (s) {
-                          _searchTextController.text = s;
-                          _searchingProvider.search(context, s);
-                        },
-                        onDeleteHistory: () {
-                          _getSearchHistoryProvider
-                              .deleteSearchHistory(context);
-                        },
-                        histories: historyProvider.histories,
-                      );
-                    }
-                    return SearchHistoryItem(
-                        onSearchItemPress: (t) {
-                          _searchingProvider.search(context, t);
-                        },
-                        history: historyProvider.histories[index - 1]);
-                  },
-                );
-              },
-            );
-          }
-          if (searchProvider.searchResult.isEmpty) {
-            return LoadingView(isNoData: true);
-          } else
-            return ListView.builder(
-              itemCount: searchProvider.searchResult == null
-                  ? 0
-                  : searchProvider.searchResult.length,
-              itemBuilder: (BuildContext context, int index) {
-                if (searchProvider.searchResult[index].runtimeType == String) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      WidgetUtil.paddingWidget(
-                          Text(
-                            searchProvider.searchResult[index],
-                            style: TextStyle(
-                                color: ColorUtil.primaryColor,
-                                fontSize: SizeUtil.textSizeDefault),
-                          ),
-                          padding: EdgeInsets.only(
-                              left: SizeUtil.defaultSpace,
-                              top: SizeUtil.smallSpace,
-                              bottom: SizeUtil.smallSpace)),
-                      WidgetUtil.getLine(margin: EdgeInsets.all(0))
-                    ],
-                  );
-                } else
-                  return SearchProductItem(
-                    isPickup: widget.isPickup,
-                    product: searchProvider.searchResult[index],
-                  );
-              },
-            );
-        },
+              );
+            }
+            if (searchProvider.searchResult.isEmpty) {
+              return LoadingView(isNoData: true);
+            } else
+              return ListView.builder(
+                itemCount: searchProvider.searchResult == null
+                    ? 0
+                    : searchProvider.searchResult.length,
+                itemBuilder: (BuildContext context, int index) {
+                  if (searchProvider.searchResult[index].runtimeType ==
+                      String) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        WidgetUtil.paddingWidget(
+                            Text(
+                              searchProvider.searchResult[index],
+                              style: TextStyle(
+                                  color: ColorUtil.primaryColor,
+                                  fontSize: SizeUtil.textSizeDefault),
+                            ),
+                            padding: EdgeInsets.only(
+                                left: SizeUtil.defaultSpace,
+                                top: SizeUtil.smallSpace,
+                                bottom: SizeUtil.smallSpace)),
+                        WidgetUtil.getLine(margin: EdgeInsets.all(0))
+                      ],
+                    );
+                  } else
+                    return SearchProductItem(
+                      isPickup: widget.isPickup,
+                      product: searchProvider.searchResult[index],
+                    );
+                },
+              );
+          },
+        ),
       ),
     );
   }
