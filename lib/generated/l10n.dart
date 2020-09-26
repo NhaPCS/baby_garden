@@ -4895,6 +4895,15 @@ class S {
       args: [],
     );
   }
+
+  String get mess_fill_all_info_of_checking {
+    return Intl.message(
+      'Vui lòng nhập thông tin chiều cao, cân nặng của trẻ để tiếp tục!',
+      name: 'mess_fill_all_info_of_checking',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
