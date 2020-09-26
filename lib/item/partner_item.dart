@@ -103,7 +103,9 @@ class PartnerItem extends StatelessWidget {
                             height: 2,
                           ),
                           Text(
-                            shop['introduce'] ?? "",
+                            shop['introduce'].length > 100
+                                ? shop['introduce'].substring(0, 100)
+                                : shop['introduce'] ?? "",
                             style: TextStyle(
                                 fontSize: SizeUtil.textSizeSmall,
                                 color: Colors.white),

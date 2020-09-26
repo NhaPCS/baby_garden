@@ -65,15 +65,15 @@ class _PartnerServiceDetailScreenScreen extends BaseState<PartnerServiceDetailSc
             child: Text(widget.data['content']
             ,style: TextStyle(fontSize: SizeUtil.textSizeSmall,color: ColorUtil.textColor),),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left:SizeUtil.smallSpace,top: SizeUtil.midSmallSpace,right: SizeUtil.smallSpace,bottom: SizeUtil.midSmallSpace),
-            child: Image.asset('photo/service_detail.png'),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left:SizeUtil.smallSpace,bottom: SizeUtil.midSmallSpace,right: SizeUtil.smallSpace),
-            child: Text('99.99% khách hàng đến trải nghiệm dịch vụ tại Thẩm mỹ viện Quốc tế Nevada và hài lòng tuyệt đối. Để tái sinh làn da và sở hữu một làn da căng bóng khỏe, tươi trẻ, đơn giản thôi, bạn hãy đến ngay với Thẩm mỹ viện Quốc tế Nevada để được tư vấn cụ thể.'
-              ,style: TextStyle(fontSize: SizeUtil.textSizeSmall,color: ColorUtil.textColor),),
-          ),
+//          Padding(
+//            padding: const EdgeInsets.only(left:SizeUtil.smallSpace,top: SizeUtil.midSmallSpace,right: SizeUtil.smallSpace,bottom: SizeUtil.midSmallSpace),
+//            child: Image.asset('photo/service_detail.png'),
+//          ),
+//          Padding(
+//            padding: const EdgeInsets.only(left:SizeUtil.smallSpace,bottom: SizeUtil.midSmallSpace,right: SizeUtil.smallSpace),
+//            child: Text('99.99% khách hàng đến trải nghiệm dịch vụ tại Thẩm mỹ viện Quốc tế Nevada và hài lòng tuyệt đối. Để tái sinh làn da và sở hữu một làn da căng bóng khỏe, tươi trẻ, đơn giản thôi, bạn hãy đến ngay với Thẩm mỹ viện Quốc tế Nevada để được tư vấn cụ thể.'
+//              ,style: TextStyle(fontSize: SizeUtil.textSizeSmall,color: ColorUtil.textColor),),
+//          ),
           //TODO time schedule
           Padding(
             padding: const EdgeInsets.only(left:SizeUtil.smallSpace,bottom: SizeUtil.midSmallSpace,right: SizeUtil.smallSpace),

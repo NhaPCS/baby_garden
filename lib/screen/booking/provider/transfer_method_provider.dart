@@ -26,6 +26,10 @@ class TransferMethodProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  String getDiscountValue(){
+    return ships[transferMethod]['price_discount'].toString();
+  }
+
   void onChange(val) {
     transferMethod = val;
     final method = ships[val];
