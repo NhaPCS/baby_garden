@@ -113,7 +113,7 @@ class ProductCartItem extends StatelessWidget {
                       ChangeQuantityWidget(
                         buttonColor: ColorUtil.primaryColor,
                         textColor: ColorUtil.textColor,
-                        quantity: product['quantity'],
+                        quantity: int.parse(product['quantity']),
                         height: 23,
                         padding: EdgeInsets.only(
                             left: SizeUtil.superTinySpace,
