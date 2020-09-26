@@ -32,6 +32,7 @@ class _CountdownState extends State<CountDownTime> {
       _startDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(widget.startTime);
       _endDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(widget.endTime);
       DateTime _now = DateTime.now();
+      print("AAAA TIME $_startDate $_endDate  $_now");
       if (!_now.isAfter(_startDate)) {
         _status.value = S.of(context).time_pending;
         return;
@@ -42,12 +43,16 @@ class _CountdownState extends State<CountDownTime> {
       }
       _start =
           _endDate.millisecondsSinceEpoch - _startDate.millisecondsSinceEpoch;
+      if (_timer != null) {
+        _timer.cancel();
+      }
       _timer = new Timer.periodic(Duration(seconds: 1), (Timer timer) {
         _start = _start - 1000;
         _status.value = DateFormat("HH:mm:ss")
-            .format(new DateTime.fromMillisecondsSinceEpoch(_start));
+            .format(new DateTime.fromMillisecondsSinceEpoch(_start,isUtc: true ));
         if (_start <= 0) {
           _timer.cancel();
+          _status.value = null;
         }
       });
     }
@@ -67,12 +72,10 @@ class _CountdownState extends State<CountDownTime> {
   @override
   Widget build(BuildContext context) {
     startTimer();
-    return _status.value==null
-        ? SizedBox(
-            width: 0,
-            height: 0,
-          )
-        : ValueListenableBuilder(valueListenable: _status, builder: (context, value, child){
+    return ValueListenableBuilder(
+        valueListenable: _status,
+        builder: (context, value, child) {
+          if (value == null) return SizedBox();
           return MyRaisedButton(
             onPressed: () {},
             padding: EdgeInsets.only(
@@ -85,6 +88,6 @@ class _CountdownState extends State<CountDownTime> {
             text: _status.value,
             borderRadius: SizeUtil.bigRadius,
           );
-    });
+        });
   }
 }
