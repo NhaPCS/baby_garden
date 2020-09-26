@@ -16,6 +16,7 @@ class SearchBar extends StatelessWidget {
   final ValueChanged<String> onSearchTextChanged;
   final Function(String) onSubmit;
   final String hint;
+  final VoidCallback onBackPress;
 
   const SearchBar({
     Key key,
@@ -28,7 +29,7 @@ class SearchBar extends StatelessWidget {
     this.onSearchTextChanged,
     this.onSubmit,
     this.onQrPressed,
-    this.hint,
+    this.hint, this.onBackPress,
   }) : super(key: key);
 
   @override
@@ -55,7 +56,11 @@ class SearchBar extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.of(context).pop();
+                    if(onBackPress!=null){
+                      onBackPress();
+                    }else{
+                      Navigator.of(context).pop();
+                    }
                   },
                 )
               : SizedBox(),

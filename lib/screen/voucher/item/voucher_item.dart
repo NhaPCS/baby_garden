@@ -39,7 +39,10 @@ class VoucherItem extends StatelessWidget {
                   borderRadius:
                       BorderRadius.all(Radius.circular(SizeUtil.smallRadius)),
                   image: DecorationImage(
-                      image: CachedNetworkImageProvider(voucher['img'] ?? ''))),
+                      image: CachedNetworkImageProvider(
+                          voucher['img'] == null || voucher['img'].isEmpty
+                              ? ''
+                              : voucher['img'][0]))),
             ),
             Positioned(
               left: 0,
@@ -79,7 +82,8 @@ class VoucherItem extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(SizeUtil.smallRadius)),
+                      borderRadius:
+                          BorderRadius.circular(SizeUtil.smallRadius)),
                   padding: SizeUtil.normalPadding,
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

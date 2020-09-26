@@ -146,6 +146,7 @@ Response parseResponse(BuildContext context, String responseBody,
       data: body == null ? null : body['data']);
 
   if (!res.isSuccess()) {
+    res.data = null;
     if (context != null && showErrorDialog)
       WidgetUtil.showErrorDialog(context, res.message);
   } else {

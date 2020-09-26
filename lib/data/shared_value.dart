@@ -15,6 +15,7 @@ class ShareValueProvider {
   final String setting_notify_service = "setting_notify_service";
   final String setting_notify_vcb_express = "setting_notify_vcb_express";
   final String token_fcm = "token_fcm";
+  final String _is_first_open = "_is_first_open";
 
   ShareValueProvider._();
 
@@ -112,5 +113,15 @@ class ShareValueProvider {
   Future<String> getFcmToken() async {
     final shareValueProvider = await SharedPreferences.getInstance();
     return shareValueProvider.getString(token_fcm);
+  }
+
+  Future<void> saveIsFirstOpened() async {
+    final shareValueProvider = await SharedPreferences.getInstance();
+    shareValueProvider.setBool(_is_first_open, true);
+  }
+
+  Future<bool> firstOpened() async {
+    final shareValueProvider = await SharedPreferences.getInstance();
+    return shareValueProvider.getBool(_is_first_open) ?? false;
   }
 }

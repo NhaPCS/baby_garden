@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -50,14 +51,16 @@ class FlashSaleProductItem extends StatelessWidget {
               ),
               Row(
                 children: <Widget>[
-                  MyText(
+                  Expanded(
+                      child: AutoSizeText(
                     StringUtil.getPriceText(product['price']),
+                    maxLines: 1,
+                    minFontSize: SizeUtil.textSizeMini,
+                    maxFontSize: SizeUtil.textSizeSmall,
                     style: TextStyle(
                         decoration: TextDecoration.lineThrough,
-                        color: ColorUtil.textGray,
-                        fontSize: SizeUtil.textSizeSmall),
-                  ),
-                  Expanded(child: SizedBox()),
+                        color: ColorUtil.textGray),
+                  )),
                   MyText(
                     isPending
                         ? product['price_discount']

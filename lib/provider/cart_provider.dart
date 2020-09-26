@@ -16,7 +16,7 @@ class CartProvider extends ChangeNotifier {
       shops.forEach((element) {
         if (element != null && element['product'] != null) {
           element['product'].forEach((p) {
-            int number = p['quantity'];
+            int number = int.parse(p['quantity']??'0');
             badge += number;
             if (p['price_discount'] != null)
               price += int.parse(p['price_discount']?? 0) * number;
@@ -35,7 +35,7 @@ class CartProvider extends ChangeNotifier {
             element != null &&
             element['product'] != null) {
           element['product'].forEach((p) {
-            int number = p['quantity'];
+            int number = int.parse(p['quantity']??'0');
             badge += number;
             if (p['price_discount'] != null)
               price += int.parse(p['price_discount']) * number;

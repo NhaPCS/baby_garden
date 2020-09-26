@@ -1,4 +1,6 @@
+import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/list_introduct_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 class WelcomeGuideScreen extends StatefulWidget {
   @override
@@ -17,8 +20,15 @@ class WelcomeGuideScreen extends StatefulWidget {
 
 class _WelcomeGuideScreenState extends BaseState<WelcomeGuideScreen> {
   @override
+  void didChangeDependencies() {
+    ShareValueProvider.shareValueProvider.saveIsFirstOpened();
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget buildWidget(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white));
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -36,11 +46,11 @@ class _WelcomeGuideScreenState extends BaseState<WelcomeGuideScreen> {
               boxFit: BoxFit.contain,
               slideBackground: Colors.transparent,
               isAssetImage: true,
-              images: [
-                "photo/welcome_1.png",
-                "photo/welcome_2.png",
-                "photo/welcome_3.png"
-              ],
+              images:
+                  Provider.of<ListIntroductionProvider>(context, listen: false)
+                      .list
+                      .map((e) => e['img'])
+                      .toList(),
               indicatorActiveColor: ColorUtil.indicatorActiveColor,
               indicatorInactiveColor: ColorUtil.indicatorUnactiveColor),
           SizedBox(
@@ -49,7 +59,9 @@ class _WelcomeGuideScreenState extends BaseState<WelcomeGuideScreen> {
           InkWell(
             onTap: () {
               print("Yeah, this line is printed after 3 seconds");
-              pushReplacement(MainScreen(getPromotion: true,));
+              pushReplacement(MainScreen(
+                getPromotion: true,
+              ));
             },
             child: Padding(
               padding: const EdgeInsets.all(SizeUtil.tinySpace),
