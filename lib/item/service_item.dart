@@ -1,5 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -75,66 +76,83 @@ class ServiceItem extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 color: ColorUtil.gray,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Stack(
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: SizeUtil.midSmallSpace),
-                    child: CachedNetworkImage(
-                      imageUrl: itemData['shop_img'] ?? '',
-                      width: MediaQuery.of(context).size.width / 6,
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.only(left: SizeUtil.smallSpace),
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: SizeUtil.tinySpace,
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              itemData['service_name'] == null
-                                  ? ""
-                                  : itemData['service_name'],
-                              style: TextStyle(
-                                  fontSize: SizeUtil.textSizeExpressDetail,
-                                  color: ColorUtil.textColor),
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                          SizedBox(
-                            height: SizeUtil.tinySpace,
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              S
-                                  .of(context)
-                                  .overall_time(itemData['time_service']),
-                              style:
-                                  TextStyle(fontSize: SizeUtil.textSizeSmall),
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                          SizedBox(
-                            height: SizeUtil.tinySpace,
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              S.of(context).using_date(itemData["date_booking"],itemData["time_booking"]),
-                              style:
-                                  TextStyle(fontSize: SizeUtil.textSizeSmall),
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                        ],
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: SizeUtil.midSmallSpace),
+                        child: CachedNetworkImage(
+                          imageUrl: itemData['shop_img'] ?? '',
+                          width: MediaQuery.of(context).size.width / 6,
+                        ),
                       ),
-                    ),
-                  )
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(left: SizeUtil.smallSpace),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                height: SizeUtil.tinySpace,
+                              ),
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  itemData['service_name'] == null
+                                      ? ""
+                                      : itemData['service_name'],
+                                  style: TextStyle(
+                                      fontSize: SizeUtil.textSizeExpressDetail,
+                                      color: ColorUtil.textColor),
+                                  textAlign: TextAlign.start,
+                                ),
+                              ),
+                              SizedBox(
+                                height: SizeUtil.tinySpace,
+                              ),
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  S
+                                      .of(context)
+                                      .overall_time(itemData['time_service']),
+                                  style: TextStyle(
+                                      fontSize: SizeUtil.textSizeSmall),
+                                  textAlign: TextAlign.start,
+                                ),
+                              ),
+                              SizedBox(
+                                height: SizeUtil.tinySpace,
+                              ),
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  S.of(context).using_date(
+                                      itemData["date_booking"],
+                                      itemData["time_booking"]),
+                                  style: TextStyle(
+                                      fontSize: SizeUtil.textSizeSmall),
+                                  textAlign: TextAlign.start,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                Positioned.fill(
+                    child: Align(
+                        alignment: Alignment.centerRight,
+                        child: SvgIcon(
+                          itemData['is_rate'] == "1"
+                              ? 'check_green.svg'
+                              : 'error.svg',
+                          width: SizeUtil.iconSizeDefault,
+                          height: SizeUtil.iconSizeDefault,
+                        )))
                 ],
               ),
               Container(

@@ -101,7 +101,7 @@ class _PartnerBookScheduleScreenState
           vsync: this,
           length: (shopValue.data['service'] == null ? 0 : 1) +
               (shopValue.data['number_product'] == 0 ? 0 : 1));
-        _partnerTabbarProvider.setIsProduct(shopValue.data['service'] == null);
+      _partnerTabbarProvider.setIsProduct(shopValue.data['service'] == null);
       _tabController.addListener(() {
         _partnerTabbarProvider.onChange();
       });
@@ -410,13 +410,14 @@ class _PartnerBookScheduleScreenState
                   PartnerChooseLocationProvider value, Widget child) {
                 return Column(
                     children: List.generate(
-                        data['address'] != null &&
-                                data['address'].runtimeType == List
-                            ? data['address'].length
-                            : 0,
+                        data['place'] != null &&
+                                    data['place'].runtimeType == String ||
+                                data['place'].runtimeType == bool
+                            ? 0
+                            : data['place'].length,
                         (index) => CustomRadioButton(
                               titleContent:
-                                  Text(data['address'][index]['address']),
+                                  Text(data['place'][index]['address']),
                               padding: const EdgeInsets.only(
                                   left: SizeUtil.smallSpace,
                                   top: SizeUtil.smallSpace),
@@ -425,8 +426,7 @@ class _PartnerBookScheduleScreenState
                               iconSize: SizeUtil.iconSize,
                               titleSize: SizeUtil.textSizeSmall,
                               onChanged: (val) {
-                                _addressChoose =
-                                    data['address'][val]['address'];
+                                _addressChoose = data['place'][val]['address'];
                                 _partnerChooseLocation.onChange(val);
                               },
                             )));
@@ -684,7 +684,8 @@ class _PartnerBookScheduleScreenState
             Expanded(
                 child: ShopInfoForm(
                     title: S.of(context).address_form,
-                    content: StringUtil.getFullAddress(data, hasPersonalData: false))),
+                    content: StringUtil.getFullAddress(data,
+                        hasPersonalData: false))),
             SizedBox(
               width: SizeUtil.smallSpace,
             ),
@@ -695,7 +696,7 @@ class _PartnerBookScheduleScreenState
                 if (await canLaunch(uri)) launch(uri);
               },
               child: Text(
-                "Chỉ đường",
+                S.of(context).direction,
                 style: TextStyle(
                     fontSize: SizeUtil.textSizeSmall,
                     color: ColorUtil.blueLight),
@@ -811,7 +812,7 @@ class _PartnerBookScheduleScreenState
               _rowHeight.value == -1)
             {
               if (_rowKey.currentContext != null)
-                _rowHeight.value = _rowKey.currentContext.size.height,
+                _rowHeight.value = _rowKey.currentContext.size.height + 10,
               //TODO min height
               if (_rowKeyFull.currentContext != null)
                 _rowHeightFull = _rowKeyFull.currentContext.size.height,
@@ -844,12 +845,14 @@ class _PartnerBookScheduleScreenState
 
   String getAddress(dynamic data) {
     try {
-      if (data['address'].runtimeType == List) {
-        return data['address'] != null && data['address'].length > 0
-            ? data['address'][0]['address']
-            : "";
+      if (data['place'].runtimeType == String) {
+        return data['place'];
+      } else if (data['place'].runtimeType == bool) {
+        return "";
       } else {
-        return data['address'];
+        return data['place'] != null && data['place'].length > 0
+            ? data['place'][0]['address']
+            : "";
       }
     } on Exception catch (e) {
       return data;

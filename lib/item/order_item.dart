@@ -98,20 +98,33 @@ class OrderItem extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 color: ColorUtil.gray,
               ),
-              ProductOrderItem(
-                title: productItem['name'],
-                price: StringUtil.getPriceText(
-                        productItem == null ? "" : productItem['price']) +
-                    " X ",
-                productCount: productItem == null ? "" : productItem['number'],
-                imageUrl: productItem['image'] != null &&
-                        productItem['image'].isNotEmpty
-                    ? productItem['image'][0]
-                    : '',
-                star: isRated
-                    ? int.parse(itemData['star'])
-                    : null, // todo- hung  thiếu rating
-              ),
+              Stack(children: <Widget>[
+                ProductOrderItem(
+                  title: productItem['name'],
+                  price: StringUtil.getPriceText(
+                          productItem == null ? "" : productItem['price']) +
+                      " X ",
+                  productCount:
+                      productItem == null ? "" : productItem['number'],
+                  imageUrl: productItem['image'] != null &&
+                          productItem['image'].isNotEmpty
+                      ? productItem['image'][0]
+                      : '',
+                  star: isRated
+                      ? int.parse(itemData['star'])
+                      : null, // todo- hung  thiếu rating
+                ),
+                Positioned.fill(
+                    child: Align(
+                        alignment: Alignment.centerRight,
+                        child: SvgIcon(
+                          itemData['is_rate'] == "1"
+                              ? 'check_green.svg'
+                              : 'error.svg',
+                          width: SizeUtil.iconSizeDefault,
+                          height: SizeUtil.iconSizeDefault,
+                        )))
+              ]),
               isRated
                   ? SizedBox()
                   : Center(

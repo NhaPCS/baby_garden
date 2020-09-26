@@ -132,7 +132,8 @@ class _BookingScreenState
                                       value.addressList.isEmpty
                                   ? ''
                                   : StringUtil.getFullAddress(
-                                      value.addressList[value.selectedIndex], hasBreak: true),
+                                      value.addressList[value.selectedIndex],
+                                      hasBreak: true),
                               style: TextStyle(
                                   fontSize: SizeUtil.textSizeSmall,
                                   height: 1.3,
@@ -358,6 +359,48 @@ class _BookingScreenState
           ),
           WidgetUtil.getLine(
               width: 1, color: ColorUtil.lineColor, margin: EdgeInsets.all(0)),
+          Consumer<TransferMethodProvider>(
+            builder: (BuildContext context, TransferMethodProvider value,
+                Widget child) {
+              return value.isActiveCode
+                  ? Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: SizeUtil.normalSpace,
+                              right: SizeUtil.normalSpace,
+                              top: SizeUtil.midSmallSpace,
+                              bottom: SizeUtil.midSmallSpace),
+                          child: Row(
+                            children: <Widget>[
+                              Text(S.of(context).ship_promote,
+                                  style: TextStyle(
+                                      fontSize:
+                                          SizeUtil.textSizeExpressDetail)),
+                              Spacer(),
+                              Consumer<TransferMethodProvider>(builder:
+                                  (BuildContext context,
+                                      TransferMethodProvider value,
+                                      Widget child) {
+                                return Text(
+                                    "- ${StringUtil.getPriceText((value.getDiscountValue()).toString())}",
+                                    style: TextStyle(
+                                        fontSize:
+                                            SizeUtil.textSizeExpressDetail,
+                                        color: ColorUtil.blue));
+                              })
+                            ],
+                          ),
+                        ),
+                        WidgetUtil.getLine(
+                            width: 1,
+                            color: ColorUtil.lineColor,
+                            margin: EdgeInsets.all(0)),
+                      ],
+                    )
+                  : SizedBox();
+            },
+          ),
           Padding(
             padding: const EdgeInsets.only(
                 left: SizeUtil.normalSpace,

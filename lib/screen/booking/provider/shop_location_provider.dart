@@ -12,7 +12,7 @@ class ShopLocationProvider extends ChangeNotifier{
 
   Future<dynamic> getShopId( String shopID) async {
     dynamic data = await shopDetail( shopID: shopID);
-    locations = data['address'];
+    locations = data['place'];
 //    print(locations);
     notifyListeners();
   }
