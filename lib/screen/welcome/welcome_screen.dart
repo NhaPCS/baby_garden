@@ -1,13 +1,17 @@
 import 'dart:async';
 
 import 'package:baby_garden_flutter/data/dynamic_link_service.dart';
+import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/provider/list_introduct_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/welcome_guide/welcome_guide_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/text/hobo_text.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatefulWidget {
   @override
@@ -17,12 +21,19 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeState extends BaseState<WelcomeScreen> {
-
-
-  _WelcomeState() {
-    new Timer(const Duration(milliseconds: 3000), () {
+  @override
+  Future<void> didChangeDependencies() async {
+    super.didChangeDependencies();
+    await Provider.of<ListIntroductionProvider>(context).getIntroduction();
+    bool isFirstOpen =
+        await ShareValueProvider.shareValueProvider.firstOpened();
+    if (!isFirstOpen) {
       pushReplacement(WelcomeGuideScreen());
-    });
+    } else {
+      pushReplacement(MainScreen(
+        getPromotion: true,
+      ));
+    }
   }
 
   @override
