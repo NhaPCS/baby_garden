@@ -71,7 +71,7 @@ class _BookingRateScreenState extends BaseState<BookingRateScreen>
                 labelColor: ColorUtil.primaryColor,
                 unselectedLabelColor: ColorUtil.textColor,
                 tabs: <Tab>[
-                  Tab(text: S.of(context).book),
+                  Tab(text: S.of(context).not_rating),
                   Tab(text: S.of(context).rated),
                 ],
               )),

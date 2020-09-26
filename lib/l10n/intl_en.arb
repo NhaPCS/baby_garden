@@ -149,7 +149,7 @@
   "order_count_summary": "Tổng {count} sản phẩm",
   "expiry_date": "Ngày sử dung: {date}",
   "invoice": "Tổng đơn hàng: ",
-  "see_more": "Xem thêm",
+  "see_more": " Xem thêm",
   "order_rating": "Đánh giá đơn {code}",
   "receiving_date": "Ngày nhận hàng: {date}",
   "rating_hint": "Viết chia sẻ của bạn về sản phẩm này",
@@ -540,5 +540,9 @@
   "no_child": "Bố mẹ đã có con chưa? Hãy thêm bé vào để sử dụng chức năng này nhé!",
   "product_share_content": "{name} đang có giá chỉ {price} tại Vườn Của Bé, chi tiết tham khảo:",
   "choose_service_title": "Bạn vui lòng chọn Dịch vụ",
+  "direction": "Chỉ đường",
+  "ship_promote": "Mã giảm giá",
+  "all_booking": "Tất cả",
+  "not_rating": "Chưa đánh giá",
   "mess_fill_all_info_of_checking": "Vui lòng nhập thông tin chiều cao, cân nặng của trẻ để tiếp tục!"
 }

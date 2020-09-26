@@ -1379,7 +1379,7 @@ class S {
 
   String get see_more {
     return Intl.message(
-      'Xem thêm',
+      ' Xem thêm',
       name: 'see_more',
       desc: '',
       args: [],
@@ -4891,6 +4891,42 @@ class S {
     return Intl.message(
       'Bạn vui lòng chọn Dịch vụ',
       name: 'choose_service_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get direction {
+    return Intl.message(
+      'Chỉ đường',
+      name: 'direction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get ship_promote {
+    return Intl.message(
+      'Mã giảm giá',
+      name: 'ship_promote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get all_booking {
+    return Intl.message(
+      'Tất cả',
+      name: 'all_booking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get not_rating {
+    return Intl.message(
+      'Chưa đánh giá',
+      name: 'not_rating',
       desc: '',
       args: [],
     );
