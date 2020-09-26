@@ -29,7 +29,9 @@ class VoucherCardItem extends StatelessWidget {
             width: 55,
             height: 55,
             borderRadius: SizeUtil.smallRadius,
-            imageUrl: voucher['img'],
+            imageUrl: voucher['img'] == null || voucher['img'].isEmpty
+                ? ''
+                : voucher['img'][0],
           ),
           SizedBox(
             width: SizeUtil.smallSpace,

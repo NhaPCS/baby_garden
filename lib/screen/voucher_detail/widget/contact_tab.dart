@@ -13,18 +13,18 @@ class ContactTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<dynamic> imgs = voucher['img'];
+//    List<dynamic> imgs = voucher['img'];
     return ListView(
       children: <Widget>[
-        imgs != null
-            ? Column(
-          children: imgs.map((img) {
-            return MyCachedImage(
-              url: img,
-            );
-          }).toList(),
-        )
-            : SizedBox(),
+//        imgs != null
+//            ? Column(
+//          children: imgs.map((img) {
+//            return MyCachedImage(
+//              url: img,
+//            );
+//          }).toList(),
+//        )
+//            : SizedBox(),
         Padding(
           padding: SizeUtil.smallPadding,
           child: Column(

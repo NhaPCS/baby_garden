@@ -137,9 +137,7 @@ class ProductItem extends StatelessWidget {
           children: <Widget>[
             Expanded(
                 child: AutoSizeText(
-              product == null || product['price'] == product['price_discount']
-                  ? ""
-                  : StringUtil.getPriceText(product['price']),
+              getDiscountPrice(),
               maxFontSize: SizeUtil.textSizeSmall,
               minFontSize: SizeUtil.textSizeTiny,
               maxLines: 1,
@@ -226,5 +224,13 @@ class ProductItem extends StatelessWidget {
             width: 0,
             height: 0,
           );
+  }
+
+  String getDiscountPrice() {
+    if (product == null) return "";
+    if (isFlashSalePending) return product['price_discount'];
+    return product['price_discount'] != null
+        ? StringUtil.getPriceText(product['price_discount'])
+        : StringUtil.getPriceText(product['price']);
   }
 }

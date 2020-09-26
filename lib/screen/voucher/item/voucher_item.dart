@@ -13,8 +13,10 @@ import 'package:flutter/material.dart';
 class VoucherItem extends StatelessWidget {
   final dynamic voucher;
   final VoidCallback onItemClick;
+  final bool hideStatus;
 
-  const VoucherItem({Key key, this.voucher, this.onItemClick})
+  const VoucherItem(
+      {Key key, this.voucher, this.onItemClick, this.hideStatus = false})
       : super(key: key);
 
   @override
@@ -44,38 +46,43 @@ class VoucherItem extends StatelessWidget {
                               ? ''
                               : voucher['img'][0]))),
             ),
-            Positioned(
-              left: 0,
-              top: 0,
-              child: CustomPaint(
-                painter: DrawTriangle(color: Colors.white, offsets: [
-                  Offset(0, 50),
-                  Offset(50, 0),
-                ]),
-              ),
-            ),
-            Positioned(
-                left: 0,
-                top: 0,
-                child: Container(
-                  padding: EdgeInsets.only(top: 10, left: 5),
-                  child: Transform.rotate(
-                      angle: -90 * pi / 360,
-                      child: AutoSizeText(
-                        StringUtil.getVoucherStatus(context, voucher['active']),
-                        minFontSize: SizeUtil.textSizeMini,
-                        maxFontSize: SizeUtil.textSizeTiny,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: SizeUtil.textSizeSmall,
-                            fontWeight: FontWeight.bold,
-                            color: voucher['active'] == '1'
-                                ? Colors.blue
-                                : Colors.orange),
-                      )),
-                  width: 50,
-                  height: 50,
-                )),
+            hideStatus
+                ? SizedBox()
+                : Positioned(
+                    left: 0,
+                    top: 0,
+                    child: CustomPaint(
+                      painter: DrawTriangle(color: Colors.white, offsets: [
+                        Offset(0, 50),
+                        Offset(50, 0),
+                      ]),
+                    ),
+                  ),
+            hideStatus
+                ? SizedBox()
+                : Positioned(
+                    left: 0,
+                    top: 0,
+                    child: Container(
+                      padding: EdgeInsets.only(top: 10, left: 5),
+                      child: Transform.rotate(
+                          angle: -90 * pi / 360,
+                          child: AutoSizeText(
+                            StringUtil.getVoucherStatus(
+                                context, voucher['active']),
+                            minFontSize: SizeUtil.textSizeMini,
+                            maxFontSize: SizeUtil.textSizeTiny,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: SizeUtil.textSizeSmall,
+                                fontWeight: FontWeight.bold,
+                                color: voucher['active'] == '1'
+                                    ? Colors.blue
+                                    : Colors.orange),
+                          )),
+                      width: 50,
+                      height: 50,
+                    )),
             Stack(
               overflow: Overflow.visible,
               children: <Widget>[
@@ -125,7 +132,7 @@ class VoucherItem extends StatelessWidget {
                                           fontWeight: FontWeight.bold)),
                                   TextSpan(
                                       text:
-                                          "${voucher['number_used']}/${voucher['number']}"),
+                                          "${voucher['number_used'] ?? '0'}/${voucher['number']}"),
                                 ])),
                           ],
                         )

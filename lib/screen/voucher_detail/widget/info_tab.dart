@@ -3,10 +3,11 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/partner_book_schedule/partner_book_schedule_screen.dart';
 import 'package:baby_garden_flutter/screen/voucher_code/voucher_code_screen.dart';
 import 'package:baby_garden_flutter/screen/voucher_detail/dialog/get_voucher_code_dialog.dart';
+import 'package:baby_garden_flutter/screen/voucher_detail/widget/shop_info.dart';
+import 'package:baby_garden_flutter/screen/vouchers_shop/vouchers_shop_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/image/circle_image.dart';
-import 'package:baby_garden_flutter/widget/image/my_cached_image.dart';
 import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,9 @@ class _InfoTabState extends BaseState<InfoTab> {
   Widget buildWidget(BuildContext context) {
     List<dynamic> imgs;
     try {
-      if (widget.voucher != null && widget.voucher['img'] != null && widget.voucher['img'].runtimeType.toString().contains("List"))
+      if (widget.voucher != null &&
+          widget.voucher['img'] != null &&
+          widget.voucher['img'].runtimeType.toString().contains("List"))
         imgs = widget.voucher == null ? null : widget.voucher['img'];
     } on Exception catch (e) {
       imgs = null;
@@ -38,15 +41,6 @@ class _InfoTabState extends BaseState<InfoTab> {
       Expanded(
         child: ListView(
           children: <Widget>[
-            imgs != null
-                ? Column(
-                    children: imgs.map((img) {
-                      return MyCachedImage(
-                        url: img,
-                      );
-                    }).toList(),
-                  )
-                : SizedBox(),
             Padding(
               padding: SizeUtil.smallPadding,
               child: Column(
@@ -93,38 +87,13 @@ class _InfoTabState extends BaseState<InfoTab> {
             WidgetUtil.getLine(width: SizeUtil.lineHeight),
             InkWell(
               onTap: () {
-                push(PartnerBookScheduleScreen(
-                    shopID: widget.voucher['shop_id']));
+                push(VoucherShopScreen(
+                  shopId: widget.voucher['shop_id'],
+                  shopInfo: widget.voucher,
+                ));
               },
-              child: Padding(
-                padding: EdgeInsets.only(
-                    left: SizeUtil.smallSpace, right: SizeUtil.smallSpace),
-                child: Row(
-                  children: <Widget>[
-                    CircleImage(
-                      width: 45,
-                      height: 45,
-                      imageUrl: widget.voucher['shop_img'],
-                      borderRadius: SizeUtil.smallRadius,
-                    ),
-                    SizedBox(
-                      width: SizeUtil.smallSpace,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(S.of(context).provided_by,
-                            style: TextStyle(fontSize: SizeUtil.textSizeSmall)),
-                        MyText(widget.voucher['shop_name'],
-                            style: TextStyle(
-                              fontSize: SizeUtil.textSizeDefault,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff4A4949),
-                            ))
-                      ],
-                    )
-                  ],
-                ),
+              child: ShopInfo(
+                shop: widget.voucher,
               ),
             )
           ],

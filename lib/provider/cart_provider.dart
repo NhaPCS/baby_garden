@@ -16,10 +16,9 @@ class CartProvider extends ChangeNotifier {
       shops.forEach((element) {
         if (element != null && element['product'] != null) {
           element['product'].forEach((p) {
-            int number = int.parse(p['quantity']??'0');
+            int number = int.parse(p['quantity'] ?? '0');
             badge += number;
-            if (p['price_discount'] != null)
-              price += int.parse(p['price_discount']?? 0) * number;
+            price += getPrice(p) * number;
           });
         }
       });
@@ -35,15 +34,21 @@ class CartProvider extends ChangeNotifier {
             element != null &&
             element['product'] != null) {
           element['product'].forEach((p) {
-            int number = int.parse(p['quantity']??'0');
+            int number = int.parse(p['quantity'] ?? '0');
             badge += number;
-            if (p['price_discount'] != null)
-              price += int.parse(p['price_discount']) * number;
+            price += getPrice(p) * number;
           });
         }
       });
     }
     return price;
+  }
+
+  int getPrice(dynamic product) {
+    if (product['price_discount'] != null) {
+      return int.parse(product['price_discount']);
+    }
+    return int.parse(product['price']);
   }
 
   Future<void> addProduct(dynamic product) async {
@@ -58,7 +63,7 @@ class CartProvider extends ChangeNotifier {
 
     if (product['selected_color'] == null ||
         product['selected_color'].isEmpty) {
-      if (product['color'] != null && product['color'].isNotEmpty ) {
+      if (product['color'] != null && product['color'].isNotEmpty) {
         product['color_id'] = product['color'][0]['id'];
       }
     } else
