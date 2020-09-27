@@ -41,19 +41,38 @@ class RemindCalendar {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> params = {
       'product_id': this.productId,
-      'date_start': DateUtil.convertNormalToServerDate(this.dateStart),
-      'time_start': this.timeStart,
-      'date_end': DateUtil.convertNormalToServerDate(this.dateEnd),
-      'time_end': this.timeEnd,
       'type': this.type == RemindType.remindBuy
           ? "1"
           : this.type == RemindType.remindUse ? "2" : "3",
-      'period': this.period,
-      'time_1': this.time1,
-      'time_2': this.time2,
-      'time_3': this.time3,
-      'time_4': this.time4
     };
+    if (dateStart != null) {
+      params['date_start'] = DateUtil.convertNormalToServerDate(this.dateStart);
+    }
+    if (timeStart != null) {
+      params['time_start'] = this.timeStart;
+    }
+    if (dateEnd != null) {
+      params['date_end'] = DateUtil.convertNormalToServerDate(this.dateEnd);
+    }
+    if (timeEnd != null) {
+      params['time_end'] = this.timeEnd;
+    }
+    if (period != null) {
+      params['period'] = this.period;
+    }
+    if (time1 != null) {
+      params['time_1'] = this.time1;
+    }
+    if (time2 != null) {
+      params['time_2'] = this.time2;
+    }
+    if (time3 != null) {
+      params['time_3'] = this.time3;
+    }
+    if (time4 != null) {
+      params['time_4'] = this.time4;
+    }
+
     return params;
   }
 
