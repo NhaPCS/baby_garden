@@ -218,6 +218,15 @@ class ImageUtil {
 }
 
 class StringUtil {
+  static int getQuantity(dynamic product) {
+    if (product['quantity'] == null) return 0;
+    if (product['quantity'].runtimeType == String &&
+        product['quantity'].isNotEmpty) {
+      return int.parse(product['quantity']);
+    }
+    return product['quantity'];
+  }
+
   static String getFullAddress(dynamic address,
       {bool hasBreak = false, bool hasPersonalData = true}) {
     if (address == null) return '';
@@ -225,7 +234,8 @@ class StringUtil {
     String city = address['city_name'] != null ? "${address['city_name']}" : '';
     String district =
         address['district_name'] != null ? "${address['district_name']}," : '';
-    String ward = address['ward_name'] != null ? "${address['ward_name']}," : '';
+    String ward =
+        address['ward_name'] != null ? "${address['ward_name']}," : '';
     String name = address['name'] != null ? "${address['name']}" : '';
     String phone = address['phone'] != null ? "${address['phone']}" : '';
     if (hasBreak) {

@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:baby_garden_flutter/data/service.dart' as service;
 
@@ -16,7 +17,7 @@ class CartProvider extends ChangeNotifier {
       shops.forEach((element) {
         if (element != null && element['product'] != null) {
           element['product'].forEach((p) {
-            int number = int.parse(p['quantity'] ?? '0');
+            int number = StringUtil.getQuantity(p);
             badge += number;
             price += getPrice(p) * number;
           });
@@ -34,7 +35,7 @@ class CartProvider extends ChangeNotifier {
             element != null &&
             element['product'] != null) {
           element['product'].forEach((p) {
-            int number = int.parse(p['quantity'] ?? '0');
+            int number = StringUtil.getQuantity(p);
             badge += number;
             price += getPrice(p) * number;
           });
@@ -52,8 +53,8 @@ class CartProvider extends ChangeNotifier {
   }
 
   Future<void> addProduct(dynamic product) async {
-    if (product['quantity'] == null || product['quantity'] <= 0)
-      product['quantity'] = 1;
+    int quantity = StringUtil.getQuantity(product);
+    if (quantity <= 0) product['quantity'] = 1;
     if (product['selected_size'] == null || product['selected_size'].isEmpty) {
       if (product['size'] != null && product['size'].isNotEmpty) {
         product['size_id'] = product['size'][0]['id'];
