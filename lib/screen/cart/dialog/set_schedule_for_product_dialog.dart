@@ -105,10 +105,9 @@ class _State
             children: <Widget>[
               MyRaisedButton(
                 onPressed: () {
-                  _remindValue.value = new RemindCalendar();
-//                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
                 },
-                text: S.of(context).enter_again,
+                text: S.of(context).cancel,
                 borderRadius: 30,
                 color: ColorUtil.primaryColor,
                 textStyle:
