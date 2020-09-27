@@ -5,20 +5,23 @@ import 'package:baby_garden_flutter/widget/partner/date_picker.dart';
 import 'package:baby_garden_flutter/widget/partner/time_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:nested/nested.dart';
-class PartnerServiceDetailScreen extends StatefulWidget{
+
+class PartnerServiceDetailScreen extends StatefulWidget {
   final dynamic data;
 
-  const PartnerServiceDetailScreen({this.data}):super();
+  const PartnerServiceDetailScreen({this.data}) : super();
 
   @override
   State<StatefulWidget> createState() {
     return _PartnerServiceDetailScreenScreen();
   }
-
 }
 
-class _PartnerServiceDetailScreenScreen extends BaseState<PartnerServiceDetailScreen> with TickerProviderStateMixin{
+class _PartnerServiceDetailScreenScreen
+    extends BaseState<PartnerServiceDetailScreen>
+    with TickerProviderStateMixin {
   int dateIndex = 0;
   int timeScheduleIndex = 0;
   String dateValue = "";
@@ -32,57 +35,89 @@ class _PartnerServiceDetailScreenScreen extends BaseState<PartnerServiceDetailSc
       body: ListView(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(left:SizeUtil.smallSpace,top: SizeUtil.tinySpace,bottom: SizeUtil.midSmallSpace),
-            child: Text(widget.data['name'],style: TextStyle(color: ColorUtil.primaryColor,fontWeight: FontWeight.bold,fontSize: SizeUtil.textSizeDefault),),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left:SizeUtil.smallSpace),
-            child: RichText(
-              text: TextSpan(children: <TextSpan>[
-                TextSpan(
-                  text: 'Giá niêm yết: ',
-                    style: TextStyle(color: ColorUtil.textColor,fontSize: SizeUtil.textSizeSmall)
-                ),
-                TextSpan(
-                  text: StringUtil.getPriceText(widget.data['price']),
-                  style: TextStyle(color: Colors.red,fontSize: SizeUtil.textSizeSmall)
-                )
-              ]
-              ),
+            padding: const EdgeInsets.only(
+                left: SizeUtil.smallSpace,
+                top: SizeUtil.tinySpace,
+                bottom: SizeUtil.midSmallSpace),
+            child: Text(
+              widget.data['name'],
+              style: TextStyle(
+                  color: ColorUtil.primaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: SizeUtil.textSizeDefault),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left:SizeUtil.smallSpace,bottom: SizeUtil.tinySpace),
-            child: Text('Thời gian thực hiện: ${widget.data['ex_time']}',style: TextStyle(color: ColorUtil.textColor,fontSize: SizeUtil.textSizeSmall,height: 1.5)),
+            padding: const EdgeInsets.only(left: SizeUtil.smallSpace),
+            child: RichText(
+              text: TextSpan(children: <TextSpan>[
+                TextSpan(
+                    text: 'Giá niêm yết: ',
+                    style: TextStyle(
+                        color: ColorUtil.textColor,
+                        fontSize: SizeUtil.textSizeSmall)),
+                TextSpan(
+                    text: StringUtil.getPriceText(widget.data['price']),
+                    style: TextStyle(
+                        color: Colors.red, fontSize: SizeUtil.textSizeSmall))
+              ]),
+            ),
           ),
-          WidgetUtil.getLine(width: 1,margin: EdgeInsets.all(0),color: ColorUtil.lineColor),
           Padding(
-            padding: const EdgeInsets.only(left:SizeUtil.smallSpace,top: SizeUtil.tinySpace),
-            child: Text('Thông tin dịch vụ:',style: TextStyle(color: ColorUtil.red,fontSize: SizeUtil.textSizeExpressTitle),),
+            padding: const EdgeInsets.only(
+                left: SizeUtil.smallSpace, bottom: SizeUtil.tinySpace),
+            child: Text('Thời gian thực hiện: ${widget.data['ex_time']}',
+                style: TextStyle(
+                    color: ColorUtil.textColor,
+                    fontSize: SizeUtil.textSizeSmall,
+                    height: 1.5)),
+          ),
+          WidgetUtil.getLine(
+              width: 1, margin: EdgeInsets.all(0), color: ColorUtil.lineColor),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: SizeUtil.smallSpace, top: SizeUtil.tinySpace),
+            child: Text(
+              'Thông tin dịch vụ:',
+              style: TextStyle(
+                  color: ColorUtil.red,
+                  fontSize: SizeUtil.textSizeExpressTitle),
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left:SizeUtil.smallSpace,top: SizeUtil.midSmallSpace,right: SizeUtil.smallSpace),
-            child: Text(widget.data['content']
-            ,style: TextStyle(fontSize: SizeUtil.textSizeSmall,color: ColorUtil.textColor),),
+            padding: const EdgeInsets.only(
+                left: SizeUtil.smallSpace,
+                top: SizeUtil.midSmallSpace,
+                right: SizeUtil.smallSpace),
+            child: Html(
+              data: widget.data['content'],
+              defaultTextStyle: TextStyle(
+                  fontSize: SizeUtil.textSizeSmall, color: ColorUtil.textColor),
+            ),
           ),
-//          Padding(
-//            padding: const EdgeInsets.only(left:SizeUtil.smallSpace,top: SizeUtil.midSmallSpace,right: SizeUtil.smallSpace,bottom: SizeUtil.midSmallSpace),
-//            child: Image.asset('photo/service_detail.png'),
-//          ),
-//          Padding(
-//            padding: const EdgeInsets.only(left:SizeUtil.smallSpace,bottom: SizeUtil.midSmallSpace,right: SizeUtil.smallSpace),
-//            child: Text('99.99% khách hàng đến trải nghiệm dịch vụ tại Thẩm mỹ viện Quốc tế Nevada và hài lòng tuyệt đối. Để tái sinh làn da và sở hữu một làn da căng bóng khỏe, tươi trẻ, đơn giản thôi, bạn hãy đến ngay với Thẩm mỹ viện Quốc tế Nevada để được tư vấn cụ thể.'
-//              ,style: TextStyle(fontSize: SizeUtil.textSizeSmall,color: ColorUtil.textColor),),
-//          ),
-          //TODO time schedule
           Padding(
-            padding: const EdgeInsets.only(left:SizeUtil.smallSpace,bottom: SizeUtil.midSmallSpace,right: SizeUtil.smallSpace),
-            child: Text('Thời gian',style: TextStyle(color: Colors.black, fontSize: SizeUtil.textSizeExpressDetail,fontWeight: FontWeight.bold),),
+            padding: const EdgeInsets.only(
+                left: SizeUtil.smallSpace,
+                bottom: SizeUtil.midSmallSpace,
+                right: SizeUtil.smallSpace),
+            child: Text(
+              'Thời gian',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: SizeUtil.textSizeExpressDetail,
+                  fontWeight: FontWeight.bold),
+            ),
           ),
-          DatePicker(onValueChange:(val){
-            dateValue = val['date'];
-          },unSelectedColor: ColorUtil.blue,valueController: _dateValueController,),
-          TimePicker(valueController: _timeValueController,),
+          DatePicker(
+            onValueChange: (val) {
+              dateValue = val['date'];
+            },
+            unSelectedColor: ColorUtil.blue,
+            valueController: _dateValueController,
+          ),
+          TimePicker(
+            valueController: _timeValueController,
+          ),
           Container(
               padding: const EdgeInsets.only(
                   left: SizeUtil.smallSpace,
@@ -90,14 +125,18 @@ class _PartnerServiceDetailScreenScreen extends BaseState<PartnerServiceDetailSc
                   top: SizeUtil.tinySpace,
                   bottom: SizeUtil.tinySpace),
               width: MediaQuery.of(context).size.width,
-              child: RaisedButton (
-                onPressed: () async{
-                  Navigator.pop(context,{'dateValue':dateValue,'date':_dateValueController.value,'time':_timeValueController.value});
+              child: RaisedButton(
+                onPressed: () async {
+                  Navigator.pop(context, {
+                    'dateValue': dateValue,
+                    'date': _dateValueController.value,
+                    'time': _timeValueController.value
+                  });
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(
-                      Radius.circular(SizeUtil.smallRadius),
-                    )),
+                  Radius.circular(SizeUtil.smallRadius),
+                )),
                 color: ColorUtil.primaryColor,
                 child: Padding(
                   padding: const EdgeInsets.all(SizeUtil.midSpace),
@@ -119,9 +158,6 @@ class _PartnerServiceDetailScreenScreen extends BaseState<PartnerServiceDetailSc
   @override
   List<SingleChildWidget> providers() {
     // TODO: implement providers
-    return [
-    ];
+    return [];
   }
-
 }
-
