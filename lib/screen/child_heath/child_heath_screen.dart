@@ -135,13 +135,16 @@ class _ChildHeathState
               return Consumer<GetBabyTestResultProvider>(
                 builder: (BuildContext context, GetBabyTestResultProvider value,
                     Widget child) {
-                  return ValueListenableBuilder(builder: (BuildContext context, listener, Widget child) {
-                    return ViewWeightHeight(
-                      testResults: value.results,
-                      baby: _dropdownController.value,
-                      tab: indexProvider.index,
-                    );
-                  },valueListenable: _dropdownController,);
+                  return ValueListenableBuilder(
+                    builder: (BuildContext context, listener, Widget child) {
+                      return ViewWeightHeight(
+                        testResults: value.results,
+                        baby: _dropdownController.value,
+                        tab: indexProvider.index,
+                      );
+                    },
+                    valueListenable: _dropdownController,
+                  );
                 },
               );
             },
@@ -152,6 +155,12 @@ class _ChildHeathState
               onPressed: () {
                 if (_dropdownController.value == null) return;
                 if (_changeModeEnterHeathProvider.isEntering) {
+                  if (_heightController.text.isEmpty ||
+                      _weightController.text.isEmpty) {
+                    WidgetUtil.showErrorDialog(
+                        context, S.of(context).mess_fill_all_info_of_checking);
+                    return;
+                  }
                   showDialog(
                       context: context,
                       builder: (context) {

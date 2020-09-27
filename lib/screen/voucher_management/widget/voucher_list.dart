@@ -15,8 +15,7 @@ class VoucherList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (vouchers == null || vouchers.isEmpty) {
       return LoadingView(
-        isNoData: vouchers != null,
-        onReload: onReload,
+        isNoData: true
       );
     }
     return ListView.builder(

@@ -89,7 +89,9 @@ class ProductCartItem extends StatelessWidget {
                           },
                         ),
                   ProductProperties(product: product),
-                  SizedBox(height: SizeUtil.defaultSpace,),
+                  SizedBox(
+                    height: SizeUtil.defaultSpace,
+                  ),
                   Row(
                     children: <Widget>[
                       Text(
@@ -103,7 +105,11 @@ class ProductCartItem extends StatelessWidget {
                       ),
                       Expanded(
                         child: AutoSizeText(
-                          StringUtil.getPriceText(product['price_discount']),
+                          product['price_discount'] != null
+                              ? StringUtil.getPriceText(
+                                  product['price_discount'])
+                              : StringUtil.getPriceText(
+                                  product['price']),
                           maxLines: 1,
                           maxFontSize: SizeUtil.textSizeDefault,
                           minFontSize: SizeUtil.textSizeSmall,
@@ -113,7 +119,7 @@ class ProductCartItem extends StatelessWidget {
                       ChangeQuantityWidget(
                         buttonColor: ColorUtil.primaryColor,
                         textColor: ColorUtil.textColor,
-                        quantity: int.parse(product['quantity']),
+                        quantity: StringUtil.getQuantity(product),
                         height: 23,
                         padding: EdgeInsets.only(
                             left: SizeUtil.superTinySpace,
@@ -130,7 +136,8 @@ class ProductCartItem extends StatelessWidget {
                       Expanded(
                         child: Center(
                           child: ButtonIcon(
-                            icon: SvgIcon(product['calendar']==null || product['calendar'].isEmpty
+                            icon: SvgIcon(product['calendar'] == null ||
+                                    product['calendar'].isEmpty
                                 ? 'ic_alarm_disable.svg'
                                 : 'ic_alarm.svg'),
                             onPressed: () {

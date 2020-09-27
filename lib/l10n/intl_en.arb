@@ -543,5 +543,6 @@
   "direction": "Chỉ đường",
   "ship_promote": "Mã giảm giá",
   "all_booking": "Tất cả",
-  "not_rating": "Chưa đánh giá"
+  "not_rating": "Chưa đánh giá",
+  "mess_fill_all_info_of_checking": "Vui lòng nhập thông tin chiều cao, cân nặng của trẻ để tiếp tục!"
 }

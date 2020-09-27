@@ -83,7 +83,8 @@ class ChildChartState extends State<ChildChart> {
                               color: ColorUtil.textColor,
                               fontSize: SizeUtil.textSizeSmall),
                           getTitles: (double value) {
-                            return widget.testResults[value.toInt()]['month'];
+                            return getMonthText(
+                                widget.testResults[value.toInt()]);
                           },
                         ),
                         leftTitles: SideTitles(
@@ -114,8 +115,8 @@ class ChildChartState extends State<ChildChart> {
                       barGroups: widget.testResults == null
                           ? []
                           : widget.testResults
-                              .map((e) => getColumnChart(e['month'], e['value'],
-                                  getStatusColor(e['status'])))
+                              .map((e) => getColumnChart(getMonth(e),
+                                  e['value'], getStatusColor(e['status'])))
                               .toList(),
                     ),
                   )),
@@ -170,10 +171,26 @@ class ChildChartState extends State<ChildChart> {
     }
   }
 
-  BarChartGroupData getColumnChart(var month, var value, Color color) {
-    print("MONTH ${int.parse(month)}");
+  double getMonth(dynamic data) {
+    if (data != null && data['children_date_old'] != null) {
+      return (data['children_date_old'] ?? 0) / 30;
+    }
+    return 0;
+  }
+
+  String getMonthText(dynamic data) {
+    if (data != null && data['children_date_old'] != null) {
+      int days = data['children_date_old'];
+      if (days > 30 * 12) return "${(days / (30 * 12)).toStringAsFixed(2)} năm";
+      if (days < 30) return "$days ngày";
+      return "${(days / 30).toStringAsFixed(2)} tháng";
+    }
+    return '';
+  }
+
+  BarChartGroupData getColumnChart(double month, var value, Color color) {
     return BarChartGroupData(
-      x: int.parse(month),
+      x: month.round(),
       barRods: [
         BarChartRodData(
             y: double.parse(value),

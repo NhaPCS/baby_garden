@@ -9,7 +9,7 @@ class GetListBabyProvider extends ChangeNotifier {
       String selectedId}) async {
     babies = await service.listBaby(null);
 
-    if (dropdownController != null && babies != null) {
+    if (dropdownController != null && babies != null && babies.isNotEmpty) {
       dropdownController.value = babies[0];
       if (selectedId != null) {
         dropdownController.value =

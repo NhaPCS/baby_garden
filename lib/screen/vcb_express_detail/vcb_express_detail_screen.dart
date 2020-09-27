@@ -49,8 +49,8 @@ class _VCBExpressDetailScreenState
         builder:
             (BuildContext context, NewsDetailProvider value, Widget child) {
           if (value.currentDetail == null) return LoadingView();
-          bool commentable = value.currentDetail['commentable'] != null &&
-              value.currentDetail['commentable'] == '1';
+          bool isComment = value.currentDetail['is_comment'] != null &&
+              value.currentDetail['is_comment'] == '1';
           return Column(children: <Widget>[
             Expanded(
               child: Padding(
@@ -106,16 +106,16 @@ class _VCBExpressDetailScreenState
                 children: <Widget>[
                   Expanded(
                     child: MyTextField(
-                      enable: commentable,
+                      enable: isComment,
                       textStyle:
                           TextStyle(fontSize: SizeUtil.textSizeExpressTitle),
                       elevation: SizeUtil.defaultElevation,
                       textEditingController: _commentController,
                       maxLines: 1,
                       backgroundColor:
-                          commentable ? Colors.white : ColorUtil.lightGray,
+                          isComment ? Colors.white : ColorUtil.lightGray,
                       borderRadius: SizeUtil.bigRadius,
-                      hint: commentable
+                      hint: isComment
                           ? S.of(context).vcb_ex_detail_ctm_hint
                           : S.of(context).vcb_can_not_comment,
                       contentPadding: EdgeInsets.only(

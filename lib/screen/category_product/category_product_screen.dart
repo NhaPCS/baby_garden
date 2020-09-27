@@ -9,6 +9,7 @@ import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/category_product/provider/get_product_category_by_parent_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/delegate/sliver_category_delegate.dart';
+import 'package:baby_garden_flutter/widget/loading/loading_view.dart';
 import 'package:baby_garden_flutter/widget/loadmore/loadmore_nested_scrollview.dart';
 import 'package:baby_garden_flutter/widget/product/list_category.dart';
 import 'package:baby_garden_flutter/widget/product/list_parent_category.dart';
@@ -88,6 +89,7 @@ class _CategoryProductState extends BaseState<CategoryProductScreen> {
             } else {
               _listProducts = value.products;
             }
+            if(_listProducts==null || _listProducts.isEmpty) return LoadingView(isNoData: true);
             return GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, childAspectRatio: 0.7),

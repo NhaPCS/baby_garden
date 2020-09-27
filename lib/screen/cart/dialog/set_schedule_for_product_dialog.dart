@@ -24,21 +24,24 @@ class SetScheduleForProductDialog extends StatefulWidget {
 
 class _State
     extends BaseStateModel<SetScheduleForProductDialog, ReminderAddViewModel> {
-  RemindCalendar _remindCalendar = RemindCalendar();
+  ValueNotifier<RemindCalendar> _remindValue =
+      new ValueNotifier(new RemindCalendar());
+
+//  RemindCalendar _remindValue.value = RemindCalendar();
 
   @override
   void initState() {
     super.initState();
     if (widget.product['calendar'] != null &&
         widget.product['calendar'].isNotEmpty) {
-      _remindCalendar =
+      _remindValue.value =
           RemindCalendar().fromJson(widget.product['calendar'][0]);
     }
   }
 
   @override
   Widget buildWidget(BuildContext context) {
-    _remindCalendar.productId = widget.product['product_id'];
+    _remindValue.value.productId = widget.product['product_id'];
     return AlertDialog(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -69,24 +72,31 @@ class _State
                   color: ColorUtil.blue, fontSize: SizeUtil.textSizeDefault),
             ),
           ),
-          ReminderLayout(
-            showDesc: false,
-            hasDivider: true,
-            remindCalendar:
-                widget.product['calendar'] != null ? _remindCalendar : null,
-            reminderSelectCallBack:
-                (type, buyDate, endDate, period, time1, time2, time3, time4) {
-              _remindCalendar.type = type;
-              _remindCalendar.dateStart =
-                  DateUtil.formatNormalDateTime(buyDate);
-              _remindCalendar.timeStart = DateUtil.formatTime(buyDate);
-              _remindCalendar.dateEnd = DateUtil.formatNormalDateTime(endDate);
-              _remindCalendar.timeEnd = DateUtil.formatTime(endDate);
-              _remindCalendar.period = period.toString();
-              _remindCalendar.time1 = DateUtil.formatTime(time1);
-              _remindCalendar.time2 = DateUtil.formatTime(time2);
-              _remindCalendar.time3 = DateUtil.formatTime(time3);
-              _remindCalendar.time4 = DateUtil.formatTime(time4);
+          ValueListenableBuilder(
+            valueListenable: _remindValue,
+            builder: (BuildContext context, value, Widget child) {
+              return ReminderLayout(
+                showDesc: false,
+                hasDivider: true,
+                remindCalendar: widget.product['calendar'] != null
+                    ? _remindValue.value
+                    : null,
+                reminderSelectCallBack: (type, buyDate, endDate, period, time1,
+                    time2, time3, time4) {
+                  _remindValue.value.type = type;
+                  _remindValue.value.dateStart =
+                      DateUtil.formatNormalDateTime(buyDate);
+                  _remindValue.value.timeStart = DateUtil.formatTime(buyDate);
+                  _remindValue.value.dateEnd =
+                      DateUtil.formatNormalDateTime(endDate);
+                  _remindValue.value.timeEnd = DateUtil.formatTime(endDate);
+                  _remindValue.value.period = period.toString();
+                  _remindValue.value.time1 = DateUtil.formatTime(time1);
+                  _remindValue.value.time2 = DateUtil.formatTime(time2);
+                  _remindValue.value.time3 = DateUtil.formatTime(time3);
+                  _remindValue.value.time4 = DateUtil.formatTime(time4);
+                },
+              );
             },
           ),
           Row(
@@ -97,7 +107,7 @@ class _State
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                text: S.of(context).enter_again,
+                text: S.of(context).cancel,
                 borderRadius: 30,
                 color: ColorUtil.primaryColor,
                 textStyle:
@@ -109,7 +119,7 @@ class _State
               MyRaisedButton(
                 onPressed: () async {
                   await getViewModel()
-                      .addNewCalendar(context, calendar: _remindCalendar);
+                      .addNewCalendar(context, calendar: _remindValue.value);
                   widget.onAddedCalendar();
                 },
                 text: S.of(context).agree,

@@ -55,6 +55,7 @@ class _RemindSetDateScreenState extends BaseState<RemindSetDateScreen> {
                 padding: EdgeInsets.only(top: SizeUtil.defaultSpace),
                 child: TableCalendar(
                   locale: this.locale,
+                  startDay: new DateTime.now(),
                   calendarController: _calenderController,
                   calendarStyle: CalendarStyle(
                     todayColor: Color.fromRGBO(255, 137, 24, 0.7),

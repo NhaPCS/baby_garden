@@ -1,3 +1,4 @@
+import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:baby_garden_flutter/data/service.dart' as service;
 
@@ -16,10 +17,9 @@ class CartProvider extends ChangeNotifier {
       shops.forEach((element) {
         if (element != null && element['product'] != null) {
           element['product'].forEach((p) {
-            int number = int.parse(p['quantity']??'0');
+            int number = StringUtil.getQuantity(p);
             badge += number;
-            if (p['price_discount'] != null)
-              price += int.parse(p['price_discount']?? 0) * number;
+            price += getPrice(p) * number;
           });
         }
       });
@@ -35,10 +35,9 @@ class CartProvider extends ChangeNotifier {
             element != null &&
             element['product'] != null) {
           element['product'].forEach((p) {
-            int number = int.parse(p['quantity']??'0');
+            int number = StringUtil.getQuantity(p);
             badge += number;
-            if (p['price_discount'] != null)
-              price += int.parse(p['price_discount']) * number;
+            price += getPrice(p) * number;
           });
         }
       });
@@ -46,9 +45,16 @@ class CartProvider extends ChangeNotifier {
     return price;
   }
 
+  int getPrice(dynamic product) {
+    if (product['price_discount'] != null) {
+      return int.parse(product['price_discount']);
+    }
+    return int.parse(product['price']);
+  }
+
   Future<void> addProduct(dynamic product) async {
-    if (product['quantity'] == null || product['quantity'] <= 0)
-      product['quantity'] = 1;
+    int quantity = StringUtil.getQuantity(product);
+    if (quantity <= 0) product['quantity'] = 1;
     if (product['selected_size'] == null || product['selected_size'].isEmpty) {
       if (product['size'] != null && product['size'].isNotEmpty) {
         product['size_id'] = product['size'][0]['id'];
@@ -58,7 +64,7 @@ class CartProvider extends ChangeNotifier {
 
     if (product['selected_color'] == null ||
         product['selected_color'].isEmpty) {
-      if (product['color'] != null && product['color'].isNotEmpty ) {
+      if (product['color'] != null && product['color'].isNotEmpty) {
         product['color_id'] = product['color'][0]['id'];
       }
     } else

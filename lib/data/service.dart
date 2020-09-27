@@ -268,6 +268,16 @@ Future<dynamic> listVoucher({int index, String categoryId}) async {
   return null;
 }
 
+Future<dynamic> listVoucherShop(String shopId) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic param = {
+    'shop_id': shopId,
+  };
+  Response response = await get(null, path: "listVoucherShop", param: param);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 Future<dynamic> cancelBooking(BuildContext context,
     {int index, String bookingId}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
@@ -285,13 +295,6 @@ Future<dynamic> listVoucherUser(int type) async {
   Response response = await get(null,
       path: "listVoucherUser",
       param: {'user_id': userId, 'type': type.toString()});
-  if (response.isSuccess()) return response.data;
-  return null;
-}
-
-Future<dynamic> listVoucherShop({String shopID}) async {
-  Response response =
-      await get(null, path: "listVoucherShop", param: {'shop_id': shopID});
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -1258,7 +1261,6 @@ Future<dynamic> listIntroduction() async {
   if (response.isSuccess()) return response.data;
   return null;
 }
-
 
 Future<dynamic> privacy() async {
   Response response = await get(null, path: "privacy");
