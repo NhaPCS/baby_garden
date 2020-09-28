@@ -361,6 +361,12 @@ Future<dynamic> news(
   return null;
 }
 
+Future<dynamic> newsCategories() async {
+  Response response = await get(null, path: "news-category");
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 //todo newsDetail
 Future<dynamic> newsDetail({String newID}) async {
   Response response =
