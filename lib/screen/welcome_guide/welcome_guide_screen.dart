@@ -42,15 +42,13 @@ class _WelcomeGuideScreenState extends BaseState<WelcomeGuideScreen> {
           ),
           MyCarouselSlider(
               height: MediaQuery.of(context).size.height * 2 / 3,
-              width: MediaQuery.of(context).size.width * 5 / 7,
+              width: MediaQuery.of(context).size.width * 0.9,
               boxFit: BoxFit.contain,
               slideBackground: Colors.transparent,
-              isAssetImage: true,
+              imageAttrName: "img",
               images:
                   Provider.of<ListIntroductionProvider>(context, listen: false)
-                      .list
-                      .map((e) => e['img'])
-                      .toList(),
+                      .list,
               indicatorActiveColor: ColorUtil.indicatorActiveColor,
               indicatorInactiveColor: ColorUtil.indicatorUnactiveColor),
           SizedBox(

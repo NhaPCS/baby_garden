@@ -1,14 +1,11 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
-import 'package:baby_garden_flutter/screen/partner_book_schedule/partner_book_schedule_screen.dart';
 import 'package:baby_garden_flutter/screen/voucher_code/voucher_code_screen.dart';
 import 'package:baby_garden_flutter/screen/voucher_detail/dialog/get_voucher_code_dialog.dart';
 import 'package:baby_garden_flutter/screen/voucher_detail/widget/shop_info.dart';
 import 'package:baby_garden_flutter/screen/vouchers_shop/vouchers_shop_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
-import 'package:baby_garden_flutter/widget/image/circle_image.dart';
-import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -17,8 +14,9 @@ import 'package:nested/nested.dart';
 class InfoTab extends StatefulWidget {
   final dynamic voucher;
   final VoidCallback onGetVoucherPress;
+  final VoidCallback onReload;
 
-  const InfoTab({Key key, this.voucher, this.onGetVoucherPress})
+  const InfoTab({Key key, this.voucher, this.onGetVoucherPress, this.onReload})
       : super(key: key);
 
   @override
@@ -102,20 +100,23 @@ class _InfoTabState extends BaseState<InfoTab> {
       Padding(
         padding: SizeUtil.normalPadding,
         child: MyRaisedButton(
-          onPressed: () {
-            switch (widget.voucher['active']) {
-              case "1":
+          onPressed: () async {
+            switch (widget.voucher['status_id'].toString()) {
+              case "0":
                 showDialog(
                     context: context,
                     builder: (BuildContext context) => GetVoucherCodeDialog(
                           onGetVoucherPress: widget.onGetVoucherPress,
                         ));
                 break;
-              case "2":
-                push(VoucherCodeScreen(
+              case "1":
+                final result = await push(VoucherCodeScreen(
                   context: context,
                   voucher: widget.voucher,
                 ));
+                if(result!=null && result){
+                  widget.onReload();
+                }
                 break;
             }
           },
@@ -134,9 +135,7 @@ class _InfoTabState extends BaseState<InfoTab> {
   }
 
   Color getVoucherColorStatus() {
-    switch (widget.voucher['take_voucher']) {
-      case "1":
-        return ColorUtil.primaryColor;
+    switch (widget.voucher['status_id'].toString()) {
       case "2":
         return ColorUtil.blue;
       case "3":
@@ -147,17 +146,17 @@ class _InfoTabState extends BaseState<InfoTab> {
   }
 
   String getVoucherStatus() {
-    switch (widget.voucher['take_voucher']) {
+    switch (widget.voucher['status_id'].toString()) {
       case "1":
-        return S.of(context).voucher_get_code;
-      case "2":
         return S.of(context).voucher_use_code;
+      case "2":
+        return S.of(context).expireVoucher;
       case "3":
         return S.of(context).voucher_used;
       case "4":
         return S.of(context).expiredVoucher;
     }
-    return "";
+    return S.of(context).getCode;
   }
 
   @override

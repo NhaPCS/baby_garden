@@ -540,6 +540,13 @@ Future<dynamic> productCategory({String parentId}) async {
   return null;
 }
 
+Future<dynamic> voucherCategory() async {
+  Response response = await get(null,
+      path: "voucherCategory", showLoading: false);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 Future<dynamic> serviceCategory() async {
   Response response =
       await get(null, path: "serviceCategory", showLoading: false);

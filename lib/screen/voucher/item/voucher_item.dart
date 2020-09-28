@@ -64,19 +64,18 @@ class VoucherItem extends StatelessWidget {
                     left: 0,
                     top: 0,
                     child: Container(
-                      padding: EdgeInsets.only(top: 10, left: 5),
+                      padding: EdgeInsets.only(top: 8, left: 7),
                       child: Transform.rotate(
                           angle: -90 * pi / 360,
                           child: AutoSizeText(
-                            StringUtil.getVoucherStatus(
-                                context, voucher['active']),
+                            voucher['status_name'] ?? '',
                             minFontSize: SizeUtil.textSizeMini,
                             maxFontSize: SizeUtil.textSizeTiny,
+                            maxLines: 1,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: SizeUtil.textSizeSmall,
                                 fontWeight: FontWeight.bold,
-                                color: voucher['active'] == '1'
+                                color: voucher['status_id'].toString() == '0'
                                     ? Colors.blue
                                     : Colors.orange),
                           )),

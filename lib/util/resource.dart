@@ -246,12 +246,11 @@ class StringUtil {
   }
 
   /*"active:
-  1: đã đặt,
-  2: xác nhận,
-  3: hoàn thành,
-  4: huỷ,
-  5:đang đóng gói,
-  6: đang vận chuyển"*/
+  * 1: đã lấy
+  * 2: sắp hết hạn
+  * 3: đã sử dụng
+  * 4: đã hết hạn
+  * 0 : chưa lấy */
   static String getVoucherStatus(BuildContext context, String active) {
     if (active == null) return "";
     switch (active) {
