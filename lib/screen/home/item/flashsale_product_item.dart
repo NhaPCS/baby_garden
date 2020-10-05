@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/screen/home/widget/notify_me_button.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/image/my_cached_image.dart';
 import 'package:baby_garden_flutter/widget/loading/rounded_progress.dart';
@@ -102,7 +103,16 @@ class FlashSaleProductItem extends StatelessWidget {
             ),
             left: 0,
             top: -10,
-          )
+          ),
+          isPending
+              ? Positioned(
+                  child: NotifyMeButton(product: product, onNotifyMePressed: () {
+
+                  },),
+                  right: SizeUtil.tinySpace,
+                  top: SizeUtil.tinySpace,
+                )
+              : SizedBox()
         ],
       ),
       width: Provider.of<AppProvider>(context).flashSaleItemWidth,

@@ -121,7 +121,9 @@ class _HomeState extends BaseStateModel<HomeScreen, HomeViewModel> {
                           children: List.generate(
                               getViewModel().SECTIONS.length + 1, (index) {
                             if (index == 0) {
-                              return FlashSale();
+                              return FlashSale(
+                                reload: _reloadNotifier.value,
+                              );
                             }
                             return GridProduct(
                               reload: _reloadNotifier.value,

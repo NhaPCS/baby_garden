@@ -547,8 +547,8 @@ Future<dynamic> productCategory({String parentId}) async {
 }
 
 Future<dynamic> voucherCategory() async {
-  Response response = await get(null,
-      path: "voucherCategory", showLoading: false);
+  Response response =
+      await get(null, path: "voucherCategory", showLoading: false);
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -1280,4 +1280,21 @@ Future<dynamic> privacy() async {
 
   if (response.isSuccess()) return response.data;
   return null;
+}
+
+Future<dynamic> addNotifyFlashSales(BuildContext context,
+    {String productId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  Map<String, dynamic> params = {
+    'user_id': userId,
+    'id': productId,
+  };
+
+  Response response = await post(context,
+      path: "addNotifyFlashSales",
+      param: params,
+      requireLogin: true,
+      showLoading: true);
+  if (response.isSuccess()) return response.data;
+  return response;
 }

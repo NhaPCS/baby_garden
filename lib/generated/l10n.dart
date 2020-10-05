@@ -4940,6 +4940,24 @@ class S {
       args: [],
     );
   }
+
+  String get notify_me {
+    return Intl.message(
+      'Nhắc nhở tôi',
+      name: 'notify_me',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get delete_notify_me {
+    return Intl.message(
+      'Huỷ nhắc nhở',
+      name: 'delete_notify_me',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

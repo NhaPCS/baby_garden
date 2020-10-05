@@ -16,6 +16,9 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 class FlashSale extends StatefulWidget {
+  final int reload;
+
+  const FlashSale({Key key, this.reload}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _FlashSaleState();
@@ -26,15 +29,18 @@ class _FlashSaleState extends BaseState<FlashSale> {
   final FlashSaleProvider _getFlashSaleProvider = FlashSaleProvider();
   final ChangeFlashSaleModeProvider _changeFlashSaleModeProvider =
       ChangeFlashSaleModeProvider();
+  int _reload = -1;
 
   @override
   void initState() {
-    _getFlashSaleProvider.getData();
     super.initState();
   }
 
   @override
   Widget buildWidget(BuildContext context) {
+    if(widget.reload!=null && widget.reload != _reload){
+      _getFlashSaleProvider.getData();
+    }
     return Consumer<FlashSaleProvider>(
       builder: (BuildContext context, FlashSaleProvider flashSaleProvider,
           Widget child) {

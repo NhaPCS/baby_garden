@@ -79,6 +79,7 @@ class _State extends State<Balloon> {
           Padding(
             padding: EdgeInsets.only(right: 10),
             child: CircleImage(
+              elevation: 0,
               width: 50,
               height: 50,
               imageUrl: img ?? '',
