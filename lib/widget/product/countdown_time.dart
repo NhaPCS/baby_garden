@@ -32,7 +32,6 @@ class _CountdownState extends State<CountDownTime> {
       _startDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(widget.startTime);
       _endDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(widget.endTime);
       DateTime _now = DateTime.now();
-      print("AAAA TIME $_startDate $_endDate  $_now");
       if (!_now.isAfter(_startDate)) {
         _status.value = S.of(context).time_pending;
         return;

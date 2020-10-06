@@ -95,7 +95,7 @@ Future<dynamic> updatePassword(BuildContext context,
 }
 
 //TODO require favouriteShop
-Future<dynamic> favouriteShop({String shopID}) async {
+Future<bool> favouriteShop({String shopID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await post(null,
       path: "favouriteShop", param: {'user_id': userId, 'shop_id': shopID});
@@ -106,7 +106,7 @@ Future<dynamic> favouriteShop({String shopID}) async {
 }
 
 //TODO require unFavouriteShop
-Future<dynamic> unFavouriteShop({String shopID}) async {
+Future<bool> unFavouriteShop({String shopID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await post(null,
       path: "unFavouriteShop", param: {'user_id': userId, 'shop_id': shopID});
@@ -938,7 +938,6 @@ Future<Response> updateAvatar(BuildContext context, {File img}) async {
 
 Future<Response> deleteAddress(BuildContext context,
     {@required String addressId}) async {
-  print('address id ' + addressId);
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {"user_id": userId, 'address_id': addressId};
 

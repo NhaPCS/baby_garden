@@ -46,7 +46,6 @@ class _RemindManageState extends BaseState<RemindManagementScreen> {
         ),
         body: Consumer<RemindCalendarProvider>(
           builder: (context, value, child) {
-            print("WWTF");
             if (value.remindList == null || value.remindList.isEmpty)
               return LoadingView(
                 isNoData: value.remindList != null,

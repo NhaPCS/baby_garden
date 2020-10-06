@@ -21,8 +21,8 @@ class CustomRadioButton extends StatelessWidget {
 
   final String label;
   final EdgeInsets padding;
-  final int groupValue;
-  final int value;
+  final dynamic groupValue;
+  final dynamic value;
   final Function onChanged;
   final double titleSpace;
   final double iconSize;
@@ -35,7 +35,7 @@ class CustomRadioButton extends StatelessWidget {
 
   // TODO-Hung: chuyển widget này sang stateful và dùng ValueNotifier để lấy giá trị đã chọn, không phải phụ thuộc vào provider của class cha nữa
   // Tất cả các provider sẽ chuyển thành ValueNotifier (cách làm này giống controller của TextField)
-  final ValueNotifier<int> checkedValue;
+  final ValueNotifier<dynamic> checkedValue;
 
   @override
   Widget build(BuildContext context) {

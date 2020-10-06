@@ -1,8 +1,7 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/partner_book_schedule/widget/service_date_picker.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/partner/date_picker.dart';
-import 'package:baby_garden_flutter/widget/partner/time_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -22,11 +21,8 @@ class PartnerServiceDetailScreen extends StatefulWidget {
 class _PartnerServiceDetailScreenScreen
     extends BaseState<PartnerServiceDetailScreen>
     with TickerProviderStateMixin {
-  int dateIndex = 0;
-  int timeScheduleIndex = 0;
-  String dateValue = "";
-  final ValueNotifier<int> _timeValueController = ValueNotifier(0);
-  final ValueNotifier<int> _dateValueController = ValueNotifier(0);
+  final ValueNotifier<String> _timeValueController = ValueNotifier('');
+  final ValueNotifier<String> _dateValueController = ValueNotifier('');
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -108,15 +104,10 @@ class _PartnerServiceDetailScreenScreen
                   fontWeight: FontWeight.bold),
             ),
           ),
-          DatePicker(
-            onValueChange: (val) {
-              dateValue = val['date'];
-            },
-            unSelectedColor: ColorUtil.blue,
-            valueController: _dateValueController,
-          ),
-          TimePicker(
-            valueController: _timeValueController,
+          ServiceDatePicker(
+            timeOpen: widget.data['time_open'],
+            selectDateController: _dateValueController,
+            selectTimeController: _timeValueController,
           ),
           Container(
               padding: const EdgeInsets.only(
@@ -128,7 +119,6 @@ class _PartnerServiceDetailScreenScreen
               child: RaisedButton(
                 onPressed: () async {
                   Navigator.pop(context, {
-                    'dateValue': dateValue,
                     'date': _dateValueController.value,
                     'time': _timeValueController.value
                   });

@@ -139,6 +139,24 @@ class DateUtil {
     }
   }
 
+  static String formatFromYmdToDmy(String rawDate) {
+    try {
+      DateTime date = new DateFormat('yyyy-MM-dd').parse(rawDate);
+      return new DateFormat("dd-MM-yyyy").format(date);
+    } on Exception catch (e) {
+      return '';
+    }
+  }
+
+  static String getDayOfWeek(String rawDate) {
+    try {
+      DateTime date = new DateFormat('yyyy-MM-dd').parse(rawDate);
+      return date.weekday == 7 ? "Chủ nhật" : "Thứ ${date.weekday + 1}";
+    } on Exception catch (e) {
+      return '';
+    }
+  }
+
   static DateTime getDateFrom(String rawDate) {
     try {
       return new DateFormat("yyyy-MM-dd").parse(rawDate);

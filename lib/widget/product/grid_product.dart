@@ -69,7 +69,6 @@ class _GridProductState extends BaseState<GridProduct> {
   @override
   Widget buildWidget(BuildContext context) {
     if (widget.reload != reload) {
-      print("WTF ${widget.reload} ${reload}");
       reload = widget.reload;
       _loadData();
     }

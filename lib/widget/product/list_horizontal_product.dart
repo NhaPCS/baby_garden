@@ -23,7 +23,6 @@ class ListHorizontalProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("SIZE C  ${getItemsCount()}");
     return Container(
       color: ColorUtil.lineColor,
       padding: padding,
