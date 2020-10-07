@@ -140,7 +140,7 @@ class ShopBookingContent extends StatelessWidget {
                       ),
                     ),
                     selectedShopServiceController.value == null
-                        ? SizedBox()
+                        ? Center(child: Text(S.of(context).choose_service_title),)
                         : ServiceDatePicker(
                             timeOpen: selectedService['time_open'],
                             selectDateController: selectedDateController,

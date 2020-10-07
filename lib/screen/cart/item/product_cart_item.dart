@@ -43,7 +43,7 @@ class ProductCartItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               CircleImage(
-                imageUrl: product['image'] == null && product['image'].isEmpty
+                imageUrl: product['image'] == null || product['image'].isEmpty
                     ? ''
                     : product['image'][0],
                 borderRadius: 0,

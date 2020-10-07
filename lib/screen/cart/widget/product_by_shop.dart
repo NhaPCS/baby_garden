@@ -17,7 +17,7 @@ class ProductByShop extends StatelessWidget {
       children: <Widget>[
         CircleCheckbox(
           text: Text(
-            shop['shop_name'],
+            shop['shop_name']??'',
             style: TextStyle(
                 color: ColorUtil.textGray, fontWeight: FontWeight.bold),
           ),

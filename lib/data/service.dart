@@ -1219,13 +1219,6 @@ Future<dynamic> support() async {
   return null;
 }
 
-Future<dynamic> productTest({String babyId}) async {
-  String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  dynamic params = {"user_id": userId, "baby_id": babyId};
-  Response response = await get(null, path: "productTest", param: params);
-  if (response.isSuccess()) return response.data;
-  return null;
-}
 
 Future<Response> deleteSearch(BuildContext context) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
@@ -1291,6 +1284,24 @@ Future<dynamic> addNotifyFlashSales(BuildContext context,
 
   Response response = await post(context,
       path: "addNotifyFlashSales",
+      param: params,
+      requireLogin: true,
+      showLoading: true);
+  if (response.isSuccess()) return response.data;
+  return response;
+}
+
+
+Future<dynamic> deleteNotifyFlashSales(BuildContext context,
+    {String productId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  Map<String, dynamic> params = {
+    'user_id': userId,
+    'id': productId,
+  };
+
+  Response response = await post(context,
+      path: "deleteNotifyFlashSales",
       param: params,
       requireLogin: true,
       showLoading: true);

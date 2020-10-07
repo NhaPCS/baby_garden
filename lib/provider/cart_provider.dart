@@ -49,7 +49,7 @@ class CartProvider extends ChangeNotifier {
     if (product['price_discount'] != null) {
       return int.parse(product['price_discount']);
     }
-    return int.parse(product['price']);
+    return int.parse(product['price']??'0');
   }
 
   Future<void> addProduct(dynamic product) async {

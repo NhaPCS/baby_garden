@@ -27,6 +27,7 @@ class ProductItem extends StatelessWidget {
   final dynamic product;
   final bool isPickup;
   final bool isFlashSalePending;
+  final VoidCallback onNotifyPress;
 
   const ProductItem(
       {Key key,
@@ -47,7 +48,8 @@ class ProductItem extends StatelessWidget {
       this.index = 0,
       this.product,
       this.isFlashSalePending = false,
-      this.isPickup})
+      this.isPickup,
+      this.onNotifyPress})
       : super(key: key);
 
   @override
@@ -90,12 +92,13 @@ class ProductItem extends StatelessWidget {
                   ),
             isFlashSalePending
                 ? Positioned(
-              child: NotifyMeButton(product: product, onNotifyMePressed: () {
-
-              },),
-              right: SizeUtil.tinySpace,
-              top: SizeUtil.tinySpace,
-            )
+                    child: NotifyMeButton(
+                      product: product,
+                      onNotifyMePressed: onNotifyPress,
+                    ),
+                    right: SizeUtil.tinySpace,
+                    top: SizeUtil.tinySpace,
+                  )
                 : SizedBox()
           ],
         ),

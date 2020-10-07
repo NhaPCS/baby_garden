@@ -8,7 +8,6 @@ import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/screen/child_heath/provider/change_mode_enter_heath_provider.dart';
 import 'package:baby_garden_flutter/screen/child_heath/provider/get_baby_test_result_provider.dart';
 import 'package:baby_garden_flutter/screen/child_heath/provider/get_list_baby_provider.dart';
-import 'package:baby_garden_flutter/screen/child_heath/provider/get_product_test_provider.dart';
 import 'package:baby_garden_flutter/screen/child_heath/view_model/child_health_view_model.dart';
 import 'package:baby_garden_flutter/screen/child_heath/widget/child_header.dart';
 import 'package:baby_garden_flutter/screen/child_heath/widget/enter_weight_height.dart';
@@ -46,8 +45,6 @@ class _ChildHeathState
   final GetListBabyProvider _getListBabyProvider = GetListBabyProvider();
   final GetBabyTestResultProvider _getBabyTestResultProvider =
       GetBabyTestResultProvider();
-  final GetProductTestProvider _getProductTestProvider =
-      GetProductTestProvider();
 
   @override
   void initState() {
@@ -235,12 +232,9 @@ class _ChildHeathState
 
   void _loadTestResults() {
     if (_dropdownController.value == null) return;
-    _getProductTestProvider.getProductTest(
-        babyId: _dropdownController.value['id']);
-    if (_dropdownController.value != null)
-      _getBabyTestResultProvider.testResult(
-          babyId: _dropdownController.value['id'],
-          type: _changeIndexProvider.index + 1);
+    _getBabyTestResultProvider.testResult(
+        babyId: _dropdownController.value['id'],
+        type: _changeIndexProvider.index == 0 ? 2 : 1); // 1: weight, 2: height
   }
 
   bool isBoy() {
@@ -255,7 +249,6 @@ class _ChildHeathState
       ChangeNotifierProvider.value(value: _changeIndexProvider),
       ChangeNotifierProvider.value(value: _getListBabyProvider),
       ChangeNotifierProvider.value(value: _getBabyTestResultProvider),
-      ChangeNotifierProvider.value(value: _getProductTestProvider),
     ];
   }
 

@@ -62,7 +62,7 @@ class _PartnerServiceDetailScreenScreen
           Padding(
             padding: const EdgeInsets.only(
                 left: SizeUtil.smallSpace, bottom: SizeUtil.tinySpace),
-            child: Text('Thời gian thực hiện: ${widget.data['ex_time']}',
+            child: Text('Thời gian thực hiện: ${widget.data['ex_time'] ?? ''}',
                 style: TextStyle(
                     color: ColorUtil.textColor,
                     fontSize: SizeUtil.textSizeSmall,
@@ -77,7 +77,8 @@ class _PartnerServiceDetailScreenScreen
               'Thông tin dịch vụ:',
               style: TextStyle(
                   color: ColorUtil.red,
-                  fontSize: SizeUtil.textSizeExpressTitle),
+                  fontSize: SizeUtil.textSizeDefault,
+                  fontWeight: FontWeight.bold),
             ),
           ),
           Padding(
@@ -95,9 +96,10 @@ class _PartnerServiceDetailScreenScreen
             padding: const EdgeInsets.only(
                 left: SizeUtil.smallSpace,
                 bottom: SizeUtil.midSmallSpace,
-                right: SizeUtil.smallSpace),
+                right: SizeUtil.smallSpace,
+                top: SizeUtil.smallSpace),
             child: Text(
-              'Thời gian',
+              'Chọn thời gian',
               style: TextStyle(
                   color: Colors.black,
                   fontSize: SizeUtil.textSizeExpressDetail,

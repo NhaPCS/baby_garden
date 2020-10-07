@@ -18,7 +18,9 @@ import 'package:provider/provider.dart';
 class FlashSale extends StatefulWidget {
   final int reload;
 
-  const FlashSale({Key key, this.reload}) : super(key: key);
+  const FlashSale({Key key, this.reload})
+      : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _FlashSaleState();
@@ -38,7 +40,7 @@ class _FlashSaleState extends BaseState<FlashSale> {
 
   @override
   Widget buildWidget(BuildContext context) {
-    if(widget.reload!=null && widget.reload != _reload){
+    if (widget.reload != null && widget.reload != _reload) {
       _getFlashSaleProvider.getData();
     }
     return Consumer<FlashSaleProvider>(
@@ -46,7 +48,8 @@ class _FlashSaleState extends BaseState<FlashSale> {
           Widget child) {
         if (flashSaleProvider.flashSalesPending.isEmpty &&
             flashSaleProvider.flashSales.isEmpty) return SizedBox();
-        final List<dynamic> list = _changeFlashSaleModeProvider.isPending || flashSaleProvider.flashSales.isEmpty
+        final List<dynamic> list = _changeFlashSaleModeProvider.isPending ||
+                flashSaleProvider.flashSales.isEmpty
             ? flashSaleProvider.flashSalesPending
             : flashSaleProvider.flashSales;
         return GestureDetector(
@@ -122,17 +125,24 @@ class _FlashSaleState extends BaseState<FlashSale> {
                           scrollDirection: Axis.horizontal,
                           itemCount: list.length,
                           itemBuilder: (BuildContext context, int index) {
+                            dynamic productDetail =
+                                list[index]['product_detail'] != null
+                                    ? list[index]['product_detail']
+                                    : list[index];
                             return GestureDetector(
                               child: FlashSaleProductItem(
                                 product: list[index],
                                 isPending:
                                     _changeFlashSaleModeProvider.isPending,
+                                onNotifyMePress: () {
+                                  _getFlashSaleProvider.notifyFlashSale(context, list[index]);
+                                },
                               ),
                               onTap: () {
                                 RouteUtil.push(
                                     context,
                                     ProductDetailScreen(
-                                      productId: list[index]['id'],
+                                      productId: productDetail['id'],
                                     ));
                               },
                             );

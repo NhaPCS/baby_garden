@@ -14,12 +14,14 @@ import 'package:provider/provider.dart';
 class FlashSaleProductItem extends StatelessWidget {
   final dynamic product;
   final bool isPending;
+  final VoidCallback onNotifyMePress;
 
-  const FlashSaleProductItem({Key key, this.product, this.isPending = false})
+  const FlashSaleProductItem({Key key, this.product, this.isPending = false, this.onNotifyMePress})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    dynamic productDetail = product['product_detail']!=null?product['product_detail']: product;
     return Container(
       margin: SizeUtil.tinyPadding,
       child: Stack(
@@ -42,7 +44,7 @@ class FlashSaleProductItem extends StatelessWidget {
                 height: SizeUtil.smallSpace,
               ),
               MyText(
-                product['name'],
+                productDetail['name'],
                 style: TextStyle(
                     fontSize: SizeUtil.textSizeSmall,
                     fontWeight: FontWeight.bold),
@@ -54,7 +56,7 @@ class FlashSaleProductItem extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                       child: AutoSizeText(
-                    StringUtil.getPriceText(product['price']),
+                    StringUtil.getPriceText(productDetail['price']),
                     maxLines: 1,
                     minFontSize: SizeUtil.textSizeMini,
                     maxFontSize: SizeUtil.textSizeSmall,
@@ -64,7 +66,7 @@ class FlashSaleProductItem extends StatelessWidget {
                   )),
                   MyText(
                     isPending
-                        ? product['price_discount']
+                        ? product['price_x']
                         : StringUtil.getPriceText(product['price_discount']),
                     style: TextStyle(
                         color: ColorUtil.red, fontWeight: FontWeight.bold),
@@ -92,7 +94,7 @@ class FlashSaleProductItem extends StatelessWidget {
               ? SizedBox()
               : Positioned(
                   child: DiscountWidget(
-                      discount: StringUtil.getDiscountPercent(product)),
+                      discount: StringUtil.getDiscountPercent(productDetail)),
                   right: 0,
                   top: 0,
                 ),
@@ -106,9 +108,10 @@ class FlashSaleProductItem extends StatelessWidget {
           ),
           isPending
               ? Positioned(
-                  child: NotifyMeButton(product: product, onNotifyMePressed: () {
-
-                  },),
+                  child: NotifyMeButton(
+                    product: product,
+                    onNotifyMePressed: onNotifyMePress,
+                  ),
                   right: SizeUtil.tinySpace,
                   top: SizeUtil.tinySpace,
                 )

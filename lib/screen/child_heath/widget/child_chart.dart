@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/child_heath/dialog/chart_clicked_info_dialog.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -7,8 +9,9 @@ import 'package:flutter/material.dart';
 class ChildChart extends StatefulWidget {
   final List<dynamic> testResults;
   final dynamic baby;
+  final int tab;
 
-  const ChildChart({Key key, this.testResults, this.baby}) : super(key: key);
+  const ChildChart({Key key, this.testResults, this.baby, this.tab}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => ChildChartState();
@@ -24,6 +27,7 @@ class ChildChartState extends State<ChildChart> {
 
   @override
   Widget build(BuildContext context) {
+    double maxValue = getMaxValue();
     return AspectRatio(
       aspectRatio: 1.5,
       child: Card(
@@ -53,7 +57,7 @@ class ChildChartState extends State<ChildChart> {
                       child: BarChart(
                     BarChartData(
                       alignment: BarChartAlignment.spaceEvenly,
-                      maxY: getMaxValue(),
+                      maxY: maxValue,
                       groupsSpace: 12,
                       barTouchData: BarTouchData(
 //                        touchTooltipData: BarTouchTooltipData(),
@@ -70,6 +74,7 @@ class ChildChartState extends State<ChildChart> {
                                         testResult: widget.testResults[
                                             barRes.spot.touchedBarGroupIndex],
                                         baby: widget.baby,
+                                        tab: widget.tab
                                       );
                                     });
                               } on Exception catch (e) {}
@@ -83,8 +88,10 @@ class ChildChartState extends State<ChildChart> {
                               color: ColorUtil.textColor,
                               fontSize: SizeUtil.textSizeSmall),
                           getTitles: (double value) {
-                            return getMonthText(
-                                widget.testResults[value.toInt()]);
+                            return widget.testResults == null
+                                ? '0'
+                                : getMonthText(
+                                    widget.testResults[value.toInt()]);
                           },
                         ),
                         leftTitles: SideTitles(
@@ -97,7 +104,7 @@ class ChildChartState extends State<ChildChart> {
                             }
                             return '${value.toInt()}';
                           },
-                          interval: isHeightTab() ? 50 : 5,
+                          interval: maxValue/10,
                           margin: 5,
                           reservedSize: 30,
                         ),
@@ -115,8 +122,8 @@ class ChildChartState extends State<ChildChart> {
                       barGroups: widget.testResults == null
                           ? []
                           : widget.testResults
-                              .map((e) => getColumnChart(getMonth(e),
-                                  e['value'], getStatusColor(e['status'])))
+                              .map((e) => getColumnChart(
+                                  getMonth(e), e['value'], Color(0xffFF0000)))
                               .toList(),
                     ),
                   )),
@@ -138,9 +145,7 @@ class ChildChartState extends State<ChildChart> {
   }
 
   bool isHeightTab() {
-    return widget.testResults == null ||
-        widget.testResults.isEmpty ||
-        widget.testResults[0]['type'] == '1';
+    return widget.tab==0;
   }
 
   double getMaxValue() {
