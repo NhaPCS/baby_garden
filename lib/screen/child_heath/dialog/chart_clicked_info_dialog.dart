@@ -125,6 +125,22 @@ class ChartClickedInfoDialog extends StatelessWidget {
           ),
           RichText(
               text: TextSpan(children: [
+                TextSpan(
+                    text: S.of(context).note_is,
+                    style: TextStyle(
+                        color: ColorUtil.textGray,
+                        fontSize: SizeUtil.textSizeDefault)),
+                TextSpan(
+                    text: testResult['note']??'',
+                    style: TextStyle(
+                        color: ColorUtil.primaryColor,
+                        fontSize: SizeUtil.textSizeDefault))
+              ])),
+          SizedBox(
+            height: SizeUtil.smallSpace,
+          ),
+          RichText(
+              text: TextSpan(children: [
             TextSpan(
                 text: S.of(context).test_result_is,
                 style: TextStyle(

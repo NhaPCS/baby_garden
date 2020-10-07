@@ -49,23 +49,10 @@ class ViewWeightHeight extends StatelessWidget {
           height: SizeUtil.smallSpace,
         ),
         Wrap(
-          children: [
-            getNotice(
-                context,
-                isHeightTab
-                    ? S.of(context).normal_height
-                    : S.of(context).normal_weight,
-                Color(0xff00BBFF)),
-            getNotice(
-                context,
-                isHeightTab
-                    ? S.of(context).greater_than_age
-                    : S.of(context).weight_greater_than_age,
-                Color(0xffFFD500)),
-            getNotice(context, S.of(context).suy_dinh_duong_normal,
-                Color(0xffFF9100)),
-            getNotice(context, S.of(context).sdd_nang, Color(0xffFF0000)),
-          ],
+          children: List.generate(
+              5,
+              (index) => getNotice(context,
+                  (isHeightTab ? HEIGHTS : WEIGHTS)[index], COLORS[index])),
         ),
         SizedBox(
           height: SizeUtil.smallSpace,
@@ -130,7 +117,7 @@ class ViewWeightHeight extends StatelessWidget {
 
   Widget getNotice(BuildContext context, String text, Color color) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.46,
+      width: MediaQuery.of(context).size.width * 0.45,
       child: Row(
         children: <Widget>[
           Container(
@@ -166,3 +153,25 @@ class ViewWeightHeight extends StatelessWidget {
     return null;
   }
 }
+
+const List<String> WEIGHTS = [
+  "Trẻ suy dinh dưỡng thể nhẹ cân, mức độ nặng",
+  "Trẻ suy dinh dưỡng thể nhẹ cân, mức độ vừa",
+  "Trẻ cân nặng bình thường",
+  "Trẻ thừa cân",
+  "Trẻ béo phì"
+];
+const List<String> HEIGHTS = [
+  "Trẻ suy dinh dưỡng thấp còi, mức độc nặng",
+  "Trẻ suy dinh dưỡng thể thấp còi, mức độ vừa",
+  "Trẻ chiều cao bình thường",
+  "Chiều cao cao hơn so với lứa tuổi",
+  "Chiều cao vượt trội so với lứa tuổi"
+];
+const List<Color> COLORS = [
+  Color(0xff002060),
+  Color(0xff00B050),
+  Color(0xff92D050),
+  Color(0xffFFC000),
+  Color(0xffFF0000),
+];

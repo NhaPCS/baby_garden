@@ -64,12 +64,18 @@ class ColorUtil {
     Color(0xffD89012)
   ];
 
-  static Color getColorFromHex(String hexColor) {
-    hexColor = hexColor.toUpperCase().replaceAll("#", "");
-    if (hexColor.length == 6) {
-      hexColor = "FF" + hexColor;
+  static Color getColorFromHex(String hexColor,
+      {Color defaultColor = ColorUtil.primaryColor}) {
+    try {
+      if (hexColor == null || hexColor.isEmpty) return defaultColor;
+      hexColor = hexColor.toUpperCase().replaceAll("#", "");
+      if (hexColor.length == 6) {
+        hexColor = "FF" + hexColor;
+      }
+      return Color(int.parse(hexColor, radix: 16));
+    } on Exception catch (e) {
+      return defaultColor;
     }
-    return Color(int.parse(hexColor, radix: 16));
   }
 }
 

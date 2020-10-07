@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/child_heath/dialog/chart_clicked_info_dialog.dart';
+import 'package:baby_garden_flutter/screen/child_heath/widget/view_weight_height.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,8 @@ class ChildChart extends StatefulWidget {
   final dynamic baby;
   final int tab;
 
-  const ChildChart({Key key, this.testResults, this.baby, this.tab}) : super(key: key);
+  const ChildChart({Key key, this.testResults, this.baby, this.tab})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => ChildChartState();
@@ -71,11 +73,10 @@ class ChildChartState extends State<ChildChart> {
                                     context: context,
                                     builder: (context) {
                                       return ChartClickedInfoDialog(
-                                        testResult: widget.testResults[
-                                            barRes.spot.touchedBarGroupIndex],
-                                        baby: widget.baby,
-                                        tab: widget.tab
-                                      );
+                                          testResult: widget.testResults[
+                                              barRes.spot.touchedBarGroupIndex],
+                                          baby: widget.baby,
+                                          tab: widget.tab);
                                     });
                               } on Exception catch (e) {}
                             }
@@ -88,7 +89,8 @@ class ChildChartState extends State<ChildChart> {
                               color: ColorUtil.textColor,
                               fontSize: SizeUtil.textSizeSmall),
                           getTitles: (double value) {
-                            return widget.testResults == null
+                            return widget.testResults == null ||
+                                    widget.testResults.isEmpty
                                 ? '0'
                                 : getMonthText(
                                     widget.testResults[value.toInt()]);
@@ -104,7 +106,7 @@ class ChildChartState extends State<ChildChart> {
                             }
                             return '${value.toInt()}';
                           },
-                          interval: maxValue/10,
+                          interval: max(maxValue / 10, 1),
                           margin: 5,
                           reservedSize: 30,
                         ),
@@ -123,7 +125,10 @@ class ChildChartState extends State<ChildChart> {
                           ? []
                           : widget.testResults
                               .map((e) => getColumnChart(
-                                  getMonth(e), e['value'], Color(0xffFF0000)))
+                                  getMonth(e),
+                                  e['value'],
+                                  ColorUtil.getColorFromHex(e['color'],
+                                      defaultColor: COLORS[4])))
                               .toList(),
                     ),
                   )),
@@ -145,7 +150,7 @@ class ChildChartState extends State<ChildChart> {
   }
 
   bool isHeightTab() {
-    return widget.tab==0;
+    return widget.tab == 0;
   }
 
   double getMaxValue() {
