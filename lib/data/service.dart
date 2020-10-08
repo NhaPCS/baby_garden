@@ -95,7 +95,7 @@ Future<dynamic> updatePassword(BuildContext context,
 }
 
 //TODO require favouriteShop
-Future<dynamic> favouriteShop({String shopID}) async {
+Future<bool> favouriteShop({String shopID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await post(null,
       path: "favouriteShop", param: {'user_id': userId, 'shop_id': shopID});
@@ -106,7 +106,7 @@ Future<dynamic> favouriteShop({String shopID}) async {
 }
 
 //TODO require unFavouriteShop
-Future<dynamic> unFavouriteShop({String shopID}) async {
+Future<bool> unFavouriteShop({String shopID}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   Response response = await post(null,
       path: "unFavouriteShop", param: {'user_id': userId, 'shop_id': shopID});
@@ -361,6 +361,12 @@ Future<dynamic> news(
   return null;
 }
 
+Future<dynamic> newsCategories() async {
+  Response response = await get(null, path: "news-category");
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
 //todo newsDetail
 Future<dynamic> newsDetail({String newID}) async {
   Response response =
@@ -536,6 +542,13 @@ Future<dynamic> productCategory({String parentId}) async {
   }
   Response response =
       await get(null, path: "category", showLoading: false, param: params);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> voucherCategory() async {
+  Response response =
+      await get(null, path: "voucherCategory", showLoading: false);
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -925,7 +938,6 @@ Future<Response> updateAvatar(BuildContext context, {File img}) async {
 
 Future<Response> deleteAddress(BuildContext context,
     {@required String addressId}) async {
-  print('address id ' + addressId);
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {"user_id": userId, 'address_id': addressId};
 
@@ -1207,13 +1219,6 @@ Future<dynamic> support() async {
   return null;
 }
 
-Future<dynamic> productTest({String babyId}) async {
-  String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  dynamic params = {"user_id": userId, "baby_id": babyId};
-  Response response = await get(null, path: "productTest", param: params);
-  if (response.isSuccess()) return response.data;
-  return null;
-}
 
 Future<Response> deleteSearch(BuildContext context) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
@@ -1267,4 +1272,39 @@ Future<dynamic> privacy() async {
 
   if (response.isSuccess()) return response.data;
   return null;
+}
+
+Future<dynamic> addNotifyFlashSales(BuildContext context,
+    {String productId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  Map<String, dynamic> params = {
+    'user_id': userId,
+    'id': productId,
+  };
+
+  Response response = await post(context,
+      path: "addNotifyFlashSales",
+      param: params,
+      requireLogin: true,
+      showLoading: true);
+  if (response.isSuccess()) return response.data;
+  return response;
+}
+
+
+Future<dynamic> deleteNotifyFlashSales(BuildContext context,
+    {String productId}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  Map<String, dynamic> params = {
+    'user_id': userId,
+    'id': productId,
+  };
+
+  Response response = await post(context,
+      path: "deleteNotifyFlashSales",
+      param: params,
+      requireLogin: true,
+      showLoading: true);
+  if (response.isSuccess()) return response.data;
+  return response;
 }

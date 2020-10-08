@@ -42,7 +42,6 @@ class _SeenProductScreen extends BaseState<SeenProductScreen> {
                       index: page * PAGE_SIZE);
                 },
                 itemBuilder: (BuildContext context, product, int index) {
-                  print(product);
                   final _product = _getListProductProvider.fromJson(product);
 
                   return _product != null

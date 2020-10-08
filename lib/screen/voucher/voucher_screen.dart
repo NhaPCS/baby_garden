@@ -4,6 +4,7 @@ import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/voucher/item/voucher_item.dart';
 import 'package:baby_garden_flutter/screen/voucher/provider/get_list_voucher_provider.dart';
+import 'package:baby_garden_flutter/screen/voucher/provider/get_voucher_category_provider.dart';
 import 'package:baby_garden_flutter/screen/voucher_detail/voucher_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/loadmore/loadmore_listview.dart';
@@ -22,6 +23,8 @@ class VoucherScreen extends StatefulWidget {
 class _VoucherScreen extends BaseState<VoucherScreen> {
   final GetListVoucherProvider _getListVoucherProvider =
       GetListVoucherProvider();
+  final GetVoucherCategoryProvider _getVoucherCategoryProvider =
+      GetVoucherCategoryProvider();
   String _selectedCategoryId;
   final ValueNotifier<int> _pageController = ValueNotifier(0);
 
@@ -30,13 +33,12 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
   }
 
   @override
-  void didChangeDependencies() {
-    if (_getListVoucherProvider.vouchers == null ||
-        _getListVoucherProvider.vouchers.isEmpty) {
-      _getListVoucherProvider.getListVoucher();
-    }
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
+    _getVoucherCategoryProvider.getCategories();
+    _getListVoucherProvider.getListVoucher();
   }
+
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -45,11 +47,17 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
       appBar: getAppBar(title: S.of(context).voucher.toUpperCase()),
       body: Column(
         children: <Widget>[
-          ListCategory(
-            onChangedCategory: (category) {
-              _pageController.value = 0;
-              _selectedCategoryId = category == null ? null : category['id'];
-              _loadData();
+          Consumer<GetVoucherCategoryProvider>(
+            builder: (context, value, child) {
+              return ListCategory(
+                categories: value.categories,
+                onChangedCategory: (category) {
+                  _pageController.value = 0;
+                  _selectedCategoryId =
+                      category == null ? null : category['id'];
+                  _loadData();
+                },
+              );
             },
           ),
           Expanded(
@@ -86,6 +94,9 @@ class _VoucherScreen extends BaseState<VoucherScreen> {
 
   @override
   List<SingleChildWidget> providers() {
-    return [ChangeNotifierProvider.value(value: _getListVoucherProvider)];
+    return [
+      ChangeNotifierProvider.value(value: _getListVoucherProvider),
+      ChangeNotifierProvider.value(value: _getVoucherCategoryProvider),
+    ];
   }
 }

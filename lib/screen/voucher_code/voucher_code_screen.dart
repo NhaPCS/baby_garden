@@ -118,10 +118,9 @@ class _VoucherCodeScreenState
           // button send code
           GestureDetector(
             onTap: () {
-              //TODO
               getViewModel().verifyVoucherCode(
                   voucherId: widget.voucher['id'],
-                  code: _userVoucherProvider.code);
+                  code: _codeController.text.trim());
             },
             child: Container(
               margin: SizeUtil.smallPadding,

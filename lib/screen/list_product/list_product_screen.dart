@@ -92,6 +92,9 @@ class _ListProductState extends BaseState<ListProductScreen> {
                         left: SizeUtil.smallSpace,
                         right: SizeUtil.smallSpace,
                         top: 0),
+                    onNotifyPress: (){
+                      _getListProductProvider.notifyFlashSale(context, product);
+                    },
                   );
                 },
               );

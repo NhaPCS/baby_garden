@@ -1,13 +1,12 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/screen/child_heath/provider/get_product_test_provider.dart';
+import 'package:baby_garden_flutter/screen/child_heath/widget/child_chart.dart';
 import 'package:baby_garden_flutter/screen/child_heath/widget/list_suggest_for_child.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/screen/child_heath/widget/child_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class ViewWeightHeight extends StatelessWidget {
-  final List<dynamic> testResults;
+  final dynamic testResults;
   final dynamic baby;
   final int tab;
 
@@ -17,9 +16,11 @@ class ViewWeightHeight extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isHeightTab = tab == 0;
-    dynamic newestResult = testResults != null && testResults.isNotEmpty
-        ? testResults[testResults.length - 1]
-        : null;
+    dynamic newestResult = getFirstResult(isHeightTab);
+    List<dynamic> products =
+        newestResult == null || newestResult['suggest'] == null
+            ? null
+            : newestResult['suggest']['product'];
     String typeText = isHeightTab
         ? S.of(context).height.toLowerCase()
         : S.of(context).weight.toLowerCase();
@@ -38,30 +39,20 @@ class ViewWeightHeight extends StatelessWidget {
           height: SizeUtil.smallSpace,
         ),
         ChildChart(
-          testResults: testResults,
+          testResults: testResults != null
+              ? (isHeightTab ? testResults['height'] : testResults['weight'])
+              : [],
           baby: baby,
+          tab: tab,
         ),
         SizedBox(
           height: SizeUtil.smallSpace,
         ),
         Wrap(
-          children: [
-            getNotice(
-                context,
-                isHeightTab
-                    ? S.of(context).normal_height
-                    : S.of(context).normal_weight,
-                Color(0xff00BBFF)),
-            getNotice(
-                context,
-                isHeightTab
-                    ? S.of(context).greater_than_age
-                    : S.of(context).weight_greater_than_age,
-                Color(0xffFFD500)),
-            getNotice(context, S.of(context).suy_dinh_duong_normal,
-                Color(0xffFF9100)),
-            getNotice(context, S.of(context).sdd_nang, Color(0xffFF0000)),
-          ],
+          children: List.generate(
+              5,
+              (index) => getNotice(context,
+                  (isHeightTab ? HEIGHTS : WEIGHTS)[index], COLORS[index])),
         ),
         SizedBox(
           height: SizeUtil.smallSpace,
@@ -87,7 +78,9 @@ class ViewWeightHeight extends StatelessWidget {
                   : S.of(context).weight_is,
               style: TextStyle(color: ColorUtil.textColor)),
           TextSpan(
-              text: newestResult == null ? '' : newestResult['result'],
+              text: newestResult == null
+                  ? ''
+                  : "${newestResult['value']} ${isHeightTab ? "cm" : "kg"}",
               style: TextStyle(color: ColorUtil.primaryColor)),
         ])),
         SizedBox(
@@ -101,7 +94,10 @@ class ViewWeightHeight extends StatelessWidget {
         SizedBox(
           height: SizeUtil.smallSpace,
         ),
-        Text(newestResult == null ? '' : newestResult['advice']),
+        Html(
+            data: newestResult == null || newestResult['suggest'] == null
+                ? ''
+                : newestResult['suggest']['consult']),
         SizedBox(
           height: SizeUtil.smallSpace,
         ),
@@ -110,27 +106,18 @@ class ViewWeightHeight extends StatelessWidget {
           style: TextStyle(
               color: ColorUtil.blueLight, fontWeight: FontWeight.bold),
         ),
-        Consumer<GetProductTestProvider>(
-          builder: (BuildContext context, GetProductTestProvider value,
-              Widget child) {
-            if (value.data == null) return SizedBox();
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: value.data.map((category) {
-                return ListSuggestForChild(
-                  category: category['category'],
-                );
-              }).toList(),
-            );
-          },
-        )
+        products == null
+            ? SizedBox()
+            : ListSuggestForChild(
+                products: products,
+              )
       ],
     );
   }
 
   Widget getNotice(BuildContext context, String text, Color color) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.46,
+      width: MediaQuery.of(context).size.width * 0.45,
       child: Row(
         children: <Widget>[
           Container(
@@ -150,10 +137,41 @@ class ViewWeightHeight extends StatelessWidget {
   String getTheNewestDate(BuildContext context, dynamic newestResult) {
     if (newestResult == null) return S.of(context).newest_test_time('');
     return S.of(context).newest_test_time(
-        "${DateUtil.formatDDMMyyyy(newestResult['date'])} - ${newestResult['month']}");
+        "${DateUtil.formatDDMMyyyy(newestResult['date_check'])} - ${newestResult['month']}");
   }
 
   String getEvaluate(BuildContext context, dynamic newestResult) {
     return "${newestResult['type'] == '1' ? S.of(context).height_is : S.of(context).weight_is} ${newestResult == null ? '' : newestResult['result']}";
   }
+
+  dynamic getFirstResult(bool isHeightTab) {
+    if (testResults == null) return null;
+    dynamic data = isHeightTab ? testResults['height'] : testResults['weight'];
+    if (data != null && data.isNotEmpty) {
+      return data[0];
+    }
+    return null;
+  }
 }
+
+const List<String> WEIGHTS = [
+  "Trẻ suy dinh dưỡng thể nhẹ cân, mức độ nặng",
+  "Trẻ suy dinh dưỡng thể nhẹ cân, mức độ vừa",
+  "Trẻ cân nặng bình thường",
+  "Trẻ thừa cân",
+  "Trẻ béo phì"
+];
+const List<String> HEIGHTS = [
+  "Trẻ suy dinh dưỡng thấp còi, mức độc nặng",
+  "Trẻ suy dinh dưỡng thể thấp còi, mức độ vừa",
+  "Trẻ chiều cao bình thường",
+  "Chiều cao cao hơn so với lứa tuổi",
+  "Chiều cao vượt trội so với lứa tuổi"
+];
+const List<Color> COLORS = [
+  Color(0xff002060),
+  Color(0xff00B050),
+  Color(0xff92D050),
+  Color(0xffFFC000),
+  Color(0xffFF0000),
+];

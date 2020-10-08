@@ -150,7 +150,6 @@ class _MainState extends BaseState<MainScreen> with TickerProviderStateMixin {
               },
             )),
         onWillPop: () async {
-          print("WTF will");
           if (_changeIndexProvider.index != 0) {
             _changeIndexProvider.changeIndex(0);
             _tabController.animateTo(0);

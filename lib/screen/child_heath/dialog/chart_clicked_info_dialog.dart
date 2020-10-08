@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 class ChartClickedInfoDialog extends StatelessWidget {
   final dynamic testResult;
   final dynamic baby;
+  final int tab;
 
-  const ChartClickedInfoDialog({Key key, this.testResult, this.baby})
+  const ChartClickedInfoDialog({Key key, this.testResult, this.baby, this.tab})
       : super(key: key);
 
   @override
@@ -82,7 +83,7 @@ class ChartClickedInfoDialog extends StatelessWidget {
                             color: ColorUtil.textGray,
                             fontSize: SizeUtil.textSizeDefault)),
                     TextSpan(
-                        text: " ${DateUtil.formatDDMMyyyy(testResult['date'])}",
+                        text: " ${testResult['date_check']}",
                         style: TextStyle(
                             color: ColorUtil.primaryColor,
                             fontSize: SizeUtil.textSizeDefault))
@@ -97,7 +98,7 @@ class ChartClickedInfoDialog extends StatelessWidget {
           RichText(
               text: TextSpan(children: [
             TextSpan(
-                text: testResult['type'] == 1
+                text: tab == 0
                     ? S.of(context).height_is
                     : S.of(context).weight_is,
                 style: TextStyle(
@@ -114,11 +115,27 @@ class ChartClickedInfoDialog extends StatelessWidget {
                     color: ColorUtil.textGray,
                     fontSize: SizeUtil.textSizeDefault)),
             TextSpan(
-                text: testResult == null ? '' : testResult['rank'],
+                text: testResult == null ? '' : (testResult['category'] ?? ''),
                 style: TextStyle(
                     color: ColorUtil.primaryColor,
                     fontSize: SizeUtil.textSizeDefault))
           ])),
+          SizedBox(
+            height: SizeUtil.smallSpace,
+          ),
+          RichText(
+              text: TextSpan(children: [
+                TextSpan(
+                    text: S.of(context).note_is,
+                    style: TextStyle(
+                        color: ColorUtil.textGray,
+                        fontSize: SizeUtil.textSizeDefault)),
+                TextSpan(
+                    text: testResult['note']??'',
+                    style: TextStyle(
+                        color: ColorUtil.primaryColor,
+                        fontSize: SizeUtil.textSizeDefault))
+              ])),
           SizedBox(
             height: SizeUtil.smallSpace,
           ),
@@ -130,7 +147,8 @@ class ChartClickedInfoDialog extends StatelessWidget {
                     color: ColorUtil.textGray,
                     fontSize: SizeUtil.textSizeDefault)),
             TextSpan(
-                text: " ${testResult['result']}",
+                text:
+                    " ${testResult['suggest'] == null ? '' : StringUtil.removeHtml((testResult['suggest']['consult'] ?? ''))}",
                 style: TextStyle(
                     color: ColorUtil.primaryColor,
                     fontSize: SizeUtil.textSizeDefault))
@@ -141,7 +159,7 @@ class ChartClickedInfoDialog extends StatelessWidget {
   }
 
   String getValueText() {
-    if (testResult['type'] == '1') {
+    if (tab == 0) {
       return " ${testResult['value']}cm";
     } else {
       return " ${testResult['value']}kg";

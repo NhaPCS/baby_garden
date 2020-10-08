@@ -63,7 +63,6 @@ class _State extends State<PickImageTextField> {
           child: ButtonIcon(
             icon: SvgIcon(widget.svgImage),
             onPressed: () {
-              print("aaa");
               WidgetUtil.showPickImageDialog(context, onCameraClick: () async {
                 var file =
                     await ImagePicker.pickImage(source: ImageSource.camera);

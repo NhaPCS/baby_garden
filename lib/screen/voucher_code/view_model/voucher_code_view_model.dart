@@ -18,7 +18,9 @@ class VoucherCodeViewModel extends BaseViewModel {
       if (data.isSuccess()) {
         WidgetUtil.showMessageDialog(context,
             message: S.of(context).verify_voucher_success,
-            title: S.of(context).success);
+            title: S.of(context).success, onOkClick: () {
+          Navigator.of(context).pop(true);
+        });
       } else {
         WidgetUtil.showErrorDialog(context, data.message);
       }

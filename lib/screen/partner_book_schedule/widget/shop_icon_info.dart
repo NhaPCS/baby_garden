@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 class ShopIconInfo extends StatelessWidget {
   final String icon;
+  final Widget iconWidget;
   final String textData;
   final Color bgColor;
   final bool isPadding;
@@ -20,7 +21,8 @@ class ShopIconInfo extends StatelessWidget {
       this.textColor = ColorUtil.textColor,
       this.iconSize = SizeUtil.iconSizeDefault,
       this.textSize = SizeUtil.textSizeSmall,
-      this.onTap});
+      this.onTap,
+      this.iconWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +44,13 @@ class ShopIconInfo extends StatelessWidget {
         child: Wrap(
           direction: Axis.horizontal,
           children: <Widget>[
-            Image.asset(
-              icon,
-              width: iconSize,
-              height: iconSize,
-            ),
+            iconWidget != null
+                ? iconWidget
+                : Image.asset(
+                    icon,
+                    width: iconSize,
+                    height: iconSize,
+                  ),
             SizedBox(
               width: SizeUtil.tinySpace,
             ),

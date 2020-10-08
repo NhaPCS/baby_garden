@@ -64,12 +64,18 @@ class ColorUtil {
     Color(0xffD89012)
   ];
 
-  static Color getColorFromHex(String hexColor) {
-    hexColor = hexColor.toUpperCase().replaceAll("#", "");
-    if (hexColor.length == 6) {
-      hexColor = "FF" + hexColor;
+  static Color getColorFromHex(String hexColor,
+      {Color defaultColor = ColorUtil.primaryColor}) {
+    try {
+      if (hexColor == null || hexColor.isEmpty) return defaultColor;
+      hexColor = hexColor.toUpperCase().replaceAll("#", "");
+      if (hexColor.length == 6) {
+        hexColor = "FF" + hexColor;
+      }
+      return Color(int.parse(hexColor, radix: 16));
+    } on Exception catch (e) {
+      return defaultColor;
     }
-    return Color(int.parse(hexColor, radix: 16));
   }
 }
 
@@ -134,6 +140,24 @@ class DateUtil {
     try {
       DateTime date = new DateFormat(serverFormatDate).parse(rawDate);
       return new DateFormat("dd/MM/yyyy").format(date);
+    } on Exception catch (e) {
+      return '';
+    }
+  }
+
+  static String formatFromYmdToDmy(String rawDate) {
+    try {
+      DateTime date = new DateFormat('yyyy-MM-dd').parse(rawDate);
+      return new DateFormat("dd-MM-yyyy").format(date);
+    } on Exception catch (e) {
+      return '';
+    }
+  }
+
+  static String getDayOfWeek(String rawDate) {
+    try {
+      DateTime date = new DateFormat('yyyy-MM-dd').parse(rawDate);
+      return date.weekday == 7 ? "Chủ nhật" : "Thứ ${date.weekday + 1}";
     } on Exception catch (e) {
       return '';
     }
@@ -246,12 +270,11 @@ class StringUtil {
   }
 
   /*"active:
-  1: đã đặt,
-  2: xác nhận,
-  3: hoàn thành,
-  4: huỷ,
-  5:đang đóng gói,
-  6: đang vận chuyển"*/
+  * 1: đã lấy
+  * 2: sắp hết hạn
+  * 3: đã sử dụng
+  * 4: đã hết hạn
+  * 0 : chưa lấy */
   static String getVoucherStatus(BuildContext context, String active) {
     if (active == null) return "";
     switch (active) {

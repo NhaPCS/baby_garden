@@ -121,7 +121,7 @@ Future<Response> postMultiPart(BuildContext context,
 
     if (context != null && showLoading) WidgetUtil.showLoading(context);
     http.StreamedResponse response = await request.send();
-    print("REQ ${request.fields}  ${request.files.toString()}");
+    print("REQ $url \n ${request.fields}  ${request.files.toString()} ");
     String res = await response.stream.bytesToString();
 
     if (context != null && showLoading) Navigator.pop(context);

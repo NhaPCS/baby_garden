@@ -28,11 +28,15 @@ class _VoucherDetailScreenState
   @override
   void initState() {
     _getVoucherDetailProvider.setVoucher(widget.voucher);
+    _loadVoucherDetail();
+    super.initState();
+  }
+
+  _loadVoucherDetail(){
     _getVoucherDetailProvider.getVoucherDetail(
         widget.voucher['voucher_id'] != null
             ? widget.voucher['voucher_id']
             : widget.voucher['id']);
-    super.initState();
   }
 
   @override
@@ -77,6 +81,9 @@ class _VoucherDetailScreenState
                         voucher: value.voucher,
                         onGetVoucherPress: () {
                           getViewModel().getCodeVoucher(value.voucher['id']);
+                        },
+                        onReload: (){
+                          _loadVoucherDetail();
                         },
                       ),
                       GuideTab(

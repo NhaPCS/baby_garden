@@ -11,9 +11,18 @@ class BookingDialogue extends Dialog {
   final String shopID;
   final String address;
   final String serviceID;
+  final String dateBooking;
+  final String timeBooking;
 
-
-  const BookingDialogue({this.context, this.serviceData, this.shopID, this.address, this.serviceID}):super();
+  const BookingDialogue(
+      {this.context,
+      this.serviceData,
+      this.shopID,
+      this.address,
+      this.serviceID,
+      this.dateBooking,
+      this.timeBooking})
+      : super();
 
   @override
   // TODO: implement shape
@@ -138,12 +147,20 @@ class BookingDialogue extends Dialog {
                   width: SizeUtil.smallSpace,
                 ),
                 RaisedButton(
-                  onPressed: () async{
-                    var userID = Provider.of<UserProvider>(context,listen: false).userInfo['id'];
-                    dynamic data = await service.bookingService(userID: userID,shopID: shopID,dateBooking: DateUtil.convertNormalToServerDate(serviceData[2]['content']),timeBooking: serviceData[3]['content'],serviceID: serviceID,address: address);
-                    if (data !=null){
+                  onPressed: () async {
+                    var userID =
+                        Provider.of<UserProvider>(context, listen: false)
+                            .userInfo['id'];
+                    dynamic data = await service.bookingService(
+                        userID: userID,
+                        shopID: shopID,
+                        dateBooking: dateBooking,
+                        timeBooking: timeBooking,
+                        serviceID: serviceID,
+                        address: address);
+                    if (data != null) {
                       Navigator.of(context).pop(true);
-                    }else{
+                    } else {
                       Navigator.of(context).pop(false);
                     }
                   },

@@ -31,16 +31,7 @@ class _State extends State<Balloon> {
                 left: _offset.value.dx,
                 top: _offset.value.dy,
                 child: Draggable(
-                  child: GestureDetector(
-                    child: getImage(),
-                    onTap: () {
-                      WidgetUtil.linkToScreen(
-                          context,
-                          Provider.of<GetBalloonProvider>(context,
-                                  listen: false)
-                              .balloon);
-                    },
-                  ),
+                  child: getImage(),
                   feedback: getImage(),
                   childWhenDragging: SizedBox(),
                   onDragEnd: (detail) {
@@ -71,29 +62,42 @@ class _State extends State<Balloon> {
     String img = Provider.of<GetBalloonProvider>(context).balloon == null
         ? null
         : Provider.of<GetBalloonProvider>(context).balloon['img'];
-    return Stack(
-      alignment: Alignment.topRight,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(right: 10),
-          child: CircleImage(
-            width: 50,
-            height: 50,
-            imageUrl: img ?? '',
-            borderRadius: SizeUtil.smallRadius,
+    return GestureDetector(
+      onTap: (){
+        print("AAA ${ Provider.of<GetBalloonProvider>(context,
+            listen: false)
+            .balloon}");
+        WidgetUtil.linkToScreen(
+            context,
+            Provider.of<GetBalloonProvider>(context,
+                listen: false)
+                .balloon);
+      },
+      child: Stack(
+        alignment: Alignment.topRight,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(right: 10),
+            child: CircleImage(
+              elevation: 0,
+              width: 50,
+              height: 50,
+              imageUrl: img ?? '',
+              borderRadius: SizeUtil.smallRadius,
+            ),
           ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Provider.of<GetBalloonProvider>(context, listen: false)
-                .clearBalloon();
-          },
-          child: Icon(
-            CupertinoIcons.clear_thick_circled,
-            color: ColorUtil.gray,
-          ),
-        )
-      ],
+          GestureDetector(
+            onTap: () {
+              Provider.of<GetBalloonProvider>(context, listen: false)
+                  .clearBalloon();
+            },
+            child: Icon(
+              CupertinoIcons.clear_thick_circled,
+              color: ColorUtil.gray,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

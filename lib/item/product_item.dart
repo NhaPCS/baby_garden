@@ -1,12 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
+import 'package:baby_garden_flutter/screen/home/widget/notify_me_button.dart';
 import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:baby_garden_flutter/widget/loading/rounded_progress.dart';
 import 'package:baby_garden_flutter/widget/product/countdown_time.dart';
 import 'package:baby_garden_flutter/widget/product/discount_widget.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +27,7 @@ class ProductItem extends StatelessWidget {
   final dynamic product;
   final bool isPickup;
   final bool isFlashSalePending;
+  final VoidCallback onNotifyPress;
 
   const ProductItem(
       {Key key,
@@ -45,7 +48,8 @@ class ProductItem extends StatelessWidget {
       this.index = 0,
       this.product,
       this.isFlashSalePending = false,
-      this.isPickup})
+      this.isPickup,
+      this.onNotifyPress})
       : super(key: key);
 
   @override
@@ -85,7 +89,17 @@ class ProductItem extends StatelessWidget {
                             : StringUtil.getDiscountPercent(product)),
                     right: 0,
                     top: SizeUtil.smallSpace,
+                  ),
+            isFlashSalePending
+                ? Positioned(
+                    child: NotifyMeButton(
+                      product: product,
+                      onNotifyMePressed: onNotifyPress,
+                    ),
+                    right: SizeUtil.tinySpace,
+                    top: SizeUtil.tinySpace,
                   )
+                : SizedBox()
           ],
         ),
       ),
@@ -124,7 +138,7 @@ class ProductItem extends StatelessWidget {
         SizedBox(
           height: SizeUtil.tinySpace,
         ),
-        Text(
+        MyText(
           product == null ? "" : product['name'],
           maxLines: 2,
           textAlign: TextAlign.center,
