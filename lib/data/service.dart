@@ -207,27 +207,27 @@ user_address: địa chỉ
 city_id: id thành phố
 district_id: id quận huyện
 */
-Future<dynamic> bookingProduct(
-    {String inShopReceiveTimeId,
-    String userID,
-    String shopID,
-    String bookingDate,
-    String bookingTime,
-    String promoteCode,
-    String isReceiveInShop,
-    String timeReceive,
-    String paymentMethod,
-    String note,
-    String shipID,
-    String address,
-    String shipCode,
-    String userName,
-    String userPhone,
-    String userAddress,
-    String cityID,
-    String point,
-    String districtID,
-    String ward_id}) async {
+Future<dynamic> bookingProduct({
+  @required String timeId,
+  @required String userID,
+  @required String shopID,
+  @required String bookingDate,
+  @required String bookingTime,
+  @required String promoteCode,
+  @required String isReceiveInShop,
+  @required String paymentMethod,
+  @required String note,
+  @required String address,
+  @required String userName,
+  @required String userPhone,
+  @required String userAddress,
+  @required String cityID,
+  @required String point,
+  @required String districtID,
+  @required String wardId,
+  @required String shipCode,
+  @required String shipCoupon,
+}) async {
   Response response = await post(null, path: "bookingProduct", param: {
     'point': point,
     'user_id': userID,
@@ -236,18 +236,18 @@ Future<dynamic> bookingProduct(
     'time_booking': bookingTime,
     'promotion_code': promoteCode,
     'is_receive': isReceiveInShop,
-    'time_ship': timeReceive,
     'payment': paymentMethod,
     'note': note,
-    'ship_id': shipID,
     'address': address,
-    'ship_code': shipCode,
     'user_name': userName,
     'user_phone': userPhone,
     'user_address': userAddress,
     'city_id': cityID,
     'district_id': districtID,
-    'ward_id': ward_id
+    'ward_id': wardId,
+    'time_id': timeId,
+    'code': shipCode,
+    'coupon': shipCoupon
   });
   if (response.isSuccess()) return response.data;
   return null;
@@ -431,8 +431,8 @@ Future<dynamic> feeDiscountShipping(
     'district_id': districtId,
     'ward_id': wardId,
     'user_address': userAddress,
-    'code': transferCode,
-    'coupon': coupon
+    'code': transferCode ?? '',
+    'coupon': coupon ?? ''
   };
   Response response =
       await post(null, path: "feeDiscountShipping", param: params);
@@ -556,7 +556,7 @@ Future<dynamic> payment(BuildContext context,
     'note': note.toLowerCase(),
   };
   Response response;
-  if (img.path == "") {
+  if (img == null || img.path == null || img.path.isEmpty) {
     response =
         await post(context, path: "payment", param: param, requireLogin: true);
   } else {

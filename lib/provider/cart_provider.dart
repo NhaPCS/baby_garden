@@ -4,9 +4,16 @@ import 'package:baby_garden_flutter/data/service.dart' as service;
 
 class CartProvider extends ChangeNotifier {
   List<dynamic> shops = List();
+  dynamic selectedShop;
   int badge = 0;
   int price = 0;
   bool isRun = false;
+
+  void updateSelectedShop(dynamic shop) {
+    selectedShop = shop;
+    getShopTotalPrice();
+    notifyListeners();
+  }
 
   Future<void> getMyCart() async {
     shops = await service.myCart();
@@ -14,12 +21,14 @@ class CartProvider extends ChangeNotifier {
     badge = 0;
     price = 0;
     if (shops != null) {
+      if (shops.isNotEmpty) {
+        updateSelectedShop(shops[0]);
+      }
       shops.forEach((element) {
         if (element != null && element['product'] != null) {
           element['product'].forEach((p) {
             int number = StringUtil.getQuantity(p);
             badge += number;
-            price += getPrice(p) * number;
           });
         }
       });
@@ -27,19 +36,12 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int getShopTotalPrice(String shopId) {
-    int price = 0;
-    if (shops != null) {
-      shops.forEach((element) {
-        if (element["shop_id"] == shopId &&
-            element != null &&
-            element['product'] != null) {
-          element['product'].forEach((p) {
-            int number = StringUtil.getQuantity(p);
-            badge += number;
-            price += getPrice(p) * number;
-          });
-        }
+  int getShopTotalPrice() {
+    price = 0;
+    if (selectedShop != null && selectedShop['product'] != null) {
+      selectedShop['product'].forEach((p) {
+        int number = StringUtil.getQuantity(p);
+        price += getPrice(p) * number;
       });
     }
     return price;
@@ -49,7 +51,7 @@ class CartProvider extends ChangeNotifier {
     if (product['price_discount'] != null) {
       return int.parse(product['price_discount']);
     }
-    return int.parse(product['price']??'0');
+    return int.parse(product['price'] ?? '0');
   }
 
   Future<void> addProduct(dynamic product) async {

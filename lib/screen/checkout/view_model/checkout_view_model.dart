@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 class CheckoutViewModel extends BaseViewModel {
+
   Future<void> onCheckout(
       {String userID,
       String bookingId,
@@ -21,7 +22,7 @@ class CheckoutViewModel extends BaseViewModel {
         content: content,
         note: note,
         img: file);
-    Provider.of<CartProvider>(context,listen: false).getMyCart();
+    Provider.of<CartProvider>(context, listen: false).getMyCart();
   }
 
   @override

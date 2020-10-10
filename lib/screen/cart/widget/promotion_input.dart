@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/added_promo_item.dart';
 import 'package:baby_garden_flutter/screen/cart/provider/get_promotion_detail_provider.dart';
@@ -28,7 +30,6 @@ class PromotionInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("AAAA $price");
     return Consumer<GetPromotionDetailProvider>(
       builder: (context, value, child) {
         return Column(
@@ -160,7 +161,7 @@ class PromotionInput extends StatelessWidget {
     try {
       print("PRICE $price  ${price.runtimeType}");
       int promotionPrice = getPromotionDetailProvider.getPromotionsPrice();
-      return (int.parse(price) - promotionPrice).toString();
+      return max((int.parse(price) - promotionPrice), 0).toString();
     } on Exception catch (e) {
       return "0";
     }

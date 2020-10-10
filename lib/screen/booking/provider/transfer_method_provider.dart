@@ -12,7 +12,7 @@ class TransferMethodProvider extends ChangeNotifier {
   String _districtId;
   String _wardId;
   String _userAddress;
-  String _couponCode;
+  String selectedCouponCode;
 
   void onNotify() {
     notifyListeners();
@@ -41,35 +41,43 @@ class TransferMethodProvider extends ChangeNotifier {
   }
 
   String getDiscountValue() {
-    return ships[selectedTransfer]['price_discount'].toString();
+    if (ships == null || ships[selectedTransfer] == null) return '';
+    return (ships[selectedTransfer]['price_discount'] ?? '').toString();
   }
 
   void onChange(String value) {
     selectedTransfer = value;
-    if (_couponCode != null) getTransferPromotion(_couponCode);
+    if (selectedCouponCode != null) getTransferPromotion(selectedCouponCode);
     notifyListeners();
   }
 
   Future<void> getTransferPromotion(String couponCode) async {
-    _couponCode = couponCode;
+    selectedCouponCode = couponCode;
     dynamic result = await service.feeDiscountShipping(
         shopId: _shopId,
         districtId: _districtId,
         wardId: _wardId,
         userAddress: _userAddress,
         transferCode: selectedTransfer,
-        coupon: coupon);
+        coupon: selectedCouponCode);
     coupon = result;
     notifyListeners();
   }
 
   void removeCoupon() {
     coupon = null;
+    selectedCouponCode = null;
     notifyListeners();
   }
 
   int getDiscountFee() {
-    if (coupon == null) return 0;
-    return coupon['total_discount_fee']['total_fee']??0;
+    if (coupon == null || coupon['total_discount_fee'] == null) return 0;
+    return coupon['total_discount_fee']['total_fee'] ?? 0;
+  }
+
+  String getSelectedTransferCode() {
+    if (ships != null && ships[selectedTransfer] != null)
+      return ships[selectedTransfer]['id'];
+    return '';
   }
 }
