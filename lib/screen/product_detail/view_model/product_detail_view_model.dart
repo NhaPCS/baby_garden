@@ -10,12 +10,13 @@ class ProductDetailViewModel extends BaseViewModel {
 
   ProductDetailViewModel(this.context);
 
-  Future<void> receiveNotify({String productId}) async {
-    dynamic res = await service.receiveNotify(context, productId: productId);
+  Future<void> receiveNotify({String productId, int number}) async {
+    dynamic res = await service.receiveNotify(context,
+        productId: productId, number: number);
     if (res != null) {
       WidgetUtil.showMessageDialog(context,
-          message: S.of(context).success,
-          title: S.of(context).mess_receive_notify_for_product);
+          title: S.of(context).success,
+          message: S.of(context).mess_receive_notify_for_product);
     }
   }
 }

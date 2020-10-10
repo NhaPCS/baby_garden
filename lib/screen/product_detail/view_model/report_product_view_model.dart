@@ -29,13 +29,4 @@ class ReportProductViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> receiveNotify({String productId}) async {
-    dynamic res = await service.receiveNotify(context, productId: productId);
-    print("RES $res");
-    if (res != null) {
-      WidgetUtil.showMessageDialog(context,
-          message: S.of(context).mess_receive_notify_for_product,
-          title: S.of(context).success);
-    }
-  }
 }

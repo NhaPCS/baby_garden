@@ -34,6 +34,10 @@ class GetProductDetailProvider extends ChangeNotifier {
   }
 
   bool isOutStock() {
+    return checkIsOutStock(product);
+  }
+
+  static bool checkIsOutStock(dynamic product) {
     return product == null ||
         product['number'] == null ||
         product['number_sales'] == null ||

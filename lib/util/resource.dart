@@ -9,6 +9,7 @@ import 'package:baby_garden_flutter/screen/product_detail/product_detail_screen.
 import 'package:baby_garden_flutter/screen/saling_detail/sailing_detail_screen.dart';
 import 'package:baby_garden_flutter/screen/vcb_express_detail/vcb_express_detail_screen.dart';
 import 'package:baby_garden_flutter/screen/voucher_detail/voucher_detail_screen.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -755,7 +756,7 @@ class WidgetUtil {
         title: Text(title),
         content: Padding(
           padding: EdgeInsets.only(top: SizeUtil.smallSpace),
-          child: new Text(message),
+          child: new MyText(message),
         ),
         actions: <Widget>[
           CupertinoDialogAction(
