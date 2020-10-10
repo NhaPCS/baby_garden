@@ -51,6 +51,7 @@ class GetListProductProvider extends ChangeNotifier {
         name: _product['name'] == null ? '' : _product['name'],
         price: _product['price'] == null ? '' : _product['price'],
         date: _product['date'] == null ? '' : _product['date'],
+        dateView: _product['date_view'] == null ? '' : _product['date_view'],
         priceDiscount: _product['price_discount'],
         active: _product['active'] == '1' ? true : false,
         image: _product['image'] == null ? '' : _product['image'],

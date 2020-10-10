@@ -507,7 +507,7 @@ class _BookingScreenState
               context,
               CheckoutScreen(
                 bookingId: getViewModel().bookingData['booking_id'],
-                bookingCode: getViewModel().bookingData['code'].toString(),
+                bookingCode: getViewModel().getFinishedBookingCode(),
                 totalPrice: totalPriceAfterFix,
                 phone: receiveAddress['phone'] ?? '',
                 shopName: widget.shopName,
@@ -515,7 +515,9 @@ class _BookingScreenState
         } else {
           int index = await showDialog(
               context: context,
-              builder: (BuildContext context) => ConfirmDialogue());
+              builder: (BuildContext context) => ConfirmDialogue(
+                    bookingCode: getViewModel().getFinishedBookingCode(),
+                  ));
           pushAndReplaceAll(MainScreen(index: index), "/main_screen");
         }
         Provider.of<CartProvider>(context, listen: false).getMyCart();
@@ -533,7 +535,7 @@ class _BookingScreenState
               context,
               CheckoutScreen(
                 bookingId: getViewModel().bookingData['booking_id'],
-                bookingCode: getViewModel().bookingData['code'].toString(),
+                bookingCode: getViewModel().getFinishedBookingCode(),
                 totalPrice: totalPriceAfterFix,
                 phone: receiveAddress['phone'] ?? '',
                 shopName: widget.shopName,

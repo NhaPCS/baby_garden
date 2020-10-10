@@ -29,7 +29,11 @@ class CheckoutScreen extends StatefulWidget {
   final String shopName;
 
   const CheckoutScreen(
-      {this.bookingId, this.totalPrice, this.bookingCode, this.phone, this.shopName})
+      {this.bookingId,
+      this.totalPrice,
+      this.bookingCode,
+      this.phone,
+      this.shopName})
       : super();
 
   @override
@@ -351,43 +355,49 @@ class _CheckoutScreenState
                     top: SizeUtil.smallSpace, bottom: SizeUtil.smallSpace),
                 width: SizeUtil.smallSpace),
             PrivacyPolicyButton(),
-            MyRaisedButton(
-              padding: const EdgeInsets.only(
-                  left: SizeUtil.smallSpace,
-                  right: SizeUtil.smallSpace,
-                  top: SizeUtil.smallSpace,
-                  bottom: SizeUtil.smallSpace),
-              onPressed: () async {
-                getViewModel().onCheckout(
-                    userID: Provider.of<UserProvider>(context, listen: false)
-                        .userInfo['id'],
-                    bookingId: widget.bookingId.toString(),
-                    money: widget.totalPrice.toDouble(),
-                    content: transferContent,
-                    note: _noteController.text.trim(),
-                    file: uploadImageController.value);
-                int index = await showDialog(
-                    context: context,
-                    builder: (BuildContext context) => ConfirmDialogue());
-                if (index != null) {
-                  if(index>0){
-                    pushReplacement(OrderDetailScreen(
+            Padding(
+              padding: SizeUtil.defaultPadding,
+              child: MyRaisedButton(
+                padding: const EdgeInsets.only(
+                    left: SizeUtil.smallSpace,
+                    right: SizeUtil.smallSpace,
+                    top: SizeUtil.smallSpace,
+                    bottom: SizeUtil.smallSpace),
+                onPressed: () async {
+                  getViewModel().onCheckout(
+                      userID: Provider.of<UserProvider>(context, listen: false)
+                          .userInfo['id'],
                       bookingId: widget.bookingId.toString(),
-                    ));
-                  }else {
-                    pushAndReplaceAll(MainScreen(index: index), "/main_screen");
+                      money: widget.totalPrice.toDouble(),
+                      content: transferContent,
+                      note: _noteController.text.trim(),
+                      file: uploadImageController.value);
+                  int index = await showDialog(
+                      context: context,
+                      builder: (BuildContext context) => ConfirmDialogue(
+                            bookingCode: widget.bookingCode,
+                          ));
+                  if (index != null) {
+                    if (index > 0) {
+                      pushReplacement(OrderDetailScreen(
+                        bookingId: widget.bookingId.toString(),
+                      ));
+                    } else {
+                      pushAndReplaceAll(
+                          MainScreen(index: index), "/main_screen");
+                    }
+                  } else {
+                    pushAndReplaceAll(MainScreen(index: 0), "/main_screen");
                   }
-                }else{
-                  pushAndReplaceAll(MainScreen(index: 0), "/main_screen");
-                }
-              },
-              text: S.of(context).finish_checkout.toUpperCase(),
-              textStyle: TextStyle(
-                  fontSize: SizeUtil.textSizeDefault,
-                  color: Colors.white,
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.bold),
-              color: ColorUtil.primaryColor,
+                },
+                text: S.of(context).finish_checkout.toUpperCase(),
+                textStyle: TextStyle(
+                    fontSize: SizeUtil.textSizeDefault,
+                    color: Colors.white,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.bold),
+                color: ColorUtil.primaryColor,
+              ),
             ),
           ],
         ),

@@ -237,7 +237,7 @@ class _ServiceDetailScreenState
                               showDialog(
                                   context: context,
                                   builder: (BuildContext context) =>
-                                      ReceiveBarCodeDialogue());
+                                      ReceiveBarCodeDialogue(_bookingDetailProvider.bookingDetailData['code']));
                             } else {
                               await push(RatingDetailScreen(
                                 bookingId: bookingDetailData['id'],
