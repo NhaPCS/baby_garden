@@ -113,7 +113,8 @@ class FlashSaleProductItem extends StatelessWidget {
                     onNotifyMePressed: onNotifyMePress,
                   ),
                   right: SizeUtil.tinySpace,
-                  top: SizeUtil.tinySpace,
+                  top: Provider.of<AppProvider>(context)
+                      .flashSaleItemHeight - 120,
                 )
               : SizedBox()
         ],

@@ -38,7 +38,7 @@ class StoreInfo extends StatelessWidget {
                   color: ColorUtil.primaryColor, fontWeight: FontWeight.bold),
             ),
             RatingBar(
-              value: int.parse(shop['star']),
+              value: int.parse(shop['star'] ?? '0'),
             )
           ],
         ),

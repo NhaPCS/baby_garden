@@ -63,6 +63,9 @@ class GetListProductProvider extends ChangeNotifier {
   }
 
   Future<void> notifyFlashSale(BuildContext context, dynamic product) async {
+    if (product['product_detail'] != null) {
+      product = product['product_detail'];
+    }
     if ((product['is_remind'] ?? 0).toString() == '1') {
       await service.deleteNotifyFlashSales(context, productId: product['id']);
     } else {

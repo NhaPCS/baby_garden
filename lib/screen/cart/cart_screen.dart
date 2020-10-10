@@ -76,18 +76,14 @@ class _CartState extends BaseState<CartScreen> {
                               _getPromotionDetailProvider.getPromotionDetail(
                                   _promoCodeController.text);
                           },
-                          onRemoveCodePress: () {
-                            _getPromotionDetailProvider.clearPromotion();
+                          onRemoveCodePress: (id) {
+                            _getPromotionDetailProvider.clearPromotion(id);
                           },
                           onGoBookingPress: () {
                             if (_changeIndexProvider.index >= 0)
                               push(BookingScreen(
-                                promoteCode:
-                                    _getPromotionDetailProvider.promotion ==
-                                            null
-                                        ? null
-                                        : _getPromotionDetailProvider
-                                            .promotion['code'],
+                                promotions:
+                                    _getPromotionDetailProvider.promotions,
                                 shopID: value.shops[_changeIndexProvider.index]
                                     ['shop_id'],
                                 shopName:

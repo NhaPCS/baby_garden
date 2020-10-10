@@ -90,16 +90,6 @@ class ProductItem extends StatelessWidget {
                     right: 0,
                     top: SizeUtil.smallSpace,
                   ),
-            isFlashSalePending
-                ? Positioned(
-                    child: NotifyMeButton(
-                      product: product,
-                      onNotifyMePressed: onNotifyPress,
-                    ),
-                    right: SizeUtil.tinySpace,
-                    top: SizeUtil.tinySpace,
-                  )
-                : SizedBox()
           ],
         ),
       ),
@@ -125,15 +115,29 @@ class ProductItem extends StatelessWidget {
           height: SizeUtil.smallSpace,
         ),
         Expanded(
-            child: CachedNetworkImage(
-          imageUrl: product == null ||
+            child: Stack(
+          children: [
+            CachedNetworkImage(
+              imageUrl: product == null ||
                   product['image'] == null ||
                   product['image'].isEmpty
-              ? ""
-              : product['image'][0],
-          width: double.infinity,
-          height: double.infinity,
-          fit: BoxFit.fitWidth,
+                  ? ""
+                  : product['image'][0],
+              width: double.infinity,
+              height: double.infinity,
+              fit: BoxFit.fitWidth,
+            ),
+            isFlashSalePending
+                ? Positioned(
+                    child: NotifyMeButton(
+                      product: product,
+                      onNotifyMePressed: onNotifyPress,
+                    ),
+                    right: SizeUtil.tinySpace,
+                    bottom: SizeUtil.tinySpace,
+                  )
+                : SizedBox()
+          ],
         )),
         SizedBox(
           height: SizeUtil.tinySpace,

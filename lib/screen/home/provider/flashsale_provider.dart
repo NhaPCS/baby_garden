@@ -20,10 +20,11 @@ class FlashSaleProvider extends ChangeNotifier {
   }
 
   Future<void> notifyFlashSale(BuildContext context, dynamic product) async {
-    if ((product['is_remind'] ?? 0).toString() == '1') {
-      await service.deleteNotifyFlashSales(context, productId: product['id']);
+    dynamic productDetail = product['product_detail'] ?? product;
+    if ((productDetail['is_remind'] ?? 0).toString() == '1') {
+      await service.deleteNotifyFlashSales(context, productId: productDetail['id']);
     } else {
-      await service.addNotifyFlashSales(context, productId: product['id']);
+      await service.addNotifyFlashSales(context, productId: productDetail['id']);
     }
     getData();
   }

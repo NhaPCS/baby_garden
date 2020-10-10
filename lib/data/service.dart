@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 
 import 'base_service.dart';
 
-const int START_PAGE = 1;
+const int START_PAGE = 0;
 const int PAGE_SIZE = 20;
 
 //TODO require LOGIN
@@ -269,7 +269,6 @@ Future<dynamic> listVoucher({int index, String categoryId}) async {
 }
 
 Future<dynamic> listVoucherShop(String shopId) async {
-  String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic param = {
     'shop_id': shopId,
   };
@@ -400,10 +399,43 @@ Future<dynamic> ward({String id}) async {
 }
 
 //todo listShiper
-Future<dynamic> listShiper() async {
+Future<dynamic> feeShipping(
+    {String shopId,
+    String districtId,
+    String wardId,
+    String userAddress}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    'user_id': userId,
+    'shop_id': shopId,
+    'district_id': districtId,
+    'ward_id': wardId,
+    'user_address': userAddress
+  };
+  Response response = await post(null, path: "feeShipping", param: params);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> feeDiscountShipping(
+    {String shopId,
+    String districtId,
+    String wardId,
+    String userAddress,
+    String transferCode,
+    String coupon}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    'user_id': userId,
+    'shop_id': shopId,
+    'district_id': districtId,
+    'ward_id': wardId,
+    'user_address': userAddress,
+    'code': transferCode,
+    'coupon': coupon
+  };
   Response response =
-      await get(null, path: "listShiper", param: {'user_id': userId});
+      await post(null, path: "feeDiscountShipping", param: params);
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -564,14 +596,6 @@ Future<dynamic> banners() async {
   Response response = await get(null, path: "banner", showLoading: false);
   if (response.isSuccess()) return response.data;
   return null;
-}
-
-Future<dynamic> flashSales() async {
-  return await listProducts(null, "flashSales");
-}
-
-Future<dynamic> flashSalesPending() async {
-  return await listProducts(null, "flashSalesPending");
 }
 
 Future<dynamic> listShop(BuildContext context,
@@ -1219,7 +1243,6 @@ Future<dynamic> support() async {
   return null;
 }
 
-
 Future<Response> deleteSearch(BuildContext context) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {"user_id": userId};
@@ -1290,7 +1313,6 @@ Future<dynamic> addNotifyFlashSales(BuildContext context,
   if (response.isSuccess()) return response.data;
   return response;
 }
-
 
 Future<dynamic> deleteNotifyFlashSales(BuildContext context,
     {String productId}) async {

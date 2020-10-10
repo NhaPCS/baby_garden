@@ -18,7 +18,7 @@ class VoucherDetailViewModel extends BaseViewModel {
       WidgetUtil.showMessageDialog(context,
           message: S.of(context).mess_get_code_voucher_success,
           title: S.of(context).success);
-      getVoucherDetailProvider.updateActive('2');
+      getVoucherDetailProvider.getVoucherDetail(voucherId);
     }
   }
 }

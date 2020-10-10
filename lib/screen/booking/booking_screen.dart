@@ -29,16 +29,14 @@ import 'package:provider/provider.dart';
 
 class BookingScreen extends StatefulWidget {
   final String shopID;
-  final String promoteCode;
+  final List<dynamic> promotions;
   final String shopName;
 
-  const BookingScreen(
-      {this.shopID = '1', this.promoteCode = '123', this.shopName = ""})
+  const BookingScreen({this.shopID, this.promotions, this.shopName = ""})
       : super();
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _BookingScreenState();
   }
 }
@@ -65,7 +63,6 @@ class _BookingScreenState
 
   @override
   void initState() {
-    _transferMethodProvider.getShips();
     _pointProvider.getPoint(context, shopId: widget.shopID);
     Provider.of<ReceiveAddressListProvider>(context, listen: false).getData();
     totalPriceAfterFix = getTotalPrice();
@@ -127,6 +124,15 @@ class _BookingScreenState
                           builder: (BuildContext context,
                               ReceiveAddressListProvider value, Widget child) {
                             if (value.addressList == null) return SizedBox();
+                            if (value.selectedAddress != null) {
+                              _transferMethodProvider.getShips(
+                                  shopId: widget.shopID,
+                                  districtId:
+                                      value.selectedAddress['district_id'],
+                                  wardId: value.selectedAddress['ward_id'],
+                                  userAddress:
+                                      value.selectedAddress['address']);
+                            }
                             return MyText(
                               value.addressList == null ||
                                       value.addressList.isEmpty
@@ -213,7 +219,6 @@ class _BookingScreenState
                                           shopId: widget.shopID,
                                         ));
                                 if (data != null) {
-//                                  print("$data");
                                   receiveTime.value = data;
                                 }
                               },
@@ -350,7 +355,9 @@ class _BookingScreenState
                 Spacer(),
                 Consumer<TransferMethodProvider>(builder: (BuildContext context,
                     TransferMethodProvider value, Widget child) {
-                  return Text(StringUtil.getPriceText(value.price.toString()),
+                  return Text(
+                      StringUtil.getPriceText(
+                          value.getDiscountFee().toString()),
                       style:
                           TextStyle(fontSize: SizeUtil.textSizeExpressDetail));
                 })
@@ -362,7 +369,7 @@ class _BookingScreenState
           Consumer<TransferMethodProvider>(
             builder: (BuildContext context, TransferMethodProvider value,
                 Widget child) {
-              return value.isActiveCode
+              return value.coupon != null
                   ? Column(
                       children: <Widget>[
                         Padding(
@@ -418,9 +425,10 @@ class _BookingScreenState
                   builder: (BuildContext context, TransferMethodProvider value,
                       Widget child) {
                     return Text(
-                        StringUtil.getPriceText(
-                            (totalPrice + value.price - checkoutPoint * 1000)
-                                .toString()),
+                        StringUtil.getPriceText((totalPrice +
+                                value.getDiscountFee() -
+                                checkoutPoint * 1000)
+                            .toString()),
                         style: TextStyle(
                             fontSize: SizeUtil.textSizeDefault,
                             color: Colors.red,
@@ -495,7 +503,8 @@ class _BookingScreenState
             receiveTime.value['id'].trim(),
             checkoutPoint.toString(),
             widget.shopID.toString(),
-            widget.promoteCode == null ? "" : widget.promoteCode,
+            "widget.promoteCode == null ? " " : widget.promoteCode",
+            //TODO check here
             deliveryMethod.value.toString(),
             receiveTime.value['data'].trim(),
             checkoutMethod.value.toString(),
@@ -541,13 +550,14 @@ class _BookingScreenState
             receiveTime.value['id'].trim(),
             checkoutPoint.toString(),
             widget.shopID.toString(),
-            widget.promoteCode == null ? "" : widget.promoteCode,
+            "widget.promoteCode == null ? " " : widget.promoteCode",
+            //TODO
             deliveryMethod.value.toString(),
             receiveTime.value['data'].trim(),
             checkoutMethod.value.toString(),
             _noteController.text.toString(),
             _transferMethodProvider
-                .ships[_transferMethodProvider.transferMethod]['id'],
+                .ships[_transferMethodProvider.selectedTransfer]['id'],
             inShopReceiveAddress,
             _promoteShipCodeController.text.trim(),
             receiveAddress['name'],
@@ -591,6 +601,8 @@ class _BookingScreenState
   int getTotalPrice() {
     totalPrice = Provider.of<CartProvider>(context, listen: false)
         .getShopTotalPrice(widget.shopID);
-    return totalPrice + _transferMethodProvider.price - checkoutPoint * 1000;
+    return totalPrice +
+        _transferMethodProvider.getDiscountFee() -
+        checkoutPoint * 1000;
   }
 }
