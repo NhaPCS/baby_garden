@@ -31,10 +31,9 @@ class ReceiveBarCodeDialogue extends StatelessWidget {
                 height: SizeUtil.bigSpaceHigher,
               ),
               BarcodeGenerator(
-                witdth: 300,
+                witdth: double.infinity,
                 height: 100,
-                backgroundColor: Colors.red,
-                fromString: "xxxxxxxx",
+                fromString: code,
                 codeType: BarCodeType.kBarcodeFormatCode128,
               ),
               SizedBox(

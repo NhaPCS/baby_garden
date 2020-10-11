@@ -513,12 +513,7 @@ class _BookingScreenState
                 shopName: widget.shopName,
               ));
         } else {
-          int index = await showDialog(
-              context: context,
-              builder: (BuildContext context) => ConfirmDialogue(
-                    bookingCode: getViewModel().getFinishedBookingCode(),
-                  ));
-          pushAndReplaceAll(MainScreen(index: index), "/main_screen");
+          bookingDone();
         }
         Provider.of<CartProvider>(context, listen: false).getMyCart();
       }
@@ -542,24 +537,28 @@ class _BookingScreenState
               ));
         } else {
           if (!done) return;
-          int index = await showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) => ConfirmDialogue(
-                  bookingCode: getViewModel().getFinishedBookingCode()));
-          if (index > 0) {
-            RouteUtil.pushReplacement(
-                context,
-                OrderDetailScreen(
-                  bookingId:
-                      getViewModel().bookingData['booking_id'].toString(),
-                ));
-          } else {
-            pushAndReplaceAll(MainScreen(index: index), "/main_screen");
-          }
+          bookingDone();
         }
         Provider.of<CartProvider>(context, listen: false).getMyCart();
       }
+    }
+  }
+
+  Future<void> bookingDone() async {
+    int index = await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => ConfirmDialogue(
+            bookingCode: getViewModel().getFinishedBookingCode()));
+    if (index > 0) {
+      RouteUtil.pushReplacement(
+          context,
+          OrderDetailScreen(
+            bookingId:
+            getViewModel().bookingData['booking_id'].toString(),
+          ));
+    } else {
+      pushAndReplaceAll(MainScreen(index: index), "/main_screen");
     }
   }
 
