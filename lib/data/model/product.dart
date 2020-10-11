@@ -6,6 +6,7 @@ class Product {
   String price;
   String priceDiscount;
   String date;
+  String dateView;
   String favoriteDate;
   bool isFavorite;
   List<dynamic> image;
@@ -21,5 +22,7 @@ class Product {
       this.isFavorite,
       this.image,
       this.active,
-      this.priceDiscount, this.favoriteDate});
+      this.dateView,
+      this.priceDiscount,
+      this.favoriteDate});
 }

@@ -11,6 +11,7 @@ import 'package:baby_garden_flutter/provider/orders_provider.dart';
 import 'package:baby_garden_flutter/provider/privacy_provider.dart';
 import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
+import 'package:baby_garden_flutter/screen/customer_support_detail/provider/get_support_provider.dart';
 import 'package:baby_garden_flutter/screen/notify/provider/notify_control_provider.dart';
 import 'package:baby_garden_flutter/screen/welcome/welcome_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
@@ -37,13 +38,13 @@ void main() {
           ChangeNotifierProvider(create: (_) => PrivacyProvider()),
           ChangeNotifierProvider(create: (_) => ListIntroductionProvider()),
           ChangeNotifierProvider(create: (_) => GetBalloonProvider()),
+          ChangeNotifierProvider(create: (_) => GetSupportProvider()),
         ],
         child: MyApp(),
       )));
 }
 
 class MyApp extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return _MyAppState();
@@ -62,6 +63,10 @@ class _MyAppState extends State<MyApp> {
 
     if (Provider.of<PrivacyProvider>(context).privacy == null)
       Provider.of<PrivacyProvider>(context).getPrivacy();
+
+    if (Provider.of<GetSupportProvider>(context).data == null ||
+        Provider.of<GetSupportProvider>(context).data.keys.isEmpty)
+      Provider.of<GetSupportProvider>(context).getSupport();
 
     // get product categories
     if (Provider.of<GetProductCategoryProvider>(context).categories == null ||
@@ -104,7 +109,7 @@ class _MyAppState extends State<MyApp> {
     if (Provider.of<OrdersProvider>(context).SERVICE_OPTIONS.isEmpty)
       Provider.of<OrdersProvider>(context).init();
 
-    if (Provider.of<GetBalloonProvider>(context).balloon==null)
+    if (Provider.of<GetBalloonProvider>(context).balloon == null)
       Provider.of<GetBalloonProvider>(context).getBalloon();
   }
 

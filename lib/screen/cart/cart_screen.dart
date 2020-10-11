@@ -27,7 +27,6 @@ class _CartState extends BaseState<CartScreen> {
   final TextEditingController _promoCodeController = TextEditingController();
   final GetPromotionDetailProvider _getPromotionDetailProvider =
       GetPromotionDetailProvider();
-  final ChangeIndexProvider _changeIndexProvider = ChangeIndexProvider();
 
   @override
   void initState() {
@@ -59,55 +58,45 @@ class _CartState extends BaseState<CartScreen> {
                 ],
               );
             }
-            return Consumer<ChangeIndexProvider>(
-              builder: (BuildContext context,
-                  ChangeIndexProvider changeIndexProvider, Widget child) {
-                return ListView.builder(
-                    padding: EdgeInsets.all(0),
-                    itemCount: value.shops.length + 1,
-                    itemBuilder: (context, index) {
-                      if (index == value.shops.length) {
-                        return PromotionInput(
-                          promoCodeController: _promoCodeController,
-                          getPromotionDetailProvider:
-                              _getPromotionDetailProvider,
-                          onApplyCodePress: () {
-                            if (_promoCodeController.text.isNotEmpty)
-                              _getPromotionDetailProvider.getPromotionDetail(
-                                  _promoCodeController.text);
-                          },
-                          onRemoveCodePress: () {
-                            _getPromotionDetailProvider.clearPromotion();
-                          },
-                          onGoBookingPress: () {
-                            if (_changeIndexProvider.index >= 0)
-                              push(BookingScreen(
-                                promoteCode:
-                                    _getPromotionDetailProvider.promotion ==
-                                            null
-                                        ? null
-                                        : _getPromotionDetailProvider
-                                            .promotion['code'],
-                                shopID: value.shops[_changeIndexProvider.index]
-                                    ['shop_id'],
-                                shopName:
-                                    value.shops[_changeIndexProvider.index]
-                                        ['shop_name'],
-                              ));
-                          },
-                          price: value.price.toString(),
-                        );
+            return ListView.builder(
+                padding: EdgeInsets.all(0),
+                itemCount: value.shops.length + 1,
+                itemBuilder: (context, index) {
+                  if (index == value.shops.length) {
+                    return PromotionInput(
+                      promoCodeController: _promoCodeController,
+                      getPromotionDetailProvider: _getPromotionDetailProvider,
+                      onApplyCodePress: () {
+                        if (_promoCodeController.text.isNotEmpty)
+                          _getPromotionDetailProvider
+                              .getPromotionDetail(_promoCodeController.text);
+                      },
+                      onRemoveCodePress: (id) {
+                        _getPromotionDetailProvider.clearPromotion(id);
+                      },
+                      onGoBookingPress: () {
+                        if (value.selectedShop != null)
+                          push(BookingScreen(
+                            promotions: _getPromotionDetailProvider.promotions,
+                            shopID: value.selectedShop['shop_id'],
+                            shopName: value.selectedShop['shop_name'],
+                          ));
+                      },
+                      price: value.price.toString(),
+                    );
+                  }
+                  return ProductByShop(
+                    isSelected: value.selectedShop != null &&
+                        value.selectedShop['shop_id'] == value.shops[index]['shop_id'],
+                    shop: value.shops[index],
+                    onSelectShop: (s) {
+                      if (s) {
+                        Provider.of<CartProvider>(context, listen: false)
+                            .updateSelectedShop(value.shops[index]);
                       }
-                      return ProductByShop(
-                        isSelected: _changeIndexProvider.index == index,
-                        shop: value.shops[index],
-                        onSelectShop: (s) {
-                          if (s) _changeIndexProvider.changeIndex(index);
-                        },
-                      );
-                    });
-              },
-            );
+                    },
+                  );
+                });
           },
         ))
       ],
@@ -117,7 +106,6 @@ class _CartState extends BaseState<CartScreen> {
   @override
   List<SingleChildWidget> providers() {
     return [
-      ChangeNotifierProvider.value(value: _changeIndexProvider),
       ChangeNotifierProvider.value(value: _getPromotionDetailProvider),
     ];
   }

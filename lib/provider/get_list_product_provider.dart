@@ -51,6 +51,7 @@ class GetListProductProvider extends ChangeNotifier {
         name: _product['name'] == null ? '' : _product['name'],
         price: _product['price'] == null ? '' : _product['price'],
         date: _product['date'] == null ? '' : _product['date'],
+        dateView: _product['date_view'] == null ? '' : _product['date_view'],
         priceDiscount: _product['price_discount'],
         active: _product['active'] == '1' ? true : false,
         image: _product['image'] == null ? '' : _product['image'],
@@ -63,6 +64,9 @@ class GetListProductProvider extends ChangeNotifier {
   }
 
   Future<void> notifyFlashSale(BuildContext context, dynamic product) async {
+    if (product['product_detail'] != null) {
+      product = product['product_detail'];
+    }
     if ((product['is_remind'] ?? 0).toString() == '1') {
       await service.deleteNotifyFlashSales(context, productId: product['id']);
     } else {

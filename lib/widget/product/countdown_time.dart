@@ -31,6 +31,7 @@ class _CountdownState extends State<CountDownTime> {
     if (widget.startTime != null && widget.endTime != null) {
       _startDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(widget.startTime);
       _endDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(widget.endTime);
+      print("START ${_startDate}  ${_endDate}  ${DateTime.now()}");
       DateTime _now = DateTime.now();
       if (!_now.isAfter(_startDate)) {
         _status.value = S.of(context).time_pending;
@@ -40,15 +41,14 @@ class _CountdownState extends State<CountDownTime> {
         _status.value = S.of(context).time_ended;
         return;
       }
-      _start =
-          _endDate.millisecondsSinceEpoch - _startDate.millisecondsSinceEpoch;
+      _start = _endDate.millisecondsSinceEpoch - _now.millisecondsSinceEpoch;
       if (_timer != null) {
         _timer.cancel();
       }
       _timer = new Timer.periodic(Duration(seconds: 1), (Timer timer) {
         _start = _start - 1000;
-        _status.value = DateFormat("HH:mm:ss")
-            .format(new DateTime.fromMillisecondsSinceEpoch(_start,isUtc: true ));
+        _status.value = DateFormat("HH:mm:ss").format(
+            new DateTime.fromMillisecondsSinceEpoch(_start, isUtc: true));
         if (_start <= 0) {
           _timer.cancel();
           _status.value = null;

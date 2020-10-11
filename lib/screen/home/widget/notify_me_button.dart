@@ -12,18 +12,25 @@ class NotifyMeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isRemind = product['is_remind'] != null && product['is_remind'].toString() == '1';
     return InkWell(
       child: Container(
         alignment: Alignment.center,
         child: Text(
-          S.of(context).notify_me,
+          !isRemind ? S.of(context).notify_me : S.of(context).delete_notify_me,
           style: TextStyle(
-              fontSize: SizeUtil.textSizeTiny, color: Colors.white, fontWeight: FontWeight.bold),
+              fontSize: SizeUtil.textSizeTiny,
+              color: isRemind ? ColorUtil.textColor : Colors.white,
+              fontWeight: FontWeight.bold),
         ),
         decoration: BoxDecoration(
-          color: ColorUtil.primaryColor.withOpacity(0.8),
+            color: !isRemind
+                ? ColorUtil.primaryColor.withOpacity(0.8)
+                : ColorUtil.white.withOpacity(0.7),
             borderRadius: new BorderRadius.circular(SizeUtil.tinyRadius),
-            border: Border.all(color: ColorUtil.primaryColor)),
+            border: Border.all(
+                color:
+                    isRemind ? ColorUtil.textColor : ColorUtil.primaryColor)),
         padding: SizeUtil.tinyPadding,
       ),
       onTap: onNotifyMePressed,

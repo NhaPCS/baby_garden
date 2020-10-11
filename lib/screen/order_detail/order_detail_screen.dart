@@ -118,7 +118,8 @@ class _OrderDetailScreenState
                   content: state == BookingState.RECEIVE_IN_SHOP
                       ? S.of(context).receive_in_shop
                       : S.of(context).delivery_in_place,
-                  contentNote: "${data['time_ship']}\n${data['address']??''}"),
+                  contentNote:
+                      "${data['time_ship']}\n${data['address'] ?? ''}"),
               OrderInfo(
                 svgIcon: 'ic_payment_method.svg',
                 title: S.of(context).type_of_checkout,
@@ -445,7 +446,8 @@ class _OrderDetailScreenState
     if (state == BookingState.RECEIVE_IN_SHOP) {
       showDialog(
           context: context,
-          builder: (BuildContext context) => ReceiveBarCodeDialogue());
+          builder: (BuildContext context) => ReceiveBarCodeDialogue(
+              _bookingDetailProvider.bookingDetailData['code']));
     } else {
       await push(RatingDetailScreen(
         bookingId: bookingId,
@@ -455,10 +457,13 @@ class _OrderDetailScreenState
   }
 
   String getFullAddress() {
-    if(_bookingDetailProvider.bookingDetailData==null) return '';
-    String userAddress = _bookingDetailProvider.bookingDetailData['user_address'] ?? '';
-    String userName = "${_bookingDetailProvider.bookingDetailData['user_name']}," ?? '';
-    String userPhone = "${_bookingDetailProvider.bookingDetailData['user_phone']}," ?? '';
+    if (_bookingDetailProvider.bookingDetailData == null) return '';
+    String userAddress =
+        _bookingDetailProvider.bookingDetailData['user_address'] ?? '';
+    String userName =
+        "${_bookingDetailProvider.bookingDetailData['user_name']}," ?? '';
+    String userPhone =
+        "${_bookingDetailProvider.bookingDetailData['user_phone']}," ?? '';
     return "$userName $userPhone $userAddress";
   }
 

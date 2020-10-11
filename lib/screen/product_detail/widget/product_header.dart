@@ -29,26 +29,28 @@ class ProductHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        MyCarouselSlider(
-          height: Provider.of<AppProvider>(context).productImageHeight,
-          borderRadius: 0,
-          margin: EdgeInsets.all(0),
-          images: product['image'],
-          boxFit: BoxFit.contain,
-          slideBackground: Colors.white,
-          onItemSelected: (index) {
-            onCarouselItemSelected(index);
-          },
-          autoPlay: true,
-          onItemPressed: (index) {
-            RouteUtil.push(
-                context,
-                PhotoViewScreen(
-                  images: product['image'],
-                  initIndex: index,
-                ));
-          },
-        ),
+        product['image'] == null && product['image'].isEmpty
+            ? SizedBox()
+            : MyCarouselSlider(
+                height: Provider.of<AppProvider>(context).productImageHeight,
+                borderRadius: 0,
+                margin: EdgeInsets.all(0),
+                images: product['image'],
+                boxFit: BoxFit.contain,
+                slideBackground: Colors.white,
+                onItemSelected: (index) {
+                  onCarouselItemSelected(index);
+                },
+                autoPlay: true,
+                onItemPressed: (index) {
+                  RouteUtil.push(
+                      context,
+                      PhotoViewScreen(
+                        images: product['image'],
+                        initIndex: index,
+                      ));
+                },
+              ),
         Positioned(
           child: DiscountWidget(
             discount: StringUtil.getDiscountPercent(product),

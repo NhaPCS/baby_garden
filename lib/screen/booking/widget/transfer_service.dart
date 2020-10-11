@@ -1,6 +1,7 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/item/added_promo_item.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
+import 'package:baby_garden_flutter/screen/booking/item/transfer_item.dart';
 import 'package:baby_garden_flutter/screen/booking/provider/transfer_method_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/checkbox/custom_radio_button.dart';
@@ -11,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-class TransferService extends StatefulWidget {
+class TransferService extends StatelessWidget {
   final TransferMethodProvider transferMethodProvider;
   final TextEditingController promoteShipCodeController;
 
@@ -20,112 +21,28 @@ class TransferService extends StatefulWidget {
       : super();
 
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return _TransferServiceState();
-  }
-}
-
-class _TransferServiceState extends BaseState<TransferService> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
-  Widget buildWidget(BuildContext context) {
-    // TODO: implement buildWidget
+  Widget build(BuildContext context) {
     return Consumer<TransferMethodProvider>(
       builder:
           (BuildContext context, TransferMethodProvider value, Widget child) {
+        List<String> shipKeys =
+            value.ships == null ? List() : value.ships.keys.toList();
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Column(
-                children: value.ships
-                    .map((e) => Column(
-                          children: <Widget>[
-                            CustomRadioButton(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              titleContent: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  CachedNetworkImage(
-                                    imageUrl: e['img'],
-                                    width: 40,
-                                    height: 16,
-                                  ),
-                                  SizedBox(
-                                    width: SizeUtil.tinySpace,
-                                  ),
-                                  Text(
-                                    e['name'],
-                                    style: TextStyle(
-                                        fontSize:
-                                            SizeUtil.textSizeExpressDetail),
-                                  ),
-                                ],
-                              ),
-                              subTitle: Text(
-                                e['note'],
-                                style: TextStyle(
-                                    fontSize: SizeUtil.textSizeNoticeTime,
-                                    color: ColorUtil.gray),
-                              ),
-                              padding: const EdgeInsets.only(
-                                  left: SizeUtil.bigSpaceHigher,
-                                  top: SizeUtil.smallSpace,
-                                  bottom: SizeUtil.smallSpace,
-                                  right: SizeUtil.normalSpace),
-                              value: value.ships.indexOf(e),
-                              groupValue: value.transferMethod,
-                              onChanged: (val) {
-                                widget.transferMethodProvider.onChange(val);
-                              },
-                              trailing: (value.isActiveCode &&
-                                      value.transferMethod ==
-                                          value.ships.indexOf(e))
-                                  ? Row(
-                                      children: <Widget>[
-                                        Text(
-                                          e['price'],
-                                          style: TextStyle(
-                                            fontSize: SizeUtil.textSizeTiny,
-                                            decoration:
-                                                TextDecoration.lineThrough,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: SizeUtil.tinySpace,
-                                        ),
-                                        Text(
-                                          e['price_discount'],
-                                          style: TextStyle(
-                                            fontSize: SizeUtil.textSizeSmall,
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  : Text(
-                                      e['price'],
-                                      style: TextStyle(
-                                        fontSize: SizeUtil.textSizeSmall,
-                                      ),
-                                    ),
-                            ),
-                            Container(
-                                margin: EdgeInsets.only(
-                                  left: SizeUtil.notifyHintSpace,
-                                ),
-                                child: DotLineSeparator(
-                                  color: ColorUtil.lineColor,
-                                  paddingLeft: SizeUtil.largeSpace,
-                                ))
-                          ],
-                        ))
-                    .toList()),
+                children: shipKeys.map((e) {
+              return TransferItem(
+                transfer: value.ships[e],
+                selectedTransferCode: transferMethodProvider.selectedTransfer,
+                onSelected: () {
+                  transferMethodProvider.onChange(e);
+                },
+                transferCode: e,
+                coupon: transferMethodProvider.coupon,
+              );
+            }).toList()),
             Padding(
               padding: const EdgeInsets.only(
                   left: SizeUtil.bigSpaceHigher,
@@ -152,7 +69,7 @@ class _TransferServiceState extends BaseState<TransferService> {
                           child: TextField(
                             style: TextStyle(fontSize: SizeUtil.textSizeSmall),
                             obscureText: false,
-                            controller: widget.promoteShipCodeController,
+                            controller: promoteShipCodeController,
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius:
@@ -170,25 +87,13 @@ class _TransferServiceState extends BaseState<TransferService> {
                         ),
                         RaisedButton(
                           onPressed: () {
-                            if (widget.promoteShipCodeController.text
-                                    .toString()
-                                    .trim()
-                                    .length >
-                                0) {
-                              var correct = widget.transferMethodProvider
-                                  .checkPromoteCode(
-                                      widget.promoteShipCodeController.text);
-                              WidgetUtil.showMessageDialog(context,
-                                  message: correct
-                                      ? S.of(context).correct_code
-                                      : S.of(context).incorrect_code,
-                                  title: S.of(context).notify);
-                              if (correct) {
-                                widget.transferMethodProvider.setIsActive();
-                              }
+                            if (promoteShipCodeController.text
+                                .toString()
+                                .trim()
+                                .isNotEmpty) {
+                              transferMethodProvider.getTransferPromotion(
+                                  promoteShipCodeController.text);
                             }
-
-                            //TODO booking
                           },
                           color: ColorUtil.primaryColor,
                           shape: RoundedRectangleBorder(),
@@ -210,15 +115,12 @@ class _TransferServiceState extends BaseState<TransferService> {
                       ],
                     ),
                   ),
-                  value.isActiveCode
+                  value.coupon != null
                       ? AddedPromoItem(
                           onRemoved: () {
-                            widget.transferMethodProvider.removePromote();
+                            transferMethodProvider.removeCoupon();
                           },
-                          promotion: {
-                            'code': value.promoteCode,
-                            "title": "Giảm giá"
-                          },
+                          promotion: value.coupon,
                           padding: EdgeInsets.only(
                               top: SizeUtil.tinySpace, bottom: 0),
                         )
@@ -230,11 +132,5 @@ class _TransferServiceState extends BaseState<TransferService> {
         );
       },
     );
-  }
-
-  @override
-  List<SingleChildWidget> providers() {
-    // TODO: implement providers
-    return [];
   }
 }

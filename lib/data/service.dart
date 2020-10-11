@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 
 import 'base_service.dart';
 
-const int START_PAGE = 1;
+const int START_PAGE = 0;
 const int PAGE_SIZE = 20;
 
 //TODO require LOGIN
@@ -207,27 +207,27 @@ user_address: địa chỉ
 city_id: id thành phố
 district_id: id quận huyện
 */
-Future<dynamic> bookingProduct(
-    {String inShopReceiveTimeId,
-    String userID,
-    String shopID,
-    String bookingDate,
-    String bookingTime,
-    String promoteCode,
-    String isReceiveInShop,
-    String timeReceive,
-    String paymentMethod,
-    String note,
-    String shipID,
-    String address,
-    String shipCode,
-    String userName,
-    String userPhone,
-    String userAddress,
-    String cityID,
-    String point,
-    String districtID,
-    String ward_id}) async {
+Future<dynamic> bookingProduct({
+  @required String timeId,
+  @required String userID,
+  @required String shopID,
+  @required String bookingDate,
+  @required String bookingTime,
+  @required String promoteCode,
+  @required String isReceiveInShop,
+  @required String paymentMethod,
+  @required String note,
+  @required String address,
+  @required String userName,
+  @required String userPhone,
+  @required String userAddress,
+  @required String cityID,
+  @required String point,
+  @required String districtID,
+  @required String wardId,
+  @required String shipCode,
+  @required String shipCoupon,
+}) async {
   Response response = await post(null, path: "bookingProduct", param: {
     'point': point,
     'user_id': userID,
@@ -236,18 +236,18 @@ Future<dynamic> bookingProduct(
     'time_booking': bookingTime,
     'promotion_code': promoteCode,
     'is_receive': isReceiveInShop,
-    'time_ship': timeReceive,
     'payment': paymentMethod,
     'note': note,
-    'ship_id': shipID,
     'address': address,
-    'ship_code': shipCode,
     'user_name': userName,
     'user_phone': userPhone,
     'user_address': userAddress,
     'city_id': cityID,
     'district_id': districtID,
-    'ward_id': ward_id
+    'ward_id': wardId,
+    'time_id': timeId,
+    'code': shipCode,
+    'coupon': shipCoupon
   });
   if (response.isSuccess()) return response.data;
   return null;
@@ -269,7 +269,6 @@ Future<dynamic> listVoucher({int index, String categoryId}) async {
 }
 
 Future<dynamic> listVoucherShop(String shopId) async {
-  String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic param = {
     'shop_id': shopId,
   };
@@ -400,10 +399,43 @@ Future<dynamic> ward({String id}) async {
 }
 
 //todo listShiper
-Future<dynamic> listShiper() async {
+Future<dynamic> feeShipping(
+    {String shopId,
+    String districtId,
+    String wardId,
+    String userAddress}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    'user_id': userId,
+    'shop_id': shopId,
+    'district_id': districtId,
+    'ward_id': wardId,
+    'user_address': userAddress
+  };
+  Response response = await post(null, path: "feeShipping", param: params);
+  if (response.isSuccess()) return response.data;
+  return null;
+}
+
+Future<dynamic> feeDiscountShipping(
+    {String shopId,
+    String districtId,
+    String wardId,
+    String userAddress,
+    String transferCode,
+    String coupon}) async {
+  String userId = await ShareValueProvider.shareValueProvider.getUserId();
+  dynamic params = {
+    'user_id': userId,
+    'shop_id': shopId,
+    'district_id': districtId,
+    'ward_id': wardId,
+    'user_address': userAddress,
+    'code': transferCode ?? '',
+    'coupon': coupon ?? ''
+  };
   Response response =
-      await get(null, path: "listShiper", param: {'user_id': userId});
+      await post(null, path: "feeDiscountShipping", param: params);
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -524,7 +556,7 @@ Future<dynamic> payment(BuildContext context,
     'note': note.toLowerCase(),
   };
   Response response;
-  if (img.path == "") {
+  if (img == null || img.path == null || img.path.isEmpty) {
     response =
         await post(context, path: "payment", param: param, requireLogin: true);
   } else {
@@ -564,14 +596,6 @@ Future<dynamic> banners() async {
   Response response = await get(null, path: "banner", showLoading: false);
   if (response.isSuccess()) return response.data;
   return null;
-}
-
-Future<dynamic> flashSales() async {
-  return await listProducts(null, "flashSales");
-}
-
-Future<dynamic> flashSalesPending() async {
-  return await listProducts(null, "flashSalesPending");
 }
 
 Future<dynamic> listShop(BuildContext context,
@@ -768,11 +792,13 @@ Future<Response> reportProduct(BuildContext context,
   return null;
 }
 
-Future<Response> receiveNotify(BuildContext context, {String productId}) async {
+Future<Response> receiveNotify(BuildContext context,
+    {String productId, int number}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {
     "user_id": userId,
     "product_id": productId,
+    "number": number.toString()
   };
   Response response = await post(context,
       path: 'receiveNoty', param: params, requireLogin: true);
@@ -1219,7 +1245,6 @@ Future<dynamic> support() async {
   return null;
 }
 
-
 Future<Response> deleteSearch(BuildContext context) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
   dynamic params = {"user_id": userId};
@@ -1290,7 +1315,6 @@ Future<dynamic> addNotifyFlashSales(BuildContext context,
   if (response.isSuccess()) return response.data;
   return response;
 }
-
 
 Future<dynamic> deleteNotifyFlashSales(BuildContext context,
     {String productId}) async {

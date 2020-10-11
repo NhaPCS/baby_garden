@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:baby_garden_flutter/data/response.dart';
 import 'package:baby_garden_flutter/data/shared_value.dart';
+import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -147,8 +148,14 @@ Response parseResponse(BuildContext context, String responseBody,
 
   if (!res.isSuccess()) {
     res.data = null;
-    if (context != null && showErrorDialog)
-      WidgetUtil.showErrorDialog(context, res.message);
+    if (context != null && showErrorDialog) {
+      if(res.errorId!=null){
+        WidgetUtil.showErrorDialog(context, res.message);
+      } else{
+        WidgetUtil.showMessageDialog(context, message: res.message, title: "Thông báo");
+      }
+    }
+
   } else {
     if (hasAccessToken) {
       if (res.data != null && res.data['id'] != null) {

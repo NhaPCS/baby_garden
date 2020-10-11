@@ -1,12 +1,14 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
+import 'package:baby_garden_flutter/screen/customer_support_detail/provider/get_support_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:provider/provider.dart';
 
-class CreditTransferCheckoutDialogue extends StatelessWidget{
+class CreditTransferCheckoutDialogue extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Dialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
@@ -15,8 +17,10 @@ class CreditTransferCheckoutDialogue extends StatelessWidget{
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.0),
             color: Colors.white,
-            border: Border.all(color: ColorUtil.primaryColor,
-              width: 0.7,),
+            border: Border.all(
+              color: ColorUtil.primaryColor,
+              width: 0.7,
+            ),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -38,31 +42,17 @@ class CreditTransferCheckoutDialogue extends StatelessWidget{
               WidgetUtil.getLine(
                   margin: EdgeInsets.only(bottom: SizeUtil.tinySpace),
                   color: ColorUtil.lineColor),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: SizeUtil.smallSpace,top: SizeUtil.tinySpace,right: SizeUtil.tinySpace),
-                    child: Text(S.of(context).delivery_in_place,style: TextStyle(color: ColorUtil.textColor,fontWeight: FontWeight.bold,fontSize: SizeUtil.textSizeSmall),),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: SizeUtil.smallSpace,top: SizeUtil.tinySpace,right: SizeUtil.tinySpace),
-                    child: Text(S.of(context).delivery_policy,style: TextStyle(color: ColorUtil.textColor,fontWeight: FontWeight.normal,fontSize: SizeUtil.textSizeSmall),),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: SizeUtil.smallSpace,top: SizeUtil.tinySpace,right: SizeUtil.tinySpace),
-                    child: Text(S.of(context).get_in_shop,style: TextStyle(color: ColorUtil.textColor,fontWeight: FontWeight.bold,fontSize: SizeUtil.textSizeSmall),),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: SizeUtil.smallSpace,top: SizeUtil.tinySpace,right: SizeUtil.tinySpace),
-                    child: Text(S.of(context).checkout_policy,style: TextStyle(color: ColorUtil.textColor,fontWeight: FontWeight.normal,fontSize: SizeUtil.textSizeSmall),),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: SizeUtil.smallSpace,top: SizeUtil.tinySpace,right: SizeUtil.tinySpace),
-                    child: Text(S.of(context).checkout_policy_overal,style: TextStyle(color: ColorUtil.textColor,fontWeight: FontWeight.normal,fontSize: SizeUtil.textSizeSmall),),
-                  ),
-                ],),
+              Padding(
+                padding: EdgeInsets.only(left: SizeUtil.defaultSpace, right: SizeUtil.defaultSpace),
+                child: Html(
+                  data: Provider.of<GetSupportProvider>(context, listen: false)
+                          .data['transfer_payment'] ??
+                      '',
+                  defaultTextStyle: TextStyle(
+                      color: ColorUtil.textColor,
+                      fontSize: SizeUtil.textSizeSmall),
+                ),
+              ),
               Center(
                 child: RaisedButton(
                   onPressed: () {
@@ -70,8 +60,8 @@ class CreditTransferCheckoutDialogue extends StatelessWidget{
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
-                        Radius.circular(SizeUtil.smallRadius),
-                      )),
+                    Radius.circular(SizeUtil.smallRadius),
+                  )),
                   color: ColorUtil.primaryColor,
                   child: Text(
                     S.of(context).confirm,
@@ -87,5 +77,4 @@ class CreditTransferCheckoutDialogue extends StatelessWidget{
           ),
         ));
   }
-
 }

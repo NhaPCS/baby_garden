@@ -4448,8 +4448,17 @@ class S {
 
   String get choose_time_Schedule {
     return Intl.message(
-      'Vui lòng thời gian nhận hàng ',
+      'Vui lòng chọn thời gian nhận hàng ',
       name: 'choose_time_Schedule',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get choose_booking_time {
+    return Intl.message(
+      'Vui lòng chọn thời gian đặt lịch',
+      name: 'choose_booking_time',
       desc: '',
       args: [],
     );

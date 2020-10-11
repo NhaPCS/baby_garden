@@ -93,7 +93,7 @@ class ProductFavoriteItem extends StatelessWidget {
           ? ''
           : DateUtil.formatDDMMyyyy(product.favoriteDate);
     } else {
-      return product.date == null ? '' : DateUtil.formatDDMMyyyy(product.date);
+      return product.dateView == null ? '' : DateUtil.formatDDMMyyyy(product.dateView);
     }
   }
 }

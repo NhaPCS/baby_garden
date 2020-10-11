@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:baby_garden_flutter/provider/privacy_provider.dart';
 import 'package:baby_garden_flutter/screen/booking/dialog/change_delivery_address_dialogue.dart';
 import 'package:baby_garden_flutter/screen/booking/dialog/change_delivery_time_dialogue.dart';
@@ -29,16 +31,14 @@ import 'package:provider/provider.dart';
 
 class BookingScreen extends StatefulWidget {
   final String shopID;
-  final String promoteCode;
+  final List<dynamic> promotions;
   final String shopName;
 
-  const BookingScreen(
-      {this.shopID = '1', this.promoteCode = '123', this.shopName = ""})
+  const BookingScreen({this.shopID, this.promotions, this.shopName = ""})
       : super();
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _BookingScreenState();
   }
 }
@@ -65,7 +65,6 @@ class _BookingScreenState
 
   @override
   void initState() {
-    _transferMethodProvider.getShips();
     _pointProvider.getPoint(context, shopId: widget.shopID);
     Provider.of<ReceiveAddressListProvider>(context, listen: false).getData();
     totalPriceAfterFix = getTotalPrice();
@@ -127,6 +126,15 @@ class _BookingScreenState
                           builder: (BuildContext context,
                               ReceiveAddressListProvider value, Widget child) {
                             if (value.addressList == null) return SizedBox();
+                            if (value.selectedAddress != null) {
+                              _transferMethodProvider.getShips(
+                                  shopId: widget.shopID,
+                                  districtId:
+                                      value.selectedAddress['district_id'],
+                                  wardId: value.selectedAddress['ward_id'],
+                                  userAddress:
+                                      value.selectedAddress['address']);
+                            }
                             return MyText(
                               value.addressList == null ||
                                       value.addressList.isEmpty
@@ -213,7 +221,6 @@ class _BookingScreenState
                                           shopId: widget.shopID,
                                         ));
                                 if (data != null) {
-//                                  print("$data");
                                   receiveTime.value = data;
                                 }
                               },
@@ -350,7 +357,9 @@ class _BookingScreenState
                 Spacer(),
                 Consumer<TransferMethodProvider>(builder: (BuildContext context,
                     TransferMethodProvider value, Widget child) {
-                  return Text(StringUtil.getPriceText(value.price.toString()),
+                  return Text(
+                      StringUtil.getPriceText(
+                          value.getDiscountFee().toString()),
                       style:
                           TextStyle(fontSize: SizeUtil.textSizeExpressDetail));
                 })
@@ -362,7 +371,7 @@ class _BookingScreenState
           Consumer<TransferMethodProvider>(
             builder: (BuildContext context, TransferMethodProvider value,
                 Widget child) {
-              return value.isActiveCode
+              return value.coupon != null
                   ? Column(
                       children: <Widget>[
                         Padding(
@@ -418,9 +427,10 @@ class _BookingScreenState
                   builder: (BuildContext context, TransferMethodProvider value,
                       Widget child) {
                     return Text(
-                        StringUtil.getPriceText(
-                            (totalPrice + value.price - checkoutPoint * 1000)
-                                .toString()),
+                        StringUtil.getPriceText((totalPrice +
+                                value.getDiscountFee() -
+                                checkoutPoint * 1000)
+                            .toString()),
                         style: TextStyle(
                             fontSize: SizeUtil.textSizeDefault,
                             color: Colors.red,
@@ -490,107 +500,123 @@ class _BookingScreenState
             message: S.of(context).choose_time_Schedule,
             title: S.of(context).missing_information);
       } else {
-        await getViewModel().onBookingProduct(
-            context,
-            receiveTime.value['id'].trim(),
-            checkoutPoint.toString(),
-            widget.shopID.toString(),
-            widget.promoteCode == null ? "" : widget.promoteCode,
-            deliveryMethod.value.toString(),
-            receiveTime.value['data'].trim(),
-            checkoutMethod.value.toString(),
-            _noteController.text.toString(),
-            "",
-            inShopReceiveAddress,
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "");
+        await onBookingProduct();
         if (checkoutMethod.value == CheckoutMethod.CREDIT_TRANSFER.index) {
           print(getViewModel().bookingData['booking_id']);
           RouteUtil.pushReplacement(
               context,
               CheckoutScreen(
                 bookingId: getViewModel().bookingData['booking_id'],
-                bookingCode: getViewModel().bookingData['code'].toString(),
+                bookingCode: getViewModel().getFinishedBookingCode(),
                 totalPrice: totalPriceAfterFix,
                 phone: receiveAddress['phone'] ?? '',
                 shopName: widget.shopName,
               ));
         } else {
-          int index = await showDialog(
-              context: context,
-              builder: (BuildContext context) => ConfirmDialogue());
-          pushAndReplaceAll(MainScreen(index: index), "/main_screen");
+          bookingDone();
         }
         Provider.of<CartProvider>(context, listen: false).getMyCart();
       }
     } else {
-      //note
-
       if (receiveAddress == null) {
         WidgetUtil.showMessageDialog(context,
             message: S.of(context).choose_delivery_address,
             title: S.of(context).missing_information);
       } else {
-        await getViewModel().onBookingProduct(
-            context,
-            receiveTime.value['id'].trim(),
-            checkoutPoint.toString(),
-            widget.shopID.toString(),
-            widget.promoteCode == null ? "" : widget.promoteCode,
-            deliveryMethod.value.toString(),
-            receiveTime.value['data'].trim(),
-            checkoutMethod.value.toString(),
-            _noteController.text.toString(),
-            _transferMethodProvider
-                .ships[_transferMethodProvider.transferMethod]['id'],
-            inShopReceiveAddress,
-            _promoteShipCodeController.text.trim(),
-            receiveAddress['name'],
-            receiveAddress['phone'],
-            receiveAddress['address'],
-            receiveAddress['city_id'],
-            receiveAddress['district_id'],
-            receiveAddress['ward_id']);
+        bool done = await onBookingProduct();
         if (checkoutMethod.value == CheckoutMethod.CREDIT_TRANSFER.index) {
           print(getViewModel().bookingData['booking_id']);
           RouteUtil.pushReplacement(
               context,
               CheckoutScreen(
                 bookingId: getViewModel().bookingData['booking_id'],
-                bookingCode: getViewModel().bookingData['code'].toString(),
+                bookingCode: getViewModel().getFinishedBookingCode(),
                 totalPrice: totalPriceAfterFix,
                 phone: receiveAddress['phone'] ?? '',
                 shopName: widget.shopName,
               ));
         } else {
-          int index = await showDialog(
-              context: context,
-              builder: (BuildContext context) => ConfirmDialogue(
-                  bookingCode: getViewModel().bookingData['code'].toString()));
-          if (index > 0) {
-            RouteUtil.pushReplacement(
-                context,
-                OrderDetailScreen(
-                  bookingId:
-                      getViewModel().bookingData['booking_id'].toString(),
-                ));
-          } else {
-            pushAndReplaceAll(MainScreen(index: index), "/main_screen");
-          }
+          if (!done) return;
+          bookingDone();
         }
         Provider.of<CartProvider>(context, listen: false).getMyCart();
       }
     }
   }
 
+  Future<void> bookingDone() async {
+    int index = await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => ConfirmDialogue(
+            bookingCode: getViewModel().getFinishedBookingCode()));
+    if (index > 0) {
+      RouteUtil.pushReplacement(
+          context,
+          OrderDetailScreen(
+            bookingId:
+            getViewModel().bookingData['booking_id'].toString(),
+          ));
+    } else {
+      pushAndReplaceAll(MainScreen(index: index), "/main_screen");
+    }
+  }
+
+  Future<bool> onBookingProduct() async {
+    var receiveAddress =
+        Provider.of<ReceiveAddressListProvider>(context, listen: false)
+            .selectedAddress;
+    bool isReceiveInShop =
+        deliveryMethod.value == DeliveryMethodState.RECEIVE_IN_SHOP.index;
+    bool done = await getViewModel().onBookingProduct(
+      context,
+      shopID: widget.shopID,
+      promoteCode: widget.promotions == null
+          ? ''
+          : widget.promotions.map<String>((e) => e['code']).toList().join(','),
+      isReceiveInShop: deliveryMethod.value.toString(),
+      timeId: receiveTime.value != null ? receiveTime.value['id'] : '',
+      paymentMethod: checkoutMethod.value.toString(),
+      note: _noteController.text.toString().trim(),
+      address: isReceiveInShop ? inShopReceiveAddress : '',
+      userName: isReceiveInShop ? '' : receiveAddress['name'],
+      userPhone: isReceiveInShop ? '' : receiveAddress['phone'],
+      userAddress: isReceiveInShop ? '' : receiveAddress['address'],
+      cityID: isReceiveInShop ? '' : receiveAddress['city_id'],
+      districtID: isReceiveInShop ? '' : receiveAddress['district_id'],
+      wardId: isReceiveInShop ? '' : receiveAddress['ward_id'],
+      point: checkoutPoint.toString(),
+      shipCoupon: isReceiveInShop
+          ? ''
+          : _transferMethodProvider.coupon == null
+              ? ''
+              : _transferMethodProvider.selectedCouponCode ?? '',
+      shipCode:
+          isReceiveInShop ? '' : _transferMethodProvider.selectedTransfer ?? '',
+    );
+    return done;
+  }
+
   int getTotalPrice() {
-    totalPrice = Provider.of<CartProvider>(context, listen: false)
-        .getShopTotalPrice(widget.shopID);
-    return totalPrice + _transferMethodProvider.price - checkoutPoint * 1000;
+    totalPrice = max(
+        Provider.of<CartProvider>(context, listen: false).getShopTotalPrice() -
+            getPromotionsPrice(),
+        0);
+    return max(
+        totalPrice +
+            _transferMethodProvider.getDiscountFee() -
+            checkoutPoint * 1000,
+        0);
+  }
+
+  int getPromotionsPrice() {
+    if (widget.promotions == null || widget.promotions.isEmpty) return 0;
+    int total = 0;
+    widget.promotions.forEach((element) {
+      try {
+        total += int.parse(element['value'] ?? '0');
+      } on Exception catch (e) {}
+    });
+    return total;
   }
 }

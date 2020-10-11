@@ -38,11 +38,12 @@ class AddedPromoItem extends StatelessWidget {
             TextSpan(
               text: promotion == null ? "" : promotion['code'],
               style: TextStyle(
-                  color: ColorUtil.textGray,
-                  fontSize: SizeUtil.textSizeSmall),
+                  color: ColorUtil.textGray, fontSize: SizeUtil.textSizeSmall),
             ),
             TextSpan(
-              text: "(${promotion == null ? "" : promotion['title']})",
+              text: promotion == null && promotion['title'] != null
+                  ? "(${promotion['title']})"
+                  : '',
               style: TextStyle(
                   color: ColorUtil.primaryColor,
                   fontSize: SizeUtil.textSizeSmall),

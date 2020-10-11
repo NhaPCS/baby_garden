@@ -272,17 +272,19 @@ class _ProductScreenState
                       WidgetUtil.showRequireLoginDialog(context);
                       return;
                     }
-                    if (productProvider.isOutStock()) {
-                      getViewModel().receiveNotify(
-                          productId: productProvider.product['id']);
-                    } else {
-                      showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (_) => AddToCartBottomDialog(
-                                product: productProvider.product,
-                              ));
-                    }
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (_) => AddToCartBottomDialog(
+                              product: productProvider.product,
+                              onSelectedIsOutOfStock: () {
+                                getViewModel().receiveNotify(
+                                    productId: productProvider.product['id'],
+                                    number:
+                                        productProvider.product['quantity'] ??
+                                            1);
+                              },
+                            ));
                   },
                   text: productProvider.isOutStock()
                       ? S.of(context).get_notify_when_stocking
