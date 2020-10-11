@@ -195,7 +195,15 @@ class _PartnerBookScheduleScreenState
     if (_selectedServiceController.value == null ||
         _selectedServiceController.value.isEmpty) {
       WidgetUtil.showMessageDialog(context,
-          message: S.of(context).choose_service_title, title: "");
+          message: S.of(context).choose_service_title, title: S.of(context).notify);
+      return;
+    }
+    if (_dateValueController.value == null ||
+        _dateValueController.value.isEmpty ||
+        _timeValueController.value == null ||
+        _timeValueController.value.isEmpty) {
+      WidgetUtil.showMessageDialog(context,
+          message: S.of(context).choose_booking_time, title: S.of(context).notify);
       return;
     }
     String userId = await ShareValueProvider.shareValueProvider.getUserId();
