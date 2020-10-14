@@ -181,10 +181,13 @@ Future<dynamic> shopReceiveTime({BuildContext context, String shopID}) async {
 }
 
 //todo listProductShop
-Future<dynamic> listProductShop({String shopID}) async {
+Future<dynamic> listProductShop({String shopID, String categoryId}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  Response response = await get(null,
-      path: "listProductShop", param: {'user_id': userId, 'shop_id': shopID});
+  dynamic params = {'user_id': userId, 'shop_id': shopID};
+  if (categoryId != null) {
+    params['category_id'] = categoryId;
+  }
+  Response response = await get(null, path: "listProductShop", param: params);
   if (response.isSuccess()) return response.data;
   return null;
 }
@@ -211,8 +214,6 @@ Future<dynamic> bookingProduct({
   @required String timeId,
   @required String userID,
   @required String shopID,
-  @required String bookingDate,
-  @required String bookingTime,
   @required String promoteCode,
   @required String isReceiveInShop,
   @required String paymentMethod,
@@ -232,8 +233,6 @@ Future<dynamic> bookingProduct({
     'point': point,
     'user_id': userID,
     'shop_id': shopID,
-    'date_booking': bookingDate,
-    'time_booking': bookingTime,
     'promotion_code': promoteCode,
     'is_receive': isReceiveInShop,
     'payment': paymentMethod,
@@ -699,7 +698,7 @@ Future<void> addProductCart({List<dynamic> products}) async {
   for (dynamic p in products) {
     if (p['quantity'] != null && p['quantity'] > 0)
       ps.add({
-        'product_id': p['id'],
+        'product_id': p['product_id'] ?? p['id'],
         'number': p['quantity'],
         'color_id': p['color_id'],
         'size_id': p['size_id'],
@@ -1270,7 +1269,7 @@ Future<Response> updateToken({String token}) async {
 Future<dynamic> updateProfile(BuildContext context,
     {String name, String gender, String birthday}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  Map<String, dynamic> params = {
+  Map<String, String> params = {
     'user_id': userId,
     'name': name,
     'birthday': DateUtil.convertNormalToServerDate(birthday),
@@ -1302,12 +1301,12 @@ Future<dynamic> privacy() async {
 Future<dynamic> addNotifyFlashSales(BuildContext context,
     {String productId}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  Map<String, dynamic> params = {
+  dynamic params = {
     'user_id': userId,
     'id': productId,
   };
 
-  Response response = await post(context,
+  Response response = await get(context,
       path: "addNotifyFlashSales",
       param: params,
       requireLogin: true,
@@ -1319,7 +1318,7 @@ Future<dynamic> addNotifyFlashSales(BuildContext context,
 Future<dynamic> deleteNotifyFlashSales(BuildContext context,
     {String productId}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  Map<String, dynamic> params = {
+  dynamic params = {
     'user_id': userId,
     'id': productId,
   };

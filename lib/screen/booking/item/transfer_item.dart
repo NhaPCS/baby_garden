@@ -59,7 +59,7 @@ class TransferItem extends StatelessWidget {
           onChanged: (val) {
             onSelected();
           },
-          trailing: (coupon != null && coupon['code'] == selectedTransferCode)
+          trailing: (coupon != null && coupon['code'] == transferCode)
               ? Row(
                   children: <Widget>[
                     MyText(

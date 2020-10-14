@@ -3,6 +3,7 @@ import 'package:baby_garden_flutter/item/service_detail_item.dart';
 import 'package:baby_garden_flutter/screen/partner_book_schedule/widget/service_date_picker.dart';
 import 'package:baby_garden_flutter/screen/partner_service_detail/partner_service_detail.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/checkbox/custom_radio_button.dart';
 import 'package:flutter/material.dart';
 
@@ -149,6 +150,20 @@ class ShopBookingContent extends StatelessWidget {
                   ],
                 );
               },
+            ),
+            SizedBox(height: SizeUtil.defaultSpace,),
+            Padding(
+              padding: SizeUtil.smallPadding,
+              child: MyRaisedButton(
+                onPressed: () {
+                  onBookingService();
+                },
+                matchParent: true,
+                text: S.of(context).book,
+                textStyle: TextStyle(color: Colors.white),
+                color: ColorUtil.primaryColor,
+                padding: SizeUtil.normalPadding,
+              ),
             )
           ],
         ),
