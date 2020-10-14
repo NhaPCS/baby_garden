@@ -48,18 +48,11 @@ class BookingProductViewModel extends BaseViewModel {
   }) async {
     var userID =
         Provider.of<UserProvider>(context, listen: false).userInfo['id'];
-    var now = new DateTime.now();
-    var dateFormat = new DateFormat('yyyy-MM-dd');
-    var timeFormat = new DateFormat('Hms');
-    var bookingDate = dateFormat.format(now),
-        bookingTime = timeFormat.format(now);
     dynamic data = await service.bookingProduct(
         timeId: timeId,
         point: point,
         userID: userID,
         shopID: shopID,
-        bookingDate: bookingDate,
-        bookingTime: bookingTime,
         promoteCode: promoteCode,
         isReceiveInShop: isReceiveInShop,
         paymentMethod: paymentMethod,

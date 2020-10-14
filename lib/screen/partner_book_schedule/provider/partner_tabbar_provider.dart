@@ -3,12 +3,13 @@ import 'package:flutter/cupertino.dart';
 class PartnerTabbarProvider extends ChangeNotifier {
   bool isProduct = false;
 
-  void onChange() {
-    isProduct = !isProduct;
+  void setIsProduct(bool correct) {
+    isProduct = correct;
+    print("aaa $correct");
     notifyListeners();
   }
 
-  void setIsProduct(product) {
-    isProduct = product;
+  void setIsProductNoNotify(bool correct) {
+    isProduct = correct;
   }
 }

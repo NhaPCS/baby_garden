@@ -1,6 +1,5 @@
 import 'package:baby_garden_flutter/data/shared_value.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/partner_book_schedule/dialog/booking_dialogue.dart';
@@ -13,10 +12,7 @@ import 'package:baby_garden_flutter/screen/partner_book_schedule/widget/shop_boo
 import 'package:baby_garden_flutter/screen/partner_book_schedule/widget/shop_info_header.dart';
 import 'package:baby_garden_flutter/screen/partner_book_schedule/widget/shop_product_content.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
 import 'package:baby_garden_flutter/widget/delegate/sliver_category_delegate.dart';
-import 'package:baby_garden_flutter/widget/product/list_category.dart';
-import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -40,7 +36,6 @@ class _PartnerBookScheduleScreenState
   final PartnerTabbarProvider _partnerTabbarProvider = PartnerTabbarProvider();
   final BookingServiceDetailProvider _bookingServiceDetailProvider =
       BookingServiceDetailProvider();
-
   final ValueNotifier<String> _dateValueController = new ValueNotifier('');
   final ValueNotifier<String> _timeValueController = new ValueNotifier('');
   final ValueNotifier<dynamic> _selectedAddressController =
@@ -70,132 +65,131 @@ class _PartnerBookScheduleScreenState
     super.dispose();
   }
 
+  void _initTabController() {
+    _tabCount = 0;
+    _selectedAddressController.value =
+        _bookingServiceDetailProvider.getFirstAddress();
+    if (_bookingServiceDetailProvider.data['service'] != null &&
+        _bookingServiceDetailProvider.data['service'].isNotEmpty) {
+      _tabCount++;
+    }
+    if (_bookingServiceDetailProvider.isNotEmpty()) {
+      _tabCount++;
+    }
+
+    if ((_tabController == null || _tabCount != _tabController.length) &&
+        _tabCount > 0) {
+      int _selected = _tabController == null ? 0 : _tabController.index;
+      _tabController = TabController(vsync: this, length: _tabCount);
+      _partnerTabbarProvider.setIsProductNoNotify(
+          ((_bookingServiceDetailProvider.data['service'] == null ||
+                      _bookingServiceDetailProvider.data['service'].isEmpty) &&
+                  _tabCount == 1) ||
+              _selected == 1);
+      _tabController.index = _selected;
+      _tabController.addListener(onTabChanged);
+    }
+  }
+
   void onFavoritePressed() {
     _bookingServiceDetailProvider.toggleFavorite(widget.shopID);
   }
 
+  void onTabChanged() {
+    _partnerTabbarProvider.setIsProduct(_tabController.index == 1);
+  }
+
   @override
   Widget buildWidget(BuildContext context) {
-    return Consumer<BookingServiceDetailProvider>(builder:
-        (BuildContext context, BookingServiceDetailProvider shopValue,
-            Widget child) {
-      _addCallBackFrame();
-      _tabCount = 0;
-      if (shopValue.data == null)
-        return Scaffold(
-          appBar: getAppBar(),
-        );
-      _selectedAddressController.value = shopValue.getFirstAddress();
-      if (shopValue.data['service'] != null &&
-          shopValue.data['service'].isNotEmpty) {
-        _tabCount++;
-      }
-      if (shopValue.products != null && shopValue.products.isNotEmpty) {
-        _tabCount++;
-      }
-      if (_tabCount == 0) {
-        return _renderEmptyServiceAndProducts();
-      }
-      _tabController = TabController(vsync: this, length: _tabCount);
-      _partnerTabbarProvider.setIsProduct((shopValue.data['service'] == null ||
-              shopValue.data['service'].isEmpty) &&
-          _tabCount == 1);
-      _tabController.addListener(() {
-        _partnerTabbarProvider.onChange();
-      });
-      return Scaffold(
-          body: ValueListenableBuilder<double>(
-              valueListenable: _rowHeight,
-              builder: (BuildContext context, double height, Widget child) {
-                return _rowHeight.value > 0
-                    ? NestedScrollView(
-                        body: _renderBody(),
-                        headerSliverBuilder: (context, isScrollInner) {
-                          return [
-                            new SliverAppBar(
-                              title: new MyText(
-                                shopValue.data['name'],
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              leading: BaseState.getLeading(context),
-                              centerTitle: true,
-                              pinned: true,
-                              forceElevated: isScrollInner,
-                            ),
-                            Consumer<SeeMoreProvider>(
-                              builder: (BuildContext context,
-                                  SeeMoreProvider value, Widget child) {
-                                double hei = (value.isShow
-                                    ? _rowHeightFull
-                                    : _rowHeight.value);
-                                return SliverPersistentHeader(
-                                  pinned: false,
-                                  floating: false,
-                                  delegate: SliverCategoryDelegate(
-                                      ShopInfoHeader(
-                                        shop:
-                                            _bookingServiceDetailProvider.data,
-                                        seeMoreProvider: _seeMoreProvider,
-                                        onFavoritePressed: onFavoritePressed,
-                                        isShow: value.isShow,
-                                      ),
-                                      hei,
-                                      hei),
-                                );
-                              },
-                            ),
-                            _renderTab()
-                          ];
-                        },
-                      )
-                    : Opacity(
-                        opacity: 0.0,
-                        child: Column(
-                          children: <Widget>[
-                            ShopInfoHeader(
-                              shop: _bookingServiceDetailProvider.data,
-                              seeMoreProvider: _seeMoreProvider,
-                              onFavoritePressed: onFavoritePressed,
-                              key: _rowKey,
-                              isShow: false,
-                            ),
-                            ShopInfoHeader(
-                              shop: _bookingServiceDetailProvider.data,
-                              seeMoreProvider: _seeMoreProvider,
-                              onFavoritePressed: onFavoritePressed,
-                              key: _rowKeyFull,
-                              isShow: true,
-                            )
-                          ],
-                        ),
-                      );
-              }),
-          bottomNavigationBar: Consumer<PartnerTabbarProvider>(builder:
-              (BuildContext context, PartnerTabbarProvider value,
-                  Widget child) {
-            return value.isProduct
-                ? SizedBox()
-                : Padding(
-                    padding: SizeUtil.smallPadding,
-                    child: MyRaisedButton(
-                      onPressed: () {
-                        onBookingService();
+    return Scaffold(
+      appBar: AppBar(
+        title: Consumer<BookingServiceDetailProvider>(
+          builder: (context, value, child) {
+            return Text(
+              value.data == null ? '' : value.data['name'] ?? '',
+              style: TextStyle(
+                  fontSize: SizeUtil.textSizeBigger, color: Colors.white),
+            );
+          },
+        ),
+        centerTitle: true,
+        leading: BaseStateModel.getLeading(context),
+      ),
+      body: Consumer<BookingServiceDetailProvider>(builder:
+          (BuildContext context, BookingServiceDetailProvider shopValue,
+              Widget child) {
+        _addCallBackFrame();
+        if (_bookingServiceDetailProvider.data == null) return SizedBox();
+        _initTabController();
+        if (_tabCount == 0) {
+          return _renderEmptyServiceAndProducts();
+        }
+        return ValueListenableBuilder<double>(
+            valueListenable: _rowHeight,
+            builder: (BuildContext context, double height, Widget child) {
+              return _rowHeight.value > 0
+                  ? NestedScrollView(
+                      body: _renderBody(),
+                      headerSliverBuilder: (context, isScrollInner) {
+                        return [
+                          Consumer<SeeMoreProvider>(
+                            builder: (BuildContext context,
+                                SeeMoreProvider value, Widget child) {
+                              double hei = (value.isShow
+                                  ? _rowHeightFull
+                                  : _rowHeight.value);
+                              return SliverPersistentHeader(
+                                pinned: false,
+                                floating: false,
+                                delegate: SliverCategoryDelegate(
+                                    ShopInfoHeader(
+                                      shop: _bookingServiceDetailProvider.data,
+                                      seeMoreProvider: _seeMoreProvider,
+                                      onFavoritePressed: onFavoritePressed,
+                                      isShow: value.isShow,
+                                    ),
+                                    hei,
+                                    hei,
+                                    rebuild: true),
+                              );
+                            },
+                          ),
+                          _renderTab()
+                        ];
                       },
-                      text: S.of(context).book,
-                      textStyle: TextStyle(color: Colors.white),
-                      color: ColorUtil.primaryColor,
-                      padding: SizeUtil.normalPadding,
-                    ),
-                  );
-          }));
-    });
+                    )
+                  : Opacity(
+                      opacity: 0.0,
+                      child: Column(
+                        children: <Widget>[
+                          ShopInfoHeader(
+                            shop: _bookingServiceDetailProvider.data,
+                            seeMoreProvider: _seeMoreProvider,
+                            onFavoritePressed: onFavoritePressed,
+                            key: _rowKey,
+                            isShow: false,
+                          ),
+                          ShopInfoHeader(
+                            shop: _bookingServiceDetailProvider.data,
+                            seeMoreProvider: _seeMoreProvider,
+                            onFavoritePressed: onFavoritePressed,
+                            key: _rowKeyFull,
+                            isShow: true,
+                          )
+                        ],
+                      ),
+                    );
+            });
+      }),
+    );
   }
 
   Future<void> onBookingService() async {
     if (_selectedServiceController.value == null ||
         _selectedServiceController.value.isEmpty) {
       WidgetUtil.showMessageDialog(context,
-          message: S.of(context).choose_service_title, title: S.of(context).notify);
+          message: S.of(context).choose_service_title,
+          title: S.of(context).notify);
       return;
     }
     if (_dateValueController.value == null ||
@@ -203,7 +197,8 @@ class _PartnerBookScheduleScreenState
         _timeValueController.value == null ||
         _timeValueController.value.isEmpty) {
       WidgetUtil.showMessageDialog(context,
-          message: S.of(context).choose_booking_time, title: S.of(context).notify);
+          message: S.of(context).choose_booking_time,
+          title: S.of(context).notify);
       return;
     }
     String userId = await ShareValueProvider.shareValueProvider.getUserId();
@@ -281,9 +276,6 @@ class _PartnerBookScheduleScreenState
   }
 
   Widget _renderTab() {
-    final productTabbarHei = _partnerTabbarProvider.isProduct
-        ? SizeUtil.tab_bar_fix_height + 76
-        : SizeUtil.tab_bar_fix_height;
     List<Widget> tabs = List();
     if (_bookingServiceDetailProvider.data['service'] != null &&
         _bookingServiceDetailProvider.data['service'].isNotEmpty) {
@@ -291,8 +283,7 @@ class _PartnerBookScheduleScreenState
         text: S.of(context).book,
       ));
     }
-    if (_bookingServiceDetailProvider.products != null &&
-        _bookingServiceDetailProvider.products.isNotEmpty) {
+    if (_bookingServiceDetailProvider.isNotEmpty()) {
       tabs.add(Tab(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -317,41 +308,31 @@ class _PartnerBookScheduleScreenState
             (BuildContext context, PartnerTabbarProvider value, Widget child) {
           return SliverPersistentHeader(
             pinned: true,
-            floating: false,
+            floating: true,
             delegate: SliverCategoryDelegate(
-                Column(
-                  children: <Widget>[
-                    Container(
-                      height: SizeUtil.tab_bar_fix_height,
-                      child: TabBar(
-                        onTap: (val) {
-                          _partnerTabbarProvider.onChange();
-                        },
-                        indicatorWeight: 0,
-                        controller: _tabController,
-                        labelColor: Colors.white,
-                        indicatorColor: ColorUtil.white,
-                        indicator: BoxDecoration(
-                            borderRadius: BorderRadius.circular(0),
-                            color: ColorUtil.primaryColor),
-                        unselectedLabelColor: ColorUtil.textColor,
-                        tabs: tabs,
-                      ),
-                      decoration:
-                          BoxDecoration(color: ColorUtil.lineColor, boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 5.0,
-                        ),
-                      ]),
+                Container(
+                  height: SizeUtil.tab_bar_fix_height,
+                  child: TabBar(
+                    indicatorWeight: 0,
+                    controller: _tabController,
+                    labelColor: Colors.white,
+                    indicatorColor: ColorUtil.white,
+                    indicator: BoxDecoration(
+                        borderRadius: BorderRadius.circular(0),
+                        color: ColorUtil.primaryColor),
+                    unselectedLabelColor: ColorUtil.textColor,
+                    tabs: tabs,
+                  ),
+                  decoration:
+                      BoxDecoration(color: ColorUtil.lineColor, boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 5.0,
                     ),
-                    _partnerTabbarProvider.isProduct
-                        ? ListCategory()
-                        : SizedBox()
-                  ],
+                  ]),
                 ),
-                productTabbarHei,
-                productTabbarHei),
+                SizeUtil.tab_bar_fix_height,
+                SizeUtil.tab_bar_fix_height),
           );
         },
       );
@@ -370,10 +351,13 @@ class _PartnerBookScheduleScreenState
         onBookingService: onBookingService,
       ));
     }
-    if (_bookingServiceDetailProvider.products != null &&
-        _bookingServiceDetailProvider.products.isNotEmpty) {
+    if (_bookingServiceDetailProvider.isNotEmpty()) {
       tabs.add(ShopProductContent(
         products: _bookingServiceDetailProvider.products,
+        onChangedCategory: (category) {
+          _bookingServiceDetailProvider.getListProducts(widget.shopID,
+              categoryId: category == null ? null : category['id']);
+        },
       ));
     }
     if (tabs.isEmpty)
@@ -383,18 +367,15 @@ class _PartnerBookScheduleScreenState
   }
 
   Widget _renderEmptyServiceAndProducts() {
-    return Scaffold(
-      appBar: getAppBar(),
-      body: Consumer<SeeMoreProvider>(
-        builder: (context, value, child) {
-          return ShopInfoHeader(
-            shop: _bookingServiceDetailProvider.data,
-            seeMoreProvider: _seeMoreProvider,
-            onFavoritePressed: onFavoritePressed,
-            isShow: _seeMoreProvider.isShow,
-          );
-        },
-      ),
+    return Consumer<SeeMoreProvider>(
+      builder: (context, value, child) {
+        return ShopInfoHeader(
+          shop: _bookingServiceDetailProvider.data,
+          seeMoreProvider: _seeMoreProvider,
+          onFavoritePressed: onFavoritePressed,
+          isShow: _seeMoreProvider.isShow,
+        );
+      },
     );
   }
 

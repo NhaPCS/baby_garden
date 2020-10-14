@@ -4,8 +4,10 @@ class SliverCategoryDelegate extends SliverPersistentHeaderDelegate {
   final Widget child;
   final double minHeight;
   final double maxHeight;
+  final bool rebuild;
 
-  SliverCategoryDelegate(this.child, this.minHeight, this.maxHeight);
+  SliverCategoryDelegate(this.child, this.minHeight, this.maxHeight,
+      {this.rebuild = false});
 
   @override
   Widget build(
@@ -21,6 +23,6 @@ class SliverCategoryDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    return oldDelegate.maxExtent!=maxHeight;
+    return rebuild || oldDelegate.maxExtent != maxHeight;
   }
 }

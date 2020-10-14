@@ -1,4 +1,5 @@
 import 'package:baby_garden_flutter/util/resource.dart';
+import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
 
 class OrderForm extends StatelessWidget {
@@ -32,7 +33,7 @@ class OrderForm extends StatelessWidget {
             style: titleStyle,
           ),
           Spacer(),
-          Text(content, style: contentStyle)
+          MyText(content, style: contentStyle)
         ],
       ),
     );

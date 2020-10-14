@@ -4,10 +4,24 @@ import 'package:flutter/material.dart';
 class BookingServiceDetailProvider extends ChangeNotifier {
   dynamic data;
   List<dynamic> products = List();
+  String _selectedCategory;
+
+  bool isNotEmpty() {
+    return (_selectedCategory != null && _selectedCategory.isNotEmpty) ||
+        (products != null && products.isNotEmpty);
+  }
 
   Future<dynamic> getdata(String shopID) async {
+    _selectedCategory = '';
     data = await shopDetail(context: null, shopID: shopID);
-    products = await listProductShop(shopID: shopID);
+    await getListProducts(shopID);
+    notifyListeners();
+  }
+
+  Future<void> getListProducts(String shopID, {String categoryId}) async {
+    if (categoryId == _selectedCategory) return;
+    _selectedCategory = categoryId;
+    products = await listProductShop(shopID: shopID, categoryId: categoryId);
     notifyListeners();
   }
 
@@ -27,6 +41,7 @@ class BookingServiceDetailProvider extends ChangeNotifier {
     }
     if (result) {
       data = await shopDetail(context: null, shopID: shopId);
+      print("TAGG  ${data['is_favourite']}");
       notifyListeners();
     }
   }
