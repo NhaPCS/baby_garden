@@ -3,6 +3,7 @@ import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_icon.dart';
 import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class ContentViewMoreable extends StatefulWidget {
   final String content;
@@ -31,10 +32,9 @@ class _State extends State<ContentViewMoreable> {
                 minHeight: 50, maxHeight: isExpanded ? double.infinity : 100),
             child: Stack(
               children: <Widget>[
-                MyText(
-                  widget.content,
-                  style: TextStyle(color: ColorUtil.textGray),
-//                  overflow: TextOverflow.ellipsis,
+                Html(
+                  data: widget.content,
+                  defaultTextStyle: TextStyle(color: ColorUtil.textGray),
                 ),
                 isExpanded || !canExpand
                     ? SizedBox()

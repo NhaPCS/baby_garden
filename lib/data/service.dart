@@ -1269,7 +1269,7 @@ Future<Response> updateToken({String token}) async {
 Future<dynamic> updateProfile(BuildContext context,
     {String name, String gender, String birthday}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  Map<String, dynamic> params = {
+  Map<String, String> params = {
     'user_id': userId,
     'name': name,
     'birthday': DateUtil.convertNormalToServerDate(birthday),
@@ -1301,12 +1301,12 @@ Future<dynamic> privacy() async {
 Future<dynamic> addNotifyFlashSales(BuildContext context,
     {String productId}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  Map<String, dynamic> params = {
+  dynamic params = {
     'user_id': userId,
     'id': productId,
   };
 
-  Response response = await post(context,
+  Response response = await get(context,
       path: "addNotifyFlashSales",
       param: params,
       requireLogin: true,
@@ -1318,7 +1318,7 @@ Future<dynamic> addNotifyFlashSales(BuildContext context,
 Future<dynamic> deleteNotifyFlashSales(BuildContext context,
     {String productId}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  Map<String, dynamic> params = {
+  dynamic params = {
     'user_id': userId,
     'id': productId,
   };
