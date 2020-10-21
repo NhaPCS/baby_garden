@@ -4967,6 +4967,15 @@ class S {
       args: [],
     );
   }
+
+  String get attach_product_of_main {
+    return Intl.message(
+      'Sản phẩm KH mua kèm:',
+      name: 'attach_product_of_main',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

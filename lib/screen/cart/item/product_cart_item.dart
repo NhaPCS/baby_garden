@@ -75,12 +75,12 @@ class ProductCartItem extends StatelessWidget {
                     DiscountNote(
                       note: product['promotion_info'],
                     ),
-                    product['main_product_name'] == null
+                    product['attach_product_name'] == null
                         ? SizedBox()
                         : InkWell(
                             child: WidgetUtil.paddingWidget(
                                 MyText(
-                                  product['main_product_name'],
+                                  "${S.of(context).attach_product_of_main} ${product['attach_product_name']}",
                                   style: TextStyle(
                                       color: ColorUtil.primaryColor,
                                       fontSize: SizeUtil.textSizeSmall),

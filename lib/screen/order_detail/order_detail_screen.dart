@@ -65,7 +65,7 @@ class _OrderDetailScreenState
             data['payment'], data['is_rate']);
         return Scaffold(
             appBar: getAppBar(
-              title: widget.title == "" ? title : widget.title,
+              title: widget.title == "" ? title.replaceAll("\n", " ") : widget.title,
               centerTitle: true,
               bgColor: ColorUtil.primaryColor,
               titleColor: Colors.white,
@@ -406,6 +406,7 @@ class _OrderDetailScreenState
         isShowNegativeButton = true;
         break;
       case BookingState.CONFIRM: //xác nhận
+        title = S.of(context).waiting_confirm;
         break;
       case BookingState.SUCCESS: //hoàn thành
         isShowPositiveButton = isRate != "1";

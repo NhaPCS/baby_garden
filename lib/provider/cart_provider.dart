@@ -28,6 +28,8 @@ class CartProvider extends ChangeNotifier {
         if (element != null && element['product'] != null) {
           element['product'].forEach((p) {
             int number = StringUtil.getQuantity(p);
+            String mainName = getAttachProductNames(p['attach_product_id'], element);
+            if(mainName!=null) p['attach_product_name'] = mainName;
             badge += number;
           });
         }
@@ -35,6 +37,19 @@ class CartProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  String getAttachProductNames(List<dynamic> ids, dynamic shop) {
+    if (ids != null && shop != null && shop['product'] != null) {
+      List<dynamic> products = shop['product'];
+      List<dynamic> mains = products.where((element) => ids.contains(element['product_id'])).toList().map((e) => e['product_name']).toList();
+      print("AAA $mains");
+      if(mains!=null && mains.isNotEmpty) {
+        return mains.join(", ");
+      }
+    }
+    return null;
+  }
+
 
   int getShopTotalPrice() {
     price = 0;
