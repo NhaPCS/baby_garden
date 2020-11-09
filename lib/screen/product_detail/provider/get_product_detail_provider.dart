@@ -40,8 +40,7 @@ class GetProductDetailProvider extends ChangeNotifier {
   static bool checkIsOutStock(dynamic product) {
     return product == null ||
         product['number'] == null ||
-        product['number_sales'] == null ||
-        int.parse(product['number']) - int.parse(product['number_sales']) <= 0;
+        product['number'] == '0';
   }
 
   String getValueByKey(BuildContext context, String key) {

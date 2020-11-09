@@ -71,8 +71,7 @@ class _ServiceDetailScreenState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        S.of(context).service_header(
-                            bookingDetailData['code'],
+                        S.of(context).service_header(bookingDetailData['code'],
                             bookingDetailData['date']),
                         style: TextStyle(height: 1.5),
                       ),
@@ -104,7 +103,9 @@ class _ServiceDetailScreenState
               OrderInfo(
                 svgIcon: 'ic_payment_method.svg',
                 title: S.of(context).date_using,
-                content: bookingDetailData['date_booking'] + " " + bookingDetailData['time_booking'],
+                content: bookingDetailData['date_booking'] +
+                    " " +
+                    bookingDetailData['time_booking'],
               ),
               OrderInfo(
                 svgIcon: 'order_info.svg',
@@ -156,9 +157,10 @@ class _ServiceDetailScreenState
                                       fontSize:
                                           SizeUtil.textSizeExpressDetail)),
                               Spacer(),
-                              Text(bookingDetailData['cancel_by'] == "1"
-                                  ? S.of(context).cancel_by_owner
-                                  : S.of(context).cancel_by_shop,
+                              Text(
+                                  bookingDetailData['cancel_by'] == "1"
+                                      ? S.of(context).cancel_by_owner
+                                      : S.of(context).cancel_by_shop,
                                   style: TextStyle(
                                       fontSize: SizeUtil.textSizeExpressDetail,
                                       color: ColorUtil.primaryColor))
@@ -217,39 +219,44 @@ class _ServiceDetailScreenState
               state != ServiceState.CANCEL
                   ? Column(
                       children: <Widget>[
-
-              bookingDetailData['is_rate'] == "0"?
-                        MyRaisedButton(
-                          matchParent: true,
-                          color: ColorUtil.primaryColor,
-                          borderRadius: SizeUtil.zeroSpace,
-                          textStyle: TextStyle(
-                              fontSize: SizeUtil.textSizeDefault,
-                              color: Colors.white,
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.bold),
-                          padding: EdgeInsets.only(
-                              top: SizeUtil.midSpace,
-                              bottom: SizeUtil.midSpace),
-                          onPressed: () async {
-                            //TODO booking
-                            if (state == ServiceState.BOOKED_SCHEDULE) {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      ReceiveBarCodeDialogue(_bookingDetailProvider.bookingDetailData['code']));
-                            } else {
-                              await push(RatingDetailScreen(
-                                bookingId: bookingDetailData['id'],
-                                isService: true,
-                              ));
-                              _bookingDetailProvider.getBookingDetail(widget.bookingId);
-                            }
-                          },
-                          text: state == ServiceState.BOOKED_SCHEDULE
-                              ? S.of(context).use_service.toUpperCase()
-                              : S.of(context).rating_service.toUpperCase(),
-                        ):SizedBox(),
+                        bookingDetailData['is_rate'] == "0"
+                            ? MyRaisedButton(
+                                matchParent: true,
+                                color: ColorUtil.primaryColor,
+                                borderRadius: SizeUtil.zeroSpace,
+                                textStyle: TextStyle(
+                                    fontSize: SizeUtil.textSizeDefault,
+                                    color: Colors.white,
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.bold),
+                                padding: EdgeInsets.only(
+                                    top: SizeUtil.midSpace,
+                                    bottom: SizeUtil.midSpace),
+                                onPressed: () async {
+                                  //TODO booking
+                                  if (state == ServiceState.BOOKED_SCHEDULE) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            ReceiveBarCodeDialogue(
+                                                getKiotVietCode()));
+                                  } else {
+                                    await push(RatingDetailScreen(
+                                      bookingId: bookingDetailData['id'],
+                                      isService: true,
+                                    ));
+                                    _bookingDetailProvider
+                                        .getBookingDetail(widget.bookingId);
+                                  }
+                                },
+                                text: state == ServiceState.BOOKED_SCHEDULE
+                                    ? S.of(context).use_service.toUpperCase()
+                                    : S
+                                        .of(context)
+                                        .rating_service
+                                        .toUpperCase(),
+                              )
+                            : SizedBox(),
                         state == ServiceState.BOOKED_SCHEDULE
                             ? MyRaisedButton(
                                 matchParent: true,
@@ -298,6 +305,15 @@ class _ServiceDetailScreenState
       default:
         break;
     }
+  }
+
+  String getKiotVietCode() {
+    return _bookingDetailProvider.bookingDetailData['code_kiotviet'] != null &&
+            _bookingDetailProvider.bookingDetailData['code_kiotviet']
+                .toString()
+                .isNotEmpty
+        ? _bookingDetailProvider.bookingDetailData['code_kiotviet']
+        : _bookingDetailProvider.bookingDetailData['code'];
   }
 
   @override

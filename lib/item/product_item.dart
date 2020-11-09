@@ -119,8 +119,8 @@ class ProductItem extends StatelessWidget {
           children: [
             CachedNetworkImage(
               imageUrl: product == null ||
-                  product['image'] == null ||
-                  product['image'].isEmpty
+                      product['image'] == null ||
+                      product['image'].isEmpty
                   ? ""
                   : product['image'][0],
               width: double.infinity,
@@ -155,7 +155,7 @@ class ProductItem extends StatelessWidget {
           children: <Widget>[
             Expanded(
                 child: AutoSizeText(
-              getDiscountPrice(),
+              StringUtil.getPriceText(product['price'] ?? '0'),
               maxFontSize: SizeUtil.textSizeSmall,
               minFontSize: SizeUtil.textSizeTiny,
               maxLines: 1,
@@ -170,7 +170,7 @@ class ProductItem extends StatelessWidget {
               product == null
                   ? ""
                   : isFlashSalePending
-                      ? product['price_discount']
+                      ? product['price_x']
                       : StringUtil.getPriceText(product['price_discount']),
               style:
                   TextStyle(color: ColorUtil.red, fontWeight: FontWeight.bold),
@@ -242,13 +242,5 @@ class ProductItem extends StatelessWidget {
             width: 0,
             height: 0,
           );
-  }
-
-  String getDiscountPrice() {
-    if (product == null) return "";
-    if (isFlashSalePending) return product['price_discount'];
-    return product['price_discount'] != null
-        ? StringUtil.getPriceText(product['price_discount'])
-        : StringUtil.getPriceText(product['price']);
   }
 }
