@@ -155,7 +155,10 @@ class ProductItem extends StatelessWidget {
           children: <Widget>[
             Expanded(
                 child: AutoSizeText(
-              StringUtil.getPriceText(product['price'] ?? '0'),
+              product['price'] == null ||
+                      product['price'] == product['price_discount']
+                  ? ''
+                  : StringUtil.getPriceText(product['price'] ?? '0'),
               maxFontSize: SizeUtil.textSizeSmall,
               minFontSize: SizeUtil.textSizeTiny,
               maxLines: 1,

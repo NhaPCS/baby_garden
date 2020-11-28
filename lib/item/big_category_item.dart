@@ -1,9 +1,6 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/image/circle_image.dart';
-import 'package:baby_garden_flutter/widget/image/my_cached_image.dart';
-import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,16 +14,20 @@ class BigCategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: Provider.of<AppProvider>(context).bigCategoryWidth,
       height: Provider.of<AppProvider>(context).bigCategoryHeight,
       padding: EdgeInsets.only(
-          top: SizeUtil.smallSpace, bottom: SizeUtil.tinySpace),
+          top: SizeUtil.smallSpace,
+          bottom: SizeUtil.tinySpace,
+          left: SizeUtil.smallSpace,
+          right: SizeUtil.smallSpace),
       child: Column(
         children: <Widget>[
           Container(
             child: CircleImage(
               imageUrl: category['img'],
-              width: 65,
-              height: 65,
+              width: 70,
+              height: 70,
               margin: EdgeInsets.all(2.5),
             ),
             decoration: BoxDecoration(
@@ -38,23 +39,14 @@ class BigCategoryItem extends StatelessWidget {
             height: SizeUtil.smallSpace,
           ),
           Expanded(
-              child: Padding(
-            padding: EdgeInsets.only(
-              left: SizeUtil.smallSpace,
-              right: SizeUtil.smallSpace,
-            ),
-            child: AutoSizeText(
-              category['name'],
-              minFontSize: SizeUtil.textSizeMini,
-              maxFontSize: SizeUtil.textSizeSmall,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: SizeUtil.textSizeSmall,
-                  color: isSelected
-                      ? ColorUtil.primaryColor
-                      : ColorUtil.textColor),
-            ),
+              child: Text(
+            category['name'] ?? '',
+            maxLines: 2,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: SizeUtil.textSizeSmall,
+                color:
+                    isSelected ? ColorUtil.primaryColor : ColorUtil.textColor),
           ))
         ],
       ),

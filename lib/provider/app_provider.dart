@@ -26,8 +26,8 @@ class AppProvider {
     categoryHeight = categoryWidth * 1.2;
     productWidth = widthScreen * 0.35;
     productHeight = productWidth * 1.4;
-    bigCategoryWidth = 100;
-    bigCategoryHeight = bigCategoryWidth * 1.4;
+    bigCategoryWidth = 110;
+    bigCategoryHeight = 160;
     bgHeaderHeight = heightScreen * 0.23;
     saleDetailSlideHeight = heightScreen * 0.27;
     expandHeaderHeight = heightScreen * 0.3;
@@ -39,8 +39,8 @@ class AppProvider {
     flashSaleItemWidth = widthScreen * 0.35;
     flashSaleItemHeight = flashSaleItemWidth * 1.7;
     homeCategoryHeight = widthScreen * 0.23;
-    homeCategoryWidth = widthScreen/5;
-    homeCategoryIconHeight = homeCategoryWidth*0.65;
+    homeCategoryWidth = widthScreen / 5;
+    homeCategoryIconHeight = homeCategoryWidth * 0.65;
     childHeightBar = 200;
     ;
 //    }

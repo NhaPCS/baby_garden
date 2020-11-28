@@ -1,7 +1,6 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/button/button_icon.dart';
-import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
@@ -33,7 +32,7 @@ class _State extends State<ContentViewMoreable> {
             child: Stack(
               children: <Widget>[
                 Html(
-                  data: widget.content,
+                  data: widget.content ?? '',
                   defaultTextStyle: TextStyle(color: ColorUtil.textGray),
                 ),
                 isExpanded || !canExpand

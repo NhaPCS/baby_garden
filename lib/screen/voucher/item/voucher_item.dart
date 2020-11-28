@@ -2,10 +2,8 @@ import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/screen/voucher_detail/voucher_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
 import 'package:baby_garden_flutter/widget/image/circle_image.dart';
-import 'package:baby_garden_flutter/widget/image/my_cached_image.dart';
 import 'package:baby_garden_flutter/widget/painter/draw_triangle.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +39,7 @@ class VoucherItem extends StatelessWidget {
                   borderRadius:
                       BorderRadius.all(Radius.circular(SizeUtil.smallRadius)),
                   image: DecorationImage(
+                      fit: BoxFit.cover,
                       image: CachedNetworkImageProvider(
                           voucher['img'] == null || voucher['img'].isEmpty
                               ? ''

@@ -111,7 +111,7 @@ class OrderItem extends StatelessWidget {
                       ? productItem['image'][0]
                       : '',
                   star: isRated
-                      ? int.parse(itemData['star'])
+                      ? int.parse(itemData['star'] ?? '0')
                       : null, // todo- hung  thiếu rating
                 ),
                 Positioned.fill(

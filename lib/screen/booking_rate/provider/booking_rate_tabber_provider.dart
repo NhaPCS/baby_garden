@@ -18,7 +18,9 @@ class BookingRateTabBarProvider extends ChangeNotifier {
         .where((i) => i['is_rate'].toString().toLowerCase().contains("1"))
         .toList();
     ratingData = data
-        .where((i) => i['is_rate'].toString().toLowerCase().contains("0"))
+        .where((i) =>
+            i['is_rate'] == null ||
+            i['is_rate'].toString().toLowerCase().contains("0"))
         .toList();
     notifyListeners();
   }
