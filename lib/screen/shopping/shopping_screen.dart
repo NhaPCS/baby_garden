@@ -1,7 +1,6 @@
 import 'package:baby_garden_flutter/data/model/section.dart';
 import 'package:baby_garden_flutter/provider/app_provider.dart';
 import 'package:baby_garden_flutter/provider/get_main_category_provider.dart';
-import 'package:baby_garden_flutter/provider/get_product_category_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/home/widget/balloon.dart';
 import 'package:baby_garden_flutter/screen/home/widget/banners.dart';

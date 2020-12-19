@@ -1071,9 +1071,9 @@ Future<dynamic> useVoucher({String voucherId}) async {
   return null;
 }
 
-Future<dynamic> promotionDetail({String code}) async {
+Future<dynamic> promotionDetail({String code, String shopId}) async {
   String userId = await ShareValueProvider.shareValueProvider.getUserId();
-  dynamic params = {"user_id": userId, "code": code};
+  dynamic params = {"user_id": userId, "code": code, "shop_id": shopId};
   Response response = await get(null,
       path: 'promotionDetail', param: params, requireLogin: true);
   if (response.isSuccess()) return response.data;

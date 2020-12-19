@@ -45,7 +45,7 @@ class TransferItem extends StatelessWidget {
             ],
           ),
           subTitle: MyText(
-            "${transfer['deliveryTime']} ${transfer['time_unit']}",
+            "${transfer['deliveryTime'] ?? ''} ${transfer['time_unit'] ?? ''}",
             style: TextStyle(
                 fontSize: SizeUtil.textSizeNoticeTime, color: ColorUtil.gray),
           ),
@@ -63,8 +63,10 @@ class TransferItem extends StatelessWidget {
               ? Row(
                   children: <Widget>[
                     MyText(
-                      StringUtil.getPriceText(
-                          transfer['fee']['total_fee'].toString()),
+                      transfer == null || transfer['fee'] == null
+                          ? ''
+                          : StringUtil.getPriceText(
+                              transfer['fee']['total_fee'].toString()),
                       style: TextStyle(
                         fontSize: SizeUtil.textSizeTiny,
                         decoration: TextDecoration.lineThrough,
@@ -74,9 +76,11 @@ class TransferItem extends StatelessWidget {
                       width: SizeUtil.tinySpace,
                     ),
                     Text(
-                      StringUtil.getPriceText(
-                          (coupon['total_discount_fee']['total_fee'] ?? 0)
-                              .toString()),
+                      coupon == null || coupon['total_discount_fee'] == null
+                          ? ''
+                          : StringUtil.getPriceText(
+                              (coupon['total_discount_fee']['total_fee'] ?? 0)
+                                  .toString()),
                       style: TextStyle(
                         fontSize: SizeUtil.textSizeSmall,
                       ),
@@ -84,8 +88,10 @@ class TransferItem extends StatelessWidget {
                   ],
                 )
               : MyText(
-                  StringUtil.getPriceText(
-                      (transfer['fee']['total_fee'] ?? 0).toString()),
+                  transfer == null || transfer['fee'] == null
+                      ? ''
+                      : StringUtil.getPriceText(
+                          (transfer['fee']['total_fee'] ?? 0).toString()),
                   style: TextStyle(
                     fontSize: SizeUtil.textSizeSmall,
                   ),

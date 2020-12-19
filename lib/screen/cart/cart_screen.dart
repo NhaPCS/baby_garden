@@ -1,6 +1,5 @@
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
-import 'package:baby_garden_flutter/provider/change_index_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state.dart';
 import 'package:baby_garden_flutter/screen/booking/booking_screen.dart';
 import 'package:baby_garden_flutter/screen/cart/provider/get_promotion_detail_provider.dart';
@@ -68,8 +67,9 @@ class _CartState extends BaseState<CartScreen> {
                       getPromotionDetailProvider: _getPromotionDetailProvider,
                       onApplyCodePress: () {
                         if (_promoCodeController.text.isNotEmpty)
-                          _getPromotionDetailProvider
-                              .getPromotionDetail(_promoCodeController.text);
+                          _getPromotionDetailProvider.getPromotionDetail(
+                              _promoCodeController.text,
+                              value.selectedShop['shop_id']);
                       },
                       onRemoveCodePress: (id) {
                         _getPromotionDetailProvider.clearPromotion(id);
@@ -87,7 +87,8 @@ class _CartState extends BaseState<CartScreen> {
                   }
                   return ProductByShop(
                     isSelected: value.selectedShop != null &&
-                        value.selectedShop['shop_id'] == value.shops[index]['shop_id'],
+                        value.selectedShop['shop_id'] ==
+                            value.shops[index]['shop_id'],
                     shop: value.shops[index],
                     onSelectShop: (s) {
                       if (s) {

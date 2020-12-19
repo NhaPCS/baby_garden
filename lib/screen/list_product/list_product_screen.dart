@@ -13,10 +13,17 @@ import 'package:provider/provider.dart';
 class ListProductScreen extends StatefulWidget {
   final Section section;
   final String productId;
+  final String parentId;
   final bool isFlashSalePending;
+  final List<dynamic> categories;
 
   const ListProductScreen(
-      {Key key, this.section, this.productId, this.isFlashSalePending = false})
+      {Key key,
+      this.section,
+      this.productId,
+      this.isFlashSalePending = false,
+      this.categories,
+      this.parentId})
       : super(key: key);
 
   @override
@@ -37,7 +44,9 @@ class _ListProductState extends BaseState<ListProductScreen> {
             _getListProductProvider.products.isEmpty) &&
         widget.section != null) {
       _getListProductProvider.getData(context, widget.section.path,
-          productId: widget.productId);
+          productId: widget.productId,
+          parentId: widget.parentId,
+          categoryId: widget.parentId != null ? '0' : null);
     }
   }
 
@@ -53,13 +62,16 @@ class _ListProductState extends BaseState<ListProductScreen> {
                   height: SizeUtil.tinySpace,
                 )
               : ListCategory(
+                  categories: widget.categories,
                   onChangedCategory: (category) {
-                    _selectedCategoryId =
-                        category == null ? null : category['id'];
+                    _selectedCategoryId = category == null
+                        ? (widget.parentId != null ? '0' : null)
+                        : category['id'];
                     _getListProductProvider.getData(
                         context, widget.section.path,
                         categoryId: _selectedCategoryId,
-                        productId: widget.productId);
+                        productId: widget.productId,
+                        parentId: widget.parentId);
                   },
                 ),
           Expanded(child: Consumer<GetListProductProvider>(
@@ -75,7 +87,8 @@ class _ListProductState extends BaseState<ListProductScreen> {
                   _getListProductProvider.getData(context, widget.section.path,
                       categoryId: _selectedCategoryId,
                       index: page * PAGE_SIZE,
-                      productId: widget.productId);
+                      productId: widget.productId,
+                      parentId: widget.parentId);
                 },
                 totalElement: value.total,
                 itemBuilder: (context, product, index) {
@@ -92,7 +105,7 @@ class _ListProductState extends BaseState<ListProductScreen> {
                         left: SizeUtil.smallSpace,
                         right: SizeUtil.smallSpace,
                         top: 0),
-                    onNotifyPress: (){
+                    onNotifyPress: () {
                       _getListProductProvider.notifyFlashSale(context, product);
                     },
                   );

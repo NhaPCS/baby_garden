@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
 import 'package:baby_garden_flutter/data/service.dart' as service;
+import 'package:flutter/material.dart';
 
 class GetPromotionDetailProvider extends ChangeNotifier {
   List<dynamic> promotions = new List();
   String error;
 
-  Future<void> getPromotionDetail(String code) async {
-    dynamic promotion = await service.promotionDetail(code: code);
+  Future<void> getPromotionDetail(String code, String shopId) async {
+    dynamic promotion =
+        await service.promotionDetail(code: code, shopId: shopId);
     if (promotion != null) {
       dynamic existed = promotions.firstWhere(
           (element) => element['id'] == promotion['id'],

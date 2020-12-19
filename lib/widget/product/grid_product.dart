@@ -151,6 +151,10 @@ class _GridProductState extends BaseState<GridProduct> {
                 context,
                 ListProductScreen(
                   section: widget.section,
+                  categories: widget.parentId != null
+                      ? _getProductCategoryByParentProvider.categories
+                      : null,
+                  parentId: widget.parentId,
                 ));
           },
         );
