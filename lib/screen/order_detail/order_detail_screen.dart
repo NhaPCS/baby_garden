@@ -15,6 +15,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
+
 import '../order_delivery_info/order_delivery_info_screen.dart';
 
 class OrderDetailScreen extends StatefulWidget {
@@ -65,7 +66,9 @@ class _OrderDetailScreenState
             data['payment'], data['is_rate']);
         return Scaffold(
             appBar: getAppBar(
-              title: widget.title == "" ? title.replaceAll("\n", " ") : widget.title,
+              title: widget.title == ""
+                  ? title.replaceAll("\n", " ")
+                  : widget.title,
               centerTitle: true,
               bgColor: ColorUtil.primaryColor,
               titleColor: Colors.white,
@@ -305,6 +308,7 @@ class _OrderDetailScreenState
                             bottom: SizeUtil.smallSpace),
                         onPressed: () {
                           push(CheckoutScreen(
+                            shopId: data['shop_id'],
                             bookingId: int.parse(widget.bookingId),
                             bookingCode: data['code'].toString(),
                             totalPrice: costMoney,

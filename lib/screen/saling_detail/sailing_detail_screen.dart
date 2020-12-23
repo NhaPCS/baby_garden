@@ -56,7 +56,7 @@ class _SailingDetailScreenState extends BaseState<SailingDetailScreen> {
                           .saleDetailSlideHeight,
                       borderRadius: 0,
                       margin: EdgeInsets.all(0),
-                      images: value.detail['image']?? [],
+                      images: value.detail['image'] ?? [],
                       isShowImageCount: true,
                     ),
                     Padding(
@@ -166,10 +166,10 @@ class _SailingDetailScreenState extends BaseState<SailingDetailScreen> {
                             },
                           );
                         return Container(
-                          height: MediaQuery.of(context).size.height * 0.78,
                           color: ColorUtil.lineColor,
                           child: GridView.builder(
                             physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemCount: products.length,
                             gridDelegate:

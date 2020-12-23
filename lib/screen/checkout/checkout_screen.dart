@@ -1,18 +1,18 @@
 import 'dart:io';
 
 import 'package:baby_garden_flutter/generated/l10n.dart';
-import 'package:baby_garden_flutter/screen/checkout/dialogue/confirm_dialogue.dart';
-import 'package:baby_garden_flutter/screen/checkout/provider/payment_info_provider.dart';
 import 'package:baby_garden_flutter/provider/user_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
-import 'package:baby_garden_flutter/screen/order_detail/order_detail_screen.dart';
-import 'package:baby_garden_flutter/widget/button/privacy_policy_button.dart';
+import 'package:baby_garden_flutter/screen/checkout/dialogue/confirm_dialogue.dart';
+import 'package:baby_garden_flutter/screen/checkout/provider/payment_info_provider.dart';
+import 'package:baby_garden_flutter/screen/checkout/view_model/checkout_view_model.dart';
 import 'package:baby_garden_flutter/screen/checkout/widget/rich_text_form.dart';
 import 'package:baby_garden_flutter/screen/checkout/widget/title_icon.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
+import 'package:baby_garden_flutter/screen/order_detail/order_detail_screen.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/screen/checkout/view_model/checkout_view_model.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
+import 'package:baby_garden_flutter/widget/button/privacy_policy_button.dart';
 import 'package:baby_garden_flutter/widget/image/circle_image.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,13 +27,15 @@ class CheckoutScreen extends StatefulWidget {
   final String bookingCode;
   final String phone;
   final String shopName;
+  final String shopId;
 
   const CheckoutScreen(
       {this.bookingId,
       this.totalPrice,
       this.bookingCode,
       this.phone,
-      this.shopName})
+      this.shopName,
+      this.shopId})
       : super();
 
   @override
@@ -51,7 +53,7 @@ class _CheckoutScreenState
 
   @override
   void initState() {
-    _paymentInfoProvider.getListPaymentInfo();
+    _paymentInfoProvider.getListPaymentInfo(widget.shopId);
     super.initState();
   }
 

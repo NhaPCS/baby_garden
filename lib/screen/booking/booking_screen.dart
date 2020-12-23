@@ -1,14 +1,15 @@
 import 'dart:math';
 
-import 'package:baby_garden_flutter/provider/privacy_provider.dart';
-import 'package:baby_garden_flutter/screen/booking/dialog/change_delivery_address_dialogue.dart';
-import 'package:baby_garden_flutter/screen/booking/dialog/change_delivery_time_dialogue.dart';
 import 'package:baby_garden_flutter/generated/l10n.dart';
 import 'package:baby_garden_flutter/provider/cart_provider.dart';
+import 'package:baby_garden_flutter/provider/privacy_provider.dart';
 import 'package:baby_garden_flutter/provider/receive_address_list_provider.dart';
-import 'package:baby_garden_flutter/screen/booking/provider/transfer_method_provider.dart';
 import 'package:baby_garden_flutter/screen/base_state_model.dart';
+import 'package:baby_garden_flutter/screen/booking/dialog/change_delivery_address_dialogue.dart';
+import 'package:baby_garden_flutter/screen/booking/dialog/change_delivery_time_dialogue.dart';
+import 'package:baby_garden_flutter/screen/booking/provider/transfer_method_provider.dart';
 import 'package:baby_garden_flutter/screen/booking/provider/user_point_provider.dart';
+import 'package:baby_garden_flutter/screen/booking/view_model/booking_product_view_model.dart';
 import 'package:baby_garden_flutter/screen/booking/widget/checkout_method.dart';
 import 'package:baby_garden_flutter/screen/booking/widget/delivery_method.dart';
 import 'package:baby_garden_flutter/screen/booking/widget/input_note.dart';
@@ -18,10 +19,9 @@ import 'package:baby_garden_flutter/screen/checkout/checkout_screen.dart';
 import 'package:baby_garden_flutter/screen/checkout/dialogue/confirm_dialogue.dart';
 import 'package:baby_garden_flutter/screen/main/main_screen.dart';
 import 'package:baby_garden_flutter/screen/order_detail/order_detail_screen.dart';
-import 'package:baby_garden_flutter/widget/button/privacy_policy_button.dart';
 import 'package:baby_garden_flutter/util/resource.dart';
-import 'package:baby_garden_flutter/screen/booking/view_model/booking_product_view_model.dart';
 import 'package:baby_garden_flutter/widget/button/my_raised_button.dart';
+import 'package:baby_garden_flutter/widget/button/privacy_policy_button.dart';
 import 'package:baby_garden_flutter/widget/image/svg_icon.dart';
 import 'package:baby_garden_flutter/widget/text/my_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -506,6 +506,7 @@ class _BookingScreenState
           RouteUtil.pushReplacement(
               context,
               CheckoutScreen(
+                shopId: widget.shopID,
                 bookingId: getViewModel().bookingData['booking_id'],
                 bookingCode: getViewModel().getFinishedBookingCode(),
                 totalPrice: totalPriceAfterFix,
@@ -529,6 +530,7 @@ class _BookingScreenState
           RouteUtil.pushReplacement(
               context,
               CheckoutScreen(
+                shopId: widget.shopID,
                 bookingId: getViewModel().bookingData['booking_id'],
                 bookingCode: getViewModel().getFinishedBookingCode(),
                 totalPrice: totalPriceAfterFix,
@@ -554,8 +556,7 @@ class _BookingScreenState
       RouteUtil.pushReplacement(
           context,
           OrderDetailScreen(
-            bookingId:
-            getViewModel().bookingData['booking_id'].toString(),
+            bookingId: getViewModel().bookingData['booking_id'].toString(),
           ));
     } else {
       pushAndReplaceAll(MainScreen(index: index), "/main_screen");
