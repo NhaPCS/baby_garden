@@ -205,6 +205,8 @@ class _OrderDetailScreenState
                       children: List.generate(
                           data["list_product"].length,
                           (index) => ProductOrderItem(
+                            productId: data["list_product"][index]
+                                    ['product_id'],
                                 title: data["list_product"][index]['name'],
                                 skuTitle: data["list_product"][index]
                                     ['product_id'],

@@ -14,6 +14,7 @@ class ProductOrderItem extends StatelessWidget {
   final String price;
   final String productCount;
   final String subTitle;
+  final String productId;
 
   const ProductOrderItem(
       {this.imageUrl,
@@ -22,7 +23,8 @@ class ProductOrderItem extends StatelessWidget {
       this.price,
       this.skuTitle,
       this.productCount,
-      this.subTitle})
+      this.subTitle,
+      this.productId})
       : super();
 
   @override
@@ -74,7 +76,7 @@ class ProductOrderItem extends StatelessWidget {
                       ),
                 skuTitle != null
                     ? Text(
-                        S.of(context).sku_code("123"),
+                        S.of(context).sku_code(productId ?? ''),
                         style: TextStyle(
                             height: 1.5, fontSize: SizeUtil.textSizeNoticeTime),
                         textAlign: TextAlign.start,

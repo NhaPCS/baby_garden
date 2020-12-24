@@ -100,6 +100,7 @@ class OrderItem extends StatelessWidget {
               ),
               Stack(children: <Widget>[
                 ProductOrderItem(
+                  productId: productItem['product_id'],
                   title: productItem['name'],
                   price: StringUtil.getPriceText(
                           productItem == null ? "" : productItem['price']) +

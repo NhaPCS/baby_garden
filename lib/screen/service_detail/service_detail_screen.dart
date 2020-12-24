@@ -114,6 +114,7 @@ class _ServiceDetailScreenState
                   padding: EdgeInsets.only(
                       left: SizeUtil.normalSpace, bottom: SizeUtil.tinySpace),
                   child: ProductOrderItem(
+                    productId: bookingDetailData['service_id'],
                     imageUrl: bookingDetailData['shop_img'],
                     title: bookingDetailData['service_name'],
                     subTitle: bookingDetailData['service_content'],
